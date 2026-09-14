@@ -28,6 +28,27 @@ export function startServer() {
   return { app, server, store };
 }
 
+/**
+ * Startvariante für die Electron-Desktop-App (siehe desktop/main.js):
+ * lauscht auf einem freien Port (0 = vom OS vergeben) statt auf dem festen
+ * Standardport, damit die Desktop-App nie mit einem lokal laufenden
+ * "npm start"-Backend kollidiert. Gibt die fertige URL zurück, statt sie
+ * nur zu loggen. Ändert nichts am bestehenden CLI-Verhalten (startServer/
+ * istDirektausfuehrung bleiben unverändert).
+ */
+export function startForElectron({ port = 0 } = {}) {
+  const store = createStore(config.contentDir);
+  const app = createApp(store);
+  return new Promise((resolve, reject) => {
+    const server = app.listen(port, '127.0.0.1');
+    server.once('listening', () => {
+      const adresse = server.address();
+      resolve({ url: `http://127.0.0.1:${adresse.port}`, server, store });
+    });
+    server.once('error', reject);
+  });
+}
+
 const istDirektausfuehrung = import.meta.url === pathToFileURL(process.argv[1] ?? '').href;
 if (istDirektausfuehrung) {
   startServer();
