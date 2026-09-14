@@ -264,7 +264,9 @@ derselben Origin (`http://localhost:3001`).
 | Whitespace-Bereinigung | manuell (Trim aller Felder) | 11 Zeilen korrigiert (führendes Leerzeichen) |
 | Backend-Kernlogik (Content-Laden, Antwortprüfung SC/MC/FT, Prüfungs­generierung/-auswertung) | eigenes Testskript (33 Prüfungen) | ✅ 33/33 bestanden |
 | Backend-Syntax | `node --check` auf alle `src/`- und `scripts/`-Dateien | ✅ fehlerfrei |
-| HTTP-API-Smoke-Test (Endpunkte, Header, Rate-Limit) | `backend/scripts/sicherheits-check.mjs` | ⏳ **nicht verifiziert** – `npm install` war in der Cloud-Arbeitsumgebung wegen gesperrter npm-Registry nicht möglich; einmal lokal nachholen |
+| `npm install` (lokal, Windows) | – | ✅ 69 Pakete, 0 Vulnerabilities |
+| Backend-Start (lokal) | `npm start` | ✅ läuft auf `http://127.0.0.1:3001`, lädt 500 Fragen/18 Module |
+| HTTP-API-Smoke-Test (Endpunkte, Header, Rate-Limit) | `backend/scripts/sicherheits-check.mjs` | ✅ 10/10 bestanden (lokal verifiziert, 2026-09-14) |
 | Frontend-Build | `npm run build` | ⏳ nicht in dieser Sitzung erneut geprüft |
 | Notizen-Format / Notizen im UI | – | ⏳ nicht in dieser Sitzung geprüft |
 
@@ -286,15 +288,20 @@ im Projektverzeichnis fehlt.
 
 | Priorität | Vorhaben |
 |---|---|
-| hoch | `cd backend && npm install && npm start` lokal ausführen und `sicherheits-check.mjs` sowie den Frontend-Build gegenprüfen (in der Cloud-Arbeitsumgebung nicht möglich, s. Abschnitt 7) |
-| hoch | Inhalts-Review durch Fachkundige je Fachrichtung (Beta) |
+| hoch | Installierten Desktop-Installer (`AzubiPrep Setup 0.1.0.exe`) einmal durchtesten (Installation + App-Start + Klicktest), bisher nur der Dev-Modus (`npm start`) verifiziert |
+| hoch | Inhalts-Review durch Fachkundige (Menschen mit Berufspraxis) je Fachrichtung – KI-gestützter Review bereits erfolgt, siehe [`18-Fachreview-Fragenkatalog.md`](18-Fachreview-Fragenkatalog.md) |
 | erledigt | Fragenbestand auf 500 ausgebaut (INC-044) |
+| erledigt | Backend lokal installiert & gestartet, `sicherheits-check.mjs` 10/10 bestanden (2026-09-14) |
 | erledigt | Backend neu aufgesetzt, CSV-Formatfehler (16 Zeilen) und Whitespace (11 Zeilen) repariert (2026-09-14) |
-| mittel | Versionskontrolle einrichten (`git init`, siehe docs/17-Sicherheit.md F15) – bisher kein Repository vorhanden |
+| erledigt | Frontend-Produktions-Build gegengeprüft (73 Module, `dist/` inkl. PWA-Assets vollständig) (2026-09-14) |
+| erledigt | Desktop-App (Electron) gebaut: `desktop/` startet Backend+Frontend im eigenen Fenster, lokal getestet (2026-09-14) |
+| erledigt | Windows-Installer (NSIS) über `electron-builder` gebaut (2026-09-14) |
+| erledigt | Versionskontrolle eingerichtet: GitHub-Repository angelegt, `.gitignore` ergänzt, öffentlich veröffentlicht (2026-09-14) |
 | mittel | UX-Feinschliff nach weiterem Nutzerfeedback |
 | mittel | Push-Benachrichtigungen (Web-Push, benötigt Backend-Persistenz) |
 | niedrig | Login/Rollen + Geräte-Sync (PostgreSQL) |
 | niedrig | Autoren-Weboberfläche statt Excel-Pflege |
+| niedrig | Windows-Installer digital signieren (aktuell unsigniert, SmartScreen-Warnung beim ersten Start) |
 
 > In Sprint 1.1 umgesetzt: Suche-Deep-Link, Schwierigkeitsfilter, Kalender-
 > navigation, Notizen-Export/Import, Dark-Mode-Kontrast, +90 Fragen.
