@@ -5,6 +5,7 @@ import { pathToFileURL } from 'node:url';
 import { config } from './config.js';
 import { loadContent } from './content.js';
 import { createApp } from './app.js';
+import { isDbAktiviert, dbErreichbar } from './db.js';
 
 export function createStore(contentDir) {
   let content = loadContent(contentDir);
@@ -24,6 +25,13 @@ export function startServer() {
   const server = app.listen(config.port, config.host, () => {
     console.log(`AzubiPrep-Backend läuft auf http://${config.host}:${config.port}`);
     console.log(`Inhalte: ${store.get().gesamtFragen} Fragen, ${store.get().modulesById.size} Module`);
+    if (isDbAktiviert()) {
+      dbErreichbar().then((ok) => {
+        console.log(ok ? '[db] Verbindung zu PostgreSQL erfolgreich – Login/Sync aktiv.' : '[db] DATABASE_URL gesetzt, aber Verbindung fehlgeschlagen! Login/Sync werden Fehler werfen.');
+      });
+    } else {
+      console.log('[db] Keine DATABASE_URL gesetzt – reiner Offline-Modus (kein Login/Sync).');
+    }
   });
   return { app, server, store };
 }

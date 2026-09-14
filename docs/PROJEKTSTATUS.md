@@ -288,20 +288,16 @@ im Projektverzeichnis fehlt.
 
 | Priorität | Vorhaben |
 |---|---|
-| hoch | Installierten Desktop-Installer (`AzubiPrep Setup 0.1.0.exe`) einmal durchtesten (Installation + App-Start + Klicktest), bisher nur der Dev-Modus (`npm start`) verifiziert |
-| hoch | Inhalts-Review durch Fachkundige (Menschen mit Berufspraxis) je Fachrichtung – KI-gestützter Review bereits erfolgt, siehe [`18-Fachreview-Fragenkatalog.md`](18-Fachreview-Fragenkatalog.md) |
+| hoch | Frontend-Build (`cd frontend && npm run build`) gegenprüfen bzw. neu bauen, damit `frontend/dist` sicher zum aktuellen Backend passt |
+| hoch | Inhalts-Review durch Fachkundige je Fachrichtung (Beta) |
 | erledigt | Fragenbestand auf 500 ausgebaut (INC-044) |
 | erledigt | Backend lokal installiert & gestartet, `sicherheits-check.mjs` 10/10 bestanden (2026-09-14) |
 | erledigt | Backend neu aufgesetzt, CSV-Formatfehler (16 Zeilen) und Whitespace (11 Zeilen) repariert (2026-09-14) |
-| erledigt | Frontend-Produktions-Build gegengeprüft (73 Module, `dist/` inkl. PWA-Assets vollständig) (2026-09-14) |
-| erledigt | Desktop-App (Electron) gebaut: `desktop/` startet Backend+Frontend im eigenen Fenster, lokal getestet (2026-09-14) |
-| erledigt | Windows-Installer (NSIS) über `electron-builder` gebaut (2026-09-14) |
-| erledigt | Versionskontrolle eingerichtet: GitHub-Repository angelegt, `.gitignore` ergänzt, öffentlich veröffentlicht (2026-09-14) |
+| mittel | Versionskontrolle einrichten (`git init`, siehe docs/17-Sicherheit.md F15) – bisher kein Repository vorhanden |
 | mittel | UX-Feinschliff nach weiterem Nutzerfeedback |
 | mittel | Push-Benachrichtigungen (Web-Push, benötigt Backend-Persistenz) |
 | niedrig | Login/Rollen + Geräte-Sync (PostgreSQL) |
 | niedrig | Autoren-Weboberfläche statt Excel-Pflege |
-| niedrig | Windows-Installer digital signieren (aktuell unsigniert, SmartScreen-Warnung beim ersten Start) |
 
 > In Sprint 1.1 umgesetzt: Suche-Deep-Link, Schwierigkeitsfilter, Kalender-
 > navigation, Notizen-Export/Import, Dark-Mode-Kontrast, +90 Fragen.

@@ -2,10 +2,17 @@
 // Defaults (siehe docs/14-Betrieb-Wartung.md). Keine hart kodierten Pfade/Ports.
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { config as dotenvConfig } from 'dotenv';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 // backend/src -> backend -> Projektwurzel
-const projectRoot = path.resolve(__dirname, '..', '..');
+const backendRoot = path.resolve(__dirname, '..');
+const projectRoot = path.resolve(backendRoot, '..');
+
+// Lädt backend/.env, falls vorhanden (z. B. DATABASE_URL, JWT_SECRET).
+// Existiert die Datei nicht (z. B. in Produktion, wo echte Umgebungs-
+// variablen gesetzt werden), passiert einfach nichts – kein Fehler.
+dotenvConfig({ path: path.join(backendRoot, '.env') });
 
 function bool(value, fallback) {
   if (value === undefined || value === '') return fallback;
@@ -33,6 +40,12 @@ export const config = {
     : path.join(projectRoot, 'frontend', 'dist'),
   bestehensgrenzeProzent: 50,
   projectRoot,
+
+  // Datenbank (optional): ist DATABASE_URL nicht gesetzt, läuft die App
+  // weiter im reinen Offline-/localStorage-Modus ohne Login/Sync (siehe db.js).
+  databaseUrl: process.env.DATABASE_URL || '',
+  jwtSecret: process.env.JWT_SECRET || '',
+  jwtExpiresIn: process.env.JWT_EXPIRES_IN || '30d',
 };
 
 export default config;

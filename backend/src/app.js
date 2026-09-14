@@ -6,6 +6,9 @@ import { config } from './config.js';
 import { securityHeaders, rateLimiter, fehlerHandler } from './sicherheit.js';
 import { buildContentRoutes } from './routes/content.routes.js';
 import { buildExamRoutes } from './routes/exam.routes.js';
+import { buildAuthRoutes } from './routes/auth.routes.js';
+import { buildSyncRoutes } from './routes/sync.routes.js';
+import { isDbAktiviert } from './db.js';
 
 export function createApp(store) {
   const app = express();
@@ -19,6 +22,13 @@ export function createApp(store) {
   app.use('/api', rateLimiter({ maxProMinute: config.rateLimitMax }));
   app.use('/api', buildContentRoutes(store));
   app.use('/api', buildExamRoutes(store));
+
+  // Login/Sync nur aktiv, wenn DATABASE_URL gesetzt ist – ohne DB bleibt die
+  // App im bisherigen reinen Offline-/localStorage-Modus.
+  if (isDbAktiviert()) {
+    app.use('/api', buildAuthRoutes());
+    app.use('/api', buildSyncRoutes());
+  }
 
   app.use('/api', (req, res) => {
     res.status(404).json({ error: 'Ressource nicht gefunden' });
