@@ -1,7 +1,20 @@
+# Abhängigkeiten (per npm install neu erzeugbar, nicht versionieren)
 node_modules/
-dist/
+
+# Build-Ausgaben (per npm run build / npm run dist neu erzeugbar)
+frontend/dist/
+desktop/dist/
+
+# Logs
 *.log
-.env
+npm-debug.log*
+
+# Editor-/OS-Dateien
 .DS_Store
-backend/data/
-frontend/dev-dist/
+Thumbs.db
+.vscode/
+.idea/
+
+# Umgebungsvariablen (Secrets nicht versionieren)
+.env
+.env.local

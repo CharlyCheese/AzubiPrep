@@ -2,6 +2,7 @@
   "name": "azubiprep-desktop",
   "private": true,
   "version": "0.1.0",
+  "author": "Sven Weyers",
   "description": "AzubiPrep als installierbare Windows-Desktop-App (Electron-Hülle um das bestehende React-Frontend + Node/Express-Backend).",
   "main": "main.js",
   "scripts": {
