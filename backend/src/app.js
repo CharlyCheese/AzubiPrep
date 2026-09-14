@@ -1,0 +1,39 @@
+// Express-App, Routen, statische Auslieferung des Frontend-Builds.
+import express from 'express';
+import path from 'node:path';
+import fs from 'node:fs';
+import { config } from './config.js';
+import { securityHeaders, rateLimiter, fehlerHandler } from './sicherheit.js';
+import { buildContentRoutes } from './routes/content.routes.js';
+import { buildExamRoutes } from './routes/exam.routes.js';
+
+export function createApp(store) {
+  const app = express();
+
+  app.disable('x-powered-by'); // zusätzlich zu helmet (F12)
+  app.set('trust proxy', false);
+
+  app.use(securityHeaders());
+  app.use(express.json({ limit: '256kb' }));
+
+  app.use('/api', rateLimiter({ maxProMinute: config.rateLimitMax }));
+  app.use('/api', buildContentRoutes(store));
+  app.use('/api', buildExamRoutes(store));
+
+  app.use('/api', (req, res) => {
+    res.status(404).json({ error: 'Ressource nicht gefunden' });
+  });
+
+  // Statische Auslieferung des Produktions-Builds (gleiche Origin, kein CORS nötig).
+  if (fs.existsSync(config.frontendDist)) {
+    app.use(express.static(config.frontendDist));
+    app.get('*', (req, res, next) => {
+      if (req.path.startsWith('/api')) { next(); return; }
+      res.sendFile(path.join(config.frontendDist, 'index.html'));
+    });
+  }
+
+  app.use(fehlerHandler);
+
+  return app;
+}

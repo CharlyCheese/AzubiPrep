@@ -1,0 +1,19 @@
+modul_id;fachrichtung;code;titel;beschreibung
+WISO;ALLE;WISO;Wirtschafts- und Sozialkunde;Betriebswirtschaft, Recht, Tarif- und Arbeitsrecht, IHK-Struktur – prüfungsrelevantes Grundwissen für alle Fachrichtungen.
+PM;ALLE;PM;Projektmanagement;Projektphasen, Scrum, Kanban, Stakeholder, Schätzung und Projektdokumentation.
+FIAE-PRG;FIAE;PRG;Programmierung und OOP;Grundlagen der Programmierung, objektorientierte Konzepte in Java und Python.
+FIAE-DB;FIAE;DB;Datenbanken und SQL;Relationale Modellierung, SQL-Abfragen, Normalisierung und Transaktionen.
+FIAE-SWE;FIAE;SWE;Softwareentwicklung und Vorgehensmodelle;Vorgehensmodelle, Anforderungsanalyse, UML und agile Entwicklung.
+FIAE-TST;FIAE;TST;Softwarequalität und Testen;Testverfahren, Teststufen, Qualitätssicherung und Debugging.
+FISI-NET;FISI;NET;Netzwerktechnik;OSI-Modell, IP-Adressierung, Subnetting, Routing und Netzwerkkomponenten.
+FISI-SEC;FISI;SEC;IT-Sicherheit;Bedrohungen, Schutzmaßnahmen, Verschlüsselung, Firewalls und Richtlinien.
+FISI-BET;FISI;BET;Betriebssysteme und Server;Windows/Linux, Dienste, Active Directory, Virtualisierung und Monitoring.
+FISI-SYS;FISI;SYS;Hardware, Virtualisierung und Cloud;Server-Hardware, Speicher, VM-/Container-Betrieb und Cloud-Dienste.
+DPA-DB;DPA;DB;Datenbanken und SQL;Datenmodellierung, Abfragen, Data Warehousing und ETL-Grundlagen.
+DPA-DS;DPA;DS;Data Science und KI-Grundlagen;Machine-Learning-Pipeline, Modellarten, Evaluierung und Ethik.
+DPA-ANA;DPA;ANA;Datenanalyse und Statistik;Deskriptive Statistik, Visualisierung, Hypothesen und Qualität von Daten.
+DPA-PRO;DPA;PRO;Prozessmodellierung und -optimierung;BPMN, Prozessanalyse, Kennzahlen und Prozessautomatisierung.
+DVK-IOT;DVK;IOT;IoT und eingebettete Systeme;Sensoren, Mikrocontroller, Embedded-Programmierung und Energie.
+DVK-NET;DVK;NET;Vernetzung und Kommunikation;Industrielle Netze, Funktechnik, LPWAN und Protokolle.
+DVK-AUT;DVK;AUT;Automatisierung und Industrie 4.0;Steuerungstechnik, SPS, Digitalisierung der Produktion und Schnittstellen.
+DVK-CLD;DVK;CLD;Cloud- und Edge-Computing;Cloud-Modelle, Edge-Verarbeitung, Container und Betriebskonzepte.
