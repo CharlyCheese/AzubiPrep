@@ -33,13 +33,16 @@ bei der Vorbereitung auf die IHK-Abschlussprüfung: **500 Prüfungsfragen** in
 **18 Modulen**, aufbereitet als interaktives Quiz, Karteikarten-Training und
 zeitlimitierte Prüfungssimulation mit automatischer Auswertung.
 
-Bewusste Architektur-Entscheidung für den MVP: **kein Datenbank-Server, kein
-Login, kein Docker.** Das Backend ist ein reiner, zustandsloser
-Content-Server, der Fragen und Theorie aus Excel/CSV- bzw. Markdown-Dateien
-lädt – Lernfortschritt liegt clientseitig in `localStorage`. Eine spätere
-Migration (z. B. PostgreSQL, Login, Geräte-Sync) ist über eine
-Repository-Schicht im Frontend (`frontend/src/api`) vorbereitet, ohne dass
-dafür bestehender Code umgebaut werden muss.
+Bewusste Architektur-Entscheidung für den MVP: **kein erzwungener
+Datenbank-Server, kein Pflicht-Login, kein Docker.** Das Backend ist im
+Kern ein zustandsloser Content-Server, der Fragen und Theorie aus
+Excel/CSV- bzw. Markdown-Dateien lädt – Lernfortschritt liegt standardmäßig
+clientseitig in `localStorage` und die App funktioniert ohne Konto
+vollständig. Wer möchte, kann optional ein Konto anlegen (PostgreSQL,
+siehe [`docs/19-Datenbank-Login.md`](docs/19-Datenbank-Login.md)) und den
+Lernstand darüber manuell zwischen mehreren Geräten hoch-/herunterladen –
+über dieselbe Repository-Schicht im Frontend (`frontend/src/api`), ohne
+dass der lokale Modus dafür umgebaut wurde.
 
 ## Screenshots
 
@@ -67,10 +70,20 @@ dafür bestehender Code umgebaut werden muss.
 - Lernfortschritt und Erfolgsquote je Modul und Fragetyp
 - Prüfungsverlauf mit Frage-für-Frage-Review (eigene Antwort vs. richtige Antwort)
 - Lernkalender mit Lernserie, Wiederholungsplan und eigenen Lerninhalten
+- Lernreise als Stationenweg (gemeinsame Module zuerst, danach die eigene Fachrichtung)
 - XP-System, Levels, Missionen und Abzeichen
 - Lernnotizen, lokal gespeichert und als `.txt` export-/importierbar
 
+**Konto & Sync (optional)**
+- Registrierung/Login mit Passwort-Komplexitätsprüfung (in den Einstellungen)
+- Lernstand manuell hoch-/herunterladen, um ihn zwischen mehreren Geräten
+  abzugleichen (Last-Write-Wins, kein automatischer Hintergrund-Sync)
+- Ohne Konto läuft die App unverändert rein lokal weiter
+
 **Technik**
+- Überarbeitetes visuelles Design (Dark Mode in warmem Anthrazit statt
+  reinem Schwarz, Teal als Primärfarbe, gut lesbare Typografie – siehe
+  [`docs/04-UI-UX.md`](docs/04-UI-UX.md))
 - Dark/Light Mode, responsives Layout (Desktop-Sidebar + Mobile-Navigation)
 - Installierbare PWA mit Offline-Unterstützung (Service Worker)
 - Zusätzlich als native Windows-Desktop-App (Electron) verfügbar
@@ -85,7 +98,8 @@ dafür bestehender Code umgebaut werden muss.
 | Backend | Node.js + Express (zustandslose Content-API) |
 | Desktop | Electron (Hülle um dasselbe Backend/Frontend) |
 | Inhalte | Excel/CSV (`content/`), Theorie als Markdown |
-| Persistenz | keine Datenbank – Lernstand in `localStorage` |
+| Persistenz | Lernstand standardmäßig in `localStorage`; optional PostgreSQL für Konto/Geräte-Sync |
+| Auth | bcrypt-Passwort-Hashing + JWT (nur bei optionalem Konto) |
 | PWA | Web App Manifest + Service Worker |
 | Sicherheit | Helmet (CSP/HSTS/Frame-Options), eigenes Rate-Limiting |
 
@@ -170,11 +184,18 @@ Scrum-Planung, Gamification u. v. m. – Einstieg über
 ## Projektstand & Roadmap
 
 Kompakte, laufend aktualisierte Statusübersicht (Kennzahlen, verifizierter
-Stand, offene Punkte): [`docs/PROJEKTSTATUS.md`](docs/PROJEKTSTATUS.md)
+Stand, offene Punkte): [`docs/PROJEKTSTATUS.md`](docs/PROJEKTSTATUS.md).
+Die tagesaktuelle Task-Liste (was offen ist, was erledigt ist) führt
+[`docs/agent-briefs/STATUS.md`](docs/agent-briefs/STATUS.md) bzw.
+[`docs/agent-briefs/DONE.md`](docs/agent-briefs/DONE.md).
 
 Offene Punkte mit höchster Priorität:
-- Frontend-Produktions-Build gegen das aktuelle Backend neu verifizieren
-- Fachlicher Inhalts-Review der 500 Fragen durch Fachkundige je Fachrichtung
+- Installierten Windows-Installer real durchtesten (Installation, App-Start, Klicktest)
+- Fachlicher Inhalts-Review der 500 Fragen durch Fachkundige je Fachrichtung (KI-Review ist bereits erfolgt)
+
+Weitere offene Punkte: UX-Feinschliff nach weiterem Nutzerfeedback,
+Push-Benachrichtigungen, Autoren-Weboberfläche statt Excel/CSV-Pflege,
+KI-Integration prüfen, Windows-Installer signieren.
 
 ## Lizenz
 
