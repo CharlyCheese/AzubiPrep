@@ -11,3 +11,4 @@
 > Archivierungspflicht (siehe `ORCHESTRATOR.md`) für jeden neuen Task.
 
 - [DB-001] PostgreSQL-Login & Geräte-Sync (Grundlage) — 2026-09-14 — [Brief](DB-001-postgres-login-sync.md)
+- [OPS-005] Backend Code-Cleanup (ESLint, Rate-Limiter-Leak, Dedupe, Fehlerbehandlung) — 2026-09-15 — [Brief](OPS-005-backend-code-cleanup.md)

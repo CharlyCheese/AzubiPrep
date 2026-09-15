@@ -144,7 +144,9 @@ export function buildContentRoutes(store) {
     res.json({ q, module, fragen });
   });
 
-  router.post('/admin/reload', adminSchutz, rateLimiter({ maxProMinute: config.rateLimitAdminMax, keyPrefix: 'admin:' }), (req, res) => {
+  // Fehlerbehandlung bewusst wie in exam.routes.js: try/catch + next(err),
+  // zentraler fehlerHandler loggt und antwortet einheitlich (OPS-005).
+  router.post('/admin/reload', adminSchutz, rateLimiter({ maxProMinute: config.rateLimitAdminMax, keyPrefix: 'admin:' }), (req, res, next) => {
     try {
       const neuerInhalt = loadContent(config.contentDir);
       store.set(neuerInhalt);
@@ -155,8 +157,7 @@ export function buildContentRoutes(store) {
         warnungen: neuerInhalt.warnungen,
       });
     } catch (err) {
-      console.error('[Reload fehlgeschlagen]', err);
-      res.status(500).json({ error: 'Reload fehlgeschlagen' });
+      next(err);
     }
   });
 

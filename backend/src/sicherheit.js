@@ -31,6 +31,19 @@ export function rateLimiter({ maxProMinute, keyPrefix = '' }) {
   const hits = new Map(); // ip -> Zeitstempel[]
   const fensterMs = 60_000;
 
+  // Periodische Bereinigung: ohne das hier würde die Map über die Laufzeit
+  // unbegrenzt wachsen, weil ein einmal gesehener IP-Eintrag sonst nie
+  // wieder entfernt wird, auch wenn diese IP nie wieder anfragt (OPS-005).
+  const aufraeumTimer = setInterval(() => {
+    const jetzt = Date.now();
+    for (const [key, liste] of hits) {
+      if (!liste.some((t) => jetzt - t < fensterMs)) {
+        hits.delete(key);
+      }
+    }
+  }, fensterMs);
+  aufraeumTimer.unref?.(); // Timer soll ein sauberes Prozessende nie blockieren
+
   return function limiterMiddleware(req, res, next) {
     const ip = req.ip || req.socket?.remoteAddress || 'unknown';
     const key = keyPrefix + ip;

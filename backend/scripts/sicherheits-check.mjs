@@ -20,7 +20,7 @@ async function main() {
   let res;
   try {
     res = await fetch(`${base}/api/health`);
-  } catch (e) {
+  } catch {
     console.error(`Backend nicht erreichbar unter ${base}. Läuft "npm start"?`);
     process.exit(2);
   }
@@ -49,7 +49,8 @@ async function main() {
   console.log('\nRate-Limit (Rauchtest, 20 Anfragen):');
   let letzterStatus = 200;
   for (let i = 0; i < 20; i += 1) {
-    // eslint-disable-next-line no-await-in-loop
+    // Absichtlich sequenziell (kein Promise.all): simuliert 20 Anfragen
+    // nacheinander wie ein echter Client, nicht 20 gleichzeitig.
     const r = await fetch(`${base}/api/health`);
     letzterStatus = r.status;
   }

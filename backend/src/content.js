@@ -114,11 +114,7 @@ export function loadContent(contentDir) {
 
 /** Fragenanzahl einer Fachrichtung inkl. gemeinsamer ALLE-Fragen. */
 export function fragenAnzahlFachrichtung(content, code) {
-  let n = 0;
-  for (const f of content.questionsById.values()) {
-    if (f.fachrichtung === code || f.fachrichtung === 'ALLE') n += 1;
-  }
-  return n;
+  return fragenFuerFachrichtung(content, code).length;
 }
 
 /** Module einer Fachrichtung inkl. gemeinsamer ALLE-Module. */
