@@ -22,3 +22,5 @@
 - [FE-008] Design-System-Grundlage (Farben/Typografie/Radius) nach Stitch-Vorlage — 2026-09-15 — [Brief](FE-008-design-tokens-stitch.md)
 - [FE-009] Dashboard- & Karteikarten-Layout nach Stitch-Vorlage (Phase 2) — 2026-09-15 — [Brief](FE-009-dashboard-karteikarten-layout.md)
 - [FE-010] Redesign-Abschluss: Lernbereich/Kalender/Prüfungssimulation nach Stitch-Vorlage — 2026-09-15 — [Brief](FE-010-lernbereich-kalender-pruefung.md)
+- [FE-011] UX-Feinschliff & Micro-Interactions (Stitch-Vorschlag): Tastatur-Shortcuts, Skeleton-Loading, XP-Indikator, CSS-Feinschliff, Ziffern statt Buchstaben bei Antwortoptionen, Bugfix Modul.jsx (Rules-of-Hooks-Absturz) — 2026-09-15 — [Brief](FE-011-ux-polish-stitch.md)
+- [FE-002] UX-Feinschliff: Stitch-Layout-Muster (Haupt-/Seitenspalte) auf Statistik/Modul/Quiz übertragen, 3 Seiten waren bereits konform, plus Bugfix Karteikarten-Flashcard-Overflow bei schmalen Fenstern — 2026-09-15 — [Brief](FE-002-ux-feinschliff-stitch-abgleich.md)

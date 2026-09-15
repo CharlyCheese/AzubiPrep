@@ -3,7 +3,10 @@ import { useEffect, useState } from 'react';
 import { useApi } from '../utils/useApi.js';
 import { api } from '../api/client.js';
 import FrageKarte from '../components/FrageKarte.jsx';
-import { optionenListe } from '../utils/fragen.js';
+import SkeletonCard from '../components/SkeletonCard.jsx';
+import XpGainIndicator from '../components/XpGainIndicator.jsx';
+import { useQuizKeyboard } from '../utils/useQuizKeyboard.js';
+import { optionenListe, BUCHSTABEN, buchstabeZuZiffer } from '../utils/fragen.js';
 import { mischeOptionen } from '../utils/optionen.js';
 import { progressStore, activityStore, quizOptionenStore, todayKey } from '../store/localStore.js';
 import { gamificationStore } from '../store/gamificationStore.js';
@@ -31,17 +34,17 @@ export default function Quiz() {
   const [position, setPosition] = useState(0);
   const [auswahl, setAuswahl] = useState([]);
   const [freitext, setFreitext] = useState('');
-  const [feedback, setFeedback] = useState(null); // { richtig, erwartet, erklaerung }
+  const [feedback, setFeedback] = useState(null);
   const [richtig, setRichtig] = useState(0);
-  const [verlauf, setVerlauf] = useState([]); // Ergebnisse aller beantworteten Fragen
+  const [verlauf, setVerlauf] = useState([]);
   const [nurFehler, setNurFehler] = useState(false);
   const [sessionKey, setSessionKey] = useState(0);
   const [pruefFehler, setPruefFehler] = useState('');
+  const [xpKey, setXpKey] = useState(0);
+  const [xpBetrag, setXpBetrag] = useState(15);
 
-  // Umfang des Quizdurchlaufs: verfuegbare und tatsaechlich gestellte Fragen
   const umfang = quizUmfang(fragenRaw || [], { schwierigkeit, anzahl });
   const bestand = fragenRaw?.length || 0;
-  // Auswahl bezieht sich auf den Modulbestand; groessere Werte werden als "Alle" gezeigt
   const anzahlAnzeige = bestand && anzahl > bestand ? 0 : anzahl;
   const anzahlListe = anzahlAuswahl(bestand);
 
@@ -78,20 +81,33 @@ export default function Quiz() {
     setFreitext('');
   }
 
-  // Fragen filtern (Schwierigkeit) und mischen; Deep-Link-Frage nach vorne
   useEffect(() => {
     starteQuiz();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fragenRaw, schwierigkeit, anzahl, frageParam]);
 
-  if (laden) return <div className="loading"><div className="spinner" />Lade Fragen …</div>;
+  const frageAktuell = reihenfolge[position];
+  const zeigeFrageAnsicht = !laden && position < reihenfolge.length && !!frageAktuell;
+
+  // --- WICHTIG: Keyboard-Shortcuts bleiben voll erhalten ---
+  useQuizKeyboard({
+    optionen: BUCHSTABEN.slice(0, frageAktuell?.optionen?.length || 4),
+    onSelectOption: (buchstabe) => toggle(buchstabe),
+    onSubmitOrNext: () => {
+      if (feedback) { weiter(); return; }
+      const kannPruefen = frageAktuell?.typ === 'FT' ? freitext.trim().length > 0 : auswahl.length > 0;
+      if (kannPruefen) pruefen();
+    },
+    istEingabeAktiv: frageAktuell?.typ === 'FT',
+    aktiv: zeigeFrageAnsicht,
+  });
+
+  if (laden) return <SkeletonCard lines={4} />;
   if (!fragenRaw?.length) return <div className="empty">Keine Fragen für dieses Modul verfügbar.</div>;
 
-  // Keine (passenden) Fragen – z. B. Schwierigkeitsfilter ohne Treffer
   if (reihenfolge.length === 0) {
     const gibtEsMitFilter = fragenRaw.some((f) => schwierigkeit === 'alle' || f.schwierigkeit === schwierigkeit);
     if (gibtEsMitFilter) {
-      // Der Effekt baut die Reihenfolge gleich auf – kurzer Zwischenzustand
       return <div className="loading"><div className="spinner" />Bereite Fragen vor …</div>;
     }
     return (
@@ -115,7 +131,6 @@ export default function Quiz() {
   }
 
   const frage = reihenfolge[position];
-
   const optionen = optionenListe(frage);
 
   function toggle(letter) {
@@ -150,6 +165,8 @@ export default function Quiz() {
           if (frage.schwierigkeit === 'schwer') xp += XP_REGELN.frageSchwer;
           if ((entry.falsch || 0) > 0) xp += XP_REGELN.fehlerSpaeterRichtig;
           meldeBelohnung(gamificationStore.addXp(`frage:${frage.id}`, xp));
+          setXpBetrag(xp);
+          setXpKey(Date.now());
         }
         if (position + 1 >= reihenfolge.length) {
           meldeBelohnung(
@@ -160,7 +177,6 @@ export default function Quiz() {
       }
       activityStore.add(todayKey());
       pruefeTagesziel();
-      // Modul-Status (bearbeitet/beherrscht) aktualisieren und neue Stufen melden
       meldeModulStatus(
         aktualisiereModulStatus(
           progressStore.get(),
@@ -168,7 +184,6 @@ export default function Quiz() {
           (id) => (id === modul?.modul_id ? modul.fragenAnzahl || 0 : 0),
         ),
       );
-      // Missionen (Phase 4): Fragen, richtige Antworten und abgeschlossene Quizrunden
       meldeMissionen(gamificationStore.merkeMission('frage'));
       if (erg.richtig) meldeMissionen(gamificationStore.merkeMission('richtig'));
       if (position + 1 >= reihenfolge.length) meldeMissionen(gamificationStore.merkeMission('quiz'));
@@ -189,15 +204,13 @@ export default function Quiz() {
     setPosition((p) => p + 1);
   }
 
-  const korrektBuchstaben = feedback
-    ? (frage.typ === 'MC' ? feedback.erwartet.split(',').map((s) => s.trim().toUpperCase()) : [feedback.erwartet.toUpperCase()])
-    : [];
-
-  // Erwartete Antwort auf die gemischte Anzeige abbilden
   const originalZuAnzeigeMap = {};
   (frage?.gemischt?.liste || []).forEach((o) => { originalZuAnzeigeMap[o.original] = o.buchstabe; });
   const erwartetAnzeige = feedback
-    ? feedback.erwartet.split(',').map((s) => originalZuAnzeigeMap[s.trim().toUpperCase()] || s.trim()).join(', ')
+    ? feedback.erwartet
+        .split(',')
+        .map((s) => buchstabeZuZiffer(originalZuAnzeigeMap[s.trim().toUpperCase()] || s.trim()))
+        .join(', ')
     : '';
 
   const prozent = reihenfolge.length ? Math.round((richtig / reihenfolge.length) * 100) : 0;
@@ -208,165 +221,224 @@ export default function Quiz() {
     <div>
       <header className="main-header">
         <div>
-          <div className="flex wrap">
+          <div className="flex wrap" style={{ gap: 6, alignItems: 'center' }}>
             <Link to={`/lernen/${modulId}`} className="small">← Modul</Link>
             <span className="small text-muted">{modul?.titel || modulId}</span>
           </div>
-          <h1 className="mb-0 mt-2">Quizmodus</h1>
-        </div>
-        <div className="flex wrap">
-          <div className="small text-muted">Frage {Math.min(position + 1, reihenfolge.length)} von {reihenfolge.length}</div>
-          <select
-            className="select"
-            style={{ width: 'auto' }}
-            value={schwierigkeit}
-            onChange={(e) => aendereOptionen({ schwierigkeit: e.target.value })}
-            title="Schwierigkeit filtern"
-          >
-            <option value="alle">Alle Schwierigkeiten</option>
-            <option value="leicht">Nur leicht</option>
-            <option value="mittel">Nur mittel</option>
-            <option value="schwer">Nur schwer</option>
-          </select>
-          <select
-            className="select"
-            style={{ width: 'auto' }}
-            value={anzahlAnzeige}
-            onChange={(e) => aendereOptionen({ anzahl: Number(e.target.value) })}
-            title="Anzahl der Fragen"
-            aria-label="Anzahl der Fragen"
-          >
-            <option value={0}>Alle Fragen ({umfang.verfuegbar})</option>
-            {anzahlListe.map((n) => (
-              <option key={n} value={n}>{n} Fragen</option>
-            ))}
-          </select>
+          <h1 className="mb-0 mt-1">Quizmodus</h1>
         </div>
       </header>
 
-      <div className="progress mb-2">
-        <div style={{ width: `${((position + (feedback ? 1 : 0)) / reihenfolge.length) * 100}%` }} />
-      </div>
-
-      {pruefFehler && <div className="alert alert-danger">{pruefFehler}</div>}
+      {pruefFehler && <div className="alert alert-danger mb-2">{pruefFehler}</div>}
 
       {position < reihenfolge.length ? (
-        <div className="card">
-          <div className="flex-between wrap mb-2">
-            <span className={`badge badge-${frage.schwierigkeit}`}>{frage.schwierigkeit}</span>
-            <span className="small text-muted">{frage.thema}</span>
-          </div>
-          <h2 style={{ fontSize: '1.2rem' }}>{frage.frage}</h2>
+        /* --- AKTIVES QUIZ: 2-SPALTIGES FOKUS-LAYOUT --- */
+        <div className="dashboard-layout">
+          {/* Hauptspalte: Fokussierte Frage & Antwortoptionen */}
+          <div>
+            <div className="card card-appear" style={{ position: 'relative' }} key={frage.id}>
+              <XpGainIndicator xp={xpBetrag} triggerKey={xpKey} />
+              <div className="flex-between wrap mb-2">
+                <span className={`badge badge-${frage.schwierigkeit}`}>{frage.schwierigkeit}</span>
+                <span className="small text-muted">{frage.thema}</span>
+              </div>
+              <h2 style={{ fontSize: '1.25rem', lineHeight: 1.4 }}>{frage.frage}</h2>
 
-          {frage.typ === 'FT' ? (
-            <textarea
-              className="input"
-              rows={3}
-              value={freitext}
-              disabled={!!feedback}
-              onChange={(e) => setFreitext(e.target.value)}
-              placeholder="Antwort eingeben …"
-            />
-          ) : (
-            <FrageKarte frage={frage} auswahl={auswahl} onToggle={toggle} optionen={frage.gemischt?.liste} />
-          )}
-
-          {!feedback && (
-            <button className="btn btn-primary mt-2" onClick={pruefen} disabled={frage.typ === 'FT' ? !freitext.trim() : auswahl.length === 0}>
-              Antwort prüfen
-            </button>
-          )}
-
-          {feedback && (
-            <div className={`alert ${feedback.richtig ? 'alert-success' : 'alert-danger'} mt-2`}>
-              <strong>{feedback.richtig ? '✓ Richtig!' : '✗ Leider falsch.'}</strong>
-              {!feedback.richtig && feedback.erwartet && (
-                <div className="small">Richtige Antwort: {erwartetAnzeige || feedback.erwartet}</div>
+              {frage.typ === 'FT' ? (
+                <textarea
+                  className="input mt-2"
+                  rows={4}
+                  value={freitext}
+                  disabled={!!feedback}
+                  onChange={(e) => setFreitext(e.target.value)}
+                  placeholder="Antwort eingeben …"
+                />
+              ) : (
+                <div className="mt-2">
+                  <FrageKarte frage={frage} auswahl={auswahl} onToggle={toggle} optionen={frage.gemischt?.liste} />
+                </div>
               )}
-              {feedback.erklaerung && <div className="mt-2">{feedback.erklaerung}</div>}
-              <button className="btn btn-primary btn-sm mt-2" onClick={weiter}>
-                {position + 1 >= reihenfolge.length ? 'Quiz beenden' : 'Nächste Frage →'}
-              </button>
+
+              {!feedback && (
+                <button
+                  className="btn btn-primary mt-3"
+                  onClick={pruefen}
+                  disabled={frage.typ === 'FT' ? !freitext.trim() : auswahl.length === 0}
+                >
+                  Antwort prüfen [Enter]
+                </button>
+              )}
+
+              {feedback && (
+                <div className={`alert ${feedback.richtig ? 'alert-success' : 'alert-danger'} mt-3`}>
+                  <strong>{feedback.richtig ? '✓ Richtig!' : '✗ Leider falsch.'}</strong>
+                  {!feedback.richtig && feedback.erwartet && (
+                    <div className="small mt-1">Richtige Antwort: {erwartetAnzeige || feedback.erwartet}</div>
+                  )}
+                  {feedback.erklaerung && <div className="mt-2">{feedback.erklaerung}</div>}
+                  <button className="btn btn-primary btn-sm mt-2" onClick={weiter}>
+                    {position + 1 >= reihenfolge.length ? 'Quiz beenden' : 'Nächste Frage [Enter] →'}
+                  </button>
+                </div>
+              )}
             </div>
-          )}
+          </div>
+
+          {/* Nebenspalte: Session-Metriken & Quizfilter */}
+          <aside>
+            <div className="card mb-2">
+              <h2 className="mb-0" style={{ fontSize: '1.05rem' }}>Session-Fortschritt</h2>
+              <div className="progress-label mt-2">
+                <span>Frage {position + 1} von {reihenfolge.length}</span>
+                <span>{Math.round(((position + (feedback ? 1 : 0)) / reihenfolge.length) * 100)}%</span>
+              </div>
+              <div className="progress mb-2">
+                <div style={{ width: `${((position + (feedback ? 1 : 0)) / reihenfolge.length) * 100}%` }} />
+              </div>
+
+              <div className="grid-kpi mt-2">
+                <div className="card" style={{ padding: 12 }}>
+                  <div className="small text-muted">Richtig</div>
+                  <div className="stat-value" style={{ fontSize: '1.4rem', color: 'var(--success)' }}>{richtig}</div>
+                </div>
+                <div className="card" style={{ padding: 12 }}>
+                  <div className="small text-muted">Fehler</div>
+                  <div className="stat-value" style={{ fontSize: '1.4rem', color: 'var(--danger)' }}>
+                    {verlauf.filter((v) => !v.richtig).length}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="card">
+              <h2 className="mb-0" style={{ fontSize: '1.05rem' }}>Einstellungen</h2>
+              <div className="field mt-2">
+                <label className="small text-muted">Schwierigkeit</label>
+                <select
+                  className="select"
+                  value={schwierigkeit}
+                  onChange={(e) => aendereOptionen({ schwierigkeit: e.target.value })}
+                >
+                  <option value="alle">Alle Schwierigkeiten</option>
+                  <option value="leicht">Nur leicht</option>
+                  <option value="mittel">Nur mittel</option>
+                  <option value="schwer">Nur schwer</option>
+                </select>
+              </div>
+              <div className="field mt-2">
+                <label className="small text-muted">Fragenumfang</label>
+                <select
+                  className="select"
+                  value={anzahlAnzeige}
+                  onChange={(e) => aendereOptionen({ anzahl: Number(e.target.value) })}
+                >
+                  <option value={0}>Alle Fragen ({umfang.verfuegbar})</option>
+                  {anzahlListe.map((n) => (
+                    <option key={n} value={n}>{n} Fragen</option>
+                  ))}
+                </select>
+              </div>
+            </div>
+          </aside>
         </div>
       ) : (
-        <div className="card">
-          <h2 className="mb-0">Lernergebnis 🎉</h2>
-        <p className="text-muted mt-0">{modul?.titel || modulId} · {umfangLabel(umfang)}{schwierigkeit !== 'alle' ? ` · nur ${schwierigkeit}` : ''}</p>
-
-          <div className="grid grid-4 mb-2">
-            <div><div className="stat-value">{prozent}%</div><div className="stat-label">Ergebnis</div></div>
-            <div><div className="stat-value">{richtig}</div><div className="stat-label">richtig</div></div>
-            <div><div className="stat-value">{falschAnzahl}</div><div className="stat-label">falsch</div></div>
-            <div><div className={`stat-value ${prozent >= 50 ? '' : 'text-muted'}`}>{prozent >= 50 ? '✓' : '–'}</div><div className="stat-label">≥ 50 % erreicht</div></div>
-          </div>
-          <div className="progress mb-2"><div style={{ width: `${prozent}%` }} /></div>
-
-          <div className="flex wrap mb-2">
-            <button className={`btn btn-sm ${nurFehler ? 'btn-ghost' : 'btn-primary'}`} onClick={() => setNurFehler(false)}>
-              Alle ({verlauf.length})
-            </button>
-            <button className={`btn btn-sm ${nurFehler ? 'btn-primary' : 'btn-ghost'}`} onClick={() => setNurFehler(true)}>
-              Nur Fehler ({falschAnzahl})
-            </button>
-          </div>
-
-          {anzeigeVerlauf.length === 0 && (
-            <div className="alert alert-success">Keine Fehler – stark! 🎯</div>
-          )}
-
-          {anzeigeVerlauf.map((e, i) => {
-            const optionenE = optionenListe(e.frage);
-            const korrektE = e.frage.typ !== 'FT' ? (e.frage.antwort || '').toUpperCase().split(',').map((s) => s.trim()) : [];
-            const nutzerE = (e.nutzerAntwort || '').toUpperCase().split(',').map((s) => s.trim()).filter(Boolean);
-            return (
-              <div key={`${e.frage.id}-${i}`} className="card" style={{ padding: 12, marginBottom: 10 }}>
-                <div className="flex-between wrap mb-1">
-                  <span className={`badge ${e.richtig ? 'badge-leicht' : 'badge-schwer'}`}>{e.richtig ? '✓ richtig' : '✗ falsch'}</span>
-                  <span className="small text-muted">{e.frage.thema}</span>
+        /* --- QUIZ-ABSCHLUSS: ERGEBNIS-LAYOUT --- */
+        <div className="dashboard-layout">
+          {/* Hauptspalte: Fehlerauswertung & Detailkarten */}
+          <div>
+            <div className="card mb-2">
+              <div className="flex-between wrap">
+                <h2 className="mb-0">Detaillierte Auswertung</h2>
+                <div className="flex wrap" style={{ gap: 8 }}>
+                  <button className={`btn btn-sm ${nurFehler ? 'btn-ghost' : 'btn-primary'}`} onClick={() => setNurFehler(false)}>
+                    Alle ({verlauf.length})
+                  </button>
+                  <button className={`btn btn-sm ${nurFehler ? 'btn-primary' : 'btn-ghost'}`} onClick={() => setNurFehler(true)}>
+                    Nur Fehler ({falschAnzahl})
+                  </button>
                 </div>
-                <div style={{ fontWeight: 600 }}>{e.frage.frage}</div>
-
-                {e.frage.typ === 'FT' ? (
-                  <div className="small mt-2">
-                    <div><strong>Deine Antwort:</strong> {e.nutzerAntwort || '– (keine)'}</div>
-                    <div><strong>Musterlösung:</strong> {e.erwartet}</div>
-                  </div>
-                ) : (
-                  <>
-                    <div className="small mt-1">
-                      <strong>Deine Antwort:</strong> {nutzerE.length ? nutzerE.join(', ') : '– (keine)'} · <strong>Richtig:</strong> {e.erwartet}
-                    </div>
-                    <div className="mt-2">
-                      {optionenE.map((o) => {
-                        const isKorrekt = korrektE.includes(o.buchstabe);
-                        const isNutzer = nutzerE.includes(o.buchstabe);
-                        let cls = 'option-row';
-                        if (isKorrekt) cls += ' correct';
-                        else if (isNutzer) cls += ' wrong';
-                        return (
-                          <div key={o.buchstabe} className={cls}>
-                            <span className="option-letter">{o.buchstabe}</span>
-                            <span>{o.text}</span>
-                            {isKorrekt && <span className="badge badge-leicht" style={{ marginLeft: 'auto' }}>richtig</span>}
-                            {isNutzer && !isKorrekt && <span className="badge badge-schwer" style={{ marginLeft: 'auto' }}>deine Wahl</span>}
-                          </div>
-                        );
-                      })}
-                    </div>
-                  </>
-                )}
-                {e.erklaerung && <div className="small text-muted mt-2">{e.erklaerung}</div>}
               </div>
-            );
-          })}
+            </div>
 
-          <div className="flex wrap mt-2">
-            <button className="btn btn-primary" onClick={starteQuiz}>Quiz wiederholen</button>
-            <Link className="btn btn-ghost" to="/karteikarten">Karteikarten trainieren</Link>
-            <Link className="btn btn-ghost" to={`/lernen/${modulId}`}>Zurück zum Modul</Link>
+            {anzeigeVerlauf.length === 0 && (
+              <div className="alert alert-success mb-2">Keine Fehler in diesem Durchlauf – stark! 🎯</div>
+            )}
+
+            {anzeigeVerlauf.map((e, i) => {
+              const optionenE = optionenListe(e.frage);
+              const korrektE = e.frage.typ !== 'FT' ? (e.frage.antwort || '').toUpperCase().split(',').map((s) => s.trim()) : [];
+              const nutzerE = (e.nutzerAntwort || '').toUpperCase().split(',').map((s) => s.trim()).filter(Boolean);
+              return (
+                <div key={`${e.frage.id}-${i}`} className="card mb-2" style={{ padding: 16, borderLeft: `3px solid ${e.richtig ? 'var(--success)' : 'var(--danger)'}` }}>
+                  <div className="flex-between wrap mb-1">
+                    <span className={`badge ${e.richtig ? 'badge-leicht' : 'badge-schwer'}`}>{e.richtig ? '✓ richtig' : '✗ falsch'}</span>
+                    <span className="small text-muted">{e.frage.thema}</span>
+                  </div>
+                  <div style={{ fontWeight: 600, fontSize: '1.05rem' }}>{e.frage.frage}</div>
+
+                  {e.frage.typ === 'FT' ? (
+                    <div className="small mt-2">
+                      <div><strong>Deine Antwort:</strong> {e.nutzerAntwort || '– (keine)'}</div>
+                      <div><strong>Musterlösung:</strong> {e.erwartet}</div>
+                    </div>
+                  ) : (
+                    <>
+                      <div className="small mt-1">
+                        <strong>Deine Antwort:</strong> {nutzerE.length ? nutzerE.map(buchstabeZuZiffer).join(', ') : '– (keine)'} · <strong>Richtig:</strong> {korrektE.map(buchstabeZuZiffer).join(', ')}
+                      </div>
+                      <div className="mt-2">
+                        {optionenE.map((o) => {
+                          const isKorrekt = korrektE.includes(o.buchstabe);
+                          const isNutzer = nutzerE.includes(o.buchstabe);
+                          let cls = 'option-row';
+                          if (isKorrekt) cls += ' correct';
+                          else if (isNutzer) cls += ' wrong';
+                          return (
+                            <div key={o.buchstabe} className={cls}>
+                              <span className="option-letter">{buchstabeZuZiffer(o.buchstabe)}</span>
+                              <span>{o.text}</span>
+                              {isKorrekt && <span className="badge badge-leicht" style={{ marginLeft: 'auto' }}>richtig</span>}
+                              {isNutzer && !isKorrekt && <span className="badge badge-schwer" style={{ marginLeft: 'auto' }}>deine Wahl</span>}
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </>
+                  )}
+                  {e.erklaerung && <div className="small text-muted mt-2">{e.erklaerung}</div>}
+                </div>
+              );
+            })}
           </div>
+
+          {/* Nebenspalte: Scorecard & Weiterlernen */}
+          <aside>
+            <div className="card mb-2">
+              <h2 className="mb-0" style={{ fontSize: '1.1rem' }}>Lernergebnis 🎉</h2>
+              <p className="text-muted mt-0 small">{modul?.titel || modulId} · {umfangLabel(umfang)}</p>
+
+              <div className="stat-value mt-2" style={{ fontSize: '2.2rem', color: prozent >= 50 ? 'var(--success)' : 'var(--danger)' }}>
+                {prozent}%
+              </div>
+              <div className="small text-muted mb-2">{richtig} von {reihenfolge.length} richtig beantwortet</div>
+              <div className="progress mb-2"><div style={{ width: `${prozent}%`, background: prozent >= 50 ? 'var(--success)' : 'var(--danger)' }} /></div>
+
+              <div className="grid-kpi mb-2">
+                <div className="card" style={{ padding: 10 }}>
+                  <div className="stat-label">Richtig</div>
+                  <div className="stat-value" style={{ fontSize: '1.3rem', color: 'var(--success)' }}>{richtig}</div>
+                </div>
+                <div className="card" style={{ padding: 10 }}>
+                  <div className="stat-label">Falsch</div>
+                  <div className="stat-value" style={{ fontSize: '1.3rem', color: 'var(--danger)' }}>{falschAnzahl}</div>
+                </div>
+              </div>
+
+              <button className="btn btn-primary btn-block" onClick={starteQuiz}>Quiz wiederholen</button>
+              <Link className="btn btn-ghost btn-block mt-1" to="/karteikarten">Karteikarten trainieren</Link>
+              <Link className="btn btn-ghost btn-block mt-1" to={`/lernen/${modulId}`}>Zurück zum Modul</Link>
+            </div>
+          </aside>
         </div>
       )}
     </div>

@@ -1,7 +1,7 @@
 // Wiederverwendbare Anzeige einer Frage mit Antwortoptionen.
 // Props: frage, auswahl (Array von Buchstaben), onToggle(letter), feedback (bool)
 
-import { BUCHSTABEN, optionenListe, TYP_LABEL } from '../utils/fragen.js';
+import { BUCHSTABEN, optionenListe, TYP_LABEL, buchstabeZuZiffer } from '../utils/fragen.js';
 
 export default function FrageKarte({ frage, auswahl = [], onToggle, zeigeFeedback, korrektBuchstaben = [], optionen: optionenProp }) {
   // Gemischte Reihenfolge kann übergeben werden; sonst Originalreihenfolge.
@@ -47,7 +47,7 @@ export default function FrageKarte({ frage, auswahl = [], onToggle, zeigeFeedbac
           onClick={() => onToggle && onToggle(opt.buchstabe)}
           onKeyDown={(e) => e.key === 'Enter' && onToggle && onToggle(opt.buchstabe)}
         >
-          <span className="option-letter">{opt.buchstabe}</span>
+          <span className="option-letter">{buchstabeZuZiffer(opt.buchstabe)}</span>
           <span>{opt.text}</span>
         </div>
       ))}

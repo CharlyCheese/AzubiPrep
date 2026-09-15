@@ -3,7 +3,7 @@ import { Link, useSearchParams } from 'react-router-dom';
 import { useApi } from '../utils/useApi.js';
 import { api } from '../api/client.js';
 import { examStore } from '../store/localStore.js';
-import { optionenListe } from '../utils/fragen.js';
+import { optionenListe, buchstabeZuZiffer } from '../utils/fragen.js';
 
 export default function PruefungVerlauf() {
   const [searchParams] = useSearchParams();
@@ -145,7 +145,7 @@ export default function PruefungVerlauf() {
                   else if (isNutzer) cls += ' wrong';
                   return (
                     <div key={o.buchstabe} className={cls}>
-                      <span className="option-letter">{o.buchstabe}</span>
+                      <span className="option-letter">{buchstabeZuZiffer(o.buchstabe)}</span>
                       <span>{o.text}</span>
                       {isKorrekt && <span className="badge badge-leicht" style={{ marginLeft: 'auto' }}>richtig</span>}
                       {isNutzer && !isKorrekt && <span className="badge badge-schwer" style={{ marginLeft: 'auto' }}>deine Wahl</span>}
@@ -155,10 +155,12 @@ export default function PruefungVerlauf() {
                 <div className="small mt-2">
                   <strong>Deine Antwort{d.richtig ? '' : ' (falsch)'}:</strong>{' '}
                   <span style={{ color: d.richtig ? 'var(--success-ink)' : 'var(--danger-ink)', fontWeight: 600 }}>
-                    {nutzerBuchstaben.length ? nutzerBuchstaben.join(', ') : '– (keine)'}
+                    {nutzerBuchstaben.length ? nutzerBuchstaben.map(buchstabeZuZiffer).join(', ') : '– (keine)'}
                   </span>
                   {' · '}<strong>Richtige Antwort:</strong>{' '}
-                  <span style={{ color: 'var(--success-ink)', fontWeight: 600 }}>{d.erwartet}</span>
+                  <span style={{ color: 'var(--success-ink)', fontWeight: 600 }}>
+                    {korrektBuchstaben.map(buchstabeZuZiffer).join(', ') || d.erwartet}
+                  </span>
                 </div>
               </>
             ) : (

@@ -292,12 +292,26 @@ label { display: block; font-weight: 600; margin-bottom: 6px; font-size: 0.9rem;
 }
 .flashcard.flipped .flashcard-inner { transform: rotateY(180deg); }
 .flashcard-face {
-  position: absolute; inset: 0; backface-visibility: hidden;
+  backface-visibility: hidden;
   display: flex; flex-direction: column; justify-content: center;
   padding: 28px; border-radius: var(--radius);
   background: var(--bg-card); border: 1px solid var(--border);
+  min-height: 260px;
 }
-.flashcard-back { transform: rotateY(180deg); background: var(--primary-soft); }
+/* Höhe des Kartenrahmens richtet sich nach der jeweils sichtbaren Seite (im
+   normalen Textfluss, position: relative); die andere Seite liegt absolut
+   positioniert darüber, damit die 3D-Flip-Optik erhalten bleibt. Vorher
+   waren beide Seiten fix auf 260px begrenzt (position: absolute; inset: 0)
+   – bei vielen Antwortoptionen auf schmalen Bildschirmen sprengte der
+   Inhalt diese Höhe und überlappte nachfolgende Seitenelemente. */
+.flashcard-face:not(.flashcard-back) { position: relative; }
+.flashcard-back {
+  position: absolute; inset: 0;
+  transform: rotateY(180deg);
+  background: var(--primary-soft);
+}
+.flashcard.flipped .flashcard-face:not(.flashcard-back) { position: absolute; inset: 0; }
+.flashcard.flipped .flashcard-back { position: relative; }
 
 /* Kalender */
 .kalender-layout { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); align-items: start; }

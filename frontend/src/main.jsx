@@ -4,6 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 import App from './App.jsx';
 import { ThemeProvider } from './context/ThemeContext.jsx';
 import './styles/global.css';
+import './styles/ux-polish.css';
 
 // Service Worker nur im Produktionsmodus registrieren (im Dev-Modus störend)
 if ('serviceWorker' in navigator && import.meta.env.PROD) {

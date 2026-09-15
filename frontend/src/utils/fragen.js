@@ -2,6 +2,20 @@
 
 export const BUCHSTABEN = ['A', 'B', 'C', 'D', 'E', 'F'];
 
+// Nur für die Anzeige: Optionen werden als Ziffern statt Buchstaben
+// dargestellt (angenehmer mit der Tastatur, siehe useQuizKeyboard – dort
+// lösen sowohl Ziffern- als auch Buchstabentasten dieselbe Option aus).
+// Intern bleibt weiterhin der Buchstabe (A–F) die Referenz, u. a. weil das
+// Antwortformat aus dem Backend (frage.antwort) und der Misch-Mapping-Code
+// (mischeOptionen) darauf aufbauen – hier wird nur die Beschriftung ersetzt.
+const ZIFFERN = ['1', '2', '3', '4', '5', '6'];
+
+/** Wandelt einen Options-Buchstaben (A–F) in die Anzeige-Ziffer (1–6) um. */
+export function buchstabeZuZiffer(buchstabe) {
+  const idx = BUCHSTABEN.indexOf(buchstabe);
+  return idx >= 0 ? ZIFFERN[idx] : buchstabe;
+}
+
 export const TYP_LABEL = {
   SC: 'Single Choice',
   MC: 'Multiple Choice',

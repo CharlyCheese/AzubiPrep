@@ -1,0 +1,132 @@
+/* ==========================================================================
+   AzubiPrep UX Polish: Taktile Buttons, Micro-Interactions & Fluidity
+   (Quelle: Stitch-AI-Vorschlag, von Sven angefordert nach Abschluss von
+   FE-008/FE-009/FE-010 – siehe docs/agent-briefs/FE-011-ux-polish-stitch.md)
+   ========================================================================== */
+
+/* 1. Klickgefühl & haptischer 3D-Push (Active States) */
+button,
+.btn,
+.option-row,
+.abzeichen,
+.module-row {
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 0.08s cubic-bezier(0.2, 0.8, 0.4, 1),
+              box-shadow 0.15s ease,
+              border-color 0.15s ease,
+              background-color 0.15s ease;
+}
+
+/* Physikalische Eindrückung bei Klick/Touch */
+.btn:active,
+button:active:not(:disabled),
+.option-row:active {
+  transform: scale(0.98) translateY(1px);
+}
+
+/* Sanfte Hover-Elevation bei Haupt-Buttons */
+.btn-primary:hover:not(:disabled) {
+  box-shadow: 0 4px 14px rgba(13, 148, 136, 0.28);
+  transform: translateY(-1px);
+}
+
+/* 2. Tastatur-Fokusringe im Teal-Design (barrierefrei, sauber) */
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+.option-row:focus-visible,
+a:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--bg-card), 0 0 0 4px var(--primary) !important;
+}
+
+/* 3. Antwortoptionen: Hover-Zustand (nur wenn noch unbewertet) */
+.option-row:hover:not(.correct):not(.wrong) {
+  border-color: var(--primary);
+  background-color: var(--primary-soft);
+}
+
+/* Tastatur-Trigger: subtiles Aufleuchten bei Shortcut-Betätigung */
+.option-row.key-triggered {
+  animation: keyFlash 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes keyFlash {
+  0% { transform: scale(0.97); }
+  50% { transform: scale(1.01); box-shadow: 0 0 0 3px var(--primary); }
+  100% { transform: scale(1); }
+}
+
+/* 4. Sanftes Einblenden bei Seiten-/Frage-Wechsel */
+.card-appear {
+  animation: smoothFadeUp 0.18s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes smoothFadeUp {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* 5. Elastische, flüssige Fortschrittsbalken (ergänzt bestehende .progress-Transition) */
+.progress > div {
+  transition: width 0.4s cubic-bezier(0.34, 1.3, 0.64, 1);
+}
+
+/* 6. Schwebender XP-Indikator (+XP Float-Up) */
+.xp-float-badge {
+  position: absolute;
+  top: -12px;
+  right: 12px;
+  background: var(--warning-soft);
+  color: var(--warning-ink);
+  font-weight: 800;
+  font-size: 0.75rem;
+  padding: 2px 8px;
+  border-radius: 999px;
+  pointer-events: none;
+  animation: floatUpFade 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  z-index: 10;
+}
+
+@keyframes floatUpFade {
+  0% { opacity: 0; transform: translateY(8px) scale(0.85); }
+  20% { opacity: 1; transform: translateY(0) scale(1); }
+  80% { opacity: 1; transform: translateY(-8px) scale(1); }
+  100% { opacity: 0; transform: translateY(-16px) scale(0.9); }
+}
+
+/* 7. Skeleton-Shimmer-Loader (gegen Layout-Sprünge beim Laden) */
+.skeleton-box {
+  background: var(--border);
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-sm);
+}
+
+.skeleton-box::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.08) 50%,
+    transparent 100%
+  );
+  animation: skeletonShimmer 1.4s infinite;
+}
+
+@keyframes skeletonShimmer {
+  100% { transform: translateX(100%); }
+}
+
+/* 8. Respekt vor Barrierefreiheit: reduzierte Bewegung */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.001s !important;
+    transition-duration: 0.001s !important;
+  }
+}

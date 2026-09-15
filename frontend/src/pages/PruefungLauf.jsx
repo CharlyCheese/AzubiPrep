@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useExamStore, setExamState } from '../store/examStore.js';
 import { api } from '../api/client.js';
-import { optionenListe } from '../utils/fragen.js';
+import { optionenListe, buchstabeZuZiffer } from '../utils/fragen.js';
 
 export default function PruefungLauf() {
   const navigate = useNavigate();
@@ -146,7 +146,7 @@ export default function PruefungLauf() {
               const isSel = auswahl.includes(o.buchstabe);
               return (
                 <div key={o.buchstabe} className={`option-row ${isSel ? 'selected' : ''}`} onClick={() => waehle(o.buchstabe)}>
-                  <span className="option-letter">{o.buchstabe}</span>
+                  <span className="option-letter">{buchstabeZuZiffer(o.buchstabe)}</span>
                   <span>{o.text}</span>
                 </div>
               );

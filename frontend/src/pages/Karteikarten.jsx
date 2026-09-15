@@ -3,9 +3,11 @@ import { Link } from 'react-router-dom';
 import { useApi } from '../utils/useApi.js';
 import { api } from '../api/client.js';
 import { flashcardStore, profileStore, kartenOptionenStore } from '../store/localStore.js';
-import { optionenListe, BUCHSTABEN } from '../utils/fragen.js';
+import { optionenListe, BUCHSTABEN, buchstabeZuZiffer } from '../utils/fragen.js';
 import { mischeOptionen } from '../utils/optionen.js';
 import { korrekteAntwortText } from '../utils/antworten.js';
+import { useQuizKeyboard } from '../utils/useQuizKeyboard.js';
+import SkeletonCard from '../components/SkeletonCard.jsx';
 
 const STAPEL_PRESETS = [10, 25, 50];
 
@@ -109,7 +111,19 @@ export default function Karteikarten() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [frage?.id]);
 
-  if (laden) return <div className="loading"><div className="spinner" />Lade Karteikarten …</div>;
+  // Tastatur-Shortcuts: 1–6 (oder A–F) wählen eine Antwortoption (dreht die
+  // Karte dabei automatisch um, wie beim Anklicken), Enter dreht die Karte um.
+  // toggleAuswahl/bewerten sind weiter unten als function-Deklarationen
+  // definiert und dank Hoisting hier bereits nutzbar.
+  useQuizKeyboard({
+    optionen: BUCHSTABEN.slice(0, frage?.optionen?.length || 4),
+    onSelectOption: (buchstabe) => toggleAuswahl(buchstabe, { stopPropagation() {} }),
+    onSubmitOrNext: () => { if (!umgedreht) setUmgedreht(true); },
+    istEingabeAktiv: false,
+    aktiv: !laden && !!frage,
+  });
+
+  if (laden) return <SkeletonCard lines={4} />;
 
   const stapelAuswahl = (
     <div className="card mb-2">
@@ -186,14 +200,14 @@ export default function Karteikarten() {
     && auswahlOriginal.length === korrektBuchstaben.length
     && korrektBuchstaben.every((b) => auswahlOriginal.includes(b));
 
-  /** Lesbarer Text zu einer Menge von (Original-)Buchstaben, z. B. "B) Text". */
+  /** Lesbarer Text zu einer Menge von (Original-)Buchstaben, z. B. "2) Text". */
   function buchstabenText(buchstaben) {
     const optionen = frage.optionen || [];
     return buchstaben
       .map((b) => {
         const idx = BUCHSTABEN.indexOf(b);
         const text = optionen[idx] || '';
-        return text ? `${b}) ${text}` : b;
+        return text ? `${buchstabeZuZiffer(b)}) ${text}` : buchstabeZuZiffer(b);
       })
       .join('   ');
   }
@@ -260,7 +274,7 @@ export default function Karteikarten() {
                         onClick={(e) => toggleAuswahl(o.buchstabe, e)}
                         onKeyDown={(e) => { if (e.key === 'Enter') toggleAuswahl(o.buchstabe, e); }}
                       >
-                        <span className="option-letter">{o.buchstabe}</span>
+                        <span className="option-letter">{buchstabeZuZiffer(o.buchstabe)}</span>
                         <span>{o.text}</span>
                       </div>
                     ))}
