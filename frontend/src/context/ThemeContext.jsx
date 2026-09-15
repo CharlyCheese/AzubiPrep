@@ -2,7 +2,7 @@ import { createContext, useContext, useEffect, useState } from 'react';
 
 const ThemeContext = createContext(null);
 const STORAGE_KEY = 'azubiprep.theme';
-const THEME_FARBEN = { light: '#f1f5f9', dark: '#0f172a' };
+const THEME_FARBEN = { light: '#f8fafc', dark: '#0b0f17' };
 
 export function ThemeProvider({ children }) {
   const [theme, setThemeState] = useState(() => {

@@ -27,10 +27,57 @@
 | `/einstellungen` | Profil, Fachrichtung, Prüfungstermin, Daten löschen |
 
 ## Design-Tokens (Auszug)
-- Schrift: System-Stack (Segoe UI/system-ui)
-- Akzentfarbe: Blau `--primary`, Erfolg Grün, Fehler Rot, Warnung Gelb
-- Abstände über `--radius`, Karten mit weichem Schatten
+- Schrift: „Plus Jakarta Sans" (Headlines/UI) + „Inter"/System-Stack als
+  Fallback (funktioniert auch offline ohne Internet)
+- Akzentfarbe: Teal `--primary` (`#0D9488`/`#14B8A6`), Erfolg Grün, Fehler
+  Rot, Warnung Amber, Info-Akzent Sky-Blau
+- Abstände über `--radius` (14px, Buttons/Inputs `--radius-sm` 10px), Karten
+  mit weichem Schatten
 - Komponenten in `frontend/src/styles/global.css` über Variablen thematisierbar
+
+## Design-System-Redesign (ab FE-008, Grundlage: Stitch-AI-Analyse)
+
+Sven hat mit Stitch AI eine Redesign-Analyse erstellt (siehe `docs/agent-briefs/FE-008-design-tokens-stitch.md`
+für die konkrete Token-Umsetzung). Die folgenden Prinzipien gelten als
+**verbindliche Leitlinie für alle weiteren Seiten-Anpassungen**, auch ohne
+dass für jede Seite ein eigener Screenshot vorliegt:
+
+**Warum weg vom „1-Prompt-AI-Look":** übersättigtes Neon-Lila/Electric-Blue
+und reines Schwarz/Weiß wirken generisch und ermüden bei langen
+Lernsessions die Augen (Halation-Effekt bei Astigmatismus, zu hohe
+Leuchtdichte bei reinem Weiß).
+
+**Farb- & Ergonomie-Konzept:**
+- **Dark Mode:** sattes, warmes Anthrazit/Graphit (`--bg`/`--bg-soft`/
+  `--bg-card`) statt kühlem Schwarz oder Navy – kein reines `#000000`.
+  Primärfarbe Teal/Salbeigrün (beruhigend, signalisiert im
+  Bildungs-/IT-Kontext Konzentration & Fortschritt), warme Amber-Akzente für
+  Streaks/XP/Gamification.
+- **Light Mode:** dezentes, warmes Off-White (`#F8FAFC`) als Seitenhintergrund,
+  reines Weiß nur für angehobene Karten/Flächen – kein grelles
+  Vollflächen-Weiß.
+- **Typografie:** moderner, sehr gut lesbarer Sans-Serif mit klarer
+  Zifferndarstellung (Plus Jakarta Sans/Inter), wichtig für Code-,
+  Prüfungs- und Tabellendaten.
+
+**Layout-Grundmuster (bleibt über alle Seiten erhalten):**
+- Sidebar links, strukturierter Inhaltsbereich rechts (Fitts's Law,
+  F-förmiges Lesemuster) – nicht antasten.
+- Wo sinnvoll: breite Hauptspalte (Kerninhalt) + schmalere Seitenleiste
+  (Schnellzugriffe, KPIs, Kontext-Infos) statt einspaltig gestapelter Karten
+  mit viel Leerraum – siehe Dashboard (`Dashboard.jsx`, `.dashboard-layout`)
+  als Referenzumsetzung.
+- Fokussierte, „distraction-free" Detailansichten für Lerninhalte
+  (Karteikarten, Quiz): klar abgegrenzte Antwortoptionen, Tastatur-Shortcuts
+  wo möglich, dezenter Fortschrittsbalken statt aufdringlicher Elemente.
+- Gruppierung durch Card-Container mit subtilen Status-Badges statt langer
+  Listen (z. B. Module nach Fachrichtung, Kalendertage mit
+  farbcodierten Aktivitäts-Dots statt vollflächigen Farbblöcken).
+
+**Bereits umgesetzt:** FE-008 (Farb-/Typografie-Grundlage, global),
+Dashboard-Layout (Haupt-/Seitenspalte). Offen: Karteikarten (fokussierte
+Study-Card + Session-Metriken-Seitenleiste), Lernbereich (Modul-Card-Gruppierung),
+Kalender (Aktivitäts-Dots), Prüfungssimulation (dezenter Timer).
 
 ## Komponenten-Struktur
 ```

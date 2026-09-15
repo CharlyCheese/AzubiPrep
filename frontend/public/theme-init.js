@@ -10,7 +10,7 @@
     var theme = dunkel ? 'dark' : 'light';
     document.documentElement.dataset.theme = theme;
     var meta = document.getElementById('theme-color-meta');
-    if (meta) meta.setAttribute('content', theme === 'dark' ? '#0f172a' : '#f1f5f9');
+    if (meta) meta.setAttribute('content', theme === 'dark' ? '#0b0f17' : '#f8fafc');
   } catch (e) {
     /* localStorage nicht verfuegbar */
   }

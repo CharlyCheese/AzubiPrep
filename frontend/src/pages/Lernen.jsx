@@ -49,7 +49,11 @@ function ModulBlock({ id, titel, hinweis, module, statusMap, hervorgehoben }) {
   const beherrschtAnzahl = module.filter((m) => statusMap[m.modul_id]?.beherrscht).length;
   return (
     <section id={id} className="mb-2" style={{ scrollMarginTop: 12 }}>
-      <div className="flex-between wrap">
+      {/* Titel und Fortschritts-Text bewusst eng nebeneinander (flex statt
+          flex-between) – bei breiten Fenstern würde space-between den Text
+          bis zum rechten Rand auseinanderziehen, sodass er ohne sichtbaren
+          Bezug zur Überschrift "verloren" wirkt. */}
+      <div className="flex wrap" style={{ gap: 12, rowGap: 4 }}>
         <h2 className="mb-0">
           {titel}
           {hervorgehoben && <span className="badge badge-leicht" style={{ marginLeft: 8 }}>deine Fachrichtung</span>}
@@ -59,7 +63,7 @@ function ModulBlock({ id, titel, hinweis, module, statusMap, hervorgehoben }) {
         </span>
       </div>
       {hinweis && <p className="text-muted small mt-0">{hinweis}</p>}
-      <div className="grid grid-2">
+      <div className="grid grid-2-max">
         {module.map((m) => <ModulKarte key={m.modul_id} m={m} status={statusMap[m.modul_id]} />)}
       </div>
     </section>

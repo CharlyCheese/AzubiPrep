@@ -98,103 +98,109 @@ export default function Dashboard() {
           </div>
         </div>
       </div>
-      <div className="card mb-2">
-        <h2 className="mb-0">Tages- und Wochenziel</h2>
-        <div className="grid grid-2 mt-2">
-          <div>
-            <div className="progress-label"><span>Tagesziel (Fragen)</span><span>{tages.ist} / {tages.ziel}</span></div>
-            <div className="progress"><div style={{ width: `${tages.prozent}%` }} /></div>
-            <div className="small text-muted mt-1">
-              {tages.erreicht ? 'Tagesziel erreicht (+30 XP)' : `Noch ${Math.max(0, tages.ziel - tages.ist)} Frage(n) bis zum Ziel`}
-            </div>
-          </div>
-          <div>
-            <div className="progress-label"><span>Wochenziel (aktive Tage)</span><span>{woche.ist} / {woche.ziel}</span></div>
-            <div className="progress"><div style={{ width: `${woche.prozent}%` }} /></div>
-            <div className="small text-muted mt-1">
-              {woche.erreicht ? 'Wochenziel erreicht' : `Noch ${Math.max(0, woche.ziel - woche.ist)} aktive(r) Tag(e)`}
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div className="card mb-2">
-        <h2 className="mb-0">Missionen</h2>
-        <p className="small text-muted mt-0 mb-2">
-          Tagesmissionen starten jeden Tag neu, Wochenmissionen jeden Montag.
-        </p>
-        <div className="grid grid-2">
-          <Missionsliste titel="Heute" missionen={missionen.tag} />
-          <Missionsliste titel="Diese Woche" missionen={missionen.woche} />
-        </div>
-      </div>
       {laden ? (
         <div className="loading">Lade Lernstand …</div>
       ) : (
-        <>
-          <div className="grid grid-4 mb-2">
-            <div className="card">
-              <div className="stat-value">{beantwortet}</div>
-              <div className="stat-label">beantwortete Fragen</div>
-              <div className="progress mt-2"><div style={{ width: `${fragenGesamt ? Math.min(100, Math.round((beantwortet / fragenGesamt) * 100)) : 0}%` }} /></div>
-              <div className="small text-muted">von {fragenGesamt} im Bestand</div>
+        <div className="dashboard-layout">
+          {/* Hauptspalte: Ziele, Missionen, letzte Prüfung */}
+          <div>
+            <div className="card mb-2">
+              <h2 className="mb-0">Tages- und Wochenziel</h2>
+              <div className="grid grid-2 mt-2">
+                <div>
+                  <div className="progress-label"><span>Tagesziel (Fragen)</span><span>{tages.ist} / {tages.ziel}</span></div>
+                  <div className="progress"><div style={{ width: `${tages.prozent}%` }} /></div>
+                  <div className="small text-muted mt-1">
+                    {tages.erreicht ? 'Tagesziel erreicht (+30 XP)' : `Noch ${Math.max(0, tages.ziel - tages.ist)} Frage(n) bis zum Ziel`}
+                  </div>
+                </div>
+                <div>
+                  <div className="progress-label"><span>Wochenziel (aktive Tage)</span><span>{woche.ist} / {woche.ziel}</span></div>
+                  <div className="progress"><div style={{ width: `${woche.prozent}%` }} /></div>
+                  <div className="small text-muted mt-1">
+                    {woche.erreicht ? 'Wochenziel erreicht' : `Noch ${Math.max(0, woche.ziel - woche.ist)} aktive(r) Tag(e)`}
+                  </div>
+                </div>
+              </div>
             </div>
-            <div className="card">
-              <div className="stat-value">{richtig}</div>
-              <div className="stat-label">zuletzt richtig</div>
-              <div className="small text-muted">{beantwortet ? Math.round((richtig / beantwortet) * 100) : 0}% Erfolgsquote</div>
+
+            <div className="card mb-2">
+              <h2 className="mb-0">Missionen</h2>
+              <p className="small text-muted mt-0 mb-2">
+                Tagesmissionen starten jeden Tag neu, Wochenmissionen jeden Montag.
+              </p>
+              <div className="grid grid-2">
+                <Missionsliste titel="Heute" missionen={missionen.tag} />
+                <Missionsliste titel="Diese Woche" missionen={missionen.woche} />
+              </div>
             </div>
-            <div className="card">
-              <div className="stat-value">{faellige}</div>
-              <div className="stat-label">fällige Karteikarten</div>
-              <Link to="/karteikarten" className="small">→ Jetzt wiederholen</Link>
-            </div>
-            <div className="card">
-              <div className="stat-value">{letzteLernTage}</div>
-              <div className="stat-label">Lerntage gesamt</div>
-              <div className="small text-muted">Serie & Details im Lernkalender</div>
-            </div>
+
+            {letztePruefung && (
+              <div className="card">
+                <h2 className="mb-0">Letzte Prüfungssimulation</h2>
+                <p className="text-muted mt-0 small">
+                  {new Date(letztePruefung.am).toLocaleDateString('de-DE')} · {letztePruefung.fachrichtung}
+                </p>
+                <div className="progress-label"><span>Ergebnis</span><span>{letztePruefung.scoreProzent}%</span></div>
+                <div className="progress">
+                  <div style={{ width: `${Math.min(100, letztePruefung.scoreProzent || 0)}%` }} />
+                </div>
+                <p className={letztePruefung.bestanden ? 'alert alert-success mt-2' : 'alert alert-danger mt-2'}>
+                  {letztePruefung.bestanden ? '✓ Bestanden' : '✗ Nicht bestanden'} – {letztePruefung.richtig} von {letztePruefung.gesamt} richtig
+                </p>
+              </div>
+            )}
           </div>
 
-          <div className="grid grid-2">
+          {/* Nebenspalte: Schnellstart, KPIs, Fachrichtung */}
+          <aside>
+            <div className="card mb-2">
+              <h2 className="mb-0" style={{ fontSize: '1.05rem' }}>⚡ Schnellstart</h2>
+              <Link className="btn btn-primary btn-block mt-2" to="/pruefung">Prüfungssimulation →</Link>
+              <div className="grid-kpi mt-1">
+                <Link className="btn btn-ghost btn-sm" to="/karteikarten">🗂 Karteikarten</Link>
+                <Link className="btn btn-ghost btn-sm" to="/statistik">📊 Statistik</Link>
+              </div>
+            </div>
+
+            <div className="grid-kpi mb-2">
+              <div className="card">
+                <div className="small text-muted">Fragen gesamt</div>
+                <div className="stat-value" style={{ fontSize: '1.5rem' }}>{beantwortet}</div>
+                <div className="small text-muted">von {fragenGesamt} im Bestand</div>
+              </div>
+              <div className="card">
+                <div className="small text-muted">Erfolgsquote</div>
+                <div className="stat-value" style={{ fontSize: '1.5rem', color: 'var(--primary)' }}>
+                  {beantwortet ? Math.round((richtig / beantwortet) * 100) : 0}%
+                </div>
+                <div className="small text-muted">{richtig} zuletzt richtig</div>
+              </div>
+              <div className="card">
+                <div className="small text-muted">Fällige Karten</div>
+                <div className="stat-value" style={{ fontSize: '1.5rem', color: 'var(--warning)' }}>{faellige}</div>
+                <Link to="/karteikarten" className="small">→ Jetzt wiederholen</Link>
+              </div>
+              <div className="card">
+                <div className="small text-muted">Lerntage</div>
+                <div className="stat-value" style={{ fontSize: '1.5rem' }}>{letzteLernTage}</div>
+                <div className="small text-muted">aktive Sessions</div>
+              </div>
+            </div>
+
             <div className="card">
-              <h2>Deine Fachrichtung</h2>
-              <div className="flex wrap">
+              <h2 className="mb-0" style={{ fontSize: '1.05rem' }}>Deine Fachrichtung</h2>
+              <div className="flex wrap mt-1">
                 <span className={`badge badge-${profil.fachrichtung.toLowerCase()}`}>{profil.fachrichtung}</span>
                 <span>{profil.name || 'Lernende:r'}</span>
               </div>
-              <p className="text-muted mt-2 mb-2">
+              <p className="text-muted mt-2 mb-2 small">
                 Geplante Prüfung: {profil.prüfungstermin ? new Date(profil.prüfungstermin).toLocaleDateString('de-DE') : 'noch nicht gesetzt'}
               </p>
-              <Link className="btn btn-primary btn-sm" to="/lernen">Zum Lernbereich →</Link>
+              <Link className="btn btn-ghost btn-sm btn-block" to="/lernen">Zum Lernbereich →</Link>
             </div>
-
-            <div className="card">
-              <h2>Schnellstart</h2>
-              <div className="flex wrap">
-                <Link className="btn btn-primary" to="/pruefung">Prüfungssimulation</Link>
-                <Link className="btn btn-ghost" to="/karteikarten">Karteikarten</Link>
-                <Link className="btn btn-ghost" to="/statistik">Statistik</Link>
-              </div>
-            </div>
-          </div>
-
-          {letztePruefung && (
-            <div className="card">
-              <h2 className="mb-0">Letzte Prüfungssimulation</h2>
-              <p className="text-muted mt-0 small">
-                {new Date(letztePruefung.am).toLocaleDateString('de-DE')} · {letztePruefung.fachrichtung}
-              </p>
-              <div className="progress-label"><span>Ergebnis</span><span>{letztePruefung.scoreProzent}%</span></div>
-              <div className="progress">
-                <div style={{ width: `${Math.min(100, letztePruefung.scoreProzent || 0)}%` }} />
-              </div>
-              <p className={letztePruefung.bestanden ? 'alert alert-success mt-2' : 'alert alert-danger mt-2'}>
-                {letztePruefung.bestanden ? '✓ Bestanden' : '✗ Nicht bestanden'} – {letztePruefung.richtig} von {letztePruefung.gesamt} richtig
-              </p>
-            </div>
-          )}
-        </>
+          </aside>
+        </div>
       )}
     </div>
   );

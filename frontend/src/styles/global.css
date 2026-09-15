@@ -3,65 +3,71 @@
 
 :root {
   color-scheme: light;
-  --bg: #f1f5f9;
+  /* Warmes Off-White statt reinem Weiß – schont die Augen bei langen Lernsessions */
+  --bg: #f8fafc;
   --bg-soft: #ffffff;
   --bg-card: #ffffff;
   --text: #0f172a;
   --text-muted: #64748b;
   --border: #e2e8f0;
-  --primary: #2563eb;
-  --primary-hover: #1d4ed8;
-  --primary-soft: #dbeafe;
-  --success: #16a34a;
-  --success-soft: #dcfce7;
+  /* Beruhigendes Teal statt Royalblau – Fokusfarbe des neuen Designsystems */
+  --primary: #0d9488;
+  --primary-hover: #0f766e;
+  --primary-soft: #ccfbf1;
+  --success: #059669;
+  --success-soft: #d1fae5;
   --danger: #dc2626;
   --danger-soft: #fee2e2;
   --warning: #d97706;
   --warning-soft: #fef3c7;
-  --accent: #7c3aed;
-  --accent-soft: #ede9fe;
+  /* Akzent: ruhiges Info-Blau (ersetzt das vorherige Lila) */
+  --accent: #0284c7;
+  --accent-soft: #e0f2fe;
   /* Lesetext auf farbigen Soft-Flächen (Badges/Alerts) – Light Mode */
-  --primary-ink: #1e40af;
-  --success-ink: #15803d;
+  --primary-ink: #0f766e;
+  --success-ink: #047857;
   --danger-ink: #b91c1c;
   --warning-ink: #b45309;
-  --accent-ink: #6d28d9;
+  --accent-ink: #0369a1;
   --neutral-ink: #475569;
   --border-strong: #cbd5e1;
-  --radius: 12px;
-  --shadow: 0 1px 3px rgba(15, 23, 42, 0.08), 0 4px 14px rgba(15, 23, 42, 0.05);
-  --sidebar-w: 240px;
-  --font: 'Segoe UI', system-ui, -apple-system, Roboto, Helvetica, Arial, sans-serif;
+  --radius: 14px;
+  --radius-sm: 10px;
+  --shadow: 0 1px 3px rgba(15, 23, 42, 0.06), 0 8px 20px rgba(15, 23, 42, 0.06);
+  --sidebar-w: 248px;
+  --font: 'Plus Jakarta Sans', 'Inter', 'Segoe UI', system-ui, -apple-system, Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', ui-monospace, monospace;
 }
 
 html[data-theme='dark'] {
   color-scheme: dark;
-  --bg: #0f172a;
-  --bg-soft: #111c33;
-  --bg-card: #1e293b;
-  --text: #e2e8f0;
+  /* Sattes, warmes Graphit statt reinem Schwarz – vermeidet Halation im Dark Mode */
+  --bg: #0b0f17;
+  --bg-soft: #111827;
+  --bg-card: #161f30;
+  --text: #f8fafc;
   --text-muted: #94a3b8;
-  --border: #334155;
-  --primary: #3b82f6;
-  --primary-hover: #60a5fa;
-  --primary-soft: #1e3a8a;
-  --success: #22c55e;
-  --success-soft: #14532d;
+  --border: #243044;
+  --primary: #14b8a6;
+  --primary-hover: #2dd4bf;
+  --primary-soft: rgba(20, 184, 166, 0.16);
+  --success: #10b981;
+  --success-soft: rgba(16, 185, 129, 0.16);
   --danger: #ef4444;
-  --danger-soft: #7f1d1d;
+  --danger-soft: rgba(239, 68, 68, 0.16);
   --warning: #f59e0b;
-  --warning-soft: #78350f;
-  --accent: #a78bfa;
-  --accent-soft: #3b0764;
+  --warning-soft: rgba(245, 158, 11, 0.16);
+  --accent: #38bdf8;
+  --accent-soft: rgba(56, 189, 248, 0.16);
   /* Lesetext auf farbigen Soft-Flächen – Dark Mode: bewusst hell für Kontrast */
-  --primary-ink: #93c5fd;
-  --success-ink: #86efac;
+  --primary-ink: #5eead4;
+  --success-ink: #6ee7b7;
   --danger-ink: #fca5a5;
   --warning-ink: #fcd34d;
-  --accent-ink: #c4b5fd;
+  --accent-ink: #7dd3fc;
   --neutral-ink: #cbd5e1;
-  --border-strong: #475569;
-  --shadow: 0 1px 3px rgba(0, 0, 0, 0.4), 0 4px 14px rgba(0, 0, 0, 0.3);
+  --border-strong: #334155;
+  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.35), 0 2px 4px -2px rgba(0, 0, 0, 0.3);
 }
 
 * { box-sizing: border-box; }
@@ -106,7 +112,7 @@ h1, h2, h3, h4 { line-height: 1.25; margin-top: 0; }
   padding: 8px 10px 18px;
 }
 .logo-badge {
-  background: linear-gradient(135deg, #1e3a8a, #38bdf8);
+  background: linear-gradient(135deg, var(--primary), var(--primary-hover));
   color: #fff; border-radius: 10px;
   width: 34px; height: 34px; display: grid; place-items: center;
   font-weight: 800;
@@ -119,7 +125,7 @@ h1, h2, h3, h4 { line-height: 1.25; margin-top: 0; }
   margin-bottom: 2px; text-decoration: none;
 }
 .sidebar nav a:hover { background: var(--primary-soft); color: var(--text); text-decoration: none; }
-.sidebar nav a.active { background: var(--primary); color: #fff; }
+.sidebar nav a.active { background: var(--primary-soft); color: var(--primary-ink); font-weight: 700; }
 .sidebar .nav-icon { width: 20px; text-align: center; }
 
 .main {
@@ -136,15 +142,38 @@ h1, h2, h3, h4 { line-height: 1.25; margin-top: 0; }
   background: var(--bg-card);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: 20px;
+  padding: 22px;
   box-shadow: var(--shadow);
 }
-.card + .card { margin-top: 16px; }
+.card + .card { margin-top: 18px; }
 
 .grid { display: grid; gap: 16px; }
 .grid-2 { grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); }
 .grid-3 { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); }
 .grid-4 { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); }
+/* Wie .grid-2, aber mit gedeckelter Maximalbreite je Kachel – verhindert,
+   dass Karten (z. B. Modulkarten im Lernbereich) auf breiten Bildschirmen so
+   weit auseinandergezogen werden, dass z. B. Fortschrittsbalken/Werte am
+   rechten Kartenrand den Bezug zur Beschriftung links verlieren. */
+.grid-2-max { grid-template-columns: repeat(auto-fill, minmax(300px, 420px)); }
+/* Kompaktes 2-Spalten-Raster für schmale Bereiche (z. B. KPI-Kacheln in der Dashboard-Seitenleiste) */
+.grid-kpi { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+.grid-kpi .card { padding: 14px; margin-top: 0; }
+
+/* Dashboard: breite Hauptspalte + schmale Seitenleiste (Schnellstart/KPIs/Fachrichtung) */
+.dashboard-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(260px, 320px);
+  gap: 24px;
+  align-items: start;
+}
+/* Schaltet früher auf eine Spalte um (vorher 960px): bei schmaleren Fenstern
+   reichte der Platz neben der Sidebar-Navigation sonst nicht für Hauptspalte
+   + die mind. 260px breite Seitenleiste, wodurch diese über den rechten
+   Fensterrand hinausragte und nur noch abgeschnitten sichtbar war. */
+@media (max-width: 1180px) {
+  .dashboard-layout { grid-template-columns: 1fr; }
+}
 
 /* Buttons */
 .btn {
@@ -191,7 +220,7 @@ label { display: block; font-weight: 600; margin-bottom: 6px; font-size: 0.9rem;
 
 /* Fortschrittsbalken */
 .progress { height: 8px; background: var(--bg); border-radius: 999px; overflow: hidden; }
-.progress > div { height: 100%; background: linear-gradient(90deg, var(--primary), var(--accent)); border-radius: 999px; transition: width 0.3s ease; }
+.progress > div { height: 100%; background: linear-gradient(90deg, var(--primary), var(--primary-hover)); border-radius: 999px; transition: width 0.3s ease; }
 .progress-label { display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--text-muted); margin-bottom: 4px; }
 
 /* Statistik-Karten */
@@ -255,6 +284,7 @@ label { display: block; font-weight: 600; margin-bottom: 6px; font-size: 0.9rem;
 /* Flashcard */
 .flashcard {
   min-height: 260px; perspective: 1200px; cursor: pointer;
+  margin-top: 10px; /* Abstand zu den Schwierigkeits-Badges darüber */
 }
 .flashcard-inner {
   position: relative; width: 100%; min-height: 260px;

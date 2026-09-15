@@ -35,6 +35,30 @@ export default function Karteikarten() {
   const [gemischt, setGemischt] = useState(null);
   const [auswahl, setAuswahl] = useState([]);
 
+  // Session-Metriken (nur diese Sitzung, nicht persistiert): Startzeit,
+  // Anzahl geübter Karten je Bewertung und ein „Tick" zum Auffrischen der
+  // Lernzeit-Anzeige auch ohne weitere Interaktion.
+  const [sessionStart] = useState(() => Date.now());
+  const [jetzt, setJetzt] = useState(() => Date.now());
+  const [bewertungen, setBewertungen] = useState({ leicht: 0, mittel: 0, schwer: 0 });
+  useEffect(() => {
+    const id = setInterval(() => setJetzt(Date.now()), 15000);
+    return () => clearInterval(id);
+  }, []);
+  const sessionMinuten = Math.floor((jetzt - sessionStart) / 60000);
+  const sessionSekunden = Math.floor(((jetzt - sessionStart) % 60000) / 1000);
+  const sessionGeuebt = bewertungen.leicht + bewertungen.mittel + bewertungen.schwer;
+  const sessionErfolgsquote = sessionGeuebt > 0
+    ? Math.round(((bewertungen.leicht + bewertungen.mittel) / sessionGeuebt) * 100)
+    : null;
+
+  // Box-Verteilung der aktuell fälligen Karten (Leitner-Boxen 1–5) – zeigt,
+  // wie weit die Karten im Wiederholungssystem bereits fortgeschritten sind.
+  const boxVerteilung = [1, 2, 3, 4, 5].map((b) => ({
+    box: b,
+    anzahl: alleFaelligen.filter((k) => k.box === b).length,
+  }));
+
   // Alle fälligen Karten ermitteln, sobald Fragen geladen sind.
   useEffect(() => {
     if (!fragen) return;
@@ -89,14 +113,14 @@ export default function Karteikarten() {
 
   const stapelAuswahl = (
     <div className="card mb-2">
-      <div className="flex-between wrap">
-        <div>
+      <div className="flex-between wrap" style={{ alignItems: 'flex-start', rowGap: 10 }}>
+        <div style={{ flex: '1 1 240px', minWidth: 240 }}>
           <h2 className="mb-0" style={{ fontSize: '1.05rem' }}>Stapelgröße</h2>
           <p className="small text-muted mt-0 mb-0">
             {alleFaelligen.length} Karte(n) insgesamt fällig – wie viele davon jetzt bearbeiten?
           </p>
         </div>
-        <div className="flex wrap" style={{ gap: 6 }}>
+        <div className="flex wrap" style={{ gap: 6, flexShrink: 0 }}>
           {STAPEL_PRESETS.map((n) => (
             <button
               key={n}
@@ -188,6 +212,7 @@ export default function Karteikarten() {
 
   function bewerten(bewertung) {
     flashcardStore.review(frage.id, bewertung);
+    setBewertungen((b) => ({ ...b, [bewertung]: b[bewertung] + 1 }));
     setFaellige((deck) => {
       const neuesDeck = deck.filter((_, i) => i !== index);
       // Index anpassen, falls die letzte Karte entfernt wurde
@@ -208,66 +233,109 @@ export default function Karteikarten() {
         </div>
       </header>
 
-      {stapelAuswahl}
+      <div className="dashboard-layout">
+        {/* Hauptspalte: fokussierte Lernkarte */}
+        <div>
+          {stapelAuswahl}
 
-      <div className="flex wrap mb-2">
-        <div className="badge badge-neutral">Leicht: {zusammenfassung.leicht}</div>
-        <div className="badge badge-neutral">Mittel: {zusammenfassung.mittel}</div>
-        <div className="badge badge-neutral">Schwer: {zusammenfassung.schwer}</div>
-      </div>
-
-      <div className={`flashcard ${umgedreht ? 'flipped' : ''}`} onClick={() => setUmgedreht((u) => !u)}>
-        <div className="flashcard-inner">
-          <div className="flashcard-face">
-            <span className="small text-muted mb-2">Frage · Box {karte.box} · {frage.schwierigkeit}</span>
-            <h3>{frage.frage}</h3>
-            {optionenAnzeige.length > 0 && (
-              <div className="mt-2">
-                {optionenAnzeige.map((o) => (
-                  <div
-                    key={o.buchstabe}
-                    className={`option-row ${auswahl.includes(o.buchstabe) ? 'selected' : ''}`}
-                    role="button"
-                    tabIndex={0}
-                    onClick={(e) => toggleAuswahl(o.buchstabe, e)}
-                    onKeyDown={(e) => { if (e.key === 'Enter') toggleAuswahl(o.buchstabe, e); }}
-                  >
-                    <span className="option-letter">{o.buchstabe}</span>
-                    <span>{o.text}</span>
-                  </div>
-                ))}
-              </div>
-            )}
-            {!umgedreht && (
-              <p className="text-muted small mt-2">
-                {optionenAnzeige.length > 0 ? '👆 Antwort auswählen oder Karte antippen für die Lösung' : '👆 Karte antippen für die Lösung'}
-              </p>
-            )}
+          <div className="flex wrap mb-2">
+            <div className="badge badge-neutral">Leicht: {zusammenfassung.leicht}</div>
+            <div className="badge badge-neutral">Mittel: {zusammenfassung.mittel}</div>
+            <div className="badge badge-neutral">Schwer: {zusammenfassung.schwer}</div>
           </div>
-          <div className="flashcard-face flashcard-back">
-            <span className="small text-muted mb-2">Lösung</span>
-            {optionenAnzeige.length > 0 ? (
-              <div className="mb-2">
-                <div className="alert alert-success mb-2"><strong>Richtige Antwort: {buchstabenText(korrektBuchstaben)}</strong></div>
-                {auswahlOriginal.length > 0 && !richtigBeantwortet && (
-                  <div className="alert alert-danger mb-0">Deine Antwort: {buchstabenText(auswahlOriginal)}</div>
+
+          <div className={`flashcard ${umgedreht ? 'flipped' : ''}`} onClick={() => setUmgedreht((u) => !u)}>
+            <div className="flashcard-inner">
+              <div className="flashcard-face">
+                <span className="small text-muted mb-2">Frage · Box {karte.box} · {frage.schwierigkeit}</span>
+                <h3>{frage.frage}</h3>
+                {optionenAnzeige.length > 0 && (
+                  <div className="mt-2">
+                    {optionenAnzeige.map((o) => (
+                      <div
+                        key={o.buchstabe}
+                        className={`option-row ${auswahl.includes(o.buchstabe) ? 'selected' : ''}`}
+                        role="button"
+                        tabIndex={0}
+                        onClick={(e) => toggleAuswahl(o.buchstabe, e)}
+                        onKeyDown={(e) => { if (e.key === 'Enter') toggleAuswahl(o.buchstabe, e); }}
+                      >
+                        <span className="option-letter">{o.buchstabe}</span>
+                        <span>{o.text}</span>
+                      </div>
+                    ))}
+                  </div>
+                )}
+                {!umgedreht && (
+                  <p className="text-muted small mt-2">
+                    {optionenAnzeige.length > 0 ? '👆 Antwort auswählen oder Karte antippen für die Lösung' : '👆 Karte antippen für die Lösung'}
+                  </p>
                 )}
               </div>
-            ) : (
-              <div className="alert alert-success mb-2"><strong>{korrekteAntwortText(frage)}</strong></div>
-            )}
-            {frage.erklaerung && <p className="small">{frage.erklaerung}</p>}
+              <div className="flashcard-face flashcard-back">
+                <span className="small text-muted mb-2">Lösung</span>
+                {optionenAnzeige.length > 0 ? (
+                  <div className="mb-2">
+                    <div className="alert alert-success mb-2"><strong>Richtige Antwort: {buchstabenText(korrektBuchstaben)}</strong></div>
+                    {auswahlOriginal.length > 0 && !richtigBeantwortet && (
+                      <div className="alert alert-danger mb-0">Deine Antwort: {buchstabenText(auswahlOriginal)}</div>
+                    )}
+                  </div>
+                ) : (
+                  <div className="alert alert-success mb-2"><strong>{korrekteAntwortText(frage)}</strong></div>
+                )}
+                {frage.erklaerung && <p className="small">{frage.erklaerung}</p>}
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
 
-      {umgedreht && (
-        <div className="flex wrap mt-2" style={{ justifyContent: 'center' }}>
-          <button className="btn btn-danger" onClick={() => bewerten('schwer')}>Nochmal üben</button>
-          <button className="btn btn-ghost" onClick={() => bewerten('mittel')}>Ok</button>
-          <button className="btn btn-success" onClick={() => bewerten('leicht')}>Leicht / Gewusst</button>
+          {umgedreht && (
+            <div className="flex wrap mt-2" style={{ justifyContent: 'center' }}>
+              <button className="btn btn-danger" onClick={() => bewerten('schwer')}>Nochmal üben</button>
+              <button className="btn btn-ghost" onClick={() => bewerten('mittel')}>Ok</button>
+              <button className="btn btn-success" onClick={() => bewerten('leicht')}>Leicht / Gewusst</button>
+            </div>
+          )}
         </div>
-      )}
+
+        {/* Nebenspalte: Session-Metriken + Box-Verteilung */}
+        <aside>
+          <div className="card mb-2">
+            <h2 className="mb-0" style={{ fontSize: '1.05rem' }}>Session-Metriken</h2>
+            <div className="grid-kpi mt-2">
+              <div>
+                <div className="small text-muted">Lernzeit</div>
+                <div className="stat-value" style={{ fontSize: '1.4rem' }}>
+                  {sessionMinuten}:{String(sessionSekunden).padStart(2, '0')}
+                </div>
+                <div className="small text-muted">min diese Sitzung</div>
+              </div>
+              <div>
+                <div className="small text-muted">Erfolgsquote</div>
+                <div className="stat-value" style={{ fontSize: '1.4rem', color: 'var(--primary)' }}>
+                  {sessionErfolgsquote === null ? '–' : `${sessionErfolgsquote}%`}
+                </div>
+                <div className="small text-muted">{sessionGeuebt} Karte(n) geübt</div>
+              </div>
+            </div>
+          </div>
+
+          <div className="card">
+            <h2 className="mb-0" style={{ fontSize: '1.05rem' }}>Kartenverteilung</h2>
+            <p className="small text-muted mt-0 mb-2">
+              Fällige Karten nach Leitner-Box · {alleFaelligen.length} gesamt
+            </p>
+            {boxVerteilung.map(({ box, anzahl: n }) => (
+              <div key={box} style={{ marginBottom: 8 }}>
+                <div className="progress-label"><span>Box {box}</span><span>{n}</span></div>
+                <div className="progress">
+                  <div style={{ width: `${alleFaelligen.length ? Math.round((n / alleFaelligen.length) * 100) : 0}%` }} />
+                </div>
+              </div>
+            ))}
+          </div>
+        </aside>
+      </div>
     </div>
   );
 }

@@ -19,3 +19,5 @@
 - [FE-005] Begrüßungsnachricht als zentrales Popup — 2026-09-15 — [Brief](FE-005-begruessungs-popup.md)
 - [FE-006] Karteikarten: gemischte, klickbare Antwortoptionen — 2026-09-15 — [Brief](FE-006-karteikarten-interaktiv.md)
 - [FE-007] Karteikarten: wählbare Stapelgröße + Auto-Flip beim Antworten — 2026-09-15 — [Brief](FE-007-karteikarten-stapelgroesse.md)
+- [FE-008] Design-System-Grundlage (Farben/Typografie/Radius) nach Stitch-Vorlage — 2026-09-15 — [Brief](FE-008-design-tokens-stitch.md)
+- [FE-009] Dashboard- & Karteikarten-Layout nach Stitch-Vorlage (Phase 2) — 2026-09-15 — [Brief](FE-009-dashboard-karteikarten-layout.md)
