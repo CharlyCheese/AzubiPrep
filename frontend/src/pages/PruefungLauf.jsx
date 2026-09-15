@@ -100,10 +100,22 @@ export default function PruefungLauf() {
 
   return (
     <div>
+      {/* Timer bewusst dezent: normalerweise nur gedämpfter Text statt
+          auffälligem Badge – wird erst unter 5 Minuten zum Warn-Badge, um
+          nicht dauerhaft vom eigentlichen Lerninhalt abzulenken. */}
       <div className="flex-between wrap mb-2">
         <h1 className="mb-0" style={{ fontSize: '1.3rem' }}>Prüfung: {konfig?.fachrichtung}</h1>
-        <div className={`badge ${restSek < 300 ? 'badge-schwer' : 'badge-neutral'}`}>
-          ⏱ {min}:{String(sek).padStart(2, '0')} · {beantwortet}/{fragen.length} beantwortet
+        <div className="flex wrap" style={{ gap: 10, alignItems: 'center' }}>
+          {restSek < 300 ? (
+            <span className="badge badge-schwer" style={{ fontVariantNumeric: 'tabular-nums' }}>
+              ⏱ {min}:{String(sek).padStart(2, '0')}
+            </span>
+          ) : (
+            <span className="small text-muted" style={{ fontVariantNumeric: 'tabular-nums' }}>
+              ⏱ {min}:{String(sek).padStart(2, '0')}
+            </span>
+          )}
+          <span className="small text-muted">{beantwortet}/{fragen.length} beantwortet</span>
         </div>
       </div>
 

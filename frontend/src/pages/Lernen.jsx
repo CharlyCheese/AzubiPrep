@@ -5,19 +5,36 @@ import { profileStore, progressStore } from '../store/localStore.js';
 import { modulStatusAusFortschritt, statusAnzeige, abdeckungProzent } from '../utils/modulStatus.js';
 import { BEHERRSCHT_AB } from '../utils/gamification.js';
 
+// Statusfarbe als Kartenakzent (linker Rand) – macht den Bearbeitungsstand
+// einer Modulkarte auf einen Blick erkennbar, ohne den Fließtext lesen zu
+// müssen (Stitch-Leitlinie: "Gruppierung … mit subtilen Status-Badges").
+const STATUS_AKZENT = {
+  beherrscht: 'var(--success)',
+  bearbeitet: 'var(--warning, var(--primary))',
+  offen: 'var(--border)',
+};
+
 // Modulkarte – identisch für Allgemein- und Fachrichtungsblöcke.
 function ModulKarte({ m, status }) {
   const stufe = statusAnzeige(status);
   const gesamt = m.fragenAnzahl || 0;
   const bearbeitet = status?.anzahl || 0;
   const abdeckung = abdeckungProzent(bearbeitet, gesamt);
+  const stufeKey = status?.beherrscht ? 'beherrscht' : status?.bearbeitet ? 'bearbeitet' : 'offen';
   return (
-    <div className="card" key={m.modul_id}>
+    <div
+      className="card"
+      key={m.modul_id}
+      style={{ borderLeft: `3px solid ${STATUS_AKZENT[stufeKey]}` }}
+    >
       <div className="flex-between wrap">
         <h3 className="mb-0">{m.titel}</h3>
-        <span className={`badge ${m.fachrichtung === 'ALLE' ? 'badge-neutral' : `badge-${m.fachrichtung.toLowerCase()}`}`}>
-          {m.fachrichtung === 'ALLE' ? 'Allgemein' : m.fachrichtung}
-        </span>
+        <div className="flex wrap" style={{ gap: 6, justifyContent: 'flex-end' }}>
+          <span className={`badge ${stufe.klasse}`}>{stufe.label}</span>
+          <span className={`badge ${m.fachrichtung === 'ALLE' ? 'badge-neutral' : `badge-${m.fachrichtung.toLowerCase()}`}`}>
+            {m.fachrichtung === 'ALLE' ? 'Allgemein' : m.fachrichtung}
+          </span>
+        </div>
       </div>
       <p className="text-muted small">{m.beschreibung}</p>
       <div className="progress-label mt-2">
@@ -27,14 +44,13 @@ function ModulKarte({ m, status }) {
       <div className="progress">
         <div style={{ width: `${abdeckung}%`, background: status?.beherrscht ? 'var(--success)' : undefined }} />
       </div>
-      <div className="flex wrap mt-2" style={{ gap: 6 }}>
-        <span className={`badge ${stufe.klasse}`}>{stufe.label}</span>
-        {status?.bearbeitet && (
+      {status?.bearbeitet && (
+        <div className="flex wrap mt-2" style={{ gap: 6 }}>
           <span className="badge badge-neutral">
             {status.richtig}/{status.anzahl} richtig · {status.quote}% Erfolgsquote
           </span>
-        )}
-      </div>
+        </div>
+      )}
       <div className="flex-between mt-2">
         <span className="small text-muted">{gesamt} Fragen</span>
         <Link className="btn btn-primary btn-sm" to={`/lernen/${m.modul_id}`}>Öffnen →</Link>

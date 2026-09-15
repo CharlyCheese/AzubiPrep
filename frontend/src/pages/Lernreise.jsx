@@ -194,8 +194,10 @@ export default function Lernreise() {
 
       {ansicht === 'karte' ? (
         <>
-          <ReiseBlock gruppe={GRUPPE_FACHRICHTUNG} stationen={reise.stationen} />
+          {/* Gemeinsame Module zuerst: sinnvoller Einstieg für Lernende,
+              bevor es in die eigene Fachrichtung geht. */}
           <ReiseBlock gruppe={GRUPPE_GEMEINSAM} stationen={reise.gemeinsam} />
+          <ReiseBlock gruppe={GRUPPE_FACHRICHTUNG} stationen={reise.stationen} />
         </>
       ) : (
         <ReiseTabelle stationen={reise.alle} />

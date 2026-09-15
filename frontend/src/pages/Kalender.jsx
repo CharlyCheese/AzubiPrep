@@ -159,13 +159,19 @@ export default function Kalender() {
                   title={hatWiederholung ? 'Wiederholungen fällig' : geplant ? 'Eigene Planung' : 'Tag öffnen'}
                 >
                   {tag}
-                  {hatWiederholung && <span className="cal-dot" />}
+                  {(hatWiederholung || geplant) && (
+                    <span className="cal-dots">
+                      {hatWiederholung && <span className="cal-dot" title="Wiederholung fällig" />}
+                      {geplant && <span className="cal-dot cal-dot-plan" title="Eigene Planung" />}
+                    </span>
+                  )}
                 </div>
               );
             })}
           </div>
           <p className="small text-muted mb-0">
-            Tag anklicken zum Planen · grün = gelernt · Punkt = Wiederholung fällig · Rahmen = heute.
+            Tag anklicken zum Planen · grün = gelernt · <span className="cal-dot" style={{ display: 'inline-block' }} /> Wiederholung fällig ·{' '}
+            <span className="cal-dot cal-dot-plan" style={{ display: 'inline-block' }} /> eigene Planung · Rahmen = heute.
           </p>
         </div>
 

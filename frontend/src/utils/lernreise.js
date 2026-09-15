@@ -61,7 +61,9 @@ export function baueLernreise(module = [], fachrichtung = 'FIAE', statusMap = {}
     fachrichtung,
     stationen,
     gemeinsam: gemeinsame,
-    alle: [...stationen, ...gemeinsame],
+    // Gemeinsame Module zuerst: sinnvoller Einstieg für Lernende (auch für
+    // die "nächste Station"-Empfehlung, die auf dieser Reihenfolge basiert).
+    alle: [...gemeinsame, ...stationen],
     fortschritt: fortschritt([...eigene, ...gemeinsam], statusMap),
   };
 }

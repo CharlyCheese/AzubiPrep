@@ -75,9 +75,14 @@ Leuchtdichte bei reinem Weiß).
   farbcodierten Aktivitäts-Dots statt vollflächigen Farbblöcken).
 
 **Bereits umgesetzt:** FE-008 (Farb-/Typografie-Grundlage, global),
-Dashboard-Layout (Haupt-/Seitenspalte). Offen: Karteikarten (fokussierte
-Study-Card + Session-Metriken-Seitenleiste), Lernbereich (Modul-Card-Gruppierung),
-Kalender (Aktivitäts-Dots), Prüfungssimulation (dezenter Timer).
+FE-009 (Dashboard- und Karteikarten-Layout: Haupt-/Seitenspalte,
+fokussierte Study-Card + Session-Metriken-Seitenleiste), FE-010
+(Lernbereich: Statusfarbe als Kartenakzent + Status-Badge oben in der
+Modulkarte statt nur unten im Fließtext; Kalender: farbcodierte
+Aktivitäts-Dots für Wiederholung/eigene Planung statt vollflächiger
+Hintergrundfarbe; Prüfungssimulation: Timer nur als gedämpfter Text,
+wird erst unter 5 Minuten zum Warn-Badge). Damit ist die Stitch-Analyse
+auf alle Seiten übertragen.
 
 ## Komponenten-Struktur
 ```
