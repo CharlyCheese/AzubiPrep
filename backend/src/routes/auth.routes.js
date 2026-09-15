@@ -26,7 +26,9 @@ export function buildAuthRoutes() {
         return;
       }
       if (!passwortGueltig(passwort)) {
-        res.status(400).json({ error: 'Passwort muss mindestens 8 Zeichen haben' });
+        res.status(400).json({
+          error: 'Passwort muss mind. 8 Zeichen haben, mit Groß- und Kleinbuchstaben, einer Zahl und einem Sonderzeichen',
+        });
         return;
       }
 

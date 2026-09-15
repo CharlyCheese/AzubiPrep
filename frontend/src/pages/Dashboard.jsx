@@ -66,8 +66,8 @@ export default function Dashboard() {
     <div>
       <header className="main-header">
         <div>
-          <h1 className="mb-0">Willkommen zurück 👋</h1>
-          <p className="text-muted mt-0">Schön, dass du lernst! Deine Prüfungsvorbereitung läuft.</p>
+          <h1 className="mb-0">Dashboard</h1>
+          <p className="text-muted mt-0">Dein Lernfortschritt auf einen Blick.</p>
         </div>
       </header>
 

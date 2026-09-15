@@ -20,6 +20,14 @@ export function createApp(store) {
   app.use(express.json({ limit: '256kb' }));
 
   app.use('/api', rateLimiter({ maxProMinute: config.rateLimitMax }));
+
+  // Immer verfügbar (auch ohne DB): sagt dem Frontend, ob Login/Sync
+  // überhaupt angeboten werden soll, damit die Konto-Sektion im Offline-
+  // Modus gar nicht erst angezeigt wird.
+  app.get('/api/status', (req, res) => {
+    res.json({ syncAktiviert: isDbAktiviert() });
+  });
+
   app.use('/api', buildContentRoutes(store));
   app.use('/api', buildExamRoutes(store));
 

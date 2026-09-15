@@ -7,7 +7,7 @@
 
 - [OPS-001] Installierten Windows-Installer real durchtesten (Installation + App-Start + Klicktest) (hoch)
 - [OPS-002] Fachlicher Inhalts-Review durch Menschen mit Berufspraxis je Fachrichtung – KI-Review bereits erfolgt (`18-Fachreview-Fragenkatalog.md`) (hoch)
-- [FE-001] Login-/Registrierungs-UI im Frontend + Umschaltung lokal/synchronisiert (Backend-Grundlage steht seit `DB-001`) (mittel)
+- [FE-001] Login-/Registrierungs-UI im Frontend + Umschaltung lokal/synchronisiert – implementiert, wartet auf Browser-Test durch Sven mit echter DB (mittel) → Brief: FE-001-login-sync-ui.md
 - [FE-002] UX-Feinschliff nach weiterem Nutzerfeedback (mittel)
 - [BE-001] Push-Benachrichtigungen (Web-Push) – Backend-Persistenz ist seit `DB-001` vorhanden (mittel)
 - [CONTENT-001] Autoren-Weboberfläche statt Fragenpflege per Excel/CSV (niedrig)

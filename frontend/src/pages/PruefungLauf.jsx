@@ -12,6 +12,7 @@ export default function PruefungLauf() {
   const [aktuell, setAktuell] = useState(0);
   const [freitext, setFreitext] = useState('');
   const [abgabe, setAbgabe] = useState(false);
+  const [fehler, setFehler] = useState('');
 
   const zeitlimitSek = (konfig?.zeitlimitMin || 60) * 60;
   const startAm = store.startAm ? new Date(store.startAm).getTime() : Date.now();
@@ -61,6 +62,7 @@ export default function PruefungLauf() {
   async function abgeben() {
     if (abgabe) return;
     setAbgabe(true);
+    setFehler('');
     try {
       // Freitext der aktuellen Frage übernehmen
       const antwortenFinal = { ...antworten };
@@ -82,7 +84,7 @@ export default function PruefungLauf() {
       setExamState({ ergebnis, antworten: antwortenFinal });
       navigate('/pruefung/ergebnis');
     } catch (e) {
-      alert(e.message);
+      setFehler(e.message);
       setAbgabe(false);
     }
   }
@@ -108,6 +110,8 @@ export default function PruefungLauf() {
       <div className="progress mb-2">
         <div style={{ width: `${((aktuell + 1) / fragen.length) * 100}%` }} />
       </div>
+
+      {fehler && <div className="alert alert-danger">{fehler}</div>}
 
       <div className="card">
         <div className="flex-between wrap mb-2">

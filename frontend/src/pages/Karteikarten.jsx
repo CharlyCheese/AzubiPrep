@@ -2,21 +2,40 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useApi } from '../utils/useApi.js';
 import { api } from '../api/client.js';
-import { flashcardStore, profileStore } from '../store/localStore.js';
-import { optionenListe } from '../utils/fragen.js';
+import { flashcardStore, profileStore, kartenOptionenStore } from '../store/localStore.js';
+import { optionenListe, BUCHSTABEN } from '../utils/fragen.js';
+import { mischeOptionen } from '../utils/optionen.js';
 import { korrekteAntwortText } from '../utils/antworten.js';
+
+const STAPEL_PRESETS = [10, 25, 50];
 
 export default function Karteikarten() {
   const profil = profileStore.get();
   const fr = profil.fachrichtung || 'FIAE';
   const { daten: fragen, laden } = useApi(() => api.get(`/fragen?fachrichtung=${fr}`), [fr]);
 
+  // Alle aktuell fälligen Karten (unabhängig von der gewählten Stapelgröße)
+  // und der tatsächlich bearbeitete Stapel dieser Sitzung.
+  const [alleFaelligen, setAlleFaelligen] = useState([]);
   const [faellige, setFaellige] = useState([]);
   const [index, setIndex] = useState(0);
   const [umgedreht, setUmgedreht] = useState(false);
   const [zusammenfassung, setZusammenfassung] = useState({ leicht: 0, mittel: 0, schwer: 0, gesamt: 0 });
 
-  // Karten aktualisieren, sobald Fragen geladen sind
+  // Stapelgröße: 0 = alle fälligen Karten, sonst feste Anzahl (z. B. 10/25/50).
+  const [anzahl, setAnzahlState] = useState(() => kartenOptionenStore.get().anzahl || 0);
+  function stapelgroesseWaehlen(n) {
+    const wert = Math.max(0, Number(n) || 0);
+    setAnzahlState(wert);
+    kartenOptionenStore.set({ anzahl: wert });
+  }
+
+  // Gemischte Optionen + eigene Auswahl der aktuell gezeigten Karte
+  // (wie im Quizmodus: pro Karte einmalig gemischt, bei Kartenwechsel neu).
+  const [gemischt, setGemischt] = useState(null);
+  const [auswahl, setAuswahl] = useState([]);
+
+  // Alle fälligen Karten ermitteln, sobald Fragen geladen sind.
   useEffect(() => {
     if (!fragen) return;
     const alleKarten = flashcardStore.alle(false); // alle bekannten Karten
@@ -29,32 +48,97 @@ export default function Karteikarten() {
       .map((f) => ({ frageId: f.id, box: 1, wiederholungen: 0 }));
 
     const jetzt = new Date().toISOString();
-    const faellige = alleKarten
+    const faelligeAlle = alleKarten
       .filter((k) => frageIds.has(k.frageId))
       .filter((k) => !k.faelligAm || k.faelligAm <= jetzt);
 
-    const deck = [...neueKarten, ...faellige].sort((a, b) => a.box - b.box);
-    setFaellige(deck);
+    const deck = [...neueKarten, ...faelligeAlle].sort((a, b) => a.box - b.box);
+    setAlleFaelligen(deck);
+  }, [fragen]);
+
+  // Session-Stapel aus den fälligen Karten schneiden, sobald sich die
+  // fälligen Karten oder die gewählte Stapelgröße ändern. Die restlichen
+  // fälligen Karten bleiben unangetastet und erscheinen beim nächsten Mal.
+  useEffect(() => {
+    const stapel = anzahl > 0 ? alleFaelligen.slice(0, anzahl) : alleFaelligen;
+    setFaellige(stapel);
     setIndex(0);
     setUmgedreht(false);
-    const stats = { leicht: 0, mittel: 0, schwer: 0, gesamt: deck.length };
-    deck.forEach((k) => {
-      const frage = fragen.find((f) => f.id === k.frageId);
+    const stats = { leicht: 0, mittel: 0, schwer: 0, gesamt: stapel.length };
+    stapel.forEach((k) => {
+      const frage = fragen?.find((f) => f.id === k.frageId);
       if (frage) stats[frage.schwierigkeit] = (stats[frage.schwierigkeit] || 0) + 1;
     });
     setZusammenfassung(stats);
-  }, [fragen]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [alleFaelligen, anzahl]);
+
+  const karte = faellige[index];
+  const frage = fragen && karte ? fragen.find((f) => f.id === karte.frageId) : null;
+
+  // Optionen neu mischen und Auswahl zuruecksetzen, sobald eine neue Karte
+  // angezeigt wird (Kartenwechsel = anderer frageId).
+  useEffect(() => {
+    if (!frage) { setGemischt(null); setAuswahl([]); return; }
+    setGemischt(mischeOptionen(frage));
+    setAuswahl([]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [frage?.id]);
 
   if (laden) return <div className="loading"><div className="spinner" />Lade Karteikarten …</div>;
 
-  const karte = faellige[index];
+  const stapelAuswahl = (
+    <div className="card mb-2">
+      <div className="flex-between wrap">
+        <div>
+          <h2 className="mb-0" style={{ fontSize: '1.05rem' }}>Stapelgröße</h2>
+          <p className="small text-muted mt-0 mb-0">
+            {alleFaelligen.length} Karte(n) insgesamt fällig – wie viele davon jetzt bearbeiten?
+          </p>
+        </div>
+        <div className="flex wrap" style={{ gap: 6 }}>
+          {STAPEL_PRESETS.map((n) => (
+            <button
+              key={n}
+              className={`btn btn-sm ${anzahl === n ? 'btn-primary' : 'btn-ghost'}`}
+              onClick={() => stapelgroesseWaehlen(n)}
+            >
+              {n}
+            </button>
+          ))}
+          <button
+            className={`btn btn-sm ${anzahl === 0 ? 'btn-primary' : 'btn-ghost'}`}
+            onClick={() => stapelgroesseWaehlen(0)}
+          >
+            Alle
+          </button>
+          <input
+            type="number"
+            min={1}
+            className="input"
+            style={{ width: 90 }}
+            placeholder="Andere…"
+            value={anzahl > 0 && !STAPEL_PRESETS.includes(anzahl) ? anzahl : ''}
+            onChange={(e) => stapelgroesseWaehlen(e.target.value)}
+            title="Eigene Anzahl eingeben"
+          />
+        </div>
+      </div>
+    </div>
+  );
+
   if (!karte) {
     return (
       <div>
         <h1 className="mb-0">Karteikarten</h1>
         <p className="text-muted mt-0">Lerne mit Spaced Repetition – Karten kommen automatisch zum idealen Zeitpunkt zurück.</p>
+        {alleFaelligen.length > 0 && stapelAuswahl}
         <div className="card">
-          <div className="empty">Keine Karten fällig 🎉 – neue Fragen erscheinen nach dem ersten Quiz automatisch im Deck.</div>
+          <div className="empty">
+            {alleFaelligen.length > 0
+              ? 'Stapel für diese Sitzung erledigt 🎉 – die restlichen fälligen Karten warten beim nächsten Besuch.'
+              : 'Keine Karten fällig 🎉 – neue Fragen erscheinen nach dem ersten Quiz automatisch im Deck.'}
+          </div>
           <div className="flex wrap" style={{ justifyContent: 'center' }}>
             <Link className="btn btn-primary" to="/lernen">Zum Lernbereich</Link>
           </div>
@@ -63,9 +147,44 @@ export default function Karteikarten() {
     );
   }
 
-  const frage = fragen.find((f) => f.id === karte.frageId);
   if (!frage) return <div className="empty">Frage nicht gefunden.</div>;
-  const optionen = optionenListe(frage);
+  const optionenOriginal = optionenListe(frage);
+  const optionenAnzeige = gemischt?.liste || optionenOriginal;
+
+  const korrektBuchstaben = frage.typ !== 'FT'
+    ? (frage.antwort || '').toUpperCase().split(',').map((s) => s.trim()).filter(Boolean)
+    : [];
+  // Auswahl (Anzeige-Buchstaben) auf Original-Buchstaben zurückrechnen,
+  // damit der Abgleich mit der Musterlösung unabhängig von der Mischung ist.
+  const zuOriginal = gemischt?.anzeigeZuOriginal || {};
+  const auswahlOriginal = auswahl.map((l) => zuOriginal[l] || l);
+  const richtigBeantwortet = auswahlOriginal.length > 0
+    && auswahlOriginal.length === korrektBuchstaben.length
+    && korrektBuchstaben.every((b) => auswahlOriginal.includes(b));
+
+  /** Lesbarer Text zu einer Menge von (Original-)Buchstaben, z. B. "B) Text". */
+  function buchstabenText(buchstaben) {
+    const optionen = frage.optionen || [];
+    return buchstaben
+      .map((b) => {
+        const idx = BUCHSTABEN.indexOf(b);
+        const text = optionen[idx] || '';
+        return text ? `${b}) ${text}` : b;
+      })
+      .join('   ');
+  }
+
+  function toggleAuswahl(buchstabe, e) {
+    e.stopPropagation(); // Auswahl darf die Karte nicht umdrehen
+    // Eine Antwort anklicken dreht die Karte direkt zur Lösung – bei
+    // Multiple-Choice-Fragen lässt sich die Auswahl danach noch anpassen.
+    if (frage.typ === 'SC') {
+      setAuswahl([buchstabe]);
+    } else {
+      setAuswahl((prev) => (prev.includes(buchstabe) ? prev.filter((l) => l !== buchstabe) : [...prev, buchstabe]));
+    }
+    setUmgedreht(true);
+  }
 
   function bewerten(bewertung) {
     flashcardStore.review(frage.id, bewertung);
@@ -83,9 +202,13 @@ export default function Karteikarten() {
       <header className="main-header">
         <div>
           <h1 className="mb-0">Karteikarten</h1>
-          <p className="text-muted mt-0">Deck ({faellige.length} Karten) · {fr}</p>
+          <p className="text-muted mt-0">
+            Stapel ({faellige.length} von {alleFaelligen.length} fälligen Karten) · {fr}
+          </p>
         </div>
       </header>
+
+      {stapelAuswahl}
 
       <div className="flex wrap mb-2">
         <div className="badge badge-neutral">Leicht: {zusammenfassung.leicht}</div>
@@ -98,18 +221,41 @@ export default function Karteikarten() {
           <div className="flashcard-face">
             <span className="small text-muted mb-2">Frage · Box {karte.box} · {frage.schwierigkeit}</span>
             <h3>{frage.frage}</h3>
-            {optionen.length > 0 && (
+            {optionenAnzeige.length > 0 && (
               <div className="mt-2">
-                {optionen.map((o) => (
-                  <div key={o.buchstabe} className="small">{o.buchstabe}) {o.text}</div>
+                {optionenAnzeige.map((o) => (
+                  <div
+                    key={o.buchstabe}
+                    className={`option-row ${auswahl.includes(o.buchstabe) ? 'selected' : ''}`}
+                    role="button"
+                    tabIndex={0}
+                    onClick={(e) => toggleAuswahl(o.buchstabe, e)}
+                    onKeyDown={(e) => { if (e.key === 'Enter') toggleAuswahl(o.buchstabe, e); }}
+                  >
+                    <span className="option-letter">{o.buchstabe}</span>
+                    <span>{o.text}</span>
+                  </div>
                 ))}
               </div>
             )}
-            {!umgedreht && <p className="text-muted small mt-2">👆 Karte antippen für die Lösung</p>}
+            {!umgedreht && (
+              <p className="text-muted small mt-2">
+                {optionenAnzeige.length > 0 ? '👆 Antwort auswählen oder Karte antippen für die Lösung' : '👆 Karte antippen für die Lösung'}
+              </p>
+            )}
           </div>
           <div className="flashcard-face flashcard-back">
             <span className="small text-muted mb-2">Lösung</span>
-            <div className="alert alert-success mb-2"><strong>{korrekteAntwortText(frage)}</strong></div>
+            {optionenAnzeige.length > 0 ? (
+              <div className="mb-2">
+                <div className="alert alert-success mb-2"><strong>Richtige Antwort: {buchstabenText(korrektBuchstaben)}</strong></div>
+                {auswahlOriginal.length > 0 && !richtigBeantwortet && (
+                  <div className="alert alert-danger mb-0">Deine Antwort: {buchstabenText(auswahlOriginal)}</div>
+                )}
+              </div>
+            ) : (
+              <div className="alert alert-success mb-2"><strong>{korrekteAntwortText(frage)}</strong></div>
+            )}
             {frage.erklaerung && <p className="small">{frage.erklaerung}</p>}
           </div>
         </div>

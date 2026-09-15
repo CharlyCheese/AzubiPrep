@@ -101,4 +101,9 @@ export const gamificationStore = {
     writeGame({ xp: 0, eventLog: {}, badges: {}, modulStatus: {}, missionen: {}, ziele: { tag: 10, woche: 3 } });
     notify();
   },
+  /** Kompletten Gamification-Stand ersetzen (z. B. beim Sync-Download). */
+  replace(game) {
+    writeGame(game && typeof game === 'object' ? game : {});
+    notify();
+  },
 };

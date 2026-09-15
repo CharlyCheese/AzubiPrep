@@ -57,6 +57,10 @@ export const progressStore = {
   reset() {
     write('fortschritt', {});
   },
+  /** Kompletten Fortschritt ersetzen (z. B. beim Sync-Download). */
+  setAll(daten) {
+    write('fortschritt', daten && typeof daten === 'object' ? daten : {});
+  },
 };
 
 // ---- Prüfungsverlauf ----
@@ -72,6 +76,10 @@ export const examStore = {
   },
   reset() {
     write('pruefungen', []);
+  },
+  /** Kompletten Prüfungsverlauf ersetzen (z. B. beim Sync-Download). */
+  setAll(liste) {
+    write('pruefungen', Array.isArray(liste) ? liste : []);
   },
 };
 
@@ -177,6 +185,10 @@ export const activityStore = {
   reset() {
     write('aktivitaet', {});
   },
+  /** Komplette Aktivität ersetzen (z. B. beim Sync-Download). */
+  setAll(daten) {
+    write('aktivitaet', daten && typeof daten === 'object' ? daten : {});
+  },
 };
 
 // ---- Eigene Tagesplanung (Kalender) ----
@@ -273,6 +285,10 @@ export const flashcardStore = {
   reset() {
     write('karten', {});
   },
+  /** Alle Karteikarten ersetzen (z. B. beim Sync-Download). */
+  setAll(daten) {
+    write('karten', daten && typeof daten === 'object' ? daten : {});
+  },
 };
 
 function addDays(tage) {
@@ -306,6 +322,20 @@ export const quizOptionenStore = {
   },
 };
 
+// ---- Karteikarten-Optionen (Stapelgröße je Sitzung) ----
+// anzahl: 0 = alle fälligen Karten, sonst feste Stapelgröße (z. B. 10/25/50).
+export const kartenOptionenStore = {
+  get() {
+    return read('kartenoptionen', { anzahl: 0 });
+  },
+  set(optionen) {
+    write('kartenoptionen', { ...this.get(), ...optionen });
+  },
+  reset() {
+    write('kartenoptionen', { anzahl: 0 });
+  },
+};
+
 export function resetAll() {
   write('notizen', []);
   progressStore.reset();
@@ -314,5 +344,6 @@ export function resetAll() {
   flashcardStore.reset();
   planStore.reset();
   quizOptionenStore.reset();
+  kartenOptionenStore.reset();
   gamificationStore.reset();
 }

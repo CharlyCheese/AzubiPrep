@@ -1,6 +1,7 @@
 import { NavLink, Outlet } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext.jsx';
 import ToastHost from '../components/ToastHost.jsx';
+import WillkommenModal from '../components/WillkommenModal.jsx';
 
 const NAV = [
   { to: '/', icon: '🏠', label: 'Dashboard', end: true },
@@ -21,6 +22,7 @@ export default function Layout() {
 
   return (
     <div className="app-layout">
+      <WillkommenModal />
       <aside className="sidebar">
         <div className="logo">
           <span className="logo-badge">A</span>

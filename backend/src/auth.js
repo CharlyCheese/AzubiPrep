@@ -52,6 +52,22 @@ export function emailGueltig(email) {
   return typeof email === 'string' && email.length <= 254 && EMAIL_MUSTER.test(email);
 }
 
+const PASSWORT_MIN_LAENGE = 8;
+const PASSWORT_MAX_LAENGE = 200;
+
+/**
+ * Passwort-Komplexität für die Registrierung: Mindestlänge plus je mindestens
+ * ein Klein-/Großbuchstabe, eine Ziffer und ein Sonderzeichen. Bewusst NUR
+ * bei der Registrierung genutzt (nicht beim Login), damit Bestandsnutzer mit
+ * einem vor dieser Regel angelegten, einfacheren Passwort nicht ausgesperrt
+ * werden.
+ */
 export function passwortGueltig(passwort) {
-  return typeof passwort === 'string' && passwort.length >= 8 && passwort.length <= 200;
+  if (typeof passwort !== 'string') return false;
+  if (passwort.length < PASSWORT_MIN_LAENGE || passwort.length > PASSWORT_MAX_LAENGE) return false;
+  const hatKleinbuchstabe = /[a-z]/.test(passwort);
+  const hatGrossbuchstabe = /[A-Z]/.test(passwort);
+  const hatZiffer = /[0-9]/.test(passwort);
+  const hatSonderzeichen = /[^A-Za-z0-9]/.test(passwort);
+  return hatKleinbuchstabe && hatGrossbuchstabe && hatZiffer && hatSonderzeichen;
 }

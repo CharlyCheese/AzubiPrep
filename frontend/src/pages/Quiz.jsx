@@ -36,6 +36,7 @@ export default function Quiz() {
   const [verlauf, setVerlauf] = useState([]); // Ergebnisse aller beantworteten Fragen
   const [nurFehler, setNurFehler] = useState(false);
   const [sessionKey, setSessionKey] = useState(0);
+  const [pruefFehler, setPruefFehler] = useState('');
 
   // Umfang des Quizdurchlaufs: verfuegbare und tatsaechlich gestellte Fragen
   const umfang = quizUmfang(fragenRaw || [], { schwierigkeit, anzahl });
@@ -136,6 +137,7 @@ export default function Quiz() {
     }
     if (!antwort) return;
 
+    setPruefFehler('');
     try {
       const erg = await api.post(`/fragen/${frage.id}/pruefen`, { antwort });
       setFeedback(erg);
@@ -176,7 +178,7 @@ export default function Quiz() {
         { frage, richtig: erg.richtig, nutzerAntwort: antwort, erwartet: erg.erwartet, erklaerung: erg.erklaerung },
       ]);
     } catch (e) {
-      alert(e.message);
+      setPruefFehler(e.message);
     }
   }
 
@@ -245,6 +247,8 @@ export default function Quiz() {
       <div className="progress mb-2">
         <div style={{ width: `${((position + (feedback ? 1 : 0)) / reihenfolge.length) * 100}%` }} />
       </div>
+
+      {pruefFehler && <div className="alert alert-danger">{pruefFehler}</div>}
 
       {position < reihenfolge.length ? (
         <div className="card">

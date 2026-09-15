@@ -64,6 +64,11 @@ Antwort enthält `token` und `user`. Login entsprechend über
 ## Datenmodell
 
 - `users`: E-Mail (eindeutig), gehashtes Passwort (bcrypt), Fachrichtung.
+  Bei der **Registrierung** gilt eine Passwort-Mindestanforderung: mind. 8
+  Zeichen, mit Groß- und Kleinbuchstaben, einer Zahl und einem Sonderzeichen
+  (siehe `backend/src/auth.js`, `passwortGueltig`). Der **Login** prüft diese
+  Komplexität bewusst nicht erneut, damit ein vor dieser Regel angelegtes,
+  einfacheres Bestandspasswort weiter funktioniert.
 - `user_state`: ein Datensatz je Nutzer + Store-Name (`profil`,
   `fortschritt`, `karteikarten`, `pruefungen`, `aktivitaet`,
   `gamification`), Inhalt als JSON – spiegelt die bestehenden
