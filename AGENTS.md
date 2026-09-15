@@ -2,7 +2,12 @@
 
 Projektziel: **PWA zur IHK-Prüfungsvorbereitung für Fachinformatiker** (FIAE,
 FISI, DPA, DVK). Stack: React (Vite), Node/Express, Inhalte als CSV
-(Excel-editierbar), keine Datenbank, kein Login, kein Docker im MVP.
+(Excel-editierbar), kein Docker im MVP.
+
+Datenbank/Login sind seit `DB-001` (siehe `docs/agent-briefs/`) **optional**
+vorhanden: ohne `DATABASE_URL` läuft die App weiterhin komplett offline mit
+`localStorage`; ist eine PostgreSQL-Verbindung konfiguriert, sind
+Registrierung/Login/Sync aktiv (siehe `docs/19-Datenbank-Login.md`).
 
 ## Grundregeln
 
@@ -10,15 +15,22 @@ FISI, DPA, DVK). Stack: React (Vite), Node/Express, Inhalte als CSV
    Task-Brief reicht. Nur die im Brief genannten Dateien anfassen.
 2. **Task-Brief-Pflicht**: Jede Änderung erfolgt über einen Brief in
    `docs/agent-briefs/`. Erst Brief lesen, dann ändern.
-3. **Review-Pflicht**: Nach jedem abgeschlossenen Schritt reviewt ein anderer
-   (frischer) Agent das Ergebnis gegen die Abnahme-Kriterien.
-4. **Keine Löschungen fremder Bereiche**: Der Ordner `Docs/` (Spielprojekt)
+3. **Review-Pflicht (empfohlen bei größeren Änderungen)**: Ein frischer
+   Subagent (eigener Kontext, kein geteilter Chat-Verlauf) prüft gegen die
+   Abnahme-Kriterien des Briefs.
+4. **Archivierungs-Pflicht (bindend, kein Ermessen)**: Kein Task gilt als
+   erledigt, bevor `node scripts/check-agent-briefs.mjs` grün ist – siehe
+   `ORCHESTRATOR.md` Abschnitt 3+4. Das ist keine Empfehlung, sondern eine
+   Voraussetzung dafür, die Arbeit dem Nutzer als "fertig" zu melden.
+5. **Keine Löschungen fremder Bereiche**: Der Ordner `Docs/` (Spielprojekt)
    im übergeordneten Verzeichnis gehört nicht zu AzubiPrep und wird nie
    verändert.
-5. **Feste Pfade sind tabu**: API-Basis-URL, Ports und Datenpfade kommen aus
-   Umgebungsvariablen (`VITE_API_BASE_URL`, `PORT`) mit sinnvollen Defaults.
-6. **Nur bestätigte Libraries**: React, React Router, Vite, Express, cors.
-   Keine zusätzlichen Abhängigkeiten ohne Orchestrator-Freigabe.
+6. **Feste Pfade sind tabu**: API-Basis-URL, Ports, Datenpfade und
+   Datenbank-Zugangsdaten kommen aus Umgebungsvariablen (`.env`, siehe
+   `.env.example`) mit sinnvollen Defaults – nie hart kodiert.
+7. **Nur bestätigte Libraries**: React, React Router, Vite, Express, cors,
+   pg, bcryptjs, jsonwebtoken, dotenv. Keine zusätzlichen Abhängigkeiten ohne
+   Rücksprache.
 
 ## Sprach- & Code-Konventionen
 
@@ -52,6 +64,6 @@ Excel/CSV ──> backend liest beim Start ──> REST /api/*
 Frontend (React) ──> api/repositories ──> Fortschritt in localStorage
 ```
 
-Keine SQL-Datenbank, kein Auth/Login, keine Persistenz im Backend.
-Prüfungslogik (Generierung/Auswertung) liegt bewusst im Backend
-(`POST /api/exam/generate`, `POST /api/exam/evaluate`).
+Persistenz im Backend ist optional (siehe oben, `DB-001`): ohne
+`DATABASE_URL` unverändert stateless. Prüfungslogik (Generierung/Auswertung)
+liegt bewusst im Backend (`POST /api/exam/generate`, `POST /api/exam/evaluate`).
