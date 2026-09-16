@@ -29,8 +29,8 @@ installierbare Windows-Desktop-App.
 ## Über das Projekt
 
 AzubiPrep unterstützt Auszubildende der vier Fachinformatiker-Fachrichtungen
-bei der Vorbereitung auf die IHK-Abschlussprüfung: **500 Prüfungsfragen** in
-**18 Modulen**, aufbereitet als interaktives Quiz, Karteikarten-Training und
+bei der Vorbereitung auf die IHK-Abschlussprüfung: **1623 Prüfungsfragen** in
+**19 Modulen**, aufbereitet als interaktives Quiz, Karteikarten-Training und
 zeitlimitierte Prüfungssimulation mit automatischer Auswertung.
 
 Bewusste Architektur-Entscheidung für den MVP: **kein erzwungener
@@ -50,12 +50,21 @@ dass der lokale Modus dafür umgebaut wurde.
 |---|---|
 | ![Dashboard](screenshots/dashboard.png) | ![Lernbereich](screenshots/lernbereich.png) |
 | **Dashboard** – XP, Tages-/Wochenziel, Missionen | **Lernbereich** – Module je Fachrichtung |
-| ![Lernreise](screenshots/lernreise.png) | ![Prüfungssimulation](screenshots/pruefungssimulation.png) |
-| **Lernreise** – Stationenweg durch die Module | **Prüfungssimulation** – Zeitlimit & Themengewichtung |
-| ![Statistik & Abzeichen](screenshots/statistik-abzeichen.png) | ![Lernkalender](screenshots/lernkalender.png) |
-| **Statistik & Abzeichen** – Fortschritt & Gamification | **Lernkalender** – Wiederholungsplan & eigene Lerninhalte |
-| ![Notizen](screenshots/notizen.png) | |
-| **Lernnotizen** – lokal, export-/importierbar als `.txt` | |
+| ![Karteikarten](screenshots/karteikarten.png) | ![Prüfungssimulation](screenshots/pruefungssimulation.png) |
+| **Karteikarten** – Leitner-System, Ziffern statt Buchstaben | **Prüfungssimulation** – Zeitlimit & Themengewichtung |
+| ![Statistik & Abzeichen](screenshots/statistik-abzeichen.png) | ![Lernreise](screenshots/lernreise.png) |
+| **Statistik & Abzeichen** – Fortschritt & Gamification | **Lernreise** – Stationenweg durch die Module |
+| ![Lernkalender](screenshots/lernkalender.png) | ![Notizen](screenshots/notizen.png) |
+| **Lernkalender** – Wiederholungsplan & eigene Lerninhalte | **Lernnotizen** – lokal, export-/importierbar als `.txt` |
+| ![Einstellungen](screenshots/einstellungen.png) | |
+| **Einstellungen & Profil** – Lernprofil, optionaler Konto-Sync, Darstellung | |
+
+**Responsive** – jede Seite fällt auf schmalen Bildschirmen sauber auf eine Spalte zurück:
+
+| | |
+|---|---|
+| ![Lernbereich mobil](screenshots/lernbereich-mobile.png) | ![Prüfungssimulation mobil](screenshots/pruefungssimulation-mobile.png) |
+| **Lernbereich** (mobil, helles Design) | **Prüfungssimulation** (mobil, helles Design) |
 
 ## Funktionsumfang
 
@@ -191,12 +200,18 @@ Die tagesaktuelle Task-Liste (was offen ist, was erledigt ist) führt
 
 Offene Punkte mit höchster Priorität:
 - Installierten Windows-Installer real durchtesten (Installation, App-Start, Klicktest)
-- Fachlicher Inhalts-Review der 500 Fragen durch Fachkundige je Fachrichtung (KI-Review ist bereits erfolgt)
+- Fachlicher Inhalts-Review der Fragen durch Fachkundige je Fachrichtung (KI-Review der ursprünglichen 500 ist erfolgt, 1123 neu importierte Fragen aus dem Zusatz-Fragenkatalog stehen noch aus)
 
 Weitere offene Punkte: UX-Feinschliff nach weiterem Nutzerfeedback,
 Push-Benachrichtigungen, Autoren-Weboberfläche statt Excel/CSV-Pflege,
 KI-Integration prüfen, Windows-Installer signieren.
 
+## Autor
+
+Entwickelt von **Sven Weyers** ([@CharlyCheese](https://github.com/CharlyCheese)).
+
 ## Lizenz
 
-Veröffentlicht unter der [MIT-Lizenz](LICENSE).
+Veröffentlicht unter der [MIT-Lizenz](LICENSE) – Weiterverwendung ist
+erlaubt, der Copyright-Hinweis und der Lizenztext müssen dabei erhalten
+bleiben.

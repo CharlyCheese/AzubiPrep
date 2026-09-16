@@ -3,7 +3,8 @@ node_modules/
 
 # Build-Ausgaben (per npm run build / npm run dist neu erzeugbar)
 frontend/dist/
-desktop/dist/
+Installer/
+dist/
 
 # Logs
 *.log

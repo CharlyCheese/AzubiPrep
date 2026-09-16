@@ -17,7 +17,7 @@
     "appId": "de.sven-weyers.azubiprep",
     "productName": "AzubiPrep",
     "directories": {
-      "output": "dist"
+      "output": "../Installer"
     },
     "files": [
       "main.js",
