@@ -6,7 +6,6 @@
 > (Brief-Link nur, sobald der Brief tatsächlich angelegt wurde.)
 
 - [BE-001] Push-Benachrichtigungen (Web-Push) – Backend-Persistenz ist seit `DB-001` vorhanden (mittel)
-- [BE-003] In-App-Feedback-Kanal ("Frage melden") für falsche/unklare Fragen – Ergänzung zu OPS-002, kein Ersatz für Review; kann jetzt direkt `review_status = 'gemeldet'` auf der Frage in der Content-DB (`DB-002`, seit 2026-09-16 umgesetzt) setzen (niedrig)
 - [OPS-003] KI-Integration prüfen: lokal vs. über Internet (niedrig) —
   Idee (Sven, 2026-09-15): lokales Modell direkt in der App bündeln, z. B.
   Qwen 3B + RAG, gemeinsam mit dem Installer herunterladbar, lauffähig auf

@@ -148,3 +148,34 @@ ALTER TABLE users ADD CONSTRAINT users_rolle_check CHECK (rolle IN ('lernende', 
 ALTER TABLE questions DROP CONSTRAINT IF EXISTS questions_review_status_check;
 ALTER TABLE questions ADD CONSTRAINT questions_review_status_check
   CHECK (review_status IN ('ungeprueft', 'geprueft', 'gemeldet', 'korrigiert', 'deaktiviert'));
+
+-- In-App-Feedback (BE-003): Nutzer können eine Frage im Quiz als
+-- falsch/unklar melden (Login vorausgesetzt, Grund optional). Setzt
+-- questions.review_status auf 'gemeldet' – Ergänzung zum verpflichtenden
+-- Fachreview (ORCHESTRATOR.md Abschnitt 1), kein Ersatz dafür.
+CREATE TABLE IF NOT EXISTS fragen_meldungen (
+  id            BIGSERIAL PRIMARY KEY,
+  frage_id      TEXT NOT NULL,
+  grund         TEXT NOT NULL DEFAULT '',
+  gemeldet_von  TEXT NOT NULL,
+  gemeldet_am   TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+
+CREATE INDEX IF NOT EXISTS idx_fragen_meldungen_frage ON fragen_meldungen (frage_id);
+
+-- Generische Lösung für die GRANT-Falle (traf uns bei DB-002 und
+-- CONTENT-001 je einmal): wird schema.sql über pgAdmin als Superuser statt
+-- per psql als azubiprep_app ausgeführt, gehören neue Tabellen dem
+-- Superuser und azubiprep_app bekommt "keine Berechtigung für Tabelle
+-- ...". Statt das bei jeder künftigen neuen Tabelle erneut manuell zu
+-- fixen, deckt dieser Block pauschal alle bestehenden UND künftigen
+-- Tabellen/Sequenzen im public-Schema ab – und tut nichts, falls die
+-- Rolle (noch) nicht existiert oder schema.sql ohnehin schon als
+-- azubiprep_app lief (dann ist der GRANT einfach redundant, kein Fehler).
+DO $$
+BEGIN
+  IF EXISTS (SELECT 1 FROM pg_roles WHERE rolname = 'azubiprep_app') THEN
+    EXECUTE 'GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO azubiprep_app';
+    EXECUTE 'GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO azubiprep_app';
+  END IF;
+END $$;

@@ -120,6 +120,25 @@ export default function Autoren() {
     }
   }
 
+  // CONTENT-004: manuelles Als-geprüft-Markieren, bewusst nur für 'admin'
+  // (Backend erzwingt das ebenfalls – diese Sperre hier ist nur für eine
+  // verständliche Oberfläche statt eines rohen 403 nach Klick).
+  async function alsGeprueftMarkieren() {
+    if (!ausgewaehlt) return;
+    setSpeichern(true);
+    setMeldung('');
+    try {
+      const aktualisiert = await api.put(`/admin/questions/${ausgewaehlt.id}`, { geprueft: true });
+      setAusgewaehlt(aktualisiert);
+      setReloadKey((k) => k + 1);
+      setMeldung('Als geprüft markiert ✓');
+    } catch (err) {
+      setMeldung(`Fehler: ${err.message}`);
+    } finally {
+      setSpeichern(false);
+    }
+  }
+
   if (!auth?.token) {
     return (
       <div>
@@ -303,11 +322,18 @@ export default function Autoren() {
                 <button type="submit" className="btn btn-primary" disabled={speichern}>Speichern</button>
                 <button type="button" className="btn btn-ghost" onClick={() => setAusgewaehlt(null)} disabled={speichern} style={{ marginLeft: 8 }}>Abbrechen</button>
               </div>
-              {ausgewaehlt.review_status === 'deaktiviert' ? (
-                <button type="button" className="btn btn-ghost" onClick={() => statusUmschalten(false)} disabled={speichern}>Reaktivieren</button>
-              ) : (
-                <button type="button" className="btn btn-ghost" onClick={() => statusUmschalten(true)} disabled={speichern}>Deaktivieren</button>
-              )}
+              <div>
+                {rolle === 'admin' && ausgewaehlt.review_status !== 'geprueft' && ausgewaehlt.review_status !== 'deaktiviert' && (
+                  <button type="button" className="btn btn-ghost" onClick={alsGeprueftMarkieren} disabled={speichern} style={{ marginRight: 8 }}>
+                    Als geprüft markieren
+                  </button>
+                )}
+                {ausgewaehlt.review_status === 'deaktiviert' ? (
+                  <button type="button" className="btn btn-ghost" onClick={() => statusUmschalten(false)} disabled={speichern}>Reaktivieren</button>
+                ) : (
+                  <button type="button" className="btn btn-ghost" onClick={() => statusUmschalten(true)} disabled={speichern}>Deaktivieren</button>
+                )}
+              </div>
             </div>
           </form>
 

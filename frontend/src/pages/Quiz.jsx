@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { useApi } from '../utils/useApi.js';
 import { api } from '../api/client.js';
 import FrageKarte from '../components/FrageKarte.jsx';
+import FrageMelden from '../components/FrageMelden.jsx';
 import SkeletonCard from '../components/SkeletonCard.jsx';
 import XpGainIndicator from '../components/XpGainIndicator.jsx';
 import { useQuizKeyboard } from '../utils/useQuizKeyboard.js';
@@ -279,6 +280,9 @@ export default function Quiz() {
                   <button className="btn btn-primary btn-sm mt-2" onClick={weiter}>
                     {position + 1 >= reihenfolge.length ? 'Quiz beenden' : 'Nächste Frage [Enter] →'}
                   </button>
+                  <div>
+                    <FrageMelden frageId={frage.id} />
+                  </div>
                 </div>
               )}
             </div>

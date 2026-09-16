@@ -64,7 +64,8 @@ export function buildContentAdminRoutes() {
     }
   });
 
-  // Bearbeiten: Inhaltsfelder und/oder Deaktivieren/Reaktivieren.
+  // Bearbeiten: Inhaltsfelder und/oder Deaktivieren/Reaktivieren/Als-
+  // geprüft-Markieren.
   // - Jede Änderung sichert zuerst die bisherige Zeile in
   //   questions_verlauf (Fallback/Historie, siehe Brief).
   // - Ändert sich ein Inhaltsfeld, springt review_status zwingend auf
@@ -73,6 +74,11 @@ export function buildContentAdminRoutes() {
   // - `deaktiviert: true/false` im Body steuert Deaktivieren/Reaktivieren
   //   (Ersatz für DELETE); Reaktivieren setzt ebenfalls auf 'ungeprueft'
   //   zurück, damit eine reaktivierte Frage erneut geprüft wird.
+  // - `geprueft: true` im Body markiert die Frage manuell als geprüft
+  //   (CONTENT-004) – bewusst NUR für 'admin' (nicht 'autor'), da ein
+  //   Autor selbst nicht die eigene Änderung als geprüft freigeben soll.
+  //   Wird ignoriert, falls gleichzeitig Inhalt geändert oder
+  //   (de-)aktiviert wird – diese Fälle haben Vorrang (siehe unten).
   router.put('/admin/questions/:id', async (req, res, next) => {
     try {
       const { rows: bestehend } = await query('SELECT * FROM questions WHERE id = $1', [req.params.id]);
@@ -91,6 +97,10 @@ export function buildContentAdminRoutes() {
         res.status(400).json({ error: 'Ungültige Schwierigkeit' });
         return;
       }
+      if (body.geprueft === true && req.userRolle !== 'admin') {
+        res.status(403).json({ error: 'Nur Admins können Fragen als geprüft markieren' });
+        return;
+      }
 
       const neu = { ...aktuell };
       let inhaltGeaendert = false;
@@ -101,14 +111,20 @@ export function buildContentAdminRoutes() {
         }
       }
 
+      const geaendertVon = req.userId != null ? String(req.userId) : 'unbekannt';
+
       let neuerStatus = aktuell.review_status;
+      let geprueftAm = aktuell.geprueft_am;
+      let geprueftVon = aktuell.geprueft_von;
       if (body.deaktiviert === true) {
         neuerStatus = 'deaktiviert';
       } else if (body.deaktiviert === false || inhaltGeaendert) {
         neuerStatus = 'ungeprueft';
+      } else if (body.geprueft === true) {
+        neuerStatus = 'geprueft';
+        geprueftAm = new Date();
+        geprueftVon = geaendertVon;
       }
-
-      const geaendertVon = req.userId != null ? String(req.userId) : 'unbekannt';
 
       // Vor jedem Update: bisherige Zeile sichern (Fallback/Historie).
       await query(
@@ -130,8 +146,8 @@ export function buildContentAdminRoutes() {
         `UPDATE questions SET
            frage = $1, option_a = $2, option_b = $3, option_c = $4, option_d = $5,
            antwort = $6, erklaerung = $7, thema = $8, schwierigkeit = $9, quelle = $10,
-           review_status = $11, aktualisiert_am = now()
-         WHERE id = $12
+           review_status = $11, geprueft_am = $12, geprueft_von = $13, aktualisiert_am = now()
+         WHERE id = $14
          RETURNING id, fachrichtung, modul_id, thema, typ, frage,
                    option_a, option_b, option_c, option_d,
                    antwort, erklaerung, schwierigkeit, quelle,
@@ -139,7 +155,7 @@ export function buildContentAdminRoutes() {
         [
           neu.frage, neu.option_a, neu.option_b, neu.option_c, neu.option_d,
           neu.antwort, neu.erklaerung, neu.thema, neu.schwierigkeit, neu.quelle,
-          neuerStatus, aktuell.id,
+          neuerStatus, geprueftAm, geprueftVon, aktuell.id,
         ],
       );
 

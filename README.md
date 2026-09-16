@@ -107,7 +107,11 @@ die App läuft in jedem Fall auch komplett ohne Datenbank weiter (siehe
 - Optionale Autoren-Weboberfläche (`/autoren`) zur direkten Fragenpflege in
   der Content-DB: rollenbasierter Zugriff (fachrichtungsgebundene
   Autor:innen, uneingeschränkte Admins), automatische Änderungshistorie
-  als Fallback, Review-Status je Frage
+  als Fallback, Review-Status je Frage, admin-exklusiver Button zum
+  manuellen Markieren als geprüft
+- In-App-Feedback-Kanal: eingeloggte Nutzer können eine Frage direkt im
+  Quiz als falsch/unklar melden (optionaler Freitext-Grund) – Ergänzung
+  zum verpflichtenden Fachreview, kein Ersatz dafür
 
 ## Tech-Stack
 
@@ -225,11 +229,11 @@ Erledigt (Auszug, vollständig in [`DONE.md`](docs/agent-briefs/DONE.md)):
 Windows-Installer real installiert und getestet, strukturierter KI-Fachreview
 auf den kompletten Fragenbestand (1623 Fragen) angewendet, optionale
 Content-Datenbank mit CSV-Fallback, Autoren-Weboberfläche zur
-Fragenpflege.
+Fragenpflege, In-App-Feedback-Kanal ("Frage melden"), admin-exklusives
+manuelles Markieren als geprüft.
 
-Offene Punkte: In-App-Feedback-Kanal ("Frage melden"), Push-
-Benachrichtigungen, KI-Integration prüfen (lokal vs. Internet),
-Windows-Installer signieren, Auto-Update für die Desktop-App.
+Offene Punkte: Push-Benachrichtigungen, KI-Integration prüfen (lokal vs.
+Internet), Windows-Installer signieren, Auto-Update für die Desktop-App.
 
 ## Autor
 
