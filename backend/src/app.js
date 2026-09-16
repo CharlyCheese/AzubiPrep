@@ -8,6 +8,7 @@ import { buildContentRoutes } from './routes/content.routes.js';
 import { buildExamRoutes } from './routes/exam.routes.js';
 import { buildAuthRoutes } from './routes/auth.routes.js';
 import { buildSyncRoutes } from './routes/sync.routes.js';
+import { buildContentAdminRoutes } from './routes/content-admin.routes.js';
 import { isDbAktiviert } from './db.js';
 
 export function createApp(store) {
@@ -36,6 +37,10 @@ export function createApp(store) {
   if (isDbAktiviert()) {
     app.use('/api', buildAuthRoutes());
     app.use('/api', buildSyncRoutes());
+    // CONTENT-001: Autoren-Endpunkte greifen direkt auf die questions-
+    // Tabelle zu, brauchen also zwingend eine DB (macht ohne DB ohnehin
+    // keinen Sinn, da dann per Definition der CSV-Fallback aktiv ist).
+    app.use('/api', buildContentAdminRoutes());
   }
 
   app.use('/api', (req, res) => {

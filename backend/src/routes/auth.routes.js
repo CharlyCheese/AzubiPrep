@@ -45,12 +45,12 @@ export function buildAuthRoutes() {
       const ergebnis = await query(
         `INSERT INTO users (email, password_hash, fachrichtung)
          VALUES ($1, $2, $3)
-         RETURNING id, email, fachrichtung`,
+         RETURNING id, email, fachrichtung, rolle`,
         [emailNormalisiert, hash, fachrichtung || null],
       );
       const user = ergebnis.rows[0];
       const token = tokenErstellen(user);
-      res.status(201).json({ token, user: { id: user.id, email: user.email, fachrichtung: user.fachrichtung } });
+      res.status(201).json({ token, user: { id: user.id, email: user.email, fachrichtung: user.fachrichtung, rolle: user.rolle } });
     } catch (err) {
       next(err);
     }
@@ -66,7 +66,7 @@ export function buildAuthRoutes() {
 
       const emailNormalisiert = email.trim().toLowerCase();
       const ergebnis = await query(
-        'SELECT id, email, password_hash, fachrichtung FROM users WHERE email = $1',
+        'SELECT id, email, password_hash, fachrichtung, rolle FROM users WHERE email = $1',
         [emailNormalisiert],
       );
       const user = ergebnis.rows[0];
@@ -83,7 +83,7 @@ export function buildAuthRoutes() {
       }
 
       const token = tokenErstellen(user);
-      res.json({ token, user: { id: user.id, email: user.email, fachrichtung: user.fachrichtung } });
+      res.json({ token, user: { id: user.id, email: user.email, fachrichtung: user.fachrichtung, rolle: user.rolle } });
     } catch (err) {
       next(err);
     }
@@ -91,7 +91,7 @@ export function buildAuthRoutes() {
 
   router.get('/auth/me', authPflicht, async (req, res, next) => {
     try {
-      const ergebnis = await query('SELECT id, email, fachrichtung FROM users WHERE id = $1', [req.userId]);
+      const ergebnis = await query('SELECT id, email, fachrichtung, rolle FROM users WHERE id = $1', [req.userId]);
       const user = ergebnis.rows[0];
       if (!user) {
         res.status(404).json({ error: 'Nutzer nicht gefunden' });

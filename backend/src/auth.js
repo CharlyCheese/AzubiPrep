@@ -2,6 +2,7 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { config } from './config.js';
+import { query } from './db.js';
 
 const SALZ_RUNDEN = 12;
 
@@ -43,6 +44,32 @@ export function authPflicht(req, res, next) {
     next();
   } catch {
     res.status(401).json({ error: 'Ungültiges oder abgelaufenes Login-Token' });
+    return;
+  }
+}
+
+/**
+ * Express-Middleware (CONTENT-001, nach authPflicht einsetzen): verlangt
+ * die Rolle 'autor' oder 'admin'. Fragt die Rolle bewusst frisch aus der
+ * DB ab (nicht aus dem JWT), damit eine per SQL geänderte Rolle sofort
+ * wirkt, ohne dass sich der Nutzer neu einloggen muss. Hängt bei Erfolg
+ * `req.userRolle` und `req.userFachrichtung` für die nachgelagerten Routen
+ * an (Fachrichtungs-Scoping: 'autor' nur eigene fachrichtung + 'ALLE',
+ * 'admin' uneingeschränkt).
+ */
+export async function autorPflicht(req, res, next) {
+  try {
+    const { rows } = await query('SELECT rolle, fachrichtung FROM users WHERE id = $1', [req.userId]);
+    const user = rows[0];
+    if (!user || (user.rolle !== 'autor' && user.rolle !== 'admin')) {
+      res.status(403).json({ error: 'Keine Berechtigung für die Content-Pflege' });
+      return;
+    }
+    req.userRolle = user.rolle;
+    req.userFachrichtung = user.fachrichtung;
+    next();
+  } catch (err) {
+    next(err);
   }
 }
 

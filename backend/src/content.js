@@ -63,11 +63,15 @@ function ladeTheorie(contentDir) {
 async function loadContentFromDb(contentDir) {
   const { rows: fachrichtungenRaw } = await query('SELECT code, name, beschreibung FROM fachrichtungen');
   const { rows: modulesRaw } = await query('SELECT modul_id, fachrichtung, code, titel, beschreibung FROM modules');
+  // CONTENT-001: 'deaktiviert' blendet eine Frage aus dem aktiven
+  // Lernbestand aus (Ersatz für ein hartes DELETE über die Autoren-UI),
+  // bleibt aber in der Tabelle selbst erhalten (jederzeit reaktivierbar).
   const { rows: questionsRaw } = await query(`
     SELECT id, fachrichtung, modul_id, thema, typ, frage,
            option_a, option_b, option_c, option_d,
            antwort, erklaerung, schwierigkeit, quelle, quelldatei
     FROM questions
+    WHERE review_status != 'deaktiviert'
     ORDER BY id
   `);
 

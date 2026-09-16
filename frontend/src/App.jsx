@@ -15,6 +15,7 @@ import Suche from './pages/Suche.jsx';
 import Notizen from './pages/Notizen.jsx';
 import Einstellungen from './pages/Einstellungen.jsx';
 import Lernreise from './pages/Lernreise.jsx';
+import Autoren from './pages/Autoren.jsx';
 
 export default function App() {
   return (
@@ -34,6 +35,7 @@ export default function App() {
         <Route path="suche" element={<Suche />} />
         <Route path="notizen" element={<Notizen />} />
         <Route path="einstellungen" element={<Einstellungen />} />
+        <Route path="autoren" element={<Autoren />} />
         <Route path="lernreise" element={<Lernreise />} />
         <Route path="*" element={<Dashboard />} />
       </Route>
