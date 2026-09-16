@@ -43,6 +43,34 @@ datenrelevanten Änderungen empfohlen). **Nicht optional** ist dagegen die
 Archivierung (Abschnitt 3+4) – die läuft bei jedem als "erledigt" markierten
 Task.
 
+> **Ausnahme, seit 2026-09-16 bindend: `CONTENT`-Briefs.** Da es realistisch
+> keinen dauerhaften menschlichen Fachreview durch Praktiker je Fachrichtung
+> gibt (Entscheidung Sven, 2026-09-16), ersetzt ein strukturierter KI-Review
+> diesen Schritt – und zwar **verpflichtend, nicht optional**, für jeden
+> Brief, der neue oder geänderte Fragen ins Content-Schema einbringt. Regeln:
+> 1. Der Review läuft über einen **frisch gestarteten Subagenten ohne
+>    Gesprächskontext** (Agent-Tool) – niemals durch denselben Agenten/
+>    Kontext, der die Fragen importiert/geschrieben hat.
+> 2. Der Reviewer bekommt den Brief + die tatsächlichen neuen CSV-Zeilen
+>    (nicht nur eine Zusammenfassung) und prüft strukturiert je Modul.
+>    Ist eine Content-Datenbank im Einsatz (siehe `DB-002`), ist die
+>    Grundlage dafür der aktuelle `export-content-to-csv.mjs`-Snapshot in
+>    `content/*.csv` – die Regel selbst ändert sich dadurch nicht, nur die
+>    Herkunft der Datei. Geprüft wird:
+>    fachliche Korrektheit (mit **Websuche gegen aktuelle, autoritative
+>    Quellen** wie IHK-Rahmenlehrplan/Fachliteratur, nicht nur
+>    Plausibilität aus dem eigenen Trainingswissen), eindeutige/korrekte
+>    Musterlösung, verständliche Formulierung, keine Widersprüche.
+> 3. Bei mehr als ~50 neuen Fragen ist eine vollständige Prüfung jeder
+>    Einzelfrage unrealistisch – dann eine begründete Stichprobe je Modul
+>    (mind. 3–5 Fragen, mehr bei Modulen mit vielen neuen Fragen) plus
+>    strukturelle Vollprüfung (Duplikate, Format, Musterlösung vorhanden).
+> 4. Der Review-Befund gehört in den Brief (Abschnitt "Ergebnis" oder ein
+>    eigener Unterabschnitt), bevor `Status: done` gesetzt wird.
+> 5. Ergänzend: In-App-Feedback-Kanal für Nutzer, um falsche/unklare Fragen
+>    zu melden (siehe `BE`-Backlog) – kein Ersatz für den Review, aber ein
+>    kontinuierliches Korrektiv danach.
+
 ## 2. Ablauf eines Arbeitsschritts
 
 ```

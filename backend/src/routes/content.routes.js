@@ -146,13 +146,14 @@ export function buildContentRoutes(store) {
 
   // Fehlerbehandlung bewusst wie in exam.routes.js: try/catch + next(err),
   // zentraler fehlerHandler loggt und antwortet einheitlich (OPS-005).
-  router.post('/admin/reload', adminSchutz, rateLimiter({ maxProMinute: config.rateLimitAdminMax, keyPrefix: 'admin:' }), (req, res, next) => {
+  router.post('/admin/reload', adminSchutz, rateLimiter({ maxProMinute: config.rateLimitAdminMax, keyPrefix: 'admin:' }), async (req, res, next) => {
     try {
-      const neuerInhalt = loadContent(config.contentDir);
+      const neuerInhalt = await loadContent(config.contentDir);
       store.set(neuerInhalt);
       res.json({
         status: 'ok',
         geladenAm: neuerInhalt.geladenAm,
+        quelle: neuerInhalt.quelle,
         fragenAnzahl: neuerInhalt.gesamtFragen,
         warnungen: neuerInhalt.warnungen,
       });

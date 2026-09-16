@@ -109,3 +109,151 @@ Bekannte offene Punkte, kein Blocker für den Import selbst:
 Sven hat den Import im installierten Desktop-Build getestet ("die
 zusätzlichen Fragen sind so weit ich das überblicken kann inkl Module
 optimal eingefügt worden") und bestätigt.
+
+## Unabhängiger Review (nachträglich, 2026-09-16)
+
+Dieser Brief war bereits `Status: done`, bevor die neue verbindliche
+CONTENT-Review-Regel (siehe `ORCHESTRATOR.md` Abschnitt 1) beschlossen
+wurde. Der Review wurde retroaktiv nachgeholt, um die Regel sofort
+anzuwenden statt nur für zukünftige Briefs gelten zu lassen: ein frisch
+gestarteter Subagent (kein geteilter Kontext mit der Import-Umsetzung)
+hat den Import geprüft, inkl. Websuche gegen aktuelle IHK-/Fachquellen.
+
+**Befund des Reviewers:**
+- Stichprobe von ca. 540 Fragen über alle Module geprüft, inkl.
+  sensibler Rechts-/WISO-Inhalte und technischer Fachaussagen – keine
+  fachlichen Fehler gefunden.
+- Auffälligkeit: ~97 % der 1123 neuen Fragen haben in den Roh-CSV-Daten
+  "b" als richtige Antwort (Artefakt der Quelldatei/des generierenden
+  Modells). Der Reviewer stufte dies zunächst als "kritisch, nicht
+  produktionsreif" ein (Annahme: Lernende könnten das ausnutzen).
+- Zwei echte, kleinere Formatfehler gefunden:
+  1. `HARDWARE.csv` Zeile 81 (`ALLE-HARDWARE-080`, "Was ist JBOD?"):
+     kaputtes CSV-Escaping im `erklaerung`-Feld (Artefakt aus der
+     ursprünglichen Bereinigung).
+  2. Verdacht auf Semikolon-in-Quoted-Field-Problem bei `WISO.csv`
+     Zeilen `ALLE-WISO-046`/`ALLE-WISO-049`.
+
+**Einordnung/Korrektur der "kritisch"-Bewertung:** Der Reviewer kannte
+den Frontend-Code nicht. `frontend/src/utils/optionen.js`
+(`mischeOptionen`) mischt die Antwortoptionen bei **jeder Anzeige** per
+Fisher-Yates neu und mappt die Anzeige-Buchstaben zurück auf die
+Original-Antwort zur Auswertung. Nutzer sehen also nie die rohe
+CSV-Buchstaben-Reihenfolge, sondern jedes Mal eine frisch zufällige –
+das "immer b in den Rohdaten"-Muster ist für Lernende **nicht
+ausnutzbar**. Der Fund bleibt trotzdem ein legitimer
+Datenqualitäts-Hinweis (zeigt, wie das Quell-LLM generiert hat), ist
+aber **kein produktionsblockierendes Problem**.
+
+**Fixes, durchgeführt 2026-09-16:**
+- `HARDWARE.csv` Zeile 81 korrigiert: `erklaerung` ist jetzt sauber
+  `Platten werden einfach hintereinander gehängt.` (vorher kaputtes
+  Escaping mit überzähligen Anführungszeichen).
+- `WISO.csv` Zeilen 046/049 geprüft: Das Semikolon steht korrekt
+  innerhalb eines gequoteten Felds
+  (`"Urheberrecht schützt geistige Schöpfung; Patent technische
+  Erfindung"` bzw. `"EK vom Eigentümer; FK von Gläubigern"`) und wird
+  vom projekteigenen Parser (`backend/src/csv.js`, quote-bewusste
+  State-Machine) korrekt als ein Feld erkannt – **kein Fehler,
+  kein Fix nötig**, nach Code-Prüfung bestätigt.
+- Erneute Validierung mit der echten `loadContent()`-Funktion nach den
+  Fixes: **0 Warnungen, 1623 Fragen laden fehlerfrei**.
+
+**Gesamturteil:** Import bleibt produktionstauglich. Ein echter,
+kleiner Datenfehler wurde gefunden und behoben; die vermeintlich
+kritische Schwachstelle war durch bestehende Frontend-Logik bereits
+neutralisiert. Der Prozess (unabhängiger Review durch frischen
+Subagenten) hat sich in der Praxis bewährt – ein echter Fehler wäre
+sonst unentdeckt geblieben.
+
+## Vollständiger OPS-002-Review der 1123 Fragen (2026-09-16)
+
+Der obige Review vom selben Tag war ein erster, strukturell orientierter
+Durchgang. Dies hier ist der eigentliche, vollständige OPS-002-Review
+(„hoch" priorisiert in `STATUS.md`), der die restlichen 1123 aus
+CONTENT-002 importierten Fragen abschließend abdeckt – die
+ursprünglichen 500 sind bereits über `18-Fachreview-Fragenkatalog.md`
+geprüft.
+
+**Methode:** 5 unabhängige, parallel gestartete Subagenten (Agent-Tool,
+kein geteilter Kontext untereinander oder mit der Import-Implementierung),
+je einer für eine Modul-Gruppe, mit Zugriff auf die echten CSV-Zeilen und
+das WebSearch-Tool für Faktenchecks gegen aktuelle Quellen (IHK-
+Rahmenlehrplan, RFC/IEEE-Standards, NIST SP 800-63B, OWASP, Gesetzestexte,
+Microsoft/W3Schools-SQL-Dokumentation, Herstellerdokumentation). Jede
+Gruppe deckte alle neuen Zeilen strukturell vollständig ab (Duplikate,
+CSV-Format, Musterlösung vorhanden, Pflichtfelder) und zusätzlich eine
+fachliche Stichprobe bzw. Vollprüfung je Modul/Thema (bei kleineren
+Dateien wurden alle Fragen gelesen, nicht nur eine Stichprobe):
+
+| Gruppe | Module | Neue Fragen | Fachlich geprüft |
+|---|---|---|---|
+| 1 | HARDWARE, FISI-BET | 229 | alle 229 |
+| 2 | FISI-NET | 210 | 80 Stichprobe |
+| 3 | FISI-SEC | 204 | 91 Stichprobe |
+| 4 | WISO, PM | 209 | alle 209 |
+| 5 | FIAE-DB, DPA-DB, FIAE-PRG, FIAE-SWE, FIAE-TST, DVK-CLD | 271 | alle 271 |
+
+**Gefundene und behobene Fehler (16 Fundstellen, 16 korrigiert):**
+
+- `ALLE-HARDWARE-023`: missverständliche Erklärung zu NVMe-Latenz
+  korrigiert ("massiv höhere Latenz-Vorteile" → "deutlich geringere
+  Latenzen und höhere Bandbreite als SATA")
+- `ALLE-HARDWARE-107`: Tippfehler "Chipslet" → "Chiplet" (Frage + Option)
+- `ALLE-HARDWARE-188`: verlorenes Sonderzeichen "Ohm (?)" → "Ohm (Ω)"
+  (Encoding-Artefakt aus dem ursprünglichen Import)
+- `FISI-SEC-098`: kaputtes CSV-Quoting im `erklaerung`-Feld repariert
+- `FISI-SEC-208`: fachlich falsche MFA-Definition korrigiert ("nutzt mehr
+  als zwei Faktoren" → "nutzt zwei oder mehr unabhängige Faktoren"),
+  Quelle: NIST SP 800-63B
+- `FISI-SEC-028`, `FISI-SEC-031`, `FISI-SEC-039`, `FISI-SEC-045`: Fragen
+  ohne erkennbaren Themenbezug ("Definition?", "Primärziel?",
+  "Sicheres Verfahren?", "IP-Spoofing?") zu vollständigen Fragesätzen
+  umformuliert
+- `FISI-SEC-044`: Frage/Antwort-Mismatch behoben (Frage fragte nach einem
+  *Vorteil*, Antwortoption enthielt nur die *Definition*) – Frage und
+  Optionen so umformuliert, dass die als richtig markierte Option
+  tatsächlich den gefragten Vorteil benennt
+- `FISI-SEC-087`: Tippfehler "Garantit" → "Garantiert"
+- `FISI-SEC-069`: Tippfehler "Honypot" → "Honeypot" (im Fragetext)
+- `FISI-SEC-120`: Grammatikfehler "tarnen" → "tarnt"
+- `ALLE-WISO-075`: **falsche Musterlösung** (Antwort war `a` = "Nur
+  Tätigkeitsdauer", das beschreibt aber das *einfache*, nicht das
+  *qualifizierte* Arbeitszeugnis; korrigiert auf `b`), Quelle: Haufe/
+  HR Works zu § 109 GewO
+- `FIAE-DB-057` und `DPA-DB-057`: **falsche Musterlösung** bei `LIKE
+  '%abc%'` (markierte Antwort behauptete "beginnt mit abc", korrekt ist
+  "enthält abc an beliebiger Stelle" – Antwort von `b` auf `a` korrigiert,
+  in beiden Dateien, da der SQL-Grundlagenstoff bewusst dupliziert ist)
+
+Alle Korrekturen wurden mit der echten `loadContent()`-Funktion erneut
+validiert: **0 Warnungen, weiterhin 1623 Fragen**.
+
+**Nicht als Fehler gewertet (zur Transparenz):** Die bekannte
+Häufung von "b" als Musterlösung in den Rohdaten wurde von allen 5
+Reviewern erkannt, aber wie angewiesen nicht gemeldet (neutralisiert durch
+`mischeOptionen`-Shuffle im Frontend).
+
+**Zurückgestellt, kein Blocker (Empfehlung für später, kein Fix in diesem
+Durchgang):**
+- Mehrere Themen mit hohem inhaltlichen Wiederholungsgrad (v. a. in WISO,
+  FIAE-PRG, DVK-CLD) – reduziert die effektive Fragenvielfalt, ist aber
+  fachlich nicht falsch. Eignet sich als Aufgabe für `CONTENT-001`
+  (Autoren-UI mit Review-Status), wenn Einzelfragen gezielt ersetzt werden
+  können.
+- `DVK-CLD.csv` deckt das Thema Cloud/Kubernetes mit nur 6 Fragen (davon 4
+  inhaltlich redundant) eher dünn ab – Ausbau auf mehr eigenständige
+  Kubernetes-Themen (Pod, Deployment, Autoscaling, Container vs. VM) wäre
+  sinnvoll, ist aber ein Content-Erweiterungs-Thema, kein Korrektur-Thema.
+- Stilbruch zwischen alten (vollständige Sätze) und neuen (elliptisch,
+  z. B. "Definition?") Fragen in mehreren Modulen – die eindeutig
+  unverständlichen Fälle wurden oben korrigiert, der generelle Stilbruch
+  selbst ist keine fachliche Fehlerquelle.
+
+**Gesamturteil:** Nach Korrektur der 16 gefundenen Fundstellen ist der
+komplette CONTENT-002-Bestand (1123 Fragen) fachlich und strukturell
+produktionstauglich. Der bindende, unabhängige Review-Prozess hat sich
+bewährt: alle 16 Funde (davon 2 echte Musterlösungsfehler, die Lernenden
+aktiv falsches Wissen vermittelt hätten) wären ohne dieses Verfahren
+unentdeckt geblieben. `OPS-002` gilt damit für CONTENT-002 als
+abgeschlossen.

@@ -1,9 +1,19 @@
-// Lädt und indiziert alle Inhalte (CSV + Markdown) aus CONTENT_DIR.
-// Wird beim Start und bei POST /api/admin/reload aufgerufen (stateless,
-// In-Memory-Store – siehe docs/10-Architektur.md).
+// Lädt und indiziert alle Inhalte (Fragen/Module/Fachrichtungen + Theorie).
+// Wird beim Start und bei POST /api/admin/reload aufgerufen (Ergebnis wird
+// danach nur noch aus dem In-Memory-Store gelesen – siehe docs/10-Architektur.md).
+//
+// Zwei Quellen, ein identisches Rückgabeformat (DB-002):
+//  - Ist DATABASE_URL gesetzt UND die questions-Tabelle ist befüllt, wird
+//    aus PostgreSQL geladen (siehe backend/db/schema.sql).
+//  - Sonst (keine DB konfiguriert, DB leer, oder DB-Zugriff schlägt fehl)
+//    wird wie bisher aus content/*.csv geladen – das ist die Fallback-
+//    Garantie: die App funktioniert immer ohne Datenbank.
+// Beide Pfade liefern exakt dieselbe Struktur, damit der Rest des Backends
+// (und das Frontend) den Unterschied nie merkt (Repository-Seam).
 import fs from 'node:fs';
 import path from 'node:path';
 import { readCsvFile } from './csv.js';
+import { isDbAktiviert, query } from './db.js';
 
 const QUESTION_COLUMNS = [
   'id', 'fachrichtung', 'modul_id', 'thema', 'typ', 'frage',
@@ -13,7 +23,123 @@ const QUESTION_COLUMNS = [
 const GUELTIGE_TYPEN = new Set(['SC', 'MC', 'FT']);
 const GUELTIGE_SCHWIERIGKEIT = new Set(['leicht', 'mittel', 'schwer']);
 
-export function loadContent(contentDir) {
+/**
+ * Lädt Inhalte – versucht bei konfigurierter DB zuerst den DB-Pfad, fällt
+ * bei fehlender/leerer/nicht erreichbarer DB automatisch auf CSV zurück.
+ * `quelle` im Rückgabewert zeigt, welcher Pfad tatsächlich genutzt wurde
+ * (nützlich für Diagnose/Logging, ändert sonst nichts am Verhalten).
+ */
+export async function loadContent(contentDir) {
+  if (isDbAktiviert()) {
+    try {
+      const ausDb = await loadContentFromDb(contentDir);
+      if (ausDb) return ausDb;
+    } catch (err) {
+      console.warn('[content] DB-Ladepfad fehlgeschlagen, falle auf CSV zurück:', err.message);
+    }
+  }
+  return loadContentFromCsv(contentDir);
+}
+
+/** Lädt Theorie-Markdown (unabhängig von der Content-Quelle, bleiben Dateien). */
+function ladeTheorie(contentDir) {
+  const theorieDir = path.join(contentDir, 'theorie');
+  const theorieByModul = new Map();
+  if (fs.existsSync(theorieDir)) {
+    for (const file of fs.readdirSync(theorieDir).filter((f) => f.endsWith('.md'))) {
+      const modulId = file.replace(/\.md$/, '');
+      theorieByModul.set(modulId, fs.readFileSync(path.join(theorieDir, file), 'utf-8'));
+    }
+  }
+  return theorieByModul;
+}
+
+/**
+ * DB-Ladepfad (DB-002). Gibt `null` zurück, wenn die questions-Tabelle noch
+ * leer ist (z. B. Schema angelegt, aber `migrate-content-to-db.mjs` noch
+ * nicht gelaufen) – der Aufrufer fällt dann auf CSV zurück, statt eine
+ * leere App auszuliefern.
+ */
+async function loadContentFromDb(contentDir) {
+  const { rows: fachrichtungenRaw } = await query('SELECT code, name, beschreibung FROM fachrichtungen');
+  const { rows: modulesRaw } = await query('SELECT modul_id, fachrichtung, code, titel, beschreibung FROM modules');
+  const { rows: questionsRaw } = await query(`
+    SELECT id, fachrichtung, modul_id, thema, typ, frage,
+           option_a, option_b, option_c, option_d,
+           antwort, erklaerung, schwierigkeit, quelle, quelldatei
+    FROM questions
+    ORDER BY id
+  `);
+
+  if (questionsRaw.length === 0) return null;
+
+  const warnungen = [];
+
+  const fachrichtungenByCode = new Map();
+  for (const f of fachrichtungenRaw) {
+    fachrichtungenByCode.set(f.code, { code: f.code, name: f.name, beschreibung: f.beschreibung });
+  }
+
+  const modulesById = new Map();
+  for (const m of modulesRaw) {
+    modulesById.set(m.modul_id, {
+      modul_id: m.modul_id,
+      fachrichtung: m.fachrichtung,
+      code: m.code,
+      titel: m.titel,
+      beschreibung: m.beschreibung,
+    });
+  }
+
+  const questionsById = new Map();
+  const questionsByModul = new Map();
+
+  for (const r of questionsRaw) {
+    const modul = modulesById.get(r.modul_id);
+    if (!modul) {
+      warnungen.push(`DB: modul_id "${r.modul_id}" (Frage ${r.id}) existiert nicht in modules`);
+    }
+    if (!GUELTIGE_TYPEN.has(r.typ)) {
+      warnungen.push(`DB: ungueltiger typ "${r.typ}" (Frage ${r.id})`);
+    }
+    if (!GUELTIGE_SCHWIERIGKEIT.has(r.schwierigkeit)) {
+      warnungen.push(`DB: ungueltige schwierigkeit "${r.schwierigkeit}" (Frage ${r.id})`);
+    }
+
+    const frage = {
+      id: r.id,
+      fachrichtung: r.fachrichtung,
+      modul_id: r.modul_id,
+      thema: r.thema,
+      typ: r.typ,
+      frage: r.frage,
+      optionen: [r.option_a, r.option_b, r.option_c, r.option_d],
+      antwort: r.antwort,
+      erklaerung: r.erklaerung,
+      schwierigkeit: r.schwierigkeit,
+      quelle: r.quelle,
+      quelldatei: r.quelldatei || '',
+    };
+    questionsById.set(r.id, frage);
+    if (!questionsByModul.has(r.modul_id)) questionsByModul.set(r.modul_id, []);
+    questionsByModul.get(r.modul_id).push(frage);
+  }
+
+  return {
+    geladenAm: new Date().toISOString(),
+    quelle: 'db',
+    warnungen,
+    fachrichtungenByCode,
+    modulesById,
+    questionsById,
+    questionsByModul,
+    theorieByModul: ladeTheorie(contentDir),
+    gesamtFragen: questionsById.size,
+  };
+}
+
+/** Unveränderter CSV-Ladepfad (Fallback, Default ohne DB). */
+function loadContentFromCsv(contentDir) {
   const warnungen = [];
 
   const fachrichtungenRaw = readCsvFile(path.join(contentDir, 'fachrichtungen.csv')).records;
@@ -88,26 +214,17 @@ export function loadContent(contentDir) {
     }
   }
 
-  // Theorie (optional, je Modul)
-  const theorieDir = path.join(contentDir, 'theorie');
-  const theorieByModul = new Map();
-  if (fs.existsSync(theorieDir)) {
-    for (const file of fs.readdirSync(theorieDir).filter((f) => f.endsWith('.md'))) {
-      const modulId = file.replace(/\.md$/, '');
-      theorieByModul.set(modulId, fs.readFileSync(path.join(theorieDir, file), 'utf-8'));
-    }
-  }
-
   const gesamtFragen = questionsById.size;
 
   return {
     geladenAm: new Date().toISOString(),
+    quelle: 'csv',
     warnungen,
     fachrichtungenByCode,
     modulesById,
     questionsById,
     questionsByModul,
-    theorieByModul,
+    theorieByModul: ladeTheorie(contentDir),
     gesamtFragen,
   };
 }

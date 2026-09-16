@@ -21,7 +21,7 @@ ALLE-HARDWARE-019;ALLE;HARDWARE;RAM;SC;Was ist Latenz (CL)?;Taktrate;Verzögerun
 ALLE-HARDWARE-020;ALLE;HARDWARE;Netzteil;SC;Was ist 80 Plus?;Lebensdauer;Wirkungsgrad von mind. 80%;Max. 80 Watt;;b;Weniger Hitzeentwicklung und Stromkosten.;mittel;IHK
 ALLE-HARDWARE-021;ALLE;HARDWARE;Monitor;SC;Reaktionszeit?;Startzeit;Zeit für Pixel-Farbwechsel;Hertz-Zahl;;b;Wichtig für schlierenfreie Darstellung.;leicht;IHK
 ALLE-HARDWARE-022;ALLE;HARDWARE;CPU;SC;Hyper-Threading?;Übertakten;Simulation logischer Kerne;Virenschutz;;b;Bessere Auslastung der physischen Recheneinheiten.;mittel;IHK
-ALLE-HARDWARE-023;ALLE;HARDWARE;Speicher;SC;NVMe vs. SATA?;NVMe nutzt PCIe;SATA ist schneller;NVMe braucht kein Kabel;;a;Bietet massiv höhere Latenz-Vorteile.;mittel;IHK
+ALLE-HARDWARE-023;ALLE;HARDWARE;Speicher;SC;NVMe vs. SATA?;NVMe nutzt PCIe;SATA ist schneller;NVMe braucht kein Kabel;;a;Bietet deutlich geringere Latenzen und höhere Bandbreite als SATA.;mittel;IHK
 ALLE-HARDWARE-024;ALLE;HARDWARE;Mainboard;SC;Was ist ein BIOS-Flash?;Reinigung;Firmware-Update des BIOS/UEFI-Chips;Übertakten;;b;Aktualisiert die grundlegende System-Software für Hardware-Kompatibilität.;mittel;IHK
 ALLE-HARDWARE-025;ALLE;HARDWARE;Server;SC;Was ist Hot-Swapping?;Übertakten;Austausch von Komponenten im laufenden Betrieb;Energiesparen;;b;Wichtig für Hochverfügbarkeit (z.B. Festplattentausch bei RAID).;mittel;IHK
 ALLE-HARDWARE-026;ALLE;HARDWARE;Schnittstellen;SC;Wofür steht SATA?;Serial AT Attachment;Standard Analog Array;Super Audio Task;;a;Standard-Schnittstelle für Festplatten und SSDs.;mittel;IHK
@@ -78,7 +78,7 @@ ALLE-HARDWARE-076;ALLE;HARDWARE;Kühlung;SC;Was ist eine AIO-Wasserkühlung?;Nur
 ALLE-HARDWARE-077;ALLE;HARDWARE;RAID;SC;Was ist RAID 10?;Nur Striping;Kombination aus RAID 1 (Spiegelung) und RAID 0 (Striping);RAID für 10 Platten;;b;Bietet sehr hohe Performance und Sicherheit.;schwer;IHK
 ALLE-HARDWARE-078;ALLE;HARDWARE;Monitor;SC;Was ist HDR?;Geringe Auflösung;High Dynamic Range (höherer Kontrast/Farbumfang);Stromsparmodus;;b;Sorgt für realistischere Licht- und Schatteneffekte.;mittel;IHK
 ALLE-HARDWARE-079;ALLE;HARDWARE;CPU;SC;Was ist Übertakten (Overclocking)?;CPU drosseln;Erhöhen der Taktrate über die Herstellerspezifikation;Mehr RAM einbauen;;b;Erhöht die Leistung, aber auch Hitze und Stromverbrauch.;mittel;IHK
-ALLE-HARDWARE-080;ALLE;HARDWARE;Storage;SC;Was ist JBOD?;RAID-System;Just a Bunch of Disks (Zusammenschluss ohne RAID-Logik);Ein SSD-Typ;;b;"Platten werden einfach hintereinander gehängt"".""";schwer;IHK
+ALLE-HARDWARE-080;ALLE;HARDWARE;Storage;SC;Was ist JBOD?;RAID-System;Just a Bunch of Disks (Zusammenschluss ohne RAID-Logik);Ein SSD-Typ;;b;Platten werden einfach hintereinander gehängt.;schwer;IHK
 ALLE-HARDWARE-081;ALLE;HARDWARE;Anschlüsse;SC;Was ist DisplayPort?;Ein Stromstecker;Digitale Schnittstelle für Bild und Ton;Ein USB-Standard;;b;Konkurrent zu HDMI, oft im PC-Bereich genutzt.;leicht;IHK
 ALLE-HARDWARE-082;ALLE;HARDWARE;Kühlung;SC;Was ist Passive Kühlung?;Kühlung mit Wasser;Kühlung nur durch Kühlkörper ohne Lüfter;Stickstoffkühlung;;b;Vorteil: Lautlos. Nachteil: Geringere Kühlleistung.;leicht;IHK
 ALLE-HARDWARE-083;ALLE;HARDWARE;CPU;SC;Was ist Hyper-Threading (SMT)?;Übertakten;Simulation von zwei logischen Kernen pro physischem Kern;Virenschutz;;b;Verbessert die Auslastung der Rechenwerke.;mittel;IHK
@@ -105,7 +105,7 @@ ALLE-HARDWARE-103;ALLE;HARDWARE;Speicher;SC;Was ist SRAM?;Langsamer RAM;Static R
 ALLE-HARDWARE-104;ALLE;HARDWARE;Netzteil;SC;Was ist die 12V-Schiene?;Strom für USB;Hauptstromversorgung für CPU und Grafikkarte;Lüfterstrom;;b;Moderne Hardware bezieht fast die gesamte Leistung von hier.;mittel;IHK
 ALLE-HARDWARE-105;ALLE;HARDWARE;SSD;SC;Was bedeutet TRIM?;Speicher löschen;Befehl zur Optimierung der Schreibperformance bei SSDs;Ein Gehäusetyp;;b;Informiert die SSD über nicht mehr benötigte Datenblöcke.;schwer;IHK
 ALLE-HARDWARE-106;ALLE;HARDWARE;Monitor;SC;Was ist IPS?;CPU-Marke;Panel-Technologie für hohe Farbtreue und Blickwinkel;Ein Monitor-Kabel;;b;In-Plane Switching.;mittel;IHK
-ALLE-HARDWARE-107;ALLE;HARDWARE;CPU;SC;Was ist ein Chipslet?;Ein kleiner Lüfter;Modularer Baustein einer CPU (z.B. bei AMD Ryzen);Ein RAM-Typ;;b;Erlaubt günstigere Produktion großer Multi-Core-CPUs.;schwer;IHK
+ALLE-HARDWARE-107;ALLE;HARDWARE;CPU;SC;Was ist ein Chiplet?;Ein kleiner Lüfter;Modularer Baustein einer CPU (z.B. bei AMD Ryzen);Ein RAM-Typ;;b;Erlaubt günstigere Produktion großer Multi-Core-CPUs.;schwer;IHK
 ALLE-HARDWARE-108;ALLE;HARDWARE;Speicher;SC;Was ist der Formfaktor bei RAM (DIMM/SO-DIMM)?;Die Geschwindigkeit;Die physische Größe/Bauform;Die Speicherkapazität;;b;SO-DIMM wird in Laptops verwendet.;leicht;IHK
 ALLE-HARDWARE-109;ALLE;HARDWARE;Bus;SC;Was ist der Systembus?;Ein USB-Kabel;Verbindung zwischen CPU, RAM und Ein-/Ausgabe;Ein Lüfteranschluss;;b;Besteht aus Daten-, Adress- und Steuerbus.;mittel;IHK
 ALLE-HARDWARE-110;ALLE;HARDWARE;Schnittstellen;SC;Was ist SATA Express?;Ein Stromstecker;Schnittstelle zur Anbindung von SSDs via PCIe;Ein WLAN-Standard;;b;Wurde weitgehend von M.2 (NVMe) abgelöst.;schwer;IHK
@@ -186,7 +186,7 @@ ALLE-HARDWARE-184;ALLE;HARDWARE;Speicher;SC;Was ist die S.M.A.R.T.-Technologie?;
 ALLE-HARDWARE-185;ALLE;HARDWARE;CPU;SC;Was ist eine ALU?;Lüftersteuerung;Rechenwerk einer CPU für arithmetische/logische Operationen;RAM-Speicher;;b;Arithmetic Logic Unit.;mittel;Zusatz
 ALLE-HARDWARE-186;ALLE;HARDWARE;Kühlung;SC;Was ist ein Peltierelement?;Ein Lüfter;Bauteil, das bei Stromfluss eine Seite kühlt;Ein Kühlmittel;;b;Ermöglicht Kühlung unter Raumtemperatur (Achtung Kondenswasser).;schwer;Zusatz
 ALLE-HARDWARE-187;ALLE;HARDWARE;SSD;SC;Was ist SLC (Single Level Cell)?;Billige SSD;Flash-Speicher, der 1 Bit pro Zelle speichert;RAM-Typ;;b;Sehr langlebig und schnell, aber teuer.;schwer;Zusatz
-ALLE-HARDWARE-188;ALLE;HARDWARE;Elektrotechnik;SC;Was ist der Ohmsche Widerstand?;Spannung;Eigenschaft eines Leiters, den Stromfluss zu hemmen;Leistung;;b;Einheit: Ohm (?).;leicht;Zusatz
+ALLE-HARDWARE-188;ALLE;HARDWARE;Elektrotechnik;SC;Was ist der Ohmsche Widerstand?;Spannung;Eigenschaft eines Leiters, den Stromfluss zu hemmen;Leistung;;b;Einheit: Ohm (Ω).;leicht;Zusatz
 ALLE-HARDWARE-189;ALLE;HARDWARE;Elektrotechnik;SC;Was ist die elektrische Spannung?;Stromstärke;Potenzialdifferenz zwischen zwei Punkten;Widerstand;;b;Einheit: Volt (V).;leicht;Zusatz
 ALLE-HARDWARE-190;ALLE;HARDWARE;Speicher;SC;Was ist ein Write-Back-Cache?;Datensicherung;Daten werden erst im Cache gesammelt und später geschrieben;Virenscanner;;b;Schneller, aber riskanter bei Stromausfall (ohne USV).;schwer;Zusatz
 ALLE-HARDWARE-191;ALLE;HARDWARE;Elektrotechnik;SC;Was ist die elektrische Stromstärke?;Spannung;Fluss von elektrischer Ladung pro Zeit;Widerstand;;b;Einheit: Ampere (A).;leicht;Zusatz

@@ -7,16 +7,16 @@ import { loadContent } from './content.js';
 import { createApp } from './app.js';
 import { isDbAktiviert, dbErreichbar } from './db.js';
 
-export function createStore(contentDir) {
-  let content = loadContent(contentDir);
+export async function createStore(contentDir) {
+  let content = await loadContent(contentDir);
   return {
     get: () => content,
     set: (neu) => { content = neu; },
   };
 }
 
-export function startServer() {
-  const store = createStore(config.contentDir);
+export async function startServer() {
+  const store = await createStore(config.contentDir);
   if (store.get().warnungen.length > 0) {
     console.warn(`[Content] ${store.get().warnungen.length} Warnung(en) beim Laden:`);
     for (const w of store.get().warnungen) console.warn('  -', w);
@@ -24,7 +24,7 @@ export function startServer() {
   const app = createApp(store);
   const server = app.listen(config.port, config.host, () => {
     console.log(`AzubiPrep-Backend läuft auf http://${config.host}:${config.port}`);
-    console.log(`Inhalte: ${store.get().gesamtFragen} Fragen, ${store.get().modulesById.size} Module`);
+    console.log(`Inhalte: ${store.get().gesamtFragen} Fragen, ${store.get().modulesById.size} Module (Quelle: ${store.get().quelle})`);
     if (isDbAktiviert()) {
       dbErreichbar().then((ok) => {
         console.log(ok ? '[db] Verbindung zu PostgreSQL erfolgreich – Login/Sync aktiv.' : '[db] DATABASE_URL gesetzt, aber Verbindung fehlgeschlagen! Login/Sync werden Fehler werfen.');
@@ -44,8 +44,8 @@ export function startServer() {
  * nur zu loggen. Ändert nichts am bestehenden CLI-Verhalten (startServer/
  * istDirektausfuehrung bleiben unverändert).
  */
-export function startForElectron({ port = 0 } = {}) {
-  const store = createStore(config.contentDir);
+export async function startForElectron({ port = 0 } = {}) {
+  const store = await createStore(config.contentDir);
   const app = createApp(store);
   return new Promise((resolve, reject) => {
     const server = app.listen(port, '127.0.0.1');

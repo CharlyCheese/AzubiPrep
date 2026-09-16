@@ -14,6 +14,8 @@
     "repair-ft": "node scripts/repair-ft-rows.mjs",
     "statistik": "node scripts/content-statistik.mjs",
     "sicherheits-check": "node scripts/sicherheits-check.mjs",
+    "migrate-content": "node scripts/migrate-content-to-db.mjs",
+    "export-content": "node scripts/export-content-to-csv.mjs",
     "lint": "eslint src scripts"
   },
   "dependencies": {
