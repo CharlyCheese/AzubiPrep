@@ -262,6 +262,30 @@ durchklicken, sowie serverseitig einmal `ALTER TABLE`/das aktualisierte
 `UPDATE users SET rolle = 'admin' WHERE email = '...'` die Admin-Rolle
 zuweisen.
 
+**Nachtrag 2026-09-16 (echter Praxistest durch Sven):** Auf der realen
+Maschine (echter `pg`-Treiber statt Sandbox-Shim) traten zwei erwartbare
+Reibungspunkte auf, beide behoben:
+1. `schema.sql` wurde per pgAdmin (Superuser-Verbindung) statt per `psql`
+   als `azubiprep_app` ausgeführt → `questions_verlauf` gehörte dem
+   Superuser, die App bekam `FEHLER: keine Berechtigung für Tabelle
+   questions_verlauf` beim Speichern. Fix: `GRANT ALL PRIVILEGES ON TABLE
+   questions_verlauf TO azubiprep_app;` plus `GRANT USAGE, SELECT ON
+   SEQUENCE questions_verlauf_id_seq TO azubiprep_app;` (die Sequenz
+   hinter der `BIGSERIAL`-Spalte braucht eigene Rechte). Gleiches Muster
+   wie schon bei `DB-002`, jetzt zusätzlich in
+   `docs/19-Datenbank-Login.md` dokumentiert, damit es beim nächsten
+   Aufsetzen nicht erneut überrascht.
+2. `users` hatte zunächst keine registrierten Konten (Login/Sync war nur
+   technisch erreichbar, es wurde aber nie tatsächlich ein Konto über die
+   App angelegt) – kurz nachgeholt, danach `rolle = 'admin'` per SQL
+   gesetzt.
+
+Nach beiden Fixes bestätigt: Bearbeiten, automatischer Reset auf
+`ungeprueft`, Fachrichtungs-Scoping, Deaktivieren – alles funktioniert wie
+geplant auf der echten Maschine. Zusätzlich direkt aus dem Praxistest
+entstanden: `CONTENT-003` (Auto-Scroll/Paginierung/Suche), ebenfalls
+bestätigt.
+
 **Nicht umgesetzt (bewusst, siehe Entscheidungen oben):** Neuanlage neuer
 Fragen über die UI, automatischer KI-Gegenprüfungs-Hinweis beim Speichern
 (→ `OPS-003`), automatischer CSV-Export nach jeder Änderung.

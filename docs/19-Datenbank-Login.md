@@ -31,6 +31,25 @@ Falls `psql` nicht im PATH ist: In pgAdmin auf die Datenbank `azubiprep`
 rechtsklicken → **Query Tool** → Inhalt von `backend/db/schema.sql`
 einfügen → ausführen (F5).
 
+> **Falle, die uns bei `DB-002` und `CONTENT-001` je einmal begegnet ist:**
+> Wird `schema.sql` über pgAdmin ausgeführt, läuft das unter der
+> pgAdmin-Verbindung (meist der Superuser `postgres`), nicht unter
+> `azubiprep_app`. Neue Tabellen gehören dann diesem Superuser – die App
+> (die mit `azubiprep_app` verbindet) bekommt beim Schreiben
+> `FEHLER: keine Berechtigung für Tabelle <name>`, obwohl das Schema
+> korrekt angelegt wurde. Fix: nach jedem Anlegen neuer Tabellen über
+> pgAdmin einmal explizit Rechte vergeben (Tabellenname anpassen; bei
+> Tabellen mit `BIGSERIAL`-Spalte, z. B. `questions_verlauf`, zusätzlich
+> die Sequenz freigeben, sonst schlägt `INSERT` trotz Tabellenrechten
+> weiterhin fehl):
+> ```sql
+> GRANT ALL PRIVILEGES ON TABLE <neue_tabelle> TO azubiprep_app;
+> GRANT USAGE, SELECT ON SEQUENCE <neue_tabelle>_id_seq TO azubiprep_app;
+> ```
+> Wird `schema.sql` stattdessen per `psql` direkt als `azubiprep_app`
+> ausgeführt (wie im Befehl oben), tritt das Problem nicht auf – der
+> Nutzer besitzt seine eigenen Tabellen dann von Anfang an.
+
 ## 2. Backend konfigurieren
 
 1. `\.env.example` (Projektwurzel) nach `backend/.env` kopieren.

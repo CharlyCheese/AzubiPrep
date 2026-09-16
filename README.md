@@ -42,7 +42,13 @@ vollständig. Wer möchte, kann optional ein Konto anlegen (PostgreSQL,
 siehe [`docs/19-Datenbank-Login.md`](docs/19-Datenbank-Login.md)) und den
 Lernstand darüber manuell zwischen mehreren Geräten hoch-/herunterladen –
 über dieselbe Repository-Schicht im Frontend (`frontend/src/api`), ohne
-dass der lokale Modus dafür umgebaut wurde.
+dass der lokale Modus dafür umgebaut wurde. Auch die Fragen/Module selbst
+können optional in derselben PostgreSQL-Datenbank liegen statt nur in
+CSV (`DATABASE_URL` gesetzt und Tabellen befüllt) – CSV bleibt dabei
+automatisch erzeugter Fallback und git-versionierter Review-Snapshot,
+die App läuft in jedem Fall auch komplett ohne Datenbank weiter (siehe
+[`docs/10-Architektur.md`](docs/10-Architektur.md), Abschnitt
+"Content-Datenbank").
 
 ## Screenshots
 
@@ -98,6 +104,10 @@ dass der lokale Modus dafür umgebaut wurde.
 - Zusätzlich als native Windows-Desktop-App (Electron) verfügbar
 - Sicherheitsgehärtetes Backend: Security-Header (Helmet/CSP/HSTS), Rate-Limiting, geschützter Admin-Reload
 - Inhalte pflegbar über Excel/CSV, ohne Codeänderung
+- Optionale Autoren-Weboberfläche (`/autoren`) zur direkten Fragenpflege in
+  der Content-DB: rollenbasierter Zugriff (fachrichtungsgebundene
+  Autor:innen, uneingeschränkte Admins), automatische Änderungshistorie
+  als Fallback, Review-Status je Frage
 
 ## Tech-Stack
 
@@ -107,7 +117,7 @@ dass der lokale Modus dafür umgebaut wurde.
 | Backend | Node.js + Express (zustandslose Content-API) |
 | Desktop | Electron (Hülle um dasselbe Backend/Frontend) |
 | Inhalte | Excel/CSV (`content/`), Theorie als Markdown |
-| Persistenz | Lernstand standardmäßig in `localStorage`; optional PostgreSQL für Konto/Geräte-Sync |
+| Persistenz | Lernstand standardmäßig in `localStorage`; optional PostgreSQL für Konto/Geräte-Sync sowie für Fragen/Module (CSV bleibt Fallback + Review-Snapshot) |
 | Auth | bcrypt-Passwort-Hashing + JWT (nur bei optionalem Konto) |
 | PWA | Web App Manifest + Service Worker |
 | Sicherheit | Helmet (CSP/HSTS/Frame-Options), eigenes Rate-Limiting |
@@ -159,6 +169,16 @@ Bearbeiten Backend neu starten oder `POST /api/admin/reload` aufrufen.
 - `content/questions/<modul_id>.csv` – Fragen je Modul
 - `content/theorie/<modul_id>.md` – Theorieblöcke je Modul
 
+Ist eine Content-Datenbank konfiguriert (`DATABASE_URL` gesetzt, siehe
+[`docs/19-Datenbank-Login.md`](docs/19-Datenbank-Login.md)), lässt sich
+**Bestehendes** stattdessen direkt über die Weboberfläche unter `/autoren`
+bearbeiten (Login mit Autor:in-/Admin-Rolle nötig) – inklusive Suche,
+Fachrichtungs-Scoping und automatischer Änderungshistorie. Neue Fragen
+werden weiterhin per CSV angelegt (`backend/scripts/migrate-content-to-
+db.mjs` übernimmt sie danach in die DB); `backend/scripts/export-content-
+to-csv.mjs` spiegelt den DB-Stand vor jedem Release zurück nach CSV.
+Details: [`docs/12-Rollen-Inhaltsmanagement.md`](docs/12-Rollen-Inhaltsmanagement.md).
+
 ## Projektstruktur
 
 ```
@@ -169,12 +189,15 @@ AzubiPrep/
 │   ├── questions/*.csv     18 Dateien (eine je Modul)
 │   └── theorie/*.md        18 Theorie-Dateien
 ├── backend/            Node.js + Express (zustandslose Content-API)
-│   ├── src/                 server, app, config, content, csv,
+│   ├── db/                  schema.sql (Login/Sync + optionale Content-DB)
+│   ├── src/                 server, app, config, content, csv, db, auth,
 │   │                        answer, exam, sicherheit, routes/
-│   └── scripts/             validate-content · repair-ft-rows ·
+│   └── scripts/             validate-content · migrate-content-to-db ·
+│                            export-content-to-csv · repair-ft-rows ·
 │                            content-statistik · sicherheits-check
 ├── frontend/           React + Vite (PWA)
-│   └── src/                 pages, components, store, api, context, utils
+│   └── src/                 pages (u. a. Autoren-Weboberfläche),
+│                            components, store, api, context, utils
 ├── desktop/            Electron-Hülle für die Windows-Desktop-App
 ├── screenshots/        App-Screenshots für dieses README
 ├── docs/               Produktvision, Architektur, API-Referenz,
@@ -198,13 +221,15 @@ Die tagesaktuelle Task-Liste (was offen ist, was erledigt ist) führt
 [`docs/agent-briefs/STATUS.md`](docs/agent-briefs/STATUS.md) bzw.
 [`docs/agent-briefs/DONE.md`](docs/agent-briefs/DONE.md).
 
-Offene Punkte mit höchster Priorität:
-- Installierten Windows-Installer real durchtesten (Installation, App-Start, Klicktest)
-- Fachlicher Inhalts-Review der Fragen durch Fachkundige je Fachrichtung (KI-Review der ursprünglichen 500 ist erfolgt, 1123 neu importierte Fragen aus dem Zusatz-Fragenkatalog stehen noch aus)
+Erledigt (Auszug, vollständig in [`DONE.md`](docs/agent-briefs/DONE.md)):
+Windows-Installer real installiert und getestet, strukturierter KI-Fachreview
+auf den kompletten Fragenbestand (1623 Fragen) angewendet, optionale
+Content-Datenbank mit CSV-Fallback, Autoren-Weboberfläche zur
+Fragenpflege.
 
-Weitere offene Punkte: UX-Feinschliff nach weiterem Nutzerfeedback,
-Push-Benachrichtigungen, Autoren-Weboberfläche statt Excel/CSV-Pflege,
-KI-Integration prüfen, Windows-Installer signieren.
+Offene Punkte: In-App-Feedback-Kanal ("Frage melden"), Push-
+Benachrichtigungen, KI-Integration prüfen (lokal vs. Internet),
+Windows-Installer signieren, Auto-Update für die Desktop-App.
 
 ## Autor
 
