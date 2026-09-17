@@ -20,6 +20,8 @@ import Profil from './pages/Profil.jsx';
 import Benachrichtigungen from './pages/Benachrichtigungen.jsx';
 import Lernreise from './pages/Lernreise.jsx';
 import Autoren from './pages/Autoren.jsx';
+import Nutzerverwaltung from './pages/Nutzerverwaltung.jsx';
+import PasswortZuruecksetzen from './pages/PasswortZuruecksetzen.jsx';
 import { authStore } from './store/authStore.js';
 import { landingBereitsGesehen } from './utils/landing.js';
 
@@ -39,6 +41,7 @@ export default function App() {
   return (
     <Routes>
       <Route path="willkommen" element={<Landing />} />
+      <Route path="passwort-zuruecksetzen" element={<PasswortZuruecksetzen />} />
       <Route element={<Layout />}>
         <Route index element={<Startpunkt />} />
         <Route path="lernen" element={<Lernen />} />
@@ -57,6 +60,7 @@ export default function App() {
         <Route path="profil" element={<Profil />} />
         <Route path="benachrichtigungen" element={<Benachrichtigungen />} />
         <Route path="autoren" element={<Autoren />} />
+        <Route path="nutzerverwaltung" element={<Nutzerverwaltung />} />
         <Route path="lernreise" element={<Lernreise />} />
         <Route path="*" element={<Dashboard />} />
       </Route>

@@ -41,6 +41,10 @@ const BENACHRICHTIGUNGEN_NAV_ITEM = { to: '/benachrichtigungen', icon: '🔔', l
 // keinen funktionslosen Menüpunkt zu zeigen.
 const AUTOREN_NAV_ITEM = { to: '/autoren', icon: '🛠️', label: 'Fragenpflege' };
 
+// BE-007: nur für 'admin' sichtbar (nicht 'autor') – Backend erzwingt das
+// ebenfalls (adminPflicht), gleiches Muster wie AUTOREN_NAV_ITEM oben.
+const NUTZERVERWALTUNG_NAV_ITEM = { to: '/nutzerverwaltung', icon: '🔑', label: 'Nutzerverwaltung' };
+
 export default function Layout() {
   const { theme, toggleTheme } = useTheme();
   const location = useLocation();
@@ -79,6 +83,7 @@ export default function Layout() {
 
   let nav = [...NAV.slice(0, -1), PROFIL_NAV_ITEM, BENACHRICHTIGUNGEN_NAV_ITEM, NAV[NAV.length - 1]];
   if (rolle === 'autor' || rolle === 'admin') nav = [...nav, AUTOREN_NAV_ITEM];
+  if (rolle === 'admin') nav = [...nav, NUTZERVERWALTUNG_NAV_ITEM];
 
   return (
     <div className="app-layout">

@@ -12,6 +12,7 @@ import { buildContentAdminRoutes } from './routes/content-admin.routes.js';
 import { buildMeldenRoutes } from './routes/melden.routes.js';
 import { buildPushRoutes } from './routes/push.routes.js';
 import { buildBenachrichtigungenRoutes } from './routes/benachrichtigungen.routes.js';
+import { buildNutzerAdminRoutes } from './routes/nutzer-admin.routes.js';
 import { isDbAktiviert } from './db.js';
 import { isPushAktiviert } from './push.js';
 
@@ -57,6 +58,9 @@ export function createApp(store) {
     // vorausgesetzt (die Liste soll auch ohne aktivierten Push nutzbar
     // sein, siehe push.js#benachrichtigeNutzer).
     app.use('/api', buildBenachrichtigungenRoutes());
+    // BE-007: admin-gestützter Passwort-Reset (kein E-Mail-Versand im
+    // Projekt vorhanden, siehe Brief) – ebenfalls DB-gebunden.
+    app.use('/api', buildNutzerAdminRoutes());
   }
 
   app.use('/api', (req, res) => {

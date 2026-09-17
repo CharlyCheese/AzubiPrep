@@ -210,6 +210,22 @@ CREATE INDEX IF NOT EXISTS idx_benachrichtigungen_user ON benachrichtigungen (us
 -- braucht keine eigene Spalte (DELETE-Statement in der Route).
 ALTER TABLE benachrichtigungen ADD COLUMN IF NOT EXISTS archiviert_am TIMESTAMPTZ;
 
+-- BE-007: Passwort-Reset (admin-gestützt, kein E-Mail-Versand nötig – ein
+-- Admin erzeugt einen Einmal-Token und teilt den Link außerhalb der App mit
+-- dem Nutzer/der Nutzerin, siehe backend/src/routes/nutzer-admin.routes.js).
+-- token_hash statt Klartext gespeichert (SHA-256, siehe auth.js) – ein
+-- Datenbank-Leak allein reicht dann nicht, um einen Reset-Link zu missbrauchen.
+CREATE TABLE IF NOT EXISTS passwort_reset_tokens (
+  id            BIGSERIAL PRIMARY KEY,
+  user_id       BIGINT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  token_hash    TEXT NOT NULL UNIQUE,
+  erstellt_von  BIGINT REFERENCES users(id) ON DELETE SET NULL,
+  erstellt_am   TIMESTAMPTZ NOT NULL DEFAULT now(),
+  laeuft_ab_am  TIMESTAMPTZ NOT NULL,
+  eingeloest_am TIMESTAMPTZ
+);
+CREATE INDEX IF NOT EXISTS idx_passwort_reset_tokens_user ON passwort_reset_tokens (user_id);
+
 -- Generische Lösung für die GRANT-Falle (traf uns bei DB-002 und
 -- CONTENT-001 je einmal): wird schema.sql über pgAdmin als Superuser statt
 -- per psql als azubiprep_app ausgeführt, gehören neue Tabellen dem

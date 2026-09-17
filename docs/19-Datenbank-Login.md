@@ -5,13 +5,22 @@ Status: **in Arbeit** – Backend-Grundlage steht, Frontend-Integration folgt.
 ## Architekturentscheidung
 
 Die App funktioniert weiterhin **komplett ohne Datenbank** (reiner
-Offline-/`localStorage`-Modus, wie bisher). Ist die Umgebungsvariable
+kontofreier `localStorage`-Modus, wie bisher). Ist die Umgebungsvariable
 `DATABASE_URL` nicht gesetzt, bleiben `/api/auth/*` und `/api/sync/*`
 deaktiviert und der Server verhält sich exakt wie vorher.
 
+> Begriffsklärung: "Kein Konto/keine Datenbank" ist nicht dasselbe wie
+> "offline". Auch ohne `DATABASE_URL` muss der AzubiPrep-Server laufen und
+> im Netzwerk erreichbar sein – der Browser lädt Fragen/Module weiterhin per
+> HTTP-Request von diesem Server, nur eben ohne Login/Server-Speicherung.
+> Echte Offline-Nutzung (Browser ganz ohne Netzwerkverbindung) ist ein davon
+> unabhängiges Feature über den Service Worker und strikt auf bereits
+> geladene Inhalte begrenzt – Details in
+> [`11-PWA-Konzept.md`](11-PWA-Konzept.md#offline-verhalten-stand-2026-09-17-nach-db-001be-001be-003content-001).
+
 Erst wenn eine PostgreSQL-Datenbank konfiguriert ist, werden Registrierung,
 Login und geräteübergreifender Sync aktiv. Das erlaubt einen schrittweisen
-Umbau, ohne den funktionierenden Offline-Modus zu gefährden, und eine
+Umbau, ohne den funktionierenden kontofreien Modus zu gefährden, und eine
 spätere Migration von lokalem PostgreSQL zu echtem Hosting ist eine reine
 Konfigurationsänderung (nur `DATABASE_URL` ändert sich), kein Code-Umbau.
 

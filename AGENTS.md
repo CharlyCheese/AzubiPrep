@@ -5,9 +5,15 @@ FISI, DPA, DVK). Stack: React (Vite), Node/Express, Inhalte als CSV
 (Excel-editierbar), kein Docker im MVP.
 
 Datenbank/Login sind seit `DB-001` (siehe `docs/agent-briefs/`) **optional**
-vorhanden: ohne `DATABASE_URL` läuft die App weiterhin komplett offline mit
-`localStorage`; ist eine PostgreSQL-Verbindung konfiguriert, sind
-Registrierung/Login/Sync aktiv (siehe `docs/19-Datenbank-Login.md`).
+vorhanden: ohne `DATABASE_URL` läuft die App weiterhin ohne Konto, mit
+Lernstand rein im `localStorage` des Browsers; ist eine PostgreSQL-Verbindung
+konfiguriert, sind Registrierung/Login/Sync aktiv (siehe
+`docs/19-Datenbank-Login.md`). Wichtig: "ohne Konto" ist NICHT dasselbe wie
+"offline" – der Node/Express-Server muss in beiden Fällen laufen und über
+das Netzwerk erreichbar sein. Echte Offline-Fähigkeit (Browser ohne
+Netzwerkverbindung) kommt ausschließlich vom Service Worker/PWA-Caching und
+ist strikt begrenzt (siehe `docs/11-PWA-Konzept.md`, Abschnitt
+"Offline-Verhalten").
 
 ## Grundregeln
 

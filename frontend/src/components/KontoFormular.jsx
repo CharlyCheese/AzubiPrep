@@ -6,6 +6,7 @@
 // aufrufende Seite über die Props (gleiches Verhalten wie vorher in
 // Einstellungen.jsx, nur wiederverwendbar gemacht).
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { api } from '../api/client.js';
 import { authStore } from '../store/authStore.js';
 
@@ -82,6 +83,13 @@ export default function KontoFormular({ fachrichtungen, fachrichtung, onFachrich
           {modus === 'login' ? 'Noch kein Konto? Registrieren' : 'Schon registriert? Anmelden'}
         </button>
       </div>
+      {modus === 'login' && (
+        // BE-007: kein Selbstbedienungs-Flow (kein E-Mail-Versand im
+        // Projekt) – die Seite erklärt, sich an eine Admin-Person zu wenden.
+        <p className="small text-muted mt-1">
+          <Link to="/passwort-zuruecksetzen">Passwort vergessen?</Link>
+        </p>
+      )}
     </form>
   );
 }

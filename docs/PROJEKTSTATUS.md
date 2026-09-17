@@ -288,16 +288,23 @@ im Projektverzeichnis fehlt.
 
 | Priorität | Vorhaben |
 |---|---|
-| hoch | Frontend-Build (`cd frontend && npm run build`) gegenprüfen bzw. neu bauen, damit `frontend/dist` sicher zum aktuellen Backend passt |
-| hoch | Inhalts-Review durch Fachkundige je Fachrichtung (Beta) |
+| hoch | Installierten Desktop-Installer (`AzubiPrep Setup 0.1.0.exe`) einmal durchtesten (Installation + App-Start + Klicktest), bisher nur der Dev-Modus (`npm start`) verifiziert |
+| hoch | Inhalts-Review durch Fachkundige (Menschen mit Berufspraxis) je Fachrichtung – KI-gestützter Review bereits erfolgt, siehe [`18-Fachreview-Fragenkatalog.md`](18-Fachreview-Fragenkatalog.md) |
 | erledigt | Fragenbestand auf 500 ausgebaut (INC-044) |
 | erledigt | Backend lokal installiert & gestartet, `sicherheits-check.mjs` 10/10 bestanden (2026-09-14) |
 | erledigt | Backend neu aufgesetzt, CSV-Formatfehler (16 Zeilen) und Whitespace (11 Zeilen) repariert (2026-09-14) |
-| mittel | Versionskontrolle einrichten (`git init`, siehe docs/17-Sicherheit.md F15) – bisher kein Repository vorhanden |
+| erledigt | Frontend-Produktions-Build gegengeprüft (73 Module, `dist/` inkl. PWA-Assets vollständig) (2026-09-14) |
+| erledigt | Desktop-App (Electron) gebaut: `desktop/` startet Backend+Frontend im eigenen Fenster, lokal getestet (2026-09-14) |
+| erledigt | Windows-Installer (NSIS) über `electron-builder` gebaut (2026-09-14) |
+| erledigt | Versionskontrolle eingerichtet: GitHub-Repository angelegt, `.gitignore` ergänzt, öffentlich veröffentlicht (2026-09-14) |
+| erledigt | UI modernisiert (reines CSS-Redesign von `global.css`, keine Funktionsänderung) (2026-09-14) |
+| erledigt | Backend-Grundlage für Login/Datenbank: PostgreSQL lokal eingerichtet (Datenbank `azubiprep`, eigener Benutzer `azubiprep_app`), Schema (`users`, `user_state`), Registrierung/Login/JWT und Sync-Endpunkte (`/api/auth/*`, `/api/sync/*`) implementiert und erfolgreich getestet – siehe [`19-Datenbank-Login.md`](19-Datenbank-Login.md) (2026-09-14) |
+| mittel | Frontend-Integration Login/Sync: Login-/Registrierungs-UI, Umschaltung zwischen lokalem `localStorage`-Modus und Backend-Sync |
 | mittel | UX-Feinschliff nach weiterem Nutzerfeedback |
-| mittel | Push-Benachrichtigungen (Web-Push, benötigt Backend-Persistenz) |
-| niedrig | Login/Rollen + Geräte-Sync (PostgreSQL) |
+| mittel | Push-Benachrichtigungen (Web-Push, benötigt Backend-Persistenz – jetzt vorhanden) |
 | niedrig | Autoren-Weboberfläche statt Excel-Pflege |
+| niedrig | KI-Integration prüfen (lokal vs. über Internet) |
+| niedrig | Windows-Installer digital signieren (aktuell unsigniert, SmartScreen-Warnung beim ersten Start) |
 
 > In Sprint 1.1 umgesetzt: Suche-Deep-Link, Schwierigkeitsfilter, Kalender-
 > navigation, Notizen-Export/Import, Dark-Mode-Kontrast, +90 Fragen.
@@ -307,6 +314,13 @@ im Projektverzeichnis fehlt.
 - Freitext-Antworten (FT) werden per **Schlüsselwortvergleich** bewertet,
   nicht durch KI – synonyme Formulierungen müssen als Synonyme gepflegt sein.
 - Ohne Login ist **kein geräteübergreifender Fortschritt** möglich.
-- Offline-Prüfungsabgabe benötigt beim Absenden eine Verbindung (Auswertung
-  erfolgt serverseitig); die Antworten bleiben lokal erhalten.
+- **Korrektur (2026-09-17, siehe OPS-007):** Diese Zeile behauptete
+  ursprünglich, eine offline gestartete Prüfung werde lokal
+  zwischengespeichert und bei Wiederverbindung automatisch nachgereicht.
+  Das wurde nie implementiert – `PruefungLauf.jsx` erkennt fehlende
+  Verbindung nicht, ein fehlgeschlagenes `POST /pruefung/auswerten` zeigt
+  nur die rohe Fehlermeldung, die Antworten gehen danach verloren. Die
+  Prüfungssimulation braucht durchgehend eine Serververbindung, auch beim
+  Starten/Beantworten einzelner Fragen (die Fragen selbst kommen zwar ggf.
+  aus dem Service-Worker-Cache, das Auswerten aber nicht).
 

@@ -1,6 +1,7 @@
 // Passwort-Hashing und JWT-Hilfsfunktionen für Login/Registrierung.
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+import crypto from 'node:crypto';
 import { config } from './config.js';
 import { query } from './db.js';
 
@@ -71,6 +72,48 @@ export async function autorPflicht(req, res, next) {
   } catch (err) {
     next(err);
   }
+}
+
+/**
+ * Express-Middleware (BE-007, nach authPflicht einsetzen): verlangt genau
+ * die Rolle 'admin' (anders als autorPflicht, das auch 'autor' zulässt) –
+ * für Aktionen wie das Erzeugen von Passwort-Reset-Links, die bewusst nicht
+ * an Autor:innen delegiert werden sollen.
+ */
+export async function adminPflicht(req, res, next) {
+  try {
+    const { rows } = await query('SELECT rolle FROM users WHERE id = $1', [req.userId]);
+    const user = rows[0];
+    if (!user || user.rolle !== 'admin') {
+      res.status(403).json({ error: 'Nur für Admins' });
+      return;
+    }
+    next();
+  } catch (err) {
+    next(err);
+  }
+}
+
+const RESET_TOKEN_BYTES = 32;
+const RESET_TOKEN_GUELTIGKEIT_MS = 24 * 60 * 60 * 1000; // 24h – admin-gestützter
+// Versand (Chat/persönlich) kann etwas dauern, bewusst großzügiger als ein
+// automatischer E-Mail-Link.
+
+/** Erzeugt einen zufälligen Reset-Token (Klartext, nur einmal sichtbar) plus dessen Hash (für die DB) und Ablaufzeitpunkt. */
+export function resetTokenErzeugen() {
+  const klartext = crypto.randomBytes(RESET_TOKEN_BYTES).toString('hex');
+  return {
+    klartext,
+    hash: resetTokenHashen(klartext),
+    laeuftAbAm: new Date(Date.now() + RESET_TOKEN_GUELTIGKEIT_MS),
+  };
+}
+
+/** SHA-256 statt bcrypt: der Token ist bereits hochentropisches Zufallsmaterial (kein
+ * erratbares Nutzerpasswort), ein schneller Hash erlaubt die direkte Suche per
+ * Gleichheitsvergleich in der DB statt aller Zeilen einzeln mit bcrypt.compare zu prüfen. */
+export function resetTokenHashen(klartext) {
+  return crypto.createHash('sha256').update(klartext).digest('hex');
 }
 
 const EMAIL_MUSTER = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
