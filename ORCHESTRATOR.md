@@ -90,6 +90,37 @@ Task.
    dem Nutzer als "fertig" gemeldet
 ```
 
+> **Wichtig, seit 2026-09-16 bindend, aktualisiert 2026-09-17: Auslieferung
+> von Code-Änderungen.** Die Cloud-Sandbox, in der der Orchestrator-Agent
+> arbeitet, hat **kein** Git-Remote zu Svens GitHub-Repo (kein
+> `.git`-Ordner, kein `git push` möglich) und **kein** Shell-Zugriff auf
+> Svens Rechner (kein `device_bash`-Tool verfügbar) – Sven synct sein
+> lokales Projekt selbst über die **GitHub Desktop App**.
+>
+> Seit 2026-09-17 ist Svens Projektordner
+> (`C:\Users\Charly Cheese\Lernprogramm Azubiprep\AzubiPrep\`) aber über
+> die Geräte-Brücke (`mcp__remote-devices__*`-Tools) an die Sitzung
+> angebunden, sofern die Desktop-App läuft. **Ist die Brücke verfügbar**
+> (`get_device_info` liefert den Ordner unter `connectedFolders`), schreibt
+> der Agent geänderte/neue Dateien direkt an ihren passenden Pfad im
+> Projektordner (`device_commit_files`, mit `stagedPath` unter
+> `/mnt/user-data/outputs/` oder einer vorherigen `SendUserFile`-`file_uuid`)
+> – kein Zip, kein manuelles Entpacken/Überschreiben mehr nötig. Sven muss
+> danach nur noch Backend/Frontend neu starten und in GitHub Desktop
+> committen/pushen. Vor dem Schreiben in reale Konfigurationsdateien wie
+> `backend/.env` (enthält Secrets) fragt der Agent nach oder liest sie
+> vorher, statt sie blind zu überschreiben.
+>
+> **Ist die Brücke nicht verfügbar** (Tools fehlen, oder `device_commit_files`
+> schlägt fehl), gilt weiterhin der Zip-Fallback: alle geänderten/neuen
+> Dateien als `.zip` mit identischer Ordnerstruktur (`backend/...`,
+> `frontend/...`, `docs/...`) packen und per `SendUserFile` ausliefern, mit
+> der Anweisung, sie an denselben relativen Pfaden zu überschreiben. In
+> beiden Fällen gilt: das ist zusätzlich zur (und unabhängig von der)
+> normalen Archivierungspflicht oben – eine "fertige" Sitzung ohne
+> ausgelieferten Code bei Code-Änderungen ist nicht wirklich fertig, weil
+> Sven den Code sonst gar nicht hat.
+
 ## 3. Die drei Dateien in `docs/agent-briefs/`
 
 Aktenschrank-Prinzip: `STATUS.md` ist der Schreibtisch (bleibt klein),

@@ -5,7 +5,6 @@
 > Format: `- [ID] Kurzbeschreibung (Priorität) → Brief: <ID>-<slug>.md`
 > (Brief-Link nur, sobald der Brief tatsächlich angelegt wurde.)
 
-- [BE-001] Push-Benachrichtigungen (Web-Push) – Backend-Persistenz ist seit `DB-001` vorhanden (mittel)
 - [OPS-003] KI-Integration prüfen: lokal vs. über Internet (niedrig) —
   Idee (Sven, 2026-09-15): lokales Modell direkt in der App bündeln, z. B.
   Qwen 3B + RAG, gemeinsam mit dem Installer herunterladbar, lauffähig auf
@@ -29,6 +28,11 @@
   günstige OV-Zertifikate bringen seit 2023/2024 keinen SmartScreen-Vorteil
   mehr. Hängt mit OPS-006 (Auto-Update) zusammen: Update-Prüfung verlangt
   bei signierten Apps, dass auch Updates signiert sind.
+- [FE-017] Landing-Page: weiterer Design-Feinschliff (niedrig) — Sven,
+  2026-09-17, nach FE-016 (Zwei-Spalten-Breitbild-Layout): "passt erstmal",
+  möchte aber zu einem späteren Zeitpunkt nochmal gezielt am Design
+  arbeiten. Kein konkreter Auftrag, nur vorgemerkt – Details bei Bedarf im
+  Chat klären.
 - [OPS-006] Auto-Update für die Desktop-App (electron-updater, Prüfung beim
   Start) (niedrig) — Repo ist öffentlich auf GitHub, damit ist der
   Standardweg (GitHub Releases + `electron-builder --publish always`)

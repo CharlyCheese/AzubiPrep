@@ -13,7 +13,7 @@
 
 const path = require('node:path');
 const { pathToFileURL } = require('node:url');
-const { app, BrowserWindow, dialog } = require('electron');
+const { app, BrowserWindow, dialog, session } = require('electron');
 
 let hauptfenster = null;
 let backendServer = null;
@@ -75,7 +75,28 @@ async function fensterErstellen() {
   }
 }
 
-app.whenReady().then(fensterErstellen);
+// BE-001: Electron zeigt in eigenen Fenstern standardmäßig keinen
+// Berechtigungs-Dialog wie ein normaler Browser-Tab an – ohne diesen
+// Handler würde die Push-Berechtigungsanfrage aus der App (navigator
+// .permissions/pushManager.subscribe) stillschweigend hängen bleiben oder
+// abgelehnt werden. Da wir nur unser eigenes, lokal gestartetes Backend
+// laden (keine Fremdinhalte), wird 'notifications' pauschal erlaubt, alles
+// andere sicherheitshalber abgelehnt.
+function berechtigungenEinrichten() {
+  session.defaultSession.setPermissionRequestHandler((webContents, permission, callback) => {
+    callback(permission === 'notifications');
+  });
+  // Windows zeigt Toast-Benachrichtigungen nur mit sauberem App-Namen an,
+  // wenn eine AppUserModelId gesetzt ist (sonst z. B. "Electron" als Absender).
+  if (process.platform === 'win32') {
+    app.setAppUserModelId('de.azubiprep.desktop');
+  }
+}
+
+app.whenReady().then(() => {
+  berechtigungenEinrichten();
+  return fensterErstellen();
+});
 
 app.on('window-all-closed', () => {
   if (backendServer) backendServer.close();

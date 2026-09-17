@@ -163,6 +163,53 @@ CREATE TABLE IF NOT EXISTS fragen_meldungen (
 
 CREATE INDEX IF NOT EXISTS idx_fragen_meldungen_frage ON fragen_meldungen (frage_id);
 
+-- Upgrade-Pfad: benachrichtigt_am markiert, ob/wann für diese Meldung
+-- bereits eine Push-Benachrichtigung verschickt wurde (BE-001) – verhindert
+-- doppelte Benachrichtigungen, falls eine gemeldete Frage mehrfach
+-- bearbeitet wird, bevor der erste Push tatsächlich zugestellt wurde.
+ALTER TABLE fragen_meldungen ADD COLUMN IF NOT EXISTS benachrichtigt_am TIMESTAMPTZ;
+
+-- Push-Benachrichtigungen (BE-001, kontogebunden): pro Gerät/Browser eine
+-- Subscription. Ein Nutzer kann mehrere Geräte haben (mehrere Zeilen mit
+-- derselben user_id), ein Gerät kann sich abmelden (Zeile wird gelöscht).
+-- p256dh/auth sind die vom Browser gelieferten Verschlüsselungsschlüssel
+-- (Web Push, RFC 8291) – ohne sie kann der Server keine lesbare
+-- Nachricht an dieses Gerät verschlüsseln.
+CREATE TABLE IF NOT EXISTS push_subscriptions (
+  id            BIGSERIAL PRIMARY KEY,
+  user_id       BIGINT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  endpoint      TEXT NOT NULL UNIQUE,
+  p256dh        TEXT NOT NULL,
+  auth          TEXT NOT NULL,
+  erstellt_am   TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+
+CREATE INDEX IF NOT EXISTS idx_push_subscriptions_user ON push_subscriptions (user_id);
+
+-- Benachrichtigungs-Historie / "Mailbox" (BE-005): jede Benachrichtigung
+-- (aktuell: Systemereignisse wie "Meldung bearbeitet"/"Neue Meldung") wird
+-- hier dauerhaft gespeichert, unabhängig davon, ob Push aktiv/konfiguriert
+-- ist oder das Gerät gerade online war – die Seite /benachrichtigungen
+-- zeigt diese Liste an. Bewusst generisch (kein fester Typ/Absender), damit
+-- sich später private Nachrichten zwischen Nutzern ergänzen lassen, ohne
+-- die Tabelle nochmal umzubauen (siehe FE-014-Brief).
+CREATE TABLE IF NOT EXISTS benachrichtigungen (
+  id            BIGSERIAL PRIMARY KEY,
+  user_id       BIGINT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  titel         TEXT NOT NULL,
+  text          TEXT NOT NULL DEFAULT '',
+  url           TEXT NOT NULL DEFAULT '/',
+  gelesen_am    TIMESTAMPTZ,
+  erstellt_am   TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+
+CREATE INDEX IF NOT EXISTS idx_benachrichtigungen_user ON benachrichtigungen (user_id, erstellt_am DESC);
+
+-- FE-015/BE-006: Archivieren (reversibel, bleibt gespeichert, verschwindet
+-- nur aus der normalen Liste) einer Benachrichtigung. Endgültiges Löschen
+-- braucht keine eigene Spalte (DELETE-Statement in der Route).
+ALTER TABLE benachrichtigungen ADD COLUMN IF NOT EXISTS archiviert_am TIMESTAMPTZ;
+
 -- Generische Lösung für die GRANT-Falle (traf uns bei DB-002 und
 -- CONTENT-001 je einmal): wird schema.sql über pgAdmin als Superuser statt
 -- per psql als azubiprep_app ausgeführt, gehören neue Tabellen dem

@@ -144,7 +144,7 @@ export default function Autoren() {
       <div>
         <header className="main-header"><h1 className="mb-0">Fragenpflege</h1></header>
         <div className="card">
-          <p className="text-muted">Bitte zuerst in <Link to="/einstellungen">Einstellungen</Link> einloggen – die Fragenpflege ist nur für Autor:innen zugänglich.</p>
+          <p className="text-muted">Bitte zuerst in <Link to="/profil">Profil</Link> einloggen – die Fragenpflege ist nur für Autor:innen zugänglich.</p>
         </div>
       </div>
     );

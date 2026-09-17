@@ -112,6 +112,10 @@ die App läuft in jedem Fall auch komplett ohne Datenbank weiter (siehe
 - In-App-Feedback-Kanal: eingeloggte Nutzer können eine Frage direkt im
   Quiz als falsch/unklar melden (optionaler Freitext-Grund) – Ergänzung
   zum verpflichtenden Fachreview, kein Ersatz dafür
+- Landing-Page (`/willkommen`) als Startseite/Login-Fenster für neue
+  Besucher:innen, jederzeit ohne Konto überspringbar
+- Optionale Push-Benachrichtigungen (Web-Push, kontogebunden), erster
+  Anwendungsfall: Benachrichtigung bei bearbeiteter Meldung
 
 ## Tech-Stack
 
@@ -230,10 +234,11 @@ Windows-Installer real installiert und getestet, strukturierter KI-Fachreview
 auf den kompletten Fragenbestand (1623 Fragen) angewendet, optionale
 Content-Datenbank mit CSV-Fallback, Autoren-Weboberfläche zur
 Fragenpflege, In-App-Feedback-Kanal ("Frage melden"), admin-exklusives
-manuelles Markieren als geprüft.
+manuelles Markieren als geprüft, Landing-Page als Login-Startseite,
+Push-Benachrichtigungen (Web-Push).
 
-Offene Punkte: Push-Benachrichtigungen, KI-Integration prüfen (lokal vs.
-Internet), Windows-Installer signieren, Auto-Update für die Desktop-App.
+Offene Punkte: KI-Integration prüfen (lokal vs. Internet), Windows-
+Installer signieren, Auto-Update für die Desktop-App.
 
 ## Autor
 

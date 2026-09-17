@@ -7,6 +7,7 @@
 import { Router } from 'express';
 import { query } from '../db.js';
 import { authPflicht, autorPflicht } from '../auth.js';
+import { benachrichtigeNutzer } from '../push.js';
 
 // Nur diese Felder dürfen über die UI geändert werden (Entscheidung
 // "Editierbare Felder"). id/modul_id/typ/fachrichtung bleiben gesperrt.
@@ -159,6 +160,18 @@ export function buildContentAdminRoutes() {
         ],
       );
 
+      // BE-001: war die Frage 'gemeldet' und ist es durch diese Bearbeitung
+      // jetzt nicht mehr (egal ob durch Inhaltsänderung, "Als geprüft
+      // markieren" oder Deaktivieren), werden die Melder:innen benach-
+      // richtigt. Läuft nach der Antwort an den Client (kein Warten auf
+      // Push-Zustellung) und darf die Bearbeitung selbst nie zum Scheitern
+      // bringen – Fehler landen nur im Log.
+      if (aktuell.review_status === 'gemeldet' && neuerStatus !== 'gemeldet') {
+        benachrichtigeMelder(aktuell.id).catch((err) => {
+          console.warn(`[Push] Benachrichtigung für gemeldete Frage ${aktuell.id} fehlgeschlagen:`, err?.message || err);
+        });
+      }
+
       res.json(aktualisiert[0]);
     } catch (err) {
       next(err);
@@ -166,4 +179,24 @@ export function buildContentAdminRoutes() {
   });
 
   return router;
+}
+
+async function benachrichtigeMelder(frageId) {
+  const { rows: offeneMeldungen } = await query(
+    'SELECT id, gemeldet_von FROM fragen_meldungen WHERE frage_id = $1 AND benachrichtigt_am IS NULL',
+    [frageId],
+  );
+  if (offeneMeldungen.length === 0) return;
+
+  const nutzerIds = [...new Set(offeneMeldungen.map((m) => m.gemeldet_von))];
+  await Promise.all(nutzerIds.map((userId) => benachrichtigeNutzer(userId, {
+    titel: 'Deine gemeldete Frage wurde bearbeitet',
+    text: `Frage ${frageId} wurde inzwischen überarbeitet – danke für deine Meldung!`,
+    url: '/autoren',
+  })));
+
+  await query(
+    'UPDATE fragen_meldungen SET benachrichtigt_am = now() WHERE frage_id = $1 AND benachrichtigt_am IS NULL',
+    [frageId],
+  );
 }

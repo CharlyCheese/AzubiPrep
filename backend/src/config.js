@@ -30,7 +30,13 @@ export const config = {
   adminToken: process.env.ADMIN_TOKEN || '',
   adminReloadEnabled: bool(process.env.ADMIN_RELOAD, true),
   demoEndpoints: bool(process.env.DEMO_ENDPOINTS, false),
-  rateLimitMax: int(process.env.RATEN_LIMIT_MAX, 240),
+  // War 240 – bei intensiven manuellen Testphasen (viele Reloads/Klicks
+  // kurz hintereinander, zusätzlich durch React-StrictMode in der
+  // Entwicklung effektiv verdoppelte Anfragen) kam es zu spürbaren „Zu
+  // viele Anfragen“-Fehlern. Der eigentliche Haupttreiber (Benachrichtigungs-
+  // Badge bei jedem Seitenwechsel) wurde in Layout.jsx behoben; dieser Wert
+  // ist zusätzlich als Sicherheitsmarge angehoben.
+  rateLimitMax: int(process.env.RATEN_LIMIT_MAX, 360),
   rateLimitAdminMax: int(process.env.RATEN_LIMIT_ADMIN_MAX, 5),
   contentDir: process.env.CONTENT_DIR
     ? path.resolve(process.env.CONTENT_DIR)
@@ -46,6 +52,14 @@ export const config = {
   databaseUrl: process.env.DATABASE_URL || '',
   jwtSecret: process.env.JWT_SECRET || '',
   jwtExpiresIn: process.env.JWT_EXPIRES_IN || '30d',
+
+  // Push-Benachrichtigungen (BE-001, optional): ohne diese drei Werte
+  // bleibt die Funktion einfach deaktiviert (siehe push.js/isPushAktiviert),
+  // genau wie DATABASE_URL bei Login/Sync. Erzeugung: siehe
+  // backend/scripts/generate-vapid-keys.mjs.
+  vapidPublicKey: process.env.VAPID_PUBLIC_KEY || '',
+  vapidPrivateKey: process.env.VAPID_PRIVATE_KEY || '',
+  vapidSubject: process.env.VAPID_SUBJECT || 'mailto:kontakt@example.com',
 };
 
 export default config;

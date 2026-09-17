@@ -10,7 +10,10 @@ import { buildAuthRoutes } from './routes/auth.routes.js';
 import { buildSyncRoutes } from './routes/sync.routes.js';
 import { buildContentAdminRoutes } from './routes/content-admin.routes.js';
 import { buildMeldenRoutes } from './routes/melden.routes.js';
+import { buildPushRoutes } from './routes/push.routes.js';
+import { buildBenachrichtigungenRoutes } from './routes/benachrichtigungen.routes.js';
 import { isDbAktiviert } from './db.js';
+import { isPushAktiviert } from './push.js';
 
 export function createApp(store) {
   const app = express();
@@ -27,7 +30,7 @@ export function createApp(store) {
   // überhaupt angeboten werden soll, damit die Konto-Sektion im Offline-
   // Modus gar nicht erst angezeigt wird.
   app.get('/api/status', (req, res) => {
-    res.json({ syncAktiviert: isDbAktiviert() });
+    res.json({ syncAktiviert: isDbAktiviert(), pushAktiviert: isDbAktiviert() && isPushAktiviert() });
   });
 
   app.use('/api', buildContentRoutes(store));
@@ -45,6 +48,15 @@ export function createApp(store) {
     // BE-003: Feedback-Kanal ("Frage melden") – ebenfalls DB-gebunden,
     // da review_status nur in der Content-DB existiert.
     app.use('/api', buildMeldenRoutes());
+    // BE-001: Push-Benachrichtigungen – zusätzlich zur DB auch an
+    // gesetzte VAPID-Schlüssel gekoppelt (siehe push.js), die Route baut
+    // sich aber unabhängig davon auf (GET /push/public-key liefert dann
+    // einfach einen leeren Key, das Frontend blendet den Button aus).
+    app.use('/api', buildPushRoutes());
+    // BE-005: Benachrichtigungs-Historie – unabhängig von Push, nur DB
+    // vorausgesetzt (die Liste soll auch ohne aktivierten Push nutzbar
+    // sein, siehe push.js#benachrichtigeNutzer).
+    app.use('/api', buildBenachrichtigungenRoutes());
   }
 
   app.use('/api', (req, res) => {

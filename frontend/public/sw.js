@@ -3,7 +3,7 @@
 // - API-GET-Antworten: Network-first mit Cache-Fallback (Inhalte offline verfügbar)
 // - Nicht-GET-/POST-Requests: nur Netzwerk (kein Caching)
 
-const VERSION = 'azubiprep-v2'; // v2: Security-Haertung (theme-init.js im Precache)
+const VERSION = 'azubiprep-v3'; // v3 (BE-001): Push-Benachrichtigungen (Web-Push)
 const APP_SHELL = [
   '/',
   '/index.html',
@@ -68,6 +68,45 @@ self.addEventListener('fetch', (event) => {
         })
         .catch(() => cached);
       return cached || network;
+    }),
+  );
+});
+
+// BE-001: eingehende Push-Nachricht als System-Benachrichtigung anzeigen.
+// Payload ist ein JSON-Objekt { titel, text, url } (siehe backend/src/push.js).
+// Fällt der JSON-Parse aus irgendeinem Grund aus, wird trotzdem eine
+// generische Benachrichtigung gezeigt statt gar keine (Push kam ja an).
+self.addEventListener('push', (event) => {
+  let daten = { titel: 'AzubiPrep', text: 'Du hast eine neue Benachrichtigung.', url: '/' };
+  try {
+    if (event.data) daten = { ...daten, ...event.data.json() };
+  } catch {
+    /* ignore – generische Nachricht bleibt bestehen */
+  }
+  event.waitUntil(
+    self.registration.showNotification(daten.titel, {
+      body: daten.text,
+      icon: '/icon-192.png',
+      badge: '/icon-192.png',
+      data: { url: daten.url || '/' },
+    }),
+  );
+});
+
+// Klick auf die Benachrichtigung: vorhandenes App-Fenster fokussieren statt
+// ein neues zu öffnen, falls schon eines läuft.
+self.addEventListener('notificationclick', (event) => {
+  event.notification.close();
+  const ziel = event.notification.data?.url || '/';
+  event.waitUntil(
+    self.clients.matchAll({ type: 'window', includeUncontrolled: true }).then((clientList) => {
+      for (const client of clientList) {
+        if ('focus' in client) {
+          client.navigate(ziel);
+          return client.focus();
+        }
+      }
+      return self.clients.openWindow(ziel);
     }),
   );
 });

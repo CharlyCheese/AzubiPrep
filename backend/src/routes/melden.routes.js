@@ -6,6 +6,7 @@ import { Router } from 'express';
 import { query } from '../db.js';
 import { authPflicht } from '../auth.js';
 import { rateLimiter } from '../sicherheit.js';
+import { benachrichtigeNutzer } from '../push.js';
 
 const GRUND_MAX_LAENGE = 1000;
 
@@ -19,8 +20,9 @@ export function buildMeldenRoutes() {
 
   router.post('/fragen/:id/melden', async (req, res, next) => {
     try {
-      const { rows } = await query('SELECT id FROM questions WHERE id = $1', [req.params.id]);
-      if (!rows[0]) {
+      const { rows } = await query('SELECT id, fachrichtung FROM questions WHERE id = $1', [req.params.id]);
+      const frage = rows[0];
+      if (!frage) {
         res.status(404).json({ error: 'Frage nicht gefunden' });
         return;
       }
@@ -38,10 +40,34 @@ export function buildMeldenRoutes() {
       );
 
       res.json({ ok: true });
+
+      // Zweiter Push-Trigger (Ausbau BE-001): zuständige Autor:innen
+      // (fachrichtungsgebunden, wie darfBearbeiten() in
+      // content-admin.routes.js) und alle Admins über die neue Meldung
+      // informieren, statt dass sie es erst beim nächsten Blick in die
+      // Fragenpflege bemerken. Läuft nach der Antwort an den Client, darf
+      // das Melden selbst nie zum Scheitern bringen.
+      benachrichtigeZustaendige(frage.fachrichtung, req.params.id).catch((err) => {
+        console.warn(`[Push] Benachrichtigung für neue Meldung zu ${req.params.id} fehlgeschlagen:`, err?.message || err);
+      });
     } catch (err) {
       next(err);
     }
   });
 
   return router;
+}
+
+async function benachrichtigeZustaendige(frageFachrichtung, frageId) {
+  const { rows: zustaendige } = await query(
+    `SELECT id FROM users
+     WHERE rolle = 'admin'
+        OR (rolle = 'autor' AND (fachrichtung = $1 OR $1 = 'ALLE'))`,
+    [frageFachrichtung],
+  );
+  await Promise.all(zustaendige.map((u) => benachrichtigeNutzer(u.id, {
+    titel: 'Neue Fragen-Meldung',
+    text: `Frage ${frageId} wurde soeben gemeldet – bitte in der Fragenpflege prüfen.`,
+    url: '/autoren',
+  })));
 }
