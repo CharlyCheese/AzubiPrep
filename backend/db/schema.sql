@@ -63,7 +63,11 @@ CREATE TABLE IF NOT EXISTS modules (
   fachrichtung  TEXT NOT NULL,
   code          TEXT NOT NULL,
   titel         TEXT NOT NULL,
-  beschreibung  TEXT NOT NULL DEFAULT ''
+  beschreibung  TEXT NOT NULL DEFAULT '',
+  -- CONTENT-007/FE-020: Lernfeld-Zuordnung (LF1-LF9, LF10-12+Suffix,
+  -- 'KEIN_LF' für WiSo/PM) – seit FE-020 Grundlage der Lernfeld-Gruppierung
+  -- in Lernbereich/Lernreise, siehe docs/agent-briefs/CONTENT-007-....md.
+  lernfeld      TEXT NOT NULL DEFAULT ''
 );
 
 -- review_status begleitet OPS-002: jede Frage trägt fest, ob sie den
@@ -148,6 +152,14 @@ ALTER TABLE users ADD CONSTRAINT users_rolle_check CHECK (rolle IN ('lernende', 
 ALTER TABLE questions DROP CONSTRAINT IF EXISTS questions_review_status_check;
 ALTER TABLE questions ADD CONSTRAINT questions_review_status_check
   CHECK (review_status IN ('ungeprueft', 'geprueft', 'gemeldet', 'korrigiert', 'deaktiviert'));
+
+-- FE-020-Nachbesserung: bei bereits bestehenden Installationen (vor
+-- CONTENT-007 angelegt, z. B. Svens lokale DB) fehlt die lernfeld-Spalte –
+-- "CREATE TABLE IF NOT EXISTS" oben greift dort nicht, da die Tabelle
+-- schon existiert. Ohne diese Spalte bleibt lernfeld für jedes Modul leer
+-- und die neue Lernfeld-Gruppierung in Lernbereich/Lernreise zeigt nur die
+-- "Sonstige Prüfungsbereiche"-Sammelgruppe (Fund, 2026-09-18).
+ALTER TABLE modules ADD COLUMN IF NOT EXISTS lernfeld TEXT NOT NULL DEFAULT '';
 
 -- In-App-Feedback (BE-003): Nutzer können eine Frage im Quiz als
 -- falsch/unklar melden (Login vorausgesetzt, Grund optional). Setzt

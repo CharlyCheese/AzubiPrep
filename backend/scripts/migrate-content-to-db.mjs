@@ -57,14 +57,15 @@ async function main() {
   console.log(`Migriere ${modules.length} Modul(e) …`);
   for (const m of modules) {
     await query(
-      `INSERT INTO modules (modul_id, fachrichtung, code, titel, beschreibung)
-       VALUES ($1, $2, $3, $4, $5)
+      `INSERT INTO modules (modul_id, fachrichtung, code, titel, beschreibung, lernfeld)
+       VALUES ($1, $2, $3, $4, $5, $6)
        ON CONFLICT (modul_id) DO UPDATE SET
          fachrichtung = EXCLUDED.fachrichtung,
          code = EXCLUDED.code,
          titel = EXCLUDED.titel,
-         beschreibung = EXCLUDED.beschreibung`,
-      [m.modul_id, m.fachrichtung, m.code, m.titel, m.beschreibung || ''],
+         beschreibung = EXCLUDED.beschreibung,
+         lernfeld = EXCLUDED.lernfeld`,
+      [m.modul_id, m.fachrichtung, m.code, m.titel, m.beschreibung || '', m.lernfeld || ''],
     );
   }
 

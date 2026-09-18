@@ -1,6 +1,7 @@
-// Lernreise (Phase 5): virtuelle Landkarte des Lernwegs mit barrierefreier
-// Listenansicht. Die Logik liegt in utils/lernreise.js, hier nur Darstellung.
-import { useState } from 'react';
+// Lernreise (Phase 5, seit FE-020 nach Lernfeld gegliedert): virtuelle
+// Landkarte des Lernwegs mit barrierefreier Listenansicht. Die Logik liegt
+// in utils/lernreise.js, hier nur Darstellung.
+import { useEffect, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { useApi } from '../utils/useApi.js';
 import { api } from '../api/client.js';
@@ -11,10 +12,9 @@ import {
   baueLernreise,
   naechsteStation,
   fachrichtungsUebersicht,
-  GRUPPEN_ANZEIGE,
-  GRUPPE_FACHRICHTUNG,
   GRUPPE_GEMEINSAM,
 } from '../utils/lernreise.js';
+import Akkordeon from '../components/Akkordeon.jsx';
 
 function ReiseStation({ station }) {
   const s = station;
@@ -50,20 +50,18 @@ function ReiseStation({ station }) {
   );
 }
 
-function ReiseBlock({ gruppe, stationen }) {
+function ReiseBlock({ titel, stationen, offen, onToggle }) {
   if (!stationen.length) return null;
+  const beherrschtAnzahl = stationen.filter((s) => s.beherrscht).length;
+  const untertitel = `${beherrschtAnzahl} / ${stationen.length} Stationen beherrscht`;
   return (
-    <section className="card mb-2" aria-label={GRUPPEN_ANZEIGE[gruppe]}>
-      <h2 className="mb-0">{GRUPPEN_ANZEIGE[gruppe]}</h2>
-      <p className="small text-muted mt-0">
-        {gruppe === GRUPPE_GEMEINSAM
-          ? 'Diese Module sind für alle vier Fachrichtungen prüfungsrelevant.'
-          : `${stationen.length} Stationen in deiner gewählten Fachrichtung.`}
-      </p>
-      <ol className="reise-pfad">
-        {stationen.map((s) => <ReiseStation key={s.modulId} station={s} />)}
-      </ol>
-    </section>
+    <div className="mb-2">
+      <Akkordeon titel={titel} untertitel={untertitel} offen={offen} onToggle={onToggle}>
+        <ol className="reise-pfad">
+          {stationen.map((s) => <ReiseStation key={s.modulId} station={s} />)}
+        </ol>
+      </Akkordeon>
+    </div>
   );
 }
 
@@ -113,6 +111,16 @@ export default function Lernreise() {
   const { daten: module } = useApi(() => api.get('/module'), []);
   const { daten: fachrichtungen } = useApi(() => api.get('/fachrichtungen'), []);
   const [ansicht, setAnsicht] = useState('karte');
+  // FE-020: welche Lernfeld-Gruppen aufgeklappt sind – standardmäßig nur die
+  // erste Gruppe mit einer noch nicht beherrschten Station (also der
+  // nächste sinnvolle Einstiegspunkt), damit die Seite nicht mit 10+
+  // aufgeklappten Akkordeons überwältigt.
+  const [offeneGruppen, setOffeneGruppen] = useState(null);
+
+  // Beim Wechsel der Fachrichtung (Link oben, ändert nur ?fr=…, kein
+  // Seiten-Remount) sollen die aufgeklappten Gruppen neu bestimmt werden,
+  // statt die alte Auswahl der vorherigen Fachrichtung zu behalten.
+  useEffect(() => { setOffeneGruppen(null); }, [searchParams]);
 
   const frListe = fachrichtungen || [];
   const gewaehlt = searchParams.get('fr') || profil.fachrichtung || 'FIAE';
@@ -123,6 +131,19 @@ export default function Lernreise() {
   const naechste = naechsteStation(reise);
   const uebersicht = fachrichtungsUebersicht(module || [], statusMap, frListe);
   const f = reise.fortschritt;
+
+  if (offeneGruppen === null && reise.gruppen.length) {
+    const ersteOffene = reise.gruppen.find((g) => g.stationen.some((s) => !s.beherrscht)) || reise.gruppen[0];
+    setOffeneGruppen(new Set([ersteOffene.lernfeld]));
+  }
+  const gruppenOffen = offeneGruppen || new Set();
+  function toggleGruppe(lernfeld) {
+    setOffeneGruppen((vorher) => {
+      const naechsteMenge = new Set(vorher || []);
+      if (naechsteMenge.has(lernfeld)) naechsteMenge.delete(lernfeld); else naechsteMenge.add(lernfeld);
+      return naechsteMenge;
+    });
+  }
 
   return (
     <div>
@@ -194,10 +215,18 @@ export default function Lernreise() {
 
       {ansicht === 'karte' ? (
         <>
-          {/* Gemeinsame Module zuerst: sinnvoller Einstieg für Lernende,
-              bevor es in die eigene Fachrichtung geht. */}
-          <ReiseBlock gruppe={GRUPPE_GEMEINSAM} stationen={reise.gemeinsam} />
-          <ReiseBlock gruppe={GRUPPE_FACHRICHTUNG} stationen={reise.stationen} />
+          {/* FE-020: Lernfeld-Gruppen in chronologischer Reihenfolge statt
+              zweier fester Blöcke "gemeinsam"/"eigene Fachrichtung" – bildet
+              den tatsächlichen Ausbildungsverlauf ab (siehe CONTENT-007). */}
+          {reise.gruppen.map((g) => (
+            <ReiseBlock
+              key={g.lernfeld}
+              titel={g.titel}
+              stationen={g.stationen}
+              offen={gruppenOffen.has(g.lernfeld)}
+              onToggle={() => toggleGruppe(g.lernfeld)}
+            />
+          ))}
         </>
       ) : (
         <ReiseTabelle stationen={reise.alle} />

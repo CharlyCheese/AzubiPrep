@@ -1,9 +1,12 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useApi } from '../utils/useApi.js';
 import { api } from '../api/client.js';
 import { profileStore, progressStore } from '../store/localStore.js';
 import { modulStatusAusFortschritt, statusAnzeige, abdeckungProzent } from '../utils/modulStatus.js';
 import { BEHERRSCHT_AB } from '../utils/gamification.js';
+import { gruppiereNachLernfeld } from '../utils/lernfeldOrdnung.js';
+import Akkordeon from '../components/Akkordeon.jsx';
 
 // Statusfarbe als Kartenakzent (linker Rand) – macht den Bearbeitungsstand
 // einer Modulkarte auf einen Blick erkennbar, ohne den Fließtext lesen zu
@@ -59,54 +62,63 @@ function ModulKarte({ m, status }) {
   );
 }
 
-function ModulBlock({ id, titel, hinweis, module, statusMap, hervorgehoben }) {
+// FE-020: Lernfeld-Gruppe als Akkordeon statt fester Fachrichtungs-Blöcke –
+// führt Lernende chronologisch durch die KMK-Lernfeldstruktur (LF1…LF12,
+// siehe CONTENT-007) statt sie nach Fachrichtung zu sortieren.
+function LernfeldBlock({ lernfeld, titel, module, statusMap, eigeneFachrichtung, offen, onToggle }) {
   if (!module.length) return null;
   const bearbeitetAnzahl = module.filter((m) => statusMap[m.modul_id]?.bearbeitet).length;
   const beherrschtAnzahl = module.filter((m) => statusMap[m.modul_id]?.beherrscht).length;
+  const enthaeltEigene = module.some((m) => m.fachrichtung === eigeneFachrichtung);
+  const untertitel = `${module.length} Modul${module.length === 1 ? '' : 'e'} · `
+    + `${bearbeitetAnzahl} bearbeitet · ${beherrschtAnzahl} beherrscht (ab ${BEHERRSCHT_AB} %)`;
   return (
-    <section id={id} className="mb-2" style={{ scrollMarginTop: 12 }}>
-      {/* Titel und Fortschritts-Text bewusst eng nebeneinander (flex statt
-          flex-between) – bei breiten Fenstern würde space-between den Text
-          bis zum rechten Rand auseinanderziehen, sodass er ohne sichtbaren
-          Bezug zur Überschrift "verloren" wirkt. */}
-      <div className="flex wrap" style={{ gap: 12, rowGap: 4 }}>
-        <h2 className="mb-0">
-          {titel}
-          {hervorgehoben && <span className="badge badge-leicht" style={{ marginLeft: 8 }}>deine Fachrichtung</span>}
-        </h2>
-        <span className="small text-muted">
-          {bearbeitetAnzahl} von {module.length} bearbeitet · {beherrschtAnzahl} beherrscht (ab {BEHERRSCHT_AB} %)
-        </span>
-      </div>
-      {hinweis && <p className="text-muted small mt-0">{hinweis}</p>}
-      <div className="grid grid-2-max">
-        {module.map((m) => <ModulKarte key={m.modul_id} m={m} status={statusMap[m.modul_id]} />)}
-      </div>
-    </section>
+    <div className="mb-2">
+      <Akkordeon
+        titel={(
+          <>
+            {titel}
+            {enthaeltEigene && lernfeld !== 'KEIN_LF' && (
+              <span className="badge badge-leicht" style={{ marginLeft: 8 }}>deine Fachrichtung</span>
+            )}
+          </>
+        )}
+        untertitel={untertitel}
+        offen={offen}
+        onToggle={onToggle}
+      >
+        <div className="grid grid-2-max">
+          {module.map((m) => <ModulKarte key={m.modul_id} m={m} status={statusMap[m.modul_id]} />)}
+        </div>
+      </Akkordeon>
+    </div>
   );
 }
 
 export default function Lernen() {
   const profil = profileStore.get();
   const eigeneFachrichtung = profil.fachrichtung || 'FIAE';
-  const { daten: fachrichtungen } = useApi(() => api.get('/fachrichtungen'), []);
   const { daten: module } = useApi(() => api.get('/module'), []);
 
-  const fachrichtungenListe = fachrichtungen || [];
-  // Eigene Fachrichtung zuerst, Rest in der Reihenfolge aus dem Backend –
-  // rein eine Anzeige-Priorisierung, keine Zugriffsbeschränkung: alle
-  // Module aller Fachrichtungen sind hier sichtbar und offen.
-  const fachrichtungenSortiert = [...fachrichtungenListe].sort((a, b) => {
-    if (a.code === eigeneFachrichtung) return -1;
-    if (b.code === eigeneFachrichtung) return 1;
-    return 0;
-  });
-
-  const allgemeinModule = (module || []).filter((m) => m.fachrichtung === 'ALLE');
   const statusMap = modulStatusAusFortschritt(
     progressStore.get(),
     (id) => module?.find((m) => m.modul_id === id)?.fragenAnzahl || 0,
   );
+
+  const lernfeldGruppen = gruppiereNachLernfeld(module || [], eigeneFachrichtung);
+
+  // Alle Gruppen starten eingeklappt (Sven, 2026-09-18: "am besten die zu
+  // Start alle eingeklappt laden") – ein Set statt eines einzelnen Werts,
+  // damit mehrere Gruppen gleichzeitig offen sein können und Zuklappen
+  // (Entfernen aus dem Set) nicht mit "noch nicht initialisiert" kollidiert.
+  const [offeneGruppen, setOffeneGruppen] = useState(() => new Set());
+  function toggleGruppe(lernfeld) {
+    setOffeneGruppen((vorher) => {
+      const naechste = new Set(vorher);
+      if (naechste.has(lernfeld)) naechste.delete(lernfeld); else naechste.add(lernfeld);
+      return naechste;
+    });
+  }
 
   return (
     <div>
@@ -114,41 +126,23 @@ export default function Lernen() {
         <div>
           <h1 className="mb-0">Lernbereich</h1>
           <p className="text-muted mt-0">
-            Alle Module aller Fachrichtungen stehen dir offen – deine Fachrichtung ({eigeneFachrichtung}) ist nur
-            als Orientierung hervorgehoben, keine Einschränkung.
+            Alle Module aller Fachrichtungen stehen dir offen, gegliedert nach Lernfeld (LF1–LF12) – so folgst du dem
+            tatsächlichen Ausbildungsverlauf. Deine Fachrichtung ({eigeneFachrichtung}) ist markiert, keine
+            Einschränkung.
           </p>
         </div>
       </header>
 
-      <div className="flex wrap mb-2">
-        <a className="btn btn-ghost btn-sm" href="#allgemein">Allgemein</a>
-        {fachrichtungenSortiert.map((fr) => (
-          <a
-            key={fr.code}
-            className={`btn btn-sm ${fr.code === eigeneFachrichtung ? 'btn-primary' : 'btn-ghost'}`}
-            href={`#fr-${fr.code}`}
-          >
-            {fr.code}
-          </a>
-        ))}
-      </div>
-
-      <ModulBlock
-        id="allgemein"
-        titel="Allgemein"
-        hinweis="Gemeinsame Module – für alle Fachrichtungen prüfungsrelevant."
-        module={allgemeinModule}
-        statusMap={statusMap}
-      />
-
-      {fachrichtungenSortiert.map((fr) => (
-        <ModulBlock
-          key={fr.code}
-          id={`fr-${fr.code}`}
-          titel={`${fr.code} – ${fr.name}`}
-          module={(module || []).filter((m) => m.fachrichtung === fr.code)}
+      {lernfeldGruppen.map((g) => (
+        <LernfeldBlock
+          key={g.lernfeld}
+          lernfeld={g.lernfeld}
+          titel={g.titel}
+          module={g.module}
           statusMap={statusMap}
-          hervorgehoben={fr.code === eigeneFachrichtung}
+          eigeneFachrichtung={eigeneFachrichtung}
+          offen={offeneGruppen.has(g.lernfeld)}
+          onToggle={() => toggleGruppe(g.lernfeld)}
         />
       ))}
     </div>

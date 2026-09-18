@@ -29,16 +29,33 @@ FIAE;Fachinformatiker Anwendungsentwicklung;…
 
 ## Schema: modules.csv
 ```
-modul_id;fachrichtung;code;titel;beschreibung
-FIAE-PRG;FIAE;PRG;Programmierung und OOP;…
+modul_id;fachrichtung;code;titel;beschreibung;lernfeld
+FIAE-PRG;FIAE;PRG;Programmierung und OOP;…;LF11a
 ```
-`fachrichtung = ALLE` kennzeichnet gemeinsame Module (z. B. WiSo, PM).
+`fachrichtung = ALLE` kennzeichnet gemeinsame Module (z. B. WiSo, PM,
+Netzwerktechnik-Grundlagen, IT-Sicherheit-Grundlagen).
+
+`lernfeld` (seit `CONTENT-007`) ordnet ein Modul der offiziellen
+KMK-Lernfeldstruktur zu: `LF1`–`LF9` für die neun gemeinsamen Lernfelder
+(Jahr 1/2, alle Fachrichtungen), `LF10a`–`LF12a`/`…b`/`…c`/`…d` für die drei
+fachrichtungsspezifischen Lernfelder im 3. Jahr (Suffix = Fachrichtung:
+a=FIAE, b=FISI, c=DPA, d=DVK). WiSo und Projektmanagement sind offiziell
+**keine** Lernfelder, sondern eigene Prüfungsbereiche/Querschnittskompetenzen
+– bekommen den Wert `KEIN_LF`. Details und die vollständige Mapping-Tabelle:
+`docs/agent-briefs/CONTENT-007-lernfeld-taxonomie.md`.
 
 ## Schema: Fragen-CSV
 Spalten (Reihenfolge ist verbindlich):
 ```
 id;fachrichtung;modul_id;thema;typ;frage;option_a;option_b;option_c;option_d;antwort;erklaerung;schwierigkeit;quelle
 ```
+Eine optionale 15. Spalte `lernfeld` ist erlaubt (aktuell genutzt von
+`NETZ-GRUND.csv`, `FISI-NET.csv`, `IT-SEC-GRUND.csv`, `FISI-SEC.csv`) für
+Module, die auf Fragen-Ebene zwischen gemeinsamem Grundlagen-Lernfeld und
+fachrichtungsspezifischer Vertiefung unterscheiden (siehe `CONTENT-007`).
+Fehlt die Spalte, übernimmt die Frage automatisch das `lernfeld` ihres
+Moduls aus `modules.csv` – die meisten Fragen-Dateien brauchen die Spalte
+also **nicht**.
 
 | Spalte | Bedeutung |
 |---|---|
@@ -53,6 +70,7 @@ id;fachrichtung;modul_id;thema;typ;frage;option_a;option_b;option_c;option_d;ant
 | erklaerung | Erklärung/Lösungshinweis (wird nach Beantwortung angezeigt) |
 | schwierigkeit | `leicht`, `mittel` oder `schwer` |
 | quelle | Quellenangabe (z. B. „Rahmenlehrplan FIAE", „Scrum Guide") |
+| lernfeld | optional, s. o. – überschreibt das Modul-Lernfeld für diese eine Frage |
 
 ### Antwortformate
 | Typ | antwort | Beispiel |

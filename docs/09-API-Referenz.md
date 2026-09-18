@@ -39,8 +39,13 @@ GET /api/fachrichtungen
 POST /api/pruefung/generieren
 Content-Type: application/json
 
-{ "fachrichtung": "FIAE", "anzahl": 30, "gewichtung": {} }
+{ "fachrichtung": "FIAE", "anzahl": 30, "gewichtung": { "Vererbung": 3 } }
 ```
+`gewichtung` ist optional (leeres Objekt/fehlend = gleichverteilt zufällig).
+Das Frontend füllt es automatisch anhand der Schwächenanalyse (Thema →
+Gewicht 3 bei Erfolgsquote < 60 % und ≥ 3 Versuchen, siehe `FE-018` und
+`docs/03-Pruefungssimulation.md`).
+
 Antwort: `{ fragen: [ { id, fachrichtung, modul_id, thema, typ, frage, optionen, schwierigkeit } ], anzahl, erstelltAm }`
 > Bewusst **ohne** `antwort`/`erklaerung`, damit nicht „gespickt" wird.
 

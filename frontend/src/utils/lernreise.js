@@ -1,18 +1,21 @@
-// Lernreise (Phase 5): virtuelle Landkarte des Lernwegs.
-// Reine Funktionen (testbar) - die Seite Lernreise.jsx rendert nur.
-// Aufbau: Stationen der gewaehlten Fachrichtung + gemeinsame Module (ALLE).
+// Lernreise (Phase 5, seit FE-020 nach Lernfeld gegliedert): virtuelle
+// Landkarte des Lernwegs. Reine Funktionen (testbar) - die Seite
+// Lernreise.jsx rendert nur.
+// Aufbau: Stationen der gewaehlten Fachrichtung + gemeinsame Module (ALLE),
+// gruppiert und sortiert nach der offiziellen KMK-Lernfeldstruktur
+// (CONTENT-007) statt nach einer festen "gemeinsam vs. eigene"-Trennung –
+// so folgt die Reise dem tatsächlichen chronologischen Ausbildungsverlauf.
 import { modulStufe, statusAnzeige, abdeckungProzent } from './modulStatus.js';
+import { gruppiereNachLernfeld } from './lernfeldOrdnung.js';
 
+// Weiterhin exportiert: markiert auf einer einzelnen Station, ob ihr Modul
+// gemeinsam (ALLE) oder fachrichtungsspezifisch ist (Badge-Anzeige in
+// Lernreise.jsx) – nicht mehr die primäre Gruppierung der Seite.
 export const GRUPPE_FACHRICHTUNG = 'fachrichtung';
 export const GRUPPE_GEMEINSAM = 'gemeinsam';
 
-export const GRUPPEN_ANZEIGE = {
-  [GRUPPE_FACHRICHTUNG]: 'Deine Fachrichtung',
-  [GRUPPE_GEMEINSAM]: 'Gemeinsame Module (alle Fachrichtungen)',
-};
-
 /** Eine Station der Lernreise aus Modul + Modul-Status. */
-export function baueStation(modul, nummer, gruppe = GRUPPE_FACHRICHTUNG, statusMap = {}) {
+export function baueStation(modul, nummer, statusMap = {}) {
   const status = statusMap?.[modul.modul_id];
   const stufe = modulStufe(status);
   return {
@@ -20,9 +23,10 @@ export function baueStation(modul, nummer, gruppe = GRUPPE_FACHRICHTUNG, statusM
     titel: modul.titel,
     beschreibung: modul.beschreibung || '',
     fachrichtung: modul.fachrichtung,
+    lernfeld: modul.lernfeld || '',
     fragenAnzahl: modul.fragenAnzahl || 0,
     nummer,
-    gruppe,
+    gruppe: modul.fachrichtung === 'ALLE' ? GRUPPE_GEMEINSAM : GRUPPE_FACHRICHTUNG,
     stufe,
     anzeige: statusAnzeige(status),
     bearbeitet: Boolean(status?.bearbeitet),
@@ -50,25 +54,37 @@ export function fortschritt(module = [], statusMap = {}) {
   };
 }
 
-/** Lernreise einer Fachrichtung: eigene Stationen + gemeinsame Module (ALLE). */
+/**
+ * Lernreise einer Fachrichtung: eigene Module + gemeinsame Module (ALLE),
+ * in Lernfeld-Gruppen gegliedert (LF1…LF9, dann LF10-12 – eigene
+ * Fachrichtung zuerst –, "Sonstige Prüfungsbereiche" am Ende). Die
+ * Stationsnummerierung läuft durchgehend über alle Gruppen hinweg, damit
+ * sie den chronologischen Ausbildungsverlauf abbildet.
+ */
 export function baueLernreise(module = [], fachrichtung = 'FIAE', statusMap = {}) {
   const alle = module || [];
-  const eigene = alle.filter((m) => m.fachrichtung === fachrichtung);
-  const gemeinsam = alle.filter((m) => m.fachrichtung === 'ALLE');
-  const stationen = eigene.map((m, i) => baueStation(m, i + 1, GRUPPE_FACHRICHTUNG, statusMap));
-  const gemeinsame = gemeinsam.map((m, i) => baueStation(m, i + 1, GRUPPE_GEMEINSAM, statusMap));
+  const relevante = alle.filter((m) => m.fachrichtung === fachrichtung || m.fachrichtung === 'ALLE');
+  const lernfeldGruppen = gruppiereNachLernfeld(relevante, fachrichtung);
+
+  let laufendeNummer = 0;
+  const gruppen = lernfeldGruppen.map((g) => ({
+    lernfeld: g.lernfeld,
+    titel: g.titel,
+    stationen: g.module.map((m) => {
+      laufendeNummer += 1;
+      return baueStation(m, laufendeNummer, statusMap);
+    }),
+  }));
+
   return {
     fachrichtung,
-    stationen,
-    gemeinsam: gemeinsame,
-    // Gemeinsame Module zuerst: sinnvoller Einstieg für Lernende (auch für
-    // die "nächste Station"-Empfehlung, die auf dieser Reihenfolge basiert).
-    alle: [...gemeinsame, ...stationen],
-    fortschritt: fortschritt([...eigene, ...gemeinsam], statusMap),
+    gruppen,
+    alle: gruppen.flatMap((g) => g.stationen),
+    fortschritt: fortschritt(relevante, statusMap),
   };
 }
 
-/** Naechste offene Station: erste nicht beherrschte Station (eigene zuerst). */
+/** Naechste offene Station: erste nicht beherrschte Station in Lernfeld-Reihenfolge. */
 export function naechsteStation(reise) {
   return reise?.alle?.find((s) => !s.beherrscht) || null;
 }

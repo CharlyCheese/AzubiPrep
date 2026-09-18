@@ -5,6 +5,23 @@
 > Format: `- [ID] Kurzbeschreibung (Priorität) → Brief: <ID>-<slug>.md`
 > (Brief-Link nur, sobald der Brief tatsächlich angelegt wurde.)
 
+- [FE-018] Themengewichtung in der Prüfungssimulation aktivieren (hoch) —
+  Fund aus `OPS-011`: `backend/src/exam.js#generierePruefung` unterstützt
+  seit jeher einen `gewichtung`-Parameter, den das Frontend nie befüllt
+  hat. Sven hat sich für die Aktivierung entschieden (automatisch im
+  Hintergrund, ohne neues UI-Element, gekoppelt an die bereits vorhandene
+  60%-Schwächenschwelle). Umsetzung erfolgt, Test durch Sven steht noch
+  aus (kein npm-Registry-Zugriff in meiner Umgebung). → Brief:
+  FE-018-pruefung-themengewichtung-aktivieren.md
+
+- [OPS-011] Lern-Kernflows (Quiz, Karteikarten, Prüfungssimulation):
+  kombinierte Doku- und Feature-Abnahme (hoch) — Folgeschritt aus dem
+  ChatGPT-Review 2026-09-18 ("weit fortgeschrittener MVP", 8–8,5/10),
+  Sven hat sich für Feature-Fokus statt Release-Fokus entschieden. Erster
+  von mehreren geplanten Kernbereichs-Durchgängen (weitere folgen für
+  Autoren-Workflow, Konto/Sync). Doku-Audit und Feature-Test bewusst
+  kombiniert statt nacheinander. → Brief: OPS-011-lern-kernflows-abnahme.md
+
 - [OPS-003] KI-Integration prüfen: lokal vs. über Internet (niedrig) —
   Idee (Sven, 2026-09-15): lokales Modell direkt in der App bündeln, z. B.
   Qwen 3B + RAG, gemeinsam mit dem Installer herunterladbar, lauffähig auf
@@ -49,6 +66,15 @@
   Task davor. Die `BE-007`-Token-Mechanik (Tabelle, Hashing, Ablauf,
   Einmal-Nutzung) müsste dafür nur um den Zustellweg ergänzt werden, nicht
   umgebaut.
+- [FE-019] XP-Ziel und Ränge (Gamification) an wachsenden Fragenkatalog
+  anpassen (niedrig) — Vormerkung (Sven, 2026-09-18) im Zuge der
+  Fragenkatalog-Ausbau-Planung (`CONTENT-007`): mit deutlich mehr Fragen
+  (Zielgröße ~1000 je Fachrichtung) werden aktuelle XP-Schwellen/Ränge
+  (`frontend/src/store/gamificationStore.js`, `frontend/src/utils/
+  gamification.js`) vermutlich zu schnell erreichbar bzw. nicht mehr
+  passend skaliert. Laut Sven unkompliziert anzupassen, kein konkreter
+  Auftrag – nur vormerken, bei Bedarf im Zuge des Fragen-Ausbaus erneut
+  aufgreifen.
 - [DB-003] Sync-Konfliktauflösung bei mehreren gleichzeitig aktiven Geräten
   (niedrig) — Fund beim Brief-Audit 2026-09-17: `docs/19-Datenbank-Login.md`
   nennt das seit `DB-001` als bekannte Einschränkung (aktuell reines

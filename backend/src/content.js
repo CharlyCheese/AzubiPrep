@@ -20,6 +20,18 @@ const QUESTION_COLUMNS = [
   'option_a', 'option_b', 'option_c', 'option_d',
   'antwort', 'erklaerung', 'schwierigkeit', 'quelle',
 ];
+// CONTENT-007: `lernfeld` ist eine optionale 15. Spalte, aktuell nur in
+// Fragen-Dateien genutzt, die Grundlagen-/Vertiefungs-Inhalte je Frage
+// unterscheiden (z. B. NETZ-GRUND.csv, FISI-NET.csv). Alle anderen
+// Fragen-Dateien bleiben beim 14-Spalten-Basisschema – ihr Lernfeld kommt
+// stattdessen einheitlich vom Modul (Fallback-Logik unten beim Aufbau
+// des `frage`-Objekts).
+export function pruefeFragenHeader(header) {
+  const basisOk = QUESTION_COLUMNS.every((c, i) => header[i] === c);
+  if (!basisOk) return false;
+  if (header.length === QUESTION_COLUMNS.length) return true;
+  return header.length === QUESTION_COLUMNS.length + 1 && header[QUESTION_COLUMNS.length] === 'lernfeld';
+}
 const GUELTIGE_TYPEN = new Set(['SC', 'MC', 'FT']);
 const GUELTIGE_SCHWIERIGKEIT = new Set(['leicht', 'mittel', 'schwer']);
 
@@ -62,7 +74,7 @@ function ladeTheorie(contentDir) {
  */
 async function loadContentFromDb(contentDir) {
   const { rows: fachrichtungenRaw } = await query('SELECT code, name, beschreibung FROM fachrichtungen');
-  const { rows: modulesRaw } = await query('SELECT modul_id, fachrichtung, code, titel, beschreibung FROM modules');
+  const { rows: modulesRaw } = await query('SELECT modul_id, fachrichtung, code, titel, beschreibung, lernfeld FROM modules');
   // CONTENT-001: 'deaktiviert' blendet eine Frage aus dem aktiven
   // Lernbestand aus (Ersatz für ein hartes DELETE über die Autoren-UI),
   // bleibt aber in der Tabelle selbst erhalten (jederzeit reaktivierbar).
@@ -92,6 +104,10 @@ async function loadContentFromDb(contentDir) {
       code: m.code,
       titel: m.titel,
       beschreibung: m.beschreibung,
+      // FE-020-Nachbesserung: `lernfeld` wird jetzt aus der DB selektiert
+      // (schema.sql#modules.lernfeld) – `|| ''` bleibt als Absicherung für
+      // Installationen, bei denen die Migration noch nicht gelaufen ist.
+      lernfeld: m.lernfeld || '',
     });
   }
 
@@ -123,6 +139,7 @@ async function loadContentFromDb(contentDir) {
       schwierigkeit: r.schwierigkeit,
       quelle: r.quelle,
       quelldatei: r.quelldatei || '',
+      lernfeld: r.lernfeld || (modul ? modul.lernfeld : ''),
     };
     questionsById.set(r.id, frage);
     if (!questionsByModul.has(r.modul_id)) questionsByModul.set(r.modul_id, []);
@@ -162,6 +179,9 @@ function loadContentFromCsv(contentDir) {
       code: m.code,
       titel: m.titel,
       beschreibung: m.beschreibung,
+      // CONTENT-007: 'KEIN_LF' fuer Nicht-LF-Kategorien (WiSo/PM), sonst
+      // LF1-LF9 (gemeinsam) oder LF10-12 + Fachrichtungssuffix (spezifisch).
+      lernfeld: m.lernfeld || '',
     });
   }
 
@@ -176,14 +196,17 @@ function loadContentFromCsv(contentDir) {
   for (const file of files) {
     const filePath = path.join(questionsDir, file);
     const { header, records } = readCsvFile(filePath);
-    const headerOk = QUESTION_COLUMNS.every((c, i) => header[i] === c) && header.length === QUESTION_COLUMNS.length;
-    if (!headerOk) {
+    if (!pruefeFragenHeader(header)) {
       warnungen.push(`${file}: Kopfzeile weicht vom Schema ab (${header.join(';')})`);
     }
     for (const r of records) {
       const modul = modulesById.get(r.modul_id);
       const fachrichtung = (r.fachrichtung && r.fachrichtung.trim())
         || (modul ? modul.fachrichtung : '');
+      // CONTENT-007: Frage-eigenes lernfeld (nur bei gemischten Modulen wie
+      // NETZ-GRUND/FISI-NET gesetzt) hat Vorrang, sonst faellt es auf das
+      // Modul-Lernfeld zurueck.
+      const lernfeld = (r.lernfeld && r.lernfeld.trim()) || (modul ? modul.lernfeld : '');
 
       if (!modul) {
         warnungen.push(`${file}: modul_id "${r.modul_id}" (Frage ${r.id}) existiert nicht in modules.csv`);
@@ -211,6 +234,7 @@ function loadContentFromCsv(contentDir) {
         schwierigkeit: r.schwierigkeit,
         quelle: r.quelle,
         quelldatei: file,
+        lernfeld,
       };
       questionsById.set(r.id, frage);
       if (!questionsByModul.has(r.modul_id)) questionsByModul.set(r.modul_id, []);

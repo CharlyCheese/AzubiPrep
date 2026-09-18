@@ -2,14 +2,66 @@ import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useApi } from '../utils/useApi.js';
 import { api } from '../api/client.js';
-import { profileStore } from '../store/localStore.js';
+import { profileStore, progressStore } from '../store/localStore.js';
 import { setExamState } from '../store/examStore.js';
 import { mischeOptionen } from '../utils/optionen.js';
+
+// Mindestanzahl Versuche je Thema, bevor eine Quote als aussagekräftig
+// gilt – ein einziger Zufallstreffer/-fehler soll ein Thema nicht sofort
+// als "Schwäche" markieren.
+const MIN_VERSUCHE_JE_THEMA = 3;
+// Dieselbe Schwelle wie bei "Stärken/Schwächen" in der Auswertung
+// (backend/src/exam.js#auswertePruefung), damit "Schwäche" im Produkt
+// überall dasselbe bedeutet.
+const SCHWAECHE_SCHWELLE_PROZENT = 60;
+// Gewichtsfaktor für schwache Themen (siehe backend/src/exam.js#mischen:
+// höheres Gewicht senkt den Zufalls-Schlüssel im Schnitt, das Thema landet
+// dadurch häufiger unter den ersten gezogenen Fragen).
+const SCHWAECHE_GEWICHT = 3;
+
+/**
+ * Themengewichtung für die Prüfungsgenerierung (FE-018): Themen, in denen
+ * bisher unter `SCHWAECHE_SCHWELLE_PROZENT` % richtig beantwortet wurde
+ * (bei mindestens `MIN_VERSUCHE_JE_THEMA` Versuchen), bekommen ein erhöhtes
+ * Gewicht und werden dadurch häufiger gezogen. Themen ohne ausreichend
+ * Daten bleiben absichtlich ohne Eintrag – das Backend behandelt einen
+ * fehlenden Schlüssel bereits wie Gewicht 1 (siehe exam.js#mischen).
+ */
+function berechneGewichtung(alleFragen, fachrichtungCode) {
+  if (!alleFragen?.length) return {};
+  const passend = alleFragen.filter(
+    (f) => f.fachrichtung === fachrichtungCode || f.fachrichtung === 'ALLE',
+  );
+  const fortschritt = progressStore.get();
+
+  const proThema = {};
+  for (const f of passend) {
+    const eintrag = fortschritt[f.id];
+    if (!eintrag) continue;
+    const gesamt = (eintrag.richtig || 0) + (eintrag.falsch || 0);
+    if (gesamt === 0) continue;
+    if (!proThema[f.thema]) proThema[f.thema] = { richtig: 0, gesamt: 0 };
+    proThema[f.thema].richtig += eintrag.richtig || 0;
+    proThema[f.thema].gesamt += gesamt;
+  }
+
+  const gewichtung = {};
+  for (const [thema, stats] of Object.entries(proThema)) {
+    if (stats.gesamt < MIN_VERSUCHE_JE_THEMA) continue;
+    const quote = (stats.richtig / stats.gesamt) * 100;
+    if (quote < SCHWAECHE_SCHWELLE_PROZENT) gewichtung[thema] = SCHWAECHE_GEWICHT;
+  }
+  return gewichtung;
+}
 
 export default function Pruefung() {
   const navigate = useNavigate();
   const profil = profileStore.get();
   const { daten: fachrichtungen } = useApi(() => api.get('/fachrichtungen'), []);
+  // Ungefiltert wie in PruefungVerlauf.jsx – die Fachrichtungs-/ALLE-Filterung
+  // passiert client-seitig in berechneGewichtung(), spiegelt exakt die
+  // serverseitige Logik aus content.js#fragenFuerFachrichtung.
+  const { daten: alleFragen } = useApi(() => api.get('/fragen'), []);
 
   const [fachrichtung, setFachrichtung] = useState(profil.fachrichtung || 'FIAE');
   const [anzahl, setAnzahl] = useState(30);
@@ -22,7 +74,8 @@ export default function Pruefung() {
     setLaden(true);
     setFehler('');
     try {
-      const erg = await api.post('/pruefung/generieren', { fachrichtung, anzahl, schwierigkeit });
+      const gewichtung = berechneGewichtung(alleFragen, fachrichtung);
+      const erg = await api.post('/pruefung/generieren', { fachrichtung, anzahl, schwierigkeit, gewichtung });
       setExamState({
         fragen: erg.fragen.map((f) => ({ ...f, gemischt: mischeOptionen(f) })),
         antworten: {},
@@ -88,7 +141,8 @@ export default function Pruefung() {
 
         <div className="alert alert-info">
           <strong>Hinweis:</strong> Die Simulation mischt zufällige Fragen aus allen Modulen deiner Fachrichtung
-          (inkl. gemeinsamer Module WiSo/Projektmanagement). Bestehensgrenze: 50 %.
+          (inkl. gemeinsamer Module WiSo/Projektmanagement) und zieht Themen, in denen du bisher unter 60 %
+          richtig lagst, dabei bevorzugt. Bestehensgrenze: 50 %.
           <div className="small mt-1">
             Ergebnisse dienen der <strong>Selbstkontrolle</strong> und werden nur lokal gespeichert – sie
             sind kein zertifizierter Prüfungsnachweis.

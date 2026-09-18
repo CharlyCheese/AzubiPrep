@@ -5,17 +5,13 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import fs from 'node:fs';
 import { readCsvFile } from '../src/csv.js';
+import { pruefeFragenHeader } from '../src/content.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const contentDir = process.env.CONTENT_DIR
   ? path.resolve(process.env.CONTENT_DIR)
   : path.resolve(__dirname, '..', '..', 'content');
 
-const QUESTION_COLUMNS = [
-  'id', 'fachrichtung', 'modul_id', 'thema', 'typ', 'frage',
-  'option_a', 'option_b', 'option_c', 'option_d',
-  'antwort', 'erklaerung', 'schwierigkeit', 'quelle',
-];
 const GUELTIGE_TYPEN = new Set(['SC', 'MC', 'FT']);
 const GUELTIGE_SCHWIERIGKEIT = new Set(['leicht', 'mittel', 'schwer']);
 const GUELTIGE_FACHRICHTUNG = new Set(['FIAE', 'FISI', 'DPA', 'DVK', 'ALLE', '']);
@@ -40,7 +36,7 @@ let gesamtFragen = 0;
 
 for (const file of files) {
   const { header, records } = readCsvFile(path.join(questionsDir, file));
-  if (header.length !== QUESTION_COLUMNS.length || QUESTION_COLUMNS.some((c, i) => header[i] !== c)) {
+  if (!pruefeFragenHeader(header)) {
     fehlerMelden(`${file}: Kopfzeile weicht vom Schema ab: ${header.join(';')}`);
   }
 
