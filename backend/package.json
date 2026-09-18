@@ -16,7 +16,8 @@
     "sicherheits-check": "node scripts/sicherheits-check.mjs",
     "migrate-content": "node scripts/migrate-content-to-db.mjs",
     "export-content": "node scripts/export-content-to-csv.mjs",
-    "lint": "eslint src scripts"
+    "lint": "eslint src scripts",
+    "test": "vitest run"
   },
   "dependencies": {
     "express": "^4.19.2",
@@ -29,6 +30,7 @@
   },
   "devDependencies": {
     "eslint": "^9.13.0",
-    "@eslint/js": "^9.13.0"
+    "@eslint/js": "^9.13.0",
+    "vitest": "^5.0.0"
   }
 }

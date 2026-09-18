@@ -39,14 +39,33 @@ die nächste warten muss.
 - [ ] Kurzer Hinweis in README (Abschnitt Tech-Stack oder eigener CI-Badge),
       dass CI aktiv ist.
 
-### Stufe 2: Test-Runner + Backend-Logiktests (separater Task/Brief)
-- [ ] Test-Runner einführen (Vorschlag: Vitest, passt zu Vite/ESM, für
-      Backend und Frontend gemeinsam nutzbar).
-- [ ] Tests für: Antwortauswertung SC/MC/FT (`backend/src/answer.js`),
-      Prüfungsgenerierung/-auswertung (`backend/src/exam.js`),
-      Autor/Admin-Rechteprüfung (Content-Admin-Routen), Passwort-Reset-
-      Token-Mechanik (`auth.routes.js`).
-- [ ] CI-Workflow um `npm test` (Backend + Frontend) erweitern.
+### Stufe 2: Test-Runner + Backend-Logiktests
+- [x] Test-Runner eingeführt: Vitest (`backend/vitest.config.js`,
+      `backend/test/setup.js` setzt einen Test-`JWT_SECRET`, ohne echte
+      lokale `.env`-Werte zu überschreiben).
+- [x] `backend/test/answer.test.js`: Antwortauswertung SC/MC/FT
+      (richtig/falsch, Case-Insensitivität, MC-Reihenfolge/unvollständige
+      Auswahl, FT-Synonyme/Diakritika-Normalisierung).
+- [x] `backend/test/exam.test.js`: Prüfungsgenerierung (Fachrichtungs-
+      Fehler, Fachrichtung+ALLE-Filterung, Anzahl-Begrenzung 1–200,
+      Schwierigkeitsfilter, keine Musterlösung im Rückgabeobjekt) und
+      -auswertung (Score-Berechnung, unbekannte IDs werden übersprungen,
+      Bestehensgrenze, Gruppierung nach Modul/Typ, Stärken/Schwächen).
+- [x] `backend/test/auth.test.js`: `emailGueltig`, `passwortGueltig`,
+      Reset-Token-Erzeugung/-Hashing (deterministisch, Ablaufzeit ~24h),
+      JWT erstellen/prüfen (inkl. Ablehnung bei Manipulation) und die
+      `authPflicht`-Middleware (401 ohne/mit ungültigem Token, `req.userId`
+      bei gültigem Token).
+- [ ] **Bewusst zurückgestellt:** `autorPflicht`/`adminPflicht` (fragen die
+      Rolle live per SQL ab) und die Content-Admin-Routen selbst brauchen
+      eine echte oder gemockte Datenbank – das ist inhaltlich näher an
+      Stufe 3 (API-Integrationstests) als an isolierten Logik-Tests und
+      wird dort mit erledigt, damit nicht zweimal ähnliche Test-Infrastruktur
+      aufgebaut wird.
+- [x] CI-Workflow (`.github/workflows/ci.yml`) um `npm test` (Backend)
+      erweitert, läuft vor dem Sicherheitscheck.
+- [ ] Frontend-Logiktests (Stores, Sync-Merge, Gamification) – noch offen,
+      eigener Umfang, ggf. eigener Folge-Task.
 
 ### Stufe 3: API-Integrationstests (Teil von Stufe 2 oder eigener Task)
 - [ ] Kleiner Satz HTTP-Tests gegen die echte Express-App (z. B. mit
@@ -65,9 +84,18 @@ die nächste warten muss.
       Fallback-Modus (entspricht dem MVP-Betrieb ohne DB).
 - [ ] Stufe 1: Nach Push sichtbar grün auf GitHub (von Sven bestätigt,
       da diese Sitzung nicht direkt auf GitHub pushen kann).
-- [ ] Stufen 2–4 bleiben "offen" in diesem Brief bzw. wandern in eigene
+- [ ] Stufen 3–4 bleiben "offen" in diesem Brief bzw. wandern in eigene
       Folge-Briefs, sobald sie angegangen werden.
+- [ ] Stufe 2: `npm test` läuft bei Sven lokal grün (`cd backend && npm
+      install && npm test`) – noch zu bestätigen, da diese Sitzung keinen
+      npm-Registry-Zugriff hat und die Tests nicht selbst ausführen konnte.
 
 ## Ergebnis (wird beim Abschluss ausgefüllt)
 
-<wird nach Stufe 1 ergänzt>
+Stufe 1 (CI für bestehende Checks) und Stufe 2 (Vitest + Backend-
+Logiktests für Antwortauswertung, Prüfung und Auth-Kernfunktionen)
+umgesetzt. Noch offen: Svens lokale Bestätigung, dass `npm test` grün
+läuft (diese Sitzung konnte die Tests mangels npm-Registry-Zugriff nicht
+selbst ausführen, nur gegen den Quellcode gegenlesen), sowie Stufe 3
+(API-Integrationstests, inkl. der zurückgestellten Rechteprüfung) und
+Stufe 4 (Browser-Tests).
