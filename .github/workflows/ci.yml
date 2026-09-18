@@ -57,6 +57,53 @@ jobs:
         if: always()
         run: kill "$PID" || true
 
+  backend-db-tests:
+    name: Backend – API-Integrationstests (Auth, Autoren-Rechte, mit Postgres)
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: azubiprep_test
+          POSTGRES_PASSWORD: azubiprep_test
+          POSTGRES_DB: azubiprep_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      # Wegwerf-Datenbank nur für diesen CI-Job (Postgres-Service-Container
+      # oben, existiert nur für die Dauer dieses Jobs) – niemals eine
+      # echte/produktive Datenbank hier eintragen. ALLOW_DB_TESTS=1 ist die
+      # bewusste Sicherheits-Sperre aus test/db/setup.js.
+      DATABASE_URL: postgresql://azubiprep_test:azubiprep_test@localhost:5432/azubiprep_test
+      JWT_SECRET: ci-test-secret-nicht-fuer-produktion
+      ALLOW_DB_TESTS: "1"
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Node 20 einrichten
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: PostgreSQL-Client installieren
+        run: sudo apt-get update && sudo apt-get install -y postgresql-client
+
+      - name: Schema in die Test-Datenbank einspielen
+        run: psql "$DATABASE_URL" -f backend/db/schema.sql
+
+      - name: Backend-Abhängigkeiten installieren
+        working-directory: backend
+        run: npm install
+
+      - name: DB-Integrationstests
+        working-directory: backend
+        run: npm run test:db
+
   frontend-build:
     name: Frontend – Produktions-Build
     runs-on: ubuntu-latest

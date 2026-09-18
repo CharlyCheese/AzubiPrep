@@ -4,6 +4,10 @@ export default defineConfig({
   test: {
     environment: 'node',
     setupFiles: ['./test/setup.js'],
-    include: ['test/**/*.test.js'],
+    // Bewusst NICHT rekursiv (kein "test/**"): test/db/ enthält die
+    // DB-abhängigen Integrationstests, die ausschließlich über den
+    // separaten Befehl "npm run test:db" (eigene Config, eigene Sperre in
+    // test/db/setup.js) laufen dürfen, niemals über das normale "npm test".
+    include: ['test/*.test.js'],
   },
 });

@@ -67,10 +67,34 @@ die nächste warten muss.
 - [ ] Frontend-Logiktests (Stores, Sync-Merge, Gamification) – noch offen,
       eigener Umfang, ggf. eigener Folge-Task.
 
-### Stufe 3: API-Integrationstests (Teil von Stufe 2 oder eigener Task)
-- [ ] Kleiner Satz HTTP-Tests gegen die echte Express-App (z. B. mit
-      `supertest`): Content laden, Prüfung erzeugen/auswerten,
-      unautorisierte Admin-Aktion wird abgelehnt.
+### Stufe 3: API-Integrationstests
+- [x] `backend/test/api.content-exam.test.js` (kein DB nötig, Teil des
+      normalen `npm test`): Content-Routen (health, status, module,
+      fragen, suche) und Prüfung generieren/auswerten End-to-End über
+      HTTP, gegen einen kleinen selbst gebauten Content-Store statt der
+      echten CSV-Daten.
+- [x] `backend/test/db/api.auth-admin.test.js` (DB nötig, **eigener**
+      Testlauf `npm run test:db`, eigene Config `backend/vitest.db.config.js`):
+      Registrierung (inkl. Passwort-Validierung, Duplikat-Ablehnung),
+      Login (inkl. generischer Fehlermeldung, kein Enumeration-Leck),
+      `GET /api/auth/me`, und die eigentliche Rechteprüfung: `GET
+      /api/admin/questions` ohne Token → 401, eingeloggt ohne
+      autor/admin-Rolle → 403, nach SQL-Rollenvergabe (simuliert eine
+      Admin-Aktion, genau wie in der echten App) → 200.
+- [x] **Bewusste Sicherheits-Entscheidung:** die DB-Tests laufen NICHT im
+      normalen `npm test` mit, sondern nur über den separaten Befehl
+      `npm run test:db`, mit eigener Vitest-Config und einer Sperre
+      (`test/db/setup.js`, verlangt `ALLOW_DB_TESTS=1`). Grund: `npm test`
+      lädt beim Import von `config.js` ganz normal Svens echte lokale
+      `.env` (falls vorhanden) – ohne diese Trennung hätte ein
+      versehentlicher DB-Testlauf echte Test-Nutzer in seine echte
+      Datenbank geschrieben. `npm run test:db` ist nur für eine
+      Wegwerf-Datenbank gedacht (der Postgres-Service-Container in CI).
+- [x] CI-Workflow: neuer Job `backend-db-tests` mit einem
+      `postgres:16`-Service-Container (nur für die Dauer des Jobs, eigene
+      Zugangsdaten), spielt `backend/db/schema.sql` ein, setzt
+      `DATABASE_URL`/`JWT_SECRET`/`ALLOW_DB_TESTS=1` nur für diesen Job
+      und führt `npm run test:db` aus.
 
 ### Stufe 4: Browser-Tests (separater Task, erst nach Stufe 2+3)
 - [ ] Playwright für 3–5 Kernwege: Quiz abschließen, Prüfung starten,
@@ -84,18 +108,39 @@ die nächste warten muss.
       Fallback-Modus (entspricht dem MVP-Betrieb ohne DB).
 - [ ] Stufe 1: Nach Push sichtbar grün auf GitHub (von Sven bestätigt,
       da diese Sitzung nicht direkt auf GitHub pushen kann).
-- [ ] Stufen 3–4 bleiben "offen" in diesem Brief bzw. wandern in eigene
-      Folge-Briefs, sobald sie angegangen werden.
-- [ ] Stufe 2: `npm test` läuft bei Sven lokal grün (`cd backend && npm
-      install && npm test`) – noch zu bestätigen, da diese Sitzung keinen
-      npm-Registry-Zugriff hat und die Tests nicht selbst ausführen konnte.
+- [ ] Stufe 4 bleibt "offen" in diesem Brief bzw. wandert in einen eigenen
+      Folge-Brief, sobald sie angegangen wird.
+- [x] Stufe 2: `npm test` läuft bei Sven lokal grün (2026-09-18):
+      `cd backend && npm install && npm test` → Vitest 5.0.1, 3 Testdateien,
+      **45/45 Tests bestanden** (answer.test.js 15, exam.test.js 13,
+      auth.test.js 17), Laufzeit 1.34s.
+- [x] Stufe 3: `npm test` (DB-freier Teil, `api.content-exam.test.js`)
+      läuft bei Sven lokal grün (2026-09-18, nach Fix s. u.).
+      **Zwischenzeitlich gefundener Bug (behoben, nicht datenkritisch):**
+      `vitest.config.js` hatte ein rekursives Include-Muster
+      (`test/**/*.test.js`), wodurch `npm test` versehentlich auch
+      `test/db/api.auth-admin.test.js` mitlief – die dortige
+      `ALLOW_DB_TESTS`-Sperre griff nicht, weil dieser Lauf die
+      DB-Config/das DB-Setup-File gar nicht verwendet. Folgenlos, weil bei
+      Sven lokal kein `DATABASE_URL` gesetzt ist (die DB-Routen existieren
+      dann laut `app.js` gar nicht, die Tests scheiterten entsprechend mit
+      404/"Datenbank fehlt" statt echte Daten zu schreiben) – hätte aber
+      bei gesetztem `DATABASE_URL` seine echte lokale Datenbank getroffen.
+      Fix: Include auf `test/*.test.js` (nicht rekursiv) geändert, damit
+      der `test/db/`-Unterordner nur noch über `npm run test:db` erreicht
+      wird.
+- [ ] Stufe 3: CI-Job `backend-db-tests` läuft auf GitHub grün (Postgres-
+      Service + `npm run test:db`) – noch zu bestätigen, da diese Sitzung
+      nicht direkt auf GitHub pushen/Actions einsehen kann.
 
 ## Ergebnis (wird beim Abschluss ausgefüllt)
 
-Stufe 1 (CI für bestehende Checks) und Stufe 2 (Vitest + Backend-
-Logiktests für Antwortauswertung, Prüfung und Auth-Kernfunktionen)
-umgesetzt. Noch offen: Svens lokale Bestätigung, dass `npm test` grün
-läuft (diese Sitzung konnte die Tests mangels npm-Registry-Zugriff nicht
-selbst ausführen, nur gegen den Quellcode gegenlesen), sowie Stufe 3
-(API-Integrationstests, inkl. der zurückgestellten Rechteprüfung) und
-Stufe 4 (Browser-Tests).
+Stufe 1 (CI für bestehende Checks), Stufe 2 (Vitest + Backend-Logiktests)
+und Stufe 3 (API-Integrationstests, DB-frei über den normalen `npm test`
+plus DB-abhängig über den separaten, per `ALLOW_DB_TESTS=1` gesperrten
+`npm run test:db` gegen einen Postgres-Service-Container in CI)
+umgesetzt. Stufe 2 von Sven lokal bestätigt (45/45 Tests grün). Noch
+offen: Svens lokale Bestätigung von Stufe 3 (DB-freier Teil), der grüne
+CI-Lauf auf GitHub für alle drei Jobs (inkl. dem neuen `backend-db-tests`
+mit Postgres-Service), sowie Stufe 4 (Browser-Tests). Brief bleibt bis
+dahin `Status: offen`.
