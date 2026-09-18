@@ -1,6 +1,6 @@
-# Brief CONTENT-006: 426 (tatsächlich 1123) SC-Fragen fehlt eine vierte Antwortoption
+# Brief CONTENT-006: 1123 SC-Fragen fehlte eine vierte Antwortoption
 
-Status: offen
+Status: offen (CSV-Teil fertig, wartet auf DB-Migration durch Sven)
 Bereich: CONTENT
 Angelegt: 2026-09-17
 
@@ -28,15 +28,18 @@ angelegt wurden (auffällig identisch mit der Fragenanzahl aus `OPS-002`).
 - `content/questions/HARDWARE.csv` (219 Fragen) – ✅ erledigt
 - `content/questions/WISO.csv` (208 Fragen) – ✅ erledigt
 - `content/questions/PM.csv` (1 Frage) – ✅ erledigt
-- `content/questions/FISI-NET.csv` (210 Fragen) – offen
-- `content/questions/FISI-SEC.csv` (204 Fragen) – offen
-- `content/questions/DPA-DB.csv` (91 Fragen) – offen
-- `content/questions/FIAE-DB.csv` (91 Fragen) – offen
-- `content/questions/FIAE-PRG.csv` (47 Fragen) – offen
-- `content/questions/FIAE-SWE.csv` (22 Fragen) – offen
-- `content/questions/FIAE-TST.csv` (14 Fragen) – offen
-- `content/questions/FISI-BET.csv` (10 Fragen) – offen
-- `content/questions/DVK-CLD.csv` (6 Fragen) – offen
+- `content/questions/FISI-NET.csv` (210 Fragen) – ✅ erledigt
+- `content/questions/FISI-SEC.csv` (204 Fragen) – ✅ erledigt
+- `content/questions/DPA-DB.csv` (91 Fragen) – ✅ erledigt
+- `content/questions/FIAE-DB.csv` (91 Fragen) – ✅ erledigt
+- `content/questions/FIAE-PRG.csv` (47 Fragen) – ✅ erledigt
+- `content/questions/FIAE-SWE.csv` (22 Fragen) – ✅ erledigt
+- `content/questions/FIAE-TST.csv` (14 Fragen) – ✅ erledigt
+- `content/questions/FISI-BET.csv` (10 Fragen) – ✅ erledigt
+- `content/questions/DVK-CLD.csv` (6 Fragen) – ✅ erledigt
+
+Alle 1123 Fragen sind CSV-seitig fertig. Es fehlt nur noch der Import in
+die Live-DB durch Sven (`migrate-content-to-db.mjs`, siehe unten).
 
 ## Kontext (nur Verweise, keine Dokumentkopien)
 
@@ -57,10 +60,11 @@ angelegt wurden (auffällig identisch mit der Fragenanzahl aus `OPS-002`).
 - [x] HARDWARE.csv, WISO.csv, PM.csv (428 Fragen) bearbeitet, automatisiert
       auf Duplikate/Kollisionen mit a/b/c geprüft, `npm run validate`
       lokal für diese Dateien grün
-- [ ] Restliche 695 Fragen in den 9 oben gelisteten Dateien nach derselben
-      Methodik ergänzen
-- [ ] `npm run validate` komplett grün (0 Probleme)
-- [ ] Geänderte CSVs an Sven ausgeliefert
+- [x] Restliche 695 Fragen in den 9 übrigen Dateien nach derselben Methodik
+      ergänzt (10 parallele KI-Durchläufe, danach automatisiert auf
+      Duplikate/Kollisionen/Semikolons geprüft – 0 Probleme)
+- [x] `npm run validate` komplett grün (0 Probleme, 1623 Fragen geprüft)
+- [x] Geänderte CSVs an Sven ausgeliefert
 - [ ] Sven führt `DATABASE_URL=... node scripts/migrate-content-to-db.mjs`
       aus, damit die Live-DB die neuen Optionen übernimmt (Migration ist
       idempotent/Upsert, überschreibt `review_status` bestehender Fragen
@@ -79,12 +83,23 @@ angelegt wurden (auffällig identisch mit der Fragenanzahl aus `OPS-002`).
 
 ## Ergebnis (wird beim Abschluss ausgefüllt)
 
-**Zwischenstand 2026-09-17:** 428 von 1123 Fragen erledigt
-(HARDWARE/WISO/PM). Sechs parallele KI-Durchläufe haben je einen Block der
-Fragen mit einer neuen Option d versehen; anschließend automatisiert
-geprüft, dass keine neue Option mit a/b/c übereinstimmt und kein
-Semikolon/Zeilenumbruch enthalten ist (0 Probleme gefunden). `npm run
-validate` lief für diese drei Dateien danach sauber durch. Die restlichen
-9 Dateien (695 Fragen) sind für den nächsten Durchlauf vorgemerkt – siehe
-Checkliste oben. Noch nicht an Sven ausgeliefert / noch nicht in die
-Live-DB migriert.
+**Zwischenstand 2026-09-17:** 428 von 1123 Fragen erledigt (HARDWARE/WISO/PM).
+
+**Abschluss CSV-Teil 2026-09-18:** Die restlichen 695 Fragen in
+FISI-NET, FISI-SEC, DPA-DB, FIAE-DB, FIAE-PRG, FIAE-SWE, FIAE-TST,
+FISI-BET und DVK-CLD wurden über 10 parallele KI-Durchläufe ergänzt.
+Automatisierte Prüfung danach: 695/695 IDs gemappt, 0 Duplikate mit
+vorhandenen Optionen a/b/c, 0 Semikolons/Zeilenumbrüche in den neuen
+Texten. Stichprobe (13 zufällig gezogene Fragen aus allen betroffenen
+Dateien) manuell gegengelesen – neue Optionen sind erkennbar falsch,
+thematisch passend, ähnliche Länge wie a/b/c. `npm run validate` läuft
+danach für den gesamten Bestand (1623 Fragen, 19 Dateien) fehlerfrei
+durch.
+
+Insgesamt damit alle 1123 ursprünglich betroffenen Fragen CSV-seitig
+erledigt. Dateien an Sven ausgeliefert. Noch offen: Sven muss
+`migrate-content-to-db.mjs` auf seinem Rechner laufen lassen, damit die
+neuen Optionen auch in der Live-Postgres-DB ankommen (die App liest
+Content primär aus der DB, CSV ist seit `DB-002` nur Fallback/Snapshot) –
+danach gilt der Task als vollständig abgeschlossen und wandert nach
+`DONE.md`.

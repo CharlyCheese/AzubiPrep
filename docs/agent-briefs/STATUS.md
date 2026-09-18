@@ -56,27 +56,3 @@
   erfasst. Kein akuter Schmerzpunkt (Sync ist ohnehin manuell/bewusst),
   aber bei mehreren parallel genutzten Geräten theoretisch Datenverlust
   möglich.
-- [CONTENT-006] SC-Fragen fehlt eine vierte Antwortoption (niedrig, kein
-  funktionaler Bug) — **in Arbeit, 428 von 1123 Fragen erledigt**
-  (2026-09-17). Ursprünglich anhand einer abgeschnittenen Terminal-Kopie
-  auf 426 Fragen (HARDWARE/WISO/PM) geschätzt, tatsächlich betrifft es
-  1123 Fragen über 12 Dateien (die vollständige Liste inkl. Fortschritt
-  steht im Brief). Kein funktionaler Bug (Frontend filtert leere Optionen
-  automatisch), verletzt aber das Schema und lässt `npm run validate`
-  fehlschlagen. Nächster Schritt: restliche 695 Fragen (FISI-NET,
-  FISI-SEC, DPA-DB, FIAE-DB, FIAE-PRG, FIAE-SWE, FIAE-TST, FISI-BET,
-  DVK-CLD) nach derselben Methodik ergänzen, dann Dateien an Sven
-  ausliefern und `migrate-content-to-db.mjs` laufen lassen (DB ist seit
-  `DB-002` die Quelle der Wahrheit) — siehe
-  [CONTENT-006-Brief](CONTENT-006-sc-fragen-vierte-option.md).
-- [CONTENT-005] Content-Qualität nachbessern (niedrig) — drei bei
-  `CONTENT-002`/`OPS-002` bewusst zurückgestellte, nicht-blockierende
-  Beobachtungen aus dem KI-Fachreview, nie im Backlog erfasst (Fund beim
-  Brief-Audit 2026-09-17): (1) inhaltliche Redundanz einzelner Fragen v. a.
-  in WISO/FIAE-PRG/DVK-CLD, reduziert die effektive Fragenvielfalt; (2)
-  `DVK-CLD.csv` deckt Cloud/Kubernetes mit nur 6 Fragen (4 davon redundant)
-  eher dünn ab, Ausbau um eigenständige Themen (Pod, Deployment,
-  Autoscaling, Container vs. VM) wäre sinnvoll; (3) Stilbruch zwischen
-  alten (vollständige Sätze) und neuen (elliptischen, z. B. "Definition?")
-  Fragen in mehreren Modulen. Eignet sich für die `CONTENT-001`-Autoren-UI,
-  sobald gezielt einzelne Fragen ersetzt/ergänzt werden sollen.
