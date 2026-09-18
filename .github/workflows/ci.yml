@@ -122,3 +122,42 @@ jobs:
       - name: Produktions-Build
         working-directory: frontend
         run: npm run build
+
+  e2e-tests:
+    name: Browser-Tests (Playwright) – Prüfung & Quiz, DB-frei
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Node 20 einrichten
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Backend-Abhängigkeiten installieren
+        working-directory: backend
+        run: npm install
+
+      - name: Frontend-Abhängigkeiten installieren
+        working-directory: frontend
+        run: npm install
+
+      - name: E2E-Abhängigkeiten installieren
+        working-directory: e2e
+        run: npm install
+
+      - name: Playwright-Browser installieren (Chromium)
+        working-directory: e2e
+        run: npx playwright install --with-deps chromium
+
+      - name: Browser-Tests ausführen
+        working-directory: e2e
+        run: npm test
+
+      - name: Playwright-Report bei Fehlschlag hochladen
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: e2e/playwright-report/
+          retention-days: 7

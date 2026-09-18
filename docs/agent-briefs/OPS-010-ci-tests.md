@@ -96,9 +96,60 @@ die nächste warten muss.
       `DATABASE_URL`/`JWT_SECRET`/`ALLOW_DB_TESTS=1` nur für diesen Job
       und führt `npm run test:db` aus.
 
-### Stufe 4: Browser-Tests (separater Task, erst nach Stufe 2+3)
-- [ ] Playwright für 3–5 Kernwege: Quiz abschließen, Prüfung starten,
-      Login/Sync (nur falls Test-DB verfügbar), Autorenrechte.
+### Stufe 4: Browser-Tests
+- [x] Eigenes Verzeichnis `e2e/` (Playwright, `@playwright/test`), bewusst
+      nicht in `frontend/` – testet Frontend UND Backend gemeinsam als
+      eine laufende App, gehört organisatorisch zu keinem der beiden.
+- [x] `e2e/playwright.config.js`: `webServer` baut das Frontend einmal
+      (`npm run build`) und startet das Backend im Produktionsmodus
+      (liefert `dist/` mit aus derselben Origin, kein Dev-Proxy nötig),
+      wartet auf `/api/health`. Bewusst DB-frei (kein `DATABASE_URL`) –
+      deckt sich mit der MVP-Architekturentscheidung.
+- [x] `e2e/tests/pruefung.spec.js`: Konfigurationsseite lädt, Prüfung
+      starten → Lauf-Seite → "Vorzeitig abgeben" → Ergebnisseite mit
+      Score. Bewusst über den Vorzeitig-abgeben-Button statt durch alle
+      Fragen zu klicken, damit der Test unabhängig von der (zufällig
+      gemischten) Fragenzahl bleibt.
+- [x] `e2e/tests/quiz.spec.js`: eine Quizfrage (Modul WISO) beantworten,
+      Feedback erscheint, "Nächste Frage"/"Quiz beenden" ist sichtbar.
+      Behandelt sowohl Auswahlfragen (SC/MC) als auch Freitext (FT), da
+      welcher Fragetyp zuerst gezogen wird nicht vorhersehbar ist –
+      geprüft wird bewusst nur "kommt Feedback", nicht "war die Antwort
+      richtig" (das ist bereits durch `backend/test/answer.test.js`
+      abgedeckt).
+- [x] **Bewusst zurückgestellt:** Login/Sync- und Autorenrechte-Flows über
+      die UI. Begründung: die sicherheitskritischen Teile davon
+      (401/403/Rollenprüfung, Registrierung/Login-Logik) sind bereits über
+      `backend/test/db/api.auth-admin.test.js` (Stufe 3) auf API-Ebene
+      abgedeckt – ein zusätzlicher kompletter Browser-Login-Flow
+      (Landing-Page/`KontoFormular`-Komponente, wieder mit Postgres-Service
+      in CI) hätte den Aufwand deutlich erhöht, ohne dass die eigentliche
+      Sicherheitslogik nochmal neu geprüft würde. Bei Bedarf als eigener
+      Folge-Task nachholbar.
+- [x] CI-Workflow: neuer Job `e2e-tests` (installiert Backend-, Frontend-
+      und E2E-Abhängigkeiten, installiert Chromium via
+      `playwright install --with-deps chromium`, führt `npm test` in
+      `e2e/` aus, lädt den Playwright-Report als Artefakt hoch, falls ein
+      Test fehlschlägt).
+- [x] `.gitignore` um `e2e/playwright-report/` und `e2e/test-results/`
+      ergänzt (erzeugte Testausgaben, nicht versionieren).
+- [x] **Bug gefunden und behoben (Svens erste beiden lokalen Läufe):** beide
+      Tests schlugen mit "Test timeout exceeded" fehl, zunächst wegen des
+      Begrüßungs-Popups ("Willkommen zurück",
+      `frontend/src/components/WillkommenModal.jsx`, Flag pro Browser-
+      *Sitzung* in `sessionStorage` – bei jedem frischen Playwright-Kontext
+      leer, das Popup kam also bei jedem Test), nach einem ersten Fix
+      (Wegklicken nach `goto`) dann wegen der App-Tour "Kurze Führung"
+      (`frontend/src/components/AppTour.jsx`), die automatisch startet,
+      sobald das Begrüßungs-Popup weg ist (Flag *dauerhaft* in
+      `localStorage`) – per Zeitverzögerung (Polling alle 400ms) mitten im
+      Testablauf. Beide Male kein Bug im Produktcode, sondern eine Lücke in
+      den Tests. Endgültiger Fix: `e2e/tests/helpers.js`
+      (`unterdrueckeOnboardingPopups`) setzt beide Flags direkt per
+      `page.addInitScript(...)`, bevor die Seite überhaupt lädt – robuster
+      als nachträgliches Wegklicken, weil kein Timing-Wettlauf mit dem
+      Tour-Polling mehr besteht. Aufgerufen in `test.beforeEach` in beiden
+      Spec-Dateien. Kein Produktcode geändert.
 
 ## Abnahme-Kriterien (Reviewer prüft genau diese)
 
@@ -108,8 +159,14 @@ die nächste warten muss.
       Fallback-Modus (entspricht dem MVP-Betrieb ohne DB).
 - [ ] Stufe 1: Nach Push sichtbar grün auf GitHub (von Sven bestätigt,
       da diese Sitzung nicht direkt auf GitHub pushen kann).
-- [ ] Stufe 4 bleibt "offen" in diesem Brief bzw. wandert in einen eigenen
-      Folge-Brief, sobald sie angegangen wird.
+- [ ] Stufe 4: `e2e/playwright.config.js` Syntax valide, `npm test` in
+      `e2e/` läuft bei Sven lokal grün (Voraussetzung: einmal `npm install`
+      in `backend/`, `frontend/` und `e2e/`, dann `npx playwright install
+      --with-deps chromium`, dann `npm test` in `e2e/`) – noch zu
+      bestätigen.
+- [ ] Stufe 4: CI-Job `e2e-tests` läuft auf GitHub grün – noch zu
+      bestätigen, da diese Sitzung nicht direkt auf GitHub pushen/Actions
+      einsehen kann.
 - [x] Stufe 2: `npm test` läuft bei Sven lokal grün (2026-09-18):
       `cd backend && npm install && npm test` → Vitest 5.0.1, 3 Testdateien,
       **45/45 Tests bestanden** (answer.test.js 15, exam.test.js 13,
@@ -128,19 +185,27 @@ die nächste warten muss.
       bei gesetztem `DATABASE_URL` seine echte lokale Datenbank getroffen.
       Fix: Include auf `test/*.test.js` (nicht rekursiv) geändert, damit
       der `test/db/`-Unterordner nur noch über `npm run test:db` erreicht
-      wird.
+      wird. **Nach dem Fix von Sven bestätigt (2026-09-18):** `npm test` →
+      4 Testdateien, **61/61 Tests bestanden**, `test/db/` läuft nicht mehr
+      mit.
 - [ ] Stufe 3: CI-Job `backend-db-tests` läuft auf GitHub grün (Postgres-
       Service + `npm run test:db`) – noch zu bestätigen, da diese Sitzung
       nicht direkt auf GitHub pushen/Actions einsehen kann.
 
 ## Ergebnis (wird beim Abschluss ausgefüllt)
 
-Stufe 1 (CI für bestehende Checks), Stufe 2 (Vitest + Backend-Logiktests)
-und Stufe 3 (API-Integrationstests, DB-frei über den normalen `npm test`
-plus DB-abhängig über den separaten, per `ALLOW_DB_TESTS=1` gesperrten
-`npm run test:db` gegen einen Postgres-Service-Container in CI)
-umgesetzt. Stufe 2 von Sven lokal bestätigt (45/45 Tests grün). Noch
-offen: Svens lokale Bestätigung von Stufe 3 (DB-freier Teil), der grüne
-CI-Lauf auf GitHub für alle drei Jobs (inkl. dem neuen `backend-db-tests`
-mit Postgres-Service), sowie Stufe 4 (Browser-Tests). Brief bleibt bis
+Alle vier Stufen umgesetzt: CI für bestehende Checks, Vitest +
+Backend-Logiktests, API-Integrationstests (DB-frei über `npm test` plus
+DB-abhängig über den separaten, per `ALLOW_DB_TESTS=1` gesperrten `npm
+run test:db` gegen einen Postgres-Service-Container in CI) und Playwright-
+Browser-Tests für die zwei Kernwege Prüfungssimulation und Quiz (DB-frei,
+eigenes `e2e/`-Verzeichnis). Login/Sync- und Autorenrechte-Flows über die
+UI bewusst nicht zusätzlich als Browser-Test nachgebaut, da die
+sicherheitskritische Logik bereits auf API-Ebene (Stufe 3) abgedeckt ist.
+
+Von Sven lokal bestätigt: Stufe 2 (45/45 Tests grün), Stufe 3 DB-freier
+Teil (61/61 Tests grün, inkl. Fund und Fix eines Include-Musters-Bugs in
+`vitest.config.js`). Noch offen: Svens lokale Bestätigung von Stufe 4
+sowie der grüne CI-Lauf auf GitHub für alle vier Jobs (`backend-checks`,
+`backend-db-tests`, `frontend-build`, `e2e-tests`). Brief bleibt bis
 dahin `Status: offen`.
