@@ -56,3 +56,11 @@
   erfasst. Kein akuter Schmerzpunkt (Sync ist ohnehin manuell/bewusst),
   aber bei mehreren parallel genutzten Geräten theoretisch Datenverlust
   möglich.
+- [OPS-010] CI-Pipeline + automatisierte Tests einführen (mittel) —
+  Sven hat das Projekt am 2026-09-18 von ChatGPT bewerten lassen (8/10),
+  Hauptkritikpunkt "fehlende automatisierte Tests/CI" wurde gegengeprüft
+  und bestätigt. In 4 Stufen geplant (siehe Brief): Stufe 1 bündelt
+  bestehende Checks (Lint, Content-Validierung, Sicherheitscheck) in
+  GitHub Actions, Stufe 2 führt einen Test-Runner ein und testet
+  kritische Backend-Logik, Stufe 3 ergänzt API-Integrationstests, Stufe 4
+  wenige Playwright-Browser-Tests. → Brief: OPS-010-ci-tests.md

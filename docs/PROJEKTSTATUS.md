@@ -1,6 +1,6 @@
 # Projektstatus – AzubiPrep
 
-> **Stand:** 2026-09-14 · **Phase:** MVP + Feedback/Bedienung/Review (Sprint 1.1–1.15 done) + Content-/Backend-Reparatur
+> **Stand:** 2026-09-18 · **Phase:** MVP + Feedback/Bedienung/Review (Sprint 1.1–1.15 done) + Content-/Backend-Reparatur
 > **Projektpfad:** `Project_1/AzubiPrep/`
 
 ## 1. Kurzfassung
@@ -12,8 +12,8 @@ dokumentiert; die erste Feedback-Runde (Sprint 1.1) ist eingearbeitet.
 
 | Kennzahl | Wert |
 |---|---|
-| Fragen im Bestand | **500** |
-| Module | **18** (16 fachspezifisch + 2 gemeinsam) |
+| Fragen im Bestand | **1.627** |
+| Module | **19** (17 fachspezifisch + 2 gemeinsam) |
 | Fachrichtungen | FIAE, FISI, DPA, DVK (+ gemeinsame ALLE-Fragen) |
 | Frontend-Seiten | 13 |
 | API-Endpunkte | 12 |
@@ -144,40 +144,40 @@ dokumentiert; die erste Feedback-Runde (Sprint 1.1) ist eingearbeitet.
 
 ## 3. Inhaltsbestand (Detail)
 
-> Stand dieser Tabellen: 2026-09-14, erzeugt mit `backend/scripts/content-statistik.mjs`
-> (vorherige Fassung war seit dem Fragenausbau auf 500 nicht mehr aktualisiert worden).
+> Stand dieser Tabellen: 2026-09-18, erzeugt mit `backend/scripts/content-statistik.mjs`.
 
 ### Fragen je Fachrichtung
 | Fachrichtung | eigene Fragen | + gemeinsame ALLE | nutzbar |
 |---|---|---|---|
-| FIAE | 107 | 72 | 179 |
-| FISI | 107 | 72 | 179 |
-| DPA | 107 | 72 | 179 |
-| DVK | 107 | 72 | 179 |
+| FIAE | 281 | 500 | 781 |
+| FISI | 531 | 500 | 1.031 |
+| DPA | 198 | 500 | 698 |
+| DVK | 117 | 500 | 617 |
 
 ### Fragen je Modul
 | Modul | Titel | Fragen (SC/MC/FT) | Theorie |
 |---|---|---|---|
-| WISO | Wirtschafts- und Sozialkunde | 40 (32/6/2) | ✅ |
-| PM | Projektmanagement | 32 (26/4/2) | ✅ |
-| FIAE-PRG | Programmierung und OOP | 27 (25/2/0) | ✅ |
-| FIAE-DB | Datenbanken und SQL | 27 (22/4/1) | ✅ |
-| FIAE-SWE | Softwareentwicklung / Vorgehensmodelle | 27 (25/2/0) | ✅ |
-| FIAE-TST | Softwarequalität und Testen | 26 (22/2/2) | ✅ |
-| FISI-NET | Netzwerktechnik | 27 (25/1/1) | ✅ |
-| FISI-SEC | IT-Sicherheit | 27 (22/3/2) | ✅ |
-| FISI-BET | Betriebssysteme und Server | 26 (25/0/1) | ✅ |
+| WISO | Wirtschafts- und Sozialkunde | 248 (240/6/2) | ✅ |
+| PM | Projektmanagement | 33 (27/4/2) | ✅ |
+| FIAE-PRG | Programmierung und OOP | 74 (72/2/0) | ✅ |
+| FIAE-DB | Datenbanken und SQL | 118 (113/4/1) | ✅ |
+| FIAE-SWE | Softwareentwicklung / Vorgehensmodelle | 49 (47/2/0) | ✅ |
+| FIAE-TST | Softwarequalität und Testen | 40 (36/2/2) | ✅ |
+| FISI-NET | Netzwerktechnik | 237 (235/1/1) | ✅ |
+| FISI-SEC | IT-Sicherheit | 231 (226/3/2) | ✅ |
+| FISI-BET | Betriebssysteme und Server | 36 (35/0/1) | ✅ |
 | FISI-SYS | Hardware, Virtualisierung, Cloud | 27 (23/2/2) | ✅ |
-| DPA-DB | Datenbanken und SQL | 27 (23/2/2) | ✅ |
+| DPA-DB | Datenbanken und SQL | 118 (114/2/2) | ✅ |
 | DPA-DS | Data Science und KI-Grundlagen | 27 (22/3/2) | ✅ |
 | DPA-ANA | Datenanalyse und Statistik | 26 (22/2/2) | ✅ |
 | DPA-PRO | Prozessmodellierung und -optimierung | 27 (23/2/2) | ✅ |
 | DVK-IOT | IoT und eingebettete Systeme | 27 (23/1/3) | ✅ |
 | DVK-NET | Vernetzung und Kommunikation | 27 (24/1/2) | ✅ |
 | DVK-AUT | Automatisierung und Industrie 4.0 | 26 (22/2/2) | ✅ |
-| DVK-CLD | Cloud- und Edge-Computing | 27 (24/1/2) | ✅ |
+| DVK-CLD | Cloud- und Edge-Computing | 37 (34/1/2) | ✅ |
+| HARDWARE | Hardware und technische Grundlagen | 219 (219/0/0) | ✅ |
 
-**Schwierigkeitsverteilung:** leicht 126 · mittel 309 · schwer 65 (Summe 500).
+**Schwierigkeitsverteilung:** leicht 552 · mittel 781 · schwer 294 (Summe 1.627).
 
 ## 4. Projektstruktur
 
@@ -190,8 +190,8 @@ AzubiPrep/
 ├── content/                 Inhalte (Excel/CSV, Daten – kein Code)
 │   ├── fachrichtungen.csv
 │   ├── modules.csv
-│   ├── questions/*.csv      18 Dateien (eine je Modul)
-│   └── theorie/*.md         18 Theorie-Dateien
+│   ├── questions/*.csv      19 Dateien (eine je Modul)
+│   └── theorie/*.md         18 Theorie-Dateien (HARDWARE ohne separaten Theorieblock)
 ├── backend/                 Node.js + Express (stateless Content-API)
 │   ├── package.json
 │   ├── src/
@@ -258,14 +258,14 @@ derselben Origin (`http://localhost:3001`).
 
 | Prüfung | Werkzeug | Ergebnis |
 |---|---|---|
-| Content-Validierung | `backend/scripts/content-statistik.mjs` | 500 Fragen, 18 Module (Zahlen s. o.) |
+| Content-Validierung | `backend/scripts/content-statistik.mjs` | 1.627 Fragen, 19 Module (Zahlen s. o.) |
 | Fragen-/Antwortformat | `backend/scripts/validate-content.mjs` | ✅ VALIDIERUNG OK |
 | CSV-Spaltenreparatur | `backend/scripts/repair-ft-rows.mjs` | 16 Zeilen korrigiert (10 Dateien), Lauf ist idempotent |
 | Whitespace-Bereinigung | manuell (Trim aller Felder) | 11 Zeilen korrigiert (führendes Leerzeichen) |
 | Backend-Kernlogik (Content-Laden, Antwortprüfung SC/MC/FT, Prüfungs­generierung/-auswertung) | eigenes Testskript (33 Prüfungen) | ✅ 33/33 bestanden |
 | Backend-Syntax | `node --check` auf alle `src/`- und `scripts/`-Dateien | ✅ fehlerfrei |
 | `npm install` (lokal, Windows) | – | ✅ 69 Pakete, 0 Vulnerabilities |
-| Backend-Start (lokal) | `npm start` | ✅ läuft auf `http://127.0.0.1:3001`, lädt 500 Fragen/18 Module |
+| Backend-Start (lokal) | `npm start` | ✅ läuft auf `http://127.0.0.1:3001`, lädt 1.627 Fragen/19 Module |
 | HTTP-API-Smoke-Test (Endpunkte, Header, Rate-Limit) | `backend/scripts/sicherheits-check.mjs` | ✅ 10/10 bestanden (lokal verifiziert, 2026-09-14) |
 | Frontend-Build | `npm run build` | ⏳ nicht in dieser Sitzung erneut geprüft |
 | Notizen-Format / Notizen im UI | – | ⏳ nicht in dieser Sitzung geprüft |

@@ -1,0 +1,73 @@
+name: CI
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+    branches: ["**"]
+
+jobs:
+  backend-checks:
+    name: Backend – Lint, Content-Validierung, Sicherheitscheck
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Node 20 einrichten
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Backend-Abhängigkeiten installieren
+        working-directory: backend
+        run: npm install
+
+      - name: Lint
+        working-directory: backend
+        run: npm run lint
+
+      - name: Content validieren (Schema, Duplikate, Pflichtfelder)
+        working-directory: backend
+        run: npm run validate
+
+      - name: Backend im Hintergrund starten
+        working-directory: backend
+        run: |
+          npm start &
+          echo "PID=$!" >> "$GITHUB_ENV"
+          for i in $(seq 1 20); do
+            if curl -sf http://127.0.0.1:3001/api/health > /dev/null; then
+              echo "Backend erreichbar."
+              exit 0
+            fi
+            sleep 1
+          done
+          echo "Backend nach 20s nicht erreichbar."
+          exit 1
+
+      - name: Sicherheitscheck (Header, Rate-Limiting, Admin-Schutz)
+        working-directory: backend
+        run: npm run sicherheits-check
+
+      - name: Backend stoppen
+        if: always()
+        run: kill "$PID" || true
+
+  frontend-build:
+    name: Frontend – Produktions-Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Node 20 einrichten
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Frontend-Abhängigkeiten installieren
+        working-directory: frontend
+        run: npm install
+
+      - name: Produktions-Build
+        working-directory: frontend
+        run: npm run build
