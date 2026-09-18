@@ -4,18 +4,20 @@
 // (zufällig gemischten) Anzahl/Reihenfolge der Fragen, während trotzdem
 // der komplette Weg Konfiguration -> Lauf -> Auswertung durchlaufen wird.
 import { test, expect } from '@playwright/test';
-import { schliesseWillkommenPopup } from './helpers.js';
+import { unterdrueckeOnboardingPopups } from './helpers.js';
 
 test.describe('Prüfungssimulation', () => {
+  test.beforeEach(async ({ page }) => {
+    await unterdrueckeOnboardingPopups(page);
+  });
+
   test('Konfigurationsseite lädt', async ({ page }) => {
     await page.goto('/pruefung');
-    await schliesseWillkommenPopup(page);
     await expect(page.getByRole('heading', { name: 'Prüfungssimulation' })).toBeVisible();
   });
 
   test('Prüfung starten und vorzeitig abgeben führt zum Ergebnis', async ({ page }) => {
     await page.goto('/pruefung');
-    await schliesseWillkommenPopup(page);
 
     await page.getByRole('button', { name: /Prüfung starten/ }).click();
     await expect(page).toHaveURL(/\/pruefung\/lauf$/);

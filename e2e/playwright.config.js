@@ -11,6 +11,13 @@ import { defineConfig } from '@playwright/test';
 export default defineConfig({
   testDir: './tests',
   timeout: 30_000,
+  // Playwright-Default für "expect(...).toBeVisible()" & Co. ist 5s – lokal
+  // (schnelle Maschine, warmer Server) reicht das locker, auf dem geteilten
+  // GitHub-Actions-Runner ist die Server-Antwort auf "Antwort prüfen" unter
+  // Last aber knapp über 5s gelaufen (CI-Lauf 2026-09-18: quiz.spec.js
+  // flackerte genau an dieser Stelle). Kein Bug, nur zu knapp bemessen für
+  // eine langsamere Maschine – deshalb hier auf 15s angehoben.
+  expect: { timeout: 15_000 },
   fullyParallel: true,
   retries: process.env.CI ? 1 : 0,
   use: {

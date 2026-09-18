@@ -159,14 +159,30 @@ die nächste warten muss.
       Fallback-Modus (entspricht dem MVP-Betrieb ohne DB).
 - [ ] Stufe 1: Nach Push sichtbar grün auf GitHub (von Sven bestätigt,
       da diese Sitzung nicht direkt auf GitHub pushen kann).
-- [ ] Stufe 4: `e2e/playwright.config.js` Syntax valide, `npm test` in
-      `e2e/` läuft bei Sven lokal grün (Voraussetzung: einmal `npm install`
-      in `backend/`, `frontend/` und `e2e/`, dann `npx playwright install
-      --with-deps chromium`, dann `npm test` in `e2e/`) – noch zu
-      bestätigen.
-- [ ] Stufe 4: CI-Job `e2e-tests` läuft auf GitHub grün – noch zu
-      bestätigen, da diese Sitzung nicht direkt auf GitHub pushen/Actions
-      einsehen kann.
+- [x] Stufe 4: `e2e/playwright.config.js` Syntax valide, `npm test` in
+      `e2e/` läuft bei Sven lokal grün. **Von Sven bestätigt (2026-09-18,
+      nach zwei Fixes s. u.):** `cd e2e && npm test` → **3/3 Tests
+      bestanden** (Konfigurationsseite lädt, Prüfung starten + vorzeitig
+      abgeben, Quizfrage beantworten), Laufzeit 3.6s.
+      **Zwischenzeitlich gefundene Bugs (in den Tests, nicht im
+      Produktcode – behoben):** die ersten beiden Läufe schlugen mit
+      "Test timeout exceeded" fehl, weil zwei Onboarding-Popups
+      (Begrüßungs-Popup `WillkommenModal.jsx`, danach die App-Tour
+      `AppTour.jsx`) in einem frischen Playwright-Browser-Kontext immer
+      erscheinen und als Modal-Overlay alle Klicks blockierten – in
+      echten Sitzungen kaum spürbar, in den Tests aber nicht mitgedacht.
+      Fix: `e2e/tests/helpers.js#unterdrueckeOnboardingPopups` setzt die
+      Anzeige-Flags beider Popups direkt per `page.addInitScript(...)`,
+      bevor die Seite lädt (aufgerufen in `test.beforeEach`).
+- [ ] Stufe 4: CI-Job `e2e-tests` läuft auf GitHub grün – erster Lauf
+      (2026-09-18, Commit 29c261b) war **rot**: `quiz.spec.js` lief in
+      5s Standard-`expect`-Timeout gegen das Feedback-Element, das auf dem
+      geteilten GitHub-Actions-Runner unter Last knapp über 5s brauchte
+      (die drei anderen Jobs `backend-checks`, `backend-db-tests`,
+      `frontend-build` liefen bereits grün). Fix: `expect: { timeout:
+      15_000 }` in `e2e/playwright.config.js` ergänzt. Noch zu bestätigen,
+      ob der nächste Push jetzt auch `e2e-tests` grün zeigt (diese Sitzung
+      kann nicht direkt auf GitHub pushen/Actions einsehen).
 - [x] Stufe 2: `npm test` läuft bei Sven lokal grün (2026-09-18):
       `cd backend && npm install && npm test` → Vitest 5.0.1, 3 Testdateien,
       **45/45 Tests bestanden** (answer.test.js 15, exam.test.js 13,

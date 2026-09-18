@@ -1,18 +1,29 @@
-// Gemeinsamer Helfer für alle E2E-Tests: schließt das Begrüßungs-Popup
-// ("Willkommen zurück", siehe frontend/src/components/WillkommenModal.jsx),
-// das bei jedem frischen Browser-Kontext einmal erscheint (sessionStorage
-// ist in einem neuen Playwright-Kontext immer leer) und als Modal-Overlay
-// alle Klicks auf der Seite dahinter blockiert. In echten Browsersitzungen
-// fällt das kaum auf (ein Klick "Los geht's"), aber ein automatisierter
-// Test muss es explizit wegklicken, bevor er mit der eigentlichen Seite
-// interagiert.
-export async function schliesseWillkommenPopup(page) {
-  const dialog = page.getByRole('dialog', { name: /Willkommen zurück/ });
-  // Kein toBeVisible()-Assert: das Popup ist nur beim ersten Aufruf pro
-  // Kontext da, deshalb hier bewusst tolerant über einen kurzen Timeout
-  // prüfen statt den Test scheitern zu lassen, wenn es (zu Recht) fehlt.
-  if (await dialog.isVisible({ timeout: 3_000 }).catch(() => false)) {
-    await dialog.getByRole('button', { name: "Los geht's" }).click();
-    await dialog.waitFor({ state: 'hidden' });
-  }
+// Gemeinsamer Helfer für alle E2E-Tests: unterdrückt die beiden
+// Onboarding-Popups, die in einem frischen Browser-Kontext sonst jedes Mal
+// erscheinen und als Modal-Overlay alle Klicks auf der Seite dahinter
+// blockieren würden:
+//
+//  - Begrüßungs-Popup "Willkommen zurück" (WillkommenModal.jsx) – Flag pro
+//    Browser-*Sitzung* in sessionStorage (immer leer bei einem neuen
+//    Playwright-Kontext).
+//  - App-Tour "Kurze Führung" (AppTour.jsx) – startet automatisch, sobald
+//    das Begrüßungs-Popup weg ist (per Polling, siehe dort); Flag
+//    *dauerhaft* in localStorage.
+//
+// In echten Sitzungen sind beide gewollt (Onboarding für neue Nutzer:innen);
+// für automatisierte Tests sind sie nur Rauschen, das mit einer Polling-
+// Verzögerung an beliebiger Stelle im Testablauf aufpoppen kann. Deshalb
+// werden hier direkt die Flags gesetzt, bevor die Seite überhaupt lädt
+// (page.addInitScript läuft vor jedem Skript der Seite) – robuster als ein
+// nachträgliches Wegklicken, weil kein Timing-Wettlauf mit dem Popup nötig
+// ist.
+export async function unterdrueckeOnboardingPopups(page) {
+  await page.addInitScript(() => {
+    try {
+      sessionStorage.setItem('azubiprep.begruessung-gezeigt', 'true');
+      localStorage.setItem('azubiprep.tour-gezeigt', 'true');
+    } catch {
+      /* ignore – Storage evtl. blockiert, dann bleiben die Popups sichtbar */
+    }
+  });
 }

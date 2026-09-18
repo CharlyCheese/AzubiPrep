@@ -5,12 +5,15 @@
 // prüft deshalb nur das Verhalten, nicht den Inhalt: Feedback erscheint,
 // ganz gleich ob richtig oder falsch beantwortet.
 import { test, expect } from '@playwright/test';
-import { schliesseWillkommenPopup } from './helpers.js';
+import { unterdrueckeOnboardingPopups } from './helpers.js';
 
 test.describe('Quizmodus', () => {
+  test.beforeEach(async ({ page }) => {
+    await unterdrueckeOnboardingPopups(page);
+  });
+
   test('eine Frage beantworten zeigt Feedback und eine Weiter-Möglichkeit', async ({ page }) => {
     await page.goto('/quiz/WISO');
-    await schliesseWillkommenPopup(page);
 
     // Freitext-Fragen (FT) zeigen ein Textfeld statt Antwortoptionen
     // (siehe FrageKarte.jsx) – da die erste Frage zufällig jeder der drei
