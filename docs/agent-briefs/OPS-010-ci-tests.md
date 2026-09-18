@@ -1,8 +1,9 @@
 # Brief OPS-010: CI-Pipeline + automatisierte Tests einführen
 
-Status: offen
+Status: done
 Bereich: OPS
 Angelegt: 2026-09-18
+Abgeschlossen: 2026-09-18
 
 ## Ziel (1–3 Sätze)
 
@@ -153,12 +154,12 @@ die nächste warten muss.
 
 ## Abnahme-Kriterien (Reviewer prüft genau diese)
 
-- [ ] Stufe 1: `.github/workflows/ci.yml` existiert, Syntax valide (YAML),
+- [x] Stufe 1: `.github/workflows/ci.yml` existiert, Syntax valide (YAML),
       referenziert nur tatsächlich vorhandene npm-Skripte.
-- [ ] Stufe 1: Workflow setzt kein `DATABASE_URL`, läuft also im
+- [x] Stufe 1: Workflow setzt kein `DATABASE_URL`, läuft also im
       Fallback-Modus (entspricht dem MVP-Betrieb ohne DB).
-- [ ] Stufe 1: Nach Push sichtbar grün auf GitHub (von Sven bestätigt,
-      da diese Sitzung nicht direkt auf GitHub pushen kann).
+- [x] Stufe 1: Nach Push sichtbar grün auf GitHub. **Bestätigt
+      (2026-09-18, CI #1, Commit 209ace5):** ✅ grün, 28s.
 - [x] Stufe 4: `e2e/playwright.config.js` Syntax valide, `npm test` in
       `e2e/` läuft bei Sven lokal grün. **Von Sven bestätigt (2026-09-18,
       nach zwei Fixes s. u.):** `cd e2e && npm test` → **3/3 Tests
@@ -174,15 +175,14 @@ die nächste warten muss.
       Fix: `e2e/tests/helpers.js#unterdrueckeOnboardingPopups` setzt die
       Anzeige-Flags beider Popups direkt per `page.addInitScript(...)`,
       bevor die Seite lädt (aufgerufen in `test.beforeEach`).
-- [ ] Stufe 4: CI-Job `e2e-tests` läuft auf GitHub grün – erster Lauf
-      (2026-09-18, Commit 29c261b) war **rot**: `quiz.spec.js` lief in
-      5s Standard-`expect`-Timeout gegen das Feedback-Element, das auf dem
-      geteilten GitHub-Actions-Runner unter Last knapp über 5s brauchte
-      (die drei anderen Jobs `backend-checks`, `backend-db-tests`,
+- [x] Stufe 4: CI-Job `e2e-tests` läuft auf GitHub grün. Erster Lauf
+      (2026-09-18, CI #4, Commit 29c261b) war **rot**: `quiz.spec.js` lief
+      in 5s Standard-`expect`-Timeout gegen das Feedback-Element, das auf
+      dem geteilten GitHub-Actions-Runner unter Last knapp über 5s
+      brauchte (die drei anderen Jobs `backend-checks`, `backend-db-tests`,
       `frontend-build` liefen bereits grün). Fix: `expect: { timeout:
-      15_000 }` in `e2e/playwright.config.js` ergänzt. Noch zu bestätigen,
-      ob der nächste Push jetzt auch `e2e-tests` grün zeigt (diese Sitzung
-      kann nicht direkt auf GitHub pushen/Actions einsehen).
+      15_000 }` in `e2e/playwright.config.js` ergänzt. **Bestätigt
+      (2026-09-18, CI #5, Commit 0c93541):** ✅ grün, 49s.
 - [x] Stufe 2: `npm test` läuft bei Sven lokal grün (2026-09-18):
       `cd backend && npm install && npm test` → Vitest 5.0.1, 3 Testdateien,
       **45/45 Tests bestanden** (answer.test.js 15, exam.test.js 13,
@@ -204,20 +204,31 @@ die nächste warten muss.
       wird. **Nach dem Fix von Sven bestätigt (2026-09-18):** `npm test` →
       4 Testdateien, **61/61 Tests bestanden**, `test/db/` läuft nicht mehr
       mit.
-- [ ] Stufe 3: CI-Job `backend-db-tests` läuft auf GitHub grün (Postgres-
-      Service + `npm run test:db`) – noch zu bestätigen, da diese Sitzung
-      nicht direkt auf GitHub pushen/Actions einsehen kann.
+- [x] Stufe 3: CI-Job `backend-db-tests` läuft auf GitHub grün (Postgres-
+      Service + `npm run test:db`). **Bestätigt (2026-09-18, CI #3, Commit
+      c2fe3e9):** ✅ grün, 46s.
 
 ## Ergebnis (wird beim Abschluss ausgefüllt)
 
-Alle vier Stufen umgesetzt: CI für bestehende Checks, Vitest +
-Backend-Logiktests, API-Integrationstests (DB-frei über `npm test` plus
+Alle vier Stufen umgesetzt UND auf GitHub Actions grün bestätigt (nicht
+nur lokal): CI für bestehende Checks (CI #1), Vitest + Backend-Logiktests
+(CI #2), API-Integrationstests – DB-frei über `npm test` plus
 DB-abhängig über den separaten, per `ALLOW_DB_TESTS=1` gesperrten `npm
-run test:db` gegen einen Postgres-Service-Container in CI) und Playwright-
-Browser-Tests für die zwei Kernwege Prüfungssimulation und Quiz (DB-frei,
-eigenes `e2e/`-Verzeichnis). Login/Sync- und Autorenrechte-Flows über die
-UI bewusst nicht zusätzlich als Browser-Test nachgebaut, da die
-sicherheitskritische Logik bereits auf API-Ebene (Stufe 3) abgedeckt ist.
+run test:db` gegen einen Postgres-Service-Container in CI (CI #3) – und
+Playwright-Browser-Tests für die zwei Kernwege Prüfungssimulation und Quiz,
+DB-frei, eigenes `e2e/`-Verzeichnis (CI #4 zunächst rot wegen zu knappem
+Standard-Timeout auf dem langsameren Runner, nach Fix CI #5 grün).
+Login/Sync- und Autorenrechte-Flows über die UI bewusst nicht zusätzlich
+als Browser-Test nachgebaut, da die sicherheitskritische Logik bereits auf
+API-Ebene (Stufe 3) abgedeckt ist.
+
+Nebenbei zwei projektweite Fixes im Zuge dieser Initiative: `.gitignore`
+um den lokal erzeugten `Installer/`-Ordner ergänzt (enthielt eine >100MB
+Datei, die GitHub-Pushes sonst blockiert hätte), und mehrere Testfixes
+zu Onboarding-Popups (Begrüßung, App-Tour), die nur in frischen
+Browser-Kontexten auftreten und keine Produktcode-Bugs waren.
+
+Status: erledigt.
 
 Von Sven lokal bestätigt: Stufe 2 (45/45 Tests grün), Stufe 3 DB-freier
 Teil (61/61 Tests grün, inkl. Fund und Fix eines Include-Musters-Bugs in
