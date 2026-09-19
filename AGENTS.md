@@ -21,9 +21,45 @@ ist strikt begrenzt (siehe `docs/11-PWA-Konzept.md`, Abschnitt
    Task-Brief reicht. Nur die im Brief genannten Dateien anfassen.
 2. **Task-Brief-Pflicht**: Jede Änderung erfolgt über einen Brief in
    `docs/agent-briefs/`. Erst Brief lesen, dann ändern.
-3. **Review-Pflicht (empfohlen bei größeren Änderungen)**: Ein frischer
-   Subagent (eigener Kontext, kein geteilter Chat-Verlauf) prüft gegen die
-   Abnahme-Kriterien des Briefs.
+3. **Review-Pflicht (bindend, kein Ermessen – Sven, 2026-09-19)**: Ein
+   frischer Subagent (eigener Kontext, kein geteilter Chat-Verlauf) prüft
+   gegen die Abnahme-Kriterien des Briefs, bevor ein Task als fertig
+   gemeldet wird – bei inhaltlichen/fachlichen Änderungen (insbesondere
+   neue oder umsortierte Prüfungsfragen) unabhängig von der Größe der
+   Änderung. Ursprünglich nur "empfohlen bei größeren Änderungen"; Sven hat
+   sich bei `CONTENT-008` explizit dafür entschieden, das verbindlich zu
+   machen ("die agenten struktur muss eingehalten werden, mir ist das
+   lieber wenn alles ein wenig länger dauert aber dafür sauber ist"). Der
+   ausführende Agent hat dabei selbst den Fragen-Batch erstellt und darf
+   daher nicht der einzige Prüfer sein – der Subagent-Review ist ein
+   zweiter, unabhängiger Blick, ersetzt aber nicht Svens eigenen
+   Fachreview.
+   **Wichtiger Hinweis für den Review-Prompt (Sven, 2026-09-19, aus
+   `CONTENT-010`-Klärung):** Jeder Subagent, der Fragen prüft, muss im
+   Prompt mitbekommen, dass `frontend/src/utils/optionen.js#mischeOptionen()`
+   die Antwortoptionen bei jeder Anzeige per Fisher-Yates neu mischt (mit
+   Rückabbildung auf die Original-Buchstaben) – in allen echten
+   Abfrage-Ansichten (`Quiz.jsx`, `Pruefung.jsx`, `Karteikarten.jsx`,
+   `PruefungLauf.jsx`). Eine unausgewogene oder sogar identische Verteilung
+   der `antwort`-Spalte in der CSV (z. B. wenn viele/alle Fragen eines
+   Batches "b" als korrekte Antwort haben) ist deshalb **kein Fehler** und
+   darf vom Review-Subagenten nicht als Finding gemeldet werden – die CSV-
+   Spalte ist nur Rohdatenspeicher, den Nutzern wird die Reihenfolge nie
+   in dieser Form angezeigt.
+   **Zweiter wichtiger Hinweis (Sven, 2026-09-19, aus `CONTENT-012`/
+   `CONTENT-013`-Erfahrung):** Anders als die Antwort-Position ist die
+   Antwort-**Länge/der Detailgrad** kein Nicht-Problem – das Mischen der
+   Anzeigeoptionen ändert nur die Position, nicht den Text selbst. Wenn
+   die korrekte Antwort durchgängig länger/ausführlicher formuliert ist
+   als die Distraktoren, oder wenn Distraktoren ein wiederkehrendes
+   Füllwort-Muster nutzen (z. B. "ausschließlich", "grundsätzlich",
+   "automatisch", "gesetzlich vorgeschrieben" als Signalwort für "diese
+   Option ist falsch"), bleibt das auch nach dem Mischen ein Rateindikator
+   und MUSS vom Review-Subagenten als Finding gemeldet werden. Beim
+   Erstellen neuer Fragen-Batches ist von Anfang an auf vergleichbare
+   Länge/Detailgrad zwischen korrekter Antwort und Distraktoren zu achten
+   und das genannte Füllwort-Muster zu vermeiden, statt es dem Review zu
+   überlassen, es im Nachhinein zu finden.
 4. **Archivierungs-Pflicht (bindend, kein Ermessen)**: Kein Task gilt als
    erledigt, bevor `node scripts/check-agent-briefs.mjs` grün ist – siehe
    `ORCHESTRATOR.md` Abschnitt 3+4. Das ist keine Empfehlung, sondern eine

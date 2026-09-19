@@ -20,3 +20,8 @@ DVK-NET;DVK;NET;Vernetzung und Kommunikation;Industrielle Netze, Funktechnik, LP
 DVK-AUT;DVK;AUT;Automatisierung und Industrie 4.0;Steuerungstechnik, SPS, Digitalisierung der Produktion und Schnittstellen.;LF10d
 DVK-CLD;DVK;CLD;Cloud- und Edge-Computing;Cloud-Modelle, Edge-Verarbeitung, Container und Betriebskonzepte.;LF10d
 HARDWARE;ALLE;HARDWARE;Hardware-Grundlagen;CPU, Speicher, Kühlung, Netzteile, Peripherie und Schnittstellen – fachrichtungsübergreifendes Hardware-Grundwissen.;LF2
+FIAE-UX;FIAE;UX;Benutzeroberflächen & Usability;Analyse von Geschäftsprozessen, UI/UX-Design, Barrierefreiheit, Responsive Design und Usability-Testing für Anwendungsentwickler.;LF10a
+FISI-PROJ;FISI;PROJ;Kundenspezifische Systemintegration;Anforderungsanalyse, Projektplanung/-kalkulation, Lösungsvarianten, Angebotserstellung, Qualitätssicherung, Übergabe und Wirtschaftlichkeitsbewertung für Systemintegrationsprojekte.;LF12b
+DPA-PROJ;DPA;PROJ;Kundenspezifische Prozess- und Datenanalyse;Anforderungsanalyse, Projektplanung/-kalkulation, Lösungsvarianten inkl. Datenschutz, Angebotserstellung, Qualitätssicherung, Übergabe und Wirtschaftlichkeitsbewertung für Datenanalyse-Projekte.;LF12c
+DVK-PROJ;DVK;PROJ;Kundenspezifisches cyber-physisches System optimieren;Anforderungsanalyse, Projektplanung/-kalkulation, Lösungsvarianten inkl. Datenschutz, Angebotserstellung, Qualitätssicherung, Übergabe und Wirtschaftlichkeitsbewertung für CPS-Projekte.;LF12d
+DVK-SEC;DVK;SEC;Betrieb und Sicherheit vernetzter cyber-physischer Systeme;Risikoanalyse, Schutzbedarf, Schutzziele im Kundengespräch, IT-Sicherheitsanalyse für OT/CPS, Sicherheitsleitlinien, Maßnahmenumsetzung und Bewertung des Sicherheitsniveaus.;LF11d

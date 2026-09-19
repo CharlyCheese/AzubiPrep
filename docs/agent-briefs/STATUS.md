@@ -5,6 +5,36 @@
 > Format: `- [ID] Kurzbeschreibung (Priorität) → Brief: <ID>-<slug>.md`
 > (Brief-Link nur, sobald der Brief tatsächlich angelegt wurde.)
 
+- [CONTENT-022] FISI-SYS vertiefen, Runde 4 (mittel) — `FISI-SYS` von 51
+  auf 76 Fragen erweitert (siehe `CONTENT-021`-Fortsetzungsplan). Erster
+  Subagent-Review direkt bestanden nach zwei Selbstprüfungs-Iterationen
+  (Ausgangsbefund erneut 100 % Längen-Bias, 59 Füllwort-Treffer). Neue
+  Lehre: gezielte Korrektur nur der am leichtesten behebbaren
+  Längenausreißer (statt aller) reicht aus, wenn die Gesamtquote danach
+  unter der Auffälligkeitsschwelle bleibt. `validate-content.mjs`: 2061
+  Fragen, 0 Fehler. Wartet auf Svens fachlichen Gegenlese (Sven prüft
+  stichprobenartig und gibt dann per Chat frei, siehe Vorgehen bei
+  `CONTENT-017`–`-021`). → Brief:
+  CONTENT-022-fisi-sys-vertiefung.md
+
+- [CONTENT-010] Antwortpositions-Verteilung in den CSV-Rohdaten unausgewogen,
+  aber ohne Nutzerauswirkung (niedrig) — Beim Subagent-Review von
+  `CONTENT-009` Runde 2 fiel auf, dass eine Auszählung über alle 23 Fragen-
+  Dateien (1654 Single-Choice-Fragen) ein projektweites Muster zeigt: 1157
+  Fragen (70 %) haben "b" als korrekte Antwort in der CSV, nur 480 "a", 15
+  "c" und 2 "d". **Korrektur (Sven, 2026-09-19): kein Prüfungsdesign-Fehler.**
+  `frontend/src/utils/optionen.js#mischeOptionen()` mischt die
+  Antwortoptionen bei jedem Aufruf per Fisher-Yates neu und bildet auf die
+  Original-Buchstaben zurück; das läuft in allen echten Abfrage-Ansichten
+  (`Quiz.jsx`, `Pruefung.jsx`, `Karteikarten.jsx`, `PruefungLauf.jsx`). Die
+  in der CSV gespeicherte Buchstaben-Verteilung ist für Nutzer also nie
+  sichtbar und nicht ausnutzbar ("immer b raten" funktioniert nicht, weil
+  b in der Anzeige nichts mit der CSV-Spalte zu tun hat). Ursprünglich fälschlich
+  als "hoch"/kritisch eingestuft, siehe auch `CONTENT-009`-Korrektur. Bleibt
+  nur als niedrigpriorer Hinweis stehen (Datenhygiene/Lesbarkeit in einer
+  künftigen Autoren-UI, falls dort mal unausgewählt statt gemischt
+  angezeigt würde) – kein aktiver Handlungsbedarf, kein Brief nötig.
+
 - [FE-018] Themengewichtung in der Prüfungssimulation aktivieren (hoch) —
   Fund aus `OPS-011`: `backend/src/exam.js#generierePruefung` unterstützt
   seit jeher einen `gewichtung`-Parameter, den das Frontend nie befüllt
