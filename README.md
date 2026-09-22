@@ -29,7 +29,7 @@ installierbare Windows-Desktop-App.
 ## Über das Projekt
 
 AzubiPrep unterstützt Auszubildende der vier Fachinformatiker-Fachrichtungen
-bei der Vorbereitung auf die IHK-Abschlussprüfung: **1623 Prüfungsfragen** in
+bei der Vorbereitung auf die IHK-Abschlussprüfung: **1.627 Prüfungsfragen** in
 **19 Modulen**, aufbereitet als interaktives Quiz, Karteikarten-Training und
 zeitlimitierte Prüfungssimulation mit automatischer Auswertung.
 
@@ -49,6 +49,12 @@ automatisch erzeugter Fallback und git-versionierter Review-Snapshot,
 die App läuft in jedem Fall auch komplett ohne Datenbank weiter (siehe
 [`docs/10-Architektur.md`](docs/10-Architektur.md), Abschnitt
 "Content-Datenbank").
+
+Entwickelt wird AzubiPrep im Agentic-Coding-Ansatz: Ich plane die
+Architektur, gebe Aufgaben an KI-Agenten aus und reviewe deren Umsetzung –
+als Projektverantwortlicher trage ich dabei die technische
+Gesamtverantwortung für Qualität und Architektur (Workflow:
+[`ORCHESTRATOR.md`](ORCHESTRATOR.md), Konventionen: [`AGENTS.md`](AGENTS.md)).
 
 ## Screenshots
 
@@ -103,6 +109,10 @@ die App läuft in jedem Fall auch komplett ohne Datenbank weiter (siehe
 - Installierbare PWA mit Offline-Unterstützung (Service Worker)
 - Zusätzlich als native Windows-Desktop-App (Electron) verfügbar
 - Sicherheitsgehärtetes Backend: Security-Header (Helmet/CSP/HSTS), Rate-Limiting, geschützter Admin-Reload
+- Automatisierte Tests (Vitest: Backend-Unit- & DB-Integrationstests;
+  Playwright: Ende-zu-Ende-Browser-Tests) sowie eine CI/CD-Pipeline über
+  GitHub Actions (Lint, Content-Validierung, Tests, Frontend-Build bei
+  jedem Push)
 - Inhalte pflegbar über Excel/CSV, ohne Codeänderung
 - Optionale Autoren-Weboberfläche (`/autoren`) zur direkten Fragenpflege in
   der Content-DB: rollenbasierter Zugriff (fachrichtungsgebundene
@@ -129,6 +139,7 @@ die App läuft in jedem Fall auch komplett ohne Datenbank weiter (siehe
 | Auth | bcrypt-Passwort-Hashing + JWT (nur bei optionalem Konto) |
 | PWA | Web App Manifest + Service Worker |
 | Sicherheit | Helmet (CSP/HSTS/Frame-Options), eigenes Rate-Limiting |
+| Tests & CI/CD | Vitest (Backend-Unit- & DB-Integrationstests), Playwright (e2e), GitHub Actions |
 
 ## Schnellstart (Web-App)
 
@@ -194,19 +205,23 @@ AzubiPrep/
 ├── content/            Inhalte (Excel/CSV, Markdown – kein Code)
 │   ├── fachrichtungen.csv
 │   ├── modules.csv
-│   ├── questions/*.csv     18 Dateien (eine je Modul)
-│   └── theorie/*.md        18 Theorie-Dateien
+│   ├── questions/*.csv     19 Dateien (eine je Modul)
+│   └── theorie/*.md        19 Theorie-Dateien
 ├── backend/            Node.js + Express (zustandslose Content-API)
 │   ├── db/                  schema.sql (Login/Sync + optionale Content-DB)
 │   ├── src/                 server, app, config, content, csv, db, auth,
 │   │                        answer, exam, sicherheit, routes/
-│   └── scripts/             validate-content · migrate-content-to-db ·
-│                            export-content-to-csv · repair-ft-rows ·
-│                            content-statistik · sicherheits-check
+│   ├── scripts/             validate-content · migrate-content-to-db ·
+│   │                        export-content-to-csv · repair-ft-rows ·
+│   │                        content-statistik · sicherheits-check
+│   └── test/                Vitest: Unit- & DB-Integrationstests
 ├── frontend/           React + Vite (PWA)
 │   └── src/                 pages (u. a. Autoren-Weboberfläche),
 │                            components, store, api, context, utils
 ├── desktop/            Electron-Hülle für die Windows-Desktop-App
+├── e2e/                Playwright: Ende-zu-Ende-Browser-Tests
+├── .github/workflows/  ci.yml – GitHub-Actions-Pipeline (Lint,
+│                       Content-Validierung, Tests, Frontend-Build)
 ├── screenshots/        App-Screenshots für dieses README
 ├── docs/               Produktvision, Architektur, API-Referenz,
 │                       Sicherheitskonzept, Projektstatus u. v. m.
@@ -231,7 +246,7 @@ Die tagesaktuelle Task-Liste (was offen ist, was erledigt ist) führt
 
 Erledigt (Auszug, vollständig in [`DONE.md`](docs/agent-briefs/DONE.md)):
 Windows-Installer real installiert und getestet, strukturierter KI-Fachreview
-auf den kompletten Fragenbestand (1623 Fragen) angewendet, optionale
+auf den kompletten Fragenbestand (1.627 Fragen) angewendet, optionale
 Content-Datenbank mit CSV-Fallback, Autoren-Weboberfläche zur
 Fragenpflege, In-App-Feedback-Kanal ("Frage melden"), admin-exklusives
 manuelles Markieren als geprüft, Landing-Page als Login-Startseite,

@@ -1,6 +1,6 @@
 # Brief CONTENT-022: FISI-SYS vertiefen (Runde 4, FISI-Vertiefungsphase)
 
-Status: in Arbeit
+Status: done
 Bereich: CONTENT
 Angelegt: 2026-09-19
 
@@ -121,4 +121,12 @@ Brief, konsequent mit Subagent-Review):
 ## Ergebnis (wird beim Abschluss ausgefüllt)
 
 Ein Subagent-Review-Durchlauf, direkt bestanden. `validate-content.mjs`
-bestätigt 2061 Fragen, 0 Fehler. Wartet auf Svens fachlichen Gegenlese.
+bestätigt 2061 Fragen, 0 Fehler. Sven hat die 25 neuen `FISI-SYS`-Fragen
+stichprobenartig fachlich gegengelesen und freigegeben (2026-09-21) –
+kein vollständiger Einzelfragen-Review mehr wie ursprünglich in den
+Abnahme-Kriterien vorgesehen, sondern Stichprobe plus laufende Detailprüfung
+über Svens separate Bug-/Auffälligkeitenliste aus eigenen Nutzertests
+(`BekannteBugListevonSvenNutzertests.odt`, außerhalb des Repos). Sollte sich
+dabei im Nachhinein doch ein fachlicher Fehler in diesen Fragen zeigen, wird
+er dort erfasst und als eigener Folge-Task nachgezogen statt hier erneut
+aufgemacht.

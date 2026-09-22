@@ -5,17 +5,17 @@
 > Format: `- [ID] Kurzbeschreibung (Priorität) → Brief: <ID>-<slug>.md`
 > (Brief-Link nur, sobald der Brief tatsächlich angelegt wurde.)
 
-- [CONTENT-022] FISI-SYS vertiefen, Runde 4 (mittel) — `FISI-SYS` von 51
-  auf 76 Fragen erweitert (siehe `CONTENT-021`-Fortsetzungsplan). Erster
-  Subagent-Review direkt bestanden nach zwei Selbstprüfungs-Iterationen
-  (Ausgangsbefund erneut 100 % Längen-Bias, 59 Füllwort-Treffer). Neue
-  Lehre: gezielte Korrektur nur der am leichtesten behebbaren
-  Längenausreißer (statt aller) reicht aus, wenn die Gesamtquote danach
-  unter der Auffälligkeitsschwelle bleibt. `validate-content.mjs`: 2061
-  Fragen, 0 Fehler. Wartet auf Svens fachlichen Gegenlese (Sven prüft
-  stichprobenartig und gibt dann per Chat frei, siehe Vorgehen bei
-  `CONTENT-017`–`-021`). → Brief:
-  CONTENT-022-fisi-sys-vertiefung.md
+- [CONTENT-023] FISI-SEC vertiefen, Runde 5 – Abschluss erste
+  FISI-Vertiefungsrunde (mittel) — `FISI-SEC` von 55 auf aktuell 63 Fragen
+  erweitert (Zielgröße ~80), in kleinen validierten Häppchen wegen 91 %
+  Wochenkontingent zu Beginn. Wichtig: `FISI-SEC-nnn`-IDs teilen sich den
+  Namensraum mit `IT-SEC-GRUND.csv` (fachrichtungsübergreifendes Modul) –
+  vor neuen IDs/Themen immer beide Dateien gegenprüfen (in dieser Runde
+  initial 2 ID-Kollisionen + 3 Themen-Dopplungen gefunden und vor dem
+  Validierungslauf korrigiert). `validate-content.mjs`: 2069 Fragen, 0
+  Fehler. Subagent-Review dieser ersten 8 Fragen BESTEHT direkt (keine
+  Korrektur nötig). Rest (~17 Fragen bis Zielgröße) folgt nach
+  Kontingent-Reset. → Brief: CONTENT-023-fisi-sec-vertiefung.md
 
 - [CONTENT-010] Antwortpositions-Verteilung in den CSV-Rohdaten unausgewogen,
   aber ohne Nutzerauswirkung (niedrig) — Beim Subagent-Review von
@@ -67,6 +67,17 @@
   Antwort durch die Bearbeitung möglicherweise falsch geworden ist, und
   ggf. weitere Recherche empfehlen. Grundlage dafür (`questions_verlauf`
   mit Vorher/Nachher-Stand) wird bereits in `CONTENT-001` gelegt.
+  Ergänzung (Sven, 2026-09-21): `qwen3:4b` ist über Ollama bereits lokal auf
+  Svens Rechner installiert und zum Testen einsatzbereit (`ollama run
+  qwen3:4b`). Sven hat außerdem geklärt: RAG statt Fine-Tuning ist der
+  richtige Ansatz für ein Fachbuch/Theorieinhalte, weil Antworten dabei auf
+  den Originaltext rückführbar bleiben (passt zum bestehenden
+  Korrektheitsanspruch bei Prüfungsfragen) – Fine-Tuning würde das Wissen
+  fest in die Modellgewichte einbacken und wäre für diesen Zweck schwerer
+  überprüfbar. Umsetzung der eigentlichen RAG-Pipeline (PDF-Text-Extraktion,
+  Chunking, Embeddings, Retrieval beim Prompt) bewusst zurückgestellt, bis
+  dieser Punkt konkret angegangen wird – kein Brief nötig, solange nur
+  vorbereitet/vorgemerkt.
 - [OPS-004] Windows-Installer digital signieren (aktuell unsigniert, SmartScreen-Warnung) (niedrig) —
   Recherche 2026-09-16: SignPath Foundation (kostenlos für OSS, aber
   manuelle Freigabe pro Release, Zertifikat läuft auf den Foundation-Namen)
