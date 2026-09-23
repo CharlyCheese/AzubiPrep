@@ -60,6 +60,33 @@ ist strikt begrenzt (siehe `docs/11-PWA-Konzept.md`, Abschnitt
    Länge/Detailgrad zwischen korrekter Antwort und Distraktoren zu achten
    und das genannte Füllwort-Muster zu vermeiden, statt es dem Review zu
    überlassen, es im Nachhinein zu finden.
+   **Dritter wichtiger Hinweis (aus `CONTENT-027`–`CONTENT-032`-Erfahrung,
+   insbesondere `CONTENT-032`/DPA-PRO mit 7 nötigen Review-Durchläufen):**
+   Über die konkreten Füllwörter hinaus (bisher gefunden: "ausschließlich",
+   "grundsätzlich", "automatisch", "gesetzlich vorgeschrieben",
+   "vollständig", "jede(r)", "nie", "sämtliche", "überhaupt", "keinerlei",
+   "dauerhaft", "stets", "nur", "komplett", "lediglich", "zwingend",
+   "rein", "dabei", "insgesamt", "besonders", "endgültig") gibt es zwei
+   strukturelle Meta-Tell-Muster, die genauso ein Rateindikator sind und
+   beim Erstellen wie beim Review geprüft werden müssen:
+   (a) eine über 3+ Fragen hinweg **wortgleiche oder nahezu wortgleiche
+   Phrase** (nicht nur ein Einzelwort), die ausschließlich in Distraktoren
+   auftaucht und in keiner der korrekten Antworten des Batches vorkommt
+   (Beispiele aus der Praxis: "Wie viele ...?" als Interrogativ-Öffner,
+   "Sortiert ..." als Satzanfang, "Beide [X] ... identisch/denselben" als
+   Vergleichs-Schablone);
+   (b) alle drei Distraktoren **einer einzelnen** Frage, die dasselbe
+   Eröffnungswort oder dieselbe Satzschablone teilen, während die korrekte
+   Antwort sprachlich klar abweicht.
+   **Kein** Fehler sind dagegen generische Sachbegriffe, die zufällig in
+   mehreren Distraktoren auftauchen (z. B. "Kosten", "Anzahl", "technische",
+   "beteiligt", "Dokumentation", "Mitarbeiter") – das ist normales,
+   thematisch plausibles Distraktor-Vokabular und darf nicht gemeldet
+   werden, solange es kein starres Schema nach (a) oder (b) bildet. Diese
+   Abgrenzung MUSS im Review-Prompt an den Subagenten explizit mitgegeben
+   werden (inkl. Beispielen für "ja, das ist ein Finding" vs. "nein, das
+   ist nur ein Sachbegriff"), sonst führt reflexhaftes Melden jedes
+   wiederkehrenden Wortes zu unnötig vielen Korrekturrunden.
 4. **Archivierungs-Pflicht (bindend, kein Ermessen)**: Kein Task gilt als
    erledigt, bevor `node scripts/check-agent-briefs.mjs` grün ist – siehe
    `ORCHESTRATOR.md` Abschnitt 3+4. Das ist keine Empfehlung, sondern eine
