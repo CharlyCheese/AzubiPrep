@@ -1,6 +1,6 @@
 # Brief CONTENT-023: FISI-SEC vertiefen (Runde 5, Abschluss erste FISI-Vertiefungsrunde)
 
-Status: in Arbeit
+Status: done
 Bereich: CONTENT
 Angelegt: 2026-09-21
 
@@ -60,16 +60,58 @@ ersten Durchlauf, keine Korrekturiteration nötig.
   festgehalten (bei Gelegenheit kürzen).
 - Keine inhaltliche Redundanz zwischen den 8 Fragen.
 
-## Noch offen (nächste Teilrunden)
+## Zweite Teilrunde (17 Fragen, FISI-SEC-240–256) – nach Kontingent-Reset
 
-- Weitere ~17 Fragen bis Zielgröße ~80 (nächste ID ab `FISI-SEC-240`,
-  wieder gegen `IT-SEC-GRUND.csv` prüfen).
-- Diese erste Teilrunde ist inhaltlich/fachlich fertig geprüft, der Brief
-  bleibt aber `in Arbeit`, bis das Modul insgesamt seine Zielgröße erreicht
-  hat (kein Teil-Abschluss laut Workflow).
-- Svens stichprobenartige fachliche Gegenlese steht für die gesamte Runde
-  noch aus, sobald alle Teilrunden fertig sind (siehe Vorgehen bei
-  `CONTENT-022`).
+Themen bewusst außerhalb der bereits stark abgedeckten Grundlagen gewählt
+(gegen `FISI-SEC.csv` UND `IT-SEC-GRUND.csv` auf Dopplungen geprüft): CSRF,
+Zero Trust, EDR, PAM, Netzwerksegmentierung/VLAN, Incident-Response-Phasen,
+DLP, MDM, WPA3 vs. WPA2, Supply-Chain-Angriff, Insider-Bedrohung, Privilege
+Escalation, Cyber Kill Chain, Certificate Pinning, OCSP, Passkeys/FIDO2,
+Security Hardening.
+
+**Subagent-Review, 1. Durchlauf**: fachlich/inhaltlich BESTEHT (alle 17
+Fragen korrekt, eindeutig, curricular passend, per Websuche gegen BSI/NIST/
+OWASP u. a. verifiziert), aber **NICHT BESTANDEN** wegen systematischem
+Längen-Bias bei 13 von 17 Fragen (korrekte Antwort durchgängig die
+längste/ausführlichste Option – Rateindikator, bleibt auch nach dem
+Frontend-Mischen bestehen). Betroffene IDs: 240, 241, 242, 243, 244, 246,
+249, 250, 251, 253, 254, 255, 256.
+
+**Korrektur**: Distraktoren bei allen 13 IDs inhaltlich ausgebaut/verlängert
+(nicht die korrekte Antwort gekürzt, um keine fachliche Substanz zu
+verlieren), dabei auch einige Absolutheits-Formulierungen ("zuverlässig
+verhindert", "rein kosmetisch ohne Sicherheitsrelevanz") entschärft.
+
+**Subagent-Review, 2. Durchlauf (frischer Subagent)**: **BESTEHT**. Bei
+keiner der 13 Fragen ist die korrekte Antwort mehr auffällig länger als die
+Distraktoren, keine neuen fachlichen Fehler oder Ambiguitäten durch die
+Umformulierung. Einziger optionaler Hinweis (kein Pflicht-Finding):
+FISI-SEC-250 hat in allen drei Distraktoren Absolutheits-Wörter ("immer",
+"nur", "jeder"/"zuverlässig"), während die korrekte Antwort keines enthält –
+bei Gelegenheit könnte das noch abgeschwächt werden.
+
+`validate-content.mjs` nach Abschluss beider Teilrunden: 2086 Fragen, 26
+Dateien, 0 Fehler, keine Duplikate.
+
+## Weg zu ~1000 Fragen je Fachrichtung – Stand nach dieser Runde
+
+FISI-Gesamtstand nach `CONTENT-023`: `FISI-BET` 61, `FISI-PROJ` 55,
+`FISI-NET` 76, `FISI-SYS` 76, `FISI-SEC` 80. Damit ist die **erste
+FISI-Vertiefungsrunde über alle fünf FISI-Module abgeschlossen**
+(`CONTENT-019`–`CONTENT-023`). Nächster Schritt laut Plan aus
+`CONTENT-022`: zweite Vertiefungsrunde für die sechs DVK-Module reihum.
+
+## Verbleibender Hinweis für künftige Runden
+
+`FISI-SEC-nnn` teilt sich weiterhin den ID-Namensraum mit
+`IT-SEC-GRUND.csv` (aktuell höchste ID: `FISI-SEC-256`) – vor jeder neuen
+Runde beide Dateien auf höchste ID und Themenüberschneidung prüfen.
+Optionaler Nachbesserungspunkt aus dieser Runde: FISI-SEC-250 Distraktoren
+etwas neutraler formulieren (siehe oben), nicht dringend.
+
+Svens stichprobenartige fachliche Gegenlese steht wie bei den Vorrunden
+noch aus (kein Blocker für die Archivierung, siehe Vorgehen bei
+`CONTENT-022`/`CONTENT-023`, Ergebnis-Abschnitt).
 
 ## Abnahme-Kriterien (Reviewer prüft genau diese)
 
@@ -84,5 +126,10 @@ ersten Durchlauf, keine Korrekturiteration nötig.
 
 ## Ergebnis (wird beim Abschluss ausgefüllt)
 
-Noch offen – erste Teilrunde (8 Fragen) abgeschlossen und validiert, Rest
-folgt in weiteren Häppchen.
+`FISI-SEC` von 55 auf 80 Fragen erweitert (2 Teilrunden, 8 + 17 Fragen).
+Beide Teilrunden über frische Subagent-Reviews mit Websuche geprüft; die
+zweite Runde brauchte eine Korrekturiteration wegen Längen-Bias, danach
+bestanden. `validate-content.mjs`: 2086 Fragen, 0 Fehler. Damit ist die
+erste FISI-Vertiefungsrunde (alle fünf FISI-Module) abgeschlossen. Svens
+stichprobenartige fachliche Gegenlese steht noch aus (kein Abschluss-
+Blocker, siehe `AGENTS.md`/`ORCHESTRATOR.md`-Regeln zu `CONTENT`-Briefs).

@@ -5,18 +5,6 @@
 > Format: `- [ID] Kurzbeschreibung (Priorität) → Brief: <ID>-<slug>.md`
 > (Brief-Link nur, sobald der Brief tatsächlich angelegt wurde.)
 
-- [CONTENT-023] FISI-SEC vertiefen, Runde 5 – Abschluss erste
-  FISI-Vertiefungsrunde (mittel) — `FISI-SEC` von 55 auf aktuell 63 Fragen
-  erweitert (Zielgröße ~80), in kleinen validierten Häppchen wegen 91 %
-  Wochenkontingent zu Beginn. Wichtig: `FISI-SEC-nnn`-IDs teilen sich den
-  Namensraum mit `IT-SEC-GRUND.csv` (fachrichtungsübergreifendes Modul) –
-  vor neuen IDs/Themen immer beide Dateien gegenprüfen (in dieser Runde
-  initial 2 ID-Kollisionen + 3 Themen-Dopplungen gefunden und vor dem
-  Validierungslauf korrigiert). `validate-content.mjs`: 2069 Fragen, 0
-  Fehler. Subagent-Review dieser ersten 8 Fragen BESTEHT direkt (keine
-  Korrektur nötig). Rest (~17 Fragen bis Zielgröße) folgt nach
-  Kontingent-Reset. → Brief: CONTENT-023-fisi-sec-vertiefung.md
-
 - [CONTENT-010] Antwortpositions-Verteilung in den CSV-Rohdaten unausgewogen,
   aber ohne Nutzerauswirkung (niedrig) — Beim Subagent-Review von
   `CONTENT-009` Runde 2 fiel auf, dass eine Auszählung über alle 23 Fragen-
