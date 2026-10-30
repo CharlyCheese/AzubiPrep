@@ -35,7 +35,7 @@ export default function Einstellungen() {
 
       <div className="card mb-2">
         <h2>Hilfe</h2>
-        <p className="text-muted mt-0">Kurze Führung durch Dashboard, Lernreise, Lernbereich und Prüfungssimulation.</p>
+        <p className="text-muted mt-0">Kurze Führung durch Dashboard, Lernreise, Lernbereich, Frontend-Werkstatt und Prüfungssimulation.</p>
         <button className="btn btn-ghost" onClick={tourManuellStarten}>🧭 Kurze Tour erneut anzeigen</button>
       </div>
 

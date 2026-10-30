@@ -1,0 +1,22 @@
+.pilot { max-width: 1500px; margin: auto; min-width: 0; }
+.pilot label { display: block; margin: .6rem 0; }
+.pilot select, .pilot input:not([type=checkbox]):not([type=range]), .pilot textarea { max-width: 100%; box-sizing: border-box; }
+.pilot select { width: 100%; padding: .6rem; }
+.pilot pre { white-space: pre-wrap; overflow-wrap: anywhere; padding: .8rem; background: var(--bg, #f5f5f5); border: 1px solid var(--border); }
+.pilot-status { padding: .6rem; border: 1px solid var(--border); }
+.pilot-tabs, .pilot-toolbar, .pilot-filetree { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem; margin: .8rem 0; }
+.pilot-filetree { max-height: 180px; overflow: auto; align-items: start; }
+.pilot-filetree button { overflow-wrap: anywhere; white-space: normal; text-align: left; }
+.pilot-code { display: block; width: 100%; min-height: 380px; line-height: 1.6; padding: .8rem; tab-size: 2; font-family: Consolas, monospace; resize: vertical; background: var(--bg); color: var(--text); border: 1px solid var(--border); }
+.pilot-frame-wrap { width: 100%; max-height: 700px; overflow: auto; background: #fff; }
+.pilot iframe { display: block; border: 1px solid #888; min-width: 300px; height: 500px; background: #fff; }
+.pilot-split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 1rem; }
+.pilot-split > *, .pilot .card { min-width: 0; }
+.pilot-image { max-width: 240px; max-height: 240px; }
+.pilot-paths label { display: flex; flex-wrap: wrap; gap: .5rem; }
+.pilot-check { display: flex !important; gap: .6rem; align-items: start; }
+.pilot .pilot-upload { position: relative; display: inline-flex; align-items: center; justify-content: center; min-height: 44px; margin: 0; cursor: pointer; overflow: hidden; }
+.pilot .pilot-upload input[type=file] { position: absolute; inset: 0; opacity: 0; width: 100%; height: 100%; cursor: pointer; }
+.pilot .pilot-upload:focus-within { outline: 3px solid var(--primary, #2459b5); outline-offset: 3px; }
+.pilot :focus-visible { outline: 3px solid var(--primary, #2459b5); outline-offset: 3px; }
+@media (max-width: 1100px) { .pilot-split { grid-template-columns: minmax(0, 1fr); } }

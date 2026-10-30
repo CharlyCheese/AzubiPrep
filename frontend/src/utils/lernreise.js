@@ -33,6 +33,8 @@ export function baueStation(modul, nummer, statusMap = {}) {
     beherrscht: Boolean(status?.beherrscht),
     anzahl: status?.anzahl || 0,
     quote: status?.quote || 0,
+    richtig: status?.richtig || 0,
+    beherrschung: status?.beherrschung || 0,
     gesamt: modul.fragenAnzahl || 0,
     // Fortschritt immer bezogen auf die maximale Fragenzahl des Moduls
     abdeckung: abdeckungProzent(status?.anzahl || 0, modul.fragenAnzahl || 0),

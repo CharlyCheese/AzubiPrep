@@ -1,22 +1,23 @@
 {
   "name": "azubiprep-desktop",
   "private": true,
-  "version": "0.1.1",
+  "version": "0.1.3",
   "author": "Sven Weyers",
   "description": "AzubiPrep als installierbare Windows-Desktop-App (Electron-Hülle um das bestehende React-Frontend + Node/Express-Backend).",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
     "dist": "node scripts/build-desktop.cjs",
-    "test:desktop": "node --test test/desktop-package.test.cjs",
+    "test:desktop": "node --test test/desktop-package.test.cjs test/pilot-runtime.test.cjs",
     "dist:web": "node scripts/build-web.cjs",
     "test:web": "node --test test/web-runtime.test.cjs"
   },
   "devDependencies": {
-    "electron": "^32.0.0",
-    "electron-builder": "^25.0.0"
+    "electron": "45.2.0",
+    "electron-builder": "26.18.0"
   },
   "build": {
+    "electronDist": "node_modules/electron/dist",
     "appId": "de.sven-weyers.azubiprep",
     "productName": "AzubiPrep",
     "directories": {
@@ -24,16 +25,51 @@
     },
     "files": [
       "main.js",
+      "preload.cjs",
+      "pilot-runtime.cjs",
+      "pilot-inspector.cjs",
       "package.json"
     ],
     "extraResources": [
       {
         "from": "../backend",
         "to": "backend",
-        "filter": ["src/**/*", "node_modules/**/*", "package.json", "!**/.env*", "!**/*.log", "!**/.cache/**/*"]
+        "filter": [
+          "src/**/*",
+          "package.json",
+          "!**/.env*",
+          "!**/*.log",
+          "!**/.cache/**/*"
+        ]
       },
-      { "from": "../content", "to": "content", "filter": ["**/*", "!**/.env*"] },
-      { "from": "../frontend/dist", "to": "frontend/dist", "filter": ["**/*", "!**/.env*"] }
+      {
+        "from": "../backend/node_modules",
+        "to": "backend/node_modules",
+        "filter": [
+          "**/*",
+          "!**/.env*",
+          "!**/*.log",
+          "!**/.cache/**/*",
+          "!**/.vite/**/*",
+          "!**/.vite-temp/**/*"
+        ]
+      },
+      {
+        "from": "../content",
+        "to": "content",
+        "filter": [
+          "**/*",
+          "!**/.env*"
+        ]
+      },
+      {
+        "from": "../frontend/dist",
+        "to": "frontend/dist",
+        "filter": [
+          "**/*",
+          "!**/.env*"
+        ]
+      }
     ],
     "win": {
       "target": "nsis"

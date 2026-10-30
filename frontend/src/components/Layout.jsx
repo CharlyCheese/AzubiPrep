@@ -20,6 +20,7 @@ const BADGE_INTERVALL_MS = 60_000;
 const NAV = [
   { to: '/', icon: '🏠', label: 'Dashboard', end: true },
   { to: '/lernen', icon: '📚', label: 'Lernbereich' },
+  { to: '/frontendkurs', icon: '💻', label: 'Frontend-Werkstatt' },
   { to: '/karteikarten', icon: '🃏', label: 'Karteikarten' },
   { to: '/pruefung', icon: '⏱️', label: 'Prüfungssimulation' },
   { to: '/pruefung/verlauf', icon: '🗂️', label: 'Prüfungsverlauf' },

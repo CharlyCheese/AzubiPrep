@@ -27,3 +27,8 @@ Thumbs.db
 # Umgebungsvariablen (Secrets nicht versionieren)
 .env
 .env.local
+
+# Private RAG-Unterlagen und sämtliche daraus abgeleiteten Daten bleiben lokal.
+# Nur die neutrale Anleitung wird veröffentlicht, niemals Materialien/Indizes.
+/local-rag/*
+!/local-rag/README.md

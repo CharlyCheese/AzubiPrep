@@ -23,6 +23,7 @@ export default function Quiz() {
   const [searchParams] = useSearchParams();
   const frageParam = searchParams.get('frage');
   const { daten: modul } = useApi(() => api.get(`/module/${modulId}`), [modulId]);
+  const { daten: alleModule } = useApi(() => api.get('/module'), []);
   const { daten: fragenRaw, laden } = useApi(() => api.get(`/fragen?modulId=${modulId}`), [modulId]);
 
   const optionenStand = quizOptionenStore.get();
@@ -48,6 +49,19 @@ export default function Quiz() {
   const bestand = fragenRaw?.length || 0;
   const anzahlAnzeige = bestand && anzahl > bestand ? 0 : anzahl;
   const anzahlListe = anzahlAuswahl(bestand);
+
+  // Die vollständige Fragenliste ist auch vor den Modulmetadaten verfügbar.
+  const modulTitel = (id) => alleModule?.find((m) => m.modul_id === id)?.titel || (id === modulId ? modul?.titel || id : id);
+  const modulGesamt = (id) => id === modulId && fragenRaw
+    ? fragenRaw.length
+    : alleModule?.find((m) => m.modul_id === id)?.fragenAnzahl || 0;
+
+  useEffect(() => {
+    if (!alleModule && !fragenRaw) return;
+    aktualisiereModulStatus(progressStore.get(), modulTitel, modulGesamt);
+    // Nachgeladene Metadaten korrigieren auch bereits gespeicherte Statuswerte.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [alleModule, fragenRaw, modulId, modul]);
 
   function aendereOptionen(patch) {
     const neu = { ...patch };
@@ -181,8 +195,8 @@ export default function Quiz() {
       meldeModulStatus(
         aktualisiereModulStatus(
           progressStore.get(),
-          (id) => (id === modul?.modul_id ? modul.titel : id),
-          (id) => (id === modul?.modul_id ? modul.fragenAnzahl || 0 : 0),
+          modulTitel,
+          modulGesamt,
         ),
       );
       meldeMissionen(gamificationStore.merkeMission('frage'));

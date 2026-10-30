@@ -2,8 +2,8 @@
 // unverändert im Hintergrund (per dynamic import, da backend/ ES-Module
 // nutzt) und öffnet ein Fenster auf die zurückgegebene lokale URL.
 //
-// Es wird absichtlich NICHTS am bestehenden backend/ oder frontend/ Code
-// geändert – diese Datei bindet beides nur ein. Die Pfadauflösung in
+// Die Kurswerkstatt erhält eine begrenzte native Speicher-/Auswahlbrücke.
+// Die Pfadauflösung in
 // backend/src/config.js (contentDir/frontendDist = zwei Ordner über
 // backend/src/) funktioniert automatisch korrekt, sofern backend/, content/
 // und frontend/dist/ als Geschwisterordner vorliegen – das gilt sowohl im
@@ -13,10 +13,42 @@
 
 const path = require('node:path');
 const { pathToFileURL } = require('node:url');
-const { app, BrowserWindow, dialog, session } = require('electron');
+const { app, BrowserWindow, dialog, session, ipcMain, Menu, shell } = require('electron');
+const { createStore, readProject, validSender } = require('./pilot-runtime.cjs');
+const { createInspector } = require('./pilot-inspector.cjs');
+const profileOverride = app.commandLine.getSwitchValue('user-data-dir');
+if (profileOverride) app.setPath('userData', path.resolve(profileOverride));
 
 let hauptfenster = null;
 let backendServer = null;
+let appOrigin = null;
+let inspectorWindow = null;
+
+function registerPilot() {
+  const store = createStore(app.getPath('userData'));
+  const guard = (event) => { if (!validSender(event, hauptfenster, appOrigin)) throw Error('Nicht freigegebener Anwendungsaufruf.'); };
+  ipcMain.handle('pilot:load', (event) => { guard(event); return store.load(); });
+  ipcMain.handle('pilot:save', (event, value) => { guard(event); return store.save(value); });
+  ipcMain.handle('pilot:choose', async (event, mode) => {
+    guard(event);
+    if (!['folder', 'files'].includes(mode)) throw Error('Ungültige Auswahl.');
+    const result = await dialog.showOpenDialog(hauptfenster, {
+      title: mode === 'folder' ? 'Projektordner auswählen' : 'Projektdateien auswählen',
+      properties: mode === 'folder' ? ['openDirectory', 'dontAddToRecent'] : ['openFile', 'multiSelections', 'dontAddToRecent'],
+      ...(mode === 'files' ? { filters: [{ name: 'HTML, CSS und Rasterbilder', extensions: ['html', 'css', 'png', 'jpg', 'jpeg', 'webp'] }] } : {}),
+    });
+    if (result.canceled) return null;
+    guard(event);
+    return readProject(result.filePaths, mode);
+  });
+  ipcMain.handle('pilot:inspect', (event, html) => {
+    guard(event);
+    if (inspectorWindow && !inspectorWindow.isDestroyed()) inspectorWindow.close();
+    const window = createInspector(hauptfenster, html); inspectorWindow = window;
+    window.on('closed', () => { if (inspectorWindow === window) inspectorWindow = null; });
+    return true;
+  });
+}
 
 function projektwurzel() {
   // Gepackt: resources/backend, resources/content, resources/frontend/dist
@@ -47,6 +79,7 @@ async function fensterErstellen() {
   try {
     const { url, server } = await backendStarten();
     backendServer = server;
+    appOrigin = new URL(url).origin;
 
     hauptfenster = new BrowserWindow({
       width: 1280,
@@ -58,9 +91,30 @@ async function fensterErstellen() {
         contextIsolation: true,
         nodeIntegration: false,
         sandbox: true,
+        webSecurity: true,
+        devTools: false,
+        preload: path.join(__dirname, 'preload.cjs'),
       },
     });
 
+    hauptfenster.webContents.setWindowOpenHandler(({ url: target }) => {
+      try {
+        const parsed = new URL(target);
+        if (parsed.protocol === 'https:' && ['developer.mozilla.org', 'wiki.selfhtml.org', 'www.w3schools.com'].includes(parsed.hostname)) shell.openExternal(parsed.href).catch(() => {});
+      } catch { /* Alle anderen Fenster bleiben gesperrt. */ }
+      return { action: 'deny' };
+    });
+    const stopForeign = (event, target = event.url) => { try { if (new URL(target).origin !== appOrigin) event.preventDefault(); } catch { event.preventDefault(); } };
+    hauptfenster.webContents.on('will-navigate', stopForeign);
+    hauptfenster.webContents.on('will-redirect', stopForeign);
+    hauptfenster.webContents.on('will-frame-navigate', (event) => {
+      if (!['about:blank', 'about:srcdoc'].includes(event.url)) stopForeign(event, event.url);
+    });
+    hauptfenster.webContents.on('before-input-event', (event, input) => {
+      if (input.type === 'keyDown' && (input.key === 'F12' || (input.control && input.shift && input.key.toLowerCase() === 'i'))) {
+        event.preventDefault(); hauptfenster.webContents.send('pilot:inspect-request');
+      }
+    });
     hauptfenster.loadURL(url);
     hauptfenster.on('closed', () => { hauptfenster = null; });
   } catch (err) {
@@ -84,8 +138,9 @@ async function fensterErstellen() {
 // andere sicherheitshalber abgelehnt.
 function berechtigungenEinrichten() {
   session.defaultSession.setPermissionRequestHandler((webContents, permission, callback) => {
-    callback(permission === 'notifications');
+    callback(Boolean(hauptfenster && webContents === hauptfenster.webContents && permission === 'notifications'));
   });
+  session.defaultSession.setPermissionCheckHandler((webContents, permission, origin) => Boolean(hauptfenster && webContents === hauptfenster.webContents && origin === appOrigin && permission === 'notifications'));
   // Windows zeigt Toast-Benachrichtigungen nur mit sauberem App-Namen an,
   // wenn eine AppUserModelId gesetzt ist (sonst z. B. "Electron" als Absender).
   if (process.platform === 'win32') {
@@ -94,7 +149,13 @@ function berechtigungenEinrichten() {
 }
 
 app.whenReady().then(() => {
+  registerPilot();
   berechtigungenEinrichten();
+  Menu.setApplicationMenu(Menu.buildFromTemplate([
+    { label: 'Datei', submenu: [{ role: 'quit', label: 'Beenden' }] },
+    { label: 'Bearbeiten', submenu: [{ role: 'undo', label: 'Rückgängig' }, { role: 'redo', label: 'Wiederholen' }, { type: 'separator' }, { role: 'cut', label: 'Ausschneiden' }, { role: 'copy', label: 'Kopieren' }, { role: 'paste', label: 'Einfügen' }, { role: 'selectAll', label: 'Alles auswählen' }] },
+    { label: 'Ansicht', submenu: [{ role: 'reload', label: 'Neu laden' }, { role: 'resetZoom', label: 'Originalgröße' }, { role: 'zoomIn', label: 'Vergrößern' }, { role: 'zoomOut', label: 'Verkleinern' }, { role: 'togglefullscreen', label: 'Vollbild' }] },
+  ]));
   return fensterErstellen();
 });
 

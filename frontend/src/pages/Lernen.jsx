@@ -50,7 +50,7 @@ function ModulKarte({ m, status }) {
       {status?.bearbeitet && (
         <div className="flex wrap mt-2" style={{ gap: 6 }}>
           <span className="badge badge-neutral">
-            {status.richtig}/{status.anzahl} richtig · {status.quote}% Erfolgsquote
+            {status.richtig} von {gesamt} richtig · {status.beherrschung}% des Moduls
           </span>
         </div>
       )}
@@ -71,7 +71,7 @@ function LernfeldBlock({ lernfeld, titel, module, statusMap, eigeneFachrichtung,
   const beherrschtAnzahl = module.filter((m) => statusMap[m.modul_id]?.beherrscht).length;
   const enthaeltEigene = module.some((m) => m.fachrichtung === eigeneFachrichtung);
   const untertitel = `${module.length} Modul${module.length === 1 ? '' : 'e'} · `
-    + `${bearbeitetAnzahl} bearbeitet · ${beherrschtAnzahl} beherrscht (ab ${BEHERRSCHT_AB} %)`;
+    + `${bearbeitetAnzahl} begonnen · ${beherrschtAnzahl} beherrscht (ab ${BEHERRSCHT_AB} % aller Fragen richtig)`;
   return (
     <div className="mb-2">
       <Akkordeon

@@ -1,5 +1,31 @@
 # Agent-Status (nur offene Punkte)
 
+- Frontendkurs und gemeinsame Qwen-Lernbegleitung (Pilot in dokumentierter Matrix abgenommen, Ausbau offen) —
+  Abschlusskompetenzen, 31 Kapitel, regelmäßige Projekte, Vorschau/Inspect,
+  Validator, Sicherheitsanforderungen und Pilot-vor-KI-vor-Ausbau-Reihenfolge
+  festgehalten. Weitere Schritte zuerst besprechen. Ergänzt OPS-003, ersetzt
+  dessen offene Punkte nicht. → [Plan](../20-Frontendkurs-Qwen-Planung.md)
+  Private PDF-RAG-Ablage `local-rag/material/` vorbereitet; gesamter privater
+  Bestand einschließlich abgeleiteter Daten von Git ausgeschlossen. PDF-Import,
+  Indexierung und Einrichtungshinweis in der App bleiben geplant.
+  Kursfolge angepasst: frühes CSS, Formulare nach Layoutprojekten; externe
+  Projektbearbeitung bereits ab der ersten zweiten Datei, aktuell beim
+  Seitenlink in Kapitel 3; Mehrdateiprojekte früh verbindlich eingeplant.
+  Webpilot unter `/frontendkurs`: elf Lektionen, Editor, externe Projekte,
+  Vorschau/Inspektor, Validator und OPFS-Sicherung implementiert.
+  Zehn ergänzende Qualitäts-/Betriebsanforderungen erfasst; verbindliche
+  [Pilotabnahme](../21-Frontendpilot-Abnahme.md) für Kapitel 1–6 abgeleitet.
+  Pilot ohne KI und ohne aktives Lern-JavaScript; spätere Gates separat.
+  Web-Praxistests (Zoom, Tastatur, Neustart, Mehrdatei-Sicherung) bestätigt;
+  frischer technischer Gesamtdurchlauf bestanden. Abnahme 30/30 für die
+  dokumentierte Windows-/Chromium-/Electron-Matrix; Desktop 0.1.3 mit nativer
+  Auswahl, unabhängigem Kursspeicher und isoliertem F12 gebaut/geprüft.
+  Weitere Plattformen sowie Kurs-/Qwen-Ausbau bleiben offen. → [Nachweise](../22-Frontendpilot-Technik.md)
+  Erstes Praxisfeedback in FE-023 bearbeitet: Einzeldateien ergänzen statt
+  ersetzen, Auswahlknöpfe und Ordnerhinweis verbessert, Tour ergänzt.
+  Praxisrückmeldung in OPS-022 dokumentiert; P2.4, P4.3 und P4.6 in OPS-023
+  mit ausdrücklich begrenzten automatisierten Nachweisen abgeschlossen.
+
 
 
 

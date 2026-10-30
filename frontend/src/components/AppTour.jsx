@@ -1,7 +1,7 @@
 // Kurze, seitenunabhängige Tour (Modal-Sequenz statt an Bildschirm-
 // Elemente angehefteter Tooltips – robuster gegenüber Layout-Änderungen
 // und funktioniert auf jeder Seite gleich). Reihenfolge und Inhalte laut
-// Absprache: Dashboard -> Lernreise -> Lernbereich -> Prüfungssimulation
+// Absprache: Dashboard -> Lernreise -> Lernbereich -> Frontend-Werkstatt -> Prüfungssimulation
 // (inkl. Hinweis, dass die Fehler-Nachbereitung bewusst im
 // Prüfungsverlauf liegt statt direkt nach der Simulation).
 //
@@ -15,6 +15,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { tourBereitsGesehen, tourAlsGesehenMerken, aufTourStartHoeren } from '../utils/tour.js';
+import { landingAlsGesehenMerken } from '../utils/landing.js';
 
 const BEGRUESSUNG_FLAG_KEY = 'azubiprep.begruessung-gezeigt';
 
@@ -33,6 +34,11 @@ const SCHRITTE = [
     titel: 'Lernbereich 📚',
     text: 'Alle Module nach Fachrichtung sortiert. Pro Modul: Theorie zum Nachlesen, Quiz mit Sofort-Feedback und Karteikarten mit Spaced Repetition (Leitner-System) zum Wiederholen.',
     pfad: '/lernen',
+  },
+  {
+    titel: 'Frontend-Werkstatt 💻',
+    text: 'Hier lernst du HTML und CSS Schritt für Schritt mit eigener Browser-Vorschau und Aufgabenprüfung. Ab der zweiten Datei kannst du auch in deinem eigenen Editor arbeiten: ganze Projektordner einlesen oder einzelne Dateien ergänzen. Hinweise, Musterlösungen und eine Projektsicherung helfen beim Lernen.',
+    pfad: '/frontendkurs',
   },
   {
     titel: 'Prüfungssimulation ⏱️',
@@ -84,6 +90,9 @@ export default function AppTour() {
   // Anzeige und Navigation zuverlässig synchron hält.
   useEffect(() => {
     if (!sichtbar) return;
+    // Die Tour startet bereits innerhalb der App, auch nach einem Direkteinstieg.
+    // Ihr Dashboard-Schritt darf sie nicht auf die externe Landing-Route umleiten.
+    landingAlsGesehenMerken();
     const aktuell = SCHRITTE[schritt];
     if (aktuell?.pfad) navigate(aktuell.pfad);
     // eslint-disable-next-line react-hooks/exhaustive-deps

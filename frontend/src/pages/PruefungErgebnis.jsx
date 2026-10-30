@@ -33,14 +33,6 @@ export default function PruefungErgebnis() {
       gamificationStore.addXp(`exam:${store.startAm}`, XP_REGELN.pruefungAbgeschlossen),
       'Prüfung abgeschlossen',
     );
-    // Modul-Status (bearbeitet/beherrscht) aktualisieren und neue Stufen melden
-    meldeModulStatus(
-      aktualisiereModulStatus(
-        progressStore.get(),
-        (id) => module?.find((m) => m.modul_id === id)?.titel || id,
-        (id) => module?.find((m) => m.modul_id === id)?.fragenAnzahl || 0,
-      ),
-    );
     // Missionen (Phase 4): Pruefung sowie beantwortete und richtige Fragen
     meldeMissionen(gamificationStore.merkeMission('pruefung'));
     const detail = ergebnis.detail || [];
@@ -48,6 +40,17 @@ export default function PruefungErgebnis() {
     meldeMissionen(gamificationStore.merkeMission('richtig', detail.filter((d) => d.richtig).length));
     setExamState({ gespeichert: true });
   }, [ergebnis, store.gespeichert, konfig]);
+
+  // Modulmetadaten laden unabhängig vom Ergebnis. Erst mit deren Gesamtzahlen
+  // einstufen; der Ergebnisspeicher-Guard darf diese Nachberechnung nicht sperren.
+  useEffect(() => {
+    if (!module || !store.gespeichert || !ergebnis) return;
+    meldeModulStatus(aktualisiereModulStatus(
+      progressStore.get(),
+      (id) => module.find((m) => m.modul_id === id)?.titel || id,
+      (id) => module.find((m) => m.modul_id === id)?.fragenAnzahl || 0,
+    ));
+  }, [module, store.gespeichert, ergebnis]);
 
   if (!ergebnis) {
     return (

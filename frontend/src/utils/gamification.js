@@ -35,7 +35,7 @@ export function naechsteStufe(xp) {
 }
 
 // ---- Modul-Status ----
-/** Ab dieser Erfolgsquote gilt ein Modul als beherrscht. */
+/** Mindestanteil richtig beantworteter Fragen am gesamten Modulbestand. */
 export const BEHERRSCHT_AB = 80;
 
 // ---- Abzeichen (Phase 3) ----

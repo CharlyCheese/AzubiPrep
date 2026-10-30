@@ -74,7 +74,7 @@ export default function Statistik() {
           <div className="card mb-2">
             <div className="flex-between wrap mb-2">
               <h2 className="mb-0">Fortschritt je Modul</h2>
-              <span className="small text-muted">Balken: Fragenabdeckung · Prozent: Quote</span>
+              <span className="small text-muted">Fortschritt bezieht sich auf alle Fragen des Moduls</span>
             </div>
             {Object.entries(proModul).length === 0 && (
               <p className="text-muted">Noch keine Lernaktivität. <Link to="/lernen">Jetzt starten →</Link></p>
@@ -95,11 +95,12 @@ export default function Statistik() {
                         {istBeherrscht ? 'beherrscht' : 'in Arbeit'}
                       </span>
                     </span>
-                    <span>{bearbeitet} von {gesamt || '?'} Fragen ({abdeckung} %) · {q}% richtig</span>
+                    <span>{bearbeitet} von {gesamt || '?'} Fragen ({abdeckung} %) · {statusMap[modulId]?.beherrschung || 0}% des Moduls richtig</span>
                   </div>
                   <div className="progress">
                     <div style={{ width: `${abdeckung}%`, background: istBeherrscht ? 'var(--success)' : undefined }} />
                   </div>
+                  <div className="small text-muted">{q}% Erfolgsquote bei den beantworteten Fragen</div>
                 </div>
               );
             })}

@@ -28,6 +28,9 @@
 | 14 | `13-Scrum-Roadmap.md` | Backlog, MVP, Meilensteine | Projekt |
 | 15 | `14-Betrieb-Wartung.md` | Install, Betrieb, Troubleshooting | Betrieb |
 | 16 | `15-Recherche-Inhalte.md` | Rahmenlehrpläne, Quellen, QS-Fragenbestand | Content, Redaktion |
+| 17 | [20-Frontendkurs-Qwen-Planung.md](20-Frontendkurs-Qwen-Planung.md) | Planungsstand: aufbauender Frontendkurs, Vorschau/Inspect, Validator, Sicherheit und lokale KI-Begleitung | Konzept, Entwicklung |
+| 18 | [21-Frontendpilot-Abnahme.md](21-Frontendpilot-Abnahme.md) | Offene Abnahmekriterien für den ersten HTML-/CSS-Pilot mit Mehrdateien und externen Projekten | Konzept, Entwicklung, Review |
+| 19 | [22-Frontendpilot-Technik.md](22-Frontendpilot-Technik.md) | Webprototyp, Speicher-/Importgrenzen, Abschirmung, Prüfnachweise und offene Desktopfreigabe | Entwicklung, Review |
 
 
 ## Inhalts-Philosophie

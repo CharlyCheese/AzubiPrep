@@ -3,7 +3,7 @@
 // - API-GET-Antworten: Network-first mit Cache-Fallback (Inhalte offline verfügbar)
 // - Nicht-GET-/POST-Requests: nur Netzwerk (kein Caching)
 
-const VERSION = 'azubiprep-v3'; // v3 (BE-001): Push-Benachrichtigungen (Web-Push)
+const VERSION = 'azubiprep-v6'; // v6 (OPS-023): native Desktop-Werkstatt
 const APP_SHELL = [
   '/',
   '/index.html',

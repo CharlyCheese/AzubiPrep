@@ -158,9 +158,9 @@ voraus; das eigenständige Paket nutzt den mitgelieferten CSV-Katalog.
 Paket für die Weitergabe bauen (nur auf dem Entwicklungsrechner):
 `cd desktop` und `npm run dist:web`. Die fertigen EXE-Dateien liegen unter
 `Installer-Web/`. Entwickler-Zugangsdaten werden nicht mitgeliefert.
-Für Lernende genügt die Weitergabe von `AzubiPrep-Web-0.1.0-portabel.exe`;
+Für Lernende genügt die Weitergabe von `AzubiPrep-Web-0.1.2-portabel.exe`;
 die Projektordner müssen nicht mitkopiert werden. Das Entpacken beim Start
-kann einen Moment dauern. Alternativ richtet `AzubiPrep-Web-Setup-0.1.0.exe`
+kann einen Moment dauern. Alternativ richtet `AzubiPrep-Web-Setup-0.1.2.exe`
 die App im Benutzerkonto ein. Die Pakete sind derzeit unsigniert;
 Windows kann deshalb beim Öffnen eine Rückfrage anzeigen.
 
@@ -205,7 +205,8 @@ cd ../backend && npm start   # http://localhost:3001
 ## Desktop-App (Electron)
 
 AzubiPrep läuft wahlweise auch als installierbare Windows-Desktop-App – eine
-Electron-Hülle um dasselbe Backend und Frontend, ohne separaten Code-Pfad:
+Electron-Hülle um dasselbe Backend und Frontend. Die Kurswerkstatt nutzt eine
+begrenzte native Datei- und Speicheranbindung:
 
 ```bash
 cd desktop
@@ -215,13 +216,23 @@ npm start        # startet die App im eigenen Fenster
 npm run dist      # baut Frontend und Windows-Installer nach Installer/
 ```
 
-Der aktuelle Desktopinstaller heißt **`AzubiPrep Setup 0.1.1.exe`** und
-enthält 7.000 Fragen samt aktuellem Backend und Lernfeldunterstützung.
+Der aktuelle Desktopinstaller heißt **`AzubiPrep Setup 0.1.3.exe`** und
+enthält 7.000 Fragen samt aktuellem Backend, Lernfeldunterstützung und der
+Frontend-Werkstatt für HTML/CSS (Kapitel 1–6).
 Node.js muss auf dem Ziel-PC nicht separat installiert werden.
 Entwickler-`.env`-Dateien werden ausgeschlossen; ohne eigene Kontoserver-
 Konfiguration verwendet die installierte App den mitgelieferten CSV-Katalog.
 Ältere Installer sind kein aktueller Auslieferungsstand und sollten nicht
 weitergegeben werden. Der Installer ist derzeit unsigniert.
+
+Desktopprojekte der Werkstatt werden im lokalen App-Profil gesichert und
+bleiben auch bei wechselnder interner Serveradresse erhalten. Ordner und
+Dateien werden über die Windows-Auswahl freigegeben; externe Originale bleiben
+unverändert. F12 in der Vorschau öffnet eine getrennte Projektprüfung ohne
+Zugriff auf App-Daten oder Node.js. Electron: 45.2.0.
+Die genaue Testmatrix und ihre Grenzen stehen in der
+[Pilotabnahme](docs/21-Frontendpilot-Abnahme.md). Die Webpakete 0.1.2 werden
+durch diesen Desktopbuild nicht ersetzt.
 
 ## Inhalte pflegen (ohne Code)
 

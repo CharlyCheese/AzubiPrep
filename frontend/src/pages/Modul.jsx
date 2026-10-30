@@ -175,7 +175,7 @@ export default function Modul() {
               {beantwortet === 0
                 ? 'Noch keine Fragen beantwortet – starte das Quiz, um dein Ergebnis zu sehen. '
                 : ''}
-              Als <strong>beherrscht</strong> eingestuft ab {BEHERRSCHT_AB}% Erfolgsquote.
+              Als <strong>beherrscht</strong> eingestuft, wenn mindestens {BEHERRSCHT_AB}% aller Fragen dieses Moduls zuletzt richtig beantwortet wurden.
             </p>
           </div>
         </aside>

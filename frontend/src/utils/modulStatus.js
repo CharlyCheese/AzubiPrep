@@ -1,8 +1,8 @@
 // Modul-Status "bearbeitet" / "beherrscht" (Phase 3).
 // Quelle der Wahrheit ist der lokale Lernfortschritt (progressStore): jeder
 // Eintrag kennt sein Modul (modulId) und das letzte Ergebnis.
-// Entscheidung aus dem Gamification-Plan: beherrscht ab BEHERRSCHT_AB Prozent
-// Erfolgsquote (richtig / beantwortet) mit mindestens einer beantworteten Frage.
+// Beherrscht ab BEHERRSCHT_AB Prozent richtig beantworteter Modulfragen.
+// Die Erfolgsquote einer Auswahl (richtig / beantwortet) ist davon getrennt.
 import { BEHERRSCHT_AB } from './gamification.js';
 import { gamificationStore } from '../store/gamificationStore.js';
 import { toastStore } from '../store/toastStore.js';
@@ -17,8 +17,10 @@ export const MODUL_BEHERRSCHT = 'beherrscht';
  */
 export function abdeckungProzent(anzahl = 0, gesamt = 0) {
   const g = Number(gesamt) || 0;
-  if (!g) return 0;
-  return Math.min(100, Math.round(((Number(anzahl) || 0) / g) * 100));
+  if (!Number.isFinite(g) || g <= 0) return 0;
+  const n = Number(anzahl) || 0;
+  if (!Number.isFinite(n)) return 0;
+  return Math.max(0, Math.min(100, Math.floor((n * 100) / g)));
 }
 
 /** Standardstatus eines Moduls ohne Lernaktivitaet. */
@@ -31,6 +33,7 @@ export function leerenModulStatus(gesamt = 0) {
     falsch: 0,
     quote: 0,
     beherrscht: false,
+    beherrschung: 0,
     gesamt: g || null,
     abdeckung: g ? 0 : null,
   };
@@ -38,7 +41,7 @@ export function leerenModulStatus(gesamt = 0) {
 
 /**
  * Berechnet den Status je Modul:
- * { [modulId]: { bearbeitet, beherrscht, anzahl, richtig, falsch, quote, gesamt, abdeckung } }
+ * quote: richtig/beantwortet; beherrschung: richtig/Modulgesamtbestand.
  * @param {object} fortschritt progressStore.get()
  * @param {(modulId:string)=>number} gesamtVon Fragenzahl je Modul (optional)
  */
@@ -55,12 +58,14 @@ export function modulStatusAusFortschritt(fortschritt = {}, gesamtVon = () => 0)
   for (const s of Object.values(map)) {
     s.quote = s.anzahl ? Math.round((s.richtig / s.anzahl) * 100) : 0;
     s.bearbeitet = s.anzahl > 0;
-    s.beherrscht = s.anzahl > 0 && s.quote >= BEHERRSCHT_AB;
   }
   for (const [modulId, s] of Object.entries(map)) {
-    const gesamt = Number(gesamtVon(modulId)) || 0;
+    const wert = Number(gesamtVon(modulId));
+    const gesamt = Number.isFinite(wert) && wert > 0 ? wert : 0;
     s.gesamt = gesamt || null;
     s.abdeckung = gesamt ? abdeckungProzent(s.anzahl, gesamt) : null;
+    s.beherrschung = abdeckungProzent(s.richtig, gesamt);
+    s.beherrscht = gesamt > 0 && s.richtig * 100 >= gesamt * BEHERRSCHT_AB;
   }
   return map;
 }
@@ -79,7 +84,7 @@ export function modulStufe(status) {
 /** Gemeinsame Anzeige-Konfiguration fuer alle Seiten (Label + Badge-Klasse). */
 export const MODUL_STUFEN_ANZEIGE = {
   [MODUL_BEHERRSCHT]: { label: 'beherrscht', klasse: 'badge-leicht' },
-  [MODUL_BEARBEITET]: { label: 'bearbeitet', klasse: 'badge-mittel' },
+  [MODUL_BEARBEITET]: { label: 'in Bearbeitung', klasse: 'badge-mittel' },
   [MODUL_OFFEN]: { label: 'offen', klasse: 'badge-neutral' },
 };
 
@@ -92,6 +97,7 @@ function gleich(a = {}, b = {}) {
   return (
     a.bearbeitet === b.bearbeitet &&
     a.beherrscht === b.beherrscht &&
+    a.beherrschung === b.beherrschung &&
     a.anzahl === b.anzahl &&
     a.richtig === b.richtig &&
     a.gesamt === b.gesamt &&
@@ -106,8 +112,11 @@ function gleich(a = {}, b = {}) {
  * @param {(modulId:string)=>number} gesamtVon Fragenzahl je Modul (optional)
  */
 export function aktualisiereModulStatus(fortschritt, titelVon = (id) => id, gesamtVon = () => 0) {
-  const berechnet = modulStatusAusFortschritt(fortschritt, gesamtVon);
   const vorher = gamificationStore.get().modulStatus || {};
+  const berechnet = modulStatusAusFortschritt(
+    fortschritt,
+    (id) => gesamtVon(id) || vorher[id]?.gesamt || 0,
+  );
   const neuBearbeitet = [];
   const neuBeherrscht = [];
   let geaendert = Object.keys(berechnet).length !== Object.keys(vorher).length;
@@ -128,6 +137,6 @@ export function aktualisiereModulStatus(fortschritt, titelVon = (id) => id, gesa
 
 /** Meldet neu erreichte Modul-Zustaende als Toast. */
 export function meldeModulStatus({ neuBearbeitet = [], neuBeherrscht = [] }) {
-  neuBearbeitet.forEach((m) => toastStore.push(`Modul bearbeitet: ${m.titel}`, 'modul'));
+  neuBearbeitet.forEach((m) => toastStore.push(`Modul begonnen: ${m.titel}`, 'modul'));
   neuBeherrscht.forEach((m) => toastStore.push(`Modul beherrscht: ${m.titel} 🏅`, 'modul'));
 }

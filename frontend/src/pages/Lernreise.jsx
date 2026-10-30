@@ -33,7 +33,7 @@ function ReiseStation({ station }) {
         <div className="flex wrap" style={{ gap: 6 }}>
           <span className="badge badge-neutral">{s.fragenAnzahl} Fragen</span>
           <span className="badge badge-neutral">{s.gruppe === GRUPPE_GEMEINSAM ? 'gemeinsam' : s.fachrichtung}</span>
-          {s.bearbeitet && <span className="badge badge-neutral">{s.quote}% richtig</span>}
+          {s.bearbeitet && <span className="badge badge-neutral">{s.richtig} von {s.gesamt} richtig · {s.beherrschung}% des Moduls</span>}
         </div>
         <div className="progress-label mt-1">
           <span>Fragen bearbeitet</span>
@@ -94,7 +94,7 @@ function ReiseTabelle({ stationen }) {
                 <td>{s.gruppe === GRUPPE_GEMEINSAM ? 'gemeinsam' : s.fachrichtung}</td>
                 <td>{s.fragenAnzahl}</td>
                 <td>{s.anzeige.label}</td>
-                <td>{s.gesamt ? `${s.anzahl} von ${s.gesamt} (${s.abdeckung} %) · ${s.quote}% richtig` : '–'}</td>
+                <td>{s.gesamt ? `${s.anzahl} von ${s.gesamt} bearbeitet (${s.abdeckung} %) · ${s.beherrschung}% des Moduls richtig` : '–'}</td>
                 <td><Link to={`/lernen/${s.modulId}`}>Öffnen</Link></td>
               </tr>
             ))}
@@ -126,7 +126,10 @@ export default function Lernreise() {
   const gewaehlt = searchParams.get('fr') || profil.fachrichtung || 'FIAE';
   const gewaehltName = frListe.find((f) => f.code === gewaehlt)?.name || gewaehlt;
 
-  const statusMap = modulStatusAusFortschritt(progressStore.get());
+  const statusMap = modulStatusAusFortschritt(
+    progressStore.get(),
+    (id) => module?.find((m) => m.modul_id === id)?.fragenAnzahl || 0,
+  );
   const reise = baueLernreise(module || [], gewaehlt, statusMap);
   const naechste = naechsteStation(reise);
   const uebersicht = fachrichtungsUebersicht(module || [], statusMap, frListe);
@@ -176,11 +179,11 @@ export default function Lernreise() {
         </div>
         <div className="grid grid-3 mt-2">
           <div><div className="stat-value">{f.beherrscht}</div><div className="stat-label">beherrscht</div></div>
-          <div><div className="stat-value">{f.bearbeitet}</div><div className="stat-label">bearbeitet</div></div>
+          <div><div className="stat-value">{f.bearbeitet}</div><div className="stat-label">begonnen</div></div>
           <div><div className="stat-value">{f.gesamt}</div><div className="stat-label">Stationen gesamt</div></div>
         </div>
         <div className="progress-label mt-2">
-          <span>Reisefortschritt ({BEHERRSCHT_AB} % Erfolgsquote pro Station)</span>
+          <span>Reisefortschritt (ab {BEHERRSCHT_AB} % aller Fragen einer Station richtig)</span>
           <span>{f.prozentBeherrscht}%</span>
         </div>
         <div className="progress"><div style={{ width: `${f.prozentBeherrscht}%` }} /></div>

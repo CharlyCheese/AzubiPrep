@@ -6,6 +6,7 @@ import Dashboard from './pages/Dashboard.jsx';
 import Lernen from './pages/Lernen.jsx';
 import Modul from './pages/Modul.jsx';
 import Quiz from './pages/Quiz.jsx';
+import FrontendKurs from './pages/FrontendKurs.jsx';
 import Karteikarten from './pages/Karteikarten.jsx';
 import Pruefung from './pages/Pruefung.jsx';
 import PruefungLauf from './pages/PruefungLauf.jsx';
@@ -45,6 +46,7 @@ export default function App() {
       <Route element={<Layout />}>
         <Route index element={<Startpunkt />} />
         <Route path="lernen" element={<Lernen />} />
+        <Route path="frontendkurs" element={<FrontendKurs />} />
         <Route path="lernen/:modulId" element={<Modul />} />
         <Route path="quiz/:modulId" element={<Quiz />} />
         <Route path="karteikarten" element={<Karteikarten />} />
