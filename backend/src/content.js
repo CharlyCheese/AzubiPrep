@@ -81,7 +81,7 @@ async function loadContentFromDb(contentDir) {
   const { rows: questionsRaw } = await query(`
     SELECT id, fachrichtung, modul_id, thema, typ, frage,
            option_a, option_b, option_c, option_d,
-           antwort, erklaerung, schwierigkeit, quelle, quelldatei
+           antwort, erklaerung, schwierigkeit, quelle, quelldatei, lernfeld
     FROM questions
     WHERE review_status != 'deaktiviert'
     ORDER BY id

@@ -133,13 +133,13 @@ export function buildContentAdminRoutes() {
            frage_id, fachrichtung, modul_id, thema, typ, frage,
            option_a, option_b, option_c, option_d,
            antwort, erklaerung, schwierigkeit, quelle, review_status,
-           geaendert_von
-         ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16)`,
+           geaendert_von, lernfeld
+         ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17)`,
         [
           aktuell.id, aktuell.fachrichtung, aktuell.modul_id, aktuell.thema, aktuell.typ, aktuell.frage,
           aktuell.option_a, aktuell.option_b, aktuell.option_c, aktuell.option_d,
           aktuell.antwort, aktuell.erklaerung, aktuell.schwierigkeit, aktuell.quelle, aktuell.review_status,
-          geaendertVon,
+          geaendertVon, aktuell.lernfeld || '',
         ],
       );
 

@@ -1,13 +1,16 @@
 {
   "name": "azubiprep-desktop",
   "private": true,
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": "Sven Weyers",
   "description": "AzubiPrep als installierbare Windows-Desktop-App (Electron-Hülle um das bestehende React-Frontend + Node/Express-Backend).",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "dist": "electron-builder"
+    "dist": "node scripts/build-desktop.cjs",
+    "test:desktop": "node --test test/desktop-package.test.cjs",
+    "dist:web": "node scripts/build-web.cjs",
+    "test:web": "node --test test/web-runtime.test.cjs"
   },
   "devDependencies": {
     "electron": "^32.0.0",
@@ -24,9 +27,13 @@
       "package.json"
     ],
     "extraResources": [
-      { "from": "../backend", "to": "backend", "filter": ["**/*", "!**/*.log"] },
-      { "from": "../content", "to": "content" },
-      { "from": "../frontend/dist", "to": "frontend/dist" }
+      {
+        "from": "../backend",
+        "to": "backend",
+        "filter": ["src/**/*", "node_modules/**/*", "package.json", "!**/.env*", "!**/*.log", "!**/.cache/**/*"]
+      },
+      { "from": "../content", "to": "content", "filter": ["**/*", "!**/.env*"] },
+      { "from": "../frontend/dist", "to": "frontend/dist", "filter": ["**/*", "!**/.env*"] }
     ],
     "win": {
       "target": "nsis"

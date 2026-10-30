@@ -28,7 +28,7 @@ const QUESTION_COLUMNS = [
   'antwort', 'erklaerung', 'schwierigkeit', 'quelle',
 ];
 const FACHRICHTUNG_COLUMNS = ['code', 'name', 'beschreibung'];
-const MODUL_COLUMNS = ['modul_id', 'fachrichtung', 'code', 'titel', 'beschreibung'];
+const MODUL_COLUMNS = ['modul_id', 'fachrichtung', 'code', 'titel', 'beschreibung', 'lernfeld'];
 
 async function main() {
   if (!isDbAktiviert()) {
@@ -40,12 +40,12 @@ async function main() {
     'SELECT code, name, beschreibung FROM fachrichtungen ORDER BY code',
   );
   const { rows: modules } = await query(
-    'SELECT modul_id, fachrichtung, code, titel, beschreibung FROM modules ORDER BY modul_id',
+    'SELECT modul_id, fachrichtung, code, titel, beschreibung, lernfeld FROM modules ORDER BY modul_id',
   );
   const { rows: questions } = await query(`
     SELECT id, fachrichtung, modul_id, thema, typ, frage,
            option_a, option_b, option_c, option_d,
-           antwort, erklaerung, schwierigkeit, quelle, quelldatei
+           antwort, erklaerung, schwierigkeit, quelle, quelldatei, lernfeld
     FROM questions
     ORDER BY quelldatei, id
   `);
@@ -77,7 +77,12 @@ async function main() {
   }
 
   for (const [file, records] of byFile) {
-    fs.writeFileSync(path.join(questionsDir, file), writeCsv(QUESTION_COLUMNS, records), 'utf-8');
+    // Die optionale Spalte erhalten, wenn sie Werte oder bereits einen Header hat.
+    const target = path.join(questionsDir, file);
+    const hasLernfeld = records.some((r) => r.lernfeld)
+      || (fs.existsSync(target) && fs.readFileSync(target, 'utf-8').split(/\r?\n/, 1)[0].split(';').includes('lernfeld'));
+    const columns = hasLernfeld ? [...QUESTION_COLUMNS, 'lernfeld'] : QUESTION_COLUMNS;
+    fs.writeFileSync(target, writeCsv(columns, records), 'utf-8');
   }
 
   console.log(`Export fertig: ${questions.length} Fragen in ${byFile.size} Datei(en), ${modules.length} Module, ${fachrichtungen.length} Fachrichtungen.`);

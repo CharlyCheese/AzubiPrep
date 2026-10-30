@@ -2,8 +2,7 @@
 
 Status: done
 Bereich: CONTENT
-Angelegt: 2026-09-19 (nachts, während Sven schläft – unbeaufsichtigte
-Sitzung, siehe „Hinweis zur Arbeitsweise“ unten)
+Angelegt: 2026-09-19
 
 ## Ziel (1–3 Sätze)
 
@@ -13,12 +12,10 @@ FIAE (seiner eigenen Fachrichtung). Dieser Brief ist Runde 1: echte
 Curriculum-Recherche zu den FIAE-spezifischen Lernfeldern (LF10a-12a),
 eine daraus abgeleitete Lücken-Analyse und ein erster, geprüfter Fragen-Batch.
 
-## Hinweis zur Arbeitsweise (unbeaufsichtigte Sitzung)
+## Hinweis zur Arbeitsweise
 
-Sven ist schlafen gegangen und hat gebeten, die Fragen „vorzubereiten,
-prüfen, vorsortieren". Ich habe daher eigenständig entschieden, wie weit
-ich gehe, ohne Rückfragen zu stellen (die ohnehin niemand hätte
-beantworten können): **neue Inhalte nur dort ergänzt, wo eine echte,
+Der Auftrag umfasst das Vorbereiten, Prüfen und Vorsortieren neuer Fragen.
+Für die Umsetzung gilt: **neue Inhalte nur dort ergänzt, wo eine echte,
 unstrittige Lücke besteht** (LF10a hatte bei FIAE bisher buchstäblich null
 Fragen), und **bei Entscheidungen, die Geschmackssache/Ermessen sind**
 (Neuzuordnung bestehender Fragen), nur einen konkreten, umsetzungsfertigen

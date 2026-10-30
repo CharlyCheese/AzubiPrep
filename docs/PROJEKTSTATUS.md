@@ -1,6 +1,6 @@
 # Projektstatus – AzubiPrep
 
-> **Stand:** 2026-09-18 · **Phase:** MVP + Feedback/Bedienung/Review (Sprint 1.1–1.15 done) + Content-/Backend-Reparatur
+> **Katalogstand:** 2026-10-30 · **Phase:** MVP + Feedback/Bedienung/Review; Contentziel 7.000 Fragen erreicht
 > **Projektpfad:** `Project_1/AzubiPrep/`
 
 ## 1. Kurzfassung
@@ -12,14 +12,29 @@ dokumentiert; die erste Feedback-Runde (Sprint 1.1) ist eingearbeitet.
 
 | Kennzahl | Wert |
 |---|---|
-| Fragen im Bestand | **1.627** |
-| Module | **19** (17 fachspezifisch + 2 gemeinsam) |
+| Fragen im lokalen CSV-Bestand | **7.000** (6.920 SC, 50 MC, 30 FT) |
+| Fragen in der konfigurierten Datenbank | **7.000**, vollständig mit CSV einschließlich Lernfeldern abgeglichen (CONTENT-232) |
+| Module | **26** (21 fachspezifisch + 5 gemeinsam) |
 | Fachrichtungen | FIAE, FISI, DPA, DVK (+ gemeinsame ALLE-Fragen) |
 | Frontend-Seiten | 13 |
 | API-Endpunkte | 12 |
 | Dokumente | 18 (`docs/`) + Orchestrator-/Agenten-Doku |
 | Build-Status | ✅ Vite-Build fehlerfrei (73 Module) |
 | Content-Validierung | ✅ ohne Fehler |
+
+Der lokale Fragenkatalog umfasst mit CONTENT-231 exakt 7.000 Fragen.
+Die Fortschreibung der folgenden Funktionsübersicht stammt aus dem bisherigen
+MVP-Stand; dieser Contentabschluss umfasst keine erneute Funktions- oder
+Buildabnahme. Alle Erweiterungsbatches einschließlich CONTENT-230/231 sind
+unabhängig inhaltlich freigegeben; der separate Abschlussabgleich bestätigt
+Zielzahlen, Datenformate, erhaltene Altinhalte und sachliche Dokumentation.
+Der Abschlussnachweis wird in [CONTENT-231](agent-briefs/CONTENT-231-pm-workshopmoderation-zielabschluss.md)
+und im [Content-Checkpoint](agent-briefs/CONTENT-CHECKPOINT.md) festgehalten.
+Die Erweiterungen liegen lokal in den CSV und sind mit CONTENT-232 vollständig
+in die konfigurierte PostgreSQL-Datenbank übernommen. Unabhängiger Vollvergleich
+und Export-Rundlauf bestätigen sämtliche Inhalte und Lernfeldzuordnungen.
+Import/Ladepfad/Export bewahren nun fragespezifische Lernfelder.
+Ein Commit oder Push ist nicht erfolgt.
 
 ## 2. Umgesetzter Funktionsumfang (MVP)
 

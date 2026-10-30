@@ -104,6 +104,9 @@ ist strikt begrenzt (siehe `docs/11-PWA-Konzept.md`, Abschnitt
 ## Sprach- & Code-Konventionen
 
 - Code-Identifiers: Englisch. Texte/UI-Kopien, Fragen & Doku: Deutsch (Zielgruppe).
+- Projektdokumentation bleibt sachlich: Auftrag, Entscheidungen, Ergebnisse
+  und Prüfstatus festhalten. Persönliche Angaben zu Schlaf, Tagesablauf,
+  Anwesenheit oder sonstigen privaten Umständen gehören nicht hinein.
 - UI-Komponenten: PascalCase-Dateien in `frontend/src/components`.
 - Seiten: PascalCase-Dateien in `frontend/src/pages`.
 - Backend: `backend/src/…`, Routen in `backend/src/routes`.

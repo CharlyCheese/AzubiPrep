@@ -1,5 +1,9 @@
 # Agent-Status (nur offene Punkte)
 
+
+
+
+
 > Diese Datei wird bei jeder Sitzung komplett gelesen – bleibt deshalb klein.
 > Erledigtes gehört nicht hierher, sondern nach `DONE.md`.
 > Format: `- [ID] Kurzbeschreibung (Priorität) → Brief: <ID>-<slug>.md`

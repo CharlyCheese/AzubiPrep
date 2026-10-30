@@ -105,6 +105,8 @@ CREATE TABLE IF NOT EXISTS questions (
 );
 
 CREATE INDEX IF NOT EXISTS idx_questions_modul ON questions (modul_id);
+-- CONTENT-232: leer bedeutet Vererbung vom Modul; auch Bestandsinstallationen.
+ALTER TABLE questions ADD COLUMN IF NOT EXISTS lernfeld TEXT NOT NULL DEFAULT '';
 CREATE INDEX IF NOT EXISTS idx_questions_review_status ON questions (review_status);
 
 -- Änderungshistorie (CONTENT-001): vor jedem UPDATE über die Autoren-UI
@@ -135,6 +137,7 @@ CREATE TABLE IF NOT EXISTS questions_verlauf (
 );
 
 CREATE INDEX IF NOT EXISTS idx_questions_verlauf_frage ON questions_verlauf (frage_id);
+ALTER TABLE questions_verlauf ADD COLUMN IF NOT EXISTS lernfeld TEXT NOT NULL DEFAULT '';
 
 -- Upgrade-Pfad für bereits bestehende Installationen (users/questions aus
 -- DB-001/DB-002, vor CONTENT-001 angelegt): "CREATE TABLE IF NOT EXISTS"

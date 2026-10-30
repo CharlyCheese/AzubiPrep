@@ -8,6 +8,7 @@ desktop/dist/
 # 100MB große win-unpacked/AzubiPrep.exe – GitHub verweigert Pushes mit
 # Dateien über diesem Limit, siehe auch desktop/dist/ oben)
 /Installer/
+/Installer-Web/
 
 # Playwright-Testausgaben (OPS-010, Stufe 4 – per "npm test" neu erzeugbar)
 e2e/playwright-report/

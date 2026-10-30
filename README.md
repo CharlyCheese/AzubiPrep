@@ -143,6 +143,44 @@ Gesamtverantwortung für Qualität und Architektur (Workflow:
 
 ## Schnellstart (Web-App)
 
+### Windows: im Browser per Doppelklick starten
+
+Für neue PCs gibt es zusätzlich **AzubiPrep Web als fertiges Windows-Paket**:
+Die portable EXE kann direkt geöffnet werden; alternativ richtet die Setup-EXE
+die Verknüpfungen ein. Beide enthalten die benötigte Laufzeit, Weboberfläche,
+Server und den Fragenkatalog. Node.js, npm und PostgreSQL müssen dafür nicht
+separat installiert werden. Nach dem Start öffnet sich der Standardbrowser.
+Das AzubiPrep-Symbol neben der Windows-Uhr bietet „Im Browser öffnen“ und
+„AzubiPrep beenden“. Der Lernstand bleibt im verwendeten Browser.
+Kontosynchronisation setzt weiterhin einen separat eingerichteten Kontoserver
+voraus; das eigenständige Paket nutzt den mitgelieferten CSV-Katalog.
+
+Paket für die Weitergabe bauen (nur auf dem Entwicklungsrechner):
+`cd desktop` und `npm run dist:web`. Die fertigen EXE-Dateien liegen unter
+`Installer-Web/`. Entwickler-Zugangsdaten werden nicht mitgeliefert.
+Für Lernende genügt die Weitergabe von `AzubiPrep-Web-0.1.0-portabel.exe`;
+die Projektordner müssen nicht mitkopiert werden. Das Entpacken beim Start
+kann einen Moment dauern. Alternativ richtet `AzubiPrep-Web-Setup-0.1.0.exe`
+die App im Benutzerkonto ein. Die Pakete sind derzeit unsigniert;
+Windows kann deshalb beim Öffnen eine Rückfrage anzeigen.
+
+**Start aus dem Quellprojekt:**
+
+Nach der einmaligen Einrichtung genügt ein Doppelklick auf
+**`AzubiPrep starten.cmd`** im Projektordner. Die Datei bereitet eine fehlende
+oder veraltete Weboberfläche vor, startet AzubiPrep und öffnet den
+Standardbrowser. Eine bereits laufende Webversion wird wieder geöffnet.
+Das Startfenster bleibt während des Lernens offen; **Enter** darin beendet
+den selbst gestarteten Server. Das Schließen des Browser-Tabs beendet ihn nicht.
+
+Einmalige Einrichtung durch die Person, die AzubiPrep bereitstellt:
+Node.js ab Version 20 installieren und in `backend` sowie `frontend`
+jeweils `npm ci` ausführen. Danach benötigen Lernende keine Terminalbefehle.
+Es werden beim normalen Start keine Pakete installiert. Die lokale Webversion
+benötigt weiterhin den laufenden Server auf diesem PC.
+
+### Entwicklung und manuelle Einrichtung
+
 Voraussetzung: **Node.js ≥ 20**
 
 ```bash
@@ -174,8 +212,16 @@ cd desktop
 npm install
 npm start        # startet die App im eigenen Fenster
 
-npm run dist      # baut die Windows-Installer-Datei (Setup.exe) nach desktop/dist/
+npm run dist      # baut Frontend und Windows-Installer nach Installer/
 ```
+
+Der aktuelle Desktopinstaller heißt **`AzubiPrep Setup 0.1.1.exe`** und
+enthält 7.000 Fragen samt aktuellem Backend und Lernfeldunterstützung.
+Node.js muss auf dem Ziel-PC nicht separat installiert werden.
+Entwickler-`.env`-Dateien werden ausgeschlossen; ohne eigene Kontoserver-
+Konfiguration verwendet die installierte App den mitgelieferten CSV-Katalog.
+Ältere Installer sind kein aktueller Auslieferungsstand und sollten nicht
+weitergegeben werden. Der Installer ist derzeit unsigniert.
 
 ## Inhalte pflegen (ohne Code)
 
