@@ -189,6 +189,14 @@ jobs:
         working-directory: desktop
         run: npm ci
 
+      - name: Electron-Laufzeit herunterladen und prüfen
+        working-directory: desktop
+        run: npm run prepare:electron
+
+      - name: Desktop-Paket und Laufzeitvorbereitung prüfen
+        working-directory: desktop
+        run: npm run test:desktop
+
       - name: E2E-Abhängigkeiten installieren
         working-directory: e2e
         run: npm ci

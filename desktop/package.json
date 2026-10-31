@@ -7,8 +7,11 @@
   "main": "main.js",
   "scripts": {
     "start": "electron .",
+    "prepare:electron": "node scripts/prepare-electron.cjs",
+    "predist": "npm run prepare:electron",
     "dist": "node scripts/build-desktop.cjs",
-    "test:desktop": "node --test test/desktop-package.test.cjs test/pilot-runtime.test.cjs",
+    "test:desktop": "node --test test/desktop-package.test.cjs test/pilot-runtime.test.cjs test/electron-setup.test.cjs",
+    "predist:web": "npm run prepare:electron",
     "dist:web": "node scripts/build-web.cjs",
     "test:web": "node --test test/web-runtime.test.cjs"
   },

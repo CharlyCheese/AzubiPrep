@@ -287,9 +287,15 @@ cd desktop
 npm install
 npm start        # startet die App im eigenen Fenster
 
+npm run prepare:electron  # Laufzeit gezielt laden/prüfen, z. B. vor Desktoptests
 npm run dist      # baut Frontend und Windows-Installer nach Installer/
 node scripts/verify-desktop-release.cjs  # prüft Paket/Installer ohne Installation
 ```
+
+Electron lädt seine Laufzeit beim regulären Erststart. Direkte EXE-Tests benötigen
+daher vorher `npm run prepare:electron`; CI und Installerbuild erledigen diesen
+Schritt ausdrücklich. Dabei wird die bereits festgelegte Electron-Version geladen,
+kein KI-Modell.
 
 Der aktuelle Desktopinstaller heißt **`AzubiPrep Setup 0.1.4.exe`** und liegt
 nach dem Build in `Installer/`. Er enthält 7.000 Fragen, Lernfeldunterstützung,

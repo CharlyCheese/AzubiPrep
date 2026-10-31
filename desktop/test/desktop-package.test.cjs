@@ -26,6 +26,9 @@ test('Desktopversion und Lockmetadaten passen zusammen und behalten Desktop-Eins
   assert.deepEqual(pkg.build.files, ['main.js', 'preload.cjs', 'pilot-runtime.cjs', 'pilot-inspector.cjs', 'js-pilot.cjs', 'js-pilot-fixtures.cjs', 'package.json']);
   assert.equal(pkg.devDependencies.electron, '45.2.0');
   assert.equal(pkg.scripts.dist, 'node scripts/build-desktop.cjs');
+  assert.equal(pkg.scripts['prepare:electron'], 'node scripts/prepare-electron.cjs');
+  assert.equal(pkg.scripts.predist, 'npm run prepare:electron');
+  assert.equal(pkg.scripts['predist:web'], 'npm run prepare:electron');
 });
 
 test('Beide Paketvarianten schließen Konten/Unterlagen aus und verweigern breite Kopierregeln', () => {
