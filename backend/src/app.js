@@ -3,7 +3,7 @@ import express from 'express';
 import path from 'node:path';
 import fs from 'node:fs';
 import { config } from './config.js';
-import { securityHeaders, rateLimiter, fehlerHandler } from './sicherheit.js';
+import { securityHeaders, jsWorkerAssetHeaders, rateLimiter, fehlerHandler } from './sicherheit.js';
 import { buildContentRoutes } from './routes/content.routes.js';
 import { buildExamRoutes } from './routes/exam.routes.js';
 import { buildAuthRoutes } from './routes/auth.routes.js';
@@ -71,7 +71,7 @@ export function createApp(store) {
 
   // Statische Auslieferung des Produktions-Builds (gleiche Origin, kein CORS nötig).
   if (fs.existsSync(config.frontendDist)) {
-    app.use(express.static(config.frontendDist));
+    app.use(express.static(config.frontendDist, { setHeaders: jsWorkerAssetHeaders }));
     app.get('*', (req, res, next) => {
       if (req.path.startsWith('/api')) { next(); return; }
       res.sendFile(path.join(config.frontendDist, 'index.html'));

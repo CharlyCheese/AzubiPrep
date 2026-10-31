@@ -1,16 +1,26 @@
 import { useEffect, useRef, useState } from 'react';
-import { buildPreview, cleanCSS } from '../pilot/preview.js';
+import { buildPreview, cleanCSS, activeStyleRules } from '../pilot/preview.js';
 import KiHilfe from './KiHilfe.jsx';
 import { courseContext } from '../api/ai.js';
 
-export default function PilotPreview({ files, page, onPage, lesson, project, onAiHint }) {
+// Formularnamen dürfen DOM-Eigenschaften wie dataset/closest überschreiben.
+const nodeAttribute = (node, name) => Element.prototype.getAttribute.call(node, name);
+const nodeClosest = (node, selector) => Element.prototype.closest.call(node, selector);
+const nodeMatches = (node, selector) => Element.prototype.matches.call(node, selector);
+const nodeParent = node => Object.getOwnPropertyDescriptor(Node.prototype, 'parentElement').get.call(node);
+const nodeTag = node => Object.getOwnPropertyDescriptor(Element.prototype, 'localName').get.call(node);
+
+export default function PilotPreview({ files, page, onPage, lesson, project, onAiHint, scriptOutput }) {
   const ref = useRef(null);
   const [preview, setPreview] = useState(null);
   const [error, setError] = useState('');
   const [selection, setSelection] = useState(null);
   const [width, setWidth] = useState('100%');
   const [inspect, setInspect] = useState(false);
+  const [formNotice, setFormNotice] = useState('');
   const [reset, setReset] = useState(0);
+  const [showScriptOutput, setShowScriptOutput] = useState(false);
+  const visibleOutput = showScriptOutput ? scriptOutput : undefined;
   const desktop = window.azubiDesktop?.version === 1;
   async function inspectDesktop() {
     if (!preview) return;
@@ -22,40 +32,58 @@ export default function PilotPreview({ files, page, onPage, lesson, project, onA
   }, [preview, desktop]); // eslint-disable-line react-hooks/exhaustive-deps
   useEffect(() => {
     const timer = setTimeout(() => {
-      try { setPreview(buildPreview(files, page)); setError(''); setSelection(null); }
+      try { setPreview(buildPreview(files, page, visibleOutput)); setError(''); setSelection(null); setFormNotice(''); }
       catch (e) { setError(e.message); setPreview(null); }
     }, 300);
     return () => clearTimeout(timer);
-  }, [files, page]);
+  }, [files, page, visibleOutput]);
   function inspectElement(element) {
     if (!element || !preview) return;
     const computed = ref.current.contentWindow.getComputedStyle(element);
-    const data = preview.nodes[element.dataset.pilotNode];
+    const id = nodeAttribute(element, 'data-pilot-node');
+    const data = preview.nodes[id];
+    if (!data) return;
     const rules = [];
     for (const entry of preview.styles) {
       const sheet = new CSSStyleSheet(); sheet.replaceSync(cleanCSS(entry.content));
-      for (const rule of sheet.cssRules) {
+      for (const rule of activeStyleRules(sheet.cssRules, query => ref.current.contentWindow.matchMedia(query).matches)) {
         try {
-          if (rule.selectorText && element.matches(rule.selectorText)) rules.push(`${entry.path}: ${rule.cssText}`);
-          else for (let parent = element.parentElement; parent; parent = parent.parentElement) {
-            if (rule.selectorText && parent.matches(rule.selectorText)) { rules.push(`${entry.path} (Regel am übergeordneten ${parent.localName}): ${rule.cssText}`); break; }
+          if (rule.selectorText && nodeMatches(element, rule.selectorText)) rules.push(`${entry.path}: ${rule.cssText}`);
+          else for (let parent = nodeParent(element); parent; parent = nodeParent(parent)) {
+            if (rule.selectorText && nodeMatches(parent, rule.selectorText)) { rules.push(`${entry.path} (Regel am übergeordneten ${nodeTag(parent)}): ${rule.cssText}`); break; }
           }
         } catch { /* Ungültige Selektoren werden ignoriert. */ }
       }
     }
-    setSelection({ ...data, id: element.dataset.pilotNode, rules, values: ['color', 'background-color', 'font-size', 'margin', 'padding', 'border', 'width', 'height'].map((property) => `${property}: ${computed.getPropertyValue(property)}`) });
+    setSelection({ ...data, id, rules, values: ['color', 'background-color', 'font-family', 'font-size', 'line-height', 'box-sizing', 'display', 'gap', 'flex-direction', 'flex-wrap', 'grid-template-columns', 'position', 'overflow-x', 'outline', 'transition-duration', 'margin', 'padding', 'border', 'width', 'height'].map((property) => `${property}: ${computed.getPropertyValue(property)}`) });
   }
   function loaded() {
     const doc = ref.current?.contentDocument;
     if (!doc || !preview) return;
+    const checkForm = form => {
+      if (!(form instanceof ref.current.contentWindow.HTMLFormElement)) return;
+      setFormNotice(ref.current.contentWindow.HTMLFormElement.prototype.reportValidity.call(form)
+        ? 'Die lokale Browserprüfung ist bestanden. Es wurde nichts gesendet; deine Eingaben werden nicht gespeichert.'
+        : 'Die Browserprüfung findet noch offene oder ungültige Felder. Korrigiere die angezeigte Eingabe. Es wurde nichts gesendet.');
+    };
+    doc.addEventListener('submit', event => { event.preventDefault(); checkForm(event.target); });
+    doc.addEventListener('keydown', event => {
+      if (event.key === 'Enter' && nodeTag(event.target) === 'input' && !['checkbox', 'radio', 'button', 'submit', 'reset'].includes(event.target.type)) {
+        event.preventDefault(); checkForm(event.target.form);
+      }
+    });
     doc.addEventListener('click', (event) => {
-      event.preventDefault();
-      const element = event.target.closest('[data-pilot-node]');
+      const element = nodeClosest(event.target, '[data-pilot-node]');
       if (inspect && element) {
+        event.preventDefault();
         inspectElement(element);
         return;
       }
-      const link = event.target.closest('a[data-pilot-target]');
+      const submitter = nodeClosest(event.target, 'button, input');
+      if (submitter?.type === 'submit' && submitter.form) { event.preventDefault(); checkForm(submitter.form); return; }
+      const anchor = nodeClosest(event.target, 'a');
+      if (anchor) event.preventDefault();
+      const link = nodeClosest(event.target, 'a[data-pilot-target]');
       if (link) {
         if (link.dataset.pilotTarget !== page) onPage(link.dataset.pilotTarget);
         else doc.getElementById(link.dataset.pilotFragment)?.scrollIntoView();
@@ -65,6 +93,7 @@ export default function PilotPreview({ files, page, onPage, lesson, project, onA
     doc.addEventListener('contextmenu', (event) => event.preventDefault());
   }
   return <section aria-label="Browser-Vorschau">
+    {scriptOutput !== undefined && <label><input type="checkbox" checked={showScriptOutput} onChange={event => setShowScriptOutput(event.target.checked)} /> Konsolenausgabe als Lernhilfe in der Vorschau anzeigen</label>}
     <div className="pilot-toolbar">
       <label>Vorschaugröße <select value={width} onChange={(e) => setWidth(e.target.value)}><option value="100%">Desktop</option><option value="768px">Tablet</option><option value="375px">Handy</option></select></label>
       <button className="btn btn-ghost" aria-pressed={inspect} onClick={() => setInspect(!inspect)}>Element untersuchen</button>
@@ -72,6 +101,8 @@ export default function PilotPreview({ files, page, onPage, lesson, project, onA
       {desktop && <button className="btn btn-ghost" disabled={!preview} onClick={inspectDesktop}>Entwicklerwerkzeuge (F12)</button>}
     </div>
     <p className="small">Nur HTML/CSS. JavaScript und externe Ressourcen sind gesperrt. Zum Untersuchen den Modus aktivieren und ein Element anklicken. {desktop ? 'F12 öffnet eine separate, isolierte Kopie der Vorschau mit Entwicklerwerkzeugen. Änderungen dort verändern deine Projektdateien nicht.' : 'Browser-F12 untersucht die Seite; wähle dort den Vorschaukontext.'}</p>
+    {preview?.html.includes('<form ') && <p className="small">Formulare sind lokale Übungen mit erfundenen Daten. Der Abgabeknopf und Enter prüfen nur die Browserregeln. Es wird nichts gesendet. Vorschauwerte bleiben ungespeichert und gehen beim Neuaufbau der Vorschau verloren.</p>}
+    {formNotice && <p role="status">{formNotice}</p>}
     {error && <p role="alert">Vorschau: {error}</p>}
     <div className="pilot-frame-wrap"><iframe key={`${page}:${inspect}:${reset}:${preview?.html}`} ref={ref} title="Dein Projekt" sandbox="allow-same-origin" referrerPolicy="no-referrer" srcDoc={preview?.html || ''} onLoad={loaded} style={{ width }} /></div>
     {!!preview && <label>Element per Tastatur untersuchen <select aria-label="Element per Tastatur untersuchen" value={selection?.id || ''} onChange={(event) => inspectElement(ref.current?.contentDocument?.querySelector(`[data-pilot-node="${event.target.value}"]`))}><option value="">Element auswählen</option>{Object.entries(preview.nodes).map(([id, node]) => <option key={id} value={id}>{node.tag} · {node.html.slice(0, 65)}</option>)}</select></label>}

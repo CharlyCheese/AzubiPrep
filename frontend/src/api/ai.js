@@ -19,7 +19,12 @@ async function request(endpoint, { body, signal, method, pdf } = {}) {
   return value;
 }
 export const ai = {
-  status: signal => request('status', { signal }), help: (body, signal) => request('help', { body, signal }),
+  status: (signal, provider = 'qwen') => request(provider === 'qwen' ? 'status' : `status?provider=${encodeURIComponent(provider)}`, { signal }), help: (body, signal) => request('help', { body, signal }),
+  chatgptStatus: signal => request('chatgpt/status', { signal }),
+  chatgptSignin: accountId => request('chatgpt/signin', { body: { ...(accountId ? { accountId } : {}) } }),
+  chatgptCancel: () => request('chatgpt/cancel', { body: {} }),
+  chatgptSelect: accountId => request('chatgpt/select', { body: { accountId } }),
+  chatgptSignout: () => request('chatgpt/signout', { body: {} }),
   materialStatus: signal => request('material/status', { signal }),
   addPdf: (pdf, signal) => { if (!pdf.size || pdf.size > 128 * 1024 * 1024) return Promise.reject(new Error('Bitte eine PDF mit höchstens 128 MiB auswählen.')); return request('material/documents', { pdf, signal }); },
   prepareMaterial: () => request('material/prepare', { body: {} }),
@@ -28,7 +33,7 @@ export const ai = {
 };
 
 export function courseContext(lesson, project, selected, includeCode, element = null) {
-  const textFiles = Object.entries(project.files).filter(([name, file]) => /\.(html|css)$/i.test(name) && file.kind === 'text');
+  const textFiles = Object.entries(project.files).filter(([name, file]) => (lesson.jsStep ? /\.(html|css|js)$/i : /\.(html|css)$/i).test(name) && file.kind === 'text');
   textFiles.sort(([a], [b]) => a === selected ? -1 : b === selected ? 1 : a.localeCompare(b));
   const files = includeCode ? textFiles.slice(0, 3).map(([name, file], index) => {
     const limit = index === 0 ? 3000 : 1000;
@@ -40,7 +45,7 @@ export function courseContext(lesson, project, selected, includeCode, element = 
     explanation: lesson.explain.join('\n').slice(0, 2500),
     prerequisite: lesson.prerequisite, stand: project.stand, files,
     checks: result?.stand === project.stand && result.lessonVersion === lesson.version && result.validatorVersion === VALIDATOR_VERSION
-      ? result.results.slice(0, 8).map(item => ({ passed: item.passed, file: (item.file || '').slice(0, 220), message: item.message.slice(0, 350) })) : [],
+      ? [...result.results.filter(item => !item.passed), ...result.results.filter(item => item.passed)].slice(0, 8).map(item => ({ passed: item.passed, file: (item.file || '').slice(0, 220), message: item.message.slice(0, 350) })) : [],
     ...(element && includeCode ? { element: { html: element.html.slice(0, 800), rules: element.rules.join('\n').slice(0, 1200), values: element.values.join('\n').slice(0, 800) } } : {}),
   };
 }

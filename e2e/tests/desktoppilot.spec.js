@@ -2,7 +2,8 @@ import { test, expect, _electron } from '@playwright/test';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { unterdrueckeOnboardingPopups } from './helpers.js';
+import { unterdrueckeOnboardingPopups, openWorkshopTools } from './helpers.js';
+import { LESSONS, solutionFor } from '../../frontend/src/pilot/course.js';
 
 const repo = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 const desktop = path.join(repo, 'desktop');
@@ -17,10 +18,84 @@ async function launch(profile) {
   await page.waitForURL(/^http:\/\/127\.0\.0\.1:/);
   const origin = new URL(page.url()).origin;
   await unterdrueckeOnboardingPopups(page);
-  await page.goto(`${origin}/frontendkurs`);
+  await page.goto(`${origin}/frontendkurs`); await openWorkshopTools(page);
   await expect(page.getByRole('combobox', { name: 'Lektion', exact: true })).toBeVisible();
   return { app, page, origin };
 }
+
+test('Kapitel 7 prüft und zeigt Vererbung in der Desktop-Werkstatt', async ({}, testInfo) => {
+  const profile = testInfo.outputPath('css-profile');
+  const { app, page } = await launch(profile);
+  try {
+    await page.getByRole('combobox', { name: 'Lektion', exact: true }).selectOption('css-diagnose');
+    const files = solutionFor(LESSONS.find(item => item.id === 'css-diagnose'));
+    page.once('dialog', dialog => dialog.accept());
+    await page.getByLabel('Sicherung einlesen', { exact: true }).setInputFiles({ name: 'css-projekt.json', mimeType: 'application/json', buffer: Buffer.from(JSON.stringify({ format: 'azubiprep-pilot', version: 1, files })) });
+    await page.getByRole('button', { name: 'Aufgabe prüfen', exact: true }).click();
+    await expect(page.getByText('Dieser eingereichte Stand hat die Pflichtprüfung bestanden. Ergänze die Selbstprüfung.', { exact: true })).toBeVisible();
+    await page.getByRole('button', { name: 'Vorschau', exact: true }).click();
+    const frame = page.frameLocator('iframe[title="Dein Projekt"]');
+    await expect(frame.locator('main > p')).toHaveCSS('font-family', 'serif');
+    await expect(frame.locator('main > p em')).toHaveCSS('color', 'rgb(128, 0, 0)');
+    await page.getByRole('combobox', { name: 'Projektseite', exact: true }).selectOption('ueber-uns.html');
+    await expect(frame.locator('main > p')).toHaveCSS('color', 'rgb(0, 0, 128)');
+    await expect(frame.locator('main > p em')).toHaveCSS('background-color', 'rgba(0, 0, 0, 0)');
+    await expect(page.locator('iframe[title="Interne CSS-Pflichtprüfung"]')).toHaveCount(0);
+  } finally { await app.close(); }
+});
+
+test('CSS-Abschlussprojekt läuft im Desktop mit Medienregeln und reduzierter Bewegung', async ({}, testInfo) => {
+  const { app, page } = await launch(testInfo.outputPath('responsive-profile'));
+  try {
+    await page.getByRole('combobox', { name: 'Lektion', exact: true }).selectOption('responsive-website');
+    const files = solutionFor(LESSONS.find(item => item.id === 'responsive-website'));
+    page.once('dialog', dialog => dialog.accept());
+    await page.getByLabel('Sicherung einlesen', { exact: true }).setInputFiles({ name: 'responsive.json', mimeType: 'application/json', buffer: Buffer.from(JSON.stringify({ format: 'azubiprep-pilot', version: 1, files })) });
+    await page.getByRole('button', { name: 'Aufgabe prüfen', exact: true }).click();
+    await expect(page.getByText('Dieser eingereichte Stand hat die Pflichtprüfung bestanden. Ergänze die Selbstprüfung.', { exact: true })).toBeVisible();
+    await page.getByRole('button', { name: 'Vorschau', exact: true }).click();
+    await page.getByLabel('Vorschaugröße').selectOption('375px');
+    const frame = page.frameLocator('iframe[title="Dein Projekt"]');
+    await expect.poll(() => frame.locator('.karte').evaluateAll(nodes => nodes.every((node, i) => !i || node.getBoundingClientRect().top >= nodes[i-1].getBoundingClientRect().bottom - 1))).toBe(true);
+    await page.getByRole('combobox', { name: 'Projektseite', exact: true }).selectOption('ueber-uns.html');
+    await expect(frame.locator('aside')).toBeVisible();
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await frame.locator('.karte').first().hover();
+    await expect(frame.locator('.marke')).toHaveCSS('transform', 'none');
+    await expect(frame.locator('.marke')).toHaveCSS('transition-duration', '0s');
+    await expect(page.locator('iframe[title="Interne Layout-Pflichtprüfung"]')).toHaveCount(0);
+    await expect(page.getByRole('status')).toHaveText('Gespeichert');
+  } finally { await app.close(); }
+});
+
+test('HTML-Formular lässt sich im Desktop lokal bedienen und prüfen, ohne Versand', async ({}, testInfo) => {
+  const { app, page } = await launch(testInfo.outputPath('forms-profile'));
+  try {
+    await page.getByRole('combobox', { name: 'Lektion', exact: true }).selectOption('formular-projekt');
+    const files = solutionFor(LESSONS.find(item => item.id === 'formular-projekt'));
+    page.once('dialog', dialog => dialog.accept());
+    await page.getByLabel('Sicherung einlesen', { exact: true }).setInputFiles({ name: 'formular.json', mimeType: 'application/json', buffer: Buffer.from(JSON.stringify({ format: 'azubiprep-pilot', version: 1, files })) });
+    await page.getByRole('button', { name: 'Aufgabe prüfen', exact: true }).click();
+    await expect(page.getByText('Dieser eingereichte Stand hat die Pflichtprüfung bestanden. Ergänze die Selbstprüfung.', { exact: true })).toBeVisible();
+    await page.getByRole('button', { name: 'Vorschau', exact: true }).click();
+    await page.getByLabel('Vorschaugröße').selectOption('375px');
+    const frame = page.frameLocator('iframe[title="Dein Projekt"]');
+    await frame.locator('label[for="kontaktname"]').click();
+    await expect(frame.locator('#kontaktname')).toBeFocused();
+    await frame.locator('#kontaktname').fill('Beispiel');
+    await frame.locator('#email').fill('probe@example.invalid');
+    await frame.locator('#plaetze').fill('2');
+    await frame.locator('#nachricht').fill('Eine lokale Desktop-Übung.');
+    await frame.locator('#thema').selectOption('projekt');
+    await frame.getByLabel('Nachmittag', { exact: true }).check();
+    await frame.getByLabel('Materialliste gewünscht (freiwillig)', { exact: true }).check();
+    await frame.getByRole('button', { name: 'Eingaben prüfen', exact: true }).click();
+    await expect(page.getByText('Die lokale Browserprüfung ist bestanden. Es wurde nichts gesendet; deine Eingaben werden nicht gespeichert.', { exact: true })).toBeVisible();
+    await expect(page.locator('iframe[title="Dein Projekt"]')).toHaveAttribute('sandbox', 'allow-same-origin');
+    expect((await app.windows()).length).toBe(1);
+    await expect(page.locator('.pilot-status')).toHaveText('Gespeichert');
+  } finally { await app.close(); }
+});
 async function select(app, mode, paths, canceled = false) {
   // Nur die OS-Antwort ersetzen: echter IPC, Dateisystem, Validierung, UI und
   // Profil bleiben unverändert. Das ist kein manueller Windows-Dialogtest.
@@ -182,7 +257,7 @@ test('Unterstützter Chromium-Ordnerimport überspringt echte ausbrechende Windo
   await fs.writeFile(path.join(project, 'index.html'), html('Browser innen'));
   await fs.writeFile(path.join(outside, 'secret.html'), 'AUSSERHALB');
   await fs.symlink(outside, path.join(project, 'link'), 'junction');
-  await unterdrueckeOnboardingPopups(page); await page.goto('/frontendkurs');
+  await unterdrueckeOnboardingPopups(page); await page.goto('/frontendkurs'); await openWorkshopTools(page);
   await page.getByRole('combobox', { name: 'Lektion', exact: true }).selectOption('zweite-seite');
   page.once('dialog', d => d.accept()); await page.getByLabel('Ordner einlesen', { exact: true }).setInputFiles(project);
   await expect(page.getByRole('textbox', { name: 'Code index.html', exact: true })).toContainText('Browser innen');

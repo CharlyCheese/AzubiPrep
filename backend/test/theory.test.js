@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { THEORY_FIELDS, listTheory, findTheoryTopic, publicTheorySources } from '../src/theory.js';
+import { theorySections, SPECIAL_FIELDS } from '../src/theory-outline.js';
 
 function fixture() {
   const modulesById = new Map([['HW', { modul_id: 'HW', titel: 'Hardware', fachrichtung: 'ALLE', lernfeld: 'LF2' }], ['WISO', { modul_id: 'WISO', titel: 'Wirtschaft', fachrichtung: 'ALLE', lernfeld: 'KEIN_LF' }]]);
@@ -9,6 +10,60 @@ function fixture() {
   return { modulesById, questionsById, theorieByModul: new Map([['HW', '# Hardware\nRAM ist Arbeitsspeicher.']]) };
 }
 describe('Öffentlicher Theorie- und Glossarkatalog', () => {
+  it('verwendet zentrale und im ausgewählten Kontext erklärte Abkürzungen in Quellen und Glossar', () => {
+    const content = fixture(); content.questionsById.clear(); content.theorieByModul.clear();
+    for (const [id, title] of [['D1', 'Domain Name System'], ['D2', 'DNS'], ['T1', 'Test Driven Development (TDD)'], ['T2', 'Test Driven Development']]) content.questionsById.set(id, { id, modul_id: 'HW', lernfeld: 'LF2', thema: title, frage: `Erkläre ${title}.`, erklaerung: `${title} ist ein selbst geschriebener synthetischer Testbegriff.` });
+    for (const [short, long] of [['DNS', 'Domain Name System'], ['TDD', 'Test Driven Development']]) {
+      const a = publicTheorySources(content, null, short, 6), b = publicTheorySources(content, null, long, 6);
+      expect(a.sources.length).toBeGreaterThan(0); expect(a.sources.map(s => s.text)).toEqual(b.sources.map(s => s.text));
+      expect(listTheory(content, { mode: 'glossary', q: short }).topics.map(t => t.id)).toEqual(listTheory(content, { mode: 'glossary', q: long }).topics.map(t => t.id));
+    }
+    expect(publicTheorySources(content, findTheoryTopic(content, 'module:WISO'), 'TDD', 6).sources).toHaveLength(0);
+    const separate = fixture(); separate.questionsById.clear(); separate.theorieByModul.set('HW', 'Test Driven Development ohne ausgeschriebene Klammerdefinition.');
+    expect(publicTheorySources(separate, null, 'TDD', 6).sources).toHaveLength(0);
+    expect(publicTheorySources(content, null, 'Unterschied zwischen Test Driven Development und QUUXUNBEKANNT?', 6).state).toBe('partial_match');
+  });
+  it('findet IoT und Internet of Things in beiden Richtungen in Quellen und Glossar', () => {
+    const content = fixture(); content.questionsById.clear(); content.theorieByModul.clear();
+    for (const [id, title] of [['I1', 'IoT'], ['I2', 'Internet of Things']]) content.questionsById.set(id, { id, modul_id: 'HW', lernfeld: 'LF2', thema: title, frage: `Was bedeutet ${title}?`, erklaerung: `${title} vernetzt Geräte mit Sensoren und Aktoren.` });
+    const queries = ['Erkläre IoT', 'Erkläre Internet of Things', 'Erkläre INTERNET-OF-THINGS'];
+    const sources = queries.map(query => publicTheorySources(content, null, query, 6));
+    expect(sources.every(result => result.state === 'ready')).toBe(true);
+    expect(sources[0].sources.map(s => s.text)).toEqual(sources[1].sources.map(s => s.text));
+    expect(sources[1].sources.map(s => s.text)).toEqual(sources[2].sources.map(s => s.text));
+    const topics = ['IoT', 'Internet of Things', 'INTERNET-OF-THINGS'].map(q => listTheory(content, { mode: 'glossary', q }).topics);
+    expect(topics[0].map(t => t.id)).toEqual(topics[1].map(t => t.id)); expect(topics[1].map(t => t.id)).toEqual(topics[2].map(t => t.id));
+    expect(topics[0].map(t => t.title).sort()).toEqual(['Internet of Things', 'IoT']);
+  });
+  it('prüft nur tatsächlich übergebene Ausschnitte und hält bei langen Fragen Platz für die Erklärung frei', () => {
+    const content = fixture(); content.theorieByModul.clear();
+    content.questionsById = new Map([['LONG', { id: 'LONG', modul_id: 'WISO', thema: 'Tarifrecht', frage: 'Ein synthetischer Kontextabschnitt. '.repeat(32), erklaerung: 'Gewerkschaft vertritt Beschäftigte. Arbeitgeberverband vertritt Arbeitgeber.' }]]);
+    const result = publicTheorySources(content, findTheoryTopic(content, 'module:WISO'), 'Unterschied zwischen Gewerkschaft und Arbeitgeberverband?', 6);
+    expect(result.state).toBe('ready'); expect(result.sources[0].text).toContain('Gewerkschaft vertritt'); expect(result.sources[0].text).toContain('Arbeitgeberverband vertritt');
+    const second = fixture(); second.theorieByModul.clear(); second.questionsById = new Map([['CUT', { id: 'CUT', modul_id: 'WISO', thema: 'Tarifrecht', frage: 'Gewerkschaft', erklaerung: 'Synthetischer Kontext. '.repeat(70) + ' Arbeitgeberverband vertritt Arbeitgeber.' }]]);
+    expect(publicTheorySources(second, findTheoryTopic(second, 'module:WISO'), 'Unterschied zwischen Gewerkschaft und Arbeitgeberverband?', 6).state).toBe('partial_match');
+  });
+  it('bevorzugt konkrete Vergleichsbegriffe gegenüber generischen Fragewörtern', () => {
+    const content = fixture();
+    content.theorieByModul.set('WISO', 'Eine Gewerkschaft bündelt die Interessen der Arbeitnehmer. Ein Arbeitgeberverband bündelt die Interessen der Unternehmen. Beide können miteinander Tarifverträge aushandeln.');
+    content.questionsById.set('NOISE', { id: 'NOISE', modul_id: 'WISO', thema: 'Finanzierung', frage: 'Was ist der Unterschied zwischen Eigenkapital und Fremdkapital?', erklaerung: 'Fremdkapital sind Schulden.' });
+    const result = publicTheorySources(content, findTheoryTopic(content, 'module:WISO'), 'Unterschied zwischen Gewerkschaften und Arbeitgeber Verbund?', 6);
+    expect(result.sources.length).toBeGreaterThan(0); expect(result.sources[0].text).toContain('Interessen'); expect(result.sources.every(source => !source.text.includes('Fremdkapital'))).toBe(true);
+    expect(publicTheorySources(content, findTheoryTopic(content, 'module:WISO'), 'Unterschied zwischen Gewerkschaft und QUUXBLAHUNBEKANNT?', 6).state).toBe('partial_match');
+  });
+  it('gliedert gemeinsame und fachrichtungsspezifische Lernfelder statt nur eine Gesamtfrage anzubieten', () => {
+    const content = fixture();
+    for (const [field] of [...THEORY_FIELDS, ...SPECIAL_FIELDS]) {
+      const topic = findTheoryTopic(content, `field:${field}`); const sections = theorySections(topic);
+      expect(sections.length).toBeGreaterThanOrEqual(5); expect(sections.length).toBeLessThanOrEqual(8);
+      expect(new Set(sections.map(section => section.id)).size).toBe(sections.length);
+      expect(sections.every(section => section.keywords.length > 20)).toBe(true);
+    }
+    const lf2 = listTheory(content, { field: 'LF2' }).topics.find(topic => topic.id === 'field:LF2');
+    expect(lf2.sections.map(section => section.title).join(' ')).toMatch(/Kundenwünsche.*Hardware.*Software.*nachhaltig.*Angebote.*Beschaffung.*übergeben.*auswerten/);
+    const fisi = listTheory(content, { fachrichtung: 'FISI' }); expect(fisi.topics.some(topic => topic.id === 'field:LF10b')).toBe(true); expect(fisi.topics.some(topic => topic.id === 'field:LF10a')).toBe(false);
+    expect(theorySections(findTheoryTopic(content, 'module:HW'))).toEqual([]);
+  });
   it('trennt amtliche Lernfeldeinstiege von vorhandenen Modulen und Fragenthemen', () => {
     const content = fixture(); const overview = listTheory(content);
     expect(THEORY_FIELDS.find(field => field[0] === 'LF2')[1]).toBe('Arbeitsplätze nach Kundenwunsch ausstatten');

@@ -1,4 +1,7 @@
 export const RAG_LIMITS = Object.freeze({ pdfBytes: 128 * 1024 * 1024, totalPdfBytes: 512 * 1024 * 1024, documents: 8, pages: 2500, pageChars: 20000, textChars: 12000000, chunks: 16000, indexBytes: 64 * 1024 * 1024, chunkChars: 1000, overlap: 120, sources: 3 });
+import { searchPlan, diverseSearchHits, repairSearchText } from './search-query.js';
+import { createSearchAliases } from './search-aliases.js';
+
 export class RagError extends Error {
   constructor(code, message, status = 400) { super(message); this.code = code; this.status = status; }
 }
@@ -34,21 +37,43 @@ export function buildIndex(pages) {
   if (total < 100 || !chunks.length) throw new RagError('no_text', 'Kein ausreichender lesbarer Text gefunden. Für gescannte PDFs wäre eine gesonderte OCR-Erkennung nötig.');
   return { schema: 1, method: 'bm25-1', pages: pages.length, emptyPages, chunks, frequencies, averageLength: chunks.reduce((sum, chunk) => sum + chunk.length, 0) / chunks.length };
 }
-export function searchIndex(index, query) {
+export function searchIndex(index, query, aliases) {
   if (index.schema !== 1 || index.method !== 'bm25-1' || !Array.isArray(index.chunks) || index.chunks.length > RAG_LIMITS.chunks || !index.frequencies || !index.averageLength) throw new RagError('index', 'Der lokale Index ist nicht lesbar. Bitte das Material neu aufbereiten.', 409);
-  const candidates = [...new Set(terms(query))].filter(term => Object.hasOwn(index.frequencies, term)).sort((a, b) => index.frequencies[a] - index.frequencies[b]).slice(0, 40);
-  if (!candidates.length) return [];
+  aliases ||= createSearchAliases(index.chunks.map(chunk => chunk.text));
+  // Alte Indizes können PDF-Silbentrennungen enthalten. Ausschließlich die
+  // flüchtige Suchsicht reparieren; gespeicherte Texte und Seiten bleiben gleich.
+  const frequencies = Object.assign(Object.create(null), index.frequencies);
+  const chunks = index.chunks.map(chunk => {
+    const repaired = repairSearchText(chunk.text, aliases); if (repaired === chunk.text) return chunk;
+    const words = terms(repaired); const repairedCounts = Object.create(null);
+    for (const word of words) repairedCounts[word] = (repairedCounts[word] || 0) + 1;
+    // Ursprüngliche Tokens behalten (z. B. SQL bei „SQL- basierte“).
+    const counts = Object.assign(Object.create(null), chunk.counts);
+    for (const [word, count] of Object.entries(repairedCounts)) counts[word] = Math.max(count, counts[word] || 0);
+    for (const word of Object.keys(counts)) if (!Object.hasOwn(chunk.counts, word)) frequencies[word] = (frequencies[word] || 0) + 1;
+    return { ...chunk, counts, length: Object.values(counts).reduce((sum, count) => sum + count, 0) };
+  });
+  const averageLength = chunks.reduce((sum, chunk) => sum + chunk.length, 0) / Math.max(1, chunks.length);
+  const plan = searchPlan(query, Object.keys(frequencies), aliases);
+  if (!plan.some(concept => concept.variants.length)) return [];
   const result = [];
-  for (const chunk of index.chunks) {
-    let score = 0; let matches = 0;
-    for (const term of candidates) {
-      const count = Object.hasOwn(chunk.counts, term) ? chunk.counts[term] : 0;
-      if (!count) continue;
-      matches++;
-      const idf = Math.log(1 + (index.chunks.length - index.frequencies[term] + 0.5) / (index.frequencies[term] + 0.5));
-      score += idf * count * 2.2 / (count + 1.2 * (0.25 + 0.75 * chunk.length / index.averageLength));
+  for (const chunk of chunks) {
+    let score = 0; const matched = [];
+    for (const concept of plan) {
+      let best = 0;
+      for (const variant of concept.variants) {
+        const groups = variant.partGroups || [[variant.word]];
+        const scores = groups.map(group => Math.max(0, ...group.map(word => {
+          const count = Object.hasOwn(chunk.counts, word) ? chunk.counts[word] : 0;
+          if (!count) return 0;
+          const idf = Math.log(1 + (chunks.length - frequencies[word] + 0.5) / (frequencies[word] + 0.5));
+          return idf * count * 2.2 / (count + 1.2 * (0.25 + 0.75 * chunk.length / averageLength));
+        })));
+        best = Math.max(best, variant.weight * Math.min(...scores));
+      }
+      if (best > 0) { score += best; matched.push(...concept.positions); }
     }
-    if (matches >= Math.min(candidates.length, 2) && score > 0) result.push({ ...chunk, score });
+    if (matched.length && score > 0) result.push({ ...chunk, score, matched });
   }
-  return result.sort((a, b) => b.score - a.score).slice(0, 12);
+  return diverseSearchHits(result, 12);
 }

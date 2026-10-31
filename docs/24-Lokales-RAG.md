@@ -1,5 +1,10 @@
 # Lokale PDF-Unterlagen für Qwen
 
+OPS-033 ergänzt die [KI-Anbieterauswahl](26-KI-Anbieter.md). Private Quellen
+bleiben an lokale Verarbeitung gebunden: Lesen ohne KI, Erklären mit lokalem
+Qwen. Eigene PDFs, Auszüge, Indizes und Ableitungen sind für ChatGPT serverseitig
+gesperrt; es gibt keine automatische Cloudfreigabe.
+
 Stand: 31.10.2026, OPS-026. Implementiert im aktuellen Web-/Desktop-Quellstand
 und lokalen Frontendbuild. Bestehende Installer wurden nicht neu gebaut.
 OPS-027 ergänzt [Theorie, Glossar und Quellenlesen](25-Theorie-Glossar.md):
@@ -38,10 +43,13 @@ Kurs und feste Prüfungen bleiben ohne KI oder eigenes Material nutzbar.
 ## Datenfluss und Schutzgrenzen
 
 Private PDF → separater lokaler PDF.js-Prozess → begrenzte Seitenabschnitte →
-lokaler BM25-Suchindex → höchstens drei passende Abschnitte → lokales Qwen →
+lokaler BM25-Suchindex → begrenzte passende Abschnitte → lokales Qwen →
 Antwort mit geprüften Quellenkennungen. Kein Fine-Tuning, keine Embeddings und
 kein zusätzliches Modell erforderlich. Die erste Suche nutzt Wörter und
 deutsche Schreibvarianten; sie versteht nicht beliebige Synonyme oder Bedeutung.
+Normal werden höchstens drei Fundstellen verwendet. Die ausführliche Theorie
+in OPS-029 verwendet bis sechs je gezieltem Lernfeldabschnitt; der Gesamtablauf
+führt mehrere getrennte lokale Anfragen aus. Es wird kein ganzes Buch übertragen.
 
 Im Entwicklungsprojekt bleibt alles unter `local-rag/`. Installierte Varianten
 verwenden das beschreibbare lokale App-Profil außerhalb ihrer Ressourcen.
@@ -101,6 +109,69 @@ extrahiert. Keine automatische Benotung oder Fortschrittsentscheidung.
 
 ## Grenzen und Konfiguration
 
+Die lexikalische Suche entfernt allgemeine Fragewörter und berücksichtigt
+begrenzt deutsche Wortformen, nahe Schreibfehler und zusammengesetzte Wörter.
+Getrennte Quellschreibweisen müssen beide Wortteile im selben Abschnitt
+enthalten. Alte Indizes erhalten eine flüchtige Suchsicht mit ergänzten Tokens
+für PDF-Silbentrennungen; ursprüngliche Tokens (auch SQL/TCP/API), Originaltext,
+Seiten und gespeicherter Index bleiben erhalten. Kein erneutes Einlesen nötig.
+
+Erkannte Vergleichsfragen priorisieren die Abdeckung beider Begriffe statt
+mehrerer Wiederholungen derselben Seite. Fehlt einer, meldet die App die
+unvollständige Vergleichsgrundlage ohne Modellaufruf. Vorhandene Suchwörter
+allein beweisen noch keine ausreichende Erklärung: Qwen kann auch dann wegen
+fehlender Belege ablehnen. Im Vergleich mit Gewerkschaften wird die Eingabe
+„Arbeitgeberverbund“ ausdrücklich als Suchannahme „Arbeitgeberverband“
+gekennzeichnet; keine allgemeine Gleichsetzung dieser Begriffe.
+
+Das bleibt eine begrenzte lexikalische Suche, keine semantische Suche und kein
+vollständiges Durchlesen aller Unterlagen für jede Frage. Eine lokale Probe
+bestätigt verbesserte Begriffstreffer, liefert im konkreten Vergleich jedoch
+weiterhin eine Ablehnung wegen unzureichender Quellen. Ein ergänzender
+Nachbarabschnittsversuch änderte dies nicht und wurde nicht produktiv eingebaut.
+Keine privaten Inhalte oder Modellantworten wurden dafür ausgegeben.
+
+OPS-031 ergänzt den belegten Suchalias **IoT ↔ Internet of Things**. Die
+vollständige Wortgruppe wird bei der Suche unabhängig von Großschreibung,
+Leerraum oder Bindestrichen als ein Begriff behandelt. Abkürzung und Langform
+erreichen dieselben Fundstellen auch in vorhandenen Indizes. Originalfrage,
+Originalauszüge, Seiten und gespeicherte Daten bleiben unverändert. „Internet“
+allein wird dadurch nicht zu IoT; dies ist keine allgemeine Synonymerkennung.
+Begriffsbeleg: [NIST-Glossar](https://csrc.nist.gov/glossary/term/iot).
+
+OPS-032 ersetzt den Einzelfall durch eine gemeinsame
+[Liste mit 69 IT-Begriffen](../backend/src/search-aliases.js), unter anderem
+Hardware, Netzwerkprotokolle, Web/Programmierung, Cloud und IT-Sicherheit.
+Jeder Eintrag enthält seine öffentlichen Primärbelege. Beide Suchrichtungen
+verwenden denselben Mechanismus; längste Langform zuerst, ähnliche Kürzel wie
+HTTP/HTTPS, RAM/ROM oder IPv4/IPv6 bleiben getrennt. Großschreibung, Leerraum
+und Bindestriche sind bei bekannten Langformen unerheblich.
+
+Zusätzlich werden ausdrückliche Definitionen wie „Test Driven Development
+(TDD)“ oder „ETL (Extract Transform Load)“ aus den **gewählten Quellen** erkannt.
+Dies ist eine begrenzte Texterkennung, kein Lernen neuer Modellgewichte:
+passende Initialen, drei bis zehn Großbuchstaben im Kürzel, zwei bis acht Wörter
+und höchstens100 Zeichen pro Langform. Nur Klammerdefinitionen innerhalb eines
+Textabschnitts mit Leerzeichen/Tabulatoren/Bindestrichen; andere Schreibweisen,
+getrennte Tabellenzellen und Abschnittsgrenzen können unerkannt bleiben.
+Maximal128 gelernte Paare,2048 geprüfte Definitionen und96Mi Zeichen pro
+Quellenkontext. Widersprüchliche Kürzel oder Langformen werden verworfen;
+zentrale Einträge dürfen weder über ihr Kürzel noch ihre Langform überschrieben
+werden. Mehrdeutige Kürzel wie MAC, NAS, CA, AP, CD und IDE werden nicht
+automatisch zugeordnet. Die Sperrliste ist keine vollständige Aufzählung aller
+möglichen Mehrdeutigkeiten; zentrale Bedeutungen beziehen sich auf den
+IT-Ausbildungskontext.
+
+Abgeleitete Zuordnungen existieren nur flüchtig in der lokalen Anfrage,
+niemals im öffentlichen Register, Index, Sync oder Export. Die Nutzerfrage
+liefert keine neuen Zuordnungen. Öffentliche und private Suchkontexte sind
+getrennt. Ändern oder Entfernen einer Definitionsquelle invalidiert die
+abhängige laufende private Antwort ebenfalls. Zwei Index-Lesedurchläufe
+vermeiden das gleichzeitige Halten aller großen Indexobjekte. PDFs werden
+dadurch nicht erneut aufbereitet. Unbekannte Kürzel ohne passende Definition
+werden weiterhin nicht frei erraten; neue belegte Standardpaare erfordern nur
+einen Registereintrag, keine neue Suchlogik.
+
 | Grenze | Wert |
 |---|---|
 | PDFs / Gesamtgröße | 8 / 512 MiB |
@@ -108,9 +179,9 @@ extrahiert. Keine automatische Benotung oder Fortschrittsentscheidung.
 | Text je Seite / insgesamt | 20000 / 12000000 Zeichen |
 | Abschnitte / Indexdatei | 16000 / 64 MiB |
 | Abschnitt / Überlappung | bis 1000 / 120 Zeichen |
-| Quellen pro Anfrage | höchstens 3 |
+| Quellen pro Anfrage | höchstens 3; ausführliche Theorie bis 6 |
 | Parserprozess | 512 MiB JS-Heap; standardmäßig 120 s |
-| Private Modellanfrage | 8192 Kontexttokens; höchstens 384 Ausgabetokens |
+| Private Modellanfrage | 8192 Kontexttokens; Kurs/Quiz384, kompakte Theorie1100, ausführliche Theorie2400 Ausgabetokens |
 
 | Variable | Standard / Zweck |
 |---|---|

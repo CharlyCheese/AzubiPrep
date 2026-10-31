@@ -6,7 +6,7 @@ import http from 'node:http';
 import { once } from 'node:events';
 import { fileURLToPath } from 'node:url';
 import { syntheticPdf } from '../../backend/test/fixtures/synthetic-pdf.js';
-import { unterdrueckeOnboardingPopups } from './helpers.js';
+import { unterdrueckeOnboardingPopups, openWorkshopTools } from './helpers.js';
 
 test.use({ serviceWorkers: 'block' });
 const ready = { state: 'ready', documents: [{ id: '00000000-0000-4000-8000-000000000001', label: 'Unterlage 1', state: 'ready', pages: 2 }], revision: 'synthetic-r1', localOnly: true };
@@ -19,7 +19,7 @@ test('Lernhilfe nutzt Material nur nach Zustimmung und zeigt ausschließlich bes
     const body = route.request().postDataJSON(); calls.push(body);
     await route.fulfill({ json: { text: body.useMaterial ? 'HTML strukturiert Inhalte. [S1]' : 'Ein allgemeiner Hinweis.', source: 'model', model: 'qwen3:4b', durationMs: 100, ragUsed: body.useMaterial, sources: body.useMaterial ? [{ id: 'S1', label: 'Unterlage 1', page: 2 }] : [] } });
   });
-  await page.goto('/frontendkurs');
+  await page.goto('/frontendkurs'); await openWorkshopTools(page);
   const help = page.getByRole('region', { name: 'Lokale Lernbegleitung', exact: true }).last();
   const material = help.getByRole('checkbox', { name: 'Eigene lokale Unterlagen für diese Lernanfrage verwenden' }); await expect(material).toBeEnabled(); await expect(material).not.toBeChecked();
   await help.getByRole('button', { name: 'Kleinen Hinweis anfordern', exact: true }).click(); await expect(help.getByLabel('KI-Antwort')).toContainText('allgemeiner Hinweis'); expect(calls[0].useMaterial).toBe(false);
@@ -33,7 +33,7 @@ test('Entferntes oder geändertes Material verwirft sichtbare alte Quellenantwor
   let status = ready;
   await page.route('**/api/ai/material/status', route => route.fulfill({ json: status }));
   await page.route('**/api/ai/help', route => route.fulfill({ json: { text: 'Alter belegter Stand. [S1]', source: 'model', model: 'qwen3:4b', durationMs: 100, ragUsed: true, sources: [{ id: 'S1', label: 'Unterlage 1', page: 2 }] } }));
-  await page.goto('/frontendkurs'); const help = page.getByRole('region', { name: 'Lokale Lernbegleitung', exact: true }).last();
+  await page.goto('/frontendkurs'); await openWorkshopTools(page); const help = page.getByRole('region', { name: 'Lokale Lernbegleitung', exact: true }).last();
   const check = help.getByRole('checkbox', { name: 'Eigene lokale Unterlagen für diese Lernanfrage verwenden' }); await expect(check).toBeEnabled(); await check.check();
   await help.getByRole('button', { name: 'Kleinen Hinweis anfordern', exact: true }).click(); await expect(help.getByLabel('KI-Antwort')).toBeVisible();
   status = { ...ready, state: 'empty', documents: [], revision: 'synthetic-r2' };
@@ -58,9 +58,9 @@ test('Desktop importiert synthetische PDF, erstellt Seitenindex, verwendet lokal
   try {
     app = await _electron.launch({ executablePath: path.join(repo, 'desktop/node_modules/electron/dist/electron.exe'), args: [path.join(repo, 'desktop'), `--user-data-dir=${path.join(root, 'profile')}`], env });
     const page = await app.firstWindow(); await page.waitForURL(/^http:/); const origin = new URL(page.url()).origin;
-    await unterdrueckeOnboardingPopups(page); await page.goto(`${origin}/einstellungen`);
-    await page.getByRole('checkbox', { name: 'Lokale Lernbegleitung aktivieren' }).check();
-    await expect.poll(() => page.evaluate(() => window.azubiDesktop.loadAiPreferences())).toMatchObject({ enabled: true });
+    await unterdrueckeOnboardingPopups(page); await page.goto(`${origin}/einstellungen`); await openWorkshopTools(page);
+    await page.getByRole('combobox', { name: 'KI-Anbieter', exact: true }).selectOption('qwen');
+    await expect.poll(() => page.evaluate(() => window.azubiDesktop.loadAiPreferences())).toMatchObject({ provider: 'qwen' });
     const material = page.getByRole('region', { name: 'Eigene lokale Lernunterlagen', exact: true });
     await app.evaluate(({ shell }) => { shell.openPath = async target => { globalThis.syntheticMaterialFolder = target; return ''; }; });
     await material.getByRole('button', { name: 'Materialordner öffnen', exact: true }).click();
@@ -71,13 +71,13 @@ test('Desktop importiert synthetische PDF, erstellt Seitenindex, verwendet lokal
     await expect(material.getByText('Unterlage 1', { exact: true })).toBeVisible();
     await material.getByRole('button', { name: 'Material aufbereiten / neu einlesen', exact: true }).click();
     await expect(material.getByText('Lokaler Suchindex bereit', { exact: true })).toBeVisible({ timeout: 30000 });
-    await page.goto(`${origin}/frontendkurs`); const help = page.getByRole('region', { name: 'Lokale Lernbegleitung', exact: true }).last();
+    await page.goto(`${origin}/frontendkurs`); await openWorkshopTools(page); const help = page.getByRole('region', { name: 'Lokale Lernbegleitung', exact: true }).last();
     const check = help.getByRole('checkbox', { name: 'Eigene lokale Unterlagen für diese Lernanfrage verwenden' }); await expect(check).toBeEnabled(); await check.check();
     await help.getByRole('textbox', { name: 'Deine Rückfrage (optional)' }).fill('Wozu dienen HTML und h1?');
     await help.getByRole('button', { name: 'Kleinen Hinweis anfordern', exact: true }).click();
     await expect(help.getByLabel('Verwendete Quellen')).toContainText('Unterlage 1 · PDF-Seite 1');
     const chat = requests.find(item => item.url === '/api/chat').body; expect(chat.keep_alive).toBe(0); expect(JSON.parse(chat.messages[1].content).privateSources.length).toBeLessThanOrEqual(3);
-    await page.goto(`${origin}/einstellungen`); page.once('dialog', dialog => dialog.accept());
+    await page.goto(`${origin}/einstellungen`); await openWorkshopTools(page); page.once('dialog', dialog => dialog.accept());
     await page.getByRole('button', { name: 'Unterlage entfernen', exact: true }).click();
     await expect(material.getByText('Unterlage 1', { exact: true })).toHaveCount(0);
     await expect(material.getByText(/Modellkontext wurde entladen/)).toBeVisible();

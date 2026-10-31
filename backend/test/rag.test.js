@@ -21,6 +21,36 @@ async function wait(rag) { for (let n = 0; n < 300; n++) { const status = await 
 const text = 'HTML beschreibt die Struktur einer Webseite. Eine Hauptueberschrift benennt das zentrale Thema. Absaetze enthalten eigenen Text und Links verbinden verschiedene Seiten.';
 
 describe('Private lokale RAG-Verwaltung', () => {
+  it('verwendet explizite Definitionen nur aus aktuellen Unterlagen und prüft ihre Abhängigkeiten', async () => {
+    let count = 0;
+    const definition = 'Test Driven Development (TDD) ist eine synthetische Klammerdefinition. Diese Seite dient ausschließlich der Erkennung eines ausgeschriebenen Testbegriffs.';
+    const target = 'Test Driven Development wird auf dieser synthetischen Seite erläutert. Diese Seite verwendet ausschließlich die Langform ohne Klammerdefinition oder Abkürzung.';
+    const extractor = async (_input, output) => fs.writeFile(output, JSON.stringify({ schema: 1, pages: [count++ === 0 ? definition : target], failedPages: 0 }));
+    const { rag, storage } = await fixture(extractor);
+    await rag.importPdf(Readable.from([syntheticPdf([text])])); await rag.importPdf(Readable.from([syntheticPdf([text + ' Andere Quelle.'])]));
+    await rag.prepare(); const status = await wait(rag); expect(status.state).toBe('ready');
+    const token = await rag.retrieve('TDD', { limit: 6 }); expect(token.state).toBe('ready'); expect(token.sources).toHaveLength(2); expect(token.used).toHaveLength(2); await rag.assertCurrent(token);
+    const original = (await storage.catalog()).documents[0];
+    await fs.appendFile(storage.location('material', original.source), '\n% changed');
+    await expect(rag.assertCurrent(token)).rejects.toMatchObject({ code: 'changed' });
+    await rag.remove(original.id);
+    expect((await rag.retrieve('TDD')).sources).toEqual([]);
+    expect((await rag.retrieve('Test Driven Development')).sources).toHaveLength(1);
+  });
+  it('vereint die Seiten beider Vergleichsbegriffe und meldet eine fehlende Seite als Lücke', async () => {
+    const extractor = async (_input, output) => fs.writeFile(output, JSON.stringify({ schema: 1, pages: ['Eine Gewerkschaft bündelt die Interessen von Arbeitnehmern. Diese synthetische Seite beschreibt Beschäftigte und ihre gemeinsame Interessenvertretung.', 'Ein Arbeitgeberverband bündelt die Interessen von Unternehmen. Arbeitgeberverbände vertreten die Arbeitgeberseite. Beide Begriffe stehen absichtlich auf getrennten Seiten.'], failedPages: 0 }));
+    const { rag } = await fixture(extractor); await rag.importPdf(Readable.from([syntheticPdf([text])])); await rag.prepare(); expect((await wait(rag)).state).toBe('ready');
+    const result = await rag.retrieve('Unterschied zwischen Gewerkschaften und Arbeitgeber Verbund?', { limit: 6 });
+    expect(result.state).toBe('ready'); expect(new Set(result.sources.map(source => source.page))).toEqual(new Set([1, 2])); await rag.assertCurrent(result);
+    const missing = await rag.retrieve('Unterschied zwischen Gewerkschaft und QUUXBLAHUNBEKANNT?'); expect(missing.state).toBe('partial_match'); expect(missing.sources).toEqual([]);
+  });
+  it('begrenzt ausführliche Kapitel auf sechs Quellen und prüft jede Unterlage nur einmal im Antworttoken', async () => {
+    const extractor = async (_input, output) => fs.writeFile(output, JSON.stringify({ schema: 1, pages: Array.from({ length: 8 }, (_, index) => `${text} HTML verbindet Inhalte auf Seite ${index + 1}.`), failedPages: 0 }));
+    const { rag } = await fixture(extractor); await rag.importPdf(Readable.from([syntheticPdf([text])])); await rag.prepare(); expect((await wait(rag)).state).toBe('ready');
+    expect((await rag.retrieve('HTML Struktur')).sources).toHaveLength(3);
+    const detailed = await rag.retrieve('HTML Struktur', { limit: 6 }); expect(detailed.sources).toHaveLength(6); expect(detailed.used).toHaveLength(1); await rag.assertCurrent(detailed);
+    expect((await rag.retrieve('HTML Struktur', { limit: 10000 })).sources).toHaveLength(6);
+  });
   it('weist zu viele PDFs und übergroße Einzel-/Gesamtbestände vor dem Parserstart zurück', async () => {
     const extractor = vi.fn(); const { rag, storage } = await fixture(extractor);
     for (let n = 0; n < 9; n++) await fs.writeFile(storage.location('material', `synthetic-${n}.pdf`), syntheticPdf([text]));

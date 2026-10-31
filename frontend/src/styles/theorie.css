@@ -11,4 +11,8 @@
 .theorie-quote { margin: 1rem 0; border-left: 3px solid var(--accent, #14b8a6); padding-left: .8rem; }
 .theorie-quote blockquote { margin: .6rem 0; }
 .theorie-lesson { margin-top: 1rem; }
+.theorie-outline { border: 1px solid var(--border); border-radius: .6rem; padding: 1rem; margin: 1rem 0; }
+.theorie-part { border-top: 1px solid var(--border); padding: .8rem 0; }
+.theorie-part summary { cursor: pointer; font-weight: 600; overflow-wrap: anywhere; }
+.theorie-outline .btn { white-space: normal; max-width: 100%; overflow-wrap: anywhere; }
 @media (max-width: 740px) { .theorie-filters, .theorie-grid { grid-template-columns: 1fr; } }

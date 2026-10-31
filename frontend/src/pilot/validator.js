@@ -1,6 +1,10 @@
 import { parseHTML, cleanCSS } from './preview.js';
 import { resolvePath } from './project.js';
 import { VALIDATOR_VERSION } from './course.js';
+import { checkCssLesson } from './css-checks.js';
+import { checkLayoutLesson } from './layout-checks.js';
+import { checkFormLesson } from './form-checks.js';
+import { checkJsLesson } from './js-checks.js';
 
 function pageData(files, name) {
   const source = files[name]?.content || '';
@@ -8,7 +12,11 @@ function pageData(files, name) {
   const styles = Array.from(dom.querySelectorAll('link[rel~="stylesheet"]')).map((node) => resolvePath(name, node.getAttribute('href'))).filter((path) => path && /\.css$/i.test(path) && files[path]?.kind === 'text');
   return { name, source, dom, styles };
 }
-export function validateProject(files, lesson, stand, startPage = 'index.html') {
+export async function validateProject(files, lesson, stand, startPage = 'index.html', { signal } = {}) {
+  if (lesson.jsStep) {
+    const results = await checkJsLesson(files, lesson, startPage, signal);
+    return { stand, startPage, lesson: lesson.id, lessonVersion: lesson.version, validatorVersion: VALIDATOR_VERSION, at: new Date().toISOString(), results, passed: results.every(result => result.passed) };
+  }
   const pages = Object.keys(files).filter((name) => /\.html$/i.test(name)).map((name) => pageData(files, name));
   const first = pages.find((p) => p.name === startPage) || pages[0];
   const dom = first?.dom;
@@ -62,7 +70,13 @@ export function validateProject(files, lesson, stand, startPage = 'index.html') 
     class: 'Eine vorhandene Klasse wird durch eine passende Klassenregel gestaltet.',
     project: 'Die verlangten Inhalte sind auf beiden Projektseiten vorhanden.',
   };
-  const results = lesson.rules.map((rule) => ({ rule, passed: Boolean(checks[rule][0]), message: checks[rule][0] ? success[rule] : checks[rule][1], file: first?.name || '(keine HTML-Datei)' }));
+  const results = lesson.rules.filter(rule => !rule.startsWith('css-') && rule !== 'html-form').map((rule) => ({ rule, passed: Boolean(checks[rule][0]), message: checks[rule][0] ? success[rule] : checks[rule][1], file: first?.name || '(keine HTML-Datei)' }));
+  const cssCheck = checkCssLesson(files, lesson, first?.name || startPage);
+  if (cssCheck) results.push(cssCheck);
+  const layoutCheck = await checkLayoutLesson(files, lesson, first?.name || startPage);
+  if (layoutCheck) results.push(...layoutCheck);
+  const formCheck = await checkFormLesson(files, lesson, first?.name || startPage);
+  if (formCheck) results.push(formCheck);
   if (lesson.rules.includes('document')) {
     const item = results.find((result) => result.rule === 'document');
     if (!item.passed) item.file = pages.filter((p) => !complete(p)).map((p) => p.name).join(', ') || '(keine HTML-Datei)';

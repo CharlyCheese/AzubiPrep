@@ -13,9 +13,14 @@
 
 const path = require('node:path');
 const { pathToFileURL } = require('node:url');
-const { app, BrowserWindow, dialog, session, ipcMain, Menu, shell } = require('electron');
+const { app, BrowserWindow, dialog, session, ipcMain, Menu, shell, protocol } = require('electron');
+protocol.registerSchemesAsPrivileged([
+  { scheme: 'azubi-preview', privileges: { standard: true, secure: true, corsEnabled: true } },
+  { scheme: 'azubi-js-pilot', privileges: { standard: true, secure: true } },
+]);
 const { createStore, createAiPreferences, readProject, validSender } = require('./pilot-runtime.cjs');
 const { createInspector } = require('./pilot-inspector.cjs');
+const { createJsPilot } = require('./js-pilot.cjs');
 const profileOverride = app.commandLine.getSwitchValue('user-data-dir');
 if (profileOverride) app.setPath('userData', path.resolve(profileOverride));
 
@@ -23,11 +28,19 @@ let hauptfenster = null;
 let backendServer = null;
 let appOrigin = null;
 let inspectorWindow = null;
+let jsPilot = null;
 
 function registerPilot() {
   const store = createStore(app.getPath('userData'));
   const aiPreferences = createAiPreferences(app.getPath('userData'));
   const guard = (event) => { if (!validSender(event, hauptfenster, appOrigin)) throw Error('Nicht freigegebener Anwendungsaufruf.'); };
+  const javascriptPilot = () => {
+    if (!jsPilot) jsPilot = createJsPilot(hauptfenster, appOrigin, value => { if (hauptfenster && !hauptfenster.isDestroyed()) hauptfenster.webContents.send('js-pilot:event', value); });
+    return jsPilot;
+  };
+  ipcMain.handle('js-pilot:catalog', event => { guard(event); return javascriptPilot().catalog(); });
+  ipcMain.handle('js-pilot:start', (event, id) => { guard(event); return javascriptPilot().start(id); });
+  ipcMain.handle('js-pilot:stop', (event, id) => { guard(event); if (typeof id !== 'string' || !/^[a-f0-9-]{36}$/.test(id)) throw Error('Ungültiger Lauf.'); return javascriptPilot().stop(id); });
   ipcMain.handle('pilot:load', (event) => { guard(event); return store.load(); });
   ipcMain.handle('pilot:save', (event, value) => { guard(event); return store.save(value); });
   ipcMain.handle('ai:preferences-load', (event) => { guard(event); return aiPreferences.load(); });
@@ -48,7 +61,7 @@ function registerPilot() {
     const result = await dialog.showOpenDialog(hauptfenster, {
       title: mode === 'folder' ? 'Projektordner auswählen' : 'Projektdateien auswählen',
       properties: mode === 'folder' ? ['openDirectory', 'dontAddToRecent'] : ['openFile', 'multiSelections', 'dontAddToRecent'],
-      ...(mode === 'files' ? { filters: [{ name: 'HTML, CSS und Rasterbilder', extensions: ['html', 'css', 'png', 'jpg', 'jpeg', 'webp'] }] } : {}),
+      ...(mode === 'files' ? { filters: [{ name: 'HTML, CSS, JavaScript und Rasterbilder', extensions: ['html', 'css', 'js', 'png', 'jpg', 'jpeg', 'webp'] }] } : {}),
     });
     if (result.canceled) return null;
     guard(event);
@@ -75,6 +88,7 @@ function backendEinstiegUrl() {
 
 async function backendStarten() {
   if ((app.isPackaged || profileOverride) && !process.env.AZUBIPREP_RAG_DIR) process.env.AZUBIPREP_RAG_DIR = path.join(app.getPath('userData'), 'local-rag');
+  if ((app.isPackaged || profileOverride) && !process.env.AZUBIPREP_AI_DIR) process.env.AZUBIPREP_AI_DIR = path.join(app.getPath('userData'), 'local-ai');
   const backend = await import(backendEinstiegUrl());
   const { url, server, store } = await backend.startForElectron();
 
@@ -114,7 +128,7 @@ async function fensterErstellen() {
     hauptfenster.webContents.setWindowOpenHandler(({ url: target }) => {
       try {
         const parsed = new URL(target);
-        if (parsed.protocol === 'https:' && ['developer.mozilla.org', 'wiki.selfhtml.org', 'www.w3schools.com'].includes(parsed.hostname)) shell.openExternal(parsed.href).catch(() => {});
+        if (parsed.protocol === 'https:' && !parsed.username && !parsed.password && ['developer.mozilla.org', 'wiki.selfhtml.org', 'www.w3schools.com', 'auth.openai.com', 'chatgpt.com'].includes(parsed.hostname)) shell.openExternal(parsed.href).catch(() => {});
       } catch { /* Alle anderen Fenster bleiben gesperrt. */ }
       return { action: 'deny' };
     });
@@ -177,6 +191,7 @@ app.on('window-all-closed', () => {
   if (backendServer) backendServer.close();
   if (process.platform !== 'darwin') app.quit();
 });
+app.on('before-quit', () => { if (jsPilot) jsPilot.dispose(); });
 
 app.on('activate', () => {
   if (BrowserWindow.getAllWindows().length === 0) fensterErstellen();

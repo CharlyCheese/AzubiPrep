@@ -5,6 +5,7 @@
 // - Admin-Reload nur von Loopback oder mit gültigem x-admin-token
 // - generische Fehlermeldungen (Details nur im Server-Log)
 import helmet from 'helmet';
+import path from 'node:path';
 import { config } from './config.js';
 
 export function securityHeaders() {
@@ -24,6 +25,13 @@ export function securityHeaders() {
     hsts: { maxAge: 15552000 },
     xPoweredBy: false,
   });
+}
+
+// express.static calls this only for files it actually serves. A matching but
+// nonexistent URL must NOT give the SPA's index.html the Worker's WASM policy.
+export function jsWorkerAssetHeaders(res, filePath) {
+  if (path.basename(path.dirname(filePath)) !== 'assets' || !/^js-runner\.worker-[a-zA-Z0-9_-]+\.js$/.test(path.basename(filePath))) return;
+  res.setHeader('Content-Security-Policy', "default-src 'none'; script-src 'self' 'wasm-unsafe-eval'; connect-src 'none'; worker-src 'none'; object-src 'none'; base-uri 'none'; frame-ancestors 'none'");
 }
 
 /** Einfacher In-Memory-Sliding-Window-Limiter je IP. */

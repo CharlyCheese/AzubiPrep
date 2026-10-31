@@ -1,7 +1,7 @@
 export const LIMITS = Object.freeze({ files: 50, file: 2 * 1024 * 1024, total: 10 * 1024 * 1024, text: 128 * 1024, depth: 8 });
-const textTypes = /\.(html|css)$/i;
+const textTypes = /\.(html|css|js)$/i;
 const imageTypes = /\.(png|jpe?g|webp)$/i;
-const excluded = /^(?:\.git|\.env.*|node_modules|local-rag)$/i;
+const excluded = /^(?:\.git|\.env.*|node_modules|local-rag|local-ai)$/i;
 export const isText = (name) => textTypes.test(name);
 export const isExcluded = (name) => name.split('/').some((part) => excluded.test(part));
 
@@ -74,6 +74,7 @@ export function checkFiles(files, { requireHTML = true } = {}) {
     if (isText(name) && file.kind === 'text') {
       size = new TextEncoder().encode(file.content).length;
       if (size > LIMITS.text) throw new Error(`Textdatei zu groß: ${name}`);
+      if (/\.js$/i.test(name) && (size > 64 * 1024 || !/^[a-zA-Z0-9_-][a-zA-Z0-9_.-]{0,59}\.js$/.test(name.split('/').at(-1)))) throw new Error('JS-Dateien benötigen einen einfachen Dateinamen und höchstens 64 KiB.');
     } else if (imageTypes.test(name) && file.kind === 'image') {
       const match = file.content.match(/^data:(image\/(?:png|jpeg|webp));base64,([A-Za-z\d+/]*={0,2})$/);
       if (!match || match[2].length > Math.ceil(LIMITS.file / 3) * 4) throw new Error(`Ungültiges Bild: ${name}`);
@@ -107,7 +108,8 @@ export async function importFiles(list, { partial = false, onSkip = () => {} } =
     checkPath(name);
     if (Object.hasOwn(result, name)) throw new Error(`Doppelter Pfad: ${name}. Bitte den ganzen Ordner auswählen.`);
     if (Object.keys(result).length >= LIMITS.files) throw new Error('Bitte höchstens 50 unterstützte Projektdateien auswählen.');
-    if (file.size > LIMITS.file || (isText(name) && file.size > LIMITS.text)) throw new Error(`Datei zu groß: ${name}`);
+    if (file.size > LIMITS.file || (isText(name) && file.size > LIMITS.text) || (/\.js$/i.test(name) && file.size > 64 * 1024)) throw new Error(`Datei zu groß: ${name}`);
+    if (/\.js$/i.test(name) && !/^[a-zA-Z0-9_-][a-zA-Z0-9_.-]{0,59}\.js$/.test(name.split('/').at(-1))) throw new Error('JS-Dateien benötigen einen einfachen Dateinamen.');
     total += file.size;
     if (total > LIMITS.total) throw new Error('Projekt größer als 10 MiB.');
     if (isText(name)) result[name] = { kind: 'text', content: await file.text() };
@@ -119,7 +121,7 @@ export async function importFiles(list, { partial = false, onSkip = () => {} } =
       result[name] = { kind: 'image', content: `data:${mime};base64,${btoa(binary)}` };
     }
   }
-  if (!Object.keys(result).length) throw new Error('Keine unterstützten Projektdateien gefunden. Im HTML-/CSS-Pilot sind HTML, CSS, PNG, JPEG und WebP möglich.');
+  if (!Object.keys(result).length) throw new Error('Keine unterstützten Projektdateien gefunden. Möglich sind HTML, CSS, JS, PNG, JPEG und WebP.');
   return checkFiles(result, { requireHTML: !partial });
 }
 

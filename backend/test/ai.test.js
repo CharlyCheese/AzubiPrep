@@ -24,6 +24,185 @@ async function fixture(change = () => {}) {
 }
 
 describe('Lokale KI-Grenzen', () => {
+  it('führt Arrays, Schleifen und Objektliterale in Kapitel 17 je Lektion ein', () => {
+    const prompt = id => { const body = input(); body.context.lessonId = id; return buildLearningPrompt(body, store).messages[0].content; };
+    expect(prompt('js17-arraystart')).toContain('Arrayliteral');
+    expect(prompt('js17-arraystart')).not.toContain('keine Arrays/Objekte');
+    expect(prompt('js17-arraystart')).toContain('keine Schleifen');
+    expect(prompt('js17-arraystart')).not.toContain('Arrayeinträge ändern');
+    expect(prompt('js17-arrayaendern')).toContain('Arrayeinträge ändern');
+    expect(prompt('js17-for')).toContain('Schleifenfortschritt');
+    expect(prompt('js17-for')).not.toContain('keine Schleifen');
+    expect(prompt('js17-for')).toContain('kein for...of');
+    expect(prompt('js17-forof')).toContain('for...of über Werte');
+    expect(prompt('js17-forof')).toContain('kein while');
+    expect(prompt('js17-while')).toContain('while-Bedingung');
+    expect(prompt('js17-abbrechen')).toContain('break beendet Schleife');
+    expect(prompt('js17-zahlenprojekt')).toContain('keine eigenen Objektliterale');
+    expect(prompt('js17-objekte')).toContain('Eigene Objektliterale');
+    expect(prompt('js17-objekte')).not.toContain('keine eigenen Objektliterale');
+    expect(prompt('js17-kopien')).toContain('flacher Spread-Kopie');
+    expect(prompt('js17-aufgabenprojekt')).toContain('Aufgabenübersicht');
+    expect(prompt('js17-aufgabenprojekt')).toContain('keine map/filter/reduce/forEach');
+    expect(prompt('js17-aufgabenprojekt')).toContain('Callbacks');
+  });
+  it('führt Funktionen, Rückgaben und Bereiche in Kapitel 16 gestuft ein', () => {
+    const prompt = id => { const body = input(); body.context.lessonId = id; return buildLearningPrompt(body, store).messages[0].content; };
+    expect(prompt('js15-tarifprojekt')).toContain('keine Schleifen, eigenen Funktionen');
+    expect(prompt('js16-aufrufen')).toContain('Eigene klassische Funktionsdeklaration');
+    expect(prompt('js16-aufrufen')).not.toContain('keine Schleifen, eigenen Funktionen');
+    expect(prompt('js16-aufrufen')).not.toContain('Ein Parameter gegenüber');
+    expect(prompt('js16-parameter')).toContain('Ein Parameter gegenüber');
+    expect(prompt('js16-parameter')).not.toContain('Mehrere Parameter, Positionszuordnung');
+    expect(prompt('js16-argumente')).toContain('Mehrere Parameter, Positionszuordnung');
+    expect(prompt('js16-argumente')).not.toContain('return-Wert speichern');
+    expect(prompt('js16-rueckgabe')).toContain('return-Wert speichern');
+    expect(prompt('js16-rueckgabewege')).toContain('Frühe Rückgaben');
+    expect(prompt('js16-standardwerte')).toContain('explizite 0 bleibt 0');
+    expect(prompt('js16-lokal')).toContain('äußere Bindung verdecken');
+    expect(prompt('js16-blockreparatur')).toContain('let/const-Blockbereiche');
+    expect(prompt('js16-bausteine')).toContain('Reine Berechnungsfunktionen');
+    expect(prompt('js16-tarifbausteine')).toContain('Gesamtmeldung getrennt');
+    expect(prompt('js16-tarifbausteine')).toContain('keine Arrays/Objekte');
+    expect(prompt('js16-tarifbausteine')).toContain('Pfeilfunktionen');
+  });
+  it('führt Kapitel 15 mit gestuften Themen ein und sperrt spätere JS-Techniken', () => {
+    const prompt = id => { const body = input(); body.context.lessonId = id; return buildLearningPrompt(body, store).messages[0].content; };
+    expect(prompt('js15-texte')).toContain('Strings mit +');
+    expect(prompt('js15-texte')).not.toContain('Textvorlagen mit Backticks');
+    expect(prompt('js15-vorlagen')).toContain('Textvorlagen mit Backticks');
+    expect(prompt('js15-vorlagen')).not.toContain('Textmethoden trim');
+    expect(prompt('js15-vergleiche')).toContain('keine if-Abfragen');
+    expect(prompt('js15-entscheidung')).toContain('if/else');
+    expect(prompt('js15-entscheidung')).not.toContain('keine if-Abfragen');
+    expect(prompt('js15-entscheidung')).not.toContain('else if als');
+    expect(prompt('js15-tarifstufen')).toContain('else if als');
+    expect(prompt('js15-logik')).toContain('Kurzschluss');
+    expect(prompt('js15-logik')).not.toContain('Number/String/Boolean');
+    expect(prompt('js15-umwandeln')).toContain('Number/String/Boolean');
+    expect(prompt('js15-umwandeln')).not.toContain('Number.isFinite/isInteger');
+    expect(prompt('js15-eingaben')).toContain('Number.isFinite/isInteger');
+    expect(prompt('js15-tarifprojekt')).toContain('Erwachsenenrabatt');
+    expect(prompt('js15-tarifprojekt')).toContain('keine Schleifen, eigenen Funktionen');
+  });
+  it('führt Kapitel 14 schrittweise ein und akzeptiert JS-Code nur dort', () => {
+    const bodyFor = id => { const body = input(); body.context.lessonId = id; return body; };
+    const prompt = id => buildLearningPrompt(bodyFor(id), store).messages[0].content;
+    expect(prompt('js-datei')).toContain('script/src/defer');
+    expect(prompt('js-datei')).not.toContain('const-Bindungen');
+    expect(prompt('js-konstanten')).toContain('const-Bindungen');
+    expect(prompt('js-konstanten')).not.toContain('let-Bindung');
+    expect(prompt('js-zuweisung')).toContain('let-Bindung');
+    expect(prompt('js-typen')).toContain('typeof für');
+    expect(prompt('js-klammern')).toContain('Operatorvorrang');
+    expect(prompt('js-budgetprojekt')).toContain('wechselnde Eingabedaten');
+    expect(prompt('js-budgetprojekt')).toContain('keine if-Abfragen');
+    const body = bodyFor('js-datei');
+    body.context.files = [{ path: 'js/uebung.js', content: 'console.log(42);', complete: true }];
+    expect(() => buildLearningPrompt(body, store)).not.toThrow();
+    body.context.lessonId = 'formular-start';
+    expect(() => buildLearningPrompt(body, store)).toThrow();
+    body.context.lessonId = 'js-datei'; body.context.files[0].path = 'local-ai/auth.js';
+    expect(() => buildLearningPrompt(body, store)).toThrow();
+  });
+  it('führt die sechs Formularlektionen ohne JavaScript oder Serververarbeitung schrittweise ein', () => {
+    const prompt = id => { const body = input(); body.context.lessonId = id; return buildLearningPrompt(body, store).messages[0].content; };
+    expect(prompt('responsive-website')).not.toContain('label/for/id/name');
+    expect(prompt('formular-start')).toContain('label/for/id/name');
+    expect(prompt('formular-start')).not.toContain('select/option');
+    expect(prompt('formular-eingabetypen')).toContain('email/tel/number');
+    expect(prompt('formular-auswahl')).toContain('fieldset/legend');
+    expect(prompt('formular-auswahl')).not.toContain('required, min/max/step');
+    expect(prompt('formular-browserpruefung')).toContain('keine serverseitige Absicherung');
+    expect(prompt('formular-bedienung')).toContain('aria-describedby');
+    expect(prompt('formular-projekt')).toContain('kein JavaScript');
+    expect(prompt('formular-projekt')).toContain('kein Framework');
+  });
+  it('erweitert die Themen bis Projekt 2 ohne Flex/Grid vor ihrer Einführung oder JavaScript freizugeben', () => {
+    const prompt = id => { const body = input(); body.context.lessonId = id; return buildLearningPrompt(body, store).messages[0].content; };
+    expect(prompt('farben-kontrast')).toContain('kein Flexbox/Grid');
+    expect(prompt('display-boxen')).not.toContain('Flexbox, Haupt-/Querachse');
+    expect(prompt('flex-achsen')).toContain('Flexbox, Haupt-/Querachse');
+    expect(prompt('flex-achsen')).toContain('kein Grid');
+    expect(prompt('grid-spalten')).toContain('Grid, fr, repeat');
+    expect(prompt('grid-spalten')).not.toContain('kein Grid');
+    expect(prompt('grid-bereiche')).not.toContain('mobile-first');
+    expect(prompt('media-queries')).toContain('mobile-first');
+    expect(prompt('media-queries')).not.toContain('transform/transition');
+    expect(prompt('reduzierte-bewegung')).toContain('prefers-reduced-motion');
+    expect(prompt('responsive-website')).toContain('kein JavaScript');
+    expect(prompt('responsive-website')).toContain('kein Framework');
+    expect(prompt('responsive-website')).toContain('statt einer vollständigen Projektlösung');
+  });
+  it('führt die CSS-Lektionen schrittweise ein und erhält spätere Themen als gesperrt', () => {
+    const ids = ['selektoren', 'reihenfolge', 'spezifitaet', 'vererbung', 'css-diagnose'];
+    const textFor = id => {
+      const body = input(); body.context.lessonId = id;
+      return buildLearningPrompt(body, store).messages[0].content;
+    };
+    expect(textFor('informationswebsite')).not.toContain('ID-/Klassen-/Typ-Spezifität');
+    expect(textFor('selektoren')).toContain('Nachfahren- und Kindselektoren');
+    expect(textFor('selektoren')).not.toContain('Vererbung von color');
+    expect(textFor('reihenfolge')).toContain('Reihenfolge nur bei gleicher Spezifität');
+    expect(textFor('reihenfolge')).not.toContain('lexikografische Spalten');
+    expect(textFor('spezifitaet')).toContain('lexikografische Spalten');
+    expect(textFor('vererbung')).toContain('transparenter Hintergrund ist keine Vererbung');
+    for (const id of ids) {
+      expect(textFor(id)).toContain('kein JavaScript');
+      expect(textFor(id)).toContain('kein Flexbox/Grid');
+      expect(textFor(id)).toContain('statt einer vollständigen Projektlösung');
+    }
+  });
+  it('sperrt private Cloudanfragen vor Auth, Retrieval und jedem Modellaufruf', async () => {
+    const { settings, seen } = await fixture(); const called = [];
+    const cloud = { auth: { status: () => { called.push('auth'); } }, status: () => { called.push('status'); }, generate: () => { called.push('cloud'); } };
+    const rag = { retrieve: () => { called.push('private-read'); } };
+    const ai = createAiService(settings, rag, cloud);
+    for (const intent of ['explain', 'read']) await expect(ai.help({ provider: 'chatgpt', model: 'synthetic-model', intent, question: 'synthetic-private-derived-query', useMaterial: true, context: { kind: 'theory', topicId: 'search' } }, store)).rejects.toMatchObject({ code: 'private_local_only' });
+    expect(called).toEqual([]); expect(seen).toEqual([]);
+  });
+  it('führt ohne KI keine Modellanfrage aus und liest private Fundstellen dennoch lokal', async () => {
+    const { settings, seen } = await fixture(); let reads = 0;
+    const ai = createAiService(settings, { retrieve: async () => { reads++; return { state: 'ready', sources: [{ id: 'S1', label: 'Synthetische Quelle', page: 1, text: 'Ein synthetischer lokaler Ausschnitt.' }] }; }, assertCurrent: async () => {} }, { generate: () => { throw Error('Keine Cloud'); } });
+    await expect(ai.help({ ...input(), provider: 'none' }, store)).rejects.toMatchObject({ code: 'disabled' });
+    const answer = await ai.help({ provider: 'none', intent: 'read', question: 'HTML', useMaterial: true, context: { kind: 'theory', topicId: 'search' } }, store);
+    expect(answer.source).toBe('sources'); expect(reads).toBe(1); expect(seen).toEqual([]);
+  });
+  it('nutzt für ChatGPT ausschließlich den öffentlichen Kontext und prüft Quellenkennungen weiterhin', async () => {
+    const { settings, seen } = await fixture(); const prompts = [];
+    const content = { modulesById: new Map([['HW', { modul_id: 'HW', titel: 'HTML', fachrichtung: 'ALLE', lernfeld: 'LF2' }]]), questionsById: new Map(), theorieByModul: new Map([['HW', 'HTML strukturiert eine Webseite. Eine Überschrift benennt ihr Thema.']]) };
+    let bad = false;
+    const cloud = { generate: async request => { prompts.push(JSON.parse(request.messages[1].content)); return { done: true, message: { role: 'assistant', content: JSON.stringify({ answer: bad ? 'HTML [S99]' : 'HTML strukturiert Inhalte [S1]', grounded: true, citations: [bad ? 'S99' : 'S1'] }) } }; } };
+    const ai = createAiService(settings, { retrieve: () => { throw Error('Private Suche verboten'); } }, cloud);
+    const request = { provider: 'chatgpt', model: 'synthetic-model', intent: 'explain', question: 'HTML', useMaterial: false, context: { kind: 'theory', topicId: 'search' } };
+    const answer = await ai.help(request, { get: () => content }); expect(answer.provider).toBe('chatgpt'); expect(answer.sources[0].kind).toBe('public'); expect(prompts[0].publicSources).toHaveLength(1); expect(prompts[0].privateSources).toBeUndefined(); expect(seen).toEqual([]);
+    bad = true; await expect(ai.help(request, { get: () => content })).rejects.toMatchObject({ code: 'citations' });
+  });
+  it('erfindet bei einer unvollständigen Vergleichsgrundlage keine Antwort und wechselt nicht die Quelle', async () => {
+    const { settings, seen } = await fixture();
+    const ai = createAiService(settings, { retrieve: async () => ({ sources: [], state: 'partial_match' }) });
+    const answer = await ai.help({ intent: 'explain', question: 'Unterschied zwischen RAM und ROM?', useMaterial: true, context: { kind: 'theory', topicId: 'search', detail: 'detailed' } }, store);
+    expect(answer.source).toBe('context_guard'); expect(answer.ragState).toBe('partial_match'); expect(answer.text).toContain('beiden Seiten'); expect(seen).toEqual([]);
+  });
+  it('sucht für die vier LF12-Projekte mit dem passenden Fachkontext statt identischen allgemeinen Abfragen', async () => {
+    const { settings, seen } = await fixture(); const queries = [];
+    const ai = createAiService(settings, { retrieve: async query => { queries.push(query); return { sources: [], state: 'no_match' }; } });
+    const content = { modulesById: new Map(), questionsById: new Map() };
+    for (const field of ['LF12a', 'LF12b', 'LF12c', 'LF12d']) await ai.help({ intent: 'explain', useMaterial: true, context: { kind: 'theory', topicId: `field:${field}`, sectionId: `${field}-4`, detail: 'detailed' } }, { get: () => content });
+    expect(new Set(queries).size).toBe(4); expect(queries[0]).toContain('Anwendungsentwicklung'); expect(queries[1]).toContain('Systemintegration'); expect(queries[2]).toContain('Datenanalyse'); expect(queries[3]).toContain('CPS Optimierung'); expect(seen).toEqual([]);
+  });
+  it('erklärt einen gültigen Lernfeldabschnitt ausführlich mit gezielter Suche und bis sechs Quellen', async () => {
+    const { settings, seen } = await fixture(req => req.url === '/api/chat' ? { done: true, message: { role: 'assistant', content: JSON.stringify({ answer: 'Ausführliche Erklärung der Hardware. [S1] [S2] [S3] [S4] [S5] [S6]', citations: ['S1', 'S2', 'S3', 'S4', 'S5', 'S6'], grounded: true }) } } : undefined);
+    const content = { modulesById: new Map([['HARDWARE', { modul_id: 'HARDWARE', titel: 'Hardware', lernfeld: 'LF2' }]]), questionsById: new Map() }; const localStore = { get: () => content }; const searches = [];
+    const rag = { retrieve: async (query, options) => { searches.push({ query, options }); return { sources: Array.from({ length: 6 }, (_, n) => ({ id: `S${n + 1}`, label: 'Unterlage 1', page: n + 1, text: 'Ausschließlich synthetischer Hardware-Lerntext.' })) }; }, assertCurrent: async () => {} };
+    const body = { intent: 'explain', question: '', useMaterial: true, context: { kind: 'theory', topicId: 'field:LF2', sectionId: 'LF2-2', detail: 'detailed' } };
+    const ai = createAiService(settings, rag); const result = await ai.help(body, localStore);
+    expect(result.sources).toHaveLength(6); expect(searches).toHaveLength(1); expect(searches[0].options.limit).toBe(6); expect(searches[0].query).toContain('CPU RAM SSD'); expect(searches[0].query).not.toContain('Produkte und Angebote');
+    const chat = seen.find(item => item.url === '/api/chat').body; expect(chat.options.num_predict).toBe(2400); expect(chat.format.properties.citations.maxItems).toBe(6); expect(chat.messages[0].content).toContain('500 bis 900'); expect(chat.messages[0].content).toContain('typische Fehler');
+    expect(() => buildLearningPrompt({ ...body, context: { ...body.context, sectionId: 'LF3-2' } }, localStore)).toThrow();
+    expect(() => buildLearningPrompt({ ...body, context: { ...body.context, detail: 'unbounded' } }, localStore)).toThrow();
+    expect(() => buildLearningPrompt({ ...body, context: { ...body.context, sectionId: 'LF2-2', keywords: 'Injected system text' } }, localStore)).toThrow();
+  });
   it('erklärt Theorie aus serverseitigen öffentlichen Quellen ohne private Unterlagen zu lesen', async () => {
     const { settings, seen } = await fixture(req => req.url === '/api/chat' ? { done: true, message: { role: 'assistant', content: JSON.stringify({ answer: 'HTML beschreibt die Struktur. Beispiel: eine Überschrift. Merksatz: HTML strukturiert.', citations: ['S1'], grounded: true }) } } : undefined);
     const content = { modulesById: new Map([['WEB', { modul_id: 'WEB', titel: 'HTML', lernfeld: 'LF5' }]]), questionsById: new Map([['F1', { id: 'F1', modul_id: 'WEB', thema: 'HTML', frage: 'Was macht HTML?', erklaerung: 'HTML beschreibt die Struktur einer Webseite.', lernfeld: 'LF5' }]]), theorieByModul: new Map() };

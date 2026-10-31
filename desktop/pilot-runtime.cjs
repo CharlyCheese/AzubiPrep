@@ -4,10 +4,10 @@ const { randomUUID } = require('node:crypto');
 
 const MAX_STORE = 32 * 1024 * 1024;
 const LIMITS = Object.freeze({ files: 50, entries: 5000, file: 2 * 1024 * 1024, text: 128 * 1024, total: 10 * 1024 * 1024, depth: 8 });
-const PRIVATE = /^(?:\.git|\.env.*|node_modules|local-rag)$/i;
+const PRIVATE = /^(?:\.git|\.env.*|node_modules|local-rag|local-ai)$/i;
 const isPrivate = (value) => value.split(/[\\/]/).some((part) => PRIVATE.test(part));
-const supported = (name) => /\.(?:html|css|png|jpe?g|webp)$/i.test(name);
-const isText = (name) => /\.(?:html|css)$/i.test(name);
+const supported = (name) => /\.(?:html|css|js|png|jpe?g|webp)$/i.test(name);
+const isText = (name) => /\.(?:html|css|js)$/i.test(name);
 
 function relativeName(root, target) {
   const name = path.relative(root, target).split(path.sep).join('/');
@@ -62,7 +62,8 @@ async function readProject(selection, mode) {
     if (!supported(name)) { skipped++; return; }
     if (Object.keys(files).length >= LIMITS.files) throw Error('Bitte höchstens 50 unterstützte Projektdateien auswählen.');
     if (Object.hasOwn(files, name)) throw Error('Doppelter Projektpfad.');
-    const limit = isText(name) ? LIMITS.text : LIMITS.file;
+    if (/\.js$/i.test(name) && !/^[a-zA-Z0-9_-][a-zA-Z0-9_.-]{0,59}\.js$/.test(path.basename(name))) throw Error('JS-Dateien benötigen einen einfachen Dateinamen.');
+    const limit = /\.js$/i.test(name) ? 64 * 1024 : isText(name) ? LIMITS.text : LIMITS.file;
     if (stat.size > limit) throw Error(`Datei zu groß: ${name}`);
     const handle = await fs.open(target, 'r');
     let data;
@@ -128,6 +129,7 @@ function createStore(profile, folder = 'frontendpilot-v1') {
 function createAiPreferences(profile) {
   const store = createStore(profile, 'ai-settings-v1');
   function validate(value) {
+    if (value?.version === 2 && ['none', 'qwen', 'chatgpt'].includes(value.provider) && typeof value.qwenModel === 'string' && /^qwen[a-z0-9._-]*:[a-z0-9._-]{1,48}$/i.test(value.qwenModel) && !/cloud/i.test(value.qwenModel) && typeof value.chatgptModel === 'string' && /^(?:[a-zA-Z0-9._:-]{1,80})?$/.test(value.chatgptModel)) return { version: 2, provider: value.provider, qwenModel: value.qwenModel, chatgptModel: value.chatgptModel };
     if (!value || value.version !== 1 || typeof value.enabled !== 'boolean' || typeof value.model !== 'string' || !/^qwen[a-z0-9._-]*:[a-z0-9._-]{1,48}$/i.test(value.model) || /cloud/i.test(value.model)) throw Error('Ungültige lokale KI-Einstellungen.');
     return { version: 1, enabled: value.enabled, model: value.model };
   }

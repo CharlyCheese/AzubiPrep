@@ -1,0 +1,58 @@
+import { chapter, refs } from './shared.js';
+
+export default chapter(21, 'Ereignisse und eigene Formularverarbeitung', 'Kapitel 20 und native Formularprüfung aus Kapitel 13.', 'Später: isolierter DOM mit lokal bleibenden Formulareingaben.', refs.events, [
+  {
+    title: 'Ein Klick ruft eine Funktion auf', goal: 'Handler registrieren statt sofort ausführen.',
+    explain: ['addEventListener("click", handler) registriert eine Funktion. Der Browser ruft sie beim Ereignis auf. handler() an dieser Stelle würde sie sofort ausführen und ihren Rückgabewert als Listener übergeben. Nutze echte button-Elemente: Sie unterstützen Tastatur und Semantik bereits.', 'Ein button innerhalb eines Formulars sendet standardmäßig das Formular ab. Für eine reine Aktion im Formular verwende type="button". Inline-Attribute wie onclick vermeiden wir: Verhalten bleibt in der JS-Datei.'],
+    example: '<button id="count" type="button">Zählen</button>\n// app.js:\n// button.addEventListener("click", erhoehen);',
+    task: 'Lege #count und #status an. Speichere count = 0 und erhöhe ihn bei jedem Klick. Zeige die Zahl mit textContent. Teste per Maus und Tab/Enter; beim Laden muss 0 erscheinen.',
+    hints: ['Registriere die Funktion ohne Klammern.', 'function erhoehen() { count += 1; status.textContent = String(count); }'],
+    solution: 'const button = document.querySelector("#count");\nconst status = document.querySelector("#status");\nlet count = 0;\nstatus.textContent = String(count);\nfunction erhoehen() { count += 1; status.textContent = String(count); }\nbutton.addEventListener("click", erhoehen);',
+    criteria: ['0 beim Laden; je Aktivierung genau +1.', 'Echte beschriftete Schaltfläche und Tastaturbedienung.'],
+  },
+  {
+    title: 'Ereignisobjekt und Formular-submit', goal: 'Eine lokale Aktion ohne Seitenwechsel ausführen.',
+    explain: ['Der Listener erhält ein Ereignisobjekt. event.preventDefault() unterbindet die Standardaktion, sofern das Ereignis abbrechbar ist. Beim submit verhindern wir so die Navigation. Das beendet nicht automatisch die Ereignisweitergabe.', 'Registriere submit am form, nicht bloß click am Sendebutton. So funktioniert auch Absenden per Enter. Normale native Beschränkungen wie required und min werden vor einem gewöhnlichen submit-Ereignis geprüft; ein direkter Aufruf von form.submit() umgeht diese Abläufe und gehört nicht in diese Übung.'],
+    example: 'form.addEventListener("submit", function(event) {\n  event.preventDefault();\n  message.textContent = "Lokal verarbeitet";\n});',
+    task: 'Baue ein Formular mit einem beschrifteten required-Titelfeld und Sendebutton. Zeige nach gültigem Absenden "Lokal verarbeitet", ohne Reload oder Netzwerkanfrage. Teste auch Enter und ein leeres Feld.',
+    hints: ['Das form-Element benötigt eine ID für die Auswahl.', 'Listener am Formular, preventDefault am Anfang des Handlers.'],
+    solution: '<!-- HTML: -->\n<form id="entry"><label for="title">Titel</label><input id="title" required><button>Übernehmen</button></form>\n<p id="message" role="status"></p>\n// app.js:\nconst form = document.querySelector("#entry");\nconst message = document.querySelector("#message");\nform.addEventListener("submit", event => {\n  event.preventDefault(); message.textContent = "Lokal verarbeitet";\n});',
+    criteria: ['Gültig per Enter und Klick ohne Navigation.', 'Leerwert wird nativ zurückgewiesen; keine Datenübertragung.'],
+  },
+  {
+    title: 'Feldwerte sind zunächst Strings', goal: 'Text trimmen und Zahlen bewusst umwandeln.',
+    explain: ['input.value ist auch bei type="number" ein String. trim entfernt Rand-Leerraum. Number(" ") ergibt 0: Prüfe deshalb zunächst, ob nach trim überhaupt ein Wert übrig ist. Erst dann umwandeln und mit Number.isInteger sowie Grenzen prüfen.', 'valueAsNumber kann bei Zahlenfeldern eine Zahl oder NaN liefern. Wir verwenden hier value, damit die einzelnen Schritte sichtbar bleiben. Clientprüfung verbessert Rückmeldung; bei einer späteren echten Serveranwendung muss der Server Eingaben selbst prüfen.'],
+    example: 'const raw = minutesInput.value.trim();\nconst value = Number(raw);\nconst valid = raw !== "" && Number.isInteger(value) && value >= 1 && value <= 240;',
+    task: 'Schreibe parseMinutes(raw), die bei ganzen Minuten 1–240 die Zahl und sonst null zurückgibt. Prüfe "15", " 15 ", "", "1.5", "241" und "abc". Die Funktion arbeitet ohne DOM.',
+    hints: ['Die Prüfung raw.trim() !== "" kommt vor der Annahme einer Zahl.', 'Bei ungültiger Eingabe return null; die Zahl erst nach allen Prüfungen zurückgeben.'],
+    solution: 'function parseMinutes(raw) {\n  const text = raw.trim();\n  const value = Number(text);\n  if (!text || !Number.isInteger(value) || value < 1 || value > 240) return null;\n  return value;\n}',
+    criteria: ['15 und 15; alle übrigen genannten Werte null.', '0, 1 und 240 als Grenzfälle geprüft; keine automatische Aufrundung.'],
+  },
+  {
+    title: 'Eigene Rückmeldungen mit nativer Validierung verbinden', goal: 'Verständliche, zugängliche Fehler anzeigen.', reference: refs.forms,
+    explain: ['setCustomValidity("") entfernt einen eigenen Fehler; ein nichtleerer Text macht das Feld ungültig. Ein alter Fehler muss bei einer Korrektur zurückgesetzt werden, sonst blockiert er weiter. reportValidity zeigt die native Rückmeldung an.', 'Verknüpfe einen sichtbaren Hilfetext über aria-describedby mit dem Feld. Setze aria-invalid passend zum tatsächlichen Fehler. Validierung darf nicht nur durch Rot vermittelt werden. Zeige Rückmeldungen nach einem sinnvollen Auslöser, statt jeden Tastendruck als Fehler zu tadeln.'],
+    example: '<label for="title">Lernziel</label><input id="title" required aria-describedby="title-help">\n<p id="title-help">Ein verständlicher Titel, höchstens 80 Zeichen.</p>',
+    task: 'Verhindere einen Titel, der ausschließlich Leerraum enthält. Nutze setCustomValidity beim input-Ereignis und vor der anfänglichen Prüfung; entferne den Fehler nach Korrektur. Beschränke auf 80 Zeichen und erkläre das Limit sichtbar.',
+    hints: ['Auch ein Leerraum erfüllt required; trim erkennt deinen fachlichen Fehler.', 'title.setCustomValidity(title.value.trim() ? "" : "Bitte ein Lernziel eingeben.");'],
+    solution: 'const title = document.querySelector("#title");\nfunction validateTitle() {\n  const error = title.value.trim() ? "" : "Bitte ein Lernziel eingeben.";\n  title.setCustomValidity(error);\n  title.setAttribute("aria-invalid", String(Boolean(error)));\n}\ntitle.maxLength = 80;\ntitle.addEventListener("input", validateTitle);\nvalidateTitle();\n// Beim regulären Absenden prüft der Browser die aktuelle Gültigkeit.',
+    criteria: ['Leerraum blockiert, korrigierter Titel erlaubt wieder Absenden.', 'Label, Hilfetextverknüpfung und verständlicher Fehler vorhanden.'],
+  },
+  {
+    title: 'Ereignisweitergabe und klare Zuständigkeiten', goal: 'Doppelte Handler und falsche Ziele vermeiden.',
+    explain: ['Viele Ereignisse steigen vom Ziel durch dessen Vorfahren auf: Bubbling. event.target ist das ursprüngliche Ziel, event.currentTarget das Element des gerade laufenden Listeners. Ein Klick auf ein span im Button kann deshalb ein anderes target haben als erwartet.', 'Für kleine Listen ist ein Listener pro erzeugtem Button verständlich. Registriere ihn beim Erzeugen und nicht zusätzlich bei jedem globalen Renderaufruf am selben dauerhaften Container. stopPropagation ist keine allgemeine Fehlerbehebung; kläre zuerst die Zuständigkeiten.'],
+    example: 'button.addEventListener("click", event => {\n  event.currentTarget.disabled = true;\n});',
+    task: 'Erzeuge zwei Buttons mit jeweils einem inneren span und einem eigenen Listener. Gib die Beschriftung von currentTarget aus. Prüfe Klick auf Buttonrand und Text; jede Aktivierung soll genau eine Meldung erzeugen.',
+    hints: ['Nutze currentTarget, wenn du den registrierten Button meinst.', 'Der Button kann über textContent den Text seines span liefern.'],
+    solution: 'for (const label of ["HTML", "CSS"]) {\n  const button = document.createElement("button"); button.type = "button";\n  const span = document.createElement("span"); span.textContent = label; button.append(span);\n  button.addEventListener("click", event => { message.textContent = event.currentTarget.textContent; });\n  document.querySelector("#actions").append(button);\n}',
+    criteria: ['Text und Rand aktivieren dasselbe Verhalten genau einmal.', 'target/currentTarget an einer verschachtelten Struktur erklären.'],
+  },
+  {
+    title: 'Miniprojekt: Lernziel lokal übernehmen', goal: 'Validierte Formulardaten sicher darstellen.',
+    explain: ['Verbinde submit, Titelprüfung und parseMinutes. Verwende label/for für beide Felder, required und Zahlengrenzen. Erst bei gültigen Daten wird eine neue Ausgabe erstellt. Originalwerte bleiben bei Fehlern erhalten.', 'Das Ergebnis ist noch keine gespeicherte Aufgabenliste. Es zeigt bewusst nur die zuletzt übernommene Aufgabe. Im nächsten Kapitel bekommt die Anwendung einen eigenen Zustand und eine dauerhafte lokale Sicherung.'],
+    example: '// Anzeige nach gültiger Eingabe:\n// Lernziel: HTML üben · 25 Minuten\n// Fehler: Bitte eine ganze Dauer von 1 bis 240 Minuten angeben.',
+    task: 'Erstelle eine vollständige Seite mit Formular und #message role="status". Verarbeite Titel und Minuten lokal. Gültig: getrimmten Titel plus Dauer anzeigen. Ungültig: verständlichen Fehler, kein neuer Dateneintrag. Nutze parseMinutes aus dieser Lektionengruppe.',
+    hints: ['Der submit-Handler liest beide Felder, verhindert die Navigation und prüft vor der Ausgabe.', 'if (!title || minutes === null) { ...; return; } trennt den Fehlerweg.'],
+    solution: '// HTML: form#task-form mit input#title und input#minutes, p#message.\n// parseMinutes aus der vorherigen Lektion vorher definieren.\nconst form = document.querySelector("#task-form");\nconst titleInput = document.querySelector("#title");\nconst minutesInput = document.querySelector("#minutes");\nconst message = document.querySelector("#message");\nform.addEventListener("submit", event => {\n  event.preventDefault();\n  const title = titleInput.value.trim();\n  const minutes = parseMinutes(minutesInput.value);\n  if (!title || title.length > 80 || minutes === null) {\n    message.textContent = "Bitte Titel und ganze Minuten von 1 bis 240 prüfen."; return;\n  }\n  message.textContent = title + " · " + minutes + " Minuten";\n});',
+    criteria: ['Gültige Übernahme per Enter und Klick; Fehler/Korrektur funktionieren.', 'HTML-artige Titel bleiben Text; Seite lädt nicht neu und sendet nichts.'],
+  },
+]);

@@ -9,10 +9,10 @@
     {
       "from": "../backend",
       "to": "backend",
-      "filter": ["src/**/*", "node_modules/**/*", "package.json", "!**/.env*", "!**/*.log", "!**/.cache/**/*"]
+      "filter": ["src/**/*", "node_modules/**/*", "package.json", "!**/.env*", "!**/local-ai/**", "!**/local-rag/**", "!**/accounts.json", "!**/chatgpt-auth.json", "!**/chatgpt-host.json", "!**/*.log", "!**/.cache/**/*"]
     },
-    { "from": "../content", "to": "content" },
-    { "from": "../frontend/dist", "to": "frontend/dist" }
+    { "from": "../content", "to": "content", "filter": ["**/*", "!**/.env*", "!**/local-ai/**", "!**/local-rag/**", "!**/accounts.json", "!**/chatgpt-auth.json", "!**/chatgpt-host.json"] },
+    { "from": "../frontend/dist", "to": "frontend/dist", "filter": ["**/*", "!**/.env*", "!**/local-ai/**", "!**/local-rag/**", "!**/accounts.json", "!**/chatgpt-auth.json", "!**/chatgpt-host.json"] }
   ],
   "win": {
     "target": ["nsis", "portable"],

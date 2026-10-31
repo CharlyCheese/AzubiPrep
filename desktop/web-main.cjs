@@ -43,6 +43,7 @@ if (!app.requestSingleInstanceLock()) {
     try {
       const root = rootPath();
       if (!process.env.AZUBIPREP_RAG_DIR) process.env.AZUBIPREP_RAG_DIR = path.join(app.getPath('userData'), 'local-rag');
+      if (!process.env.AZUBIPREP_AI_DIR) process.env.AZUBIPREP_AI_DIR = path.join(app.getPath('userData'), 'local-ai');
       if (!fs.existsSync(path.join(root, 'frontend/dist/index.html'))) {
         throw new Error('Die Weboberfläche fehlt. Bitte AzubiPrep Web erneut aus dem vollständigen Paket starten.');
       }

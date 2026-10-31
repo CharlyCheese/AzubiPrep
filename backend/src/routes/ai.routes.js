@@ -26,7 +26,7 @@ export function buildAiRoutes(store, service, rag = createRagService()) {
   const router = Router();
   router.use(aiAccess);
   router.use('/material', buildRagRoutes(rag, service));
-  router.use(rateLimiter({ maxProMinute: 20, keyPrefix: 'ai:' }));
+  router.use('/chatgpt', rateLimiter({ maxProMinute: 90, keyPrefix: 'chatgpt:' }));
   const handle = (run) => async (req, res) => {
     const controller = new globalThis.AbortController();
     const abort = () => { if (!res.writableEnded) controller.abort(); };
@@ -36,7 +36,13 @@ export function buildAiRoutes(store, service, rag = createRagService()) {
       if (!res.destroyed) res.status(error instanceof AiError ? error.status : 503).json({ error: error instanceof AiError ? error.message : 'Die lokale Lernbegleitung ist vorübergehend nicht verfügbar.', code: error instanceof AiError ? error.code : 'unavailable' });
     } finally { req.off('aborted', abort); res.off('close', abort); }
   };
-  router.get('/status', handle((_req, signal) => service.status(signal)));
+  router.get('/chatgpt/status', handle(() => service.chatgpt.status()));
+  router.post('/chatgpt/signin', handle(req => { service.cancel(); return service.chatgpt.start(req.body?.accountId); }));
+  router.post('/chatgpt/cancel', handle(() => { service.cancel(); return service.chatgpt.cancel(); }));
+  router.post('/chatgpt/select', handle(req => { service.cancel(); return service.chatgpt.select(req.body?.accountId); }));
+  router.post('/chatgpt/signout', handle(() => { service.cancel(); return service.chatgpt.signout(); }));
+  router.use(rateLimiter({ maxProMinute: 20, keyPrefix: 'ai:' }));
+  router.get('/status', handle((req, signal) => service.status(signal, req.query.provider || 'qwen')));
   router.post('/help', handle((req, signal) => service.help(req.body, store, signal)));
   return router;
 }

@@ -194,6 +194,15 @@ h1, h2, h3, h4 { line-height: 1.25; margin-top: 0; }
 .btn-block { width: 100%; justify-content: center; }
 
 /* Formulare */
+select {
+  color: var(--text);
+  background-color: var(--bg);
+  color-scheme: inherit;
+}
+select option, select optgroup {
+  color: var(--text);
+  background-color: var(--bg-card);
+}
 .input, .select, textarea.input {
   width: 100%; padding: 10px 14px;
   border: 1px solid var(--border); border-radius: 10px;

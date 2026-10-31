@@ -32,3 +32,6 @@ Thumbs.db
 # Nur die neutrale Anleitung wird veröffentlicht, niemals Materialien/Indizes.
 /local-rag/*
 !/local-rag/README.md
+
+# Ausschließlich lokale KI-Anmeldedaten (niemals versionieren oder verteilen).
+/local-ai/

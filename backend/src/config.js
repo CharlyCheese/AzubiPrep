@@ -54,6 +54,7 @@ export const config = {
   aiTimeoutMs: Math.min(int(process.env.AI_TIMEOUT_MS, 90000), 120000),
   aiStatusTimeoutMs: Math.min(int(process.env.AI_STATUS_TIMEOUT_MS, 3000), 10000),
   aiDevOrigin: process.env.AI_DEV_ORIGIN || 'http://localhost:5173',
+  aiDir: process.env.AZUBIPREP_AI_DIR ? path.resolve(process.env.AZUBIPREP_AI_DIR) : path.join(projectRoot, 'local-ai'),
   ragDir: process.env.AZUBIPREP_RAG_DIR ? path.resolve(process.env.AZUBIPREP_RAG_DIR) : path.join(projectRoot, 'local-rag'),
   ragTimeoutMs: Math.min(int(process.env.RAG_TIMEOUT_MS, 120000), 300000),
   ragContextTokens: Math.min(int(process.env.RAG_CONTEXT_TOKENS, 8192), 16384),

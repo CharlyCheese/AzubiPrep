@@ -1,3 +1,10 @@
+import { CSS_LESSONS, cssCourseFiles } from './css-course.js';
+import { FORM_LESSONS, formCourseFiles } from './form-course.js';
+import { JS_LESSONS, jsCourseFiles } from './js-course.js';
+import { JS15_LESSONS, js15CourseFiles } from './js15-course.js';
+import { JS16_LESSONS, js16CourseFiles } from './js16-course.js';
+import { JS17_LESSONS, js17CourseFiles } from './js17-course.js';
+
 export const COURSE_VERSION = 'pilot-1.0';
 export const VALIDATOR_VERSION = 'pilot-rules-1.0.1';
 export const BLUE_IMAGE = { kind: 'image', content: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAIAAAD8GO2jAAAAKklEQVR4nGPQyNtCU8QwasGoBaMWjFowasGoBaMWjFowasGoBaMWDBULADD+KEyfbA9oAAAAAElFTkSuQmCC' };
@@ -9,6 +16,8 @@ const pageLink = '<a href="ueber-uns.html">Über uns</a>';
 const image = '<img src="bilder/beispiel.png" alt="Blaues quadratisches Zeichen unserer Lerngruppe">';
 const sheet = '<link rel="stylesheet" href="css/style.css">\n';
 const css = 'h1 { color: navy; }\np { font-family: sans-serif; }\n';
+const selectorCss = 'h1, h2 { color: navy; }\nmain p { color: navy; }\nfooter p { color: maroon; }\nmain > p { background-color: lightyellow; }\n';
+const inheritCss = 'h1, h2 { color: navy; }\nmain { color: navy; font-family: serif; background-color: lightyellow; }\nmain > p { background-color: lightyellow; }\nmain em { color: maroon; }\nfooter p { color: maroon; }\n';
 function solution(stage) {
   const files = { 'index.html': text(htmlPage(heading)) };
   if (stage >= 3) files['index.html'] = text(htmlPage(list));
@@ -30,6 +39,22 @@ function solution(stage) {
     files['css/style.css'].content += '.hinweis { background-color: lightyellow; }\n';
   }
   if (stage >= 11) files['ueber-uns.html'].content = htmlPage(`<header><h1>Über uns</h1></header><nav><a href="index.html">Zur Startseite</a></nav><main><p class="hinweis">Gemeinsam lernen macht Freude.</p>${image}</main><footer>Unsere Gruppe</footer>`, sheet);
+  if (stage >= 13) {
+    for (const name of ['index.html', 'ueber-uns.html']) {
+      files[name].content = files[name].content.replace('</main>', '<section class="vertiefung"><h2>Mehr erfahren</h2><p>Wir üben gemeinsam weiter.</p></section></main>')
+        .replace(/<footer>.*?<\/footer>/, '<footer><p>Unsere Lerngruppe</p></footer>');
+    }
+    files['css/style.css'].content = css + selectorCss;
+  }
+  if (stage >= 14) files['css/style.css'].content += '.hinweis { color: maroon; }\n.hinweis { color: navy; }\n';
+  if (stage >= 15) {
+    for (const name of ['index.html', 'ueber-uns.html']) files[name].content = files[name].content.replace('<p class="hinweis">', '<p id="einstieg" class="hinweis">');
+    files['css/style.css'].content += '#einstieg { color: navy; }\n.hinweis { color: maroon; }\n';
+  }
+  if (stage >= 16) {
+    for (const name of ['index.html', 'ueber-uns.html']) files[name].content = files[name].content.replace('</p>', ' <em>Schritt für Schritt.</em></p>');
+    files['css/style.css'].content = inheritCss;
+  }
   return files;
 }
 const refs = {
@@ -38,6 +63,10 @@ const refs = {
   links: 'https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Structuring_content/Creating_links',
   images: 'https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Structuring_content/HTML_images',
   css: 'https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Styling_basics/Getting_started',
+  selectors: 'https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Selectors/Selectors_and_combinators',
+  cascade: 'https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Cascade/Introduction',
+  specificity: 'https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Cascade/Specificity',
+  inheritance: 'https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Cascade/Inheritance',
 };
 function lesson(id, chapter, title, prerequisite, explain, example, task, rules, hints, stage, reference = refs.html) {
   return { id, chapter, title, prerequisite, explain, example, task, rules, hints, stage, reference, checked: '2026-10-30', version: COURSE_VERSION };
@@ -90,11 +119,87 @@ export const LESSONS = [
   ], '<!-- Verwende die bereits gelernten Techniken und deine eigenen Inhalte. -->', 'Setze den Projektauftrag um, prüfe ihn, korrigiere Fehler und exportiere anschließend dein Projekt.', ['document', 'heading', 'links', 'image', 'semantic', 'css', 'class', 'project'], ['Arbeite zuerst die HTML-Struktur ab, danach Pfade und schließlich die gemeinsame Gestaltung.', 'Prüfe auf beiden Seiten head/link, nav/a, main/p und img. Die Klasse hinweis ist nur ein Beispiel; jede passend verwendete Klasse ist erlaubt.'], 12),
 ];
 
-export function solutionFor(lesson) { return structuredClone(solution(lesson.stage)); }
+const cssBase = ['document', 'heading', 'links', 'image', 'semantic', 'css', 'project'];
+const chapter7 = (id, title, prerequisite, explain, example, task, rule, hints, stage, reference) => ({
+  ...lesson(id, 7, title, prerequisite, explain, example, task, [...cssBase, rule], hints, stage, reference),
+  version: 'css-7.1', checked: '2026-10-31',
+});
+LESSONS.push(
+  chapter7('selektoren', 'Selektoren: gemeinsam und gezielt', 'Informationswebsite mit zwei Seiten und gemeinsamem Stylesheet.', [
+    'Du arbeitest an der bekannten Website weiter. Jede Aufgabe hat einen eigenen Entwurf. Die vorbereitete Fortsetzung enthält zusätzlich einen Abschnitt section mit einem Absatz. section bündelt thematisch zusammengehörige Inhalte mit einer Überschrift. Eigene Projekte kannst du über die vorhandene Sicherung oder den Ordnerimport übernehmen; ergänze dann die verlangten Übungsinhalte.',
+    'h1, h2 ist eine Selektorliste: Beide Überschriftentypen erhalten dieselben Deklarationen. main p wählt alle Absätze innerhalb von main, auch in tieferen Ebenen. main > p wählt dagegen nur direkte Absatzkinder von main. Das Zeichen > bezeichnet eine Beziehung; es erhöht nicht selbst die Spezifität. Die genaue Gewichtung folgt gleich. Für die Pflichtprüfungen in Kapitel 7 stehen alle CSS-Regeln in den eingebundenen externen Dateien, ohne style-Attribute, style-Blöcke oder !important.',
+    'Vorhersage: Trifft main > p auch den Absatz innerhalb von section? Prüfe danach beide Absätze in der Vorschau und mit „Element untersuchen“. Der Inspektor zeigt passende Regeln und berechnete Werte; die gewinnende Regel musst du daraus noch selbst erschließen.',
+  ], 'h1, h2 { color: navy; }\nmain p { color: navy; }\nmain > p { background-color: lightyellow; }\nfooter p { color: maroon; }',
+  'Behalte beide Projektseiten. Gestalte auf der Startseite h1 und h2 gemeinsam mit einer Selektorliste in navy. Färbe alle Absätze in main über einen Nachfahrenselektor navy und die Fußzeilenabsätze maroon. Gib direkten Absatzkindern von main über > den Hintergrund lightyellow; der Absatz in section bleibt ohne eigenen Hintergrund. Behalte mindestens einen direkten und einen in section verschachtelten Absatz. Diese festen Farben dienen hier dem Vergleich.',
+  'css-selectors', ['Vergleiche main p mit main > p am verschachtelten Absatz.', 'Verwende eine gemeinsame Regel h1, h2 und die Regeln aus dem Beispiel in deiner externen CSS-Datei.'], 13, refs.selectors),
+  chapter7('reihenfolge', 'Kaskade: bei Gleichstand zählt die Reihenfolge', 'Selektorlisten, Nachfahren und direkte Kinder.', [
+    'Die Kaskade bestimmt für jede Eigenschaft, welche passende Deklaration gewinnt. Wir betrachten normale Regeln aus unseren eigenen Stylesheets, ohne !important, Inline-Stile, Ebenen oder Animationen. Innerhalb dieses Rahmens entscheidet zuerst die Spezifität; bei gleicher Spezifität gilt die später stehende Deklaration. „Die letzte Regel gewinnt immer“ wäre deshalb falsch.',
+    'Zwei Regeln mit demselben Selektor .hinweis haben gleiche Spezifität. Ihre Reihenfolge entscheidet über color. Andere Eigenschaften wie background-color werden unabhängig davon ermittelt. Sage erst voraus, welcher Wert gewinnt; ändere dann nur die Reihenfolge und vergleiche die Vorschau.',
+  ], '.hinweis { color: maroon; }\n.hinweis { color: navy; }',
+  'Der Hinweisabsatz auf der Startseite soll navy sein. Behalte zwei normale .hinweis-Regeln mit unterschiedlichen color-Werten navy und maroon und ordne sie passend an. Verwende keine ID-Farbregel, Inline-Stile oder !important. Erkläre dir beim Untersuchen, warum die spätere dieser gleich gewichteten Regeln gewinnt.',
+  'css-order', ['Prüfe beide .hinweis-Regeln in der CSS-Datei von oben nach unten.', 'Die Regel .hinweis { color: navy; } gehört hinter die gleich gewichtete maroon-Regel.'], 14, refs.cascade),
+  chapter7('spezifitaet', 'Spezifität: ID, Klasse und Typ', 'Kaskade und Reihenfolge bei gleichem Gewicht.', [
+    'id="einstieg" benennt ein Element eindeutig innerhalb einer HTML-Seite. Dieselbe ID darf in einer anderen Seite wieder vorkommen. #einstieg wählt diese ID aus. Klassen können viele Elemente gemeinsam tragen. Nutze für wiederverwendbare Gestaltung meist Klassen; eine ID ist hier ein bewusstes Lernbeispiel für einen Konflikt.',
+    'Für unsere einfachen Selektoren vergleichen wir drei Spalten: IDs, Klassen, Typen. #einstieg hat (1,0,0), .hinweis (0,1,0), main p (0,0,2). Verglichen wird von links nach rechts, nicht als Dezimalpunktzahl. Viele Typen überholen keine Klasse, viele Klassen keine ID. Leerzeichen, > und * erhöhen das Gewicht nicht. Eine Selektorliste wird pro passendem Teil betrachtet.',
+    'Die frühere ID-Regel kann eine später stehende Klassenregel überstimmen. !important ist keine höhere Spezifität, sondern greift an einer früheren Stelle der Kaskade ein. Wir lösen diesen Konflikt durch verständliche Selektoren und Werte, ohne !important oder weitere IDs hinzuzufügen.',
+  ], '#einstieg { color: navy; }\n.hinweis { color: maroon; }',
+  'Der direkte Hauptinhalt-Absatz hat id="einstieg" und class="hinweis". Er soll navy sein, obwohl die spätere Klassenregel maroon vorgibt. Behalte die beiden gegensätzlichen normalen Farbregeln; korrigiere den Wert der ID-Regel. Die ID einstieg darf auf jeder Seite nur einmal vorkommen. Erkläre, weshalb hier die Reihenfolge allein nicht hilft.',
+  'css-specificity', ['Vergleiche zuerst die ID-Spalte, dann erst Klasse und Typ.', 'Setze #einstieg { color: navy; } vor .hinweis { color: maroon; }.'], 15, refs.specificity),
+  chapter7('vererbung', 'Vererbung: Werte vom Elternelement', 'Spezifität und direkt passende Regeln.', [
+    'color und font-family werden normalerweise vererbt: Ohne eigene Festlegung erhält ein Element den berechneten Wert seines Elternelements. Ein direkt am Kind gesetzter Wert ersetzt diesen geerbten Wert, auch wenn der Selektor am Elternteil eine höhere Spezifität besitzt. Vererbung ist kein Wettstreit zwischen Eltern- und Kindselektor.',
+    'background-color wird dagegen nicht vererbt. Ein transparenter Kindhintergrund lässt den Hintergrund dahinter durchscheinen; das ist keine Vererbung der Hintergrundfarbe. em hebt einen Text sprachlich hervor und wird üblicherweise kursiv dargestellt. Hier verwenden wir es zusätzlich, um eine direkte Farbausnahme am Kind zu untersuchen.',
+    'Nutze zunächst nur main für die Grundschrift und Grundfarbe. Eine vorhandene p-Regel für font-family verhindert, dass ein Absatz diese Schrift erbt. Entferne solche widersprechenden Direktregeln. Vergleiche main, seinen direkten Absatz und das enthaltene em im Inspektor.',
+  ], 'main { color: navy; font-family: serif; background-color: lightyellow; }\nmain em { color: maroon; }',
+  'Setze am main der Startseite color: navy, font-family: serif und background-color: lightyellow. Sein direkter Absatz soll Farbe und Schrift erben: Entferne dafür alle direkt am Absatz passenden color-/font-family-Deklarationen. Ein em mit eigenem Text in diesem Absatz erhält direkt maroon. Es bekommt keine eigene Hintergrundfarbe. Behalte die übrigen Projektinhalte.',
+  'css-inheritance', ['Eine direkt passende p- oder .hinweis-Farb-/Schriftregel verhindert die geforderte Vererbung.', 'Entferne die p-Schrift und die Absatz-Farbregeln. Setze die Grundwerte an main, die Ausnahme an main em.'], 16, refs.inheritance),
+  chapter7('css-diagnose', 'Mini-Projekt: eine widersprüchliche Gestaltung reparieren', 'Alle vier CSS-Übungen dieses Kapitels.', [
+    'Übertrage die Fehlersuche auf beide Seiten deiner Informationswebsite. Lies zuerst den Auftrag, sage die Darstellung voraus und untersuche passende Regeln. Korrigiere anschließend die Ursache. Du darfst unnötige Konfliktregeln entfernen oder gezielt ändern. Deine Texte, Dateinamen und Klassen bleiben frei wählbar.',
+    'Arbeite zuerst ohne Musterlösung. Prüfe danach beide Seiten in der Vorschau. Selbstprüfung: Erkläre eine Selektorbeziehung, einen Gleichstand, einen Spezifitätskonflikt und den Unterschied zwischen Vererbung und durchsichtigem Hintergrund. Die feste Prüfung kontrolliert Technik und Darstellung, nicht deine mündliche Erklärung. Exportiere das Ergebnis für deinen externen Editor.',
+  ], '/* Erst untersuchen: Welche Regel trifft den Absatz direkt? */\nmain { color: navy; font-family: serif; }\np { color: maroon; font-family: sans-serif; }',
+  'Repariere beide Seiten: Jedes main erhält navy als Textfarbe, serif als Schrift und lightyellow als Hintergrund. Mindestens ein direkter Absatz pro main erbt Farbe und Schrift, enthält ein direkt maroon gefärbtes em und dieses em bleibt ohne eigenen Hintergrund. Behalte zwei vollständige, gegenseitig verlinkte Seiten mit semantischen Bereichen und Bildern. Entferne die störenden Absatzregeln. Vergleiche, begründe und exportiere deine Website.',
+  'css-transfer', ['Untersuche einen Absatz auf jeder Seite: Welche Werte kommen von main, welche direkt vom Absatz?', 'Die Musterregel main setzt die Grundwerte. Entferne direkt passende Absatz-Farb-/Schriftregeln; main em darf die Farbe direkt ändern.'], 17, refs.inheritance),
+);
+
+LESSONS.push(...CSS_LESSONS);
+LESSONS.push(...FORM_LESSONS);
+LESSONS.push(...JS_LESSONS);
+LESSONS.push(...JS15_LESSONS);
+LESSONS.push(...JS16_LESSONS);
+LESSONS.push(...JS17_LESSONS);
+
+export function solutionFor(lesson) {
+  if (lesson.chapter === 17 && lesson.jsStep) return js17CourseFiles(lesson);
+  if (lesson.chapter === 16 && lesson.jsStep) return js16CourseFiles(lesson);
+  if (lesson.chapter === 15 && lesson.jsStep) return js15CourseFiles(lesson);
+  if (lesson.jsStep) return jsCourseFiles(lesson);
+  if (lesson.formStep !== undefined) return formCourseFiles(lesson, cssCourseFiles(CSS_LESSONS.at(-1), solution(17)));
+  return lesson.cssStep !== undefined ? cssCourseFiles(lesson, solution(17)) : structuredClone(solution(lesson.stage));
+}
 export function starterFor(lesson) {
+  if (lesson.chapter === 17 && lesson.jsStep) return js17CourseFiles(lesson, true);
+  if (lesson.chapter === 16 && lesson.jsStep) return js16CourseFiles(lesson, true);
+  if (lesson.chapter === 15 && lesson.jsStep) return js15CourseFiles(lesson, true);
+  if (lesson.jsStep) return jsCourseFiles(lesson, true);
+  if (lesson.formStep !== undefined) return formCourseFiles(lesson, cssCourseFiles(CSS_LESSONS.at(-1), solution(17)), true);
+  if (lesson.cssStep !== undefined) return cssCourseFiles(lesson, solution(17), true);
   if (lesson.stage === 1) return { 'index.html': text(htmlPage('<!-- Schreibe hier deine Überschrift und deinen Absatz. -->')) };
   if (lesson.stage === 2) return { 'index.html': text('<h1>Meine Lernseite</h1>\n<p>Meine Einleitung.</p>') };
   const files = solution(Math.max(1, lesson.stage - 1));
+  if (lesson.stage === 13) {
+    const prepared = solution(13);
+    prepared['css/style.css'].content = css;
+    return prepared;
+  }
+  if (lesson.stage === 14) files['css/style.css'].content += '.hinweis { color: navy; }\n.hinweis { color: maroon; }\n';
+  if (lesson.stage === 15) {
+    for (const name of ['index.html', 'ueber-uns.html']) files[name].content = files[name].content.replace('<p class="hinweis">', '<p id="einstieg" class="hinweis">');
+    files['css/style.css'].content += '#einstieg { color: maroon; }\n.hinweis { color: maroon; }\n';
+  }
+  if (lesson.stage === 16) {
+    for (const name of ['index.html', 'ueber-uns.html']) files[name].content = files[name].content.replace('</p>', ' <em>Schritt für Schritt.</em></p>');
+    files['css/style.css'].content += 'main { color: navy; font-family: serif; background-color: lightyellow; }\nmain em { color: maroon; }\n';
+  }
+  if (lesson.stage === 17) files['css/style.css'].content += 'p { color: maroon; font-family: sans-serif; }\n';
   if (lesson.stage === 9) files['index.html'].content = files['index.html'].content.replace('src="bilder/', 'src="bild/');
   return files;
 }

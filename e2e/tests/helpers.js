@@ -27,3 +27,14 @@ export async function unterdrueckeOnboardingPopups(page) {
     }
   });
 }
+
+// Legacy feature scenarios explicitly open the tool drawers they exercise.
+// Default/collapsed and keyboard behavior has its own UI scenarios.
+export async function openWorkshopTools(page) {
+  if (new URL(page.url()).pathname !== '/frontendkurs') return;
+  const panels = page.locator('details[data-pilot-tool]');
+  await panels.first().waitFor({ state: 'attached' });
+  for (const panel of await panels.all()) {
+    if (!await panel.evaluate(element => element.open)) await panel.locator('summary').first().click();
+  }
+}

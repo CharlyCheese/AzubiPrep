@@ -2,16 +2,17 @@ import { test, expect } from '@playwright/test';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { unterdrueckeOnboardingPopups } from './helpers.js';
+import { unterdrueckeOnboardingPopups, openWorkshopTools } from './helpers.js';
 test.use({ serviceWorkers: 'block' });
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../frontend/src/pilot');
-const source = ['project.js', 'preview.js', 'course.js', 'validator.js'].map((file) => fs.readFileSync(path.join(root, file), 'utf8').replace(/^import .*;\r?\n/gm, '').replace(/^export /gm, '')).join('\n');
+const source = ['project.js', 'preview.js', 'css-course.js', 'form-course.js', 'js-course.js', 'js15-course.js', 'js16-course.js', 'js17-course.js', 'course.js', 'css-checks.js', 'layout-checks.js', 'form-checks.js', 'validator.js'].map((file) => fs.readFileSync(path.join(root, file), 'utf8').replace(/^import .*;\r?\n/gm, '').replace(/^export /gm, '')).join('\n');
 
-test('Alle Musterlösungen und Alternativen bestehen; zwei typische Fehler je Aufgabe werden erkannt', async ({ browser }) => {
+test('Kapitel 1–7: Lösungen und Alternativen bestehen; typische Fehler werden erkannt', async ({ browser }) => {
   const page = await browser.newPage();
-  const results = await page.evaluate((code) => {
+  const results = await page.evaluate(async (code) => {
     const api = new Function(`${code}\nreturn { LESSONS, solutionFor, validateProject };`)();
-    return api.LESSONS.map((lesson) => {
+    const results = [];
+    for (const lesson of api.LESSONS.filter(item => item.chapter <= 7)) {
       const solution = api.solutionFor(lesson);
       const alternate = structuredClone(solution);
       for (const file of Object.values(alternate)) if (file.kind === 'text') file.content = file.content.replaceAll('<h1>', '<h1 class="eigene-klasse">').replaceAll('Meine Lernseite', 'Mein anderes Thema');
@@ -27,9 +28,11 @@ test('Alle Musterlösungen und Alternativen bestehen; zwei typische Fehler je Au
         if (rule === 'semantic') file.content = file.content.replace(/<footer\b[^>]*>[\s\S]*?<\/footer>/gi, '');
         if (rule === 'css') file.content = file.content.replace(/<link\b[^>]*>/gi, '');
         if (rule === 'class') file.content = file.content.replaceAll('.hinweis', 'p');
+        if (rule.startsWith('css-') && file.content.includes('{')) file.content = '';
       }
-      return { id: lesson.id, valid: api.validateProject(solution, lesson, '1').passed, alternate: api.validateProject(alternate, lesson, '2').passed, missing: api.validateProject(missingHeading, lesson, '3').passed, empty: api.validateProject(brokenDocument, lesson, '4').passed };
-    });
+      results.push({ id: lesson.id, valid: (await api.validateProject(solution, lesson, '1')).passed, alternate: (await api.validateProject(alternate, lesson, '2')).passed, missing: (await api.validateProject(missingHeading, lesson, '3')).passed, empty: (await api.validateProject(brokenDocument, lesson, '4')).passed });
+    }
+    return results;
   }, source);
   for (const item of results) { expect(item, item.id).toEqual({ id: item.id, valid: true, alternate: true, missing: false, empty: false }); }
   await page.close();
@@ -39,31 +42,31 @@ test.beforeEach(async ({ page }) => { await unterdrueckeOnboardingPopups(page); 
 
 test('Bewertung berücksichtigt freie Startseite, HTML-Varianten, Vererbung und echte Klassenselektoren', async ({ browser }) => {
   const page = await browser.newPage();
-  const result = await page.evaluate((code) => {
+  const result = await page.evaluate(async (code) => {
     const api = new Function(`${code}\nreturn { LESSONS, solutionFor, validateProject };`)();
     const lesson = api.LESSONS.find((item) => item.id === 'klassen');
     const files = api.solutionFor(lesson);
     files['index.html'].content = files['index.html'].content.replace('lang="de"', 'lang=de');
     files['css/style.css'].content = files['css/style.css'].content.replace('p { font-family:', 'body { font-family:');
-    const valid = api.validateProject(files, lesson, '1').passed;
+    const valid = (await api.validateProject(files, lesson, '1')).passed;
     const invalid = structuredClone(files);
     invalid['css/style.css'].content = 'h1{color:navy} p{font-family:sans-serif;background-color:yellow}';
-    const noClass = api.validateProject(invalid, lesson, '2').passed;
+    const noClass = (await api.validateProject(invalid, lesson, '2')).passed;
     const home = files['index.html'].content.replaceAll('ueber-uns.html', 'about.html');
     const about = files['ueber-uns.html'].content.replaceAll('index.html', 'home.html');
     const renamed = { 'about.html': { kind: 'text', content: about }, 'home.html': { kind: 'text', content: home }, 'css/style.css': files['css/style.css'], 'bilder/beispiel.png': files['bilder/beispiel.png'] };
-    const freeNames = api.validateProject(renamed, lesson, '3', 'home.html').passed;
+    const freeNames = (await api.validateProject(renamed, lesson, '3', 'home.html')).passed;
     const missing = structuredClone(files); missing['ueber-uns.html'].content = missing['ueber-uns.html'].content.replace(/<title>.*?<\/title>/, '');
-    const errorFile = api.validateProject(missing, lesson, '4').results.find((item) => item.rule === 'document').file;
+    const errorFile = (await api.validateProject(missing, lesson, '4')).results.find((item) => item.rule === 'document').file;
     const wrongCase = structuredClone(files); wrongCase['index.html'].content = wrongCase['index.html'].content.replace('src="bilder/', 'src="Bilder/');
-    const caseMessage = api.validateProject(wrongCase, lesson, '5').results.find((item) => item.rule === 'path')?.message || '';
+    const caseMessage = (await api.validateProject(wrongCase, lesson, '5')).results.find((item) => item.rule === 'path')?.message || '';
     return { valid, noClass, freeNames, errorFile, caseMessage: caseMessage.includes('Groß-/Kleinschreibung') };
   }, source);
   expect(result).toEqual({ valid: true, noClass: false, freeNames: true, errorFile: 'ueber-uns.html', caseMessage: true });
   await page.close();
 });
 async function open(page, lesson = 'zweite-seite') {
-  await page.goto('/frontendkurs');
+  await page.goto('/frontendkurs'); await openWorkshopTools(page);
   await expect(page.getByRole('combobox', { name: 'Lektion', exact: true })).toBeVisible();
   await page.getByRole('combobox', { name: 'Lektion', exact: true }).selectOption(lesson);
 }
@@ -72,6 +75,137 @@ async function importJson(page, files) {
   await page.getByLabel('Sicherung einlesen', { exact: true }).setInputFiles({ name: 'projekt.json', mimeType: 'application/json', buffer: Buffer.from(JSON.stringify({ format: 'azubiprep-pilot', version: 1, files })) });
 }
 const text = (content) => ({ kind: 'text', content });
+
+test('Kapitel 7 prüft echte Kaskade, Vererbung und Technik statt bloß vorhandener Regeln', async ({ browser }) => {
+  const page = await browser.newPage();
+  const results = await page.evaluate(async code => {
+    const api = new Function(`${code}\nreturn { LESSONS, solutionFor, starterFor, validateProject };`)();
+    const check = async (id, change) => {
+      const lesson = api.LESSONS.find(item => item.id === id);
+      const files = api.solutionFor(lesson); change?.(files);
+      return (await api.validateProject(files, lesson, 'css-test')).results.find(item => item.rule.startsWith('css-')).passed;
+    };
+    const edit = (files, from, to) => { files['css/style.css'].content = files['css/style.css'].content.replace(from, to); };
+    const broken = {};
+    broken.descendantInsteadOfChild = await check('selektoren', files => edit(files, 'main > p', 'main p'));
+    broken.ungrouped = await check('selektoren', files => edit(files, 'h1, h2 { color: navy; }', 'h1 { color: navy; } h2 { color: navy; }'));
+    broken.overridden = await check('selektoren', files => { files['css/style.css'].content += 'main > p { color: maroon; }'; });
+    broken.order = await check('reihenfolge', files => { files['css/style.css'].content += '.hinweis { color: maroon; }'; });
+    broken.specificity = await check('spezifitaet', files => edit(files, '#einstieg { color: navy; }', '#einstieg { color: maroon; }'));
+    broken.duplicateId = await check('spezifitaet', files => { files['index.html'].content = files['index.html'].content.replace('<h2>', '<h2 id="einstieg">'); });
+    broken.directSameValue = await check('vererbung', files => { files['css/style.css'].content += 'main > p { color: navy; font-family: serif; }'; });
+    broken.background = await check('vererbung', files => { files['css/style.css'].content += 'em { background-color: lightyellow; }'; });
+    broken.secondPage = await check('css-diagnose', files => { files['ueber-uns.html'].content = files['ueber-uns.html'].content.replace('<em>', '<strong>').replace('</em>', '</strong>'); });
+    broken.inline = await check('reihenfolge', files => { files['index.html'].content = files['index.html'].content.replace('<main>', '<main style="color: navy">'); });
+    broken.important = await check('reihenfolge', files => edit(files, '.hinweis { color: navy; }', '.hinweis { color: navy !important; }'));
+    broken.groupDecoy = await check('selektoren', files => {
+      edit(files, 'h1, h2 { color: navy; }', 'h1, h2 { color: maroon; }');
+      files['css/style.css'].content += 'h1 { color: navy; } h2 { color: navy; }';
+    });
+    broken.descendantDecoy = await check('selektoren', files => {
+      edit(files, 'main p { color: navy; }', 'main p { color: maroon; }');
+      files['css/style.css'].content += 'main > p { color: navy; } main section p { color: navy; }';
+    });
+    broken.childDecoy = await check('selektoren', files => { files['css/style.css'].content += '.hinweis { background-color: lightyellow; }'; });
+    broken.orderById = await check('reihenfolge', files => {
+      files['index.html'].content = files['index.html'].content.replace('<p class="hinweis">', '<p id="einstieg" class="hinweis">');
+      files['css/style.css'].content += '#einstieg { color: navy; }';
+    });
+    broken.specificityDecoy = await check('spezifitaet', files => { files['css/style.css'].content += 'main #einstieg { color: navy; }'; });
+    broken.secondPageDuplicateId = await check('spezifitaet', files => { files['ueber-uns.html'].content = files['ueber-uns.html'].content.replace('<h2>', '<h2 id="einstieg">'); });
+    broken.ineffectiveClassConflict = await check('spezifitaet', files => { files['css/style.css'].content += '.hinweis { color: navy; }'; });
+    const starters = await Promise.all(api.LESSONS.filter(item => item.chapter === 7).map(async lesson => (await api.validateProject(api.starterFor(lesson), lesson, 'starter')).passed));
+    const alternateSelectors = await check('selektoren', files => {
+      for (const file of Object.values(files)) if (file.kind === 'text') file.content = file.content.replaceAll('hinweis', 'notiz').replaceAll('einstieg', 'beginn');
+      edit(files, 'main > p {', 'main > .notiz {');
+    });
+    const alternateInheritance = await check('css-diagnose', files => {
+      files['css/style.css'].content = files['css/style.css'].content.replaceAll('main em', 'p em');
+      for (const name of ['index.html', 'ueber-uns.html']) files[name].content = files[name].content.replace('Wir lernen gemeinsam.', 'Ein selbst gewähltes Thema.');
+    });
+    return { broken, starters, alternateSelectors, alternateInheritance, leakedFrames: document.querySelectorAll('iframe').length };
+  }, source);
+  expect(Object.values(results.broken)).toEqual(Array(18).fill(false));
+  expect(results.starters).toEqual(Array(5).fill(false));
+  expect(results.alternateSelectors).toBe(true);
+  expect(results.alternateInheritance).toBe(true);
+  expect(results.leakedFrames).toBe(0);
+  await page.close();
+});
+
+test('CSS-Prüfung führt keinen Lerncode aus und entfernt ihren isolierten Prüfkontext', async ({ page }) => {
+  await page.goto('/frontendkurs'); await openWorkshopTools(page);
+  let outside = 0;
+  page.on('request', request => { if (request.url().includes('example.invalid')) outside++; });
+  const result = await page.evaluate(async code => {
+    const api = new Function(`${code}\nreturn { LESSONS, solutionFor, validateProject };`)();
+    const lesson = api.LESSONS.find(item => item.id === 'css-diagnose');
+    const files = api.solutionFor(lesson);
+    files['index.html'].content += '<script>parent.localStorage.setItem("css-escape","yes")</script><img src="https://example.invalid/pixel" onerror="parent.localStorage.setItem(\'css-escape\',\'yes\')"><iframe src="https://example.invalid"></iframe>';
+    await api.validateProject(files, lesson, 'security');
+    files['css/style.css'].content = 'p{}'.repeat(301);
+    let rejected = false;
+    try { await api.validateProject(files, lesson, 'limits'); } catch { rejected = true; }
+    return { escaped: localStorage.getItem('css-escape'), frames: document.querySelectorAll('iframe').length, rejected };
+  }, source);
+  expect(result).toEqual({ escaped: null, frames: 0, rejected: true });
+  expect(outside).toBe(0);
+});
+
+test('CSS-Fortsetzung zeigt Browserwerte, Inspektor und behält den Entwurf nach Neustart', async ({ page }) => {
+  await open(page, 'vererbung');
+  const files = await page.evaluate(code => {
+    const api = new Function(`${code}\nreturn { LESSONS, solutionFor };`)();
+    return api.solutionFor(api.LESSONS.find(item => item.id === 'vererbung'));
+  }, source);
+  await importJson(page, files);
+  await page.getByRole('button', { name: 'Aufgabe prüfen', exact: true }).click();
+  await expect(page.getByText('Dieser eingereichte Stand hat die Pflichtprüfung bestanden. Ergänze die Selbstprüfung.', { exact: true })).toBeVisible();
+  await expect(page.getByText(/CSS-Technik und die verlangten Browserwerte/)).toBeVisible();
+  await page.getByRole('button', { name: 'Vorschau', exact: true }).click();
+  const frame = page.frameLocator('iframe[title="Dein Projekt"]');
+  await expect(frame.locator('main > p')).toHaveCSS('color', 'rgb(0, 0, 128)');
+  await expect(frame.locator('main > p')).toHaveCSS('font-family', 'serif');
+  await expect(frame.locator('main > p em')).toHaveCSS('color', 'rgb(128, 0, 0)');
+  await expect(frame.locator('main > p em')).toHaveCSS('background-color', 'rgba(0, 0, 0, 0)');
+  await page.getByRole('button', { name: 'Element untersuchen', exact: true }).click();
+  await frame.locator('main > p').click();
+  await expect(page.locator('.pilot-inspector')).toContainText('font-family: serif');
+  await expect(page.locator('.pilot-inspector')).toContainText('Regel am übergeordneten main');
+  await expect(page.getByRole('status')).toHaveText('Gespeichert');
+  await page.reload(); await openWorkshopTools(page);
+  await page.getByRole('combobox', { name: 'Lektion', exact: true }).selectOption('vererbung');
+  await expect(page.getByRole('combobox', { name: 'Lektion', exact: true }).locator('option:checked')).toContainText('Prüfung bestanden');
+  await page.getByRole('button', { name: 'Schreiben', exact: true }).click();
+  await page.getByRole('button', { name: 'css/style.css', exact: true }).click();
+  await expect(page.getByRole('textbox', { name: 'Code css/style.css', exact: true })).toHaveValue(files['css/style.css'].content);
+});
+
+test('Ein gespeicherter Pilotstand erhält neue Lektionen ohne alte Ergebnisse zu entwerten', async ({ page }) => {
+  await open(page, 'erste-seite');
+  await page.getByRole('button', { name: 'Schreiben', exact: true }).click();
+  await page.getByRole('textbox', { name: 'Code index.html', exact: true }).fill('<h1>Mein bisheriger Entwurf</h1><p>Bleibt erhalten.</p>');
+  await page.getByRole('button', { name: 'Aufgabe prüfen', exact: true }).click();
+  await expect(page.getByRole('status')).toHaveText('Gespeichert');
+  // Einen echten gespeicherten Kurs auf den Umfang des bisherigen Piloten begrenzen.
+  await page.evaluate(async () => {
+    const dir = await (await navigator.storage.getDirectory()).getDirectoryHandle('azubiprep-frontendpilot-v1');
+    const head = JSON.parse(await (await (await dir.getFileHandle('head.json')).getFile()).text());
+    const handle = await dir.getFileHandle(`${head.slot}.json`);
+    const old = JSON.parse(await (await handle.getFile()).text());
+    for (const id of ['selektoren', 'reihenfolge', 'spezifitaet', 'vererbung', 'css-diagnose']) delete old.projects[id];
+    const stream = await handle.createWritable(); await stream.write(JSON.stringify(old)); await stream.close();
+  });
+  await page.reload(); await openWorkshopTools(page);
+  const lessons = page.getByRole('combobox', { name: 'Lektion', exact: true });
+  await expect(lessons.locator('option')).toHaveCount(82);
+  await expect(lessons.locator('option:checked')).toContainText('Prüfung bestanden');
+  await page.getByRole('button', { name: 'Schreiben', exact: true }).click();
+  await expect(page.getByRole('textbox', { name: 'Code index.html', exact: true })).toContainText('Mein bisheriger Entwurf');
+  await lessons.selectOption('selektoren');
+  await page.getByRole('button', { name: 'Schreiben', exact: true }).click();
+  await expect(page.getByRole('textbox', { name: 'Code index.html', exact: true })).toContainText('vertiefung');
+});
 
 test('Externer Mehrdateistand erhält CSS, Bilder und Navigation ohne Originaländerung', async ({ page }) => {
   await open(page, 'stylesheet');
@@ -122,7 +256,7 @@ test('Gesicherter Entwurf wird nach Neustart wiederhergestellt; Schreibfehler si
   await page.getByRole('button', { name: 'Schreiben', exact: true }).click();
   await page.getByRole('textbox', { name: 'Code index.html', exact: true }).fill('<h1>Mein wiederhergestellter Entwurf</h1><p>Hallo</p>');
   await expect(page.getByRole('status')).toHaveText('Gespeichert');
-  await page.reload();
+  await page.reload(); await openWorkshopTools(page);
   await page.getByRole('button', { name: 'Schreiben', exact: true }).click();
   await expect(page.getByRole('textbox', { name: 'Code index.html', exact: true })).toContainText('Mein wiederhergestellter Entwurf');
   await page.evaluate(() => { navigator.storage.getDirectory = async () => { throw new Error('Simulierter Schreibfehler'); }; });
@@ -199,7 +333,7 @@ test('Bewertungsmeldung enthält geprüften Stand; Änderungen verlieren nicht s
     saved.projects['erste-seite'].checks.at(-1).validatorVersion = 'älterer-prüfer';
     const stream = await handle.createWritable(); await stream.write(JSON.stringify(saved)); await stream.close();
   });
-  await page.reload(); await page.getByRole('button', { name: 'Prüfen', exact: true }).click();
+  await page.reload(); await openWorkshopTools(page); await page.getByRole('button', { name: 'Prüfen', exact: true }).click();
   await expect(page.getByText(/Älterer Datei- oder Regelstand/)).toBeVisible();
   await expect(page.getByText(/älterer-prüfer/)).toBeVisible();
 });
@@ -240,7 +374,7 @@ test('JSON-Sicherung erhält freie Startseite und vorhandene Bilder werden nicht
 
 test('OPFS erhält den letzten gesicherten Stand bei Kursgrenze und unbekanntem Schema', async ({ browser }) => {
   const context = await browser.newContext({ bypassCSP: true, serviceWorkers: 'block' });
-  const page = await context.newPage(); await page.goto('http://127.0.0.1:3001/api/health');
+  const page = await context.newPage(); await page.goto('http://127.0.0.1:3001/api/health'); await openWorkshopTools(page);
   const code = fs.readFileSync(path.join(root, 'storage.js'), 'utf8').replace(/^export /gm, '');
   const result = await page.evaluate(async (code) => {
     const api = new Function(`${code}\nreturn { saveCourse, loadCourse };`)();
@@ -283,14 +417,14 @@ test('Entwürfe überleben das vollständige Schließen und erneute Öffnen eine
   let context = await playwright.chromium.launchPersistentContext(profile, { headless: true, serviceWorkers: 'block' });
   try {
     let page = context.pages()[0]; await unterdrueckeOnboardingPopups(page);
-    await page.goto('http://127.0.0.1:3001/frontendkurs');
+    await page.goto('http://127.0.0.1:3001/frontendkurs'); await openWorkshopTools(page);
     await page.getByRole('button', { name: 'Schreiben', exact: true }).click();
     await page.getByRole('textbox', { name: 'Code index.html', exact: true }).fill('<h1>Nach Browserneustart vorhanden</h1><p>Gesichert.</p>');
     await expect(page.getByRole('status')).toHaveText('Gespeichert');
     await context.close();
     context = await playwright.chromium.launchPersistentContext(profile, { headless: true, serviceWorkers: 'block' });
     page = context.pages()[0]; await unterdrueckeOnboardingPopups(page);
-    await page.goto('http://127.0.0.1:3001/frontendkurs');
+    await page.goto('http://127.0.0.1:3001/frontendkurs'); await openWorkshopTools(page);
     await page.getByRole('button', { name: 'Schreiben', exact: true }).click();
     await expect(page.getByRole('textbox', { name: 'Code index.html', exact: true })).toHaveValue('<h1>Nach Browserneustart vorhanden</h1><p>Gesichert.</p>');
   } finally { await context.close(); }
@@ -347,7 +481,7 @@ test('Nacheinander ausgewählte HTML- und CSS-Dateien ergänzen das Projekt; Akt
   await expect(tree.getByRole('button', { name: 'meine-seite.html', exact: true })).toBeVisible();
   await expect(tree.getByRole('button', { name: 'css/style.css', exact: true })).toBeVisible();
   await expect(page.getByRole('status')).toHaveText('Gespeichert');
-  await page.reload();
+  await page.reload(); await openWorkshopTools(page);
   await page.getByRole('combobox', { name: 'Lektion', exact: true }).selectOption('zweite-seite');
   await page.getByRole('button', { name: 'Schreiben', exact: true }).click();
   await expect(tree.getByRole('button', { name: 'meine-seite.html', exact: true })).toBeVisible();
@@ -364,7 +498,7 @@ test('Dateiauswahlknöpfe sind sichtbar und die Einführung führt zur Werkstatt
   await page.getByLabel('Ordner einlesen', { exact: true }).focus();
   await expect(page.getByLabel('Ordner einlesen', { exact: true })).toBeFocused();
   await expect(page.locator('#pilot-folder-help')).toContainText('zeigt Ordner statt einzelner Dateien');
-  await page.goto('/einstellungen');
+  await page.goto('/einstellungen'); await openWorkshopTools(page);
   await expect(page.getByText('Kurze Führung durch Dashboard, Lernreise, Lernbereich, Frontend-Werkstatt und Prüfungssimulation.', { exact: true })).toBeVisible();
   await page.getByRole('button', { name: 'Kurze Tour erneut anzeigen' }).click();
   const dialog = page.getByRole('dialog');
@@ -427,7 +561,7 @@ test('Frischer Gesamtdurchlauf ohne KI: erklären, zweite Datei, Import, Korrekt
   let context = await playwright.chromium.launchPersistentContext(profile, { headless: true, serviceWorkers: 'block' });
   try {
     let page = context.pages()[0]; observe(page); await unterdrueckeOnboardingPopups(page);
-    await page.goto('http://127.0.0.1:3001/frontendkurs');
+    await page.goto('http://127.0.0.1:3001/frontendkurs'); await openWorkshopTools(page);
     await expect(page.getByRole('region', { name: 'Lektionstext' })).toContainText('HTML beschreibt Inhalte');
     await page.getByRole('combobox', { name: 'Lektion', exact: true }).selectOption('zweite-seite');
     await expect(page.getByRole('region', { name: 'Lektionstext' })).toContainText('Ab jetzt kannst du extern arbeiten');
@@ -446,7 +580,7 @@ test('Frischer Gesamtdurchlauf ohne KI: erklären, zweite Datei, Import, Korrekt
     await context.close();
     context = await playwright.chromium.launchPersistentContext(profile, { headless: true, serviceWorkers: 'block' });
     page = context.pages()[0]; observe(page); await unterdrueckeOnboardingPopups(page);
-    await page.goto('http://127.0.0.1:3001/frontendkurs');
+    await page.goto('http://127.0.0.1:3001/frontendkurs'); await openWorkshopTools(page);
     await page.getByRole('combobox', { name: 'Lektion', exact: true }).selectOption('zweite-seite');
     await page.getByRole('button', { name: 'Schreiben', exact: true }).click();
     await expect(page.getByRole('textbox', { name: 'Code index.html', exact: true })).toHaveValue(start);

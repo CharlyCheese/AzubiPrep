@@ -1,7 +1,13 @@
 # Theorie, Glossar und lokale Wissenssuche
 
-Stand: 31.10.2026, OPS-027. Praktischer Theorieeinstieg im aktuellen Web-/
+OPS-033 ergänzt freiwillige [KI-Anbieter](26-KI-Anbieter.md). Öffentliche
+App-Lerninhalte können nach expliziter Auswahl mit eigenem ChatGPT-Abo erklärt
+werden. Private Quellen bleiben lokal lesbar und benötigen für KI-Erklärungen
+lokales Qwen. Beim Quellenwechsel wird auch die vorherige Suchfrage geleert.
+
+Stand: 31.10.2026, OPS-027/OPS-029. Praktischer Theorieeinstieg im aktuellen Web-/
 Desktop-Quellstand. Vorhandene Installer wurden nicht neu gebaut.
+OPS-029 ergänzt ausführliche Erklärungen und einen mehrteiligen Lernfeldablauf.
 
 ## Lernen und nachschlagen
 
@@ -19,6 +25,35 @@ Erklärung verlangen. Rückfragen verwenden das aktuelle Thema und neu gefundene
 Quellen, ohne einen gespeicherten Chatverlauf mitzuschicken. Für eindeutige
 Bezüge den Begriff erneut nennen. Eine vorhandene passende Frage lässt sich
 anschließend direkt üben; Erklärung und Quellenlesen ändern keinen Lernstand.
+
+Standardmäßig ist **Ausführlich** gewählt: Grundlagen, nachvollziehbare
+Zusammenhänge, schrittweises Beispiel, typische Fehler, Zusammenfassung und
+eine unbenotete Verständnisfrage. Bei ausreichenden Quellen zielt die Anweisung
+auf 500–900 Wörter; die Länge wird nicht durch unbelegte Ergänzungen erzwungen.
+**Kompakt** bietet weiterhin den bisherigen kurzen Überblick.
+
+Die Lernfeldeinstiege enthalten eine eigene didaktische Gliederung für die
+gemeinsamen Felder LF1–9 und die zwölf fachrichtungsspezifischen Felder LF10–12.
+Die Gliederungen enthalten je fünf bis acht Teile und stammen nicht aus privaten
+Unterlagen. Beispiel LF2: Bedarf, Hardware, Software, sichere/nachhaltige Planung,
+Angebote, Beschaffung, Einrichtung/Übergabe und Auswertung des Auftrags.
+Es handelt sich um eine Lernstruktur zu zentralen Kompetenzbereichen, nicht um
+eine Garantie, jede Anforderung eines Landeslehrplans oder jeder Quelle abzudecken.
+
+**Alle offenen Abschnitte ausführlich erklären** arbeitet diese Teile bewusst
+nacheinander ab. Jeder Teil erhält eine eigene gezielte Quellenabfrage und
+bleibt separat lesbar. Bei fehlenden Quellen erscheint eine Lücke; bei einem
+Dienstfehler hält der Ablauf an. Abbrechen erhält fertige Teile, erneutes
+Starten setzt offene/fehlgeschlagene Teile fort. Einzeln lassen sich Abschnitte
+über ihren eigenen Knopf erneut anfordern. Quellenlücken werden nicht automatisch
+immer wieder angefragt, können aber ebenfalls einzeln wiederholt werden.
+
+Die angezeigte Zahl unterscheidet Abschnitte mit Erklärung und mit Quellenlücke;
+sie ist kein Lernfortschritt, Qualitätsnachweis oder Vollständigkeitssiegel.
+Mehrere Modellanfragen benötigen entsprechend länger. Die Teilantworten bleiben
+nur im aktuellen UI. Verlassen der Seite oder Wechsel von Thema, Modell,
+Quellen, Materialstand oder Erklärungstiefe verwirft sie. Die einzelne Rückfrage
+ist von der kapitelweisen Bearbeitung getrennt; sie wird nicht in jeden Teil kopiert.
 
 Die **Suche** behält die bisherige Fragensuche und ergänzt eine aufklappbare
 Wissenssuche für natürliche Ausbildungsfragen, etwa „Was unterscheidet RAM und
@@ -75,11 +110,52 @@ keine semantische Wahrheit oder vollständige Theorieabdeckung.
 Private Materialänderungen invalidieren sichtbare/laufende Antworten auch dann,
 wenn bei mehreren Unterlagen der Gesamtstatus weiterhin „bereit“ bleibt.
 Kontext-/Quellen-/Modellwechsel und Abbruch verwerfen verspätete Antworten.
-Für Theorie bis 1100 Ausgabetokens und 450 Wörter; die bisherigen engeren
-Kurs-/Quizlimits bleiben bestehen. Bei fehlenden Fundstellen oder Dienstfehlern
+Für kompakte Theorie bis 1100 Ausgabetokens/450 Wörter, ausführlich bis
+2400 Ausgabetokens/900 Wörter und 18000 Zeichen für die begrenzte Modellantwort.
+Ausführliche Erklärungen bekommen bis sechs gezielte Fundstellen je Abschnitt,
+kompakte Hilfe und Quellenlesen weiterhin höchstens drei. Das Quellenformat
+validiert entsprechend bis sechs Kennungen, ohne neue Zugriffsrechte.
+Die bisherigen engeren Kurs-/Quizlimits bleiben bestehen. Bei fehlenden Fundstellen oder Dienstfehlern
 bleiben Katalog und Quiz nutzbar; Originalauszüge können separat gelesen werden.
 
 ## Nachweise
+
+OPS-030 verbessert die Quellenabfrage für konkrete Begriffsfragen: begrenzte
+Wortform-/Schreibvarianten, Erkennung getrennter Zusammensetzungen und weniger
+Gewicht für allgemeine Fragewörter. Die Trefferbewertung verwendet ausschließlich
+den tatsächlich übergebenen Auszug. Bei erkannten Vergleichen müssen beide
+Begriffe abgedeckt sein; das ersetzt keine semantische Prüfung. Der
+Quellenmodus wird bei fehlenden Belegen niemals stillschweigend gewechselt.
+
+Die öffentlichen WISO-Grundlagen enthalten eine selbst formulierte, durch
+BMAS-Primärquellen belegte Unterscheidung von Gewerkschaft und Arbeitgeberverband.
+Die konkrete Frage wird mit App-Lerninhalten in einer echten lokalen Qwen-Probe
+beantwortet. Im privaten Modus wurden die gesuchten Begriffe nach der Korrektur
+gefunden, die Modellprobe lehnte eine belegte Erklärung weiterhin ab.
+Begriffsabdeckung ist keine Zusage ausreichender Theorie in jeder Quelle.
+
+OPS-031 vereinheitlicht IoT und die vollständige Langform Internet of Things
+für Quellenabfrage sowie Theorie-/Glossarfilter. Auch Internet-of-Things und
+abweichende Großschreibung werden unterstützt. Titel und Auszüge erscheinen
+weiter in ihrer ursprünglichen Schreibweise. Weitere Abkürzungen werden nicht
+automatisch gleichgesetzt; die Modellantwort bleibt an gefundene Belege gebunden.
+
+OPS-032 erweitert dies auf69 gemeinsame IT-Begriffe, beispielsweise
+CPU/Central Processing Unit, DNS/Domain Name System, HTML/Hypertext Markup
+Language, SQL/Structured Query Language und die Cloud-Service-Modelle.
+Theoriequellen und Glossarfilter nutzen denselben Mechanismus. Im Glossar
+kommen zusätzliche Klammerdefinitionen ausschließlich aus den nach Lernfeld,
+Modul und Fachrichtung gefilterten öffentlichen Titeln; beim Quellenabruf aus
+den tatsächlichen ausgewählten Auszügen. Definitionen außerhalb gekürzter
+Auszüge dienen nicht als versteckte Treffergrundlage. Die lokale Quelle hat
+einen eigenen getrennten Kontext, siehe [Grenzen](24-Lokales-RAG.md).
+
+Zehn reale Standardpaare lieferten jeweils identische Quellen für Kurz- und
+Langform, öffentlich und lokal. Lokale DNS-Modellproben für beide Schreibweisen
+lieferten bestätigte Quellenkennungen; private Inhalte/Antworten wurden dabei
+nicht ausgegeben. Das belegt den Abruf, keine unabhängige fachliche Wahrheit
+jeder Modellantwort. Eine Abkürzungsauflösung allein schafft keine zusätzlichen
+Theoriebelege.
 
 Synthetische Backend-/API-Fälle prüfen Katalog, Lernfelder, Pagination,
 Fachrichtungs-/Modulfilter einschließlich passend gefilterter Übungsfrage,
@@ -93,11 +169,24 @@ Eine echte lokale Qwen-Probe mit selbst geschriebenem RAM/SSD-Lerntext lieferte
 Erklärung, Beispiel, Merksatz und gültige Quellen. Keine realen privaten Inhalte
 oder Modellantworten in Testartefakte, Chat oder Dokumentation übernommen.
 
-Abschluss: 123 Backendtests/Lint, 12 Desktop-/Webruntimeprüfungen und 42
+OPS-027-Abschluss: 123 Backendtests/Lint, 12 Desktop-/Webruntimeprüfungen und 42
 unterschiedliche Browser-/Electronfälle grün. Frischer unabhängiger Nachreview
 ohne offene bestätigte Findings; dessen eigener Nachlauf: 40/40 Tests.
 Eine reale lokale Quellenleseprobe bestätigte begrenzte Auszüge, Seitenbezug
 und fehlenden Modellaufruf ausschließlich durch neutrale Prüfflags.
+
+OPS-029 prüft zusätzlich alle Abschnittspläne, serverseitige Kapitel-/
+Detailvalidierung, sechs begrenzte Fundstellen sowie Fachkontext in LF12-
+Projektanfragen. Browserfälle prüfen die sequenzielle Bearbeitung, sichtbare
+Quellenlücken, erhaltene fertige Antworten bei Abbruch, Wiederaufnahme offener
+Teile und vollständiges Verwerfen bei Quellenwechsel. Private Materialien und
+reale Antworten bleiben weiterhin außerhalb sämtlicher Testartefakte.
+
+OPS-029-Abschluss:127Backendtests/Lint,45Browser-/Electronfälle und12Desktop-/
+Webruntimeprüfungen grün. Frischer unabhängiger Code-/Dokunachreview ohne offene
+Findings; eigener Prüfernachlauf36/36. Echte lokale synthetische Qwen-Probe:
+376Wörter mit Beispiel, Zusammenfassung und sechs gültigen Quellen ohne
+Abschneiden. Eine vorgegebene Wortzielspanne ist keine Mindestlängengarantie.
 
 Quelle für Lernfeldtitel und -zuordnung:
 [KMK-Rahmenlehrplan,13.12.2019](https://www.kmk.org/service/servicebereich-berufliche-schulen/downloadbereich-rahmenlehrplaene?tx_fedownloads_single%5Baction%5D=forceDownload&tx_fedownloads_single%5Bcontroller%5D=Downloads&tx_fedownloads_single%5Bdownload%5D=45009&type=150).

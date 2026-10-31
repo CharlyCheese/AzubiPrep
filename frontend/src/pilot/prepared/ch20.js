@@ -1,0 +1,58 @@
+import { chapter, refs } from './shared.js';
+
+export default chapter(20, 'DOM: Daten in sichtbare Inhalte verwandeln', 'Projekt 3 und HTML/CSS-Grundlagen.', 'Später: isolierte DOM-Übungsansicht. Aktuelle HTML-Vorschau führt weiterhin kein JS aus.', refs.dom, [
+  {
+    title: 'HTML-Quelltext und DOM unterscheiden', goal: 'Den lebenden Elementbaum verstehen.',
+    explain: ['Der Browser liest HTML und erstellt daraus einen DOM-Baum mit Elementen und Textknoten. Er kann fehlerhaftes HTML nach festgelegten Regeln ergänzen oder umordnen. Eine sichtbare Seite beweist deshalb nicht, dass der Quelltext korrekt ist. DOM-Änderungen ändern zunächst die Darstellung im Speicher, nicht deine HTML-Datei.', 'document bezeichnet das Dokument der Übungsseite. Ein externes klassisches script mit defer wird nach dem Parsen ausgeführt. So sind die vorher definierten Elemente vorhanden. Diese Browserobjekte existieren in unserer bisherigen reinen JS-Konsole absichtlich nicht.'],
+    example: '<!-- index.html, innerhalb des body -->\n<h1 id="heading">Mein Lernplan</h1>\n<p id="status">Noch keine Auswertung.</p>\n<!-- im head: <script src="app.js" defer></script> -->',
+    task: 'Bereite index.html und app.js mit defer vor. Zeichne den Baum aus main, h1 und p. Erkläre, warum eine DOM-Änderung nach einem Neuladen ohne Speicherung verschwinden kann.',
+    hints: ['Der DOM-Baum beschreibt die aktuelle Seite im Browser.', 'Dateiquelltext und momentaner Browserzustand sind zwei verschiedene Stände.'],
+    solution: '<!doctype html>\n<html lang="de"><head><meta charset="utf-8"><title>Lernplan</title>\n<script src="app.js" defer></script></head><body>\n<main><h1 id="heading">Mein Lernplan</h1><p id="status">Noch keine Auswertung.</p></main>\n</body></html>\n// app.js bleibt zunächst leer.',
+    criteria: ['Gültige Dokumenthülle, externe Datei und nachvollziehbare Baumzeichnung.', 'DOM und gespeicherte Datei sowie Browser-Fehlerbehandlung unterscheiden.'],
+  },
+  {
+    title: 'Ein Element auswählen und null beachten', goal: 'Selektoren mit vorhandenen Elementen verbinden.',
+    explain: ['document.querySelector("#status") liefert das erste passende Element oder null. Die Zeichenfolge nutzt bekannte CSS-Selektoren. querySelectorAll liefert eine statische NodeList passender Elemente, über die du mit for...of laufen kannst.', 'Ein falscher Selektor kann gültig sein und trotzdem nichts finden. Ein syntaktisch ungültiger Selektor kann dagegen einen Fehler werfen. Prüfe erwartete Elemente bewusst, statt danach unverständlich auf null.textContent zuzugreifen.'],
+    example: 'const status = document.querySelector("#status");\nif (status === null) throw new Error("Statusbereich fehlt");\nconsole.log(status.tagName);',
+    task: 'Wähle h1 und #status aus deiner Seite aus. Protokolliere deren tagName. Ändere testweise die ID im HTML und sorge für die klare Meldung "Statusbereich fehlt".',
+    hints: ['Die Raute gehört in den Selektor, nicht in den HTML-ID-Wert.', 'Vergleiche das Auswahlresultat vor jedem späteren Zugriff mit null.'],
+    solution: 'const heading = document.querySelector("h1");\nconst status = document.querySelector("#status");\nif (!heading || !status) throw new Error("Statusbereich fehlt");\nconsole.log(heading.tagName);\nconsole.log(status.tagName);',
+    criteria: ['H1 und P gefunden; fehlende ID löst verständlichen Fehler aus.', 'querySelectorAll als Momentaufnahme erklären, nicht als Array mit automatischer Aktualisierung.'],
+  },
+  {
+    title: 'Text sicher ändern', goal: 'Fremde Texte als Text darstellen.',
+    explain: ['textContent setzt Text und ersetzt dabei vorhandene Kinder des Elements. Eine Zeichenfolge mit <strong> bleibt sichtbarer Text. innerHTML würde die Zeichenfolge als HTML parsen und kann bei unkontrollierten Daten aktive Inhalte ermöglichen.', 'Setze Titel, Formulareingaben und geladene Texte deshalb mit textContent. Wenn du Struktur brauchst, erzeuge Elemente bewusst. Sicherheit hängt auch von weiteren Einfügeorten wie URLs ab; textContent ist kein allgemeiner Schutz für jede API.'],
+    example: 'status.textContent = "<strong>Hallo</strong>";\n// Sichtbar inklusive spitzer Klammern, kein strong-Element.',
+    task: 'Zeige im Status "2 offene Aufgaben" an. Teste anschließend den Text <img src=x onerror=alert(1)> als harmlosen sichtbaren Text. Verwende dafür keine HTML-Auswertung.',
+    hints: ['Setze status.textContent auf die Zeichenfolge.', 'Für Text plus Anzahl: status.textContent = anzahl + " offene Aufgaben";'],
+    solution: 'const status = document.querySelector("#status");\nif (!status) throw new Error("Statusbereich fehlt");\nconst anzahl = 2;\nstatus.textContent = anzahl + " offene Aufgaben";\n// Gegenprobe separat: status.textContent = "<img src=x onerror=alert(1)>";',
+    criteria: ['Anzahl sichtbar; Gegenprobe erzeugt kein img-Element und führt nichts aus.', 'Nach der Gegenprobe normalen Aufgabentext wiederherstellen.'],
+  },
+  {
+    title: 'Klassen und Eigenschaften gezielt setzen', goal: 'Darstellung ohne HTML-String steuern.',
+    explain: ['classList.add/remove/toggle verändert CSS-Klassen. toggle("done", boolean) setzt den gewünschten Zustand verlässlich, statt ihn blind umzuschalten. So bleibt eine wiederholte Darstellung mit denselben Daten gleich.', 'Für Formular- und Schaltflächeneigenschaften verwendest du beispielsweise button.disabled = true. Ein Attribut disabled="false" aktiviert das boolesche Attribut trotzdem. Eigenschaften und Attribute sind verwandt, aber nicht beliebig austauschbar. setAttribute("aria-label", "Entfernen: HTML") setzt dagegen gezielt ein benanntes Attribut als String; das nutzen wir später für verständliche Aktionsbeschriftungen.'],
+    example: 'status.classList.toggle("ready", true);\n// CSS: .ready { font-weight: bold; }\nconst button = document.querySelector("button");\nif (button) button.disabled = false;',
+    task: 'Ergänze eine CSS-Klasse ready und eine Schaltfläche. Schreibe setReady(ready), die Statusklasse und disabled passend setzt: ready true macht den Button bedienbar. Rufe die Funktion zweimal mit true auf.',
+    hints: ['Der Zustand ready wird gesetzt; ein Aufruf darf ihn nicht blind umkehren.', 'status.classList.toggle("ready", ready); button.disabled = !ready;'],
+    solution: 'const status = document.querySelector("#status");\nconst button = document.querySelector("button");\nif (!status || !button) throw new Error("Oberfläche fehlt");\nfunction setReady(ready) {\n  status.classList.toggle("ready", ready);\n  button.disabled = !ready;\n}\nsetReady(true);\nsetReady(true);',
+    criteria: ['true zweimal bleibt ready und bedienbar; false deaktiviert.', 'Zustand zusätzlich als Text vermitteln, nicht nur über Farbe.'],
+  },
+  {
+    title: 'Elemente erzeugen, anfügen und entfernen', goal: 'Eine Liste aus Daten aufbauen.',
+    explain: ['document.createElement("li") erzeugt ein noch nicht eingefügtes Element. Setze seinen Text, dann füge es mit append an eine ul an. remove entfernt ein Element; replaceChildren leert den Container oder ersetzt seine Kinder.', 'Eine render-Funktion sollte für dieselben Daten dieselbe Liste erzeugen. Wenn du bei jedem Aufruf nur anhängst, entstehen Duplikate. Leere deshalb den zuständigen Listenbereich vor dem vollständigen Neuaufbau. Andere Bereiche der Seite bleiben erhalten.'],
+    example: 'const li = document.createElement("li");\nli.textContent = "HTML wiederholen";\nlist.append(li);\n// li.remove(); würde genau diesen Eintrag entfernen.',
+    task: 'Ergänze <ul id="tasks"></ul>. Schreibe renderTitles(titles), die den Container leert und pro Titel ein li sicher erzeugt. Rufe sie zweimal mit ["HTML", "CSS"] und anschließend mit [] auf.',
+    hints: ['Wähle den Container einmal aus; die Daten kommen als Parameter.', 'list.replaceChildren(); danach for...of mit createElement, textContent, append.'],
+    solution: 'const list = document.querySelector("#tasks");\nif (!list) throw new Error("Liste fehlt");\nfunction renderTitles(titles) {\n  list.replaceChildren();\n  for (const title of titles) {\n    const li = document.createElement("li");\n    li.textContent = title;\n    list.append(li);\n  }\n}\nrenderTitles(["HTML", "CSS"]);',
+    criteria: ['Zwei Aufrufe erzeugen zwei, nicht vier Einträge.', '[] leert nur die Liste; HTML-artige Titel bleiben Text.'],
+  },
+  {
+    title: 'Miniprojekt: dynamische Lernübersicht', goal: 'Die reine Auswertung mit einer sicheren Ansicht verbinden.',
+    explain: ['Verbinde nun Projekt 3 mit der Oberfläche. report bleibt rein und kennt document nicht. renderReport erhält ausschließlich den Bericht. Diese Trennung verhindert, dass Berechnung und Seitenaufbau sich gegenseitig schwer testbar machen.', 'Zeige einen verständlichen Leerzustand, statt einfach nichts auszugeben. Sage vor dem Start voraus, welche Titel und Summe für limit 20 erscheinen. Verändere anschließend nur die Daten und beobachte den Neuaufbau.'],
+    example: '// Benötigt: report und tasks aus Kapitel 19.\nconst result = report(tasks, 20);\n// renderReport(result) ist die neue Oberflächenfunktion.',
+    task: 'Baue index.html mit #tasks und #summary. Implementiere renderReport(result) mit Titeln als li und Zusammenfassung "2 Aufgaben · 30 Minuten". Bei count 0: "Keine passenden Aufgaben". Gib alle Quelldateien ab.',
+    hints: ['Nutze renderTitles als Vorbild und setze die Zusammenfassung mit textContent.', 'result.count === 0 entscheidet über den Leertext; die Liste wird immer neu aufgebaut.'],
+    solution: 'const list = document.querySelector("#tasks");\nconst summary = document.querySelector("#summary");\nif (!list || !summary) throw new Error("Ansicht fehlt");\nfunction renderReport(result) {\n  list.replaceChildren();\n  for (const title of result.titles) {\n    const li = document.createElement("li"); li.textContent = title; list.append(li);\n  }\n  if (result.count === 0) { summary.textContent = "Keine passenden Aufgaben"; }\n  else { summary.textContent = result.count + " Aufgaben · " + result.minutes + " Minuten"; }\n}\n// Nach Aufgaben- und report-Definition: renderReport(report(tasks, 20));',
+    criteria: ['Beispielbericht korrekt; leerer Bericht besitzt verständlichen Text.', 'Berechnung unabhängig vom DOM; keine Script-Ausführung in der bisherigen Vorschau voraussetzen.'],
+  },
+]);

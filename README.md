@@ -4,7 +4,7 @@
 (FIAE, FISI, DPA, DVK) – Lernmodule, Karteikarten mit Spaced Repetition,
 Prüfungssimulation und Fortschritts-Tracking, wahlweise als Web-App oder
 installierbare Windows-Desktop-App. Dazu kommen eine HTML-/CSS-Werkstatt,
-Theorie & Glossar und eine optionale lokale Qwen-Lernbegleitung.
+Theorie & Glossar und freiwillige Lernhilfe mit lokalem Qwen oder eigenem ChatGPT-Abo.
 
 ![Node](https://img.shields.io/badge/Node-%E2%89%A522.13-339933?logo=node.js&logoColor=white)
 ![React](https://img.shields.io/badge/React-18-61DAFB?logo=react&logoColor=black)
@@ -101,6 +101,7 @@ Unterlagen, persönlichen Lerndaten oder Modellantworten sind abgebildet.
 - 7.000 Fragen in 26 Modulen, nach Lernfeld und Fachrichtung gegliedert
 - Theorie & Glossar mit Lernfeldeinstiegen, Fragenthemen und passenden Übungsfragen
 - Optionale Qwen-Erklärungen mit Praxisbeispiel und Merksatz; Originalfundstellen separat lesen
+- Ausführliche Lernfelder mit geordneten Teilthemen, einzelnen Erklärungen oder einem abbrechbaren Ablauf durch alle offenen Abschnitte
 - HTML-/CSS-Werkstatt mit Editor, Mehrdateiprojekten, externer Dateiauswahl, Vorschau/Inspektor und fester Aufgabenprüfung (Pilot Kapitel 1–6)
 - Quizmodus mit Sofort-Feedback und Erklärung (Single-Choice, Multiple-Choice, Freitext)
 - Karteikartenmodus mit Spaced Repetition (Leitner-System, 5 Boxen)
@@ -152,15 +153,21 @@ Unterlagen, persönlichen Lerndaten oder Modellantworten sind abgebildet.
 
 ## Lokale Lernbegleitung und eigene Unterlagen
 
-Die freiwillige Qwen-Anbindung nutzt Ollama auf demselben Rechner. Ein lokales
-Qwen-Modell muss separat vorhanden sein; die App lädt keine Modelle herunter
-und verwendet keinen Cloudfallback. Aktivierung und Materialverwaltung liegen
-unter **Einstellungen → KI und Lernmaterial**.
+Unter **Einstellungen → KI und Lernmaterial** stehen **Ohne KI**, **lokales
+Qwen über Ollama** und **eigenes ChatGPT-Abo** zur Wahl. Qwen muss separat auf
+dem Rechner vorhanden sein; es werden keine Modelle heruntergeladen. ChatGPT
+wird ausdrücklich per Browseranmeldung verbunden, benötigt Internet und ein
+berechtigtes freigegebenes Abo. Öffentliche Lerninhalte und freiwillig gewählter
+Code können dann an OpenAI gehen. Es gibt keinen automatischen Cloudfallback.
+Anmeldung und ChatGPT-Erklärungen sind im lokalen Webstand praktisch erprobt
+und durch Nutzerrückmeldung bestätigt.
 
 Eigene PDFs können lokal importiert und aufbereitet werden. Bei Lernanfragen
 werden private Unterlagen nur nach ausdrücklicher Auswahl verwendet. Originale,
 Seitentexte, Suchindex und Metadaten bleiben in der privaten lokalen Ablage;
 sie werden weder auf GitHub veröffentlicht noch mit der App verteilt.
+**Private Unterlagen werden auch bei gewähltem ChatGPT niemals übertragen.**
+Sie bleiben lokal lesbar; eine private KI-Erklärung benötigt lokales Qwen.
 Andere Anwender stellen ihr eigenes Material bereit. Antworten werden nicht
 als Chatverlauf gespeichert und verändern keine Punkte oder Prüfergebnisse.
 
@@ -170,9 +177,15 @@ PDF-Seitenbezug, auch ohne laufendes Qwen. Die Suche arbeitet zunächst über
 Textbegriffe; OCR für reine Scans und eine vollständige didaktische Abdeckung
 sind nicht enthalten. KI-Erklärungen und vorhandene Inhalte können Fehler
 enthalten und ergänzen den Berufsschulunterricht.
+Im ausführlichen Modus werden Lernfelder in geordneten Abschnitten behandelt,
+jeweils mit eigenen Fundstellen, Grundlagen, Beispiel und Zusammenfassung.
+Der Ablauf lässt sich abbrechen und bei offenen Teilen fortsetzen; fertige
+Teilantworten bleiben während des Seitenbesuchs sichtbar. Fehlende Quellen
+werden als Lücke gekennzeichnet.
 
 Einrichtung und Grenzen: [Qwen](docs/23-Qwen-Grundanbindung.md),
 [lokales RAG](docs/24-Lokales-RAG.md), [Theorie & Glossar](docs/25-Theorie-Glossar.md).
+Anbieterauswahl, Anmeldung und Datenschutz: [KI-Anbieter](docs/26-KI-Anbieter.md).
 
 ## Tech-Stack
 

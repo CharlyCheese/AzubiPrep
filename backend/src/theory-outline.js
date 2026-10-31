@@ -1,0 +1,172 @@
+// Eigene didaktische Gliederung, keine aus privaten Unterlagen übernommene
+// Buchstruktur. Lernfeldtitel: KMK-Rahmenlehrplan vom 13.12.2019.
+export const SPECIAL_FIELDS = [
+  ['LF10a', 'Benutzerschnittstellen gestalten und entwickeln'],
+  ['LF11a', 'Funktionalität in Anwendungen realisieren'],
+  ['LF12a', 'Kundenspezifische Anwendungsentwicklung durchführen'],
+  ['LF10b', 'Serverdienste bereitstellen und Administrationsaufgaben automatisieren'],
+  ['LF11b', 'Betrieb und Sicherheit vernetzter Systeme gewährleisten'],
+  ['LF12b', 'Kundenspezifische Systemintegration durchführen'],
+  ['LF10c', 'Werkzeuge des maschinellen Lernens einsetzen'],
+  ['LF11c', 'Prozesse analysieren und gestalten'],
+  ['LF12c', 'Kundenspezifische Prozess- und Datenanalyse durchführen'],
+  ['LF10d', 'Cyber-physische Systeme entwickeln'],
+  ['LF11d', 'Betrieb und Sicherheit vernetzter Systeme gewährleisten'],
+  ['LF12d', 'Kundenspezifisches cyber-physisches System optimieren'],
+];
+const plans = {
+  LF1: [
+    ['Unternehmen und ihre Ziele', 'Unternehmensziele Leitbild Wirtschaft Nachhaltigkeit soziale Ziele'],
+    ['Branche, Markt und Kunden', 'Markt Branche Wettbewerb Kunden Lieferanten Marktbeziehungen'],
+    ['Wie Wertschöpfung entsteht', 'Wertschöpfung Geschäftsprozesse Leistungen Betrieb'],
+    ['Organisation und Rechtsformen', 'Aufbauorganisation Organigramm Rechtsform Unternehmensorganisation'],
+    ['Die eigene Rolle im Betrieb', 'Aufgaben Verantwortung Vollmacht Weiterbildung Handlungsspielraum'],
+    ['Ergebnisse vorstellen und das Handeln reflektieren', 'Präsentation Team Kommunikation Qualität Reflexion Verbesserungen'],
+  ],
+  LF2: [
+    ['Kundenwünsche in Anforderungen übersetzen', 'Kundenbedarf Anforderungsanalyse Anforderungen Auswahlkriterien'],
+    ['Hardware und Peripherie verstehen', 'CPU RAM SSD Mainboard Schnittstellen Peripherie Kompatibilität'],
+    ['Software passend auswählen', 'Betriebssystem Anwendungssoftware Lizenzen Systemanforderungen'],
+    ['Sicher, ergonomisch und nachhaltig planen', 'Arbeitssicherheit Ergonomie Energieeffizienz Kennzeichnung Recycling'],
+    ['Produkte und Angebote vergleichen', 'Datenblatt Nutzwertanalyse Angebotsvergleich Kosten Lieferanten'],
+    ['Kalkulation und Beschaffung', 'Angebotskalkulation Zuschlag Kaufvertrag Lieferzeit Wareneingang Mängel'],
+    ['Arbeitsplatz einrichten und übergeben', 'Installation Konfiguration Inbetriebnahme Funktionstest Übergabeprotokoll'],
+    ['Den Auftrag auswerten', 'Kundenzufriedenheit Qualität Dokumentation Verbesserung Reflexion'],
+  ],
+  LF3: [
+    ['Netzwerkaufbau und Übertragungswege', 'Netzwerkkomponenten Topologie Ethernet WLAN Kabel Netzwerkplan'],
+    ['Schichten und Protokolle', 'OSI TCP IP Protokoll Schichtenmodell'],
+    ['Adressen und Teilnetze', 'IPv4 IPv6 Netzmaske Subnetting Gateway'],
+    ['Clients und grundlegende Dienste', 'Netzwerkkonfiguration DHCP DNS Client Einstellungen'],
+    ['Zugriff und Verbindung absichern', 'Authentifizierung WLAN Sicherheit Zugriffsrechte Verschlüsselung'],
+    ['Verbindung prüfen und dokumentieren', 'Fehlersuche Ping Diagnose Netzwerktest Dokumentation'],
+  ],
+  LF4: [
+    ['Schutzziele und schützenswerte Werte', 'Vertraulichkeit Integrität Verfügbarkeit Informationswerte'],
+    ['Den Arbeitsbereich erfassen', 'Bestandsaufnahme Daten Geschäftsprozesse IT Systeme Schutzobjekte'],
+    ['Bedrohungen und mögliche Schäden', 'Bedrohung Schwachstelle Risiko Schadensszenario'],
+    ['Datenschutz und Rahmenbedingungen', 'Datenschutz personenbezogene Daten Vorgaben Informationssicherheit'],
+    ['Schutzbedarf systematisch beurteilen', 'Schutzbedarf Schutzbedarfsfeststellung Einstufung Begründung'],
+    ['Maßnahmen und Ergebnisse bewerten', 'Schutzmaßnahmen Sicherheitskonzept Wirksamkeit Dokumentation'],
+  ],
+  LF5: [
+    ['Problem, Daten und Anforderungen', 'Datenverwaltung Anforderungen Datenmodell Software'],
+    ['Programmiergrundlagen', 'Variable Datentyp Operator Bedingung Schleife'],
+    ['Algorithmen und Programmstruktur', 'Algorithmus Funktion Methode Ablauf Kontrollstruktur'],
+    ['Objekte und einfache Modelle', 'Klasse Objekt Attribute Beziehung Modellierung'],
+    ['Daten speichern und abfragen', 'Datenbank Tabelle Schlüssel SQL Datenintegrität'],
+    ['Änderungen testen und dokumentieren', 'Softwaretest Testfall Fehlerbehandlung Dokumentation'],
+  ],
+  LF6: [
+    ['Serviceanfragen verständlich aufnehmen', 'Kundengespräch Kommunikation Support Ticket Fehlerbeschreibung'],
+    ['Aufträge einordnen und priorisieren', 'Priorität Servicelevel SLA Auswirkung Dringlichkeit'],
+    ['Ursachen systematisch eingrenzen', 'Fehleranalyse Diagnose Hypothese Störung'],
+    ['Lösungen auswählen und umsetzen', 'Lösungsstrategie Support Fernwartung Berechtigung'],
+    ['Lösung prüfen und erklären', 'Funktionstest Kundenkommunikation Dokumentation Wissensdatenbank'],
+    ['Service abschließen und verbessern', 'Ticketabschluss Eskalation Kundenzufriedenheit Qualität'],
+  ],
+  LF7: [
+    ['Bausteine vernetzter physischer Systeme', 'Sensor Aktor Mikrocontroller cyber physisch'],
+    ['Signale, Daten und Kommunikation', 'Messwert Signal Bus Protokoll Kommunikation'],
+    ['Erweiterung planen', 'Systemmodell Anforderungen Schnittstelle Komponenten'],
+    ['Steuerung und Programmabläufe', 'Steuerung Programmierung Logik Regelung'],
+    ['Sicherheit und Ressourcen', 'IT Sicherheit Datenschutz Energie Ressourcen'],
+    ['Aufbau testen und dokumentieren', 'Integration Test Messung Inbetriebnahme Dokumentation'],
+  ],
+  LF8: [
+    ['Datenquellen und Datenqualität', 'Datenquelle Datenqualität Erhebung Bereinigung'],
+    ['Modelle und Austauschformate', 'Datenmodell JSON XML CSV Schnittstelle'],
+    ['Daten gezielt abfragen', 'SQL JOIN Aggregation Abfrage Datenbank'],
+    ['Daten zwischen Systemen übertragen', 'API Datenaustausch Übertragung Authentifizierung'],
+    ['Integrität und Zugriff schützen', 'Validierung Datenschutz Transaktion Datenintegrität Rechte'],
+    ['Bereitstellung testen und dokumentieren', 'Integrationstest Fehlerbehandlung Dokumentation Datenaustausch'],
+  ],
+  LF9: [
+    ['Anforderungen an Netze und Dienste', 'Netzwerkplanung Anforderungen Bandbreite Verfügbarkeit'],
+    ['Netzaufbau und Komponenten auswählen', 'Switch Router VLAN Routing Topologie'],
+    ['Dienste bereitstellen', 'Serverdienst DNS DHCP Webserver Netzwerkdienst'],
+    ['Betrieb und Zugriff absichern', 'Firewall Zugriff Sicherheit Redundanz Datensicherung'],
+    ['Verfügbarkeit überwachen und Fehler beheben', 'Monitoring Diagnose Protokoll Fehleranalyse'],
+    ['Netz und Dienste übergeben', 'Funktionstest Dokumentation Übergabe Netzwerkplan'],
+  ],
+  LF10a: [
+    ['Nutzer und Nutzungssituationen', 'Benutzer Anforderungen Nutzungskontext User Story'],
+    ['Bedienabläufe und Entwürfe', 'Navigation Wireframe Prototyp Interaktion'],
+    ['Oberflächen verständlich gestalten', 'Usability Gestaltung Rückmeldung Konsistenz'],
+    ['Zugängliche Schnittstellen umsetzen', 'Barrierefreiheit Benutzerschnittstelle Frontend Validierung'],
+    ['Mit Nutzern prüfen und verbessern', 'Usability Test Feedback Evaluation Dokumentation'],
+  ],
+  LF11a: [
+    ['Fachliche Anforderungen in Software übersetzen', 'Anforderungsanalyse Spezifikation Modellierung'],
+    ['Anwendung und Daten strukturieren', 'Architektur Entwurf Klasse Datenstruktur'],
+    ['Funktionalität implementieren', 'Algorithmus Programmierung Methode Schnittstelle'],
+    ['Fehler und Sicherheitsrisiken behandeln', 'Fehlerbehandlung Eingabevalidierung Sicherheit'],
+    ['Qualität nachweisen und Änderungen pflegen', 'Unit Test Integration Versionsverwaltung Dokumentation'],
+  ],
+  LF10b: [
+    ['Serverdienste planen', 'Server Anforderungen Dienst Architektur Ressourcen'],
+    ['Systeme installieren und konfigurieren', 'Serverinstallation Betriebssystem Dienst Konfiguration'],
+    ['Benutzer und Berechtigungen verwalten', 'Benutzer Gruppe Rechte Verzeichnisdienst'],
+    ['Verwaltungsaufgaben automatisieren', 'Skript Automatisierung Administration Aufgabenplanung'],
+    ['Betrieb prüfen und dokumentieren', 'Monitoring Test Protokoll Dokumentation Serverbetrieb'],
+  ],
+  LF11b: [
+    ['Betriebsanforderungen und Risiken', 'Betrieb Risiko Verfügbarkeit Sicherheitsanforderungen'],
+    ['Netze und Zugriffe schützen', 'Firewall Segmentierung VPN Zugriff Authentifizierung'],
+    ['Daten und Wiederherstellung', 'Backup Wiederherstellung Redundanz Notfall'],
+    ['Betrieb überwachen und Störungen bearbeiten', 'Monitoring Protokolle Incident Fehlerbehebung'],
+    ['Sicherheitsmaßnahmen bewerten', 'Patchmanagement Sicherheitsprüfung Dokumentation Verbesserung'],
+  ],
+  LF10c: [
+    ['Lernaufgabe und Daten verstehen', 'Machine Learning Ziel Trainingsdaten Merkmale'],
+    ['Daten für Modelle vorbereiten', 'Datenbereinigung Transformation Feature Engineering'],
+    ['Verfahren und Werkzeuge auswählen', 'Klassifikation Regression Clustering Modellwahl'],
+    ['Modelle trainieren und prüfen', 'Training Test Validierung Overfitting Metrik'],
+    ['Ergebnisse verantwortungsvoll einsetzen', 'Interpretation Bias Datenschutz Modellgrenzen'],
+  ],
+  LF11c: [
+    ['Prozesse und Beteiligte erfassen', 'Prozess Stakeholder Ist Analyse Geschäftsprozess'],
+    ['Abläufe verständlich modellieren', 'BPMN Prozessmodell Ereignis Entscheidung'],
+    ['Prozessdaten und Kennzahlen auswerten', 'Kennzahl Durchlaufzeit Qualität Datenanalyse'],
+    ['Verbesserungen entwerfen', 'Soll Prozess Optimierung Automatisierung Wirtschaftlichkeit'],
+    ['Änderungen bewerten und begleiten', 'Prozessvergleich Test Einführung Dokumentation'],
+  ],
+  LF10d: [
+    ['Systemaufgabe und Anforderungen', 'Cyber physisch Anforderungen Systementwurf'],
+    ['Komponenten und Schnittstellen auswählen', 'Sensor Aktor Controller Schnittstelle'],
+    ['Kommunikation und Steuerung umsetzen', 'Protokoll Vernetzung Steuerung Programmierung'],
+    ['Daten und Betrieb absichern', 'Datenschutz IT Sicherheit Energie Betriebssicherheit'],
+    ['System integrieren und erproben', 'Integration Inbetriebnahme Test Messung Dokumentation'],
+  ],
+  LF11d: [
+    ['Betrieb vernetzter Anlagen verstehen', 'OT CPS Betrieb Verfügbarkeit Anlagen'],
+    ['Risiken und Schutzbedarf untersuchen', 'Risiko Schutzbedarf Bedrohung Sicherheitsanalyse'],
+    ['Vernetzung und Zugänge absichern', 'Segmentierung Fernzugriff Authentifizierung Schutzmaßnahmen'],
+    ['Systeme überwachen und wiederherstellen', 'Monitoring Backup Notfall Störungsbehebung'],
+    ['Sicherheit bewerten und verbessern', 'Wirksamkeit Sicherheitskonzept Dokumentation Verbesserung'],
+  ],
+};
+const projectPlan = [
+  ['Auftrag und Ziele klären', 'Kundenauftrag Anforderungen Ziele Projektumfang'],
+  ['Lösungen und Aufwand vergleichen', 'Lösungsvarianten Wirtschaftlichkeit Kosten Ressourcen Risiko'],
+  ['Umsetzung planen', 'Projektplanung Meilenstein Aufgaben Qualität'],
+  ['Lösung realisieren und absichern', 'Implementierung Integration Sicherheit Datenschutz'],
+  ['Ergebnisse testen und übergeben', 'Test Abnahme Schulung Übergabe Dokumentation'],
+  ['Projekt bewerten und verbessern', 'Soll Ist Vergleich Zielerreichung Reflexion Verbesserung'],
+];
+for (const field of ['LF12a', 'LF12b', 'LF12c', 'LF12d']) plans[field] = projectPlan;
+export function theorySections(topic) {
+  if (topic?.kind !== 'overview') return [];
+  const projectContext = {
+    LF12a: 'Anwendungsentwicklung Software Anwendung Programmcode',
+    LF12b: 'Systemintegration Infrastruktur Server Netzwerk',
+    LF12c: 'Prozessanalyse Datenanalyse Datenqualität Datenaufbereitung',
+    LF12d: 'CPS Optimierung Sensor Aktor Vernetzung Bestandsanalyse',
+  }[topic.field] || '';
+  return (plans[topic.field] || []).map(([title, keywords], index) => ({
+    id: `${topic.field}-${index + 1}`,
+    title: topic.field === 'LF12d' && index === 0 ? 'Bestehendes System und Optimierungsauftrag klären' : topic.field === 'LF12d' && index === 3 ? 'Optimierung umsetzen und absichern' : title,
+    keywords: `${keywords} ${projectContext}`.trim(),
+    context: projectContext ? topic.title : '', number: index + 1,
+  }));
+}

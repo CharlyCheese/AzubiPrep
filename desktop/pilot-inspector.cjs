@@ -1,6 +1,5 @@
-const { BrowserWindow, session, protocol } = require('electron');
+const { BrowserWindow, session } = require('electron');
 const { randomUUID } = require('node:crypto');
-protocol.registerSchemesAsPrivileged([{ scheme: 'azubi-preview', privileges: { standard: true, secure: true, corsEnabled: true } }]);
 
 function createInspector(parent, html) {
   if (typeof html !== 'string' || Buffer.byteLength(html) > 20 * 1024 * 1024) throw Error('Vorschau ist zu groß.');

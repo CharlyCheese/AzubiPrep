@@ -3,6 +3,9 @@
 Stand: 31.10.2026, OPS-024. Erste optionale Lernbegleitung im Quellstand und
 gebauten lokalen Frontend implementiert. PDF-Verarbeitung und RAG wurden danach
 in OPS-026 ergänzt: [Lokales RAG](24-Lokales-RAG.md). KI-Benotung bleibt offen.
+OPS-033 ergänzt die ausdrückliche Auswahl **Ohne KI / lokales Qwen / eigenes
+ChatGPT-Abo**; siehe [KI-Anbieter](26-KI-Anbieter.md). Die folgenden
+Loopback-/Modellgrenzen gelten weiterhin unverändert für den Qwen-Transport.
 Bestehende Auslieferungspakete 0.1.3
 (Desktop) und 0.1.2 (Web) wurden hier nicht neu gebaut und enthalten diese
 Erweiterung noch nicht.
@@ -12,8 +15,8 @@ Erweiterung noch nicht.
 1. Die bereits installierte Ollama-Anwendung auf demselben Rechner starten.
    Ein unterstütztes lokales Qwen-Modell muss separat vorhanden sein.
 2. In der lokalen AzubiPrep-Webversion oder im aktuellen Desktop-Quellstand
-   unter **Einstellungen → KI und Lernmaterial** die Verbindung prüfen.
-3. Ein gefundenes lokales Modell auswählen und die Lernbegleitung aktivieren.
+   unter **Einstellungen → KI und Lernmaterial** lokales Qwen wählen und die Verbindung prüfen.
+3. Ein gefundenes lokales Modell auswählen.
    Standardmäßig ist sie ausgeschaltet. Es werden keine Modelle automatisch
    heruntergeladen, installiert oder mit der App verteilt.
 4. Im Kurs einen kleinen Hinweis anfordern oder aktuelle Prüfermeldungen

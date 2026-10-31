@@ -19,6 +19,53 @@ async function setup(page, enabled = true) {
 const lesson = page => page.getByRole('region', { name: 'Theorie lernen', exact: true });
 async function openTopic(page) { await page.goto('/theorie'); await page.getByRole('button', { name: /LF2.*Arbeitsplätze/ }).click(); }
 
+const sections = ['Bedarf', 'Hardware', 'Übergabe'].map((title, index) => ({ id: `LF2-${index + 1}`, title, number: index + 1 }));
+async function withSections(page) { await page.route('**/api/theorie?**', route => route.fulfill({ json: { ...catalog, topics: [{ ...topic, sections }] } })); }
+
+test('Lernfeldablauf erklärt Teile nacheinander, erhält alle Antworten und zeigt Quellenlücken', async ({ page }, info) => {
+  await setup(page); await withSections(page); const sent = []; let simultaneous = 0; let maximum = 0;
+  await page.route('**/api/ai/help', async route => {
+    const body = route.request().postDataJSON(); sent.push(body); simultaneous++; maximum = Math.max(maximum, simultaneous);
+    await new Promise(resolve => setTimeout(resolve, 40)); simultaneous--;
+    const missing = body.context.sectionId === 'LF2-2';
+    await route.fulfill({ json: missing ? { text: 'Für diesen Teil fehlen passende Quellen.', source: 'context_guard', sources: [] } : { ...reply, text: `Erklärung ${body.context.sectionId}. [S1]` } });
+  });
+  await openTopic(page); const flow = page.getByRole('region', { name: 'Lernfeld Schritt für Schritt', exact: true });
+  await flow.getByRole('button', { name: 'Alle offenen Abschnitte ausführlich erklären' }).click();
+  await expect(flow.getByRole('status')).toHaveText('2 von 3 Abschnitten mit Erklärung · 1 mit Quellenlücke');
+  expect(maximum).toBe(1); expect(sent.map(body => body.context.sectionId)).toEqual(['LF2-1', 'LF2-2', 'LF2-3']); expect(sent.every(body => body.context.detail === 'detailed')).toBe(true);
+  await expect(flow.getByLabel('Theorieantwort')).toHaveCount(3); await expect(flow.getByText('Erklärung LF2-1. [S1]', { exact: true })).toBeVisible();
+  await expect(flow.getByRole('button', { name: 'Alle offenen Abschnitte ausführlich erklären' })).toBeDisabled();
+  expect(await page.evaluate(() => Object.values(localStorage).join(' '))).not.toContain('Erklärung LF2-1');
+  await page.setViewportSize({ width: 390, height: 844 });
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
+  await flow.screenshot({ path: info.outputPath('synthetic-field-mobile.png') });
+});
+
+test('Abbruch erhält fertige Abschnitte, verwirft verspätete Antworten und setzt nur offene Teile fort', async ({ page }) => {
+  await setup(page); await withSections(page); const sent = []; let delay = true;
+  await page.route('**/api/ai/help', async route => {
+    const body = route.request().postDataJSON(); sent.push(body.context.sectionId);
+    if (body.context.sectionId === 'LF2-2' && delay) await new Promise(resolve => setTimeout(resolve, 300));
+    await route.fulfill({ json: { ...reply, text: `Fertiger Teil ${body.context.sectionId}. [S1]` } }).catch(() => {});
+  });
+  await openTopic(page); const flow = page.getByRole('region', { name: 'Lernfeld Schritt für Schritt', exact: true });
+  await flow.getByRole('button', { name: 'Alle offenen Abschnitte ausführlich erklären' }).click();
+  await expect.poll(() => sent.length).toBe(2); await flow.getByRole('button', { name: 'Lernfeldablauf abbrechen' }).click();
+  await expect(flow.getByText('Fertiger Teil LF2-1. [S1]', { exact: true })).toBeVisible(); await expect(flow.getByText('Fertiger Teil LF2-2. [S1]', { exact: true })).toHaveCount(0);
+  delay = false; await flow.getByRole('button', { name: 'Alle offenen Abschnitte ausführlich erklären' }).click();
+  await expect(flow.getByRole('status')).toHaveText('3 von 3 Abschnitten mit Erklärung · 0 mit Quellenlücke'); expect(sent).toEqual(['LF2-1', 'LF2-2', 'LF2-2', 'LF2-3']);
+});
+
+test('Quellenwechsel verwirft sämtliche Lernfeldantworten; kompakte und ausführliche Einzelhilfe bleiben wählbar', async ({ page }) => {
+  await setup(page); await withSections(page); const sent = [];
+  await page.route('**/api/ai/help', async route => { const body = route.request().postDataJSON(); sent.push(body); await route.fulfill({ json: reply }); });
+  await openTopic(page); const flow = page.getByRole('region', { name: 'Lernfeld Schritt für Schritt', exact: true });
+  await flow.getByRole('button', { name: 'Alle offenen Abschnitte ausführlich erklären' }).click(); await expect(flow.getByLabel('Theorieantwort')).toHaveCount(3);
+  await lesson(page).getByRole('radio', { name: 'Eigene lokale Unterlagen', exact: true }).check(); await expect(flow.getByLabel('Theorieantwort')).toHaveCount(0);
+  await lesson(page).getByLabel('Erklärungstiefe', { exact: true }).selectOption('short'); await lesson(page).getByRole('button', { name: 'Thema erklären', exact: true }).click(); await expect(lesson(page).getByLabel('Theorieantwort')).toBeVisible(); expect(sent.at(-1).context.detail).toBe('short'); expect(sent.at(-1).useMaterial).toBe(true);
+});
+
 test('Modul ersetzt den alten Theorieblock durch Lernzugang, Glossar und Filter', async ({ page }) => {
   await setup(page, false); await page.goto('/lernen/WISO');
   await expect(page.getByRole('button', { name: /^Theorie Lies/ })).toHaveCount(0);

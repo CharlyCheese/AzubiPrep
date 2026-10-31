@@ -1,12 +1,27 @@
 # Frontendkurs und lokale Qwen Lernbegleitung
 
-Stand: 30.10.2026. Für Kapitel 1–6 ist ein erster lokaler Webprototyp unter
+Stand: 31.10.2026. Für Kapitel 1–6 ist ein erster lokaler Webprototyp unter
 `/frontendkurs` implementiert: elf Lektionen, Mehrdatei-Editor, externe Projekte,
 HTML/CSS-Vorschau, Prüfung und OPFS-Sicherung. Desktop 0.1.3 ergänzt native
 Dateiauswahl, vom internen Port unabhängigen Kursspeicher und isoliertes F12.
 Die [Pilotabnahme](21-Frontendpilot-Abnahme.md) steht bei 30/30 innerhalb der
 dort dokumentierten Windows-/Chromium-/Electron-Matrix; Testgrenzen bleiben ausgewiesen.
 [Technik und Nachweise](22-Frontendpilot-Technik.md).
+FE-025 ergänzt im Entwicklungsstand Kapitel 7 mit fünf Lektionen zu Selektoren,
+Reihenfolge, Spezifität, Vererbung und angewandter CSS-Fehlersuche. Dieser Abschnitt
+ist praktisch bestätigt. FE-026 ergänzt Kapitel 8–12 mit 21 weiteren Lektionen,
+Layout-/Responsivprüfungen und Projekt 2. FE-027 ergänzt sechs Formularlektionen
+in Kapitel 13. FE-028 ergänzt acht JavaScript-Grundlagenlektionen in Kapitel 14,
+insgesamt 51 Lektionen. FE-030 führt Kapitel 15 in zehn weiteren Schritten bis
+zum Tarifrechner aus. FE-031 ergänzt Kapitel 16 mit zehn Funktions-/Bereichslektionen
+und dem zerlegten Tarifprojekt. FE-034 ergänzt elf Array-/Schleifen-/Objektlektionen
+in Kapitel 17 bis zur Aufgabenübersicht, insgesamt 82 Lektionen. Formulareingaben bleiben lokal ohne Versand; JavaScript
+läuft bewusst in einer getrennten Konsole, die HTML-Vorschau bleibt skriptfrei.
+[Kapitel 14 und Abnahmegrenzen](31-JavaScript-Kapitel-14.md).
+[CSS-Umfang, Nachweise und praktische Abnahmepunkte](27-CSS-Kurs-Abnahme.md).
+[Formularumfang und Nachweise](28-HTML-Formulare-Abnahme.md).
+Die Abnahme des ursprünglichen Piloten bleibt ein
+getrennter Nachweis; neue Installationspakete sind dadurch nicht erstellt.
 OPS-024 ergänzt die optionale lokale Qwen-Grundanbindung im Entwicklungsstand:
 Einstellungen, Hinweise, Prüfer-/Elementerklärungen und Quizhilfe.
 [Einrichtung, Grenzen und Nachweise](23-Qwen-Grundanbindung.md).
@@ -108,7 +123,9 @@ nicht vor den ersten Gestaltungsaufgaben abgearbeitet werden.
 
 Insbesondere Kapitel 26–30 werden in mehrere aufeinander aufbauende
 Unterkapitel zerlegt. Benötigte Werkzeuge werden vor ihrer Verwendung erklärt.
-Konkrete Aufgabenzahlen, Bearbeitungszeiten und Kapitelabnahmen sind noch offen.
+Die Inhaltsfassung für Kapitel 18–31 umfasst inzwischen 85 Lektionen mit
+Aufgaben, Hilfen, Lösungen und Abnahmekriterien; technische/praktische Abnahme
+und Bearbeitungszeiten bleiben offen. → [Umfang und Integrationsgrenzen](35-Frontendkurs-Kapitel-18-31.md)
 Die zusätzliche spätere Formulareinführung ergibt insgesamt 31 Kapitel;
 die sieben großen Projektmeilensteine einschließlich Abschlussprojekt bleiben
 erhalten. Mehrere Dateien werden bereits in den ersten HTML-/CSS-Kapiteln
@@ -272,11 +289,53 @@ Der Validator ist keine Sicherheitsgrenze.
   Speicherung und fetch unterrichtet werden können, ohne App-Daten freizugeben.
 - Entwicklerwerkzeuge dürfen die Übung nicht mit zusätzlichen App-Rechten ausstatten.
 
-Konkrete Technik ist noch offen. Eine begrenzte JavaScript-Laufzeit kann für
-Grundlagen sinnvoll sein; der vollständige Kurs benötigt echte Browser-/DOM-
+Für Sprachgrundlagen verwendet OPS-037 nach ausdrücklicher Freigabe lokale
+QuickJS/WASM-Ausführung in einem Worker; der vollständige Kurs benötigt echte Browser-/DOM-
 Funktionen. Ein iframe allein wird nicht als vollständiges Sicherheitskonzept
 behandelt. Vor Auslieferung ausführbaren Lerncodes sind Electron-Aktualisierung,
 Bedrohungsmodell und Ausbruch-/Ressourcentests einzuplanen.
+
+OPS-036 erprobt die Browser-Sandbox zunächst mit sieben festen Testprogrammen
+in einem getrennten Electron-Renderer: echter DOM, externer Abbruch, neue Sitzung
+und Ressourcenbeobachtung. In dieser nativen DOM-Testfläche bleiben eigene
+Lernskripte gesperrt. Harte Speicher-
+grenzen, vollständige Browser-/Netzwerkwege und die Webversion brauchen weitere
+Nachweise. [Technikpilot und Restgates](29-JavaScript-Sandbox-Pilot.md).
+
+OPS-037 ergänzt separat eine eigene `.js`-Konsole in Web und Electron, mit
+Interpreter-Heap-/Stacklimit, Zeit-/Ausgabe-/Jobgrenzen und manuellem Abbruch.
+Lokale Sicherung und Dateiimport/-export sind vorhanden. Kein DOM, keine
+Browser-/App-/Netzwerk-/Dateibrücke; bestehende 43 Lektionen bleiben erhalten.
+FE-028 ergänzt acht Lektionen in Kapitel 14 mit Dateiverknüpfung, Werten,
+const/let, Typen und Operatoren bis zum Materialbudget-Projekt, insgesamt
+51 Lektionen. FE-030 ergänzt zehn Lektionen in Kapitel 15 zu Texten, Vergleichen,
+Bedingungen und Umwandlung bis zum geprüften Tarifrechner, insgesamt 61.
+FE-031 ergänzt Kapitel 16 mit Funktionen, Parametern, Rückgaben und
+Gültigkeitsbereichen bis zum zerlegten Tarifrechner, insgesamt 71 Lektionen.
+FE-034 ergänzt Kapitel 17 mit Arrays, Schleifen und Objekten bis zur
+Aufgabenübersicht, insgesamt 82 praktisch eingebundene Lektionen. FE-036 ergänzt
+die vereinbarte Inhaltsfassung für sämtliche Kapitel 18–31 mit 85 weiteren
+Lektionen: [Umfang, Projekte und offene Integration](35-Frontendkurs-Kapitel-18-31.md).
+Für den weiteren Ausbau ist die Reihenfolge ausdrücklich angepasst: zuerst
+Kapitel 18–31 vollständig inhaltlich ausarbeiten (Lerntexte, Beispiele, Aufgaben,
+Hilfen, Musterlösungen, Projekte und Abnahmekriterien). Danach die benötigte
+DOM-/Browser-/Debugging-Unterstützung gemeinsam erweitern, integrieren und prüfen.
+Bereits sicher unterstützte Übungen können währenddessen regulär geprüft werden.
+Abschnitte mit noch fehlender Laufzeitunterstützung bleiben als „inhaltlich
+vorbereitet, technische/praktische Abnahme offen“ gekennzeichnet und dürfen
+nicht als voll funktionsfähig oder bestanden gelten. Die bisherige begrenzte
+Ausführung und skriptfreie HTML-Vorschau bleiben bis zur technischen Abnahme
+erhalten. Diese Bündelung ändert weder die didaktische Folge noch die bereits
+abgeschlossenen Kapitel 1–17; sie erfordert keine erneute Grundsatzplanung.
+Die Inhaltsphase ist ausgearbeitet und in der Werkstatt lesbar. Als Nächstes
+folgt die gemeinsame technische Integration, nicht ein weiteres Inhaltskapitel.
+[Kapitel 17 und Abnahmegrenzen](34-JavaScript-Kapitel-17.md).
+[Kapitel 16 und Abnahmegrenzen](33-JavaScript-Kapitel-16.md).
+[Kapitel 15 und Abnahmegrenzen](32-JavaScript-Kapitel-15.md).
+FE-029 ergänzt eine freiwillig zuschaltbare reine Textspiegelung
+der Konsolenausgabe in der HTML-Vorschau als gekennzeichnete App-Lernhilfe.
+console.log wird dadurch nicht als normale HTML-Ausgabe gelehrt. Die spätere DOM-Ausführung
+bleibt ein eigenes Gate. [Bedienung/Grenzen](30-JavaScript-Grundlagenlaufzeit.md).
 
 Eine absolute Ausbruchsgarantie ist nicht zugesagt. Schutz gegen Lerncode ist
 von absichtlichen Änderungen durch den Besitzer des Rechners an eigenen Dateien
@@ -462,6 +521,20 @@ dokumentierten Windows-/Chromium-/Electron-Umfang abgenommen. Die private
 Materialablage mit Git-Ausschluss wurde in OPS-026 um lokale PDF-Aufbereitung,
 lexikalische RAG-Suche und Quellenbelege erweitert.
 Die lokale Qwen-Grundanbindung wurde zuvor in OPS-024 umgesetzt.
+Die praktische Rückmeldung zur Lernbegleitung einschließlich alternativer
+HTML-Antworten und der Anbieterwahl erlaubt den schrittweisen Kursausbau.
+FE-025 setzt Kapitel 7 um; FE-026 schließt die CSS-Kapitel 8–12 im Entwicklungsstand
+ab; FE-027 setzt das HTML-Formularkapitel 13 um. OPS-036 erprobt native DOM-
+Testprogramme; OPS-037 ergänzt eine begrenzte eigene Grundlagenkonsole für
+Web und Electron. FE-028 ergänzt Kapitel 14 in acht Schritten bis zum Budgetprojekt.
+FE-030 ergänzt Kapitel 15 mit zehn Lektionen und Tarifprojekt.
+FE-031 ergänzt Kapitel 16 mit zehn Funktions-/Scope-Lektionen und Tarifzerlegung.
+FE-034 ergänzt Kapitel 17 mit elf Schritten bis zur Aufgabenübersicht.
+Nächster Inhaltsschritt ist Kapitel 18; echte DOM-/Browser-
+Programme benötigen weiterhin eine separate Freigabe und Sicherheitsprüfung.
+→ [Kapitel 14 und Abnahmegrenzen](31-JavaScript-Kapitel-14.md).
+Allgemeine KI-Evaluation bleibt
+begleitende Arbeit und erfordert keine Wiederholung bereits bestätigter Tests.
 Offen sind insbesondere semantische Suche/OCR, vertiefte KI-Evaluation,
 weitere Plattformnachweise, weitere Kursinhalte,
 kontrollierte Builds späterer Framework-Projekte, Fortschrittsmodell, erlaubte
@@ -480,7 +553,7 @@ Quellabschnitte und ihr Prüfdatum zusätzlich zu dokumentieren.
 - [WHATWG HTML](https://html.spec.whatwg.org/), [W3C CSS](https://www.w3.org/Style/CSS/), [ECMAScript](https://tc39.es/ecma262/): Detailklärung anhand von Spezifikationen; Entwurfsstatus und Browserunterstützung beachten.
 - [MDN iframe](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/iframe): Vorschau-Berechtigungen und Einschränkungen.
 - [Electron Sicherheit](https://www.electronjs.org/docs/latest/tutorial/security/) und [webContents](https://www.electronjs.org/docs/latest/api/web-contents/): Sicherheitsprüfung und gezielte Entwicklerwerkzeuge.
-- [QuickJS Emscripten](https://github.com/justjake/quickjs-emscripten): untersuchte Option für begrenzte JavaScript-Ausführung, keine festgelegte Abhängigkeit.
+- [QuickJS Emscripten](https://github.com/justjake/quickjs-emscripten): in OPS-037 genehmigte lokale Grundlagenlaufzeit ohne DOM.
 - [Browser-Ordnerauswahl](https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/webkitdirectory), [Verzeichniszugriff](https://developer.mozilla.org/en-US/docs/Web/API/Window/showDirectoryPicker) und [Electron Dialoge](https://www.electronjs.org/docs/latest/api/dialog): Grundlagen für externe Projekte; Browser-/Berechtigungsunterschiede beachten.
 - [W3C Barrierefreiheitsprüfung](https://www.w3.org/WAI/test-evaluate/): Grenzen automatischer Prüfungen.
 - [MDN JavaScript-Module](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules): Voraussetzungen lokaler Modultests.

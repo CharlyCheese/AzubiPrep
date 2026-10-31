@@ -4,6 +4,66 @@ Stand: 30.10.2026, erster Webprototyp in FE-022 implementiert. Nach OPS-023
 sind 30/30 Kriterien innerhalb der dokumentierten Windows-/Chromium-/Electron-
 Matrix abgenommen. Desktop 0.1.3 ist gebaut und geprüft; Grenzen siehe unten.
 
+Ergänzung 31.10.2026 (FE-025): Kapitel 7 ist im Entwicklungsstand umgesetzt.
+Es ergänzt den abgenommenen Pilotumfang um fünf Lektionen, nicht um neue
+Installer. Die folgenden ursprünglichen Pilotnachweise bleiben historisch gültig.
+
+FE-026 erweitert den Entwicklungsstand auf 37 Lektionen bis Kapitel 12:
+Boxmodell, Flexbox, Grid, responsive Gestaltung, Fokus/Bewegungspräferenz und
+Projekt 2. Die feste Prüfung wartet jetzt auf lokale Bilder und verwirft
+zwischenzeitlich überholte Dateistände. Vollständiger neuer Umfang und
+Nachweisgrenzen: [CSS-Kurs-Abnahme](27-CSS-Kurs-Abnahme.md).
+
+FE-027 ergänzt sechs Formularlektionen bis Kapitel 13 (43 Lektionen insgesamt).
+Labels, Auswahlfelder und native Browserprüfung sind in der Vorschau bedienbar;
+Versand, Uploads und Lernskripte bleiben gesperrt. Speichergrenze der Aufgabenanzahl
+angepasst, bisherige Ergebnisse erhalten. [Formularnachweise](28-HTML-Formulare-Abnahme.md).
+
+## Ausbau Kapitel 7: CSS-Regeln verstehen
+
+Nach FE-025 umfasste die Werkstatt 16 Lektionen. Neue Reihenfolge in Kapitel 7: `selektoren`,
+`reihenfolge`, `spezifitaet`, `vererbung`, `css-diagnose`. Jede Lektion enthält
+Voraussetzungen, Erklärung, Beispiel, Aufgabe, zwei Hinweise und Musterlösung.
+Kleine Vorhersage-/Untersuchungsaufgaben münden in ein Reparaturprojekt auf
+beiden Seiten. Die bekannten Eigenschaften reichen aus; Layout/JavaScript
+werden noch nicht eingeführt. Externe Projekte sind weiterhin möglich.
+
+Die Vergleichsübungen nennen feste benannte Farben und verlangen normale,
+externe CSS-Regeln. Inline-Stile, style-Blöcke und !important erfüllen diese
+bewusst begrenzten Lernziele nicht. Texte und gleichwertige Selektorlösungen
+bleiben frei, außer bei ausdrücklich vorgegebenen .hinweis/#einstieg-Konflikten.
+Quellen, am 31.10.2026 geprüft: MDN
+[Selektoren und Kombinatoren](https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Selectors/Selectors_and_combinators),
+[Kaskade](https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Cascade/Introduction),
+[Spezifität](https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Cascade/Specificity) und
+[Vererbung](https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Cascade/Inheritance).
+
+`css-checks.js` kontrolliert die Browserwerte in einer kurzlebigen, unsichtbaren
+Kopie derselben bereinigten Vorschau. Sandbox ohne Skriptfreigabe und CSP
+bleiben aktiv; keine zusätzlichen Ressourcen oder privaten Unterlagen werden
+geladen. Für Selektor-/Konfliktaufgaben belegt eine temporäre CSSOM-Testfarbe,
+dass die verlangte Deklaration tatsächlich die Darstellung steuert. Im
+Spezifitätsfall muss ohne ID-Farbe die maroon-Klassenregel wirksam werden.
+Prüfframes und Teständerungen werden auch bei Fehlern entfernt. Vererbung
+verlangt zusätzlich das Fehlen direkt passender Farb-/Schriftdeklarationen am
+Übungsabsatz. Diese gezielten Lernzielprüfungen sind kein vollständiger
+HTML-/CSS-Validator. Das Erklären der Ursache bleibt Selbstprüfung.
+
+Kurs-/Speicherschema und Prüferstand für Kapitel 1–6 bleiben unverändert;
+neue Lektionen tragen `css-7.1`. Beim Laden werden fehlende Lektionen ergänzt,
+bisherige Entwürfe und bestandene historische Ergebnisse bleiben erhalten.
+Der Inspektor zeigt jetzt auch font-family. Die KI-Whitelist und Themenfolge
+decken die neuen Lektionen ab, ohne spätere Techniken freizugeben; Datenschutz,
+optionale Codefreigabe und die feste Bewertung bleiben unverändert.
+
+Automatisierte Nachweise: 194 Backendtests, Backend-Lint, Frontendbuild,
+24 Werkstatt-Browserfälle (einschließlich aller 16 Lösungen/Alternativen,
+neuer Starter, CSS-Konfliktfehler, Abschottung, Speicherübernahme) und eine
+separate Electron-Gegenprobe für Kapitel 7. Die Electron-Probe verwendet ein
+frisches Testprofil und prüft feste Bewertung sowie Darstellung beider Seiten.
+Keine neue manuelle Nutzerabnahme, kein neuer Installer und kein Nachweis für
+weitere Betriebssysteme/Browser. Einzelheiten und Review: FE-025.
+
 ## Einstieg und implementierter Umfang
 
 Navigation „Frontend-Werkstatt“, Route `/frontendkurs`. Elf Lektionen über die

@@ -28,6 +28,8 @@
       "preload.cjs",
       "pilot-runtime.cjs",
       "pilot-inspector.cjs",
+      "js-pilot.cjs",
+      "js-pilot-fixtures.cjs",
       "package.json"
     ],
     "extraResources": [
@@ -38,6 +40,7 @@
           "src/**/*",
           "package.json",
           "!**/.env*",
+          "!**/local-ai/**", "!**/local-rag/**", "!**/accounts.json", "!**/chatgpt-auth.json", "!**/chatgpt-host.json",
           "!**/*.log",
           "!**/.cache/**/*"
         ]
@@ -48,6 +51,7 @@
         "filter": [
           "**/*",
           "!**/.env*",
+          "!**/local-ai/**", "!**/local-rag/**", "!**/accounts.json", "!**/chatgpt-auth.json", "!**/chatgpt-host.json",
           "!**/*.log",
           "!**/.cache/**/*",
           "!**/.vite/**/*",
@@ -59,7 +63,7 @@
         "to": "content",
         "filter": [
           "**/*",
-          "!**/.env*"
+          "!**/.env*", "!**/local-ai/**", "!**/local-rag/**", "!**/accounts.json", "!**/chatgpt-auth.json", "!**/chatgpt-host.json"
         ]
       },
       {
@@ -67,7 +71,7 @@
         "to": "frontend/dist",
         "filter": [
           "**/*",
-          "!**/.env*"
+          "!**/.env*", "!**/local-ai/**", "!**/local-rag/**", "!**/accounts.json", "!**/chatgpt-auth.json", "!**/chatgpt-host.json"
         ]
       }
     ],

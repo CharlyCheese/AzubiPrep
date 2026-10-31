@@ -4,6 +4,8 @@ import { config } from './config.js';
 import { createRagStorage } from './rag-storage.js';
 import { extractPdf } from './rag-extract.js';
 import { buildIndex, searchIndex, RAG_LIMITS, RagError } from './rag-index.js';
+import { comparisonCovered, diverseSearchHits } from './search-query.js';
+import { createSearchAliasCollector } from './search-aliases.js';
 
 const idValid = id => typeof id === 'string' && /^[a-f0-9-]{36}$/.test(id);
 const publicError = error => error instanceof RagError ? error.message : 'Die lokale Materialverarbeitung ist fehlgeschlagen. Vorhandene bestätigte Daten bleiben geschützt.';
@@ -117,26 +119,39 @@ export function createRagService(settings = config, extractor = extractPdf) {
       return { removed: true, originalKept: !document.owned };
     } finally { await release(); }
   }
-  async function retrieve(query) {
+  async function retrieve(query, { limit = RAG_LIMITS.sources } = {}) {
+    limit = Number.isInteger(limit) ? Math.max(1, Math.min(limit, 6)) : RAG_LIMITS.sources;
     if (job) throw new RagError('processing', 'Die Unterlagen werden gerade aufbereitet. Bitte danach erneut anfragen.', 409);
     const catalog = await disk().catalog(); const ready = catalog.documents.filter(document => document.status === 'ready');
     if (!ready.length) return { revision: catalog.revision, sources: [], state: 'unprepared' };
-    const matches = []; const used = [];
+    const matches = []; const used = []; const aliasCollector = createSearchAliasCollector();
     for (const document of ready) {
       const fingerprint = await disk().fingerprint(document.source);
       if (fingerprint.hash !== document.fingerprint?.hash || fingerprint.mtimeMs !== document.fingerprint?.mtimeMs) throw new RagError('stale', 'Eine Unterlage hat sich verändert. Bitte das Material neu einlesen.', 409);
       if (!document.index || !document.index.startsWith(document.id + '.') || !/^[a-f0-9.-]+\.json$/.test(document.index)) throw new RagError('index', 'Ungültiger privater Index. Bitte neu aufbereiten.', 409);
       const index = await disk().json('index', document.index);
       if (index.fingerprint !== fingerprint.hash) throw new RagError('stale', 'Index und Unterlage passen nicht zusammen. Bitte neu aufbereiten.', 409);
-      for (const chunk of searchIndex(index, query)) matches.push({ ...chunk, document });
+      aliasCollector.add(index.chunks.map(chunk => chunk.text));
+    }
+    // Zwei begrenzte Durchläufe statt sämtliche großen Indexobjekte zugleich
+    // zu halten; PDFs werden dabei nicht erneut extrahiert oder kopiert.
+    const aliases = aliasCollector.finish();
+    for (const document of ready) {
+      const index = await disk().json('index', document.index);
+      if (index.fingerprint !== document.fingerprint.hash) throw new RagError('stale', 'Index und Unterlage passen nicht zusammen. Bitte neu aufbereiten.', 409);
+      for (const chunk of searchIndex(index, query, aliases)) matches.push({ ...chunk, document });
     }
     const sources = [];
-    for (const match of matches.sort((a, b) => b.score - a.score)) {
-      if (sources.some(source => source.documentId === match.document.id && source.page === match.page && Math.max(0, Math.min(source.end, match.end) - Math.max(source.start, match.start)) > RAG_LIMITS.overlap)) continue;
+    const selected = diverseSearchHits(matches, limit, (match, chosen) => !chosen.some(source => source.document.id === match.document.id && source.page === match.page && Math.max(0, Math.min(source.end, match.end) - Math.max(source.start, match.start)) > RAG_LIMITS.overlap));
+    if (!comparisonCovered(query, selected, aliases)) return { revision: catalog.revision, sources: [], used: [], state: 'partial_match' };
+    for (const match of selected) {
       sources.push({ id: `S${sources.length + 1}`, documentId: match.document.id, label: match.document.label, page: match.page, start: match.start, end: match.end, text: match.text });
-      used.push({ id: match.document.id, fingerprint: match.document.fingerprint.hash });
-      if (sources.length === RAG_LIMITS.sources) break;
+      if (!used.some(item => item.id === match.document.id)) used.push({ id: match.document.id, fingerprint: match.document.fingerprint.hash });
+      if (sources.length === limit) break;
     }
+    // Gelernte Zuordnungen können aus einer weiteren gewählten Unterlage
+    // stammen. Auch deren externe Änderung muss eine laufende Antwort entwerten.
+    if (aliases.learnedCount) for (const document of ready) if (!used.some(item => item.id === document.id)) used.push({ id: document.id, fingerprint: document.fingerprint.hash });
     return { revision: catalog.revision, sources, used, state: sources.length ? 'ready' : 'no_match' };
   }
   async function assertCurrent(token) {

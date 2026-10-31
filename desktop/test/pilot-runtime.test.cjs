@@ -24,12 +24,27 @@ test('Native Auswahl liest nur freigegebene unterstützte Dateien und erhält re
   await fs.writeFile(path.join(project, 'css', 'style.css'), 'h1{color:navy}');
   await fs.writeFile(path.join(project, '.env'), 'privat'); await fs.writeFile(path.join(project, 'start.js'), 'keine Ausführung');
   const result = await readProject([project], 'folder');
-  assert.deepEqual(Object.keys(result.files).sort(), ['css/style.css', 'index.html', 'seiten/zweite seite.html']);
-  assert.equal(result.skipped, 3);
+  assert.deepEqual(Object.keys(result.files).sort(), ['css/style.css', 'index.html', 'seiten/zweite seite.html', 'start.js']);
+  assert.equal(result.files['start.js'].content, 'keine Ausführung');
+  assert.equal(result.skipped, 2);
   const partial = await readProject([path.join(project, 'css', 'style.css')], 'files');
   assert.equal(partial.files['style.css'].content, 'h1{color:navy}');
   assert.equal(await fs.readFile(path.join(project, '.env'), 'utf8'), 'privat');
 });
+test('JavaScript-Import begrenzt Größe und Namen vor Lesen und überspringt private KI-Verzeichnisse', async (t) => {
+  const root = await fixture(t);
+  const project = path.join(root, 'projekt'); await fs.mkdir(project);
+  await fs.writeFile(path.join(project, 'index.html'), '<h1>Test</h1>');
+  await fs.mkdir(path.join(project, 'local-ai'));
+  await fs.writeFile(path.join(project, 'local-ai', 'auth.js'), 'SYNTHETISCH');
+  const result = await readProject([project], 'folder');
+  assert.deepEqual(Object.keys(result.files), ['index.html']);
+  const large = path.join(project, 'gross.js'); await fs.writeFile(large, ' '.repeat(65537));
+  await assert.rejects(readProject([large], 'files'), /groß/);
+  const invalid = path.join(project, 'ungueltig name.js'); await fs.writeFile(invalid, 'console.log(1)');
+  await assert.rejects(readProject([invalid], 'files'), /einfachen Dateinamen/);
+});
+
 test('Windows-Junctions und ihre Unterordner sind keine Importfreigabe', async (t) => {
   const root = await fixture(t); const project = path.join(root, 'projekt'); const outside = path.join(root, 'ausserhalb');
   await fs.mkdir(project); await fs.mkdir(path.join(outside, 'unterordner'), { recursive: true });
@@ -109,4 +124,13 @@ test('KI-Präferenzen bleiben im eigenen Profilstand und akzeptieren keine fremd
   assert.throws(() => preferences.save({ ...value, model: 'qwen3:cloud' }), /Ungültige/);
   assert.throws(() => preferences.save({ ...value, model: '../../local-rag/material/x.pdf' }), /Ungültige/);
   assert.equal(await createStore(root).load(), null);
+});
+
+test('Anbieterauswahl speichert Modelle getrennt und niemals Zugangstokens', async (t) => {
+  const root = await fixture(t); const preferences = createAiPreferences(root);
+  const value = { version: 2, provider: 'chatgpt', qwenModel: 'qwen3:4b', chatgptModel: 'synthetic-model' };
+  await preferences.save({ ...value, accessToken: 'synthetic-token' });
+  assert.deepEqual(await createAiPreferences(root).load(), value);
+  assert.throws(() => preferences.save({ ...value, provider: 'foreign' }), /Ungültige/);
+  assert.throws(() => preferences.save({ ...value, qwenModel: 'qwen3:cloud' }), /Ungültige/);
 });

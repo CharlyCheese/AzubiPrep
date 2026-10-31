@@ -11,7 +11,7 @@
   Kursfolge angepasst: frühes CSS, Formulare nach Layoutprojekten; externe
   Projektbearbeitung bereits ab der ersten zweiten Datei, aktuell beim
   Seitenlink in Kapitel 3; Mehrdateiprojekte früh verbindlich eingeplant.
-  Webpilot unter `/frontendkurs`: elf Lektionen, Editor, externe Projekte,
+  Webstand unter `/frontendkurs`: 82 Lektionen, Editor, externe Projekte,
   Vorschau/Inspektor, Validator und OPFS-Sicherung implementiert.
   Zehn ergänzende Qualitäts-/Betriebsanforderungen erfasst; verbindliche
   [Pilotabnahme](../21-Frontendpilot-Abnahme.md) für Kapitel 1–6 abgeleitet.
@@ -39,6 +39,72 @@
   Wissenssuche mit Qwen-Erklärung oder modellfreiem Quellenlesen. Themen
   stammen aus öffentlichen Lernfeldern/Modulen/Fragenthemen; keine vollständige
   redaktionelle Theorieabdeckung zugesagt. → [Bedienung](../25-Theorie-Glossar.md)
+  OPS-029 erweitert den Theorieeinstieg um ausführliche Erklärungen und einen
+  gegliederten, abbrechbaren Lernfeldablauf mit eigenen Quellen je Teil.
+  OPS-030 verbessert lexikalische Begriffs-/Vergleichssuche und ergänzt
+  öffentliche WISO-Grundlagen. Die private Modellprobe findet die Begriffe,
+  lehnt die konkrete Erklärung aber weiterhin wegen fehlender Belege ab;
+  vertiefte semantische Suche und Materialabdeckung bleiben offen.
+  OPS-031 ergänzt die eindeutige Zuordnung IoT/Internet of Things für
+  Quellenabfrage und Theorie-/Glossarfilter ohne erneute Materialaufbereitung.
+  OPS-032 verallgemeinert die Auflösung auf69 zentrale IT-Begriffe und
+  begrenzte explizite Quellendefinitionen; private Zuordnungen bleiben flüchtig
+  und getrennt. Unbekannte/mehrdeutige Kürzel werden weiterhin nicht frei erraten.
+  OPS-033 implementiert die Auswahl ohne KI / lokales Qwen / eigenes ChatGPT-Abo
+  samt geschütztem OAuth-Zugang. Private Quellen bleiben serverseitig lokal
+  gebunden. Anmeldung und Erklärungen sind durch praktische Nutzerrückmeldung bestätigt.
+  → [Einrichtung](../26-KI-Anbieter.md)
+  OPS-034 behebt die zu enge Transportquote beim Modellkatalog. Reale
+  Gegenprobe bestätigt erfolgreichen Katalogabruf. OPS-035 ergänzt die bestätigte
+  Nutzerabnahme der Erklärungen, Paketsperren für Kontodaten und lesbare Dropdowns.
+  FE-025 ergänzt Kapitel 7: Selektoren, Reihenfolge, Spezifität, Vererbung und
+  CSS-Reparaturprojekt, Browserwertprüfung und passende KI-Themenfolge.
+  Kapitel 7 ist praktisch bestätigt. FE-026 ergänzt die CSS-Kapitel 8–12 mit
+  21 Lektionen bis zum responsiven Projekt 2, Layout-/Medien-/Fokusprüfungen
+  und erweiterten Browser-/Electronnachweisen. Alte Entwürfe bleiben erhalten.
+  FE-027 ergänzt sechs Formularlektionen in Kapitel 13 mit lokaler nativer
+  Prüfung, offenen Startern und Formularprojekt. Kein Versand, Upload oder
+  Lern-JavaScript in der HTML-Vorschau. Neue Installationspakete bleiben separat.
+  → [CSS-Umfang und Abnahmepunkte](../27-CSS-Kurs-Abnahme.md)
+  → [Formularumfang und Abnahmepunkte](../28-HTML-Formulare-Abnahme.md)
+  OPS-036 ergänzt einen Desktop-JS-Technikpilot mit sieben festen Programmen,
+  separatem Renderer, externem Abbruch und Ressourcenbeobachtung. DOM/Neustart/
+  typische Zugriffsversuche erprobt. Eigene native Browser-DOM-Skripte bleiben
+  gesperrt. → [Nachweise/Restgates](../29-JavaScript-Sandbox-Pilot.md)
+  OPS-037 ergänzt eine eigene lokale `.js`-Konsole in Web und Electron mit
+  Interpreter-Heap-/Stack-/Zeit-/Ausgabe-/Jobgrenzen und lokaler Sicherung.
+  Kein DOM-/Browser-/Netzwerk-/App-Zugriff. FE-028 ergänzt Kapitel 14 in acht
+  Schritten mit eigenen Aufgaben, Typ-/Bindungsprüfung und Budgetprojekt;
+  51 Lektionen in diesem Stand. FE-030 ergänzt Kapitel 15 mit zehn Schritten
+  zu Strings, Bedingungen, Umwandlung und geprüftem Tarifrechner; insgesamt 61.
+  FE-031 ergänzt zehn Schritte zu eigenen Funktionen, Parametern, Rückgaben
+  und Gültigkeitsbereichen bis zum zerlegten Tarifrechner; insgesamt 71 Lektionen.
+  Direkte Prüfaufrufe bleiben im begrenzten Interpreter.
+  FE-034 ergänzt Kapitel 17 mit elf Array-/Schleifen-/Objektlektionen,
+  Zahlenprojekt, Produktliste und Aufgabenübersicht; insgesamt 82 Lektionen.
+  Strukturierte Erwartungen bleiben als unabhängige Kopie innerhalb der VM.
+  FE-036 ergänzt sämtliche Kapitel 18–31 als lesbare Inhaltsfassung mit 85
+  weiteren Lektionen, Aufgaben, Hilfen, Lösungen und Abnahmekriterien.
+  Projekte 3–6 und Abschlussportal in Etappen mit Referenzprogrammen ausgearbeitet.
+  59 Inhalts-/Browser-/Regressionsfälle und Build grün, unabhängige Fach- und
+  Integrationsreviews freigegeben. Alte 82 Übungen und Entwürfe erhalten.
+  Nächster Schritt: gemeinsame technische Integration/Abnahme der vorbereiteten
+  Kapitel; DOM/Debugger/async-Adapter, Werkzeugvorlagen, Validatoren, Fortschritt
+  und KI-Themenfolge weiterhin offen. Neue Kapitel noch nicht praktisch abgenommen.
+  → [Kapitel 18–31 und Integrationsgrenzen](../35-Frontendkurs-Kapitel-18-31.md)
+  Reihenfolge laut FE-035: Kapitel 18–31 zunächst vollständig inhaltlich
+  ausarbeiten; danach DOM-/Browser-/Debugging-Unterstützung gemeinsam erweitern
+  und prüfen. Technisch noch abhängige Übungen als vorbereitet mit offener
+  technischer/praktischer Abnahme kennzeichnen; bestehende Ausführungsgrenzen
+  bleiben bis dahin erhalten. Bereits unterstützte Übungen weiterhin prüfen.
+  → [Kapitel 17](../34-JavaScript-Kapitel-17.md)
+  → [Kapitel 16](../33-JavaScript-Kapitel-16.md)
+  → [Kapitel 15](../32-JavaScript-Kapitel-15.md)
+  → [Kapitel 14](../31-JavaScript-Kapitel-14.md)
+  FE-029 ergänzt eine standardmäßig ausgeschaltete Textspiegelung der Kurskonsole
+  in der Vorschau, deutlich als Lernhilfe der App gekennzeichnet; keine neue
+  DOM-/Browserfreigabe oder Speicherung von Lauf-Ausgaben.
+  → [Grundlagenlaufzeit und Grenzen](../30-JavaScript-Grundlagenlaufzeit.md)
 
 
 
