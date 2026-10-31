@@ -221,7 +221,8 @@ test('Einzeldateien ergänzen JS lokal und private Verzeichnisse bleiben ausgesc
   await expect(page.getByRole('button', { name: 'eigen.js', exact: true })).toBeVisible();
 });
 
-test('Electron: Kapitel 14 ausführen, prüfen und nach vollständigem Neustart fortsetzen', async ({}, info) => {
+test('Electron: Kapitel 14 ausführen, prüfen und nach vollständigem Neustart fortsetzen', { tag: '@desktop' }, async ({}, info) => {
+  test.skip(process.platform !== 'win32', 'Diese Prüfung benötigt Windows-Electron.');
   test.setTimeout(90000);
   const desktop = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../desktop');
   const env = { ...process.env, DATABASE_URL: '' }; delete env.ELECTRON_RUN_AS_NODE;

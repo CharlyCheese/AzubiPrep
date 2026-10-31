@@ -152,7 +152,8 @@ test('Web: lokaler Entwurf, Ein-/Auslesen und alle Kursprojekte bleiben erhalten
   await expect(page.getByRole('textbox', { name: 'JavaScript-Code', exact: true })).toHaveValue('console.log(21 * 2);');
 });
 
-test('Electron: eigene Programme, Grenzen, kein Hostzugriff und portunabhängige Sicherung', async ({}, info) => {
+test('Electron: eigene Programme, Grenzen, kein Hostzugriff und portunabhängige Sicherung', { tag: '@desktop' }, async ({}, info) => {
+  test.skip(process.platform !== 'win32', 'Diese Prüfung benötigt Windows-Electron.');
   test.setTimeout(90000);
   const env = { ...process.env, DATABASE_URL: '' }; delete env.ELECTRON_RUN_AS_NODE;
   const args = [desktop, `--user-data-dir=${info.outputPath('profile')}`];

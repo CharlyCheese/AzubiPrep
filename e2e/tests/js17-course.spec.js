@@ -101,7 +101,8 @@ test('Strukturierte Testdaten ausführen und sichern; ältere Prüfung und 82 Pr
   await expect(page.getByRole('combobox',{name:'Lektion',exact:true}).locator('option')).toHaveCount(82);
 });
 
-test('Electron: strukturierte Daten prüfen und nach vollständigem Neustart fortsetzen', async ({},info) => {
+test('Electron: strukturierte Daten prüfen und nach vollständigem Neustart fortsetzen', { tag: '@desktop' }, async ({},info) => {
+  test.skip(process.platform !== 'win32', 'Diese Prüfung benötigt Windows-Electron.');
   test.setTimeout(90000); const desktop=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'../../desktop');
   const env={...process.env,DATABASE_URL:''}; delete env.ELECTRON_RUN_AS_NODE;
   const options={executablePath:path.join(desktop,'node_modules/electron/dist/electron.exe'),args:[desktop,`--user-data-dir=${info.outputPath('profile')}`],env}; let app;

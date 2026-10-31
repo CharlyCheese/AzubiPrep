@@ -39,7 +39,7 @@ test('Späte Startantworten nach Schließen überschreiben keinen neuen Lauf', a
   await expect.poll(() => page.evaluate(() => window.pilotStopped)).toEqual(['old', 'new']);
 });
 
-test.describe('Electron-JavaScript-Technikpilot', () => {
+test.describe('Electron-JavaScript-Technikpilot', { tag: '@desktop' }, () => {
   test.skip(process.platform !== 'win32', 'Technische Windows-Matrix.');
   test.describe.configure({ mode: 'serial', timeout: 60000 });
   let app; let page;

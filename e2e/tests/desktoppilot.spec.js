@@ -1,6 +1,7 @@
 import { test, expect, _electron } from '@playwright/test';
 import fs from 'node:fs/promises';
 import path from 'node:path';
+import os from 'node:os';
 import { fileURLToPath } from 'node:url';
 import { unterdrueckeOnboardingPopups, openWorkshopTools } from './helpers.js';
 import { LESSONS, solutionFor } from '../../frontend/src/pilot/course.js';
@@ -12,7 +13,7 @@ test.describe.configure({ mode: 'serial', timeout: 90_000 });
 test.skip(process.platform !== 'win32', 'Diese Matrix prüft Windows-Desktop und echte NTFS-Junctions.');
 
 async function launch(profile) {
-  const env = { ...process.env, DATABASE_URL: '' }; delete env.ELECTRON_RUN_AS_NODE;
+  const env = { ...process.env, DATABASE_URL: '', AZUBIPREP_AI_DIR: path.join(profile, 'local-ai'), AZUBIPREP_RAG_DIR: path.join(profile, 'local-rag') }; delete env.ELECTRON_RUN_AS_NODE;
   const app = await _electron.launch({ executablePath, args: [...(process.env.PILOT_DESKTOP_EXE ? [] : [desktop]), `--user-data-dir=${profile}`], env });
   const page = await app.firstWindow();
   await page.waitForURL(/^http:\/\/127\.0\.0\.1:/);
@@ -23,7 +24,7 @@ async function launch(profile) {
   return { app, page, origin };
 }
 
-test('Kapitel 7 prüft und zeigt Vererbung in der Desktop-Werkstatt', async ({}, testInfo) => {
+test('Kapitel 7 prüft und zeigt Vererbung in der Desktop-Werkstatt', { tag: '@desktop' }, async ({}, testInfo) => {
   const profile = testInfo.outputPath('css-profile');
   const { app, page } = await launch(profile);
   try {
@@ -44,7 +45,7 @@ test('Kapitel 7 prüft und zeigt Vererbung in der Desktop-Werkstatt', async ({},
   } finally { await app.close(); }
 });
 
-test('CSS-Abschlussprojekt läuft im Desktop mit Medienregeln und reduzierter Bewegung', async ({}, testInfo) => {
+test('CSS-Abschlussprojekt läuft im Desktop mit Medienregeln und reduzierter Bewegung', { tag: '@desktop' }, async ({}, testInfo) => {
   const { app, page } = await launch(testInfo.outputPath('responsive-profile'));
   try {
     await page.getByRole('combobox', { name: 'Lektion', exact: true }).selectOption('responsive-website');
@@ -68,7 +69,7 @@ test('CSS-Abschlussprojekt läuft im Desktop mit Medienregeln und reduzierter Be
   } finally { await app.close(); }
 });
 
-test('HTML-Formular lässt sich im Desktop lokal bedienen und prüfen, ohne Versand', async ({}, testInfo) => {
+test('HTML-Formular lässt sich im Desktop lokal bedienen und prüfen, ohne Versand', { tag: '@desktop' }, async ({}, testInfo) => {
   const { app, page } = await launch(testInfo.outputPath('forms-profile'));
   try {
     await page.getByRole('combobox', { name: 'Lektion', exact: true }).selectOption('formular-projekt');
@@ -118,7 +119,7 @@ function nextPreview(app, page) {
 const html = (heading) => `<!doctype html><html lang="de"><head><meta charset="utf-8"><title>${heading}</title><link rel="stylesheet" href="css/style.css"></head><body><h1>${heading}</h1><p>Meine Seite</p><a href="zweite.html">Weiter</a><img src="bilder/logo.png" alt="Zeichen"></body></html>`;
 const png = Buffer.from('iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAIAAAD8GO2jAAAAKklEQVR4nGPQyNtCU8QwasGoBaMWjFowasGoBaMWjFowasGoBaMWDBULADD+KEyfbA9oAAAAAElFTkSuQmCC', 'base64');
 
-test('Native Auswahl verarbeitet Mehrdateien, Abbruch, Ergänzen, Konflikte und Neustart mit neuer Herkunft', async ({}, info) => {
+test('Native Auswahl verarbeitet Mehrdateien, Abbruch, Ergänzen, Konflikte und Neustart mit neuer Herkunft', { tag: '@desktop' }, async ({}, info) => {
   const root = info.outputPath('native'); const project = path.join(root, 'Projekt mit Leerzeichen');
   await fs.mkdir(path.join(project, 'css'), { recursive: true }); await fs.mkdir(path.join(project, 'bilder'));
   await fs.writeFile(path.join(project, 'index.html'), html('Desktopprojekt'));
@@ -166,7 +167,7 @@ test('Native Auswahl verarbeitet Mehrdateien, Abbruch, Ergänzen, Konflikte und 
   } finally { await running.app.close().catch(() => {}); }
 });
 
-test('Echte Windows-Junction und ungültige Auswahlen ersetzen keinen Entwurf', async ({}, info) => {
+test('Echte Windows-Junction und ungültige Auswahlen ersetzen keinen Entwurf', { tag: '@desktop' }, async ({}, info) => {
   const root = info.outputPath('links'); const project = path.join(root, 'project'); const outside = path.join(root, 'outside');
   await fs.mkdir(project, { recursive: true }); await fs.mkdir(outside);
   await fs.writeFile(path.join(project, 'index.html'), html('Innen'));
@@ -187,7 +188,7 @@ test('Echte Windows-Junction und ungültige Auswahlen ersetzen keinen Entwurf', 
   } finally { await app.close(); }
 });
 
-test('F12 untersucht getrennte Vorschau ohne Node, Speicherbrücke, Netzwerk oder Appnavigation', async ({}, info) => {
+test('F12 untersucht getrennte Vorschau ohne Node, Speicherbrücke, Netzwerk oder Appnavigation', { tag: '@desktop' }, async ({}, info) => {
   const { app, page, origin } = await launch(info.outputPath('inspect/profil'));
   try {
     expect(await page.evaluate(() => ({ bridge: window.azubiDesktop.version, require: typeof require }))).toEqual({ bridge: 1, require: 'undefined' });
@@ -251,7 +252,7 @@ test('F12 untersucht getrennte Vorschau ohne Node, Speicherbrücke, Netzwerk ode
   } finally { await app.close(); }
 });
 
-test('Unterstützter Chromium-Ordnerimport überspringt echte ausbrechende Windows-Junction', async ({ page, browser }, info) => {
+test('Unterstützter Chromium-Ordnerimport überspringt echte ausbrechende Windows-Junction', { tag: '@desktop' }, async ({ page, browser }, info) => {
   const root = info.outputPath('browser-links'); const project = path.join(root, 'project'); const outside = path.join(root, 'outside');
   await fs.mkdir(project, { recursive: true }); await fs.mkdir(outside);
   await fs.writeFile(path.join(project, 'index.html'), html('Browser innen'));
@@ -264,4 +265,46 @@ test('Unterstützter Chromium-Ordnerimport überspringt echte ausbrechende Windo
   await expect(page.getByRole('button', { name: 'link/secret.html', exact: true })).toHaveCount(0);
   expect(await fs.readFile(path.join(outside, 'secret.html'), 'utf8')).toBe('AUSSERHALB');
   console.log(`Browsermatrix Chromium ${browser.version()}, ${process.platform}`);
+});
+
+test('Aktueller Desktop enthält 7000 Fragen, 82 Übungen, 85 Inhaltslektionen und keine vorangemeldeten KI-Konten', { tag: '@desktop' }, async ({}, info) => {
+  const temporary = await fs.realpath(os.tmpdir());
+  const profile = await fs.mkdtemp(path.join(temporary, 'azubiprep-release-'));
+  let app;
+  try {
+    const launched = await launch(profile); app = launched.app;
+    const { page, origin } = launched;
+    const health = await page.request.get(`${origin}/api/health`);
+    expect((await health.json()).fragenAnzahl).toBe(7000);
+    await expect(page.getByLabel('Lektion', { exact: true }).locator('option')).toHaveCount(82);
+    const lesson = LESSONS.find(item => item.id === 'js17-aufgabenprojekt');
+    await page.getByLabel('Lektion', { exact: true }).selectOption(lesson.id);
+    page.once('dialog', dialog => dialog.accept());
+    await page.getByLabel('Sicherung einlesen', { exact: true }).setInputFiles({ name: 'release-projekt.json', mimeType: 'application/json', buffer: Buffer.from(JSON.stringify({ format: 'azubiprep-pilot', version: 1, entry: 'index.html', files: solutionFor(lesson) })) });
+    await expect(page.getByRole('alert')).toContainText('eingelesen');
+    await page.getByRole('button', { name: 'Schreiben', exact: true }).click();
+    await page.getByRole('button', { name: 'Aufgabe prüfen', exact: true }).click();
+    await expect(page.getByRole('region', { name: 'Prüfergebnisse', exact: true })).toContainText('Dieser eingereichte Stand hat die Pflichtprüfung bestanden');
+    await page.getByRole('button', { name: 'Vorschau / Konsole', exact: true }).click();
+    await page.getByRole('button', { name: 'Kursprogramm ausführen', exact: true }).click();
+    await expect(page.getByLabel('Kurs-Konsolenausgabe')).toHaveText('2\n35\nHTML üben\nJavaScript testen');
+    await page.getByRole('button', { name: 'Kapitel 18–31 lesen', exact: true }).click();
+    await expect(page.getByLabel('Kapitel der Inhaltsfassung', { exact: true }).locator('option')).toHaveCount(14);
+    await expect(page.getByText('Inhaltsfassung · Kapitel 18–31 · 85 vorbereitete Lektionen', { exact: true })).toBeVisible();
+    await page.getByLabel('Kapitel der Inhaltsfassung', { exact: true }).selectOption('31');
+    await expect(page.getByRole('heading', { name: 'Auftrag und eigenen Umfang festlegen', exact: true })).toBeVisible();
+    await page.goto(`${origin}/einstellungen`);
+    await expect(page.getByRole('combobox', { name: 'KI-Anbieter', exact: true }).locator('option')).toHaveCount(3);
+    const response = await page.request.get(`${origin}/api/ai/chatgpt/status`, { headers: { 'X-AzubiPrep-AI': '1' } });
+    expect(response.status()).toBe(200);
+    const account = await response.json();
+    expect(account.connected).toBe(false); expect(account.accounts).toEqual([]);
+    expect(await app.evaluate(({ app: application }) => application.getVersion())).toBe('0.1.4');
+  } finally {
+    if (app) await app.close();
+    expect(path.dirname(path.resolve(profile))).toBe(temporary);
+    expect(path.basename(profile).startsWith('azubiprep-release-')).toBe(true);
+    expect((await fs.lstat(profile)).isSymbolicLink()).toBe(false);
+    await fs.rm(profile, { recursive: true, force: true, maxRetries: 10, retryDelay: 100 });
+  }
 });

@@ -140,7 +140,7 @@ test('Quiz-Lernhilfe erklärt erst nach der festen Prüfung und übergibt nur di
   await expect(page.getByRole('button', { name: /Nächste Frage|Quiz beenden/ })).toBeVisible();
 });
 
-test('Desktop speichert KI-Zustimmung im App-Profil über wechselnde Ports hinweg', async () => {
+test('Desktop speichert KI-Zustimmung im App-Profil über wechselnde Ports hinweg', { tag: '@desktop' }, async () => {
   test.skip(process.platform !== 'win32'); test.setTimeout(60000);
   const repo = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
   const profile = await fs.realpath(await fs.mkdtemp(path.join(os.tmpdir(), 'azubiprep-ai-profile-')));
@@ -165,7 +165,7 @@ test('Desktop speichert KI-Zustimmung im App-Profil über wechselnde Ports hinwe
   } finally { await running.app.close(); expect(path.dirname(await fs.realpath(profile))).toBe(await fs.realpath(os.tmpdir())); expect(path.basename(profile)).toMatch(/^azubiprep-ai-profile-/); await fs.rm(profile, { recursive: true, force: true }); }
 });
 
-test('Echter Desktop-Codehinweis benennt offene h1-Tags und erklärt die fehlerverzeihende Browserdarstellung', async ({}, info) => {
+test('Echter Desktop-Codehinweis benennt offene h1-Tags und erklärt die fehlerverzeihende Browserdarstellung', { tag: '@desktop' }, async ({}, info) => {
   test.skip(process.platform !== 'win32'); test.setTimeout(60000);
   const repo = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
   const env = { ...process.env, DATABASE_URL: '', AI_ENABLED: 'true', OLLAMA_BASE_URL: 'http://127.0.0.1:1' }; delete env.ELECTRON_RUN_AS_NODE;

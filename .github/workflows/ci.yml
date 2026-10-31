@@ -161,3 +161,50 @@ jobs:
           name: playwright-report
           path: e2e/playwright-report/
           retention-days: 7
+
+  desktop-tests:
+    name: Windows-Desktop – Electron und native Werkstatt
+    runs-on: windows-latest
+    timeout-minutes: 20
+    env:
+      DATABASE_URL: ""
+      HOST: "127.0.0.1"
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Node 24 einrichten
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+
+      - name: Backend-Abhängigkeiten installieren
+        working-directory: backend
+        run: npm ci
+
+      - name: Frontend-Abhängigkeiten installieren
+        working-directory: frontend
+        run: npm ci
+
+      - name: Windows-Electron und Desktop-Abhängigkeiten installieren
+        working-directory: desktop
+        run: npm ci
+
+      - name: E2E-Abhängigkeiten installieren
+        working-directory: e2e
+        run: npm ci
+
+      - name: Playwright-Browser installieren (Chromium)
+        working-directory: e2e
+        run: npx playwright install chromium
+
+      - name: Windows-Desktopmatrix ausführen
+        working-directory: e2e
+        run: npx playwright test --grep "@desktop" --workers=1
+
+      - name: Desktop-Report bei Fehlschlag hochladen
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-desktop-report
+          path: e2e/playwright-report/
+          retention-days: 7

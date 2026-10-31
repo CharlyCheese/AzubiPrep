@@ -19,7 +19,7 @@ test('Desktopdistribution schließt .env-Dateien in allen Ressourcen aus', () =>
 });
 
 test('Desktopversion und Lockmetadaten passen zusammen und behalten Desktop-Einstieg', () => {
-  assert.equal(pkg.version, '0.1.3');
+  assert.equal(pkg.version, '0.1.4');
   assert.equal(lock.version, pkg.version);
   assert.equal(lock.packages[''].version, pkg.version);
   assert.equal(pkg.main, 'main.js');

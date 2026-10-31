@@ -112,7 +112,7 @@ test('Wissenssuche erlaubt Quellenlesen ohne aktivierte KI und Abbruch verwirft 
   await expect(lesson(page).getByLabel('Theorieantwort')).toHaveCount(0); await lesson(page).getByRole('button', { name: 'Fundstellen lesen' }).click(); await expect(lesson(page).getByLabel('Fundstellen')).toContainText('Synthetischer Originaltext');
 });
 
-test('Echter Desktop liest öffentliche Fundstellen bei serverseitig ausgeschalteter KI', async ({}, info) => {
+test('Echter Desktop liest öffentliche Fundstellen bei serverseitig ausgeschalteter KI', { tag: '@desktop' }, async ({}, info) => {
   test.skip(process.platform !== 'win32'); test.setTimeout(60000);
   const root = await fs.realpath(await fs.mkdtemp(path.join(os.tmpdir(), 'azubiprep-theory-e2e-'))); const repo = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
   const env = { ...process.env, DATABASE_URL: '', AI_ENABLED: 'false', OLLAMA_BASE_URL: 'http://127.0.0.1:1', AZUBIPREP_RAG_DIR: path.join(root, 'private') }; delete env.ELECTRON_RUN_AS_NODE;

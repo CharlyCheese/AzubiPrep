@@ -19,6 +19,7 @@ export default defineConfig({
   // eine langsamere Maschine – deshalb hier auf 15s angehoben.
   expect: { timeout: 15_000 },
   fullyParallel: true,
+  reporter: process.env.CI ? [['dot'], ['html', { open: 'never' }]] : 'list',
   retries: process.env.CI ? 1 : 0,
   use: {
     baseURL: 'http://127.0.0.1:3001',

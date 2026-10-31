@@ -120,7 +120,8 @@ test('Alle Projekte, ältere JS-Prüfung, Sicherung und Projekt-Reload bleiben e
   await expect(page.getByRole('combobox', { name: 'Lektion', exact: true }).locator('option')).toHaveCount(82);
 });
 
-test('Electron: Tarifprojekt mit Textdaten ausführen, prüfen, nach Neustart fortsetzen', async ({}, info) => {
+test('Electron: Tarifprojekt mit Textdaten ausführen, prüfen, nach Neustart fortsetzen', { tag: '@desktop' }, async ({}, info) => {
+  test.skip(process.platform !== 'win32', 'Diese Prüfung benötigt Windows-Electron.');
   test.setTimeout(90000);
   const desktop = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../desktop');
   const env = { ...process.env, DATABASE_URL: '' }; delete env.ELECTRON_RUN_AS_NODE;

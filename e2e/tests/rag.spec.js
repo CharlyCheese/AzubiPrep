@@ -42,7 +42,7 @@ test('Entferntes oder geändertes Material verwirft sichtbare alte Quellenantwor
   await check.uncheck(); await expect(check).toBeDisabled();
 });
 
-test('Desktop importiert synthetische PDF, erstellt Seitenindex, verwendet lokalen Modellmock und entfernt Arbeitsdaten', async ({}, info) => {
+test('Desktop importiert synthetische PDF, erstellt Seitenindex, verwendet lokalen Modellmock und entfernt Arbeitsdaten', { tag: '@desktop' }, async ({}, info) => {
   test.skip(process.platform !== 'win32'); test.setTimeout(90000);
   const root = await fs.realpath(await fs.mkdtemp(path.join(os.tmpdir(), 'azubiprep-rag-e2e-')));
   const repo = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..'); const requests = [];

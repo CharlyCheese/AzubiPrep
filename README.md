@@ -3,7 +3,7 @@
 **Progressive Web App zur IHK-Prüfungsvorbereitung für Fachinformatiker**
 (FIAE, FISI, DPA, DVK) – Lernmodule, Karteikarten mit Spaced Repetition,
 Prüfungssimulation und Fortschritts-Tracking, wahlweise als Web-App oder
-installierbare Windows-Desktop-App. Dazu kommen eine HTML-/CSS-Werkstatt,
+installierbare Windows-Desktop-App. Dazu kommen eine HTML-/CSS-/JavaScript-Werkstatt,
 Theorie & Glossar und freiwillige Lernhilfe mit lokalem Qwen oder eigenem ChatGPT-Abo.
 
 ![Node](https://img.shields.io/badge/Node-%E2%89%A522.13-339933?logo=node.js&logoColor=white)
@@ -35,13 +35,14 @@ bei der Vorbereitung auf die IHK-Abschlussprüfung: **7.000 Prüfungsfragen** in
 **26 Modulen**, aufbereitet als interaktives Quiz, Karteikarten-Training und
 zeitlimitierte Prüfungssimulation mit automatischer Auswertung. Lernfelder
 gliedern den Einstieg. Theorie & Glossar helfen beim Verstehen vor dem Quiz;
-die Frontend-Werkstatt bietet elf aufeinander aufbauende HTML-/CSS-Lektionen.
+die Frontend-Werkstatt bietet **82 praktisch eingebundene Lektionen in Kapitel
+1–17** und **85 zusätzliche Inhaltslektionen für Kapitel 18–31**.
 
-**Quellstand und fertige Pakete:** Die Screenshots zeigen den aktuellen
-Entwicklungsstand. Die vorhandenen Windows-Pakete (Desktop 0.1.3, Web 0.1.2)
-enthalten 7.000 Fragen. Qwen, lokale PDF-Wissenssuche und der neue Theorie-/
-Glossarbereich wurden anschließend ergänzt und sind darin noch nicht enthalten.
-Der Desktopinstaller 0.1.3 enthält bereits die HTML-/CSS-Pilotwerkstatt.
+**Quellstand und fertige Pakete:** Desktop **0.1.4** enthält 7.000 Fragen,
+Theorie & Glossar, die freiwillige KI-Auswahl, lokale PDF-Wissenssuche und den
+aktuellen Werkstattstand. Die älteren Webpakete **0.1.2** enthalten diese späteren
+Erweiterungen noch nicht. Modelle, eigene Unterlagen und angemeldete Konten
+werden nicht mitgeliefert. Die Screenshots zeigen ausgewählte App-Ansichten.
 
 Bewusste Architektur-Entscheidung für den MVP: **kein erzwungener
 Datenbank-Server, kein Pflicht-Login, kein Docker.** Das Backend ist im
@@ -102,7 +103,10 @@ Unterlagen, persönlichen Lerndaten oder Modellantworten sind abgebildet.
 - Theorie & Glossar mit Lernfeldeinstiegen, Fragenthemen und passenden Übungsfragen
 - Optionale Qwen-Erklärungen mit Praxisbeispiel und Merksatz; Originalfundstellen separat lesen
 - Ausführliche Lernfelder mit geordneten Teilthemen, einzelnen Erklärungen oder einem abbrechbaren Ablauf durch alle offenen Abschnitte
-- HTML-/CSS-Werkstatt mit Editor, Mehrdateiprojekten, externer Dateiauswahl, Vorschau/Inspektor und fester Aufgabenprüfung (Pilot Kapitel 1–6)
+- Frontend-Werkstatt mit 82 Übungen in Kapitel 1–17: HTML, CSS, Formulare und JavaScript-Grundlagen bis zu Funktionen, Arrays, Schleifen und Objekten
+- Editor, Mehrdateiprojekte, externe Dateiauswahl, skriptfreie HTML-/CSS-Vorschau mit Inspektor und feste Aufgabenprüfungen
+- JavaScript bewusst in einer begrenzten lokalen Konsole ausführen; keine DOM-, Datei-, Netzwerk- oder App-Brücken für eigene Programme
+- Weitere 85 Lektionen in Kapitel 18–31 unter „Kapitel 18–31 lesen“: Erklärungen, Übungen, gestufte Hilfen, Lösungen und Projekte bis TypeScript, React und Abschlussportal; technische Einbindung und praktische Abnahme dieser neuen Kapitel noch offen
 - Quizmodus mit Sofort-Feedback und Erklärung (Single-Choice, Multiple-Choice, Freitext)
 - Karteikartenmodus mit Spaced Repetition (Leitner-System, 5 Boxen)
 - Prüfungssimulation mit Zeitlimit, Zufallsfragen, Themengewichtung und Bestehensgrenze
@@ -135,8 +139,8 @@ Unterlagen, persönlichen Lerndaten oder Modellantworten sind abgebildet.
 - Sicherheitsgehärtetes Backend: Security-Header (Helmet/CSP/HSTS), Rate-Limiting, geschützter Admin-Reload
 - Automatisierte Tests (Vitest: Backend-Unit- & DB-Integrationstests;
   Playwright: Ende-zu-Ende-Browser-Tests) sowie eine CI/CD-Pipeline über
-  GitHub Actions (Lint, Content-Validierung, Tests, Frontend-Build bei
-  jedem Push)
+  GitHub Actions (Lint, Content-Validierung, Tests und Frontend-Build bei
+  jedem Push; Browserprüfungen auf Linux und eigene Windows-Desktopmatrix)
 - Inhalte pflegbar über Excel/CSV, ohne Codeänderung
 - Optionale Autoren-Weboberfläche (`/autoren`) zur direkten Fragenpflege in
   der Content-DB: rollenbasierter Zugriff (fachrichtungsgebundene
@@ -159,8 +163,8 @@ dem Rechner vorhanden sein; es werden keine Modelle heruntergeladen. ChatGPT
 wird ausdrücklich per Browseranmeldung verbunden, benötigt Internet und ein
 berechtigtes freigegebenes Abo. Öffentliche Lerninhalte und freiwillig gewählter
 Code können dann an OpenAI gehen. Es gibt keinen automatischen Cloudfallback.
-Anmeldung und ChatGPT-Erklärungen sind im lokalen Webstand praktisch erprobt
-und durch Nutzerrückmeldung bestätigt.
+Jeder Anwender verbindet sein eigenes Konto. Persönliche Zugangsdaten und
+Anmeldesitzungen werden nicht mit der App weitergegeben.
 
 Eigene PDFs können lokal importiert und aufbereitet werden. Bei Lernanfragen
 werden private Unterlagen nur nach ausdrücklicher Auswahl verwendet. Originale,
@@ -269,9 +273,10 @@ cd ../backend && npm start   # http://localhost:3001
 
 ## Desktop-App (Electron)
 
-Die [lokale Lernbegleitung](#lokale-lernbegleitung-und-eigene-unterlagen) ist
-auch im Desktop-Quellstand verfügbar. Der vorhandene Installer 0.1.3 wurde für
-Qwen/RAG/Theorie noch nicht neu gebaut.
+Die [lokale Lernbegleitung](#lokale-lernbegleitung-und-eigene-unterlagen),
+Theorie & Glossar und der aktuelle Frontendkurs sind in Desktop 0.1.4 enthalten.
+Qwen/Ollama wird bei Bedarf separat eingerichtet; für ChatGPT ist die eigene
+Anmeldung erforderlich. Ohne KI bleiben Quiz und feste Übungen nutzbar.
 
 AzubiPrep läuft wahlweise auch als installierbare Windows-Desktop-App – eine
 Electron-Hülle um dasselbe Backend und Frontend. Die Kurswerkstatt nutzt eine
@@ -283,13 +288,18 @@ npm install
 npm start        # startet die App im eigenen Fenster
 
 npm run dist      # baut Frontend und Windows-Installer nach Installer/
+node scripts/verify-desktop-release.cjs  # prüft Paket/Installer ohne Installation
 ```
 
-Der aktuelle Desktopinstaller heißt **`AzubiPrep Setup 0.1.3.exe`** und
-enthält 7.000 Fragen, Lernfeldunterstützung und die
-Frontend-Werkstatt für HTML/CSS (Kapitel 1–6).
+Der aktuelle Desktopinstaller heißt **`AzubiPrep Setup 0.1.4.exe`** und liegt
+nach dem Build in `Installer/`. Er enthält 7.000 Fragen, Lernfeldunterstützung,
+Theorie/Glossar, die KI-Auswahl und die Frontend-Werkstatt mit 82 integrierten
+Übungen sowie 85 vorbereiteten Inhaltslektionen. Die Integration von DOM,
+Browserfunktionen, Debugger und weiteren Werkzeugen für Kapitel 18–31 folgt
+separat; diese Kapitel werden noch nicht als praktisch bestanden bewertet.
 Node.js muss auf dem Ziel-PC nicht separat installiert werden.
-Entwickler-`.env`-Dateien werden ausgeschlossen; ohne eigene Kontoserver-
+Entwickler-`.env`-Dateien, private Lernunterlagen, daraus erzeugte Daten und
+persönliche KI-Konten werden ausgeschlossen; ohne eigene Kontoserver-
 Konfiguration verwendet die installierte App den mitgelieferten CSV-Katalog.
 Ältere Installer sind kein aktueller Auslieferungsstand und sollten nicht
 weitergegeben werden. Der Installer ist derzeit unsigniert.
@@ -300,7 +310,8 @@ Dateien werden über die Windows-Auswahl freigegeben; externe Originale bleiben
 unverändert. F12 in der Vorschau öffnet eine getrennte Projektprüfung ohne
 Zugriff auf App-Daten oder Node.js. Electron: 45.2.0.
 Die genaue Testmatrix und ihre Grenzen stehen in der
-[Pilotabnahme](docs/21-Frontendpilot-Abnahme.md). Die Webpakete 0.1.2 werden
+[Pilotabnahme](docs/21-Frontendpilot-Abnahme.md) und im
+[Kursstand 18–31](docs/35-Frontendkurs-Kapitel-18-31.md). Die Webpakete 0.1.2 werden
 durch diesen Desktopbuild nicht ersetzt.
 
 ## Inhalte pflegen (ohne Code)
@@ -373,15 +384,16 @@ Die tagesaktuelle Task-Liste (was offen ist, was erledigt ist) führt
 
 Erledigt (Auszug, vollständig in [`DONE.md`](docs/agent-briefs/DONE.md)):
 Ausbau auf 7.000 Fragen, Lernfeldzuordnung, Windows-Pakete mit eigener Laufzeit,
-HTML-/CSS-Pilotwerkstatt, optionale Content-Datenbank mit CSV-Fallback,
-Autoren-Weboberfläche, Fragenfeedback und lokale Qwen-Grundanbindung.
-PDF-Aufbereitung mit lokaler Wissenssuche sowie Theorie/Glossar sind im
-Quellstand implementiert; die bestehenden Installer enthalten die jüngsten
-KI-/Theorieerweiterungen noch nicht.
+Frontend-Werkstatt mit 82 integrierten Übungen und 85 weiteren Inhaltslektionen,
+optionale Content-Datenbank mit CSV-Fallback, Autoren-Weboberfläche und
+Fragenfeedback. Qwen/eigenes ChatGPT, lokale PDF-Wissenssuche und Theorie/Glossar
+sind ebenso wie der Kursstand im Desktopinstaller 0.1.4 enthalten.
 
-Offen bleiben weitere Kursinhalte, vertiefte fachlich-didaktische KI-Evaluation,
-semantische Suche/OCR, Nachweise auf weiteren Zielgeräten, neue Pakete mit den
-jüngsten Funktionen sowie Installersignatur und Desktop-Auto-Update.
+Offen bleiben technische Integration und praktische Abnahme der Inhaltskapitel
+18–31, vertiefte fachlich-didaktische KI-Evaluation, semantische Suche/OCR,
+Nachweise auf weiteren Zielgeräten, aktualisierte Webpakete sowie Installersignatur
+und Desktop-Auto-Update. Die Inhaltsfassung führt keinen Beispielcode aus und
+verändert keine bisherigen Prüfungsergebnisse.
 
 Die README-Bilder lassen sich mit den vorhandenen Playwright-Abhängigkeiten
 erneuern: erst in `frontend/` mit `npm run build` bauen, dann in `e2e/`

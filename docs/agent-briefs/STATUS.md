@@ -91,6 +91,10 @@
   Nächster Schritt: gemeinsame technische Integration/Abnahme der vorbereiteten
   Kapitel; DOM/Debugger/async-Adapter, Werkzeugvorlagen, Validatoren, Fortschritt
   und KI-Themenfolge weiterhin offen. Neue Kapitel noch nicht praktisch abgenommen.
+  OPS-039: Desktop 0.1.4 mit aktuellem Kurs/KI/Theorie neu gebaut und als echte
+  Paket-EXE geprüft. NSIS-Inhalt identisch zum kontrollierten Build, private
+  Dateiklassen ausgeschlossen; README aktualisiert. Vorhandene Webpakete 0.1.2
+  bleiben älterer Stand. → [Desktopbuild](OPS-039-desktop-014-readme.md)
   → [Kapitel 18–31 und Integrationsgrenzen](../35-Frontendkurs-Kapitel-18-31.md)
   Reihenfolge laut FE-035: Kapitel 18–31 zunächst vollständig inhaltlich
   ausarbeiten; danach DOM-/Browser-/Debugging-Unterstützung gemeinsam erweitern
