@@ -1,15 +1,15 @@
 # Eigene lokale Lernunterlagen für RAG
 
-Dieser Ordner ist für eigene PDF-Ausbildungsunterlagen vorgesehen. RAG und
-PDF-Import sind noch nicht implementiert; das Ablegen allein startet keine
-Verarbeitung. Der [Planungsstand](../docs/20-Frontendkurs-Qwen-Planung.md)
-beschreibt den vorgesehenen Ablauf und den späteren Einrichtungshinweis.
+Dieser Ordner ist für eigene PDF-Ausbildungsunterlagen vorgesehen. Nach dem
+Ablegen unter „Einstellungen → KI und Lernmaterial“ ausdrücklich „Material
+aufbereiten / neu einlesen“ starten. Ablegen allein startet keine Extraktion.
+Bedienung, Schutzgrenzen und Konfiguration: [Lokales RAG](../docs/24-Lokales-RAG.md).
 
 ## Materialien ablegen
 
 Im Entwicklungsprojekt eigene PDFs in `local-rag/material/` ablegen.
-Falls der Unterordner nach einem frischen Checkout fehlt, kann er angelegt
-werden; die spätere Einrichtung soll das automatisch übernehmen.
+Die Materialverwaltung legt fehlende Unterordner automatisch an. Alternativ
+„PDF hinzufügen“ verwenden; dadurch wird eine lokale Arbeitskopie importiert.
 Keine eigenen Buchinhalte oder Dateilisten in diese README schreiben.
 
 Nur diese neutrale Anleitung ist zur Veröffentlichung vorgesehen. Alle
@@ -28,12 +28,20 @@ keine Verschlüsselung und verhindert keine lokalen Backups anderer Programme.
 ## Für Anwender der fertigen App
 
 Das private Buch und der private Suchindex werden nicht mitgeliefert.
-Jeder Anwender fügt eigenes Material selbst hinzu. Geplant sind unter
+Jeder Anwender fügt eigenes Material selbst hinzu. Implementiert sind unter
 „Einstellungen → KI und Lernmaterial“ die Aktionen „PDF hinzufügen“,
 „Materialordner öffnen“ und „Material aufbereiten“ sowie eine Statusanzeige.
-Der tatsächliche beschreibbare Speicherort soll angezeigt werden und liegt
+Der tatsächliche beschreibbare Speicherort wird angezeigt und liegt
 bei installierten Paketen außerhalb des Installationsverzeichnisses.
-Diese Oberfläche und Speicherortwahl sind noch nicht umgesetzt.
+Diese Funktionen sind im aktuellen Quellstand verfügbar; bestehende Installer
+wurden dafür noch nicht neu gebaut. Im Kurs/Quiz die Verwendung eigener
+Unterlagen pro Lernanfrage ausdrücklich auswählen. Die erste Suche arbeitet
+lexikalisch, ohne Embedding-Modell; Quellen nennen neutrale IDs und PDF-Seiten.
+
+„Unterlage entfernen“ löscht Such-/Zwischendaten und importierte Arbeitskopien.
+Zuvor selbst im Materialordner abgelegte Originale bleiben erhalten und werden
+anschließend nicht erneut entdeckt. Erneutes Hinzufügen erfolgt dann ausdrücklich
+über „PDF hinzufügen“.
 
 Ohne eigenes Material bleiben Kurs und feste Aufgabenprüfungen verwendbar.
 Die KI darf fehlendes eigenes Quellenmaterial nicht als eingelesenes Wissen ausgeben.

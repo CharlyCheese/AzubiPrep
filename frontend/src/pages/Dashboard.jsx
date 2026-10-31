@@ -58,9 +58,7 @@ export default function Dashboard() {
 
   // Onboarding-Hinweis nur vor der ersten Lernaktivitaet
   const neuling = xp === 0 && beantwortet === 0 && pruefungen.length === 0;
-  // Fortschritt je Fachrichtung der gewählten Richtung
-  const moduleGesamt = meta?.moduleGesamt || 18;
-  const fragenGesamt = meta?.fragenGesamt || 0;
+  const fragenGesamt = meta?.fragenAnzahl ?? 0;
 
   return (
     <div>

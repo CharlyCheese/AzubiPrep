@@ -5,9 +5,12 @@ import { fragenAnzahlFachrichtung, moduleFuerFachrichtung, loadContent } from '.
 import { pruefeAntwort, musterloesungFT } from '../answer.js';
 import { adminSchutz, rateLimiter } from '../sicherheit.js';
 import { config } from '../config.js';
+import { listTheory } from '../theory.js';
 
 export function buildContentRoutes(store) {
   const router = Router();
+
+  router.get('/theorie', (req, res) => res.json(listTheory(store.get(), req.query)));
 
   router.get('/health', (req, res) => {
     const c = store.get();

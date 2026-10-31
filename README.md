@@ -3,12 +3,13 @@
 **Progressive Web App zur IHK-Prüfungsvorbereitung für Fachinformatiker**
 (FIAE, FISI, DPA, DVK) – Lernmodule, Karteikarten mit Spaced Repetition,
 Prüfungssimulation und Fortschritts-Tracking, wahlweise als Web-App oder
-installierbare Windows-Desktop-App.
+installierbare Windows-Desktop-App. Dazu kommen eine HTML-/CSS-Werkstatt,
+Theorie & Glossar und eine optionale lokale Qwen-Lernbegleitung.
 
-![Node](https://img.shields.io/badge/Node-%E2%89%A520-339933?logo=node.js&logoColor=white)
+![Node](https://img.shields.io/badge/Node-%E2%89%A522.13-339933?logo=node.js&logoColor=white)
 ![React](https://img.shields.io/badge/React-18-61DAFB?logo=react&logoColor=black)
 ![Express](https://img.shields.io/badge/Express-4-000000?logo=express&logoColor=white)
-![Electron](https://img.shields.io/badge/Electron-32-47848F?logo=electron&logoColor=white)
+![Electron](https://img.shields.io/badge/Electron-45.2-47848F?logo=electron&logoColor=white)
 ![License](https://img.shields.io/badge/Lizenz-MIT-yellow)
 
 ---
@@ -18,6 +19,7 @@ installierbare Windows-Desktop-App.
 - [Über das Projekt](#über-das-projekt)
 - [Screenshots](#screenshots)
 - [Funktionsumfang](#funktionsumfang)
+- [Lokale Lernbegleitung und eigene Unterlagen](#lokale-lernbegleitung-und-eigene-unterlagen)
 - [Tech-Stack](#tech-stack)
 - [Schnellstart (Web-App)](#schnellstart-web-app)
 - [Desktop-App (Electron)](#desktop-app-electron)
@@ -29,9 +31,17 @@ installierbare Windows-Desktop-App.
 ## Über das Projekt
 
 AzubiPrep unterstützt Auszubildende der vier Fachinformatiker-Fachrichtungen
-bei der Vorbereitung auf die IHK-Abschlussprüfung: **1.627 Prüfungsfragen** in
-**19 Modulen**, aufbereitet als interaktives Quiz, Karteikarten-Training und
-zeitlimitierte Prüfungssimulation mit automatischer Auswertung.
+bei der Vorbereitung auf die IHK-Abschlussprüfung: **7.000 Prüfungsfragen** in
+**26 Modulen**, aufbereitet als interaktives Quiz, Karteikarten-Training und
+zeitlimitierte Prüfungssimulation mit automatischer Auswertung. Lernfelder
+gliedern den Einstieg. Theorie & Glossar helfen beim Verstehen vor dem Quiz;
+die Frontend-Werkstatt bietet elf aufeinander aufbauende HTML-/CSS-Lektionen.
+
+**Quellstand und fertige Pakete:** Die Screenshots zeigen den aktuellen
+Entwicklungsstand. Die vorhandenen Windows-Pakete (Desktop 0.1.3, Web 0.1.2)
+enthalten 7.000 Fragen. Qwen, lokale PDF-Wissenssuche und der neue Theorie-/
+Glossarbereich wurden anschließend ergänzt und sind darin noch nicht enthalten.
+Der Desktopinstaller 0.1.3 enthält bereits die HTML-/CSS-Pilotwerkstatt.
 
 Bewusste Architektur-Entscheidung für den MVP: **kein erzwungener
 Datenbank-Server, kein Pflicht-Login, kein Docker.** Das Backend ist im
@@ -58,20 +68,26 @@ Gesamtverantwortung für Qualität und Architektur (Workflow:
 
 ## Screenshots
 
+Aktuelle Aufnahmen vom 31.10.2026 aus einem getrennten Demoprofil mit
+öffentlichen App-Inhalten und selbst erstellten Beispieldaten. Keine privaten
+Unterlagen, persönlichen Lerndaten oder Modellantworten sind abgebildet.
+
 | | |
 |---|---|
 | ![Dashboard](screenshots/dashboard.png) | ![Lernbereich](screenshots/lernbereich.png) |
-| **Dashboard** – XP, Tages-/Wochenziel, Missionen | **Lernbereich** – Module je Fachrichtung |
+| **Dashboard** – XP, Tages-/Wochenziel, Missionen | **Lernbereich** – Module nach Lernfeld und Fachrichtung |
 | ![Karteikarten](screenshots/karteikarten.png) | ![Prüfungssimulation](screenshots/pruefungssimulation.png) |
 | **Karteikarten** – Leitner-System, Ziffern statt Buchstaben | **Prüfungssimulation** – Zeitlimit & Themengewichtung |
 | ![Statistik & Abzeichen](screenshots/statistik-abzeichen.png) | ![Lernreise](screenshots/lernreise.png) |
 | **Statistik & Abzeichen** – Fortschritt & Gamification | **Lernreise** – Stationenweg durch die Module |
 | ![Lernkalender](screenshots/lernkalender.png) | ![Notizen](screenshots/notizen.png) |
 | **Lernkalender** – Wiederholungsplan & eigene Lerninhalte | **Lernnotizen** – lokal, export-/importierbar als `.txt` |
-| ![Einstellungen](screenshots/einstellungen.png) | |
-| **Einstellungen & Profil** – Lernprofil, optionaler Konto-Sync, Darstellung | |
+| ![Frontend-Werkstatt](screenshots/frontend-werkstatt.png) | ![Theorie und Glossar](screenshots/theorie-glossar.png) |
+| **Frontend-Werkstatt** – eigener HTML-Code und isolierte Vorschau | **Theorie & Glossar** – Lernfeldeinstiege und Begriffssuche |
+| ![Theorie-Fundstellen](screenshots/theorie-fundstellen.png) | ![Einstellungen](screenshots/einstellungen.png) |
+| **Fundstellen lesen** – öffentliche Originalauszüge ohne Modellanfrage | **Einstellungen** – Darstellung und optionale lokale Lernbegleitung |
 
-**Responsive** – jede Seite fällt auf schmalen Bildschirmen sauber auf eine Spalte zurück:
+**Mobile Ansichten** im hellen Design:
 
 | | |
 |---|---|
@@ -81,13 +97,18 @@ Gesamtverantwortung für Qualität und Architektur (Workflow:
 ## Funktionsumfang
 
 **Lernen & Üben**
-- Modulbasiertes Lernen mit Theorieblock je Modul
+
+- 7.000 Fragen in 26 Modulen, nach Lernfeld und Fachrichtung gegliedert
+- Theorie & Glossar mit Lernfeldeinstiegen, Fragenthemen und passenden Übungsfragen
+- Optionale Qwen-Erklärungen mit Praxisbeispiel und Merksatz; Originalfundstellen separat lesen
+- HTML-/CSS-Werkstatt mit Editor, Mehrdateiprojekten, externer Dateiauswahl, Vorschau/Inspektor und fester Aufgabenprüfung (Pilot Kapitel 1–6)
 - Quizmodus mit Sofort-Feedback und Erklärung (Single-Choice, Multiple-Choice, Freitext)
 - Karteikartenmodus mit Spaced Repetition (Leitner-System, 5 Boxen)
 - Prüfungssimulation mit Zeitlimit, Zufallsfragen, Themengewichtung und Bestehensgrenze
 - Volltextsuche über Fragen, Erklärungen, Themen und Module
 
 **Fortschritt & Motivation**
+
 - Lernfortschritt und Erfolgsquote je Modul und Fragetyp
 - Prüfungsverlauf mit Frage-für-Frage-Review (eigene Antwort vs. richtige Antwort)
 - Lernkalender mit Lernserie, Wiederholungsplan und eigenen Lerninhalten
@@ -96,17 +117,19 @@ Gesamtverantwortung für Qualität und Architektur (Workflow:
 - Lernnotizen, lokal gespeichert und als `.txt` export-/importierbar
 
 **Konto & Sync (optional)**
-- Registrierung/Login mit Passwort-Komplexitätsprüfung (in den Einstellungen)
+
+- Registrierung/Login mit Passwort-Komplexitätsprüfung unter Profil
 - Lernstand manuell hoch-/herunterladen, um ihn zwischen mehreren Geräten
   abzugleichen (Last-Write-Wins, kein automatischer Hintergrund-Sync)
 - Ohne Konto läuft die App unverändert rein lokal weiter
 
 **Technik**
+
 - Überarbeitetes visuelles Design (Dark Mode in warmem Anthrazit statt
   reinem Schwarz, Teal als Primärfarbe, gut lesbare Typografie – siehe
   [`docs/04-UI-UX.md`](docs/04-UI-UX.md))
 - Dark/Light Mode, responsives Layout (Desktop-Sidebar + Mobile-Navigation)
-- Installierbare PWA mit Offline-Unterstützung (Service Worker)
+- Installierbare PWA mit begrenztem Offline-Zugriff auf bereits geladene Inhalte; lokale Dienste müssen für KI und private Wissenssuche laufen
 - Zusätzlich als native Windows-Desktop-App (Electron) verfügbar
 - Sicherheitsgehärtetes Backend: Security-Header (Helmet/CSP/HSTS), Rate-Limiting, geschützter Admin-Reload
 - Automatisierte Tests (Vitest: Backend-Unit- & DB-Integrationstests;
@@ -127,14 +150,39 @@ Gesamtverantwortung für Qualität und Architektur (Workflow:
 - Optionale Push-Benachrichtigungen (Web-Push, kontogebunden), erster
   Anwendungsfall: Benachrichtigung bei bearbeiteter Meldung
 
+## Lokale Lernbegleitung und eigene Unterlagen
+
+Die freiwillige Qwen-Anbindung nutzt Ollama auf demselben Rechner. Ein lokales
+Qwen-Modell muss separat vorhanden sein; die App lädt keine Modelle herunter
+und verwendet keinen Cloudfallback. Aktivierung und Materialverwaltung liegen
+unter **Einstellungen → KI und Lernmaterial**.
+
+Eigene PDFs können lokal importiert und aufbereitet werden. Bei Lernanfragen
+werden private Unterlagen nur nach ausdrücklicher Auswahl verwendet. Originale,
+Seitentexte, Suchindex und Metadaten bleiben in der privaten lokalen Ablage;
+sie werden weder auf GitHub veröffentlicht noch mit der App verteilt.
+Andere Anwender stellen ihr eigenes Material bereit. Antworten werden nicht
+als Chatverlauf gespeichert und verändern keine Punkte oder Prüfergebnisse.
+
+**Theorie & Glossar** bietet Erklärungen vor dem Quiz. „Fundstellen lesen“ zeigt
+begrenzte Originalauszüge mit Quellenkennung und bei privaten Unterlagen mit
+PDF-Seitenbezug, auch ohne laufendes Qwen. Die Suche arbeitet zunächst über
+Textbegriffe; OCR für reine Scans und eine vollständige didaktische Abdeckung
+sind nicht enthalten. KI-Erklärungen und vorhandene Inhalte können Fehler
+enthalten und ergänzen den Berufsschulunterricht.
+
+Einrichtung und Grenzen: [Qwen](docs/23-Qwen-Grundanbindung.md),
+[lokales RAG](docs/24-Lokales-RAG.md), [Theorie & Glossar](docs/25-Theorie-Glossar.md).
+
 ## Tech-Stack
 
 | Bereich | Technologie |
 |---|---|
 | Frontend | React 18 + Vite, React Router |
-| Backend | Node.js + Express (zustandslose Content-API) |
+| Backend | Node.js ≥ 22.13 (empfohlen: 24) + Express 4 |
 | Desktop | Electron (Hülle um dasselbe Backend/Frontend) |
-| Inhalte | Excel/CSV (`content/`), Theorie als Markdown |
+| Inhalte | Excel/CSV (`content/`), vorhandene Kurztexte als Markdown, öffentlicher Theoriekatalog |
+| Optionale lokale KI | Qwen über Ollama; PDF.js für PDF-Text, lokaler BM25-Suchindex |
 | Persistenz | Lernstand standardmäßig in `localStorage`; optional PostgreSQL für Konto/Geräte-Sync sowie für Fragen/Module (CSV bleibt Fallback + Review-Snapshot) |
 | Auth | bcrypt-Passwort-Hashing + JWT (nur bei optionalem Konto) |
 | PWA | Web App Manifest + Service Worker |
@@ -164,6 +212,10 @@ kann einen Moment dauern. Alternativ richtet `AzubiPrep-Web-Setup-0.1.2.exe`
 die App im Benutzerkonto ein. Die Pakete sind derzeit unsigniert;
 Windows kann deshalb beim Öffnen eine Rückfrage anzeigen.
 
+Diese vorhandenen Webpakete 0.1.2 enthalten die später ergänzten Qwen-/RAG-/
+Theoriefunktionen noch nicht. Für den aktuellen Quellstand die folgende
+Startroutine nutzen oder ein neues Paket aus dem Projekt bauen.
+
 **Start aus dem Quellprojekt:**
 
 Nach der einmaligen Einrichtung genügt ein Doppelklick auf
@@ -174,14 +226,14 @@ Das Startfenster bleibt während des Lernens offen; **Enter** darin beendet
 den selbst gestarteten Server. Das Schließen des Browser-Tabs beendet ihn nicht.
 
 Einmalige Einrichtung durch die Person, die AzubiPrep bereitstellt:
-Node.js ab Version 20 installieren und in `backend` sowie `frontend`
+Node.js ab Version 22.13 (empfohlen: 24) installieren und in `backend` sowie `frontend`
 jeweils `npm ci` ausführen. Danach benötigen Lernende keine Terminalbefehle.
 Es werden beim normalen Start keine Pakete installiert. Die lokale Webversion
 benötigt weiterhin den laufenden Server auf diesem PC.
 
 ### Entwicklung und manuelle Einrichtung
 
-Voraussetzung: **Node.js ≥ 20**
+Voraussetzung: **Node.js ≥ 22.13**, empfohlen Node.js 24
 
 ```bash
 # 1) Backend starten (Port 3001)
@@ -204,6 +256,10 @@ cd ../backend && npm start   # http://localhost:3001
 
 ## Desktop-App (Electron)
 
+Die [lokale Lernbegleitung](#lokale-lernbegleitung-und-eigene-unterlagen) ist
+auch im Desktop-Quellstand verfügbar. Der vorhandene Installer 0.1.3 wurde für
+Qwen/RAG/Theorie noch nicht neu gebaut.
+
 AzubiPrep läuft wahlweise auch als installierbare Windows-Desktop-App – eine
 Electron-Hülle um dasselbe Backend und Frontend. Die Kurswerkstatt nutzt eine
 begrenzte native Datei- und Speicheranbindung:
@@ -217,7 +273,7 @@ npm run dist      # baut Frontend und Windows-Installer nach Installer/
 ```
 
 Der aktuelle Desktopinstaller heißt **`AzubiPrep Setup 0.1.3.exe`** und
-enthält 7.000 Fragen samt aktuellem Backend, Lernfeldunterstützung und der
+enthält 7.000 Fragen, Lernfeldunterstützung und die
 Frontend-Werkstatt für HTML/CSS (Kapitel 1–6).
 Node.js muss auf dem Ziel-PC nicht separat installiert werden.
 Entwickler-`.env`-Dateien werden ausgeschlossen; ohne eigene Kontoserver-
@@ -243,7 +299,7 @@ Bearbeiten Backend neu starten oder `POST /api/admin/reload` aufrufen.
 - `content/fachrichtungen.csv` – Fachrichtungen
 - `content/modules.csv` – Modul-Stammdaten
 - `content/questions/<modul_id>.csv` – Fragen je Modul
-- `content/theorie/<modul_id>.md` – Theorieblöcke je Modul
+- `content/theorie/<modul_id>.md` – vorhandene öffentliche Kurztexte als Lernquellen
 
 Ist eine Content-Datenbank konfiguriert (`DATABASE_URL` gesetzt, siehe
 [`docs/19-Datenbank-Login.md`](docs/19-Datenbank-Login.md)), lässt sich
@@ -262,8 +318,8 @@ AzubiPrep/
 ├── content/            Inhalte (Excel/CSV, Markdown – kein Code)
 │   ├── fachrichtungen.csv
 │   ├── modules.csv
-│   ├── questions/*.csv     19 Dateien (eine je Modul)
-│   └── theorie/*.md        19 Theorie-Dateien
+│   ├── questions/*.csv     26 Dateien (eine je Modul)
+│   └── theorie/*.md        18 öffentliche Kurztexte
 ├── backend/            Node.js + Express (zustandslose Content-API)
 │   ├── db/                  schema.sql (Login/Sync + optionale Content-DB)
 │   ├── src/                 server, app, config, content, csv, db, auth,
@@ -280,6 +336,7 @@ AzubiPrep/
 ├── .github/workflows/  ci.yml – GitHub-Actions-Pipeline (Lint,
 │                       Content-Validierung, Tests, Frontend-Build)
 ├── screenshots/        App-Screenshots für dieses README
+├── local-rag/          Private Unterlagen/Ableitungen, von Git und Paketen ausgeschlossen
 ├── docs/               Produktvision, Architektur, API-Referenz,
 │                       Sicherheitskonzept, Projektstatus u. v. m.
 ├── ORCHESTRATOR.md     Agenten-Workflow (Task-Briefs + Review)
@@ -302,15 +359,22 @@ Die tagesaktuelle Task-Liste (was offen ist, was erledigt ist) führt
 [`docs/agent-briefs/DONE.md`](docs/agent-briefs/DONE.md).
 
 Erledigt (Auszug, vollständig in [`DONE.md`](docs/agent-briefs/DONE.md)):
-Windows-Installer real installiert und getestet, strukturierter KI-Fachreview
-auf den kompletten Fragenbestand (1.627 Fragen) angewendet, optionale
-Content-Datenbank mit CSV-Fallback, Autoren-Weboberfläche zur
-Fragenpflege, In-App-Feedback-Kanal ("Frage melden"), admin-exklusives
-manuelles Markieren als geprüft, Landing-Page als Login-Startseite,
-Push-Benachrichtigungen (Web-Push).
+Ausbau auf 7.000 Fragen, Lernfeldzuordnung, Windows-Pakete mit eigener Laufzeit,
+HTML-/CSS-Pilotwerkstatt, optionale Content-Datenbank mit CSV-Fallback,
+Autoren-Weboberfläche, Fragenfeedback und lokale Qwen-Grundanbindung.
+PDF-Aufbereitung mit lokaler Wissenssuche sowie Theorie/Glossar sind im
+Quellstand implementiert; die bestehenden Installer enthalten die jüngsten
+KI-/Theorieerweiterungen noch nicht.
 
-Offene Punkte: KI-Integration prüfen (lokal vs. Internet), Windows-
-Installer signieren, Auto-Update für die Desktop-App.
+Offen bleiben weitere Kursinhalte, vertiefte fachlich-didaktische KI-Evaluation,
+semantische Suche/OCR, Nachweise auf weiteren Zielgeräten, neue Pakete mit den
+jüngsten Funktionen sowie Installersignatur und Desktop-Auto-Update.
+
+Die README-Bilder lassen sich mit den vorhandenen Playwright-Abhängigkeiten
+erneuern: erst in `frontend/` mit `npm run build` bauen, dann in `e2e/`
+`node scripts/update-screenshots.mjs` ausführen. Das Skript verwendet einen
+getrennten lokalen Server, ein frisches Demoprofil und öffentliche App-Inhalte;
+persönliche Unterlagen und die laufende Benutzer-App bleiben unangetastet.
 
 ## Autor
 

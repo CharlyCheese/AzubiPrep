@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useApi } from '../utils/useApi.js';
 import { api } from '../api/client.js';
-import { renderMarkdown } from '../utils/markdown.jsx';
 import { progressStore, quizOptionenStore } from '../store/localStore.js';
 import { modulStatusEines, statusAnzeige } from '../utils/modulStatus.js';
 import { BEHERRSCHT_AB } from '../utils/gamification.js';
@@ -16,7 +15,6 @@ export default function Modul() {
   const { daten: modul, laden, fehler } = useApi(() => api.get(`/module/${modulId}`), [modulId]);
   const { daten: fragen } = useApi(() => api.get(`/fragen?modulId=${modulId}`), [modulId]);
 
-  const [offenTheorie, setOffenTheorie] = useState(true);
   const [offenFragen, setOffenFragen] = useState(false);
   const [quizAnzahl, setQuizAnzahl] = useState(() => quizOptionenStore.get().anzahl || 0);
 
@@ -56,18 +54,11 @@ export default function Modul() {
       <div className="dashboard-layout">
         {/* Hauptspalte: Theorie & Fragenkatalog */}
         <div>
-          {modul.theorie && (
-            <div className="mb-2">
-              <Akkordeon
-                titel="Theorie"
-                untertitel="Lies den Theorietext, bevor du die Wissensabfrage startest."
-                offen={offenTheorie}
-                onToggle={() => setOffenTheorie((v) => !v)}
-              >
-                <div className="markdown">{renderMarkdown(modul.theorie)}</div>
-              </Akkordeon>
-            </div>
-          )}
+          <section className="card mb-2" aria-label="Theorie zu diesem Lernbereich">
+            <h2>Erst verstehen, dann üben</h2>
+            <p>Öffne die Themen dieses Lernbereichs, lies passende Fundstellen oder lass dir Begriffe und Zusammenhänge mit Qwen erklären.</p>
+            <div className="flex wrap"><Link className="btn btn-primary" to={`/theorie?modul=${encodeURIComponent(modul.modul_id)}`}>Theorie lernen →</Link><Link className="btn btn-ghost" to={`/theorie?modul=${encodeURIComponent(modul.modul_id)}&modus=glossary`}>Begriffe nachschlagen</Link></div>
+          </section>
 
           <Akkordeon
             titel="Fragen des Moduls"

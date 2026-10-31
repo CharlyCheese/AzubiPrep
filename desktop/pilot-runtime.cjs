@@ -85,8 +85,8 @@ async function readProject(selection, mode) {
   return { files, skipped };
 }
 
-function createStore(profile) {
-  const root = path.join(profile, 'frontendpilot-v1'); let queue = Promise.resolve();
+function createStore(profile, folder = 'frontendpilot-v1') {
+  const root = path.join(profile, folder); let queue = Promise.resolve();
   async function ensureRoot() {
     await fs.mkdir(root, { recursive: true });
     if ((await fs.lstat(root)).isSymbolicLink() || !inside(await fs.realpath(profile), await fs.realpath(root))) throw Error('Der Projektspeicher darf keine Verknüpfung sein.');
@@ -125,8 +125,19 @@ function createStore(profile) {
     },
   };
 }
+function createAiPreferences(profile) {
+  const store = createStore(profile, 'ai-settings-v1');
+  function validate(value) {
+    if (!value || value.version !== 1 || typeof value.enabled !== 'boolean' || typeof value.model !== 'string' || !/^qwen[a-z0-9._-]*:[a-z0-9._-]{1,48}$/i.test(value.model) || /cloud/i.test(value.model)) throw Error('Ungültige lokale KI-Einstellungen.');
+    return { version: 1, enabled: value.enabled, model: value.model };
+  }
+  return {
+    async load() { const saved = await store.load(); return saved ? validate(saved.projects.preferences) : null; },
+    save(value) { return store.save({ schema: 1, projects: { preferences: validate(value) } }); },
+  };
+}
 function validSender(event, window, origin) {
   try { return Boolean(window && !window.isDestroyed() && event.sender === window.webContents && event.senderFrame === window.webContents.mainFrame && new URL(event.senderFrame.url).origin === origin); }
   catch { return false; }
 }
-module.exports = { readProject, createStore, validSender, LIMITS, MAX_STORE };
+module.exports = { readProject, createStore, createAiPreferences, validSender, LIMITS, MAX_STORE };

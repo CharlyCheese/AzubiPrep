@@ -4,6 +4,7 @@ import { useApi } from '../utils/useApi.js';
 import { api } from '../api/client.js';
 import FrageKarte from '../components/FrageKarte.jsx';
 import FrageMelden from '../components/FrageMelden.jsx';
+import KiHilfe from '../components/KiHilfe.jsx';
 import SkeletonCard from '../components/SkeletonCard.jsx';
 import XpGainIndicator from '../components/XpGainIndicator.jsx';
 import { useQuizKeyboard } from '../utils/useQuizKeyboard.js';
@@ -297,6 +298,7 @@ export default function Quiz() {
                   <div>
                     <FrageMelden frageId={frage.id} />
                   </div>
+                  <KiHilfe key={frage.id} contextKey={frage.id} makeContext={() => ({ kind: 'quiz', questionId: frage.id })} />
                 </div>
               )}
             </div>

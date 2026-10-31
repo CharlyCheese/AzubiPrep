@@ -3,7 +3,7 @@
 // - API-GET-Antworten: Network-first mit Cache-Fallback (Inhalte offline verfügbar)
 // - Nicht-GET-/POST-Requests: nur Netzwerk (kein Caching)
 
-const VERSION = 'azubiprep-v6'; // v6 (OPS-023): native Desktop-Werkstatt
+const VERSION = 'azubiprep-v10'; // v10 (OPS-027): Theorie, Glossar und lokale Wissenssuche
 const APP_SHELL = [
   '/',
   '/index.html',
@@ -40,6 +40,9 @@ self.addEventListener('fetch', (event) => {
 
   // Nur eigene Origin (kein Cross-Origin-Caching von Fremdressourcen)
   if (url.origin !== self.location.origin) return;
+
+  // Modellstatus und Lernhilfe niemals als Offline-Antwort zwischenspeichern.
+  if (url.pathname.startsWith('/api/ai/')) return;
 
   // API-Antworten: Network-first, Fallback auf Cache
   if (url.pathname.startsWith('/api/')) {

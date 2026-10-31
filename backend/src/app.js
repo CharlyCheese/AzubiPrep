@@ -15,6 +15,7 @@ import { buildBenachrichtigungenRoutes } from './routes/benachrichtigungen.route
 import { buildNutzerAdminRoutes } from './routes/nutzer-admin.routes.js';
 import { isDbAktiviert } from './db.js';
 import { isPushAktiviert } from './push.js';
+import { buildAiRoutes } from './routes/ai.routes.js';
 
 export function createApp(store) {
   const app = express();
@@ -36,6 +37,7 @@ export function createApp(store) {
 
   app.use('/api', buildContentRoutes(store));
   app.use('/api', buildExamRoutes(store));
+  app.use('/api/ai', buildAiRoutes(store));
 
   // Login/Sync nur aktiv, wenn DATABASE_URL gesetzt ist – ohne DB bleibt die
   // App im bisherigen reinen Offline-/localStorage-Modus.

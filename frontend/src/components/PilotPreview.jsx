@@ -1,7 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 import { buildPreview, cleanCSS } from '../pilot/preview.js';
+import KiHilfe from './KiHilfe.jsx';
+import { courseContext } from '../api/ai.js';
 
-export default function PilotPreview({ files, page, onPage }) {
+export default function PilotPreview({ files, page, onPage, lesson, project, onAiHint }) {
   const ref = useRef(null);
   const [preview, setPreview] = useState(null);
   const [error, setError] = useState('');
@@ -75,5 +77,6 @@ export default function PilotPreview({ files, page, onPage }) {
     {!!preview && <label>Element per Tastatur untersuchen <select aria-label="Element per Tastatur untersuchen" value={selection?.id || ''} onChange={(event) => inspectElement(ref.current?.contentDocument?.querySelector(`[data-pilot-node="${event.target.value}"]`))}><option value="">Element auswählen</option>{Object.entries(preview.nodes).map(([id, node]) => <option key={id} value={id}>{node.tag} · {node.html.slice(0, 65)}</option>)}</select></label>}
     {!!preview?.warnings.length && <details><summary>Hinweise zur eingeschränkten Vorschau ({preview.warnings.length})</summary><ul>{preview.warnings.map((warning) => <li key={warning}>{warning}</li>)}</ul></details>}
     {selection && <div className="pilot-inspector" aria-live="polite"><h3>{selection.tag} in {selection.path}</h3><pre>{selection.html}</pre><h4>Passende CSS-Regeln</h4><pre>{selection.rules.join('\n') || 'Keine externe Regel passt.'}</pre><h4>Berechnete Darstellung und Boxmodell</h4><pre>{selection.values.join('\n')}</pre></div>}
+    {selection && lesson && project && <KiHilfe course contextKey={`${lesson.id}:${project.stand}:${selection.id}`} makeContext={includeCode => courseContext(lesson, project, selection.path, includeCode, selection)} onHint={onAiHint} />}
   </section>;
 }

@@ -7,8 +7,13 @@ Dateiauswahl, vom internen Port unabhängigen Kursspeicher und isoliertes F12.
 Die [Pilotabnahme](21-Frontendpilot-Abnahme.md) steht bei 30/30 innerhalb der
 dort dokumentierten Windows-/Chromium-/Electron-Matrix; Testgrenzen bleiben ausgewiesen.
 [Technik und Nachweise](22-Frontendpilot-Technik.md).
-Der vollständige Kurs, aktives Lern-JavaScript und Qwen bleiben geplante
-Ausbaustufen. Dieses Dokument erhält deren abgestimmte Richtung.
+OPS-024 ergänzt die optionale lokale Qwen-Grundanbindung im Entwicklungsstand:
+Einstellungen, Hinweise, Prüfer-/Elementerklärungen und Quizhilfe.
+[Einrichtung, Grenzen und Nachweise](23-Qwen-Grundanbindung.md).
+OPS-026 ergänzt lokale PDF-Aufbereitung und eine erste begrenzte RAG-Suche
+mit Quellenbezug: [Bedienung und Grenzen](24-Lokales-RAG.md).
+Der vollständige Kurs und aktives Lern-JavaScript bleiben geplante Ausbaustufen.
+Dieses Dokument erhält deren abgestimmte Richtung.
 
 ## Ziel und Abschlusskompetenzen
 
@@ -280,10 +285,10 @@ manipulationssichere Zertifizierung.
 
 ## Gemeinsame lokale Qwen Anbindung
 
-Qwen soll optional anwendungsweit unterstützen: im Kurs, bei Prüfungsfragen,
-Erklärungen und Hilfestellungen. Der bestehende Backlogpunkt OPS-003 dokumentiert
-qwen3:4b über Ollama als vorhandene Testgrundlage; die aktuelle Verfügbarkeit
-wird vor Umsetzung erneut geprüft. Kurs und feste Aufgabenprüfungen bleiben
+Qwen unterstützt seit OPS-024 optional den Pilotkurs und Quiz-Erklärungen
+über eine gemeinsame lokale Schnittstelle. Der bestehende Backlogpunkt OPS-003
+dokumentiert weitere Ausbaustufen. qwen3:4b über Ollama wurde am 31.10.2026
+als vorhandene lokale Testgrundlage geprüft. Kurs und feste Aufgabenprüfungen bleiben
 auch ohne KI nutzbar. Dies ist keine zusätzliche Zusage vollständiger
 Offline-Fähigkeit der gesamten Anwendung.
 
@@ -308,11 +313,14 @@ Feste Validatoren bleiben für objektiv prüfbare Aufgaben maßgeblich; eine
 KI-Antwort darf eine tatsächlich richtige Lösung nicht allein durchfallen lassen.
 
 Geprüfte eigene Kursinhalte sollen als Wissensgrundlage dienen. Zusätzlich
-ist RAG über eigene lokale PDF-Ausbildungsunterlagen vorgesehen; das Material
+ist RAG über eigene lokale PDF-Ausbildungsunterlagen seit OPS-026 als lokale
+lexikalische Suche implementiert; das Material
 wird zur Laufzeit abschnittsweise als Kontext abgerufen, nicht als Fine-Tuning
 in die Modellgewichte übernommen. Dies ergänzt OPS-003. Modellverteilung,
-Ressourcenbedarf, Lizenz, technischer Dienstzugang und konkrete Datenformate
-sind noch nicht entschieden.
+Ressourcenprofile für weitere Zielgeräte und Lizenz-/Verteilungsfragen sind
+weiter offen; lokaler Dienstzugang und begrenzte Kontext-/Antwortformate sind
+in [OPS-024](23-Qwen-Grundanbindung.md) implementiert. Die Anbindung ist eine
+freiwillige Erprobung, keine Freigabe für fortschrittsrelevante KI-Bewertung.
 
 ## Eigene PDF Materialien für RAG
 
@@ -325,8 +333,8 @@ gesamte Ablage `local-rag/` wird von Git ausgeschlossen, ausgenommen die neutral
 [Anleitung](../local-rag/README.md). Diese Ausnahme darf keine Buchinhalte,
 privaten Dateilisten oder Auszüge enthalten. Extrahierte Texte, OCR-Ergebnisse,
 Chunks, Embeddings, Suchindex, Quellmetadaten und Zwischenspeicher bleiben
-ebenfalls ausschließlich in der privaten Ablage. Es wurden noch keine PDFs
-importiert und kein Index erstellt. `.gitignore` ist keine Verschlüsselung;
+ebenfalls ausschließlich in der privaten Ablage. Die ausdrückliche lokale
+Aufbereitung erstellt einen privaten Seiten-/Suchindex. `.gitignore` ist keine Verschlüsselung;
 Dateien außerhalb der Ablage oder bereits versionierte Dateien sind dadurch
 nicht geschützt. Die Ablage darf nicht erzwungen zu Git hinzugefügt werden.
 
@@ -339,15 +347,15 @@ werden. Eine Vorschau oder eine Lerncode-Ausführung erhält keinen Zugriff auf
 die RAG-Dateien oder den Modell-Dienst.
 
 Für installierte Web-/Desktop-Pakete ist ein beschreibbarer lokaler
-Benutzerdatenordner außerhalb des Installationsverzeichnisses vorgesehen.
-Der tatsächliche Pfad wird in der Oberfläche angezeigt und kann über eine
-Aktion geöffnet werden. Eine zusätzliche Browser-Dateiauswahl kann PDFs über
+Benutzerdatenordner außerhalb des Installationsverzeichnisses implementiert.
+Der tatsächliche Pfad wird in der Oberfläche angezeigt und kann in der
+Electron-Desktopoberfläche über eine Aktion geöffnet werden. Eine Browser-Dateiauswahl kann PDFs über
 den kontrollierten lokalen Anwendungsdienst importieren. Konkrete Pfadwahl,
-Konfiguration und sichere Import-Endpunkte werden erst bei Umsetzung festgelegt.
+Konfiguration und sichere Import-Endpunkte sind in [OPS-026](24-Lokales-RAG.md) beschrieben.
 Anwender benötigen weder GitHub noch einen Terminalbefehl zur Einrichtung.
 
-Geplante Oberfläche: „Einstellungen → KI und Lernmaterial“ mit
-„PDF hinzufügen“, „Materialordner öffnen“, „Material aufbereiten“,
+Implementierte Oberfläche: „Einstellungen → KI und Lernmaterial“ mit
+„PDF hinzufügen“, „Materialordner öffnen“ (Electron), „Material aufbereiten“,
 „Neu einlesen“ und „Material entfernen“. Statuswerte unterscheiden
 „kein Material“, „wird verarbeitet“, „bereit“, „erneut einzulesen“ und
 „Fehler“. Nicht erreichbares Ollama/Modell wird getrennt vom Materialstatus
@@ -363,12 +371,12 @@ Vorgesehener Hinweis bei leerer Wissensablage:
 > diesem PC. Starte anschließend „Material aufbereiten“. Kurs und feste
 > Aufgabenprüfungen kannst du auch ohne eigene Unterlagen nutzen.
 
-Geplanter Verarbeitungsablauf: PDF prüfen, Text mit Seitenbezug extrahieren,
+Implementierter Verarbeitungsablauf: PDF prüfen, Text mit Seitenbezug extrahieren,
 in geeignete Abschnitte zerlegen, lokal indexieren, zur Anfrage passende
 Abschnitte suchen und an Qwen übergeben. OCR für gescannte PDFs ist gesondert
-zu prüfen. Das Embedding-Verfahren beziehungsweise dafür benötigte Modell ist
-noch offen und nicht automatisch durch das vorhandene Qwen-Modell abgedeckt.
-Verarbeitung, Embeddings und Modellanfragen sollen lokal bleiben; keine
+zu prüfen. Die erste Suche nutzt BM25 ohne zusätzliches Embedding-Modell.
+Semantische Suche bleibt ein gesonderter Ausbau. Verarbeitung und Modellanfragen
+bleiben lokal; auch ein späteres Embedding-Verfahren muss lokal bleiben. Keine
 automatische Übertragung an externe KI-Dienste. Dokumenttexte sind Inhalte,
 keine ausführbaren Anweisungen an die Anwendung oder die KI.
 
@@ -451,10 +459,13 @@ der [Abnahmeliste des Frontendpiloten](21-Frontendpilot-Abnahme.md).
 
 Der Pilot der Kapitel 1–6 wurde in FE-022 implementiert und bis OPS-023 im
 dokumentierten Windows-/Chromium-/Electron-Umfang abgenommen. Die private
-Materialablage mit Git-Ausschluss ist vorbereitet, ohne PDF-Import oder
-Qwen-Anbindung. Offen sind insbesondere weitere Plattformnachweise, weitere Kursinhalte,
+Materialablage mit Git-Ausschluss wurde in OPS-026 um lokale PDF-Aufbereitung,
+lexikalische RAG-Suche und Quellenbelege erweitert.
+Die lokale Qwen-Grundanbindung wurde zuvor in OPS-024 umgesetzt.
+Offen sind insbesondere semantische Suche/OCR, vertiefte KI-Evaluation,
+weitere Plattformnachweise, weitere Kursinhalte,
 kontrollierte Builds späterer Framework-Projekte, Fortschrittsmodell, erlaubte
-Trainings-APIs sowie die KI-Schnittstelle und deren Evaluation. Neue
+Trainings-APIs sowie weitere KI-Ausbaustufen und deren Evaluation. Neue
 Abhängigkeiten werden nicht durch diesen Plan automatisch freigegeben.
 
 ## Referenzen

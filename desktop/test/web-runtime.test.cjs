@@ -13,6 +13,8 @@ test('Webpaket übernimmt keine Entwicklerdatenbank oder öffentliche Bindung', 
   assert.equal(env.JWT_SECRET, '');
   assert.equal(env.VAPID_PRIVATE_KEY, '');
   assert.equal(env.CONTENT_DIR, path.resolve('paket/content'));
+  assert.ok(!env.AZUBIPREP_RAG_DIR.startsWith(path.resolve('paket') + path.sep));
+  assert.equal(path.basename(env.AZUBIPREP_RAG_DIR), 'local-rag');
 });
 
 test('Server wird mit stabilem konfiguriertem Port statt Zufallsport gestartet', async () => {

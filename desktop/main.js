@@ -14,7 +14,7 @@
 const path = require('node:path');
 const { pathToFileURL } = require('node:url');
 const { app, BrowserWindow, dialog, session, ipcMain, Menu, shell } = require('electron');
-const { createStore, readProject, validSender } = require('./pilot-runtime.cjs');
+const { createStore, createAiPreferences, readProject, validSender } = require('./pilot-runtime.cjs');
 const { createInspector } = require('./pilot-inspector.cjs');
 const profileOverride = app.commandLine.getSwitchValue('user-data-dir');
 if (profileOverride) app.setPath('userData', path.resolve(profileOverride));
@@ -26,9 +26,22 @@ let inspectorWindow = null;
 
 function registerPilot() {
   const store = createStore(app.getPath('userData'));
+  const aiPreferences = createAiPreferences(app.getPath('userData'));
   const guard = (event) => { if (!validSender(event, hauptfenster, appOrigin)) throw Error('Nicht freigegebener Anwendungsaufruf.'); };
   ipcMain.handle('pilot:load', (event) => { guard(event); return store.load(); });
   ipcMain.handle('pilot:save', (event, value) => { guard(event); return store.save(value); });
+  ipcMain.handle('ai:preferences-load', (event) => { guard(event); return aiPreferences.load(); });
+  ipcMain.handle('ai:preferences-save', (event, value) => { guard(event); return aiPreferences.save(value); });
+  ipcMain.handle('rag:open-folder', async (event) => {
+    guard(event);
+    const { createRagService } = await import(pathToFileURL(path.join(projektwurzel(), 'backend/src/rag.js')).href);
+    const { config } = await import(pathToFileURL(path.join(projektwurzel(), 'backend/src/config.js')).href);
+    const status = await createRagService(config).status();
+    if (!status.location || status.state === 'error') throw Error('Der private Materialordner ist nicht verfügbar.');
+    guard(event); const error = await shell.openPath(status.location);
+    if (error) throw Error('Der private Materialordner konnte nicht geöffnet werden.');
+    return true;
+  });
   ipcMain.handle('pilot:choose', async (event, mode) => {
     guard(event);
     if (!['folder', 'files'].includes(mode)) throw Error('Ungültige Auswahl.');
@@ -61,6 +74,7 @@ function backendEinstiegUrl() {
 }
 
 async function backendStarten() {
+  if ((app.isPackaged || profileOverride) && !process.env.AZUBIPREP_RAG_DIR) process.env.AZUBIPREP_RAG_DIR = path.join(app.getPath('userData'), 'local-rag');
   const backend = await import(backendEinstiegUrl());
   const { url, server, store } = await backend.startForElectron();
 

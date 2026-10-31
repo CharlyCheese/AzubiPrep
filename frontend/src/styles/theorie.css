@@ -1,0 +1,14 @@
+.theorie-filters { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .8rem; }
+.theorie-filters label, .theorie-search { display: grid; gap: .35rem; min-width: 0; }
+.theorie-search { flex: 1; }
+.theorie-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .7rem; }
+.theorie-topic { display: flex; flex-direction: column; gap: .5rem; text-align: left; color: var(--text); cursor: pointer; font: inherit; margin: 0; }
+.theorie-topic strong, .theorie-lesson h2 { overflow-wrap: anywhere; }
+.theorie-selected, .theorie-topic:hover { border-color: var(--accent, #14b8a6); }
+.theorie-topic:focus-visible { outline: 3px solid var(--accent, #14b8a6); outline-offset: 2px; }
+.theorie-sources { border: 1px solid var(--border); border-radius: .6rem; padding: .8rem; display: flex; flex-wrap: wrap; gap: 1rem; }
+.theorie-sources label { display: flex; gap: .4rem; align-items: center; }
+.theorie-quote { margin: 1rem 0; border-left: 3px solid var(--accent, #14b8a6); padding-left: .8rem; }
+.theorie-quote blockquote { margin: .6rem 0; }
+.theorie-lesson { margin-top: 1rem; }
+@media (max-width: 740px) { .theorie-filters, .theorie-grid { grid-template-columns: 1fr; } }

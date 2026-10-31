@@ -1,0 +1,10 @@
+.ki { margin-top: 1rem; }
+.ki-field { display: grid; gap: .4rem; margin: .8rem 0; }
+.ki-field textarea, .ki-field select { width: 100%; max-width: 100%; padding: .65rem; color: var(--text); background: var(--surface, transparent); border: 1px solid var(--border); border-radius: .5rem; font: inherit; }
+.ki-check { display: flex; align-items: flex-start; gap: .6rem; margin: .8rem 0; }
+.ki-check input { flex: 0 0 auto; margin-top: .25rem; }
+.ki-actions { display: flex; flex-wrap: wrap; gap: .5rem; }
+.ki-answer { border: 1px solid var(--border); border-radius: .7rem; padding: 1rem; margin-top: 1rem; }
+.ki-text { white-space: pre-wrap; overflow-wrap: anywhere; line-height: 1.6; }
+.ki-document { border: 1px solid var(--border); border-radius: .5rem; padding: .8rem; margin-top: .7rem; }
+.ki-material { border-top: 1px solid var(--border); margin-top: 1.2rem; padding-top: .8rem; }

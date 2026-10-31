@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { api } from '../api/client.js';
+import TheorieLektion from '../components/TheorieLektion.jsx';
 
 export default function Suche() {
   const [begriff, setBegriff] = useState('');
@@ -45,6 +46,8 @@ export default function Suche() {
         </div>
       </form>
 
+      <details className="mb-2"><summary>Wissen mit Qwen suchen oder Originalfundstellen lesen</summary><TheorieLektion /></details>
+      <p><Link to="/theorie?modus=glossary">Im Theorie-Glossar nachschlagen →</Link></p>
       {fehler && <div className="alert alert-danger">{fehler}</div>}
 
       {ergebnis && (

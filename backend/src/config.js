@@ -47,6 +47,18 @@ export const config = {
   bestehensgrenzeProzent: 50,
   projectRoot,
 
+  // Optionale lokale Lernbegleitung. Die KI-Schicht akzeptiert nur Loopback.
+  aiEnabled: bool(process.env.AI_ENABLED, true),
+  ollamaUrl: process.env.OLLAMA_BASE_URL || 'http://127.0.0.1:11434',
+  ollamaModel: process.env.OLLAMA_MODEL || 'qwen3:4b',
+  aiTimeoutMs: Math.min(int(process.env.AI_TIMEOUT_MS, 90000), 120000),
+  aiStatusTimeoutMs: Math.min(int(process.env.AI_STATUS_TIMEOUT_MS, 3000), 10000),
+  aiDevOrigin: process.env.AI_DEV_ORIGIN || 'http://localhost:5173',
+  ragDir: process.env.AZUBIPREP_RAG_DIR ? path.resolve(process.env.AZUBIPREP_RAG_DIR) : path.join(projectRoot, 'local-rag'),
+  ragTimeoutMs: Math.min(int(process.env.RAG_TIMEOUT_MS, 120000), 300000),
+  ragContextTokens: Math.min(int(process.env.RAG_CONTEXT_TOKENS, 8192), 16384),
+  ragLockPort: process.env.RAG_LOCK_PORT ? Math.min(int(process.env.RAG_LOCK_PORT, 0), 65535) : 0,
+
   // Datenbank (optional): ist DATABASE_URL nicht gesetzt, läuft die App
   // weiter im reinen Offline-/localStorage-Modus ohne Login/Sync (siehe db.js).
   databaseUrl: process.env.DATABASE_URL || '',

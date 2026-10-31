@@ -4,6 +4,8 @@ import { api } from '../api/client.js';
 import { resetAll } from '../store/localStore.js';
 import { useTheme } from '../context/ThemeContext.jsx';
 import { tourManuellStarten } from '../utils/tour.js';
+import KiEinstellungen from '../components/KiEinstellungen.jsx';
+import { aiStore } from '../store/aiStore.js';
 
 export default function Einstellungen() {
   const navigate = useNavigate();
@@ -14,6 +16,7 @@ export default function Einstellungen() {
   function reset() {
     if (!confirm('Wirklich alle lokalen Lerndaten löschen? Diese Aktion kann nicht rückgängig gemacht werden.')) return;
     resetAll();
+    aiStore.reset();
     navigate('/');
   }
 
@@ -38,6 +41,8 @@ export default function Einstellungen() {
         <p className="text-muted mt-0">Kurze Führung durch Dashboard, Lernreise, Lernbereich, Frontend-Werkstatt und Prüfungssimulation.</p>
         <button className="btn btn-ghost" onClick={tourManuellStarten}>🧭 Kurze Tour erneut anzeigen</button>
       </div>
+
+      <KiEinstellungen />
 
       <div className="card mb-2">
         <h2>Datenschutz & Hinweise</h2>

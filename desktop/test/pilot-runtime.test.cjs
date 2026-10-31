@@ -3,7 +3,7 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs/promises');
 const path = require('node:path');
 const os = require('node:os');
-const { readProject, createStore, validSender, MAX_STORE } = require('../pilot-runtime.cjs');
+const { readProject, createStore, createAiPreferences, validSender, MAX_STORE } = require('../pilot-runtime.cjs');
 
 async function fixture(t) {
   const root = await fs.mkdtemp(path.join(os.tmpdir(), 'azubiprep-desktop-test-'));
@@ -98,4 +98,15 @@ test('IPC erlaubt ausschließlich das Hauptfenster, dessen Hauptframe und aktuel
   assert.equal(validSender({ sender: {}, senderFrame: frame }, window, 'http://127.0.0.1:12345'), false);
   assert.equal(validSender({ sender: contents, senderFrame: frame }, window, 'http://127.0.0.1:9999'), false);
   assert.equal(validSender({}, window, 'http://127.0.0.1:12345'), false);
+});
+
+test('KI-Präferenzen bleiben im eigenen Profilstand und akzeptieren keine fremden Pfade oder Cloudmodelle', async (t) => {
+  const root = await fixture(t); const preferences = createAiPreferences(root);
+  assert.equal(await preferences.load(), null);
+  const value = { version: 1, enabled: true, model: 'qwen3:4b' };
+  await preferences.save(value);
+  assert.deepEqual(await createAiPreferences(root).load(), value);
+  assert.throws(() => preferences.save({ ...value, model: 'qwen3:cloud' }), /Ungültige/);
+  assert.throws(() => preferences.save({ ...value, model: '../../local-rag/material/x.pdf' }), /Ungültige/);
+  assert.equal(await createStore(root).load(), null);
 });

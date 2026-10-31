@@ -6,8 +6,8 @@
   festgehalten. Weitere Schritte zuerst besprechen. Ergänzt OPS-003, ersetzt
   dessen offene Punkte nicht. → [Plan](../20-Frontendkurs-Qwen-Planung.md)
   Private PDF-RAG-Ablage `local-rag/material/` vorbereitet; gesamter privater
-  Bestand einschließlich abgeleiteter Daten von Git ausgeschlossen. PDF-Import,
-  Indexierung und Einrichtungshinweis in der App bleiben geplant.
+  Bestand einschließlich abgeleiteter Daten von Git ausgeschlossen. OPS-026
+  ergänzt lokalen PDF-Import, Seitenindex, lexikalische Suche und Materialverwaltung.
   Kursfolge angepasst: frühes CSS, Formulare nach Layoutprojekten; externe
   Projektbearbeitung bereits ab der ersten zweiten Datei, aktuell beim
   Seitenlink in Kapitel 3; Mehrdateiprojekte früh verbindlich eingeplant.
@@ -25,6 +25,20 @@
   ersetzen, Auswahlknöpfe und Ordnerhinweis verbessert, Tour ergänzt.
   Praxisrückmeldung in OPS-022 dokumentiert; P2.4, P4.3 und P4.6 in OPS-023
   mit ausdrücklich begrenzten automatisierten Nachweisen abgeschlossen.
+  OPS-024: lokale Qwen-Grundanbindung im Entwicklungsstand mit freiwilligen
+  Hinweisen/Prüfer-/Element-/Quizerklärungen umgesetzt. Keine private PDF gelesen,
+  kein RAG oder KI-Benotung; vertiefte Evaluation und Paketverteilung offen.
+  → [Einrichtung und Grenzen](../23-Qwen-Grundanbindung.md)
+  OPS-025 sichert einen klar erkennbaren h1-Tagfehler mit festem Codehinweis
+  ab; Browser-Fehlerbehandlung und Erhalt eigener Texte präzisiert.
+  OPS-026: private RAG-Verwendung pro Lernanfrage, neutrale Quellen/PDF-Seiten,
+  kontrolliertes Entfernen und lokale Aufbereitung implementiert.
+  Semantische Suche/OCR, vertiefte Evaluation und neue Pakete bleiben offen.
+  → [Lokales RAG](../24-Lokales-RAG.md)
+  OPS-027 ergänzt einen praktischen Theorie-/Glossareinstieg und lokale
+  Wissenssuche mit Qwen-Erklärung oder modellfreiem Quellenlesen. Themen
+  stammen aus öffentlichen Lernfeldern/Modulen/Fragenthemen; keine vollständige
+  redaktionelle Theorieabdeckung zugesagt. → [Bedienung](../25-Theorie-Glossar.md)
 
 
 
@@ -71,6 +85,8 @@
   kombiniert statt nacheinander. → Brief: OPS-011-lern-kernflows-abnahme.md
 
 - [OPS-003] KI-Integration prüfen: lokal vs. über Internet (niedrig) —
+  Teilumsetzung der lokalen Grundanbindung in OPS-024; private RAG-Pipeline,
+  Zielgeräte-/Lizenz-/Modellverteilung und vertiefte Evaluation bleiben offen.
   Idee (Sven, 2026-09-15): lokales Modell direkt in der App bündeln, z. B.
   Qwen 3B + RAG, gemeinsam mit dem Installer herunterladbar, lauffähig auf
   einem Laptop mit 8 GB RAM. Vor Umsetzung klären: Installer-Größe (ggf. Modell erst

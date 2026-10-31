@@ -20,6 +20,7 @@ const BADGE_INTERVALL_MS = 60_000;
 const NAV = [
   { to: '/', icon: '🏠', label: 'Dashboard', end: true },
   { to: '/lernen', icon: '📚', label: 'Lernbereich' },
+  { to: '/theorie', icon: '📖', label: 'Theorie & Glossar' },
   { to: '/frontendkurs', icon: '💻', label: 'Frontend-Werkstatt' },
   { to: '/karteikarten', icon: '🃏', label: 'Karteikarten' },
   { to: '/pruefung', icon: '⏱️', label: 'Prüfungssimulation' },
@@ -126,7 +127,7 @@ export default function Layout() {
 
       {/* Mobile Navigation unten */}
       <nav className="mobile-nav">
-        {NAV.slice(0, 5).map((item) => (
+        {NAV.filter(item => item.to !== '/theorie').slice(0, 5).map((item) => (
           <NavLink key={item.to} to={item.to} end={item.end} className={({ isActive }) => (isActive ? 'active' : '')}>
             <span className="nav-icon">{item.icon}</span>
             {item.label.split(' ')[0]}

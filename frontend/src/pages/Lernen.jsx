@@ -133,6 +133,7 @@ export default function Lernen() {
         </div>
       </header>
 
+      <div className="card mb-2"><h2>Theorie vor der Wissensabfrage</h2><p>Lernfelder und Begriffe verstehen, Quellen lesen und danach üben.</p><Link className="btn btn-primary" to="/theorie">Theorie & Glossar öffnen →</Link></div>
       {lernfeldGruppen.map((g) => (
         <LernfeldBlock
           key={g.lernfeld}

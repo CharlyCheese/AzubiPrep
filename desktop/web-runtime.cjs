@@ -1,4 +1,5 @@
 const path = require('node:path');
+const os = require('node:os');
 
 function configureWebEnvironment(root, env = process.env) {
   // Portable/Setup-Paket arbeitet eigenständig, ohne geerbte Entwicklerdienste.
@@ -6,6 +7,7 @@ function configureWebEnvironment(root, env = process.env) {
   env.PORT = env.AZUBIPREP_WEB_PORT || '';
   env.CONTENT_DIR = path.join(root, 'content');
   env.FRONTEND_DIST = path.join(root, 'frontend', 'dist');
+  env.AZUBIPREP_RAG_DIR ||= path.join(env.LOCALAPPDATA || os.homedir(), 'AzubiPrep Web', 'local-rag');
   for (const key of ['DATABASE_URL', 'JWT_SECRET', 'ADMIN_TOKEN',
     'VAPID_PUBLIC_KEY', 'VAPID_PRIVATE_KEY', 'VAPID_SUBJECT']) env[key] = '';
 }

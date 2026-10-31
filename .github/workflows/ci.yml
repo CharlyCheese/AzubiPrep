@@ -13,10 +13,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Node 20 einrichten
+      - name: Node 24 einrichten
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: "24"
 
       - name: Backend-Abhängigkeiten installieren
         working-directory: backend
@@ -85,10 +85,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Node 20 einrichten
+      - name: Node 24 einrichten
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: "24"
 
       - name: PostgreSQL-Client installieren
         run: sudo apt-get update && sudo apt-get install -y postgresql-client
@@ -110,10 +110,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Node 20 einrichten
+      - name: Node 24 einrichten
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: "24"
 
       - name: Frontend-Abhängigkeiten installieren
         working-directory: frontend
@@ -129,10 +129,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Node 20 einrichten
+      - name: Node 24 einrichten
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: "24"
 
       - name: Backend-Abhängigkeiten installieren
         working-directory: backend
