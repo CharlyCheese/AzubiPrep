@@ -206,7 +206,7 @@ test('Verschachtelte externe Dateien bleiben in JSON/ZIP und nach Neustart erhal
   await expect(page.getByRole('region', { name: 'Prüfergebnisse', exact: true })).toContainText('Dieser eingereichte Stand hat die Pflichtprüfung bestanden');
   await page.getByRole('button', { name: 'Vorschau / Konsole', exact: true }).click();
   await expect(page.getByLabel('Kurs-Konsolenausgabe')).toHaveText('Noch keine Ausgabe.');
-  await expect(page.getByRole('combobox', { name: 'Lektion', exact: true }).locator('option')).toHaveCount(82);
+  await expect(page.getByRole('combobox', { name: 'Lektion', exact: true }).locator('option')).toHaveCount(167);
 });
 
 test('Einzeldateien ergänzen JS lokal und private Verzeichnisse bleiben ausgeschlossen', async ({ page }) => {

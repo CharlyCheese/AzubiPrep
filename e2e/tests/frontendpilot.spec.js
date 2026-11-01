@@ -1,3 +1,5 @@
+import { ADVANCED_LESSONS } from '../../frontend/src/pilot/advanced-course.js';
+import prepared18 from '../../frontend/src/pilot/prepared/ch18.js';
 import { test, expect } from '@playwright/test';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -5,7 +7,7 @@ import { fileURLToPath } from 'node:url';
 import { unterdrueckeOnboardingPopups, openWorkshopTools } from './helpers.js';
 test.use({ serviceWorkers: 'block' });
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../frontend/src/pilot');
-const source = ['project.js', 'preview.js', 'css-course.js', 'form-course.js', 'js-course.js', 'js15-course.js', 'js16-course.js', 'js17-course.js', 'course.js', 'css-checks.js', 'layout-checks.js', 'form-checks.js', 'validator.js'].map((file) => fs.readFileSync(path.join(root, file), 'utf8').replace(/^import .*;\r?\n/gm, '').replace(/^export /gm, '')).join('\n');
+const source = 'const prepared18 = ' + JSON.stringify(prepared18) + ';\nconst ADVANCED_LESSONS = ' + JSON.stringify(ADVANCED_LESSONS) + ';\n' + ['project.js', 'preview.js', 'css-course.js', 'form-course.js', 'js-course.js', 'js15-course.js', 'js16-course.js', 'js17-course.js', 'js18-course.js', 'course.js', 'css-checks.js', 'layout-checks.js', 'form-checks.js', 'validator.js'].map((file) => fs.readFileSync(path.join(root, file), 'utf8').replace(/^import .*;\r?\n/gm, '').replace(/^export /gm, '')).join('\n');
 
 test('Kapitel 1–7: Lösungen und Alternativen bestehen; typische Fehler werden erkannt', async ({ browser }) => {
   const page = await browser.newPage();
@@ -198,7 +200,7 @@ test('Ein gespeicherter Pilotstand erhält neue Lektionen ohne alte Ergebnisse z
   });
   await page.reload(); await openWorkshopTools(page);
   const lessons = page.getByRole('combobox', { name: 'Lektion', exact: true });
-  await expect(lessons.locator('option')).toHaveCount(82);
+  await expect(lessons.locator('option')).toHaveCount(167);
   await expect(lessons.locator('option:checked')).toContainText('Prüfung bestanden');
   await page.getByRole('button', { name: 'Schreiben', exact: true }).click();
   await expect(page.getByRole('textbox', { name: 'Code index.html', exact: true })).toContainText('Mein bisheriger Entwurf');

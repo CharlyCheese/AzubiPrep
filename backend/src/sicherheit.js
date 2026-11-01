@@ -30,7 +30,7 @@ export function securityHeaders() {
 // express.static calls this only for files it actually serves. A matching but
 // nonexistent URL must NOT give the SPA's index.html the Worker's WASM policy.
 export function jsWorkerAssetHeaders(res, filePath) {
-  if (path.basename(path.dirname(filePath)) !== 'assets' || !/^js-runner\.worker-[a-zA-Z0-9_-]+\.js$/.test(path.basename(filePath))) return;
+  if (path.basename(path.dirname(filePath)) !== 'assets' || !/^(?:js-runner\.worker|advanced\.worker|debugger\.worker)-[a-zA-Z0-9_-]+\.js$/.test(path.basename(filePath))) return;
   res.setHeader('Content-Security-Policy', "default-src 'none'; script-src 'self' 'wasm-unsafe-eval'; connect-src 'none'; worker-src 'none'; object-src 'none'; base-uri 'none'; frame-ancestors 'none'");
 }
 

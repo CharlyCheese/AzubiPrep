@@ -24,6 +24,40 @@ async function fixture(change = () => {}) {
 }
 
 describe('Lokale KI-Grenzen', () => {
+  it('führt Callbacks, Arraymethoden und Fehlerbehandlung in Kapitel 18 gestuft ein', () => {
+    const prompt = id => { const body = input(); body.context.lessonId = id; return buildLearningPrompt(body, store).messages[0].content; };
+    expect(prompt('js18-callback')).toContain('synchrone Callbacks');
+    expect(prompt('js18-callback')).not.toContain('Pfeilfunktionen, implizite Rückgabe');
+    expect(prompt('js18-callback')).toContain('keine map/filter/reduce/forEach');
+    expect(prompt('js18-filter')).toContain('filter mit klassischem Funktionsausdruck');
+    expect(prompt('js18-filter')).toContain('keine map/reduce/forEach');
+    expect(prompt('js18-map')).toContain('map formt jeden Eintrag um');
+    expect(prompt('js18-map')).toContain('Pfeilfunktionen,');
+    expect(prompt('js18-pfeile')).toContain('implizite Rückgabe');
+    expect(prompt('js18-pfeile')).toContain('kein find/some/every');
+    expect(prompt('js18-suchen')).toContain('every auf leerer Liste true');
+    expect(prompt('js18-suchen')).toContain('kein sort');
+    expect(prompt('js18-reduce-sort')).toContain('numerisch/stabil');
+    expect(prompt('js18-reduce-sort')).toContain('keine eigene throw-/try-/catch');
+    expect(prompt('js18-fehler')).toContain('Syntax-/Laufzeit-/Logikfehler');
+    expect(prompt('js18-fehler')).not.toContain('keine eigene throw-/try-/catch');
+    expect(prompt('js18-debugspur')).toContain('führt keinen Editorcode aus');
+    expect(prompt('js18-debugspur')).toContain('DOM-, Timer-, Netzwerk- oder Framework');
+  });
+    it('begleitet Kapitel 19–31 gestuft und erlaubt nur ausdrücklich gewählte Quellausschnitte', () => {
+      const prompt = id => { const body=input();body.context.lessonId=id;return buildLearningPrompt(body,store).messages[0].content; };
+      expect(prompt('course-19-2')).toContain('Reine Datenverarbeitung ohne DOM');
+      expect(prompt('course-20-2')).toContain('noch keine Ereignisse');
+      expect(prompt('course-24-4')).toContain('lokale Datenadapter');
+      expect(prompt('course-29-2')).toContain('noch kein React');
+      expect(prompt('course-30-1')).not.toContain('Refs für gezielten Fokus');
+      expect(prompt('course-30-8')).toContain('Refs für gezielten Fokus');
+      expect(prompt('course-31-3')).toContain('kein echter Netzwerk-/Datei-/Appzugriff');
+      const body=input();body.context.lessonId='course-30-1';body.context.files=[{path:'App.tsx',content:'export default function App(){return <h1>Test</h1>;}'}];
+      expect(buildLearningPrompt(body,store).messages.at(-1).content).toContain('App.tsx');
+      body.context.files=[{path:'local-rag/material/privat.tsx',content:'SYNTHETISCH'}];
+      expect(()=>buildLearningPrompt(body,store)).toThrow();
+    });
   it('führt Arrays, Schleifen und Objektliterale in Kapitel 17 je Lektion ein', () => {
     const prompt = id => { const body = input(); body.context.lessonId = id; return buildLearningPrompt(body, store).messages[0].content; };
     expect(prompt('js17-arraystart')).toContain('Arrayliteral');

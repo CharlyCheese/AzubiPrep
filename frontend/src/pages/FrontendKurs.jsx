@@ -1,3 +1,4 @@
+import { Link, useOutlet } from 'react-router-dom';
 import { Component, lazy, Suspense, useEffect, useRef, useState } from 'react';
 import { LESSONS, COURSE_VERSION, VALIDATOR_VERSION, BLUE_IMAGE, htmlPage, starterFor, solutionFor } from '../pilot/course.js';
 import { checkFiles, checkPath, isText, importFiles, importProject, newStand, downloadProject, downloadZip, downloadFile } from '../pilot/project.js';
@@ -8,14 +9,17 @@ import KiHilfe from '../components/KiHilfe.jsx';
 import JsSandboxPilot from '../components/JsSandboxPilot.jsx';
 import JsPlayground from '../components/JsPlayground.jsx';
 import JsCourseConsole from '../components/JsCourseConsole.jsx';
+import JsGuidedTrace from '../components/JsGuidedTrace.jsx';
 import { initialJsDraft, checkJsDraft } from '../pilot/js-draft.js';
+import { checkDebugProject } from '../pilot/debugger-project.js';
 import { courseContext } from '../api/ai.js';
 import '../styles/pilot.css';
 
 const draft = (lesson) => ({ files: starterFor(lesson), entry: 'index.html', stand: newStand(), hints: 0, aiHints: 0, solutionSeen: false, checks: [], reports: [], skipped: false, manual: false });
-const resultCurrent = (project, lesson) => { const result = project?.checks.at(-1); return Boolean(result && result.stand === project.stand && result.lessonVersion === lesson.version && result.validatorVersion === VALIDATOR_VERSION); };
+const resultCurrent = (project, lesson) => { const result = project?.checks.at(-1); return Boolean(result && result.stand === project.stand && result.lessonVersion === lesson.version && result.validatorVersion === VALIDATOR_VERSION && (!lesson.advanced || !lesson.manualStep || result.manual === project.manual)); };
 const initial = () => ({ schema: 1, courseVersion: COURSE_VERSION, jsDraft: initialJsDraft(), projects: Object.fromEntries(LESSONS.map((lesson) => [lesson.id, draft(lesson)])) });
 const NO_COURSE_OUTPUT = [];
+const AdvancedWorkshop = lazy(() => import('../components/AdvancedWorkshop.jsx'));
 const PreparedCourse = lazy(() => import('../components/PreparedCourse.jsx'));
 class PreparedBoundary extends Component {
   state = { failed: false };
@@ -47,6 +51,8 @@ export default function FrontendKurs() {
   const revision = useRef(0);
   const checkRun = useRef(null);
   const preparedButton = useRef(null);
+  const debuggerEntry = useRef(null);
+  const wasDebugger = useRef(false);
   const lesson = LESSONS.find((item) => item.id === lessonId);
   const current = state.projects[lessonId] || draft(lesson);
   const latest = current.checks.at(-1);
@@ -63,7 +69,7 @@ export default function FrontendKurs() {
       if (saved) {
         if (saved.schema !== 1 || !saved.projects || Object.keys(saved.projects).length > Math.max(64, LESSONS.length)) throw new Error('Unbekannter Kursstand; Daten bleiben erhalten.');
         for (const project of Object.values(saved.projects)) { checkFiles(project.files); if (!Array.isArray(project.checks) || !Array.isArray(project.reports)) throw new Error('Ungültiger Entwurf.'); }
-        setState({ ...saved, jsDraft: saved.jsDraft === undefined ? initialJsDraft() : checkJsDraft(saved.jsDraft), projects: { ...initial().projects, ...saved.projects } });
+        setState({ ...saved, debugProject: saved.debugProject === undefined ? undefined : checkDebugProject(saved.debugProject), jsDraft: saved.jsDraft === undefined ? initialJsDraft() : checkJsDraft(saved.jsDraft), projects: { ...initial().projects, ...saved.projects } });
       }
       setWritable(true); setSaveStatus('Projektspeicher bereit'); setReady(true);
     }).catch((error) => { if (active) { setSaveStatus(`${error.message} Weiterarbeit ohne Sicherung möglich; bitte exportieren.`); setReady(true); } });
@@ -80,8 +86,22 @@ export default function FrontendKurs() {
     return () => clearTimeout(timer);
   }, [state, ready, writable]);
 
+  function changeState(change) {
+    // Invalidate an older in-flight acknowledgement at the edit itself, not
+    // only when the deferred autosave effect runs after rendering.
+    revision.current++;
+    if (ready && writable) setSaveStatus('Änderungen noch nicht gespeichert …');
+    setState(change);
+  }
+  const debuggerPage = useOutlet({ state, changeState, ready, saveStatus });
+  useEffect(() => {
+    if (debuggerPage) { checkRun.current?.abort(); checkRun.current = null; setChecking(false); setCourseOutput(null); }
+    else if (wasDebugger.current) requestAnimationFrame(() => debuggerEntry.current?.focus());
+    wasDebugger.current = Boolean(debuggerPage);
+  }, [Boolean(debuggerPage)]);
+
   function update(change) {
-    setState((previous) => {
+    changeState((previous) => {
       const project = previous.projects[lessonId] || draft(lesson);
       const next = typeof change === 'function' ? change(project) : { ...project, ...change };
       return { ...previous, projects: { ...previous.projects, [lessonId]: next } };
@@ -173,7 +193,7 @@ export default function FrontendKurs() {
     setChecking(true);
     const controller = new AbortController(); checkRun.current = controller;
     try {
-      const result = await validateProject(current.files, lesson, current.stand, current.entry, { signal: controller.signal });
+      const result = await validateProject(current.files, lesson, current.stand, current.entry, { signal: controller.signal, manual: current.manual });
       if (controller.signal.aborted || checkRun.current !== controller || currentRef.current.lessonId !== lessonId || currentRef.current.project.stand !== current.stand) return;
       update((project) => ({ ...project, checks: [...project.checks.slice(-9), result], lastSubmission: { stand: project.stand, files: project.files, entry: project.entry } })); setView('pruefen'); setMessage('');
     } catch (error) { if (!controller.signal.aborted && checkRun.current === controller && error.name !== 'AbortError' && currentRef.current.lessonId === lessonId) setMessage(`Prüfung konnte nicht abgeschlossen werden: ${error.message}`); }
@@ -191,11 +211,14 @@ export default function FrontendKurs() {
   const htmlFiles = Object.keys(current.files).filter((name) => /\.html$/i.test(name));
   const activePage = current.files[page] ? page : htmlFiles[0];
 
-  if (prepared) return <div className="pilot"><header className="main-header"><h1>Frontend-Werkstatt</h1></header><button className="btn btn-ghost" onClick={() => { setPrepared(false); requestAnimationFrame(() => preparedButton.current?.focus()); }}>← Zurück zu den Übungen 1–17</button><PreparedBoundary><Suspense fallback={<p>Weitere Kapitel werden geladen …</p>}><PreparedCourse /></Suspense></PreparedBoundary></div>;
+  if (debuggerPage) return debuggerPage;
+
+  if (prepared) return <div className="pilot"><header className="main-header"><h1>Frontend-Werkstatt</h1></header><button className="btn btn-ghost" onClick={() => { setPrepared(false); requestAnimationFrame(() => preparedButton.current?.focus()); }}>← Zurück zu den Übungen 1–31</button><PreparedBoundary><Suspense fallback={<p>Weitere Kapitel werden geladen …</p>}><PreparedCourse /></Suspense></PreparedBoundary></div>;
 
   return <div className="pilot">
-    <header className="main-header"><div><h1>Frontend-Werkstatt</h1><p>HTML, CSS und JavaScript-Grundlagen · Kapitel 1–17 · optionale Lernbegleitung</p></div></header>
-    <button ref={preparedButton} className="btn btn-ghost" onClick={() => { checkRun.current?.abort(); checkRun.current = null; setChecking(false); setCourseOutput(null); setPrepared(true); }}>Kapitel 18–31 lesen</button>
+    <header className="main-header"><div><h1>Frontend-Werkstatt</h1><p>HTML, CSS und JavaScript-Grundlagen · Kapitel 1–31 · optionale Lernbegleitung</p></div></header>
+    {/* Historical content reader retained as a separate reference view. */}
+    <button ref={preparedButton} className="btn btn-ghost" onClick={() => { checkRun.current?.abort(); checkRun.current = null; setChecking(false); setCourseOutput(null); setPrepared(true); }}>Kapitel 19–31 lesen</button>
     <p className="pilot-status" role="status">{saveStatus}</p>
     <p className="small">{desktop ? 'Deine Projekte werden im lokalen Desktop-App-Profil gespeichert und bleiben unabhängig von der internen Adresse erhalten.' : 'Deine Projekte bleiben in diesem Browserprofil auf diesem Gerät. Löschen von Browserdaten entfernt auch Entwürfe.'} Exportiere wichtige Projekte. Bestehender Quiz-Lernfortschritt bleibt getrennt.</p>
     <p className="small">Der Pilot sichert insgesamt bis zu 32 MiB einschließlich eingereichter Prüfstände. Bilder und ihre Prüfabgaben benötigen mehr Platz als Text. Bei ausgeschöpftem Speicher bleibt die Arbeit exportierbar; „Gespeichert“ erscheint dann nicht.</p>
@@ -206,7 +229,8 @@ export default function FrontendKurs() {
       <div className="pilot-tabs" aria-label="Arbeitsansichten">{[['lernen', 'Lernen'], ['schreiben', 'Schreiben'], ['vorschau', lesson.jsStep ? 'Vorschau / Konsole' : 'Vorschau'], ['pruefen', 'Prüfen'], ['geteilt', 'Geteilte Ansicht']].map(([id, label]) => <button className={`btn ${view === id ? 'btn-primary' : 'btn-ghost'}`} aria-pressed={view === id} key={id} onClick={() => setView(id)}>{label}</button>)}</div>
       {checking && <p role="status">Prüfung läuft … <button className="btn btn-ghost" onClick={() => checkRun.current?.abort()}>Prüfung abbrechen</button></p>}
       {message && <p className="alert" role="alert">{message}</p>}
-      {(view === 'lernen' || view === 'geteilt') && <section className="card pilot-lesson" aria-label="Lektionstext"><p>Kapitel {lesson.chapter} · Voraussetzung: {lesson.prerequisite}</p><h2>{lesson.title}</h2>{lesson.explain.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}<h3>Beispiel</h3><pre>{lesson.example}</pre><h3>Deine Aufgabe</h3><p>{lesson.task}</p><p className="small">Pflicht sind die genannten Inhalte und Techniken. Eigene Texte, gültige alternative Strukturen und Dateinamen sind erlaubt. Empfehlungen beeinflussen die Pflichtprüfung nicht.</p><button className="btn btn-primary" onClick={() => setView('schreiben')}>Selbst ausprobieren</button><p>Quelle: <a href={lesson.reference} target="_blank" rel="noreferrer">Fachreferenz zur Lektion</a> · geprüft {lesson.checked}</p></section>}
+      {(view === 'lernen' || view === 'geteilt') && <section className="card pilot-lesson" aria-label="Lektionstext"><p>Kapitel {lesson.chapter} · Voraussetzung: {lesson.prerequisite}</p><h2>{lesson.title}</h2>{lesson.explain.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}<h3>Beispiel</h3><pre>{lesson.example}</pre><h3>Deine Aufgabe</h3><p>{lesson.task}</p>{(lesson.chapter === 18 || lesson.advanced) && <><h3>Darauf achtest du</h3><ul>{lesson.criteria.map(criterion => <li key={criterion}>{criterion}</li>)}</ul><p className="small">Die feste Prüfung kontrolliert Ergebnisse und ausgewählte Funktionsaufrufe. Erkläre die geübten Methoden selbst; ihre tatsächliche Verwendung und dein Verständnis sind damit nicht vollständig nachgewiesen.</p></>}<p className="small">Pflicht sind die genannten Inhalte und Techniken. Eigene Texte, gültige alternative Strukturen und Dateinamen sind erlaubt. Empfehlungen beeinflussen die Pflichtprüfung nicht.</p><button className="btn btn-primary" onClick={() => setView('schreiben')}>Selbst ausprobieren</button><p>Quelle: <a href={lesson.reference} target="_blank" rel="noreferrer">Fachreferenz zur Lektion</a> · geprüft {lesson.checked}</p></section>}
+      {(view === 'lernen' || view === 'geteilt') && lesson.traceStep && <JsGuidedTrace key={`${lesson.id}:${current.stand}`} onReveal={() => update({ solutionSeen: true })} />}
       <div className={view === 'geteilt' ? 'pilot-split' : ''}>
         {(view === 'schreiben' || view === 'geteilt') && <section className="card" aria-label="Projekteditor">
           <h2>Deine Dateien</h2><div className="pilot-filetree" role="group" aria-label="Dateibaum">{Object.keys(current.files).map((name) => <button key={name} className={`btn ${name === selected ? 'btn-primary' : 'btn-ghost'}`} aria-pressed={name === selected} onClick={() => setSelected(name)}>{name}</button>)}</div>
@@ -216,11 +240,12 @@ export default function FrontendKurs() {
           <p className="small">Tab verlässt den Editor. Dateien bleiben getrennt. Erlaubt sind HTML/CSS/JS und PNG/JPEG/WebP, 50 Dateien, 128 KiB pro HTML-/CSS-Datei, 64 KiB pro JS-Datei, 2 MiB pro Bild und 10 MiB insgesamt. JS läuft ausschließlich beim bewussten Start in der Kurskonsole; die HTML-Vorschau bleibt skriptfrei.</p>
           <div className="pilot-toolbar"><button className="btn btn-primary" onClick={check} disabled={checking}>{checking ? 'Prüfung läuft …' : 'Aufgabe prüfen'}</button><button className="btn btn-ghost" onClick={() => setView('vorschau')}>Browser-Vorschau ansehen</button></div>
         </section>}
-        {(view === 'vorschau' || view === 'geteilt') && <section className="card">{lesson.jsStep && <JsCourseConsole files={current.files} entry={current.entry} lesson={lesson} onOutput={setCourseOutput} />}<label>Projektseite <select aria-label="Projektseite" value={activePage} onChange={(event) => setPage(event.target.value)}>{htmlFiles.map((name) => <option key={name}>{name}</option>)}</select></label><PilotPreview key={lesson.jsStep ? `${lesson.id}:${current.stand}` : undefined} scriptOutput={lesson.jsStep ? (courseOutput?.files === current.files && courseOutput?.entry === activePage && courseOutput?.lessonId === lesson.id ? courseOutput.lines : NO_COURSE_OUTPUT) : undefined} files={current.files} page={activePage} onPage={setPage} lesson={lesson} project={current} onAiHint={() => update(project => ({ ...project, aiHints: (project.aiHints || 0) + 1 }))} /></section>}
+        {(view === 'vorschau' || view === 'geteilt') && <section className="card">{lesson.advanced && <Suspense fallback={<p>Übungsansicht wird geladen …</p>}><AdvancedWorkshop key={`${lesson.id}:${current.stand}`} files={current.files} entry={current.entry} lesson={lesson} onSaveStore={store => changeFiles({ ...current.files, 'uebungsspeicher.json': { kind: 'text', content: JSON.stringify(store, null, 2) } })} /></Suspense>}{lesson.jsStep && <JsCourseConsole files={current.files} entry={current.entry} lesson={lesson} onOutput={setCourseOutput} />}<label>Projektseite <select aria-label="Projektseite" value={activePage} onChange={(event) => setPage(event.target.value)}>{htmlFiles.map((name) => <option key={name}>{name}</option>)}</select></label><PilotPreview key={lesson.jsStep ? `${lesson.id}:${current.stand}` : undefined} scriptOutput={lesson.jsStep ? (courseOutput?.files === current.files && courseOutput?.entry === activePage && courseOutput?.lessonId === lesson.id ? courseOutput.lines : NO_COURSE_OUTPUT) : undefined} files={current.files} page={activePage} onPage={setPage} lesson={lesson} project={current} onAiHint={() => update(project => ({ ...project, aiHints: (project.aiHints || 0) + 1 }))} /></section>}
       </div>
       {view === 'pruefen' && <section className="card" aria-label="Prüfergebnisse"><h2>Prüfung und Verständnis</h2><button className="btn btn-primary" onClick={check}>Neu prüfen</button>{latest ? <><p>{resultCurrent(current, lesson) ? 'Aktueller Datei- und Regelstand' : 'Älterer Datei- oder Regelstand – bitte neu prüfen'} · {latest.lessonVersion} · {latest.validatorVersion}</p><p>{latest.passed ? 'Dieser eingereichte Stand hat die Pflichtprüfung bestanden. Ergänze die Selbstprüfung.' : 'Noch offene Pflichtkriterien:'}</p><ul>{latest.results.map((result, index) => <li key={`${result.rule}:${index}`}>{result.passed ? '✓ Erfüllt' : '○ Offen'} · {result.file}: {result.message}</li>)}</ul></> : <p>Noch keine Prüfung für diese Aufgabe.</p>}
-        <p className="small">{lesson.jsStep ? 'Die feste Prüfung vergleicht Ausgabetypen und ausgewählte Variablen; im Projekt mit mehreren Testdaten. Sie beweist nicht jede verwendete Technik oder selbstständiges Verständnis. Erkläre selbst die Rechenausdrücke und verwende const/let wie gelernt.' : 'Die Pflichtprüfung bewertet die Lernziele dieser Aufgabe. Eine offene Anforderung bedeutet nicht automatisch einen HTML-Syntaxfehler. Die Prüfung ersetzt keinen vollständigen HTML-Validator.'}</p>
-        <label className="pilot-check"><input type="checkbox" checked={current.manual} onChange={(event) => update({ manual: event.target.checked })} /> {lesson.jsStep ? 'Ich kann jede Anweisung erklären, habe Ausgaben und Typen vorhergesagt, const/let und Rechenausdrücke geprüft und mein Projekt gesichert.' : lesson.chapter >= 8 ? 'Ich habe die Erklärung meiner Gestaltung, beide Seiten mit Tastatur, schmale/breite Ansicht, 200% Zoom und gegebenenfalls reduzierte Bewegung selbst geprüft.' : lesson.chapter === 7 ? 'Ich habe die Darstellung auf beiden Seiten untersucht und kann die verwendeten Selektoren sowie Reihenfolge, Spezifität oder Vererbung der aktuellen Aufgabe erklären.' : 'Ich habe Links mit Tab/Enter, Bildbeschreibung, Verständlichkeit und die verwendeten Pfade selbst geprüft.'}</label>
+        {lesson.advanced && lesson.manualStep && <><h3>Zusätzlich tatsächlich selbst prüfen</h3><ul>{lesson.criteria.map(criterion=><li key={criterion}>{criterion}</li>)}</ul><p>Dokumentiere deine Durchführung in pruefprotokoll.md. Die Bestätigung unten ist deine Selbstauskunft und keine unabhängige Bewertung dieser Belege.</p></>}
+        <p className="small">{lesson.advanced ? 'Die feste Prüfung deckt ausgewählte Funktions-, Daten-, Typ- und DOM-Anforderungen ab. Manuell bestätigte Kriterien sind Selbstauskünfte. Externe Werkzeug-, Layout- und Bediennachweise bleiben zusätzlich erforderlich.' : lesson.jsStep ? 'Die feste Prüfung vergleicht Ausgabetypen und ausgewählte Variablen; im Projekt mit mehreren Testdaten. Sie beweist nicht jede verwendete Technik oder selbstständiges Verständnis. Erkläre selbst die Rechenausdrücke und verwende const/let wie gelernt.' : 'Die Pflichtprüfung bewertet die Lernziele dieser Aufgabe. Eine offene Anforderung bedeutet nicht automatisch einen HTML-Syntaxfehler. Die Prüfung ersetzt keinen vollständigen HTML-Validator.'}</p>
+        <label className="pilot-check"><input type="checkbox" checked={current.manual} onChange={(event) => update({ manual: event.target.checked })} /> {lesson.advanced ? 'Ich habe die manuellen Kriterien tatsächlich durchgeführt, Soll-/Istwerte und Belege in pruefprotokoll.md dokumentiert und kann meine Entscheidungen erklären.' : lesson.jsStep ? 'Ich kann jede Anweisung erklären, habe Ausgaben und Typen vorhergesagt, const/let und Rechenausdrücke geprüft und mein Projekt gesichert.' : lesson.chapter >= 8 ? 'Ich habe die Erklärung meiner Gestaltung, beide Seiten mit Tastatur, schmale/breite Ansicht, 200% Zoom und gegebenenfalls reduzierte Bewegung selbst geprüft.' : lesson.chapter === 7 ? 'Ich habe die Darstellung auf beiden Seiten untersucht und kann die verwendeten Selektoren sowie Reihenfolge, Spezifität oder Vererbung der aktuellen Aufgabe erklären.' : 'Ich habe Links mit Tab/Enter, Bildbeschreibung, Verständlichkeit und die verwendeten Pfade selbst geprüft.'}</label>
         <p>Feste Hilfen: {current.hints} · Lernbegleitung: {current.aiHints || 0} · Musterlösung {current.solutionSeen ? 'angesehen' : 'nicht angesehen'} · Selbstständiger Transfer {latest?.passed && current.manual && !current.solutionSeen && !current.hints && !current.aiHints && ['transfer', 'js-budgetprojekt', 'js15-tarifprojekt', 'js16-tarifbausteine', 'js17-aufgabenprojekt'].includes(lesson.id) && resultCurrent(current, lesson) ? 'nach Pflicht- und Selbstprüfung bestätigt' : 'noch nicht bestätigt'}. Hilfen kosten keine Punkte.</p>
         <div className="pilot-toolbar"><button className="btn btn-ghost" onClick={report}>Bewertung fragwürdig? Meldung exportieren</button><button className="btn btn-ghost" onClick={() => { update({ skipped: true }); selectLesson(LESSONS[Math.min(LESSONS.indexOf(lesson) + 1, LESSONS.length - 1)].id); }}>Offen lassen und weiterlernen</button></div><p>Die Regelprüfung ist keine vollständige Standard- oder Barrierefreiheitsprüfung. Eine offene Aufgabe wird durch Weiterlernen nicht als bestanden markiert.</p>
       </section>}
@@ -231,6 +256,7 @@ export default function FrontendKurs() {
         <KiHilfe course contextKey={`${lesson.id}:${current.stand}:${selected}:${latest?.at || ''}`} makeContext={includeCode => courseContext(lesson, current, selected, includeCode)} onHint={() => update(project => ({ ...project, aiHints: (project.aiHints || 0) + 1 }))} />
       </details>
       <details className="card pilot-disclosure" data-pilot-tool="project"><summary>Projekt sichern und einlesen</summary>
+        {lesson.advanced && lesson.chapter >= 26 && <><button className="btn btn-ghost" onClick={async () => { try { const {downloadAdvancedTemplate}=await import('../pilot/advanced-template.js');downloadAdvancedTemplate(current.files); } catch(error){setMessage(error.message);} }}>Externe Werkzeugvorlage mit Projekt herunterladen</button><p className="small">Neue ZIP-Kopie mit festen Paketversionen, Lockdatei, Typecheck, Tests, Build und VORLAGE.md. Paket-/Compilerkonfiguration der Kopie wird durch die geprüfte Vorlage ersetzt; Originaldateien hier bleiben erhalten. Keine Installation oder Befehlsausführung durch die App.</p></>}
         <div className="pilot-toolbar"><button className="btn btn-ghost" onClick={() => downloadProject(current)}>Sicherung exportieren (JSON)</button><button className="btn btn-ghost" onClick={() => downloadZip(current.files)}>Dateien für eigenen Editor (ZIP)</button><button className="btn btn-ghost" onClick={() => { if (window.confirm('Nur diese Aufgabe zurücksetzen? Eigene Änderungen dieser Aufgabe gehen verloren. Andere Projekte bleiben erhalten.')) { update(draft(lesson)); setSelected('index.html'); setPage('index.html'); setMessage('Diese Aufgabe wurde zurückgesetzt.'); } }}>Diese Aufgabe zurücksetzen</button></div>
         <p>ZIP im eigenen Projektordner entpacken. Mit dem gewünschten Editor öffnen. Für erneutes Einlesen den Ordner auswählen; ZIP-Dateien werden nicht automatisch ausgeführt oder importiert. JSON dient als vollständige Dateisicherung.</p>
         {external ? <>
@@ -244,7 +270,7 @@ export default function FrontendKurs() {
               <button className="btn btn-primary" onClick={() => chooseDesktop('files')}>＋ Dateien auswählen</button>
             </> : <>
               <label className="btn btn-primary pilot-upload">📂 Ordner einlesen<input aria-label="Ordner einlesen" aria-describedby="pilot-folder-help" type="file" multiple webkitdirectory="" onChange={(event) => handleImport(event, 'folder')} /></label>
-              <label className="btn btn-primary pilot-upload">＋ Dateien auswählen<input aria-label="Dateien auswählen" type="file" multiple accept=".html,.css,.js,.png,.jpg,.jpeg,.webp" onChange={(event) => handleImport(event, 'files')} /></label>
+              <label className="btn btn-primary pilot-upload">＋ Dateien auswählen<input aria-label="Dateien auswählen" type="file" multiple accept=".html,.css,.js,.ts,.tsx,.jsx,.json,.md,.png,.jpg,.jpeg,.webp" onChange={(event) => handleImport(event, 'files')} /></label>
             </>}
             <label className="btn btn-ghost pilot-upload">↥ Sicherung einlesen<input aria-label="Sicherung einlesen" type="file" accept=".json" onChange={(event) => handleImport(event, 'json')} /></label>
           </div>
@@ -253,7 +279,8 @@ export default function FrontendKurs() {
       </details>
       </section>
     </>}
-    <JsPlayground draft={state.jsDraft} onChange={(jsDraft) => setState(previous => ({ ...previous, jsDraft }))} ready={ready} saveStatus={saveStatus} />
+    <JsPlayground draft={state.jsDraft} onChange={(jsDraft) => changeState(previous => ({ ...previous, jsDraft }))} ready={ready} saveStatus={saveStatus} />
+    <section className="card debugger-entry" aria-label="Debugger öffnen"><h2>Debugger</h2><p>Untersuche eigenen Code mit Haltepunkten, Variablen und HTML-Vorschau auf einer eigenen Seite.</p><Link ref={debuggerEntry} className="btn btn-primary" to="/frontendkurs/debugger">Debugger öffnen</Link></section>
     <JsSandboxPilot />
   </div>;
 }

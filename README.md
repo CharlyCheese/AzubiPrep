@@ -19,6 +19,7 @@ Theorie & Glossar und freiwillige Lernhilfe mit lokalem Qwen oder eigenem ChatGP
 - [Über das Projekt](#über-das-projekt)
 - [Screenshots](#screenshots)
 - [Funktionsumfang](#funktionsumfang)
+- [Eigener Quellcode-Debugger](#eigener-quellcode-debugger)
 - [Lokale Lernbegleitung und eigene Unterlagen](#lokale-lernbegleitung-und-eigene-unterlagen)
 - [Tech-Stack](#tech-stack)
 - [Schnellstart (Web-App)](#schnellstart-web-app)
@@ -35,12 +36,13 @@ bei der Vorbereitung auf die IHK-Abschlussprüfung: **7.000 Prüfungsfragen** in
 **26 Modulen**, aufbereitet als interaktives Quiz, Karteikarten-Training und
 zeitlimitierte Prüfungssimulation mit automatischer Auswertung. Lernfelder
 gliedern den Einstieg. Theorie & Glossar helfen beim Verstehen vor dem Quiz;
-die Frontend-Werkstatt bietet **82 praktisch eingebundene Lektionen in Kapitel
-1–17** und **85 zusätzliche Inhaltslektionen für Kapitel 18–31**.
+die Frontend-Werkstatt bietet im Quellstand **167 eingebundene Lektionen in Kapitel 1–31**, einschließlich lokaler DOM-/React-Übungen, TypeScript-Prüfung und externer Werkzeugvorlage. Ein eigener Quellcode-Debugger bietet echte Haltepunkte und eine begrenzte HTML-/CSS-Klickvorschau.
 
 **Quellstand und fertige Pakete:** Desktop **0.1.4** enthält 7.000 Fragen,
 Theorie & Glossar, die freiwillige KI-Auswahl, lokale PDF-Wissenssuche und den
-aktuellen Werkstattstand. Die älteren Webpakete **0.1.2** enthalten diese späteren
+Werkstattstand mit 82 Übungen/85 Inhaltslektionen. Die technische Einbindung von Kapitel 18–31 und der eigene Quellcode-Debugger
+wurden danach im Quellstand ergänzt und sind noch nicht neu als Installer gebaut.
+Die älteren Webpakete **0.1.2** enthalten diese späteren
 Erweiterungen noch nicht. Modelle, eigene Unterlagen und angemeldete Konten
 werden nicht mitgeliefert. Die Screenshots zeigen ausgewählte App-Ansichten.
 
@@ -103,10 +105,13 @@ Unterlagen, persönlichen Lerndaten oder Modellantworten sind abgebildet.
 - Theorie & Glossar mit Lernfeldeinstiegen, Fragenthemen und passenden Übungsfragen
 - Optionale Qwen-Erklärungen mit Praxisbeispiel und Merksatz; Originalfundstellen separat lesen
 - Ausführliche Lernfelder mit geordneten Teilthemen, einzelnen Erklärungen oder einem abbrechbaren Ablauf durch alle offenen Abschnitte
-- Frontend-Werkstatt mit 82 Übungen in Kapitel 1–17: HTML, CSS, Formulare und JavaScript-Grundlagen bis zu Funktionen, Arrays, Schleifen und Objekten
+- Frontend-Werkstatt im Quellstand mit 167 Lektionen in Kapitel 1–31: HTML, CSS, Formulare, JavaScript, DOM, Zustand, asynchrone Daten, Module, TypeScript, React und Abschlussprojekt
 - Editor, Mehrdateiprojekte, externe Dateiauswahl, skriptfreie HTML-/CSS-Vorschau mit Inspektor und feste Aufgabenprüfungen
-- JavaScript bewusst in einer begrenzten lokalen Konsole ausführen; keine DOM-, Datei-, Netzwerk- oder App-Brücken für eigene Programme
-- Weitere 85 Lektionen in Kapitel 18–31 unter „Kapitel 18–31 lesen“: Erklärungen, Übungen, gestufte Hilfen, Lösungen und Projekte bis TypeScript, React und Abschlussportal; technische Einbindung und praktische Abnahme dieser neuen Kapitel noch offen
+- JavaScript bewusst in begrenzten lokalen Laufzeiten ausführen: Grundlagenkonsole ohne DOM, neue Projektansicht mit lokalem DOM-Modell; keine echten Datei-, Netzwerk- oder Apprechte
+- Geführte Debugger-Spur am Kursbeispiel sowie eigener Quellcode-Debugger auf einer separaten Seite: echte Haltepunkte, Schritte hinein/über/aus, Aufrufkette und passive Variablenansicht
+- Eigene JS-Dateien und Modulprojekte mit Unterordnern, Imports/Weiterexporten, synchronen Callbacks, Closures und Fehlerbehandlung debuggen
+- Begrenzte HTML-/Klickvorschau mit eigener CSS-Quelle: Klassen-/ID-/Textänderungen werden nach dem ausgeführten Schritt sichtbar; CSS bleibt im skriptlosen Vorschaurahmen
+- Neue interaktive Übungsansicht mit lokalem DOM-Modell, festen Datenquellen, getrenntem Übungsspeicher und echter TypeScript-Typprüfung; Code bleibt in QuickJS. Eigene CSS-/Browserdetails und reale Werkzeuge zusätzlich extern prüfen. [Umfang und Grenzen](docs/37-Frontendkurs-Technische-Integration.md)
 - Quizmodus mit Sofort-Feedback und Erklärung (Single-Choice, Multiple-Choice, Freitext)
 - Karteikartenmodus mit Spaced Repetition (Leitner-System, 5 Boxen)
 - Prüfungssimulation mit Zeitlimit, Zufallsfragen, Themengewichtung und Bestehensgrenze
@@ -154,6 +159,53 @@ Unterlagen, persönlichen Lerndaten oder Modellantworten sind abgebildet.
   Besucher:innen, jederzeit ohne Konto überspringbar
 - Optionale Push-Benachrichtigungen (Web-Push, kontogebunden), erster
   Anwendungsfall: Benachrichtigung bei bearbeiteter Meldung
+
+## Eigener Quellcode-Debugger
+
+In der **Frontend-Werkstatt → Debugger öffnen** führt ein kompakter Einstieg
+auf die eigene Seite **`/frontendkurs/debugger`**. Der Arbeitsbereich öffnet sich
+direkt; der Rücklink führt zur bisherigen Lektion und Editoransicht. Entwürfe
+und laufende Speicherungen bleiben beim internen Wechsel erhalten. Beim
+Verlassen wird die Ausführung beendet, beim Zurückkehren startet kein Code automatisch.
+
+- **Eigene JavaScript-Datei:** Variablen, Bedingungen, Schleifen, Funktionen,
+  Arrays/Objekte, ausgewählte Arraymethoden, synchrone Callbacks/Closures sowie
+  `try`/`catch`/`finally` und eigene Fehler schrittweise untersuchen.
+- **Mehrere Dateien / Module:** lokale JS-Projekte mit Unterordnern und relativen
+  Imports, Sammelimports und Weiterexporten; dateigenaue Haltepunkte und Frames.
+- **HTML und Klickereignisse:** erlaubte Elemente auswählen, Texte/IDs/Klassen
+  ändern und synchrone Klickhandler mit echten Pausen verfolgen. Eine optionale
+  CSS-Quelle gestaltet ausschließlich den gesonderten Vorschaurahmen.
+
+**Erster CSS-Versuch:** Debugmodus „HTML und Klickereignisse“ wählen,
+„CSS bearbeiten und einlesen · styles.css“ aufklappen und nach Bestätigung
+„CSS-Beispiel laden“. „Debuggen starten“ hält zunächst vor der ersten Anweisung;
+mit „Weiter / bis zum nächsten Haltepunkt“ die Listener einrichten. Danach
+„Farbe wechseln“ in der Vorschau anklicken und die Klassenänderung schrittweise
+verfolgen: Die Karte wechselt nach der ausgeführten Klassenänderung von Blau zu Grün.
+
+Einzelner JS-Entwurf, Modulprojekt und ursprüngliche HTML-/CSS-Quellen bleiben
+lokal gespeichert. Das Modulprojekt lässt sich als JSON sichern, die CSS-Quelle
+zusätzlich einzeln einlesen/exportieren. Live-DOM, Variablen, Ereignisse und
+Aufrufketten werden nicht gespeichert oder an KI übertragen. Die Ausführung
+läuft in einer begrenzten QuickJS-Laufzeit; der skriptlose CSS-Rahmen erhält nur
+geprüfte Darstellungsdaten. Styles können die App nicht überdecken, externe
+CSS-Ressourcen und Imports sind gesperrt.
+
+Der freie Debugger hat einen ausdrücklich begrenzten Sprach-/DOM-Umfang.
+Weitere Ereignisse, Formulare, zusätzliche DOM-/CSS-APIs, Übungsspeicher,
+asynchrone Abläufe und TypeScript-/React-Debugging folgen in eigenen Stufen.
+Die Kursprüfungen für diese Themen sind bereits separat eingebunden.
+
+**Geprüfter Stand:** 440 Browser-/Windows-Electronfälle ohne Wiederholung
+erfolgreich, anschließend nach Bereinigung der CSS-Beispieldaten alle zehn
+CSS-Fälle erneut bestanden. Sieben agentseitige CSS-Bediengruppen und Desktop-/
+Mobilbilder sowie ein unabhängiger Review sind abgeschlossen. Diese Nachweise
+betreffen den Quellstand, nicht einen neu gebauten Installer.
+
+Bedienung und Grenzen: [Debugger](docs/39-Debugger-Technikpilot.md),
+[Module](docs/44-Debugger-Module.md), [Modulausbau](docs/45-Debugger-Modulausbau.md),
+[DOM und Klicks](docs/46-Debugger-DOM-Klicks.md), [CSS](docs/47-Debugger-CSS.md).
 
 ## Lokale Lernbegleitung und eigene Unterlagen
 
@@ -274,7 +326,9 @@ cd ../backend && npm start   # http://localhost:3001
 ## Desktop-App (Electron)
 
 Die [lokale Lernbegleitung](#lokale-lernbegleitung-und-eigene-unterlagen),
-Theorie & Glossar und der aktuelle Frontendkurs sind in Desktop 0.1.4 enthalten.
+Theorie & Glossar und der Kursstand mit 82 Übungen/85 Inhaltslektionen sind in
+Desktop 0.1.4 enthalten. Der spätere Quellstand bindet zusätzlich Kapitel 18–31
+und den eigenen Quellcode-Debugger einschließlich DOM-/CSS-Pilot ein.
 Qwen/Ollama wird bei Bedarf separat eingerichtet; für ChatGPT ist die eigene
 Anmeldung erforderlich. Ohne KI bleiben Quiz und feste Übungen nutzbar.
 
@@ -301,8 +355,10 @@ Der aktuelle Desktopinstaller heißt **`AzubiPrep Setup 0.1.4.exe`** und liegt
 nach dem Build in `Installer/`. Er enthält 7.000 Fragen, Lernfeldunterstützung,
 Theorie/Glossar, die KI-Auswahl und die Frontend-Werkstatt mit 82 integrierten
 Übungen sowie 85 vorbereiteten Inhaltslektionen. Die Integration von DOM,
-Browserfunktionen, Debugger und weiteren Werkzeugen für Kapitel 18–31 folgt
-separat; diese Kapitel werden noch nicht als praktisch bestanden bewertet.
+Browserfunktionen und Werkzeugen für Kapitel 19–31 sowie der eigene Quellcode-
+Debugger mit DOM-/CSS-Pilot sind inzwischen im Quellstand ergänzt. Das vorhandene
+Paket enthält diesen späteren Stand noch nicht. Die praktische Nutzerabnahme
+der neuen Kurskapitel bleibt ein eigener offener Punkt.
 Node.js muss auf dem Ziel-PC nicht separat installiert werden.
 Entwickler-`.env`-Dateien, private Lernunterlagen, daraus erzeugte Daten und
 persönliche KI-Konten werden ausgeschlossen; ohne eigene Kontoserver-
@@ -390,13 +446,16 @@ Die tagesaktuelle Task-Liste (was offen ist, was erledigt ist) führt
 
 Erledigt (Auszug, vollständig in [`DONE.md`](docs/agent-briefs/DONE.md)):
 Ausbau auf 7.000 Fragen, Lernfeldzuordnung, Windows-Pakete mit eigener Laufzeit,
-Frontend-Werkstatt mit 82 integrierten Übungen und 85 weiteren Inhaltslektionen,
+Frontend-Werkstatt im Quellstand mit 167 eingebundenen Lektionen bis Kapitel 31,
 optionale Content-Datenbank mit CSV-Fallback, Autoren-Weboberfläche und
 Fragenfeedback. Qwen/eigenes ChatGPT, lokale PDF-Wissenssuche und Theorie/Glossar
-sind ebenso wie der Kursstand im Desktopinstaller 0.1.4 enthalten.
+sind im Desktopinstaller 0.1.4 enthalten. Dessen Kursstand liegt noch bei
+82 Übungen/85 Inhaltslektionen; Kapitel 18–31 und der eigene Debugger mit
+Modul-/DOM-/CSS-Unterstützung wurden erst anschließend eingebunden.
 
-Offen bleiben technische Integration und praktische Abnahme der Inhaltskapitel
-18–31, vertiefte fachlich-didaktische KI-Evaluation, semantische Suche/OCR,
+Offen bleiben praktische Nutzerabnahme der neuen Kapitel und externe Bedien-/
+Werkzeugnachweise, weitere DOM-/Formular-/Async- und TypeScript-/React-Stufen
+des freien Debuggers, vertiefte fachlich-didaktische KI-Evaluation, semantische Suche/OCR,
 Nachweise auf weiteren Zielgeräten, aktualisierte Webpakete sowie Installersignatur
 und Desktop-Auto-Update. Die Inhaltsfassung führt keinen Beispielcode aus und
 verändert keine bisherigen Prüfungsergebnisse.

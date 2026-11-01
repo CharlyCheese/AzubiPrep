@@ -10,7 +10,7 @@ test('Web-Werkstatt aktiviert keine Skripte durch den technischen Pilot', async 
   await page.getByText('JavaScript-Technikpilot öffnen', { exact: true }).click();
   await expect(page.getByText(/In der Webversion ist dieser Browser-DOM-Technikpilot nicht verfügbar/)).toBeVisible();
   await expect(page.getByRole('button', { name: 'Test starten / zurücksetzen', exact: true })).toHaveCount(0);
-  await expect(page.getByRole('combobox', { name: 'Lektion', exact: true }).locator('option')).toHaveCount(82);
+  await expect(page.getByRole('combobox', { name: 'Lektion', exact: true }).locator('option')).toHaveCount(167);
 });
 
 test('Späte Startantworten nach Schließen überschreiben keinen neuen Lauf', async ({ page }) => {

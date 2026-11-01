@@ -1,15 +1,19 @@
 import { useEffect, useRef, useState } from 'react';
-import { PREPARED_CHAPTERS, PREPARED_LESSONS } from '../pilot/prepared/catalog.js';
+import { READING_CHAPTERS as PREPARED_CHAPTERS, READING_LESSONS as PREPARED_LESSONS } from '../pilot/prepared/catalog.js';
 import { downloadFile } from '../pilot/project.js';
+import { ADVANCED_LESSONS } from '../pilot/advanced-course.js';
 
 export default function PreparedCourse() {
   const [lessonId, setLessonId] = useState(PREPARED_LESSONS[0].id);
   const [hints, setHints] = useState(0);
   const title = useRef(null);
-  const lesson = PREPARED_LESSONS.find(item => item.id === lessonId);
-  const chapter = PREPARED_CHAPTERS.find(item => item.number === lesson.chapter);
-  const index = PREPARED_LESSONS.indexOf(lesson);
-  const chapterIndex = chapter.lessons.indexOf(lesson);
+  const original = PREPARED_LESSONS.find(item => item.id === lessonId);
+  const index = PREPARED_LESSONS.indexOf(original);
+  const baseChapter = PREPARED_CHAPTERS.find(item => item.number === original.chapter);
+  const chapterIndex = baseChapter.lessons.indexOf(original);
+  const active = ADVANCED_LESSONS.find(item=>item.chapter===original.chapter&&item.unit===chapterIndex+1);
+  const lesson = { ...active, id: original.id, status: 'Lesefassung · praktische Übungen in der Lektionsauswahl' };
+  const chapter = { ...baseChapter, environment: active.environment };
 
   useEffect(() => { setHints(0); }, [lessonId]);
   function select(id) { setHints(0); setLessonId(id); }
@@ -28,8 +32,8 @@ export default function PreparedCourse() {
   }
 
   return <section className="prepared-course" aria-label="Weitere Kurskapitel">
-    <p className="pilot-status">Inhaltsfassung · Kapitel 18–31 · {PREPARED_LESSONS.length} vorbereitete Lektionen</p>
-    <p>Hier kannst du die nächsten Kapitel mit Aufgaben, Hilfen und Lösungen lesen. Die gemeinsame Einbindung von DOM, Browserfunktionen, Debugger und Werkzeugen folgt anschließend. Diese Inhaltsfassung führt keinen Beispielcode aus und vergibt keine bestandenen Prüfungen. Eigene Projekte bearbeitest du weiterhin in deinem Editor.</p>
+    <p className="pilot-status">Inhaltsfassung · Kapitel 19–31 · {PREPARED_LESSONS.length} Referenzlektionen</p>
+    <p>Hier kannst du Kapitel mit Aufgaben, Hilfen und Lösungen nachlesen. Die praktischen Übungen findest du in der normalen Lektionsauswahl. Diese Lesefassung führt keinen Beispielcode aus und vergibt keine bestandenen Prüfungen. Externe Werkzeug-, Layout- und Bediennachweise ergänzen die festen Teilprüfungen.</p>
     <div className="prepared-selectors">
       <label>Kapitel der Inhaltsfassung<select aria-label="Kapitel der Inhaltsfassung" value={chapter.number} onChange={event => select(PREPARED_CHAPTERS.find(item => item.number === Number(event.target.value)).lessons[0].id)}>{PREPARED_CHAPTERS.map(item => <option key={item.number} value={item.number}>{item.number}. {item.title}</option>)}</select></label>
       <label>Lektion der Inhaltsfassung<select aria-label="Lektion der Inhaltsfassung" value={lessonId} onChange={event => select(event.target.value)}>{chapter.lessons.map((item, position) => <option key={item.id} value={item.id}>{position + 1}. {item.title}</option>)}</select></label>

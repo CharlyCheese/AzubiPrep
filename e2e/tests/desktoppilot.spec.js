@@ -267,7 +267,7 @@ test('Unterstützter Chromium-Ordnerimport überspringt echte ausbrechende Windo
   console.log(`Browsermatrix Chromium ${browser.version()}, ${process.platform}`);
 });
 
-test('Aktueller Desktop enthält 7000 Fragen, 82 Übungen, 85 Inhaltslektionen und keine vorangemeldeten KI-Konten', { tag: '@desktop' }, async ({}, info) => {
+test('Aktueller Desktop enthält 7000 Fragen, 90 Übungen, 77 Inhaltslektionen und keine vorangemeldeten KI-Konten', { tag: '@desktop' }, async ({}, info) => {
   const temporary = await fs.realpath(os.tmpdir());
   const profile = await fs.mkdtemp(path.join(temporary, 'azubiprep-release-'));
   let app;
@@ -276,7 +276,7 @@ test('Aktueller Desktop enthält 7000 Fragen, 82 Übungen, 85 Inhaltslektionen u
     const { page, origin } = launched;
     const health = await page.request.get(`${origin}/api/health`);
     expect((await health.json()).fragenAnzahl).toBe(7000);
-    await expect(page.getByLabel('Lektion', { exact: true }).locator('option')).toHaveCount(82);
+    await expect(page.getByLabel('Lektion', { exact: true }).locator('option')).toHaveCount(167);
     const lesson = LESSONS.find(item => item.id === 'js17-aufgabenprojekt');
     await page.getByLabel('Lektion', { exact: true }).selectOption(lesson.id);
     page.once('dialog', dialog => dialog.accept());
@@ -288,9 +288,9 @@ test('Aktueller Desktop enthält 7000 Fragen, 82 Übungen, 85 Inhaltslektionen u
     await page.getByRole('button', { name: 'Vorschau / Konsole', exact: true }).click();
     await page.getByRole('button', { name: 'Kursprogramm ausführen', exact: true }).click();
     await expect(page.getByLabel('Kurs-Konsolenausgabe')).toHaveText('2\n35\nHTML üben\nJavaScript testen');
-    await page.getByRole('button', { name: 'Kapitel 18–31 lesen', exact: true }).click();
-    await expect(page.getByLabel('Kapitel der Inhaltsfassung', { exact: true }).locator('option')).toHaveCount(14);
-    await expect(page.getByText('Inhaltsfassung · Kapitel 18–31 · 85 vorbereitete Lektionen', { exact: true })).toBeVisible();
+    await page.getByRole('button', { name: 'Kapitel 19–31 lesen', exact: true }).click();
+    await expect(page.getByLabel('Kapitel der Inhaltsfassung', { exact: true }).locator('option')).toHaveCount(13);
+    await expect(page.getByText('Inhaltsfassung · Kapitel 19–31 · 77 Referenzlektionen', { exact: true })).toBeVisible();
     await page.getByLabel('Kapitel der Inhaltsfassung', { exact: true }).selectOption('31');
     await expect(page.getByRole('heading', { name: 'Auftrag und eigenen Umfang festlegen', exact: true })).toBeVisible();
     await page.goto(`${origin}/einstellungen`);

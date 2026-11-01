@@ -12,6 +12,8 @@ const BOOTSTRAP = `(() => {
   const string = String;
   const isArray = Array.isArray;
   const descriptor = Object.getOwnPropertyDescriptor;
+  const prototypeOf = Object.getPrototypeOf;
+  const errorTypes = [[Error.prototype, 'Error'], [TypeError.prototype, 'TypeError'], [ReferenceError.prototype, 'ReferenceError'], [SyntaxError.prototype, 'SyntaxError'], [RangeError.prototype, 'RangeError'], [URIError.prototype, 'URIError'], [EvalError.prototype, 'EvalError']];
   const records = [];
   const format = value => {
     const kind = typeof value;
@@ -34,6 +36,8 @@ const BOOTSTRAP = `(() => {
   const errorText = error => {
     if (typeof error !== 'object' || error === null) return format(error);
     let text = '';
+    const prototype = prototypeOf(error);
+    for (const pair of errorTypes) if (prototype === pair[0]) { text = pair[1]; break; }
     // Read data properties only: no user-provided getters/toString/toJSON.
     for (const key of ['message', 'stack']) {
       const own = descriptor(error, key);

@@ -96,7 +96,7 @@ test('Alle Projekte erhalten ältere Ergebnisse; Funktionsprojekt lässt sich au
   await expect(page.getByRole('region',{name:'Prüfergebnisse',exact:true})).toContainText('Dieser eingereichte Stand hat die Pflichtprüfung bestanden');
   await select(page,'js15-tarifprojekt'); await page.getByRole('button',{name:'Prüfen',exact:true}).click();
   await expect(page.getByRole('region',{name:'Prüfergebnisse',exact:true})).toContainText('Dieser eingereichte Stand hat die Pflichtprüfung bestanden');
-  await expect(page.getByRole('combobox',{name:'Lektion',exact:true}).locator('option')).toHaveCount(82);
+  await expect(page.getByRole('combobox',{name:'Lektion',exact:true}).locator('option')).toHaveCount(167);
 });
 
 test('Electron: Funktionen separat prüfen, normal ausführen und nach Neustart fortsetzen', { tag: '@desktop' }, async ({},info) => {

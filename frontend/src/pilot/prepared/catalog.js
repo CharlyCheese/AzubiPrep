@@ -15,3 +15,7 @@ import ch31 from './ch31.js';
 
 export const PREPARED_CHAPTERS = [ch18, ch19, ch20, ch21, ch22, ch23, ch24, ch25, ch26, ch27, ch28, ch29, ch30, ch31];
 export const PREPARED_LESSONS = PREPARED_CHAPTERS.flatMap(item => item.lessons);
+// Der vollständige redaktionelle Katalog bleibt als Quelle erhalten. Praktisch
+// eingebundene Kapitel erscheinen nicht doppelt unter den vorbereiteten Übungen.
+export const READING_CHAPTERS = PREPARED_CHAPTERS.filter(item => item.number >= 19);
+export const READING_LESSONS = READING_CHAPTERS.flatMap(item => item.lessons);

@@ -14,6 +14,8 @@ describe('JavaScript-Worker CSP', () => {
     await fs.mkdir(path.join(root, 'assets'));
     await fs.writeFile(path.join(root, 'index.html'), '<!doctype html><title>Synthetic app</title>');
     await fs.writeFile(path.join(root, 'assets', 'js-runner.worker-abc_123.js'), '/* synthetic worker */');
+    await fs.writeFile(path.join(root, 'assets', 'advanced.worker-abc_123.js'), '/* synthetic worker */');
+    await fs.writeFile(path.join(root, 'assets', 'debugger.worker-abc_123.js'), '/* synthetic worker */');
     app.use(securityHeaders());
     app.use(express.static(root, { setHeaders: jsWorkerAssetHeaders }));
     app.get('*', (_req, res) => res.sendFile(path.join(root, 'index.html')));
@@ -21,8 +23,8 @@ describe('JavaScript-Worker CSP', () => {
   afterAll(async () => {
     if (root && path.dirname(root) === path.resolve(os.tmpdir()) && path.basename(root).startsWith('azubiprep-worker-csp-')) await fs.rm(root, { recursive: true, force: true });
   });
-  it('erlaubt ausschließlich WASM auf dem lokalen Worker und sperrt Verbindungen/Unterworker', async () => {
-    const response = await request(app).get('/assets/js-runner.worker-abc_123.js');
+  it.each(['js-runner.worker', 'advanced.worker', 'debugger.worker'])('erlaubt ausschließlich WASM auf dem lokalen Worker %s und sperrt Verbindungen/Unterworker', async name => {
+    const response = await request(app).get(`/assets/${name}-abc_123.js`);
     const csp = response.headers['content-security-policy'];
     expect(csp).toContain("script-src 'self' 'wasm-unsafe-eval'");
     expect(csp).toContain("connect-src 'none'");

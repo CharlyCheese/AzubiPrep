@@ -4,6 +4,8 @@ import { JS_LESSONS, jsCourseFiles } from './js-course.js';
 import { JS15_LESSONS, js15CourseFiles } from './js15-course.js';
 import { JS16_LESSONS, js16CourseFiles } from './js16-course.js';
 import { JS17_LESSONS, js17CourseFiles } from './js17-course.js';
+import { JS18_LESSONS, js18CourseFiles } from './js18-course.js';
+import { ADVANCED_LESSONS, advancedFiles } from './advanced-course.js';
 
 export const COURSE_VERSION = 'pilot-1.0';
 export const VALIDATOR_VERSION = 'pilot-rules-1.0.1';
@@ -166,8 +168,12 @@ LESSONS.push(...JS_LESSONS);
 LESSONS.push(...JS15_LESSONS);
 LESSONS.push(...JS16_LESSONS);
 LESSONS.push(...JS17_LESSONS);
+LESSONS.push(...JS18_LESSONS);
+LESSONS.push(...ADVANCED_LESSONS);
 
 export function solutionFor(lesson) {
+  if (lesson.advanced) return advancedFiles(lesson);
+  if (lesson.chapter === 18 && lesson.jsStep) return js18CourseFiles(lesson);
   if (lesson.chapter === 17 && lesson.jsStep) return js17CourseFiles(lesson);
   if (lesson.chapter === 16 && lesson.jsStep) return js16CourseFiles(lesson);
   if (lesson.chapter === 15 && lesson.jsStep) return js15CourseFiles(lesson);
@@ -176,6 +182,8 @@ export function solutionFor(lesson) {
   return lesson.cssStep !== undefined ? cssCourseFiles(lesson, solution(17)) : structuredClone(solution(lesson.stage));
 }
 export function starterFor(lesson) {
+  if (lesson.advanced) return advancedFiles(lesson, true);
+  if (lesson.chapter === 18 && lesson.jsStep) return js18CourseFiles(lesson, true);
   if (lesson.chapter === 17 && lesson.jsStep) return js17CourseFiles(lesson, true);
   if (lesson.chapter === 16 && lesson.jsStep) return js16CourseFiles(lesson, true);
   if (lesson.chapter === 15 && lesson.jsStep) return js15CourseFiles(lesson, true);

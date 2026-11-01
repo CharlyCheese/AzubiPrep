@@ -38,3 +38,14 @@ export async function openWorkshopTools(page) {
     if (!await panel.evaluate(element => element.open)) await panel.locator('summary').first().click();
   }
 }
+
+// Debugger now has its own page. Follow the real entry point and only open its
+// optional drawer when needed (direct visits start with the work area open).
+export async function openDebugger(page) {
+  if (new URL(page.url()).pathname === '/frontendkurs') {
+    await page.getByRole('link', { name: 'Debugger öffnen', exact: true }).click();
+  }
+  const panel = page.locator('.js-debug-pilot');
+  await panel.waitFor({ state: 'attached' });
+  if (!await panel.evaluate(node => node.open)) await panel.locator(':scope > summary').click();
+}

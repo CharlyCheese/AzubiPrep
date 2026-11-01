@@ -11,7 +11,7 @@
   Kursfolge angepasst: frühes CSS, Formulare nach Layoutprojekten; externe
   Projektbearbeitung bereits ab der ersten zweiten Datei, aktuell beim
   Seitenlink in Kapitel 3; Mehrdateiprojekte früh verbindlich eingeplant.
-  Webstand unter `/frontendkurs`: 82 Lektionen, Editor, externe Projekte,
+  Webstand unter `/frontendkurs`: 167 Lektionen, Editor, externe Projekte,
   Vorschau/Inspektor, Validator und OPFS-Sicherung implementiert.
   Zehn ergänzende Qualitäts-/Betriebsanforderungen erfasst; verbindliche
   [Pilotabnahme](../21-Frontendpilot-Abnahme.md) für Kapitel 1–6 abgeleitet.
@@ -88,13 +88,107 @@
   Projekte 3–6 und Abschlussportal in Etappen mit Referenzprogrammen ausgearbeitet.
   59 Inhalts-/Browser-/Regressionsfälle und Build grün, unabhängige Fach- und
   Integrationsreviews freigegeben. Alte 82 Übungen und Entwürfe erhalten.
-  Nächster Schritt: gemeinsame technische Integration/Abnahme der vorbereiteten
-  Kapitel; DOM/Debugger/async-Adapter, Werkzeugvorlagen, Validatoren, Fortschritt
-  und KI-Themenfolge weiterhin offen. Neue Kapitel noch nicht praktisch abgenommen.
-  OPS-039: Desktop 0.1.4 mit aktuellem Kurs/KI/Theorie neu gebaut und als echte
+  FE-037 bindet die acht Lektionen aus Kapitel 18 mit Funktionsprüfungen und
+  geführter Spur eines festen Beispiels praktisch ein: insgesamt 90 Übungen,
+  verbleibend 77 vorbereitete Lektionen für Kapitel 19–31. 212 Browser-/Electron-
+  und 208 Backendtests grün; alte Stände erhalten, unabhängige Reviews freigegeben.
+  Nutzerabnahme von Kapitel 18 sowie allgemeiner Debugger für eigenen Code offen.
+  FE-038 bindet die verbleibenden Kapitel 19–31 mit begrenzter DOM-/React-
+  Übungsansicht, kontrollierten Daten-/Speicheradaptern, Modulen, strict-Typprüfung,
+  Projektkriterien und externer Werkzeugvorlage ein. Praktische Nutzerabnahme,
+  vollständige externe Bedien-/Werkzeugnachweise und freier Quellcodedebugger
+  bleiben offen. → [Umfang und Grenzen](../37-Frontendkurs-Technische-Integration.md)
+  FE-039 konkretisiert die Debugger-Planung: echtes Anhalten/Fortsetzen zuerst
+  technisch beweisen, dann begrenzter Grundlagenpilot mit Haltepunkten/Schritten/
+  Scopes; spätere Sprache/Module/DOM/Async/TS/React separat. Keine Umsetzung oder
+  zusätzliche Bibliothek dadurch freigegeben. → [Plan/Abnahme](../38-Quellcode-Debugger-Planung.md)
+  Der erste echte D0/D1-Debugger-Pilot ergänzt primitive Variablen, Bedingungen,
+  Blockscopes, Haltepunkte und Fortsetzen derselben Ausführung. Funktionen,
+  Schleifen und Aufrufschritte sind im begrenzten D2-Teil ergänzt: benannte
+  Funktionen mit Parametern/return, Rekursion, Über/Aus, passive Aufrufauswahl
+  und aktuelle Iterations-/Callerscopes. 340 Gesamtfälle und unabhängiger Review
+  grün; D3–D6 und weitere Sprach-/Plattformziele bleiben offen.
+  Einfache Array-/Objekt-/Stringdatenzugriffe mit eigenen Feldern, Index/length,
+  Zuweisungen und Inkrementen ergänzt; passive Anzeige bleibt ohne Objektbaum.
+  34 betroffene Debugger-/Daten-/Electronfälle und unabhängiger Review grün.
+  Acht grundlegende direkte native Array-Methoden ohne Callbacks ergänzt:
+  push/pop/shift/unshift/slice/includes/indexOf/join. 41 betroffene Prüfungen
+  und unabhängiger Abschlussreview grün. Grundlagen-D2-Abnahme DB01–DB23 für
+  dokumentierten Sprachumfang unter Windows/Chromium/Electron bestanden:
+  365 Gesamtfälle plus 13 gezielte Nachprüfungen, 211 Backendtests/Lint und
+  Paketregeln grün. Praktische Bedienung/Sichtbarkeit bestätigt, Ergebnisse
+  5/0 separat automatisch geprüft; frischer Abschlussreview freigegeben.
+  → [Grundlagen-Abnahme](../40-Debugger-Grundlagen-Abnahme.md)
+  Erster begrenzter D3-Teil ergänzt: sieben synchrone Array-Callbackmethoden
+  (map/filter/forEach/some/every/find/reduce), Rootfunktionsnamen, inline Pfeile/
+  anonyme Function-Expressions und synchrone lexikalische Captures mit eigenen
+  Frames/Schritten. 375 Gesamtfälle und unabhängiger Abschlussreview grün,
+  konkrete map-Bedienrunde praktisch bestätigt. Aufgedeckte alte Speicherstatus-
+  Race behoben: Erfolg gilt erst nach Commit des aktuellen Stands.
+  → [Callbackumfang](../41-Debugger-Callbacks.md)
+  Gespeicherte Pfeile/anonyme Function-Expressions, eigene HOF-Callbackparameter
+  und zurückgegebene synchrone Closures ergänzt; lebende äußere Bindungen
+  gekennzeichnet, beendete Erzeuger ohne aktiven Frame. Private Provenienz und
+  Funktionskonvertierungsgate erhalten Identität und verhindern Quelltextreflexion.
+  68 gezielte Debuggerfälle sowie 382 Gesamtfälle ohne Wiederholung und
+  unabhängiger Abschlussreview grün; neue praktische Nutzerabnahme separat.
+  → [Funktionswerte/Closures](../42-Debugger-Funktionswerte-Closures.md)
+  Synchrone Fehlerbehandlung mit throw/try/catch/finally und eigenen
+  Handler-Haltepunkten ergänzt. Standardfehler eng gebunden; nur name/message
+  ausdrücklich lesbar. Private Gates/Heap-/Zeit-/Protokollabbrüche bleiben auch
+  über Catch/Finally-return endgültig. Neun neue Fehlerfälle sowie 391 Gesamtfälle
+  ohne Wiederholung und unabhängiger Abschlussreview grün. Sichtbare
+  Fehlerbedienabläufe anschließend selbstständig im isolierten Browserprofil
+  gegen den laufenden lokalen Stand geprüft: neun Kontrollpunkte und zwei
+  visuell geprüfte Ansichten bestanden. Keine persönliche Testaufgabe für diese
+  Stufe offen; Rückmeldung zu Verständlichkeit/Bediengefühl freiwillig.
+  → [Fehlerbehandlung](../43-Debugger-Fehlerbehandlung.md)
+  Erste native Mehrdatei-/Modulstufe ergänzt: benannte/default Imports/Exports,
+  flache relative Projektdateien, zunächst azyklische Graphen. Dateigenaue
+  Haltepunkte/Frames, getrennt gespeichertes Modulprojekt und gemeinsames Budget.
+  Native Vorprüfung ohne unsicheren compileOnly-Modulpfad, keine Lernanweisungen
+  vor bestandener Prüfung. Neun neue Modul-/Electronfälle sowie400 Gesamtfälle
+  ohne Wiederholung grün. Agentseitige Bedienprobe acht Kontrollpunkte und
+  Desktop-/Mobilansichten bestätigt, unabhängiger Abschlussreview freigegeben;
+  keine persönliche Testaufgabe dieser Stufe offen. Weitere Modulsyntax separat.
+  → [Module](../44-Debugger-Module.md)
+  Modulstufe um wurzelgebundene Unterordner, Sammelimports und benannte/Star-/
+  Namespaceweiterexporte erweitert. Kanonische Bindingherkunft, ursprüngliche
+  Anforderungsreihenfolge und sicherer Ordnerimport vor Inhaltslesen abgesichert.
+  18 gezielte Modulfälle, sieben agentseitige Bedienkontrollen und409 Gesamtfälle
+  ohne Wiederholung grün. Unabhängiger Abschlussreview freigegeben, keine
+  persönliche Testaufgabe offen. → [Modulausbau](../45-Debugger-Modulausbau.md)
+  Erster DOM-/Klickpilot FE-052 ergänzt HTML-Datenvorschau und begrenzte
+  Element-/Klassen-/Textzugriffe mit echten Handlerhalten in derselben VM.
+  Keine Klickqueue während Pause; Originalquellen gesichert, Livezustände flüchtig.
+  Zwölf neue gezielte Fälle, sieben agentseitige Bedienkontrollen und421
+  Gesamtfälle ohne Wiederholung grün; unabhängiger Review ohne offene Findings.
+  CSS-/Formular-/weitere Ereignis-/Speicher-/Asyncadapter separat.
+  → [DOM und Klicks](../46-Debugger-DOM-Klicks.md)
+  FE-053 verlegt den kompletten Debugger auf /frontendkurs/debugger, mit
+  Kompakteinstieg, Rückweg und gemeinsamem Elternzustand für Quellen/Lektion/
+  laufende Autosaves. Verlassen beendet VM; Eintritt beendet Kursausführung.
+  Neun neue Navigationsfälle und sechs agentseitige Bediengruppen abgedeckt,
+  inklusive angehaltenem Speichercommit, Browserhistorie und Mobil-/Fokusprobe.
+  429 Fälle im Gesamtlauf bestanden; letzter Testaufbau korrigiert und gezielt 1/1
+  grün nachgeprüft, Produktcode unverändert. Unabhängiger Review ohne Findings.
+  → [Eigene Debuggerseite](FE-053-debugger-eigene-seite.md)
+  FE-054 ergänzt eigene CSS-Gestaltung, Editor/Dateiimport/-export und ein
+  Klassen-Umschaltbeispiel im skriptlosen Vorschaurahmen. Native Kaskade/Media,
+  gleiche VM mit echten Halten, keine App-Styles oder Ressourcenrechte.
+  Zehn neue CSS-Fälle, 440/440 gesamte Browser-/Windows-Electronfälle grün;
+  nach Beispieldatenbereinigung CSS 10/10 und sieben Bediengruppen erneut grün.
+  Unabhängiger Review einschließlich neuer Bilder ohne offene Findings, SW v44.
+  → [CSS im Debugger](../47-Debugger-CSS.md)
+  Weitere Sprach-/Plattformstufen bleiben eigene Aufgaben.
+  → [Technikpilot und Grenzen](../39-Debugger-Technikpilot.md)
+  → [Kapitel 18](../36-JavaScript-Kapitel-18.md)
+  OPS-039: Desktop 0.1.4 mit damaligem Kurs/KI/Theorie neu gebaut und als echte
   Paket-EXE geprüft. NSIS-Inhalt identisch zum kontrollierten Build, private
   Dateiklassen ausgeschlossen; README aktualisiert. Vorhandene Webpakete 0.1.2
-  bleiben älterer Stand. → [Desktopbuild](OPS-039-desktop-014-readme.md)
+  bleiben älterer Stand. Desktop 0.1.4 enthält weiterhin 82 praktische und 85
+  vorbereitete Lektionen; Kapitel 18–31 bislang nur im Entwicklungsstand.
+  → [Desktopbuild](OPS-039-desktop-014-readme.md)
   → [Kapitel 18–31 und Integrationsgrenzen](../35-Frontendkurs-Kapitel-18-31.md)
   Reihenfolge laut FE-035: Kapitel 18–31 zunächst vollständig inhaltlich
   ausarbeiten; danach DOM-/Browser-/Debugging-Unterstützung gemeinsam erweitern

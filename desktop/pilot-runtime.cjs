@@ -6,8 +6,8 @@ const MAX_STORE = 32 * 1024 * 1024;
 const LIMITS = Object.freeze({ files: 50, entries: 5000, file: 2 * 1024 * 1024, text: 128 * 1024, total: 10 * 1024 * 1024, depth: 8 });
 const PRIVATE = /^(?:\.git|\.env.*|node_modules|local-rag|local-ai)$/i;
 const isPrivate = (value) => value.split(/[\\/]/).some((part) => PRIVATE.test(part));
-const supported = (name) => /\.(?:html|css|js|png|jpe?g|webp)$/i.test(name);
-const isText = (name) => /\.(?:html|css|js)$/i.test(name);
+const supported = (name) => /(?:\.(?:html|css|js|ts|tsx|jsx|json|md|png|jpe?g|webp)$|(?:^|\/)\.gitignore$)/i.test(name);
+const isText = (name) => /(?:\.(?:html|css|js|ts|tsx|jsx|json|md)$|(?:^|\/)\.gitignore$)/i.test(name);
 
 function relativeName(root, target) {
   const name = path.relative(root, target).split(path.sep).join('/');

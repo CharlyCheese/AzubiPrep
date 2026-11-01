@@ -1,9 +1,10 @@
 # Kapitel 18–31: Inhaltsfassung und anschließende Integration
 
-Die vereinbarte Inhaltsphase umfasst 85 zusätzliche Lektionen. In der
-Frontend-Werkstatt öffnet **„Kapitel 18–31 lesen“** die Kapitel-/Lektionsauswahl.
-Die bisherigen 82 praktisch eingebundenen Übungen 1–17 bleiben getrennt erhalten.
-Die Inhalte werden erst beim Öffnen nachgeladen, nicht in jeden App-Start gepackt.
+Die vereinbarte Inhaltsphase umfasste 85 zusätzliche Lektionen. Kapitel 18 wurde
+in FE-037 eingebunden; FE-038 ergänzt sämtliche 77 Lektionen 19–31 in der normalen
+Lektionsauswahl. Insgesamt stehen 167 Lektionen 1–31 im Entwicklungsstand bereit.
+„Kapitel 19–31 lesen“ bleibt eine separate Referenzansicht ohne eigene Benotung.
+[Technische Umsetzung, Prüfdeckung und Grenzen](37-Frontendkurs-Technische-Integration.md).
 
 Jede neue Lektion enthält Voraussetzungen, Lernziel, eigene Erklärung, Beispiel,
 Aufgabe, zwei gestufte Hinweise, bewusst abrufbare Referenzlösung, Fachquelle
@@ -38,23 +39,23 @@ gelten nicht als Nachweis selbstständiger Kompetenz.
 
 ## Sichtbare technische Grenze
 
-Alle neuen Lektionen sind **„Inhaltlich vorbereitet · technische/praktische
-Abnahme offen“**. Die Lesefassung führt weder JS noch Terminalbefehle aus, ruft
-keine KI auf und vergibt keine bestandenen Prüfungen. Die bisherigen QuickJS-
-Grenzen und die skriptfreie HTML-Vorschau bleiben erhalten. Die Referenzen sind
-öffentlicher Kurstext, keine Freigabe beliebigen Lerncodes für den App-Prozess.
+Die technischen Übungen 19–31 laufen mit lokalem DOM-Modell, kontrollierten
+Daten-/Speicheradaptern, Modulauflösung, semantischer TypeScript-Prüfung und
+React ausschließlich in QuickJS. Die vorhandene HTML-/CSS-Vorschau bleibt
+skriptfrei. Externe Werkzeugvorlagen ergänzen reale Node-Tests, Typecheck und
+Build; die App führt keine Shell-/Git-/Installationsbefehle aus.
 
-Noch nicht integriert: DOM-/Ereignis-/Speicheradapter für beliebigen Lerncode,
-Debugger, kontrollierte asynchrone API-Simulation, Module/TS/React-Werkzeugvorlage,
-passende Validatoren, projektbezogene KI-Themenfolge und Fortschritt für 18–31.
-Der bisherige Projektimport wird nicht stillschweigend um TS/TSX/Pakete erweitert.
-Die neue Textmitnahme ist kein Mehrdateiprojektimport oder ausführbares Paket.
+Die interaktive Ansicht modelliert freigegebene Elemente und Ereignisse, keinen
+vollständigen Browser. Eigenes CSS, native Formulare, Browsernavigation,
+Zugänglichkeit und echte Werkzeugabläufe zusätzlich extern prüfen. Manuelle
+Kriterien werden mit eigenem Prüfprotokoll ausdrücklich als Selbstauskunft
+bestätigt. Praktische Nutzerabnahme und freier Quellcodedebugger bleiben offen.
 
-Werkzeuge werden vor ihrer Verwendung erklärt. Es werden keine Bibliotheken
-installiert und keine ungeprüften versionslosen Installationsrezepte verlangt.
-Die React-Beispiele verwenden bewusst React 18 und Router 6 wie den vorhandenen
-Projektstand; die spätere externe Vorlage benötigt eigene feste Versionen und
-ein passendes Lock. Echte Veröffentlichung bleibt eine ausdrückliche Entscheidung.
+Die historische Quellenfassung und ihre 85 Referenzen bleiben erhalten. Aktive
+Lektionen und Lesefläche zeigen aktualisierte Laufzeithinweise. Die externe
+Vorlage verwendet feste aktuelle Werkzeuge; React 18 bleibt gleich, die VM
+verwendet den vorhandenen Router 6, die externe Vorlage Router 7 mit den hier
+verwendeten deklarativen APIs. Kein neues Desktop-/Webpaket wurde gebaut.
 
 ## Nachweise dieser Inhaltsphase
 
@@ -72,15 +73,14 @@ Hilfen, geschlossene Lösungen, Textdownload und Erhalt vorhandener Entwürfe ge
 Prüfergebnisse und unabhängige Reviews stehen im
 [Arbeitsbrief](agent-briefs/FE-036-restliche-kursinhalte.md).
 
-## Nächste gemeinsame Abnahmephase
+## Weitere Abnahme
 
-1. DOM-/Browser-/Debugger-Architektur mit begrenzten Zugriffsrechten festlegen.
-2. Kapitelweise Ausführung/Validatoren anschließen, zuerst reine Kapitel 18/19,
-   dann DOM/Formulare/Zustand; jeweils vorhandene Grenzen und Abbruch prüfen.
-3. Kontrollierte Datenadapter/async-Fälle und Werkzeugvorlagen ergänzen.
-4. Typecheck, Tests, Build, KI-Themenfolge, Fortschritt und Bedienmatrix verbinden.
-5. Erst nach tatsächlichen Nachweisen die betreffenden Kapitel praktisch abnehmen;
-   neue Desktop-/Web-Installationspakete bei eigenem Buildauftrag erstellen.
+Die Kapitel sind technisch eingebunden. Noch ausstehend sind die praktische
+Nutzerabnahme der neuen Abschnitte, vollständige externe Bedien-/Werkzeugnachweise
+und weitere Zielgeräte. Feste Teilprüfungen, selbst bestätigte Kriterien und
+unabhängige Kompetenznachweise bleiben getrennt. Ein allgemeiner Debugger für
+eigenen Quellcode folgt gesondert; Kapitel 18 besitzt seine feste geführte Spur.
+Neue Installationspakete werden bei eigenem Buildauftrag erstellt.
 
 Öffentliche Fachreferenzen sind pro Lektion verlinkt: MDN/Chrome DevTools,
 Git/npm/Node/Vite, W3C WAI, TypeScript sowie React/React Router. Keine privaten

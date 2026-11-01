@@ -12,7 +12,12 @@ function pageData(files, name) {
   const styles = Array.from(dom.querySelectorAll('link[rel~="stylesheet"]')).map((node) => resolvePath(name, node.getAttribute('href'))).filter((path) => path && /\.css$/i.test(path) && files[path]?.kind === 'text');
   return { name, source, dom, styles };
 }
-export async function validateProject(files, lesson, stand, startPage = 'index.html', { signal } = {}) {
+export async function validateProject(files, lesson, stand, startPage = 'index.html', { signal, manual = false } = {}) {
+  if (lesson.advanced) {
+    const { checkAdvanced } = await import('./advanced-runtime.js');
+    const results = await checkAdvanced(files, lesson, startPage, signal, manual);
+    return { stand, startPage, lesson: lesson.id, lessonVersion: lesson.version, validatorVersion: VALIDATOR_VERSION, manual, at: new Date().toISOString(), results, passed: results.length > 0 && results.every(result => result.passed) };
+  }
   if (lesson.jsStep) {
     const results = await checkJsLesson(files, lesson, startPage, signal);
     return { stand, startPage, lesson: lesson.id, lessonVersion: lesson.version, validatorVersion: VALIDATOR_VERSION, at: new Date().toISOString(), results, passed: results.every(result => result.passed) };

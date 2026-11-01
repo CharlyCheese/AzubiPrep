@@ -1,5 +1,5 @@
 export const LIMITS = Object.freeze({ files: 50, file: 2 * 1024 * 1024, total: 10 * 1024 * 1024, text: 128 * 1024, depth: 8 });
-const textTypes = /\.(html|css|js)$/i;
+const textTypes = /(?:\.(html|css|js|ts|tsx|jsx|json|md)$|(?:^|\/)\.gitignore$)/i;
 const imageTypes = /\.(png|jpe?g|webp)$/i;
 const excluded = /^(?:\.git|\.env.*|node_modules|local-rag|local-ai)$/i;
 export const isText = (name) => textTypes.test(name);

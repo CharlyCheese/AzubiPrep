@@ -33,3 +33,35 @@
 .prepared-lesson pre { max-width: 100%; overflow-x: auto; white-space: pre-wrap; overflow-wrap: anywhere; }
 .prepared-lesson h2:focus { outline: 2px solid var(--accent, #14b8a6); outline-offset: 4px; }
 @media (max-width: 700px) { .prepared-selectors { grid-template-columns: minmax(0, 1fr); } }
+.js-trace-source { list-style: none; padding: 0; }
+.js-trace-source li { display: grid; grid-template-columns: 3.5rem minmax(0, 1fr); align-items: center; gap: .4rem; border-inline-start: 3px solid transparent; padding: .2rem; }
+.js-trace-source li[aria-current="step"] { border-inline-start-color: var(--accent, #14b8a6); background: var(--surface-hover, rgba(20, 184, 166, .12)); }
+.js-trace-source code { white-space: pre-wrap; overflow-wrap: anywhere; }
+.js-trace-source .small { grid-column: 2; }
+.js-trace-source .btn { min-height: 44px; padding-inline: .3rem; }
+.js-trace-table { overflow-x: auto; }
+.js-trace-table th, .js-trace-table td { text-align: start; padding: .4rem; overflow-wrap: anywhere; }
+.advanced-workshop { min-width: 0; }
+.advanced-output { border: 1px solid var(--border, #64748b); border-radius: .6rem; padding: 1rem; margin-block: 1rem; overflow-wrap: anywhere; min-width: 0; }
+.advanced-output input, .advanced-output textarea, .advanced-output select { max-width: 100%; min-width: 0; }
+.advanced-output button, .advanced-output input, .advanced-output select { min-height: 44px; }
+.advanced-output button { margin: .25rem; padding: .5rem; color: inherit; background: var(--surface-hover, transparent); border: 1px solid var(--border, #64748b); border-radius: .4rem; }
+.advanced-output form { display: grid; gap: .5rem; }
+.advanced-output a { color: var(--accent, #14b8a6); }
+.advanced-output :focus-visible { outline: 3px solid var(--accent, #14b8a6); outline-offset: 2px; }
+.js-debug-pilot .js-trace-source .pilot-toolbar { grid-column: 2; flex-wrap: wrap; }
+.js-debug-pilot .js-trace-source > li > span { align-self: start; }
+.js-debug-pilot td { max-width: 25rem; white-space: pre-wrap; }
+.js-debug-pilot [aria-label="Debug-Aufrufkette"] .btn { max-width: 100%; white-space: normal; overflow-wrap: anywhere; }
+.js-debug-pilot p, .js-debug-pilot summary { overflow-wrap: anywhere; }
+.js-debug-pilot label { overflow-wrap: anywhere; }
+
+.debug-dom-preview { background: #fff; color: #17202a; border: 1px solid #8795a5; padding: 1rem; border-radius: .5rem; overflow-wrap: anywhere; max-width: 100%; }
+.debug-dom-preview button { color: #17202a; background: #e5edf5; border: 1px solid #64748b; padding: .5rem; border-radius: .3rem; }
+.debug-dom-preview button:disabled { opacity: .6; }
+
+.debugger-page h1:focus { outline: none; }
+.debugger-entry h2 { margin-bottom: .5rem; }
+.debug-css-editor > summary { padding: .5rem 0; cursor: pointer; font-weight: 700; }
+.pilot .debug-dom-frame { width: 100%; min-width: 0; height: 400px; display: block; border: 1px solid #8795a5; border-radius: .5rem; background: #fff; }
+.debug-css-editor .pilot-code { min-height: 240px; }

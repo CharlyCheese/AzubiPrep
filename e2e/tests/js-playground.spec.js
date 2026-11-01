@@ -129,7 +129,7 @@ test('Web: lokaler Entwurf, Ein-/Auslesen und alle Kursprojekte bleiben erhalten
   await expect(page.getByRole('textbox', { name: 'JavaScript-Code', exact: true })).toHaveValue(source);
   await expect(output(page)).toHaveText('Noch keine Ausgabe.');
   await expect(page.getByRole('textbox', { name: 'Code index.html', exact: true })).toHaveValue(originalHtml);
-  await expect(page.getByRole('combobox', { name: 'Lektion', exact: true }).locator('option')).toHaveCount(82);
+  await expect(page.getByRole('combobox', { name: 'Lektion', exact: true }).locator('option')).toHaveCount(167);
   page.on('dialog', dialog => dialog.accept());
   await page.evaluate(() => {
     const original = File.prototype.text;
@@ -176,6 +176,6 @@ test('Electron: eigene Programme, Grenzen, kein Hostzugriff und portunabhängige
     await open(page, `${new URL(page.url()).origin}/frontendkurs`);
     await expect(page.getByRole('textbox', { name: 'JavaScript-Code', exact: true })).toHaveValue(source);
     await expect(output(page)).toHaveText('Noch keine Ausgabe.');
-    await expect(page.getByRole('combobox', { name: 'Lektion', exact: true }).locator('option')).toHaveCount(82);
+    await expect(page.getByRole('combobox', { name: 'Lektion', exact: true }).locator('option')).toHaveCount(167);
   } finally { if (app) await app.close(); }
 });

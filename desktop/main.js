@@ -61,7 +61,7 @@ function registerPilot() {
     const result = await dialog.showOpenDialog(hauptfenster, {
       title: mode === 'folder' ? 'Projektordner auswählen' : 'Projektdateien auswählen',
       properties: mode === 'folder' ? ['openDirectory', 'dontAddToRecent'] : ['openFile', 'multiSelections', 'dontAddToRecent'],
-      ...(mode === 'files' ? { filters: [{ name: 'HTML, CSS, JavaScript und Rasterbilder', extensions: ['html', 'css', 'js', 'png', 'jpg', 'jpeg', 'webp'] }] } : {}),
+      ...(mode === 'files' ? { filters: [{ name: 'Webprojektdateien und Rasterbilder', extensions: ['html', 'css', 'js', 'ts', 'tsx', 'jsx', 'json', 'md', 'png', 'jpg', 'jpeg', 'webp'] }] } : {}),
     });
     if (result.canceled) return null;
     guard(event);

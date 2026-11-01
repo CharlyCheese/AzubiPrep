@@ -10,13 +10,18 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@jitl/quickjs-singlefile-browser-release-asyncify": "0.32.0",
     "@jitl/quickjs-singlefile-browser-release-sync": "0.32.0",
+    "linkedom": "0.18.12",
     "quickjs-emscripten-core": "0.32.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-router-dom": "^6.26.2"
+    "react-router-dom": "^6.26.2",
+    "typescript": "5.9.3"
   },
   "devDependencies": {
+    "@types/react": "18.3.12",
+    "@types/react-dom": "18.3.1",
     "@vitejs/plugin-react": "^4.3.1",
     "vite": "^5.4.8"
   }

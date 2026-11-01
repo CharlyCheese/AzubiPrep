@@ -1,6 +1,6 @@
 # Frontendkurs und lokale Qwen Lernbegleitung
 
-Stand: 31.10.2026. Für Kapitel 1–6 ist ein erster lokaler Webprototyp unter
+Stand: 01.11.2026. Für Kapitel 1–6 ist ein erster lokaler Webprototyp unter
 `/frontendkurs` implementiert: elf Lektionen, Mehrdatei-Editor, externe Projekte,
 HTML/CSS-Vorschau, Prüfung und OPFS-Sicherung. Desktop 0.1.3 ergänzt native
 Dateiauswahl, vom internen Port unabhängigen Kursspeicher und isoliertes F12.
@@ -15,7 +15,10 @@ in Kapitel 13. FE-028 ergänzt acht JavaScript-Grundlagenlektionen in Kapitel 14
 insgesamt 51 Lektionen. FE-030 führt Kapitel 15 in zehn weiteren Schritten bis
 zum Tarifrechner aus. FE-031 ergänzt Kapitel 16 mit zehn Funktions-/Bereichslektionen
 und dem zerlegten Tarifprojekt. FE-034 ergänzt elf Array-/Schleifen-/Objektlektionen
-in Kapitel 17 bis zur Aufgabenübersicht, insgesamt 82 Lektionen. Formulareingaben bleiben lokal ohne Versand; JavaScript
+in Kapitel 17 bis zur Aufgabenübersicht, insgesamt 82 Lektionen. FE-037 ergänzt
+acht Lektionen in Kapitel 18 zu Arraymethoden/Callbacks/Fehlersuche samt geführter
+Modellspur. FE-038 ergänzt sämtliche 77 Lektionen 19–31: aktuell 167 eingebundene Lektionen mit begrenzter DOM-/React-Ansicht, strict-Typprüfung und externer Werkzeugvorlage. [Umfang, Prüfdeckung und Grenzen](37-Frontendkurs-Technische-Integration.md).
+Formulareingaben bleiben lokal ohne Versand; JavaScript
 läuft bewusst in einer getrennten Konsole, die HTML-Vorschau bleibt skriptfrei.
 [Kapitel 14 und Abnahmegrenzen](31-JavaScript-Kapitel-14.md).
 [CSS-Umfang, Nachweise und praktische Abnahmepunkte](27-CSS-Kurs-Abnahme.md).
@@ -27,8 +30,17 @@ Einstellungen, Hinweise, Prüfer-/Elementerklärungen und Quizhilfe.
 [Einrichtung, Grenzen und Nachweise](23-Qwen-Grundanbindung.md).
 OPS-026 ergänzt lokale PDF-Aufbereitung und eine erste begrenzte RAG-Suche
 mit Quellenbezug: [Bedienung und Grenzen](24-Lokales-RAG.md).
-Der vollständige Kurs und aktives Lern-JavaScript bleiben geplante Ausbaustufen.
+Die praktische Nutzerabnahme der Kapitel 19–31 und ein freier Quellcode-Debugger
+bleiben offen. Eigenes JavaScript ist in der begrenzten Kurskonsole bereits nutzbar.
 Dieses Dokument erhält deren abgestimmte Richtung.
+
+FE-039 konkretisiert den freien Debugger als eigenen Ausbau: zuerst echter
+Pause-/Fortsetzen-Nachweis in abgeschirmter VM, danach ein Anweisungs-Debugger
+für unterstützte JS-Grundlagen und erst später Module/DOM/Async/TS/React.
+Architekturkandidat, Entscheidungstore und verbindliche Abnahmekriterien stehen
+in [Debugger-Planung](38-Quellcode-Debugger-Planung.md). Es ist noch keine
+Implementierung oder Bibliotheksfreigabe; die bestehende praktische Kursabnahme
+und neue Installationspakete bleiben getrennte Aufgaben.
 
 ## Ziel und Abschlusskompetenzen
 
@@ -123,9 +135,11 @@ nicht vor den ersten Gestaltungsaufgaben abgearbeitet werden.
 
 Insbesondere Kapitel 26–30 werden in mehrere aufeinander aufbauende
 Unterkapitel zerlegt. Benötigte Werkzeuge werden vor ihrer Verwendung erklärt.
-Die Inhaltsfassung für Kapitel 18–31 umfasst inzwischen 85 Lektionen mit
-Aufgaben, Hilfen, Lösungen und Abnahmekriterien; technische/praktische Abnahme
-und Bearbeitungszeiten bleiben offen. → [Umfang und Integrationsgrenzen](35-Frontendkurs-Kapitel-18-31.md)
+Die Inhaltsfassung für Kapitel 18–31 umfasste 85 Lektionen. FE-037 bindet Kapitel
+18 mit acht Übungen ein: insgesamt 90 Übungen 1–18, noch 77 Inhaltslektionen
+19–31 mit offener technischer/praktischer Abnahme. Der Debuggereinstieg nutzt
+eine geführte feste Modellspur; ein freier Quellcode-Debugger bleibt offen.
+→ [Kapitel 18](36-JavaScript-Kapitel-18.md), [Integrationsgrenzen](35-Frontendkurs-Kapitel-18-31.md)
 Die zusätzliche spätere Formulareinführung ergibt insgesamt 31 Kapitel;
 die sieben großen Projektmeilensteine einschließlich Abschlussprojekt bleiben
 erhalten. Mehrere Dateien werden bereits in den ersten HTML-/CSS-Kapiteln
@@ -316,6 +330,8 @@ FE-034 ergänzt Kapitel 17 mit Arrays, Schleifen und Objekten bis zur
 Aufgabenübersicht, insgesamt 82 praktisch eingebundene Lektionen. FE-036 ergänzt
 die vereinbarte Inhaltsfassung für sämtliche Kapitel 18–31 mit 85 weiteren
 Lektionen: [Umfang, Projekte und offene Integration](35-Frontendkurs-Kapitel-18-31.md).
+FE-037 übernimmt Kapitel 18 in den Übungsablauf: 90 Übungen, 77 verbliebene
+Inhaltslektionen, begrenzte Funktionsprüfung und geführte feste Debugger-Spur.
 Für den weiteren Ausbau ist die Reihenfolge ausdrücklich angepasst: zuerst
 Kapitel 18–31 vollständig inhaltlich ausarbeiten (Lerntexte, Beispiele, Aufgaben,
 Hilfen, Musterlösungen, Projekte und Abnahmekriterien). Danach die benötigte
@@ -530,15 +546,13 @@ Web und Electron. FE-028 ergänzt Kapitel 14 in acht Schritten bis zum Budgetpro
 FE-030 ergänzt Kapitel 15 mit zehn Lektionen und Tarifprojekt.
 FE-031 ergänzt Kapitel 16 mit zehn Funktions-/Scope-Lektionen und Tarifzerlegung.
 FE-034 ergänzt Kapitel 17 mit elf Schritten bis zur Aufgabenübersicht.
-Nächster Inhaltsschritt ist Kapitel 18; echte DOM-/Browser-
+FE-038 bindet Kapitel 19–31 technisch ein; nächste Phase ist die praktische Nutzerabnahme sowie die ergänzende externe Bedien-/Werkzeugmatrix. Ein freier Quellcodedebugger bleibt offen; echte DOM-/Browser-
 Programme benötigen weiterhin eine separate Freigabe und Sicherheitsprüfung.
 → [Kapitel 14 und Abnahmegrenzen](31-JavaScript-Kapitel-14.md).
 Allgemeine KI-Evaluation bleibt
 begleitende Arbeit und erfordert keine Wiederholung bereits bestätigter Tests.
 Offen sind insbesondere semantische Suche/OCR, vertiefte KI-Evaluation,
-weitere Plattformnachweise, weitere Kursinhalte,
-kontrollierte Builds späterer Framework-Projekte, Fortschrittsmodell, erlaubte
-Trainings-APIs sowie weitere KI-Ausbaustufen und deren Evaluation. Neue
+weitere Plattformnachweise, praktische Kursabnahme und ergänzende externe Bedien-/Werkzeugnachweise, optionale weiterführende Inhalte, vertiefte Browser-/Debuggerunterstützung sowie weitere KI-Ausbaustufen und deren Evaluation. Neue
 Abhängigkeiten werden nicht durch diesen Plan automatisch freigegeben.
 
 ## Referenzen

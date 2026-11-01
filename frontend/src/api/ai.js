@@ -33,7 +33,7 @@ export const ai = {
 };
 
 export function courseContext(lesson, project, selected, includeCode, element = null) {
-  const textFiles = Object.entries(project.files).filter(([name, file]) => (lesson.jsStep ? /\.(html|css|js)$/i : /\.(html|css)$/i).test(name) && file.kind === 'text');
+  const textFiles = Object.entries(project.files).filter(([name, file]) => (lesson.advanced ? /\.(html|css|js|ts|tsx|jsx)$/i : lesson.jsStep ? /\.(html|css|js)$/i : /\.(html|css)$/i).test(name) && file.kind === 'text');
   textFiles.sort(([a], [b]) => a === selected ? -1 : b === selected ? 1 : a.localeCompare(b));
   const files = includeCode ? textFiles.slice(0, 3).map(([name, file], index) => {
     const limit = index === 0 ? 3000 : 1000;

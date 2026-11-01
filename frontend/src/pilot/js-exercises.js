@@ -1,12 +1,14 @@
 import { JS15_EXERCISES } from './js15-exercises.js';
 import { JS16_EXERCISES } from './js16-exercises.js';
 import { JS17_EXERCISES } from './js17-exercises.js';
+import { JS18_EXERCISES } from './js18-exercises.js';
 // Fixed trusted guest probes. No probe source or input values arrive from IPC,
 // editor text or imports. Every probe itself executes only inside QuickJS.
 export const JS_EXERCISES = {
   ...JS15_EXERCISES,
   ...JS16_EXERCISES,
   ...JS17_EXERCISES,
+  ...JS18_EXERCISES,
   'js-datei': { inputs: [{}], probe: 'check(0, "string")' },
   'js-werte': { inputs: [{}], probe: 'check(0,"number",42) && check(1,"string","42") && check(2,"boolean",true)' },
   'js-konstanten': { inputs: [{}], probe: 'kursName === "JavaScript" && startJahr === 2026 && check(0,"string",kursName) && check(1,"number",startJahr) && (() => { try { kursName = "anders"; return false; } catch { return true; } })() && (() => { try { startJahr = 1; return false; } catch { return true; } })()' },

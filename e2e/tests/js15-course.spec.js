@@ -117,7 +117,7 @@ test('Alle Projekte, ältere JS-Prüfung, Sicherung und Projekt-Reload bleiben e
   await expect(page.getByRole('region', { name: 'Prüfergebnisse', exact: true })).toContainText('Dieser eingereichte Stand hat die Pflichtprüfung bestanden');
   await select(page, 'js-budgetprojekt'); await page.getByRole('button', { name: 'Prüfen', exact: true }).click();
   await expect(page.getByRole('region', { name: 'Prüfergebnisse', exact: true })).toContainText('Dieser eingereichte Stand hat die Pflichtprüfung bestanden');
-  await expect(page.getByRole('combobox', { name: 'Lektion', exact: true }).locator('option')).toHaveCount(82);
+  await expect(page.getByRole('combobox', { name: 'Lektion', exact: true }).locator('option')).toHaveCount(167);
 });
 
 test('Electron: Tarifprojekt mit Textdaten ausführen, prüfen, nach Neustart fortsetzen', { tag: '@desktop' }, async ({}, info) => {

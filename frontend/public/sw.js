@@ -3,7 +3,7 @@
 // - API-GET-Antworten: Network-first mit Cache-Fallback (Inhalte offline verfügbar)
 // - Nicht-GET-/POST-Requests: nur Netzwerk (kein Caching)
 
-const VERSION = 'azubiprep-v26'; // v26 (FE-036): Inhaltsfassung Kapitel 18–31
+const VERSION = 'azubiprep-v44'; // v44 (FE-054): CSS-Vorschau mit bereinigtem Beispiel
 const APP_SHELL = [
   '/',
   '/index.html',

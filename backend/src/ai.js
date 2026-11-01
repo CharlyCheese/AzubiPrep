@@ -102,9 +102,329 @@ const FORM_TOPICS = [
   ['js17-kopien', 'Geteilte Referenz gegenüber flacher Spread-Kopie; keine tiefe Kopie'],
   ['js17-produkte', 'Arrays mit Produktobjekten auswerten, ganze Centwerte, leere/Nullbestände'],
   ['js17-aufgabenprojekt', 'Transfer Aufgabenübersicht: offene Anzahl/Minutensumme/Titelliste als neues Objekt, Eingabe bleibt unverändert'],
+  ['js18-callback', 'Funktionen als Werte und synchrone Callbacks: Funktion übergeben statt sofort aufrufen'],
+  ['js18-filter', 'filter mit klassischem Funktionsausdruck, Boolean-Rückgabe, neue Teilliste und unveränderte Aufgaben'],
+  ['js18-map', 'map formt jeden Eintrag um; Rückgabe statt console.log im Callback, Länge/Reihenfolge erhalten'],
+  ['js18-pfeile', 'Pfeilfunktionen, implizite Rückgabe oder return im Block, Objektliteral in Klammern; filter/map verketten'],
+  ['js18-suchen', 'find liefert ersten Eintrag oder undefined; some/every als Boolean, every auf leerer Liste true'],
+  ['js18-reduce-sort', 'reduce mit Startwert 0, numerisch/stabil auf flacher Kopie sortieren; Original unverändert'],
+  ['js18-fehler', 'Syntax-/Laufzeit-/Logikfehler, Error und throw, try/catch, Typ/Datei/Stack und gezielte Fehlergrenze'],
+  ['js18-debugspur', 'Geführte Debugger-Spur am festen Summenbeispiel: Haltepunkt vor Addition, Scope/Aufrufkette, <= gegenüber <; eigene Korrektur getrennt prüfen'],
+];
+const ADVANCED_TOPICS = [
+  [
+    "course-19-1",
+    "Aus einem Text eine überprüfbare Spezifikation entwickeln. – Den Auftrag in Beispiele übersetzen"
+  ],
+  [
+    "course-19-2",
+    "Bekannte Methoden zu einer reinen Funktion verbinden. – Auswertung in kleinen Bausteinen bauen"
+  ],
+  [
+    "course-19-3",
+    "Die Implementierung mit Gegenbeispielen prüfen. – Grenzfälle und Mutation untersuchen"
+  ],
+  [
+    "course-19-4",
+    "Die gleiche Denkweise auf neue Daten übertragen. – Selbstständiger Transfer und Projektabgabe"
+  ],
+  [
+    "course-20-1",
+    "Den lebenden Elementbaum verstehen. – HTML-Quelltext und DOM unterscheiden"
+  ],
+  [
+    "course-20-2",
+    "Selektoren mit vorhandenen Elementen verbinden. – Ein Element auswählen und null beachten"
+  ],
+  [
+    "course-20-3",
+    "Fremde Texte als Text darstellen. – Text sicher ändern"
+  ],
+  [
+    "course-20-4",
+    "Darstellung ohne HTML-String steuern. – Klassen und Eigenschaften gezielt setzen"
+  ],
+  [
+    "course-20-5",
+    "Eine Liste aus Daten aufbauen. – Elemente erzeugen, anfügen und entfernen"
+  ],
+  [
+    "course-20-6",
+    "Die reine Auswertung mit einer sicheren Ansicht verbinden. – Miniprojekt: dynamische Lernübersicht"
+  ],
+  [
+    "course-21-1",
+    "Handler registrieren statt sofort ausführen. – Ein Klick ruft eine Funktion auf"
+  ],
+  [
+    "course-21-2",
+    "Eine lokale Aktion ohne Seitenwechsel ausführen. – Ereignisobjekt und Formular-submit"
+  ],
+  [
+    "course-21-3",
+    "Text trimmen und Zahlen bewusst umwandeln. – Feldwerte sind zunächst Strings"
+  ],
+  [
+    "course-21-4",
+    "Verständliche, zugängliche Fehler anzeigen. – Eigene Rückmeldungen mit nativer Validierung verbinden"
+  ],
+  [
+    "course-21-5",
+    "Doppelte Handler und falsche Ziele vermeiden. – Ereignisweitergabe und klare Zuständigkeiten"
+  ],
+  [
+    "course-21-6",
+    "Validierte Formulardaten sicher darstellen. – Miniprojekt: Lernziel lokal übernehmen"
+  ],
+  [
+    "course-22-1",
+    "Zustand ändern und daraus rendern. – Datenzustand als einzige Wahrheit"
+  ],
+  [
+    "course-22-2",
+    "Vollständiges Neurendern mit Fokusfolgen verstehen. – Darstellung wiederholbar ableiten"
+  ],
+  [
+    "course-22-3",
+    "Serialisierung von echten JS-Werten unterscheiden. – JSON schreiben und wieder lesen"
+  ],
+  [
+    "course-22-4",
+    "Unbekannte Daten an der Grenze zurückweisen. – Geladene Daten vollständig prüfen"
+  ],
+  [
+    "course-22-5",
+    "Lokale Sicherung mit ehrlicher Rückmeldung bauen. – Speichern kann scheitern"
+  ],
+  [
+    "course-23-1",
+    "Eine kleine App vor dem Programmieren spezifizieren. – Anforderungen und Ansichten planen"
+  ],
+  [
+    "course-23-2",
+    "Unabhängige Aktionen auf stabilen IDs aufbauen. – Den Kern ohne Speicherung umsetzen"
+  ],
+  [
+    "course-23-3",
+    "Eine funktionierende App auch bei Fehlern bedienbar halten. – Persistenz und Ausfälle ergänzen"
+  ],
+  [
+    "course-23-4",
+    "Fachliche, Bedien- und Fehlerkriterien gemeinsam nachweisen. – Projekt prüfen, erklären und übertragen"
+  ],
+  [
+    "course-24-1",
+    "Reihenfolge ohne blockierendes Warten vorhersagen. – Sofortige und spätere Ergebnisse"
+  ],
+  [
+    "course-24-2",
+    "Ergebnisse und Fehler weiterreichen. – Promise-Ketten und abgelehnte Vorgänge"
+  ],
+  [
+    "course-24-3",
+    "Dieselben Abläufe mit klarer Fehlergrenze schreiben. – async und await lesen"
+  ],
+  [
+    "course-24-4",
+    "Status und JSON nicht miteinander verwechseln. – HTTP-Antwort und Anwendungsdaten unterscheiden"
+  ],
+  [
+    "course-24-5",
+    "Fremddaten vor der Darstellung begrenzen. – Geladene Inhalte prüfen und sicher anzeigen"
+  ],
+  [
+    "course-24-6",
+    "Asynchrone Oberfläche ausdrücklich modellieren. – Lade-, Leer- und Fehlerzustände darstellen"
+  ],
+  [
+    "course-24-7",
+    "Die zuletzt gestartete Anfrage maßgeblich halten. – Veraltete Antworten und Abbruch"
+  ],
+  [
+    "course-25-1",
+    "Datenquelle und Oberfläche unabhängig beschreiben. – Katalog und Zustandsmatrix planen"
+  ],
+  [
+    "course-25-2",
+    "Benutzereingaben normalisieren und Filter kombinieren. – Suche und Kategorie als reine Auswahl"
+  ],
+  [
+    "course-25-3",
+    "Geprüfte Daten mit vorhandenen Filtern anzeigen. – Laden und Darstellung verbinden"
+  ],
+  [
+    "course-25-4",
+    "Fehlerfälle ohne echten externen Dienst nachweisen. – Abnahme mit kontrollierten Antworten"
+  ],
+  [
+    "course-26-1",
+    "Bekannte Funktionen sinnvoll aufteilen. – Verantwortlichkeiten vor Dateien bestimmen"
+  ],
+  [
+    "course-26-2",
+    "Funktionen gezielt zwischen Modulen teilen. – Benannte Exporte und Importe"
+  ],
+  [
+    "course-26-3",
+    "Werkzeuge bewusst im richtigen Ordner verwenden. – Terminal und Projektordner verstehen"
+  ],
+  [
+    "course-26-4",
+    "Eine vorbereitete Werkzeugkette nachvollziehen. – Paketbeschreibung, Lockdatei und Skripte"
+  ],
+  [
+    "course-26-5",
+    "Kleine nachvollziehbare Zwischenstände bilden. – Git: Änderung ansehen, vormerken, festhalten"
+  ],
+  [
+    "course-26-6",
+    "Änderungen geordnet zusammenführen. – Zweig und Konflikt als normale Zusammenarbeit"
+  ],
+  [
+    "course-26-7",
+    "Entwicklungs- und Auslieferungsstand unterscheiden. – Build und Projektübergabe prüfen"
+  ],
+  [
+    "course-27-1",
+    "Eine fachliche Erwartung maschinell vergleichen. – Von Prüftabellen zu automatischen Tests"
+  ],
+  [
+    "course-27-2",
+    "Erfolg und Fehler unabhängig vom Internet prüfen. – Asynchrone Datenquellen kontrolliert testen"
+  ],
+  [
+    "course-27-3",
+    "Labels, Fokus und Statusmeldungen praktisch beurteilen. – Bedienbarkeit als fachliche Anforderung prüfen"
+  ],
+  [
+    "course-27-4",
+    "Daten nicht versehentlich als Code interpretieren. – Sichere DOM-Grenzen überprüfen"
+  ],
+  [
+    "course-27-5",
+    "Erst den Engpass finden, dann gezielt verbessern. – Performance messen statt vermuten"
+  ],
+  [
+    "course-27-6",
+    "Eine Verbesserung mit Nachweis abschließen. – Qualitätsrunde als kleines Änderungsprojekt"
+  ],
+  [
+    "course-28-1",
+    "Befunde von Vermutungen unterscheiden. – Fremden Code zunächst untersuchen"
+  ],
+  [
+    "course-28-2",
+    "Eine Reparatur gegen Rückfälle absichern. – Fehler zuerst durch Nachweise sichtbar machen"
+  ],
+  [
+    "course-28-3",
+    "Fachliche Wirkung erhalten und Verantwortlichkeiten trennen. – In kleinen Schritten reparieren"
+  ],
+  [
+    "course-28-4",
+    "Eine fremde Reparatur verständlich bewertbar machen. – Review und Übergabe begründen"
+  ],
+  [
+    "course-29-1",
+    "Den zusätzlichen Prüfschritt richtig einordnen. – Typprüfung ist keine Laufzeitprüfung"
+  ],
+  [
+    "course-29-2",
+    "Parameter und Rückgaben als Vertrag formulieren. – Inference und Funktionssignaturen"
+  ],
+  [
+    "course-29-3",
+    "Bekannte Aufgaben präzise beschreiben. – Objekttypen, Arrays und optionale Felder"
+  ],
+  [
+    "course-29-4",
+    "null und verschiedene Zustände sicher behandeln. – Vereinigungen durch Prüfungen eingrenzen"
+  ],
+  [
+    "course-29-5",
+    "Statische Versprechen erst nach echter Prüfung geben. – unknown an der Datengrenze"
+  ],
+  [
+    "course-29-6",
+    "Elementauswahl sicher eingrenzen. – DOM-Typen und bekannte Werkzeuge verbinden"
+  ],
+  [
+    "course-29-7",
+    "Bestehendes Verhalten durch Typen absichern. – Miniprojekt: Lernplan schrittweise typisieren"
+  ],
+  [
+    "course-30-1",
+    "Deklarative Darstellung von DOM-Handarbeit unterscheiden. – JSX und der Einstiegspunkt"
+  ],
+  [
+    "course-30-2",
+    "Wiederverwendbare Ausgabe mit klaren Eingaben bauen. – Komponenten und Props"
+  ],
+  [
+    "course-30-3",
+    "Datenlisten ohne Identitätsverwechslung darstellen. – Listen, Bedingungen und stabile Schlüssel"
+  ],
+  [
+    "course-30-4",
+    "Lokalen Zustand ohne Mutation verändern. – useState und funktionale Aktualisierung"
+  ],
+  [
+    "course-30-5",
+    "Formularwerte und Zustand zusammenhalten. – Kontrollierte Formulare und lokale Fehler"
+  ],
+  [
+    "course-30-6",
+    "Geschwisterkomponenten über ihren gemeinsamen Elternteil verbinden. – Zustand anheben und Aktionen als Props"
+  ],
+  [
+    "course-30-7",
+    "Nur den notwendigen Zustand speichern. – Ändern, Filtern und abgeleitete Werte"
+  ],
+  [
+    "course-30-8",
+    "Eine eng begrenzte DOM-Aufgabe korrekt ausführen. – Refs für gezielten Fokus"
+  ],
+  [
+    "course-30-9",
+    "Externe Synchronisation von Berechnung trennen. – Effekte für lokale Speicherung"
+  ],
+  [
+    "course-30-10",
+    "Veraltete Ergebnisse beim Wechsel verwerfen. – Asynchrone Effekte mit Aufräumen"
+  ],
+  [
+    "course-30-11",
+    "Eine URL als Teil des Anwendungszustands behandeln. – Navigation und Detailansichten"
+  ],
+  [
+    "course-30-12",
+    "Die bekannte Anwendung als typisierte Komponentenanwendung erklären. – Geführtes React-Projekt vollständig zusammenführen"
+  ],
+  [
+    "course-31-1",
+    "Eine umsetzbare Produktanforderung formulieren. – Auftrag und eigenen Umfang festlegen"
+  ],
+  [
+    "course-31-2",
+    "Den Auftrag in kleine lieferbare Schritte zerlegen. – Datenfluss, Komponenten und Meilensteine planen"
+  ],
+  [
+    "course-31-3",
+    "Bekannte Kompetenzen ohne exakte Schrittvorlage verbinden. – Selbstständig implementieren und Entscheidungen erklären"
+  ],
+  [
+    "course-31-4",
+    "Transfer statt nur bekannter Beispieldaten nachweisen. – Abnahme mit neuen Daten und fremdem Blick"
+  ],
+  [
+    "course-31-5",
+    "Ein Projekt nachvollziehbar und ohne private Daten übergeben. – Dokumentieren und Veröffentlichung bewusst vorbereiten"
+  ]
 ];
 LEVELS.push(...FORM_TOPICS.map(([id]) => id));
 TOPICS.push(...FORM_TOPICS.map(([, topic]) => topic));
+LEVELS.push(...ADVANCED_TOPICS.map(([id]) => id));
+TOPICS.push(...ADVANCED_TOPICS.map(([, topic]) => topic));
 
 export function localOllamaUrl(value) {
   let url;
@@ -186,7 +506,21 @@ export function buildLearningPrompt(body, store) {
       const functionLimit = index < LEVELS.indexOf('js16-aufrufen') ? 'keine Schleifen, eigenen Funktionen, ' : index < LEVELS.indexOf('js17-for') ? 'keine Schleifen, ' : '';
       const structureLimit = index < LEVELS.indexOf('js17-arraystart') ? 'keine Arrays/Objekte, ' : index < LEVELS.indexOf('js17-objekte') ? 'keine eigenen Objektliterale, ' : '';
       const iterationLimit = index >= LEVELS.indexOf('js17-arraystart') && index < LEVELS.indexOf('js17-forof') ? 'kein for...of, ' : index >= LEVELS.indexOf('js17-forof') && index < LEVELS.indexOf('js17-while') ? 'kein while, ' : '';
-      level = `JavaScript-Anfänger nach HTML/CSS, Lektion ${context.lessonId}. Bisher eingeführt: ${TOPICS.slice(LEVELS.indexOf('js-datei'), index + 1).join('; ')}. Keine späteren Techniken: ${decisionLimit}${functionLimit}${structureLimit}${iterationLimit}keine map/filter/reduce/forEach-Methoden, Pfeilfunktionen, Callbacks, Closures, DOM-, Timer-, Netzwerk- oder Framework-Nutzung. Noch nicht eingeführte Themen aus späteren Lektionen nicht vorwegnehmen. Eingabekonstanten sind gegeben, kein Einlesen über prompt oder Terminal. Kleine Hinweise statt vollständiger Lösungen. Die Kurskonsole ist kein vollständiger Browser; niemals zum Verlassen der begrenzten Ausführung auffordern.`;
+      const methodLimit = index < LEVELS.indexOf('js18-callback') ? 'keine map/filter/reduce/forEach-Methoden, Pfeilfunktionen, Callbacks, '
+        : index < LEVELS.indexOf('js18-filter') ? 'keine map/filter/reduce/forEach-Methoden, Pfeilfunktionen, '
+          : index < LEVELS.indexOf('js18-map') ? 'keine map/reduce/forEach-Methoden, Pfeilfunktionen, '
+            : index < LEVELS.indexOf('js18-pfeile') ? 'keine reduce/forEach-Methoden, Pfeilfunktionen, '
+              : index < LEVELS.indexOf('js18-reduce-sort') ? 'keine reduce/forEach-Methoden, ' : 'keine forEach-Methoden, ';
+      const searchLimit = index < LEVELS.indexOf('js18-suchen') ? 'kein find/some/every, ' : '';
+      const sortLimit = index < LEVELS.indexOf('js18-reduce-sort') ? 'kein sort, ' : '';
+      const errorLimit = index < LEVELS.indexOf('js18-fehler') ? 'keine eigene throw-/try-/catch-Fehlerbehandlung, ' : '';
+      const debuggerScope = index >= LEVELS.indexOf('js18-debugspur') ? ' Die geführte Spur ist ein festes Modellbeispiel und führt keinen Editorcode aus; keinen freien Quellcodedebugger als vorhanden behaupten.' : '';
+      level = `JavaScript-Anfänger nach HTML/CSS, Lektion ${context.lessonId}. Bisher eingeführt: ${TOPICS.slice(LEVELS.indexOf('js-datei'), index + 1).join('; ')}. Keine späteren Techniken: ${decisionLimit}${functionLimit}${structureLimit}${iterationLimit}${methodLimit}${searchLimit}${sortLimit}${errorLimit}Closures, DOM-, Timer-, Netzwerk- oder Framework-Nutzung. Noch nicht eingeführte Themen aus späteren Lektionen nicht vorwegnehmen. Eingabekonstanten sind gegeben, kein Einlesen über prompt oder Terminal. Kleine Hinweise statt vollständiger Lösungen. Die Kurskonsole ist kein vollständiger Browser; niemals zum Verlassen der begrenzten Ausführung auffordern.${debuggerScope}`;
+    }
+    if (context.lessonId.startsWith('course-')) {
+      const chapter = Number(context.lessonId.split('-')[1]);
+      const allowed = chapter < 20 ? 'Reine Datenverarbeitung ohne DOM.' : chapter < 21 ? 'DOM-Auswahl, Text und Knoten; noch keine Ereignisse.' : chapter < 22 ? 'DOM und Ereignisse; noch kein eigener dauerhafter Zustand.' : chapter < 24 ? 'DOM, Ereignisse, Zustand und lokaler Übungsspeicher; noch keine asynchronen Datenquellen.' : chapter < 26 ? 'Kontrollierte Promises und lokale Datenadapter; noch keine neuen Werkzeuge oder Frameworks.' : chapter < 29 ? 'Module, lokale Tests und externe Werkzeugabläufe; noch kein TypeScript/React.' : chapter < 30 ? 'TypeScript und strict-Prüfung; noch kein React.' : 'React, bekannte Hooks und lokale Projekte. Keine neuen Frameworks oder Backenddienste.';
+      level = 'Frontendkurs Lektion ' + context.lessonId + '. Bisher eingeführt: ' + ADVANCED_TOPICS.slice(0, ADVANCED_TOPICS.findIndex(([id]) => id === context.lessonId) + 1).map(([,topic])=>topic).join('; ') + '. ' + allowed + ' Innerhalb dieses Kapitels nur bereits erklärte Techniken verwenden; die aktuelle Aufgabe und Voraussetzungen sind maßgeblich. Kleine Hinweise statt vollständiger Lösungen. Lerncode läuft nur in QuickJS mit lokalem DOM-Modell; kein echter Netzwerk-/Datei-/Appzugriff. Externe Terminal-/Git-Aktionen werden nur erklärt, niemals durch die App ausgeführt. Eigenes CSS, native Browserdetails und Werkzeugabläufe zusätzlich extern prüfen. Kein freier Quellcodedebugger vorhanden. Manuelle Bestätigungen und feste Teiltests sind kein vollständiger Kompetenznachweis.';
     }
     data = { kind: 'course', lessonId: context.lessonId, task: string(context.task, 1800, true), explanation: string(context.explanation, 2500), prerequisite: string(context.prerequisite, 800), stand: string(context.stand, 100, true), files: [], checks: [], element: null };
     if (context.files !== undefined) {
@@ -194,7 +528,7 @@ export function buildLearningPrompt(body, store) {
       data.files = context.files.map(file => {
         if (!file || typeof file !== 'object' || Array.isArray(file)) throw new AiError('input', 'Ungültiger Dateiausschnitt.');
         const name = string(file.path, 220, true);
-        if (!(js ? /\.(html|css|js)$/i : /\.(html|css)$/i).test(name) || /[\\:%?#]/.test(name) || [...name].some(char => char.charCodeAt(0) < 32) || name.split('/').some(part => !part || part === '.' || part === '..' || /^(\.env.*|\.git|local-rag|local-ai|node_modules)$/i.test(part))) throw new AiError('input', 'Nur relative freigegebene HTML-/CSS-/JS-Projektausschnitte sind erlaubt.');
+        if (!(context.lessonId.startsWith('course-') ? /\.(html|css|js|ts|tsx|jsx)$/i : js ? /\.(html|css|js)$/i : /\.(html|css)$/i).test(name) || /[\\:%?#]/.test(name) || [...name].some(char => char.charCodeAt(0) < 32) || name.split('/').some(part => !part || part === '.' || part === '..' || /^(\.env.*|\.git|local-rag|local-ai|node_modules)$/i.test(part))) throw new AiError('input', 'Nur relative freigegebene HTML-/CSS-/JS-Projektausschnitte sind erlaubt.');
         if (file.complete !== undefined && typeof file.complete !== 'boolean') throw new AiError('input', 'Ungültige Angabe zum Dateiausschnitt.');
         return { path: name, content: string(file.content, 3200), complete: file.complete === true };
       });

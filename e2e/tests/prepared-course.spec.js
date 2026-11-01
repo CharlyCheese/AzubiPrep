@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 import fs from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { build } from '../../frontend/node_modules/esbuild/lib/main.js';
-import { PREPARED_CHAPTERS } from '../../frontend/src/pilot/prepared/catalog.js';
+import { READING_CHAPTERS as PREPARED_CHAPTERS } from '../../frontend/src/pilot/prepared/catalog.js';
 import { plannerHtml } from '../../frontend/src/pilot/prepared/shared.js';
 import { plannerSolution } from '../../frontend/src/pilot/prepared/ch23.js';
 import { reactPlanner } from '../../frontend/src/pilot/prepared/ch30.js';
@@ -12,23 +12,23 @@ import { unterdrueckeOnboardingPopups } from './helpers.js';
 test.use({ serviceWorkers: 'block' });
 async function open(page) {
   await unterdrueckeOnboardingPopups(page); await page.goto('/frontendkurs');
-  await page.getByRole('button', { name: 'Kapitel 18–31 lesen', exact: true }).click();
+  await page.getByRole('button', { name: 'Kapitel 19–31 lesen', exact: true }).click();
   await expect(page.getByRole('region', { name: 'Weitere Kurskapitel' })).toBeVisible();
 }
 
-test('Alle 85 Lektionen lesbar; keine Laufzeit/Prüfung/KI aus der Inhaltsfassung', async ({ page }) => {
+test('Alle 77 Lektionen lesbar; keine Laufzeit/Prüfung/KI aus der Inhaltsfassung', async ({ page }) => {
   test.setTimeout(120000);
   let aiCalls = 0; await page.route('**/api/ai/**', route => { aiCalls++; return route.fulfill({ json: {} }); });
   await open(page);
   const callsOnOpen = aiCalls;
-  await expect(page.getByText('Inhaltsfassung · Kapitel 18–31 · 85 vorbereitete Lektionen', { exact: true })).toBeVisible();
+  await expect(page.getByText('Inhaltsfassung · Kapitel 19–31 · 77 Referenzlektionen', { exact: true })).toBeVisible();
   for (const chapter of PREPARED_CHAPTERS) {
     await page.getByLabel('Kapitel der Inhaltsfassung', { exact: true }).selectOption(String(chapter.number));
     await expect(page.getByLabel('Lektion der Inhaltsfassung', { exact: true }).locator('option')).toHaveCount(chapter.lessons.length);
     for (const lesson of chapter.lessons) {
       await page.getByLabel('Lektion der Inhaltsfassung', { exact: true }).selectOption(lesson.id);
       await expect(page.getByRole('heading', { name: lesson.title, exact: true })).toBeVisible();
-      await expect(page.getByText(lesson.status, { exact: true })).toBeVisible();
+      await expect(page.getByText('Lesefassung · praktische Übungen in der Lektionsauswahl', { exact: true })).toBeVisible();
       await expect(page.getByRole('button', { name: 'Aufgabe prüfen', exact: true })).toHaveCount(0);
       await expect(page.locator('iframe')).toHaveCount(0);
     }
@@ -47,42 +47,42 @@ test('Mobil, gestufte Hinweise, Lösung, Download und Navigation per Tastatur', 
   const solution = page.locator('details').filter({ has: page.locator('summary', { hasText: 'Musterlösung bewusst ansehen' }) });
   expect(await solution.evaluate(node => node.open)).toBe(false);
   await solution.locator(':scope > summary').press('Enter');
-  await expect(solution.locator('pre')).toContainText('function plusDrei');
+  await expect(solution.locator('pre')).toContainText('Erwartung für die Beispieldaten');
   expect(await solution.locator('pre').textContent()).toContain('\n');
   await page.getByText('Lektion mit Lösung als Text mitnehmen', { exact: true }).click();
   const downloadEvent = page.waitForEvent('download');
   await page.getByRole('button', { name: 'Lektion einschließlich Lösung herunterladen' }).click();
   const download = await downloadEvent;
-  expect(download.suggestedFilename()).toBe('kapitel-18-lektion-1.txt');
+  expect(download.suggestedFilename()).toBe('kapitel-19-lektion-1.txt');
   const text = await fs.readFile(await download.path(), 'utf8');
-  expect(text).toContain('technische/praktische Abnahme offen'); expect(text).toContain('function plusDrei');
+  expect(text).toContain('Lesefassung · praktische Übungen in der Lektionsauswahl'); expect(text).toContain('Erwartung für die Beispieldaten');
   await page.getByRole('button', { name: 'Nächste Lektion →' }).click();
-  await expect(page.getByRole('heading', { name: 'Mit filter passende Einträge behalten' })).toBeFocused();
+  await expect(page.getByRole('heading', { name: 'Auswertung in kleinen Bausteinen bauen' })).toBeFocused();
   expect(await page.locator('details').filter({ has: page.locator('summary', { hasText: 'Musterlösung bewusst ansehen' }) }).evaluate(node => node.open)).toBe(false);
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1)).toBe(true);
   await page.screenshot({ path: info.outputPath('inhaltsfassung-mobil.png') });
 });
 
-test('Zurück erhält bisherigen Entwurf und die 82 alten Übungen', async ({ page }) => {
+test('Zurück erhält bisherigen Entwurf und die 90 eingebundenen Übungen', async ({ page }) => {
   await unterdrueckeOnboardingPopups(page); await page.goto('/frontendkurs');
-  await expect(page.getByLabel('Lektion', { exact: true }).locator('option')).toHaveCount(82);
+  await expect(page.getByLabel('Lektion', { exact: true }).locator('option')).toHaveCount(167);
   await page.getByRole('button', { name: 'Schreiben', exact: true }).click();
   const editor = page.getByRole('textbox', { name: 'Code index.html', exact: true });
   await editor.fill('<h1>Mein synthetischer Entwurf</h1><p>Erhalten</p>');
-  await page.getByRole('button', { name: 'Kapitel 18–31 lesen', exact: true }).click();
-  await page.getByRole('button', { name: '← Zurück zu den Übungen 1–17' }).click();
+  await page.getByRole('button', { name: 'Kapitel 19–31 lesen', exact: true }).click();
+  await page.getByRole('button', { name: '← Zurück zu den Übungen 1–31' }).click();
   await expect(editor).toHaveValue('<h1>Mein synthetischer Entwurf</h1><p>Erhalten</p>');
-  await expect(page.getByLabel('Lektion', { exact: true }).locator('option')).toHaveCount(82);
+  await expect(page.getByLabel('Lektion', { exact: true }).locator('option')).toHaveCount(167);
 });
 
 test('Fehlender Inhaltschunk lässt Rückweg und Entwurf bedienbar', async ({ page }) => {
   await unterdrueckeOnboardingPopups(page); await page.goto('/frontendkurs');
   await page.route('**/assets/PreparedCourse-*.js', route => route.abort());
-  await page.getByRole('button', { name: 'Kapitel 18–31 lesen', exact: true }).click();
+  await page.getByRole('button', { name: 'Kapitel 19–31 lesen', exact: true }).click();
   await expect(page.getByRole('alert')).toContainText('konnten nicht geladen');
-  await page.getByRole('button', { name: '← Zurück zu den Übungen 1–17' }).click();
-  await expect(page.getByLabel('Lektion', { exact: true }).locator('option')).toHaveCount(82);
-  await expect(page.getByRole('button', { name: 'Kapitel 18–31 lesen', exact: true })).toBeFocused();
+  await page.getByRole('button', { name: '← Zurück zu den Übungen 1–31' }).click();
+  await expect(page.getByLabel('Lektion', { exact: true }).locator('option')).toHaveCount(167);
+  await expect(page.getByRole('button', { name: 'Kapitel 19–31 lesen', exact: true })).toBeFocused();
 });
 
 test('Wechsel während Prüfung übernimmt keinen abgebrochenen Prüfstand', async ({ page }) => {
@@ -91,10 +91,10 @@ test('Wechsel während Prüfung übernimmt keinen abgebrochenen Prüfstand', asy
   await page.evaluate(() => {
     const buttons = [...document.querySelectorAll('button')];
     buttons.find(button => button.textContent === 'Aufgabe prüfen').click();
-    buttons.find(button => button.textContent === 'Kapitel 18–31 lesen').click();
+    buttons.find(button => button.textContent === 'Kapitel 19–31 lesen').click();
   });
   await expect(page.getByRole('region', { name: 'Weitere Kurskapitel' })).toBeVisible();
-  await page.getByRole('button', { name: '← Zurück zu den Übungen 1–17' }).click();
+  await page.getByRole('button', { name: '← Zurück zu den Übungen 1–31' }).click();
   await expect(page.getByRole('textbox', { name: 'Code index.html', exact: true })).toBeVisible();
   await expect(page.getByRole('region', { name: 'Prüfergebnisse', exact: true })).toHaveCount(0);
 });

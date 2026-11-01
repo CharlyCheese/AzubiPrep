@@ -7,6 +7,7 @@ import Lernen from './pages/Lernen.jsx';
 import Modul from './pages/Modul.jsx';
 import Quiz from './pages/Quiz.jsx';
 import FrontendKurs from './pages/FrontendKurs.jsx';
+import Debugger from './pages/Debugger.jsx';
 import Theorie from './pages/Theorie.jsx';
 import Karteikarten from './pages/Karteikarten.jsx';
 import Pruefung from './pages/Pruefung.jsx';
@@ -48,7 +49,7 @@ export default function App() {
         <Route index element={<Startpunkt />} />
         <Route path="lernen" element={<Lernen />} />
         <Route path="theorie" element={<Theorie />} />
-        <Route path="frontendkurs" element={<FrontendKurs />} />
+        <Route path="frontendkurs" element={<FrontendKurs />}><Route path="debugger" element={<Debugger />} /></Route>
         <Route path="lernen/:modulId" element={<Modul />} />
         <Route path="quiz/:modulId" element={<Quiz />} />
         <Route path="karteikarten" element={<Karteikarten />} />
