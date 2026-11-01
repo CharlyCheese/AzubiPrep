@@ -180,6 +180,13 @@
   nach Beispieldatenbereinigung CSS 10/10 und sieben Bediengruppen erneut grün.
   Unabhängiger Review einschließlich neuer Bilder ohne offene Findings, SW v44.
   → [CSS im Debugger](../47-Debugger-CSS.md)
+  OPS-042 korrigiert die Linux-CI-Fehlerpfade: Snapshotaufbereitung bei vielen
+  Bindungen beschleunigt, exakte JSON-/Trunkierungssemantik erhalten; lange
+  Lesefassungs-Tokens und Buttons umbrechen auch bei abweichenden Schriftmaßen.
+  Produktionsgrenzen unverändert. 24 Zieltests und 443/443 lokale Browser-/
+  Windows-Electronfälle grün; 300 unabhängige Semantikvergleiche ohne Abweichung.
+  Tatsächlicher GitHub-Linux-Nachlauf nach nächstem Push noch ausstehend.
+  → [CI-Korrektur](OPS-042-ci-linux-debugger-mobil.md)
   Weitere Sprach-/Plattformstufen bleiben eigene Aufgaben.
   → [Technikpilot und Grenzen](../39-Debugger-Technikpilot.md)
   → [Kapitel 18](../36-JavaScript-Kapitel-18.md)

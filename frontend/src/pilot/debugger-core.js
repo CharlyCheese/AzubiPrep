@@ -118,15 +118,23 @@ export function installDebugger(pause, emit, limits) {
     const current = frames[frames.length - 1]; current.point = point; current.scopes = scopes;
     const views = frames.map(frame => ({ id: frame.id, functionId: frame.functionId, point: frame.point, scopes: frame.scopes.map(scope => ({ id: scope[0], values: [] })) }));
     const result = { point, frames: views, scopes: views[views.length - 1].scopes, truncated: false };
-    if (stringify(result).length > limits.snapshotUnits - 128) abort('Zustandsgrenze erreicht.');
+    let units = stringify(result).length;
+    if (units > limits.snapshotUnits - 128) abort('Zustandsgrenze erreicht.');
+    const truncate = () => { if (!result.truncated) { result.truncated = true; units--; } };
     let count = 0;
     for (let f = frames.length - 1; f >= 0; f--) for (let i = frames[f].scopes.length - 1; i >= 0; i--) {
       const scope = frames[f].scopes[i], entry = views[f].scopes[i];
       for (const [name, read] of scope[1]) {
-        if (count >= limits.bindings) { result.truncated = true; break; }
+        if (count >= limits.bindings) { truncate(); break; }
         let value; try { value = format(read()); } catch { value = { type: 'uninitialized', display: 'noch nicht initialisiert' }; }
-        entry.values.push({ name, ...value }); count++;
-        if (stringify(result).length > limits.snapshotUnits - 128) { entry.values.pop(); result.truncated = true; break; }
+        const item = { name, ...value };
+        // The top frame's scopes are also serialized through result.scopes.
+        // Count exact JSON codeunits (including escaping and commas), without
+        // repeatedly serializing all values already collected in the snapshot.
+        const added = (stringify(item).length + (entry.values.length ? 1 : 0)) * (f === frames.length - 1 ? 2 : 1);
+        count++;
+        if (units + added > limits.snapshotUnits - 128) { truncate(); break; }
+        entry.values.push(item); units += added;
       }
     }
     return pause(stringify(result));

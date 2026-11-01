@@ -3,10 +3,11 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { compileDebugger } from '../../frontend/src/pilot/debugger-compiler.js';
-import { DEBUG_LIMITS, debuggerLimits, encodedSize } from '../../frontend/src/pilot/debugger-core.js';
+import { DEBUG_LIMITS, debuggerLimits, encodedSize, installDebugger } from '../../frontend/src/pilot/debugger-core.js';
 import { startDebugger } from '../../frontend/src/pilot/debugger.js';
+import syncVariant from '../../frontend/node_modules/@jitl/quickjs-singlefile-browser-release-sync/dist/index.mjs';
 import asyncVariant from '../../frontend/node_modules/@jitl/quickjs-singlefile-browser-release-asyncify/dist/index.mjs';
-import { newQuickJSAsyncWASMModuleFromVariant, newVariant } from '../../frontend/node_modules/quickjs-emscripten-core/dist/index.mjs';
+import { newQuickJSAsyncWASMModuleFromVariant, newQuickJSWASMModuleFromVariant, newVariant } from '../../frontend/node_modules/quickjs-emscripten-core/dist/index.mjs';
 import { unterdrueckeOnboardingPopups, openDebugger } from './helpers.js';
 
 test.use({ serviceWorkers: 'block' });
@@ -92,7 +93,7 @@ test('DB23: echte reduzierte Kontrollpunkt-/Pausengrenzen sowie Produktionsgrenz
   for(const [source,name,cap,mode] of [['let i=0;while(i<3){i++;}i;','checkpointHits',10,'continue'],['let x=0;x++;x++;','pauses',3,'step']])for(const delta of [-1,0,1]){const events=await raw(page,source,{[name]:cap+delta},mode);expect(events.at(-1).type,JSON.stringify({name,delta})).toBe(delta<0?'error':'done');}
   for(const length of [79,80,81]){const events=await raw(page,'let text="'+'x'.repeat(length)+'";');expect(events.at(-1).type).toBe('done');const final=events.find(event=>event.type==='final');expect(final.snapshot.scopes[0].values[0].display).toBe('x'.repeat(Math.min(80,length))+(length>80?'…':''));}
   const tiny=await raw(page,'let text="abc";',{valueChars:1});expect(tiny.at(-1).type).toBe('done');expect(tiny.find(event=>event.type==='paused').snapshot.scopes[0].values[0].display).toBe('noch nicht initialisiert');expect(tiny.find(event=>event.type==='final').snapshot.scopes[0].values[0].display).toBe('a…');
-  for(const count of [63,64,65]){const events=await raw(page,Array.from({length:count},(_,i)=>'let v'+i+'='+i+';').join(''));expect(events.at(-1).type).toBe('done');const final=events.find(event=>event.type==='final');expect(final.snapshot.scopes[0].values).toHaveLength(Math.min(count,64));expect(final.snapshot.truncated).toBe(count>64);}
+  for(const count of [63,64,65]){const events=await raw(page,Array.from({length:count},(_,i)=>'let v'+i+'='+i+';').join(''));expect(events.at(-1).type,JSON.stringify({count,terminal:events.at(-1)})).toBe('done');const final=events.find(event=>event.type==='final');expect(final.snapshot.scopes[0].values).toHaveLength(Math.min(count,64));expect(final.snapshot.truncated).toBe(count>64);}
   for(const count of [79,80,81]){const events=await raw(page,'for(let i=0;i<'+count+';i++){console.log("x");}');expect(events.at(-1).type).toBe(count>80?'error':'done');expect(events.filter(event=>event.type==='log')).toHaveLength(Math.min(count,80));}
   for(const count of [31,32,33]){const events=await raw(page,'for(let i=0;i<'+count+';i++){console.log("'+'x'.repeat(1000)+'");}');expect(events.at(-1).type).toBe(count>32?'error':'done');}
   for(const count of [999,1000,1001]){const events=await raw(page,'console.log("'+'x'.repeat(count)+'");');expect(events.at(-1).type).toBe('done');expect(events.find(event=>event.type==='log').text).toHaveLength(Math.min(count,1000));}
@@ -169,4 +170,18 @@ test('DB18: echter Browserzoom 200 %, Tastatur-Haltepunkte, Scope/Stack und erre
     const out=region(page).getByRole('button',{name:'Funktion verlassen',exact:true});await out.focus();await page.keyboard.press('Enter');await expect(status(page)).toContainText(':6:1');
     const stop=region(page).getByRole('button',{name:'Debuggen stoppen',exact:true});await stop.scrollIntoViewIfNeeded();await stop.click({trial:true});await stop.focus();expect(await stop.evaluate(element=>parseFloat(getComputedStyle(element).outlineWidth))).toBeGreaterThanOrEqual(2);await page.keyboard.press('Enter');await expect(status(page)).toContainText('gestoppt');expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);await page.bringToFront();await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));const capture=await context.newCDPSession(page);const shot=await capture.send('Page.captureScreenshot',{format:'png',fromSurface:true,captureBeyondViewport:false});fs.writeFileSync(info.outputPath('debugger-zoom-200.png'),Buffer.from(shot.data,'base64'));await capture.detach();
   }finally{await context.close();}
+});
+
+
+test('Snapshotaufbereitung wächst linear mit angezeigten Bindungen statt wiederholt den gesamten Zustand zu serialisieren',async()=>{
+ const quick=await newQuickJSWASMModuleFromVariant(syncVariant);
+ const measure=count=>{const runtime=quick.newRuntime();runtime.setMemoryLimit(DEBUG_LIMITS.heapBytes);runtime.setMaxStackSize(DEBUG_LIMITS.stackBytes);const vm=runtime.newContext();
+  try{const result=vm.evalCode('var serialized=0;var nativeJSON=JSON.stringify;JSON.stringify=value=>{const text=nativeJSON(value);serialized+=text.length;return text;};var snapshots=[];var helper=('+installDebugger.toString()+')(text=>snapshots.push(text),()=>{},'+JSON.stringify(DEBUG_LIMITS)+');var rows=Array.from({length:'+count+'},(_,i)=>["v"+i,()=>i]);helper(0,[[0,rows]]);nativeJSON({cost:serialized,snapshot:JSON.parse(snapshots[0])});');if(result.error){const error=vm.dump(result.error);result.error.dispose();throw new Error(JSON.stringify(error));}const value=JSON.parse(vm.getString(result.value));result.value.dispose();return value;}finally{vm.dispose();runtime.dispose();}
+ };
+ const smaller=measure(32),larger=measure(64);expect(larger.snapshot.scopes[0].values).toHaveLength(64);expect(larger.snapshot.frames[0].scopes).toEqual(larger.snapshot.scopes);expect(larger.cost).toBeLessThan(smaller.cost*2.5);
+});
+
+test('Exakte Snapshot-Codeunits bei mehreren Frames, JSON-Escapes und Unicode unter/auf/über Grenze',async({page})=>{
+ await open(page,'let x=1;');const literal=JSON.stringify(('"\n\\\t雪').repeat(14));const source='const outside='+literal+';function f(arg){const inside=outside;console.log(arg,inside);}f(outside);';const baseline=await raw(page,source,{},'step');expect(baseline.at(-1).type,JSON.stringify(baseline.at(-1))).toBe('done');const snapshots=baseline.filter(event=>event.snapshot).map(event=>event.snapshot);const target=snapshots.reduce((largest,next)=>JSON.stringify(next).length>JSON.stringify(largest).length?next:largest);expect(target.frames.length).toBeGreaterThan(1);expect(target.truncated).toBe(false);const units=JSON.stringify(target).length;
+ for(const delta of [-1,0,1]){const events=await raw(page,source,{snapshotUnits:units+128+delta},'step');expect(events.at(-1).type,JSON.stringify({delta,terminal:events.at(-1)})).toBe('done');const actual=events.find(event=>event.snapshot?.point===target.point).snapshot;if(delta<0){expect(actual.truncated).toBe(true);expect(JSON.stringify(actual).length).toBeLessThanOrEqual(units+delta);}else expect(actual).toEqual(target);}
 });

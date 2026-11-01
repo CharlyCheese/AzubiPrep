@@ -3,7 +3,7 @@
 // - API-GET-Antworten: Network-first mit Cache-Fallback (Inhalte offline verfügbar)
 // - Nicht-GET-/POST-Requests: nur Netzwerk (kein Caching)
 
-const VERSION = 'azubiprep-v44'; // v44 (FE-054): CSS-Vorschau mit bereinigtem Beispiel
+const VERSION = 'azubiprep-v45'; // v45 (OPS-042): schnellere Debugzustände und mobile Umbrüche
 const APP_SHELL = [
   '/',
   '/index.html',

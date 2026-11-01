@@ -341,3 +341,5 @@
 - [FE-054] CSS-Debugvorschau mit isoliertem skriptlosem Frame, sichtbaren Klassenwechseln und lokalem CSS-Import/-Export; 440 Gesamtfälle, finale CSS 10/10 und sieben Bediengruppen grün, unabhängiger Review — 2026-11-01 — [Brief](FE-054-debugger-css.md)
 
 - [OPS-041] README: eigene Debuggerseite, Modul-/DOM-/CSS-Umfang und Prüfnachweise aktualisiert, Quellstand von vorhandenen Paketen abgegrenzt; Links/Diff und unabhängiger Review grün — 2026-11-01 — [Brief](OPS-041-readme-debugger-stand.md)
+
+- [OPS-042] Debugger-Snapshotkosten bei unveränderten Limits reduziert und mobile Lesefassung umbruchsicher; 24 Zieltests, 443 lokale Gesamtfälle und 300 unabhängige Semantikvergleiche grün; GitHub-Linux-Nachlauf ausstehend — 2026-11-01 — [Brief](OPS-042-ci-linux-debugger-mobil.md)

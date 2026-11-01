@@ -59,7 +59,7 @@ test('Mobil, gestufte Hinweise, Lösung, Download und Navigation per Tastatur', 
   await page.getByRole('button', { name: 'Nächste Lektion →' }).click();
   await expect(page.getByRole('heading', { name: 'Auswertung in kleinen Bausteinen bauen' })).toBeFocused();
   expect(await page.locator('details').filter({ has: page.locator('summary', { hasText: 'Musterlösung bewusst ansehen' }) }).evaluate(node => node.open)).toBe(false);
-  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1)).toBe(true);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1),await page.locator('.prepared-course').evaluate(root=>JSON.stringify([...root.querySelectorAll('*')].filter(e=>e.getBoundingClientRect().right>innerWidth+1||e.scrollWidth>e.clientWidth+1).map(e=>({tag:e.tagName,text:e.textContent.slice(0,100),client:e.clientWidth,scroll:e.scrollWidth}))))).toBe(true);
   await page.screenshot({ path: info.outputPath('inhaltsfassung-mobil.png') });
 });
 
@@ -155,3 +155,9 @@ for (const [name, source] of [['React-Lernplan', reactPlanner], ['Abschlussporta
     }
   });
 }
+
+
+test('Mobile Lesefassung bricht lange Datentokens und Downloads bei verschiedenen Schriftmaßen um',async({page})=>{
+ test.setTimeout(60000);await page.setViewportSize({width:390,height:844});await open(page);await page.getByRole('button',{name:'Nächste Lektion →',exact:true}).click();const heading=page.getByRole('heading',{name:'Auswertung in kleinen Bausteinen bauen'});await expect(heading).toBeFocused();
+ for(const font of ['Arial','Tahoma','monospace'])for(const width of [320,390]){await page.setViewportSize({width,height:844});await page.evaluate(font=>{document.documentElement.style.setProperty('--font',font);document.documentElement.style.fontSize='18px';},font);await page.getByText('Lektion mit Lösung als Text mitnehmen',{exact:true}).click();const download=page.getByRole('button',{name:'Lektion einschließlich Lösung herunterladen'});await expect(download).toBeVisible();expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),JSON.stringify({font,width})).toBe(true);const overflow=await page.locator('.prepared-course li, .prepared-course .btn').evaluateAll(nodes=>nodes.filter(e=>e.offsetParent!==null&&e.scrollWidth>e.clientWidth+1).map(e=>e.textContent));expect(overflow,JSON.stringify({font,width})).toEqual([]);await page.getByText('Lektion mit Lösung als Text mitnehmen',{exact:true}).click();}
+});
