@@ -1,0 +1,27 @@
+.app-search .search-form {
+  display: grid;
+  grid-template-columns: minmax(12rem, 2fr) minmax(10rem, 1fr) auto;
+  align-items: end;
+  gap: .65rem 1rem;
+}
+.app-search .search-form label { display: block; margin: 0 0 .35rem; }
+.app-search .search-form .input, .app-search .search-form .select { width: 100%; }
+.app-search .search-form small { grid-column: 1 / -1; }
+.app-search .search-results, .app-search .search-group { display: grid; gap: .65rem; }
+.app-search .search-results { gap: 1.1rem; }
+.app-search .search-group > h2, .app-search .search-group .lh-section-head h2 {
+  font-size: 1rem;
+  color: var(--text-muted);
+}
+.app-search .lh-hits > li { padding: 1rem 1.1rem; }
+.app-search .search-pager .lh-pager { margin-top: 0; }
+.app-search .search-pager form {
+  display: flex; justify-content: center; align-items: center; flex-wrap: wrap;
+  gap: .5rem; margin-top: .5rem;
+}
+.app-search .search-pager form label { margin: 0; }
+.app-search .search-pager form input { width: 5rem; }
+@media (max-width: 640px), (min-width: 861px) and (max-width: 1024px) {
+  .app-search .search-form { grid-template-columns: minmax(0, 1fr) auto; }
+  .app-search .search-term { grid-column: 1 / -1; }
+}

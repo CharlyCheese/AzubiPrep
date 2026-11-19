@@ -24,8 +24,13 @@ test('Importgrenzen sind einschließlich des Grenzwerts wirksam', () => {
   assert.throws(() => checkPath('a/'.repeat(9) + 'x.html'));
 });
 test('Private Daten und aktive Bildformate sind keine Projektressourcen', () => {
-  for (const name of ['local-rag/buch.html', 'node_modules/a.html', '.git/a.html', 'x/.env.local/a.html', 'bild.svg', 'code.js']) assert.throws(() => checkFiles({ 'index.html': html, [name]: html }));
+  for (const name of ['local-rag/buch.html', 'local-ai/a.html', 'node_modules/a.html', '.git/a.html', 'x/.env.local/a.html', 'bild.svg', 'programm.exe']) assert.throws(() => checkFiles({ 'index.html': html, [name]: html }), name);
   assert.throws(() => checkFiles({ 'index.html': html, 'bild.png': { kind: 'image', content: 'data:image/png;base64,PHNjcmlwdD4=' } }));
+});
+
+test('Die Werkstatt übernimmt JavaScript-Dateien als Projekttext', () => {
+  const files = { 'index.html': html, 'code.js': { kind: 'text', content: 'const alter = 18;' } };
+  assert.equal(checkFiles(files), files);
 });
 test('Ordnerimport entfernt nur die gemeinsame Auswahlwurzel und überschreibt keine Duplikate', async () => {
   const file = (name, content = '<h1>Text</h1>') => ({ name: name.split('/').pop(), webkitRelativePath: name, size: content.length, text: async () => content });

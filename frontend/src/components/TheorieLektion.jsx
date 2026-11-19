@@ -2,10 +2,11 @@ import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ai, isLocalAi } from '../api/ai.js';
 import { aiStore } from '../store/aiStore.js';
+import { renderMarkdown } from '../utils/markdown.jsx';
 import '../styles/ki.css';
 import '../styles/theorie.css';
 
-export default function TheorieLektion({ topic = null }) {
+export default function TheorieLektion({ topic = null, standalone = false }) {
   const settings = aiStore.useStore(); const [question, setQuestion] = useState('');
   const cloud = settings.provider === 'chatgpt';
   const [privateSource, setPrivateSource] = useState(false); const [material, setMaterial] = useState(null);
@@ -14,7 +15,13 @@ export default function TheorieLektion({ topic = null }) {
   const sections = topic?.sections || [];
   const active = useRef(null); const version = useRef(0);
   const heading = useRef(null);
-  useEffect(() => { if (topic) { heading.current?.scrollIntoView({ block: 'start' }); heading.current?.focus({ preventScroll: true }); } }, [topic?.id]);
+  const Heading = standalone ? 'h1' : 'h2';
+  useEffect(() => {
+    if (standalone) {
+      window.scrollTo(0, 0);
+      heading.current?.focus({ preventScroll: true });
+    }
+  }, [standalone, topic?.id]);
   const materialStand = privateSource ? `${material?.revision}:${material?.state}:${(material?.documents || []).map(document => `${document.id}:${document.state}`).join(',')}` : '';
   const key = `${topic?.id || 'search'}:${privateSource}:${settings.enabled}:${settings.provider}:${settings.accountRevision}:${settings.model}:${detail}:${materialStand}`;
   useEffect(() => { setQuestion(''); }, [settings.provider, settings.accountRevision, privateSource]);
@@ -69,17 +76,27 @@ export default function TheorieLektion({ topic = null }) {
   const explained = sections.filter(section => parts[section.id]?.state === 'done').length;
   const gaps = sections.filter(section => parts[section.id]?.state === 'gap').length;
   return <section className="card theorie-lesson" aria-label="Theorie lernen">
-    <h2 ref={heading} tabIndex={-1}>{topic?.title || 'Wissenssuche'}</h2>
+    <Heading ref={heading} tabIndex={-1}>{topic?.title || 'Wissenssuche'}</Heading>
+    {topic?.reading && <details className="theorie-reading markdown"><summary>Theorietext zum Modul lesen</summary>{renderMarkdown(topic.reading, 1)}</details>}
     {cloud && <p><strong>Eigenes ChatGPT-Abo · Internet nötig.</strong> Erklärungen zu App-Lerninhalten senden die angefragten Inhalte und deine Frage an OpenAI. Private Unterlagen bleiben ausschließlich lokal; sie können hier ohne KI gelesen werden. Keine privaten Unterlagen in das Fragefeld kopieren.</p>}
     {cloud && privateSource && <p>Für eigene Unterlagen steht mit ChatGPT ausschließlich „Fundstellen lesen“ zur Verfügung. Wähle lokales Qwen für eine private KI-Erklärung.</p>}
-    <p>{topic ? `${topic.field} · Erklärung, Praxisbeispiel und Merksatz – ohne vorher ein Quiz zu beantworten.` : 'Frage nach einem Begriff oder Zusammenhang aus deiner Ausbildung, zum Beispiel: „Was ist der Unterschied zwischen RAM und SSD?“'}</p>
-    {topic && !sections.length && /^LF\d/.test(topic.field) && <p><Link to={`/theorie?lf=${encodeURIComponent(topic.field)}`}>Den Lernfeldeinstieg zu {topic.field} mit allen Abschnitten öffnen →</Link></p>}
+    <p className="text-muted">{topic ? `${topic.field} · Lies passende Fundstellen oder lass dir das Thema erklären.` : 'Stelle eine Frage zu einem Begriff oder Zusammenhang aus deiner Ausbildung.'}</p>
     <fieldset disabled={busy || !isLocalAi()} className="theorie-sources"><legend>Lernquellen für diese Anfrage</legend>
       <label><input type="radio" name={`sources-${topic?.id || 'search'}`} checked={!privateSource} onChange={() => setPrivateSource(false)} /> App-Lerninhalte</label>
       <label><input type="radio" name={`sources-${topic?.id || 'search'}`} checked={privateSource} disabled={!privateSource && material?.state !== 'ready'} onChange={() => setPrivateSource(true)} /> Eigene lokale Unterlagen</label>
     </fieldset>
-    <p className="small text-muted">{privateSource ? 'Nur passende Abschnitte deiner lokalen Unterlagen werden verwendet. Es gibt keinen stillen Wechsel auf andere Quellen. Auszüge und Antworten werden hier nicht dauerhaft gespeichert.' : 'Verwendet werden vorhandene Erklärungen und Kurztexte aus der App. Das ist ein Theorieeinstieg, kein vollständig geprüfter Lehrgang; besonders Rechtsstände können sich ändern.'}</p>
-    {material?.state !== 'ready' && <p className="small">Eigene Unterlagen sind noch nicht bereit. <Link to="/einstellungen">Materialverwaltung öffnen</Link>.</p>}
+    <label className="ki-field">Deine Frage oder Rückfrage{topic ? ' (optional)' : ''}<textarea rows={3} maxLength={600} value={question} onChange={event => { if (busy) cancel(); setQuestion(event.target.value); setAnswer(null); }} placeholder={topic ? 'Zum Beispiel: Erkläre das einfacher oder zeige ein kleines Beispiel.' : 'Erkläre mir …'} /></label>
+    <div className="ki-actions">
+      <button className={canExplain ? 'btn btn-primary' : 'btn btn-ghost'} disabled={!canExplain} onClick={() => request('explain')}>{topic ? 'Thema erklären' : 'Frage erklären'}</button>
+      <button className={!canExplain ? 'btn btn-primary' : 'btn btn-ghost'} disabled={!canRead} onClick={() => request('read')}>Fundstellen lesen</button>
+      {busy && <button className="btn btn-ghost" onClick={cancel}>Anfrage abbrechen</button>}
+    </div>
+    <label className="ki-field">Erklärungstiefe<select aria-label="Erklärungstiefe" value={detail} disabled={busy} onChange={event => setDetail(event.target.value)}><option value="detailed">Ausführlich – Grundlagen, Beispiel und typische Fehler</option><option value="short">Kompakt – kurzer Überblick</option></select></label>
+    {(!settings.enabled || !settings.model) && <p>Für Erklärungen einen <Link to="/einstellungen#ki-anbieter">KI-Anbieter und Modell auswählen</Link>. Fundstellen lesen funktioniert auch ohne laufendes Modell.</p>}
+    {!isLocalAi() && <p>Eigene Unterlagen und Qwen sind nur in der lokal gestarteten App verfügbar.</p>}
+    {busy && <p role="status">{cloud && !privateSource ? 'App-Lerninhalte werden gesucht; die Erklärung kommt von ChatGPT …' : 'Die Lernquellen werden lokal durchsucht …'}</p>}
+    {error && <p role="alert">{error} Du kannst auch „Fundstellen lesen“ versuchen.</p>}
+    {answer && <TheoryAnswer answer={answer} />}
     {sections.length > 0 && <section className="theorie-outline" aria-label="Lernfeld Schritt für Schritt">
       <h3>Das Lernfeld Schritt für Schritt</h3>
       <p>Die folgende Gliederung führt durch die zentralen Themen. Jeder Abschnitt erhält eigene Fundstellen und eine ausführliche Erklärung mit Grundlagen, Beispiel, typischen Fehlern und Zusammenfassung.</p>
@@ -95,19 +112,12 @@ export default function TheorieLektion({ topic = null }) {
         {parts[section.id]?.answer && <TheoryAnswer answer={parts[section.id].answer} />}
       </details>)}
     </section>}
-    <label className="ki-field">Erklärungstiefe<select aria-label="Erklärungstiefe" value={detail} disabled={busy} onChange={event => setDetail(event.target.value)}><option value="detailed">Ausführlich – Grundlagen, Beispiel und typische Fehler</option><option value="short">Kompakt – kurzer Überblick</option></select></label>
-    <label className="ki-field">Deine Frage oder Rückfrage{topic ? ' (optional)' : ''}<textarea rows={3} maxLength={600} value={question} onChange={event => { if (busy) cancel(); setQuestion(event.target.value); setAnswer(null); }} placeholder={topic ? 'Zum Beispiel: Erkläre das einfacher oder zeige ein kleines Beispiel.' : 'Erkläre mir …'} /></label>
+    {topic && !sections.length && /^LF\d/.test(topic.field) && <p><Link to={`/theorie?lf=${encodeURIComponent(topic.field)}&thema=${encodeURIComponent(`field:${topic.field}`)}`}>Den Lernfeldeinstieg zu {topic.field} mit allen Abschnitten öffnen →</Link></p>}
+    <details className="theorie-notes"><summary>Hinweise zu Quellen und Rückfragen</summary>
+    <p className="small text-muted">{privateSource ? 'Nur passende Abschnitte deiner lokalen Unterlagen werden verwendet. Es gibt keinen stillen Wechsel auf andere Quellen. Auszüge und Antworten werden hier nicht dauerhaft gespeichert.' : 'Verwendet werden vorhandene Erklärungen und Kurztexte aus der App. Das ist ein Theorieeinstieg, kein vollständig geprüfter Lehrgang; besonders Rechtsstände können sich ändern.'}</p>
+    {material?.state !== 'ready' && <p className="small">Eigene Unterlagen sind noch nicht bereit. <Link to="/einstellungen#lernunterlagen">Materialverwaltung öffnen</Link>.</p>}
     <p className="small">Rückfragen beziehen sich auf dieses Thema und neue passende Fundstellen. Es wird kein Chatverlauf mitgeschickt. Für eine konkrete Rückfrage den Begriff erneut nennen.</p>
-    <div className="ki-actions">
-      <button className="btn btn-primary" disabled={!canExplain} onClick={() => request('explain')}>{topic ? 'Thema erklären' : 'Frage erklären'}</button>
-      <button className="btn btn-ghost" disabled={!canRead} onClick={() => request('read')}>Fundstellen lesen</button>
-      {busy && <button className="btn btn-ghost" onClick={cancel}>Anfrage abbrechen</button>}
-    </div>
-    {(!settings.enabled || !settings.model) && <p>Für Erklärungen einen <Link to="/einstellungen">KI-Anbieter und Modell auswählen</Link>. Fundstellen lesen funktioniert auch ohne laufendes Modell.</p>}
-    {!isLocalAi() && <p>Eigene Unterlagen und Qwen sind nur in der lokal gestarteten App verfügbar.</p>}
-    {busy && <p role="status">{cloud && !privateSource ? 'App-Lerninhalte werden gesucht; die Erklärung kommt von ChatGPT …' : 'Die Lernquellen werden lokal durchsucht …'}</p>}
-    {error && <p role="alert">{error} Du kannst auch „Fundstellen lesen“ versuchen.</p>}
-    {answer && <TheoryAnswer answer={answer} />}
+    </details>
     {topic?.practice && <Link className="btn btn-ghost mt-2" to={`/quiz/${encodeURIComponent(topic.practice.moduleId)}?frage=${encodeURIComponent(topic.practice.id)}`}>Passende Frage üben →</Link>}
   </section>;
 }

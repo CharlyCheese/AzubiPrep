@@ -299,7 +299,7 @@ test('Aktueller Desktop enthält 7000 Fragen, 90 Übungen, 77 Inhaltslektionen u
     expect(response.status()).toBe(200);
     const account = await response.json();
     expect(account.connected).toBe(false); expect(account.accounts).toEqual([]);
-    expect(await app.evaluate(({ app: application }) => application.getVersion())).toBe('0.1.5');
+    expect(await app.evaluate(({ app: application }) => application.getVersion())).toBe('0.1.7');
   } finally {
     if (app) await app.close();
     expect(path.dirname(path.resolve(profile))).toBe(temporary);

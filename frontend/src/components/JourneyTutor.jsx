@@ -103,7 +103,7 @@ function TutorSession({ topic, kind, target, settings, useMaterial, onClose }) {
     </>}
     {busy && <><p role="status">{session ? 'Die Lernbegleitung antwortet …' : 'Gespräch wird vorbereitet …'}</p><button className="btn btn-ghost" onClick={() => discard('Anfrage abgebrochen. Deine Eingabe bleibt bis zum Schließen erhalten.', true)}>Anfrage abbrechen</button></>}
     {error && <p role="alert">{error}</p>}
-    {!settings.model && <p>Bitte in den <Link to="/einstellungen">Einstellungen</Link> ein verfügbares Modell wählen.</p>}
+    {!settings.model && <p>Bitte in den <Link to="/einstellungen#ki-anbieter">Einstellungen</Link> ein verfügbares Modell wählen.</p>}
     <p className="small">Unverbindliche Lernhilfe, keine Benotung. Die KI verändert weder Fortschritt noch Testergebnis. {useMaterial && 'Übernimm Inhalte dieses privaten Gesprächs nicht in allgemeine Notizen oder Sicherungen.'}</p>
     <button className="btn btn-ghost" onClick={onClose}>Ohne KI weiter</button>
   </>;
@@ -141,7 +141,7 @@ export default function JourneyTutor({ topic, kind, targetId }) {
   return <details className="journey-detail journey-tutor" ref={details} onToggle={event => { if (event.target === details.current) setOpen(event.currentTarget.open); }}>
     <summary>{kind === 'reflection' ? 'Optional: KI-Fachgespräch' : 'Optional: Erklärung mit KI'}</summary>
     {open && <section aria-label="KI-Lernbegleitung im Abschnitt">
-      {!settings.enabled || !isLocalAi() ? <p>Für freiwillige Lernbegleitung kannst du in den <Link to="/einstellungen">Einstellungen</Link> einen KI-Anbieter auswählen. Die feste Theorie und Selbstreflexion funktionieren weiterhin ohne KI. KI-Zugriff ist nur in der lokal geöffneten App verfügbar.</p> : <>
+      {!settings.enabled || !isLocalAi() ? <p>Für freiwillige Lernbegleitung kannst du in den <Link to="/einstellungen#ki-anbieter">Einstellungen</Link> einen KI-Anbieter auswählen. Die feste Theorie und Selbstreflexion funktionieren weiterhin ohne KI. KI-Zugriff ist nur in der lokal geöffneten App verfügbar.</p> : <>
         <label>Lernquelle für die KI<select className="select" value={useMaterial ? 'private' : 'public'} onChange={event => setPrivateSource(event.target.value === 'private')}>
           <option value="public">Öffentliche Inhalte dieses Abschnitts</option>
           {settings.provider === 'qwen' && <option value="private">Zusätzlich eigene lokale Unterlagen</option>}

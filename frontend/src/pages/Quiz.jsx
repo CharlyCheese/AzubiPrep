@@ -1,5 +1,5 @@
-import { useParams, Link, useSearchParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useParams, Link, useLocation, useSearchParams } from 'react-router-dom';
+import { useEffect, useRef, useState } from 'react';
 import { useApi } from '../utils/useApi.js';
 import { api } from '../api/client.js';
 import FrageKarte from '../components/FrageKarte.jsx';
@@ -22,13 +22,17 @@ import { meldeMissionen } from '../utils/missionen.js';
 export default function Quiz() {
   const { modulId } = useParams();
   const [searchParams] = useSearchParams();
+  const { state } = useLocation();
   const frageParam = searchParams.get('frage');
+  const fromSearch = typeof state?.resultSearch === 'string';
+  const backTo = fromSearch ? { pathname: '/suche', search: state.resultSearch } : `/lernen/${modulId}`;
   const { daten: modul } = useApi(() => api.get(`/module/${modulId}`), [modulId]);
   const { daten: alleModule } = useApi(() => api.get('/module'), []);
   const { daten: fragenRaw, laden } = useApi(() => api.get(`/fragen?modulId=${modulId}`), [modulId]);
 
   const optionenStand = quizOptionenStore.get();
-  const [schwierigkeit, setSchwierigkeit] = useState(optionenStand.schwierigkeit || 'alle');
+  // Eine direkt gewählte Frage muss auch bei einem abweichenden gespeicherten Filter erscheinen.
+  const [schwierigkeit, setSchwierigkeit] = useState(() => frageParam ? 'alle' : optionenStand.schwierigkeit || 'alle');
   const [anzahl, setAnzahl] = useState(() => {
     const ausUrl = Number(searchParams.get('anzahl') || 0);
     return ausUrl > 0 ? ausUrl : Number(optionenStand.anzahl) || 0;
@@ -37,6 +41,11 @@ export default function Quiz() {
   const [position, setPosition] = useState(0);
   const [auswahl, setAuswahl] = useState([]);
   const [freitext, setFreitext] = useState('');
+  const [checking, setChecking] = useState(false);
+  const activeCheck = useRef(null);
+  const feedbackHeading = useRef(null);
+  const nextHeading = useRef(null);
+  useEffect(() => () => { activeCheck.current = null; }, []);
   const [feedback, setFeedback] = useState(null);
   const [richtig, setRichtig] = useState(0);
   const [verlauf, setVerlauf] = useState([]);
@@ -92,6 +101,8 @@ export default function Quiz() {
     setVerlauf([]);
     setNurFehler(false);
     setSessionKey(Date.now());
+    activeCheck.current = null;
+    setChecking(false);
     setFeedback(null);
     setAuswahl([]);
     setFreitext('');
@@ -101,6 +112,8 @@ export default function Quiz() {
     starteQuiz();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fragenRaw, schwierigkeit, anzahl, frageParam]);
+
+  useEffect(() => { if (feedback) feedbackHeading.current?.focus(); }, [feedback]);
 
   const frageAktuell = reihenfolge[position];
   const zeigeFrageAnsicht = !laden && position < reihenfolge.length && !!frageAktuell;
@@ -130,7 +143,7 @@ export default function Quiz() {
       <div>
         <header className="main-header">
           <div>
-            <Link to={`/lernen/${modulId}`} className="small">← Modul</Link>
+            <Link to={backTo} state={state?.moduleOrigin} className="small">{fromSearch ? '← Suchergebnisse' : '← Modul'}</Link>
             <h1 className="mb-0 mt-2">Quizmodus</h1>
           </div>
         </header>
@@ -150,7 +163,7 @@ export default function Quiz() {
   const optionen = optionenListe(frage);
 
   function toggle(letter) {
-    if (feedback) return;
+    if (feedback || activeCheck.current) return;
     if (frage.typ === 'SC') {
       setAuswahl([letter]);
     } else {
@@ -166,11 +179,14 @@ export default function Quiz() {
       const zuOriginal = frage.gemischt?.anzeigeZuOriginal || {};
       antwort = auswahl.map((l) => zuOriginal[l] || l).sort().join(',');
     }
-    if (!antwort) return;
-
+    if (!antwort || feedback || activeCheck.current) return;
+    const request = {};
+    activeCheck.current = request;
+    setChecking(true);
     setPruefFehler('');
     try {
       const erg = await api.post(`/fragen/${frage.id}/pruefen`, { antwort });
+      if (activeCheck.current !== request) return;
       setFeedback(erg);
       progressStore.record(frage.id, erg.richtig, frage.modul_id);
       if (erg.richtig) {
@@ -209,7 +225,12 @@ export default function Quiz() {
         { frage, richtig: erg.richtig, nutzerAntwort: antwort, erwartet: erg.erwartet, erklaerung: erg.erklaerung },
       ]);
     } catch (e) {
-      setPruefFehler(e.message);
+      if (activeCheck.current === request) setPruefFehler(e.message);
+    } finally {
+      if (activeCheck.current === request) {
+        activeCheck.current = null;
+        setChecking(false);
+      }
     }
   }
 
@@ -218,6 +239,7 @@ export default function Quiz() {
     setFreitext('');
     setFeedback(null);
     setPosition((p) => p + 1);
+    requestAnimationFrame(() => nextHeading.current?.focus());
   }
 
   const originalZuAnzeigeMap = {};
@@ -238,7 +260,7 @@ export default function Quiz() {
       <header className="main-header">
         <div>
           <div className="flex wrap" style={{ gap: 6, alignItems: 'center' }}>
-            <Link to={`/lernen/${modulId}`} className="small">← Modul</Link>
+            <Link to={backTo} state={state?.moduleOrigin} className="small">{fromSearch ? '← Suchergebnisse' : '← Modul'}</Link>
             <span className="small text-muted">{modul?.titel || modulId}</span>
           </div>
           <h1 className="mb-0 mt-1">Quizmodus</h1>
@@ -258,20 +280,23 @@ export default function Quiz() {
                 <span className={`badge badge-${frage.schwierigkeit}`}>{frage.schwierigkeit}</span>
                 <span className="small text-muted">{frage.thema}</span>
               </div>
-              <h2 style={{ fontSize: '1.25rem', lineHeight: 1.4 }}>{frage.frage}</h2>
+              <h2 ref={nextHeading} tabIndex={-1} style={{ fontSize: '1.25rem', lineHeight: 1.4 }}>{frage.frage}</h2>
 
               {frage.typ === 'FT' ? (
-                <textarea
-                  className="input mt-2"
-                  rows={4}
-                  value={freitext}
-                  disabled={!!feedback}
-                  onChange={(e) => setFreitext(e.target.value)}
-                  placeholder="Antwort eingeben …"
-                />
+                <div className="field mt-2">
+                  <label htmlFor="quiz-answer">Deine Antwort</label>
+                  <textarea id="quiz-answer"
+                    className="input"
+                    rows={4}
+                    value={freitext}
+                    disabled={checking || !!feedback}
+                    onChange={(e) => setFreitext(e.target.value)}
+                    placeholder="Antwort eingeben …"
+                  />
+                </div>
               ) : (
                 <div className="mt-2">
-                  <FrageKarte frage={frage} auswahl={auswahl} onToggle={toggle} optionen={frage.gemischt?.liste} />
+                  <FrageKarte frage={frage} auswahl={auswahl} onToggle={toggle} disabled={checking || !!feedback} optionen={frage.gemischt?.liste} />
                 </div>
               )}
 
@@ -279,15 +304,15 @@ export default function Quiz() {
                 <button
                   className="btn btn-primary mt-3"
                   onClick={pruefen}
-                  disabled={frage.typ === 'FT' ? !freitext.trim() : auswahl.length === 0}
+                  disabled={checking || (frage.typ === 'FT' ? !freitext.trim() : auswahl.length === 0)}
                 >
-                  Antwort prüfen [Enter]
+                  {checking ? 'Antwort wird geprüft …' : 'Antwort prüfen [Enter]'}
                 </button>
               )}
 
               {feedback && (
                 <div className={`alert ${feedback.richtig ? 'alert-success' : 'alert-danger'} mt-3`}>
-                  <strong>{feedback.richtig ? '✓ Richtig!' : '✗ Leider falsch.'}</strong>
+                  <h3 ref={feedbackHeading} tabIndex={-1} className="mb-0">{feedback.richtig ? '✓ Richtig!' : '✗ Leider falsch.'}</h3>
                   {!feedback.richtig && feedback.erwartet && (
                     <div className="small mt-1">Richtige Antwort: {erwartetAnzeige || feedback.erwartet}</div>
                   )}
@@ -333,8 +358,8 @@ export default function Quiz() {
             <div className="card">
               <h2 className="mb-0" style={{ fontSize: '1.05rem' }}>Einstellungen</h2>
               <div className="field mt-2">
-                <label className="small text-muted">Schwierigkeit</label>
-                <select
+                <label htmlFor="quiz-difficulty" className="small text-muted">Schwierigkeit</label>
+                <select id="quiz-difficulty"
                   className="select"
                   value={schwierigkeit}
                   onChange={(e) => aendereOptionen({ schwierigkeit: e.target.value })}
@@ -346,8 +371,8 @@ export default function Quiz() {
                 </select>
               </div>
               <div className="field mt-2">
-                <label className="small text-muted">Fragenumfang</label>
-                <select
+                <label htmlFor="quiz-count" className="small text-muted">Fragenumfang</label>
+                <select id="quiz-count"
                   className="select"
                   value={anzahlAnzeige}
                   onChange={(e) => aendereOptionen({ anzahl: Number(e.target.value) })}
@@ -368,7 +393,7 @@ export default function Quiz() {
           <div>
             <div className="card mb-2">
               <div className="flex-between wrap">
-                <h2 className="mb-0">Detaillierte Auswertung</h2>
+                <h2 ref={nextHeading} tabIndex={-1} className="mb-0">Detaillierte Auswertung</h2>
                 <div className="flex wrap" style={{ gap: 8 }}>
                   <button className={`btn btn-sm ${nurFehler ? 'btn-ghost' : 'btn-primary'}`} onClick={() => setNurFehler(false)}>
                     Alle ({verlauf.length})
@@ -456,7 +481,7 @@ export default function Quiz() {
 
               <button className="btn btn-primary btn-block" onClick={starteQuiz}>Quiz wiederholen</button>
               <Link className="btn btn-ghost btn-block mt-1" to="/karteikarten">Karteikarten trainieren</Link>
-              <Link className="btn btn-ghost btn-block mt-1" to={`/lernen/${modulId}`}>Zurück zum Modul</Link>
+              <Link className="btn btn-ghost btn-block mt-1" to={backTo} state={state?.moduleOrigin}>{fromSearch ? 'Zurück zu den Suchergebnissen' : 'Zurück zum Modul'}</Link>
             </div>
           </aside>
         </div>

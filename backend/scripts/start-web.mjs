@@ -23,7 +23,11 @@ export function needsBuild(frontend, output) {
   const index = path.join(output, 'index.html');
   if (!fs.existsSync(index)) return true;
   const inputTime = Math.max(fs.statSync(frontend).mtimeMs, ...[
-    'src', 'public', 'index.html', 'vite.config.js', 'package.json', 'package-lock.json',
+    'src', 'public', 'index.html', 'vite.config.js', 'advanced-vendor.mjs', 'pwa-shell.mjs',
+    'workshop-search.mjs', 'journey-practice-search.mjs', 'package.json', 'package-lock.json',
+    'course-template/package.json', 'course-template/package-lock.json', 'course-template/tsconfig.json',
+    'course-template/README.md', 'course-template/model.js', 'course-template/tests/model.test.js',
+    'course-template/main.tsx', 'course-template/App.tsx',
     '.env', '.env.local', '.env.production', '.env.production.local',
   ].map((name) => newestFile(path.join(frontend, name))));
   return inputTime > fs.statSync(index).mtimeMs;
@@ -63,8 +67,9 @@ async function openBrowser(url) {
 
 async function main() {
   console.log('AzubiPrep wird vorbereitet …');
-  if (Number(process.versions.node.split('.')[0]) < 20) {
-    throw new Error('Bitte Node.js ab Version 20 installieren und erneut starten.');
+  const [major, minor] = process.versions.node.split('.').map(Number);
+  if (major < 22 || (major === 22 && minor < 13)) {
+    throw new Error('AzubiPrep benötigt Node.js ab 22.13. Bitte die aktuelle Version aus Node 24 LTS installieren und erneut starten.');
   }
   if (!fs.existsSync(path.join(projectRoot, 'backend/node_modules/express/package.json'))) {
     throw new Error('Die einmalige Einrichtung fehlt: Im Ordner backend muss npm ci ausgeführt werden.');

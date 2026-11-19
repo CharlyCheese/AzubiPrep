@@ -11,7 +11,7 @@ self.onmessage = ({ data }) => {
     if (!files || Object.keys(files).length > 50) throw new Error('Zu viele Dateien.');
     const sources = Object.entries(files).filter(([name]) => /\.(?:[jt]sx?)$/.test(name));
     if (sources.some(([name, file]) => !/^[\w./-]+$/.test(name) || name.includes('..') || typeof file.content !== 'string' || file.content.length > 131072)) throw new Error('Ungültige Quelldatei.');
-    const options = { target: ts.ScriptTarget.ES2020, module: ts.ModuleKind.CommonJS, strict: true, jsx: ts.JsxEmit.React, allowUmdGlobalAccess: true, esModuleInterop: true, skipLibCheck: true, noEmit: true, moduleResolution: ts.ModuleResolutionKind.Node10, lib: ['lib.es2020.d.ts', 'lib.dom.d.ts', 'lib.dom.iterable.d.ts'], types: ['react', 'react-dom'] };
+    const options = { target: ts.ScriptTarget.ES2020, module: ts.ModuleKind.ESNext, strict: true, jsx: ts.JsxEmit.React, allowUmdGlobalAccess: true, esModuleInterop: true, skipLibCheck: true, noEmit: true, moduleResolution: ts.ModuleResolutionKind.Bundler, lib: ['lib.es2020.d.ts', 'lib.dom.d.ts', 'lib.dom.iterable.d.ts'], types: ['react', 'react-dom'] };
     const vfs = { ...libraries, ...Object.fromEntries(sources.map(([name, file]) => ['/project/' + name, file.content])) };
     const host = {
       getSourceFile: (name, language) => Object.hasOwn(vfs, name) ? ts.createSourceFile(name, vfs[name], language) : undefined,
@@ -35,7 +35,9 @@ self.onmessage = ({ data }) => {
       };
       walk(source);
       for (const target of imports) if (!target.startsWith('./') && !target.startsWith('../') && !['react', 'react-dom/client', 'react-router-dom', 'node:test', 'node:assert/strict'].includes(target)) throw new Error('Nicht freigegebenes Modul: ' + target);
-      const result = ts.transpileModule(file.content, { fileName: name, compilerOptions: { ...options, noEmit: false }, reportDiagnostics: true });
+      // Die Typprüfung löst moderne Paketexporte auf. Das Übungsmodell führt
+      // die fertigen Module mit seinem eigenen CommonJS-Lader aus.
+      const result = ts.transpileModule(file.content, { fileName: name, compilerOptions: { target: options.target, jsx: options.jsx, strict: true, esModuleInterop: true, module: ts.ModuleKind.CommonJS }, reportDiagnostics: true });
       for (const d of result.diagnostics || []) diagnostics.push(name + ': ' + ts.flattenDiagnosticMessageText(d.messageText, '\n'));
       return { name, code: result.outputText, module: ts.isExternalModule(source) };
     });

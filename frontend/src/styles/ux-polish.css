@@ -130,3 +130,6 @@ a:focus-visible {
     transition-duration: 0.001s !important;
   }
 }
+
+.exam-options .option-row, .quiz-options .option-row { width: 100%; font: inherit; color: var(--text); text-align: start; }
+.flashcard-size { display: inline-flex; align-items: center; gap: .4rem; margin: 0; }

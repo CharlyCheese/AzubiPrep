@@ -4,7 +4,7 @@ title AzubiPrep - Webversion
 cd /d "%~dp0"
 where node >nul 2>&1
 if errorlevel 1 (
-  echo AzubiPrep braucht einmalig Node.js ab Version 20.
+  echo AzubiPrep braucht einmalig Node.js, empfohlen ist die aktuelle Version aus Node 24 LTS.
   echo Bitte Node.js installieren und diese Datei danach erneut oeffnen.
   echo Download: https://nodejs.org/
   pause

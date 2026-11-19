@@ -59,7 +59,6 @@ try {
     }
     sessionStorage.setItem('azubiprep.begruessung-gezeigt', 'true');
     localStorage.setItem('azubiprep.tour-gezeigt', 'true');
-    localStorage.setItem('azubiprep.landing-gesehen', 'true');
   }, { questions: demoQuestions.map(({ id, modul_id }) => ({ id, modul_id })) });
   async function visit(route) {
     await page.goto(runtime.url + route); await page.locator('main h1').waitFor();
@@ -74,9 +73,9 @@ try {
     await page.screenshot({ path: path.join(captures, `${name}.png`), animations: 'disabled' }); captured.push(name);
     console.log(`Aufgenommen: ${name}`);
   }
-  for (const [name, route] of [['dashboard', '/'], ['lernbereich', '/lernen'], ['karteikarten', '/karteikarten?modulId=HARDWARE'], ['pruefungssimulation', '/pruefung'], ['statistik-abzeichen', '/statistik'], ['lernreise', '/lernreise'], ['lernkalender', '/kalender'], ['notizen', '/notizen'], ['einstellungen', '/einstellungen']]) {
+  for (const [name, route] of [['dashboard', '/dashboard'], ['lernbereich', '/lernen'], ['karteikarten', '/karteikarten?modulId=HARDWARE'], ['pruefungssimulation', '/pruefung'], ['statistik-abzeichen', '/statistik'], ['lernreise', '/lernreise'], ['lernkalender', '/kalender'], ['notizen', '/notizen'], ['einstellungen', '/einstellungen']]) {
     await visit(route);
-    if (name === 'dashboard') await expect(page.getByText(`von ${runtime.store.get().gesamtFragen} im Bestand`, { exact: true })).toBeVisible();
+    if (name === 'dashboard') await expect(page.getByRole('heading', { name: 'Dein Lernstand' })).toBeVisible();
     if (name === 'lernbereich') await page.getByRole('button', { name: /^LF2/ }).click();
     await capture(name);
   }

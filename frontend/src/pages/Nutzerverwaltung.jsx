@@ -2,27 +2,41 @@
 // schlank (nur Liste + Reset-Button), keine vollständige Nutzerverwaltung
 // (Rollenvergabe bleibt weiterhin bewusst per SQL, siehe CONTENT-001-Brief)
 // – dieser Task deckt gezielt nur BE-007 (Passwort-Reset) ab.
-import { useState, useSyncExternalStore } from 'react';
+import { useEffect, useRef, useState, useSyncExternalStore } from 'react';
 import { Link } from 'react-router-dom';
 import { useApi } from '../utils/useApi.js';
 import { api } from '../api/client.js';
 import { authStore } from '../store/authStore.js';
+import '../styles/account.css';
 
 export default function Nutzerverwaltung() {
   const auth = useSyncExternalStore(authStore.subscribe, authStore.snapshot);
-  const istAdmin = auth?.user?.rolle === 'admin';
+  const istAdmin = Boolean(auth?.token) && auth.user?.rolle === 'admin';
 
-  const [reloadKey, setReloadKey] = useState(0);
   const { daten: nutzer, laden, fehler } = useApi(
     () => (istAdmin ? api.get('/admin/users') : Promise.resolve([])),
-    [istAdmin, reloadKey],
+    [istAdmin],
   );
 
   const [linkFuer, setLinkFuer] = useState(null); // { email, link, laeuftAbAm }
   const [erzeugenFehler, setErzeugenFehler] = useState('');
+  const [pendingId, setPendingId] = useState(null);
+  const [suche, setSuche] = useState('');
+  const [kopierMeldung, setKopierMeldung] = useState('');
+  const linkRef = useRef(null);
+  const triggerRef = useRef(null);
+  const suchRef = useRef(null);
+  const gefiltert = (nutzer || []).filter(n => n.email.toLowerCase().includes(suche.trim().toLowerCase()));
 
-  async function resetLinkErzeugen(nutzerEintrag) {
+  useEffect(() => {
+    if (linkFuer) linkRef.current?.focus();
+  }, [linkFuer]);
+
+  async function resetLinkErzeugen(nutzerEintrag, trigger) {
+    triggerRef.current = trigger;
+    setPendingId(nutzerEintrag.id);
     setErzeugenFehler('');
+    setKopierMeldung('');
     setLinkFuer(null);
     try {
       const erg = await api.post(`/admin/users/${nutzerEintrag.id}/passwort-reset`, {});
@@ -30,15 +44,18 @@ export default function Nutzerverwaltung() {
       setLinkFuer({ email: erg.email, link, laeuftAbAm: erg.laeuftAbAm });
     } catch (err) {
       setErzeugenFehler(err.message);
+    } finally {
+      setPendingId(null);
     }
   }
 
   async function linkKopieren() {
     try {
       await navigator.clipboard.writeText(linkFuer.link);
+      setKopierMeldung('Link kopiert.');
     } catch {
-      // Zwischenablage kann in manchen Kontexten (z. B. ohne HTTPS) fehlen –
-      // der Link steht ohnehin sichtbar im Textfeld, einfach manuell markieren.
+      linkRef.current?.focus();
+      setKopierMeldung('Kopiere den markierten Link über das Kontextmenü oder die Tastatur.');
     }
   }
 
@@ -47,7 +64,8 @@ export default function Nutzerverwaltung() {
       <div>
         <header className="main-header"><h1 className="mb-0">Nutzerverwaltung</h1></header>
         <div className="card">
-          <p className="text-muted">Bitte zuerst in <Link to="/profil">Profil</Link> einloggen.</p>
+          <p className="text-muted">Melde dich mit einem Admin-Konto an, um Konten zu verwalten.</p>
+          <Link className="btn btn-primary" to="/profil#konto">Zur Anmeldung</Link>
         </div>
       </div>
     );
@@ -59,20 +77,19 @@ export default function Nutzerverwaltung() {
         <header className="main-header"><h1 className="mb-0">Nutzerverwaltung</h1></header>
         <div className="card">
           <p className="text-muted">Dieser Bereich ist nur für Admin-Konten zugänglich.</p>
+          <Link className="btn btn-ghost" to="/profil">Zum Profil</Link>
         </div>
       </div>
     );
   }
 
   return (
-    <div>
+    <div className="account-page">
       <header className="main-header">
         <div>
           <h1 className="mb-0">Nutzerverwaltung</h1>
           <p className="text-muted mt-0">
-            Passwort-Reset-Links erzeugen. Der Link muss außerhalb der App
-            (z. B. Chat, persönlich) an die Person geschickt werden – es gibt
-            keinen automatischen E-Mail-Versand.
+            Erzeuge einen Link zum Zurücksetzen des Passworts und gib ihn persönlich oder per Chat weiter.
           </p>
         </div>
       </header>
@@ -81,46 +98,43 @@ export default function Nutzerverwaltung() {
         <div className="card mb-2">
           <div className="flex-between wrap mb-1">
             <h2 className="mb-0">Reset-Link für {linkFuer.email}</h2>
-            <button type="button" className="btn btn-ghost btn-sm" onClick={() => setLinkFuer(null)}>Schließen</button>
+            <button type="button" className="btn btn-ghost btn-sm" onClick={() => {
+              setLinkFuer(null);
+              (triggerRef.current?.isConnected ? triggerRef.current : suchRef.current)?.focus();
+            }}>Schließen</button>
           </div>
           <p className="small text-muted mt-0">
             Nur jetzt sichtbar – wird nicht erneut angezeigt. Gültig bis{' '}
             {new Date(linkFuer.laeuftAbAm).toLocaleString('de-DE', { dateStyle: 'short', timeStyle: 'short' })}.
           </p>
-          <input className="input" readOnly value={linkFuer.link} onFocus={(e) => e.target.select()} />
+          <label htmlFor="admin-reset-link">Einmal-Link für {linkFuer.email}</label>
+          <input id="admin-reset-link" className="input" ref={linkRef} readOnly value={linkFuer.link} onFocus={(e) => e.target.select()} />
           <button type="button" className="btn btn-primary btn-sm mt-1" onClick={linkKopieren}>Link kopieren</button>
+          {kopierMeldung && <p role="status" className="small">{kopierMeldung}</p>}
         </div>
       )}
-      {erzeugenFehler && <div className="alert alert-danger">{erzeugenFehler}</div>}
+      {erzeugenFehler && <div className="alert alert-danger" role="alert">{erzeugenFehler}</div>}
 
       {laden && <p className="text-muted">Lädt …</p>}
       {fehler && <p className="text-muted">Fehler: {fehler}</p>}
 
       {!laden && !fehler && (
-        <div className="card reise-tabelle-wrapper">
-          <table className="reise-tabelle">
-            <thead>
-              <tr>
-                <th>E-Mail</th>
-                <th>Fachrichtung</th>
-                <th>Rolle</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              {(nutzer || []).map((n) => (
-                <tr key={n.id}>
-                  <td>{n.email}</td>
-                  <td className="small text-muted">{n.fachrichtung || '–'}</td>
-                  <td><span className="badge badge-neutral">{n.rolle}</span></td>
-                  <td><button type="button" className="btn btn-ghost btn-sm" onClick={() => resetLinkErzeugen(n)}>Reset-Link erzeugen</button></td>
-                </tr>
-              ))}
-              {(nutzer || []).length === 0 && (
-                <tr><td colSpan={4} className="text-muted">Keine Konten vorhanden.</td></tr>
-              )}
-            </tbody>
-          </table>
+        <div className="card">
+          <label htmlFor="admin-kontosuche">Konto nach E-Mail suchen</label>
+          <input type="search" className="input" id="admin-kontosuche" ref={suchRef} value={suche} onChange={e => setSuche(e.target.value)} />
+          <ul className="management-list" aria-label="Konten">
+            {gefiltert.map(n => <li key={n.id}>
+              <div>
+                <strong>{n.email}</strong>
+                <div className="small text-muted">Fachrichtung: {n.fachrichtung || '–'} · Rolle: {n.rolle}</div>
+              </div>
+              <button type="button" className="btn btn-ghost btn-sm" aria-label={`Reset-Link erzeugen für ${n.email}`}
+                disabled={pendingId !== null} onClick={e => resetLinkErzeugen(n, e.currentTarget)}>
+                {pendingId === n.id ? 'Link wird erzeugt …' : 'Reset-Link erzeugen'}
+              </button>
+            </li>)}
+          </ul>
+          {gefiltert.length === 0 && <p role="status" className="text-muted">{nutzer?.length ? 'Kein Konto für diese Suche gefunden.' : 'Keine Konten vorhanden.'}</p>}
         </div>
       )}
     </div>

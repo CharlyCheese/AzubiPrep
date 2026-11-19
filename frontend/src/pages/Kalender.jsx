@@ -3,6 +3,7 @@ import { useApi } from '../utils/useApi.js';
 import { api } from '../api/client.js';
 import { activityStore, flashcardStore, profileStore, planStore } from '../store/localStore.js';
 import { Link } from 'react-router-dom';
+import AppDialog from '../components/AppDialog.jsx';
 
 const WOCHENTAGE = ['Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So'];
 const MONATE = ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'];
@@ -77,7 +78,13 @@ export default function Kalender() {
   // Formular für eigene Lerninhalte
   const [planTitel, setPlanTitel] = useState('');
   const [planModul, setPlanModul] = useState('');
-  function planHinzufuegen() {
+  function schliessePlanung() {
+    setTagAuswahl(null);
+    setPlanTitel('');
+    setPlanModul('');
+  }
+  function planHinzufuegen(event) {
+    event.preventDefault();
     if (!tagAuswahl) return;
     planStore.add(tagAuswahl, { titel: planTitel, modulId: planModul });
     setPlanTitel('');
@@ -100,7 +107,7 @@ export default function Kalender() {
         </div>
       </header>
 
-      <div className="grid grid-4 mb-2">
+      <div className="calendar-metrics grid grid-4 mb-2">
         <div className="card">
           <div className="stat-value">{streak}</div>
           <div className="stat-label">Tage Lernserie 🔥</div>
@@ -149,13 +156,13 @@ export default function Kalender() {
                 istHeute ? 'heute' : '',
               ].filter(Boolean).join(' ');
               return (
-                <div
+                <button type="button"
                   key={key}
                   className={cls}
-                  role="button"
-                  tabIndex={0}
+                  aria-label={`${tag}. ${MONATE[monat]} ${jahr}`}
+                  aria-current={istHeute ? 'date' : undefined}
+                  aria-pressed={tagAuswahl === key}
                   onClick={() => setTagAuswahl(key)}
-                  onKeyDown={(e) => e.key === 'Enter' && setTagAuswahl(key)}
                   title={hatWiederholung ? 'Wiederholungen fällig' : geplant ? 'Eigene Planung' : 'Tag öffnen'}
                 >
                   {tag}
@@ -165,7 +172,7 @@ export default function Kalender() {
                       {geplant && <span className="cal-dot cal-dot-plan" title="Eigene Planung" />}
                     </span>
                   )}
-                </div>
+                </button>
               );
             })}
           </div>
@@ -206,31 +213,31 @@ export default function Kalender() {
         </div>
 
         {tagAuswahl && (
-          <div className="card">
+          <AppDialog className="calendar-dialog" titleId="day-plan-title" onDismiss={schliessePlanung}>
           <div className="flex-between wrap mb-2">
-            <h2 className="mb-0">
+            <h2 className="mb-0" id="day-plan-title">
               Planung: {new Date(`${tagAuswahl}T12:00:00`).toLocaleDateString('de-DE', { weekday: 'long', day: '2-digit', month: 'long', year: 'numeric' })}
             </h2>
-            <button className="btn btn-ghost btn-sm" onClick={() => setTagAuswahl(null)}>Schließen ✕</button>
+            <button className="btn btn-ghost btn-sm" onClick={schliessePlanung}>Schließen ✕</button>
           </div>
 
           <div className="grid grid-2">
             <div>
               <h3>Eigene Lerninhalte</h3>
-              <div className="flex wrap mb-2">
+              <form className="flex wrap mb-2" onSubmit={planHinzufuegen}>
                 <input
                   className="input"
                   style={{ flex: 1, minWidth: 160 }}
-                  value={planTitel}
+                  aria-label="Geplanter Lerninhalt" value={planTitel}
                   onChange={(e) => setPlanTitel(e.target.value)}
                   placeholder="z. B. SQL-Joins wiederholen"
                 />
-                <select className="select" style={{ width: 'auto' }} value={planModul} onChange={(e) => setPlanModul(e.target.value)}>
+                <select className="select" style={{ width: 'auto' }} aria-label="Modul zum geplanten Lerninhalt" value={planModul} onChange={(e) => setPlanModul(e.target.value)}>
                   <option value="">– Modul –</option>
                   {(module || []).map((m) => <option key={m.modul_id} value={m.modul_id}>{m.modul_id}</option>)}
                 </select>
-                <button className="btn btn-primary btn-sm" onClick={planHinzufuegen}>Hinzufügen</button>
-              </div>
+                <button className="btn btn-primary btn-sm" type="submit">Hinzufügen</button>
+              </form>
               {(plan[tagAuswahl] || []).length === 0 && <p className="text-muted small">Noch keine eigenen Lerninhalte für diesen Tag.</p>}
               {(plan[tagAuswahl] || []).map((p) => (
                 <div key={p.id} className="module-row">
@@ -264,7 +271,7 @@ export default function Kalender() {
                       style={{ width: 'auto' }}
                       min={heuteKey}
                       onChange={(e) => wiederVerschieben(k.frageId, e.target.value)}
-                      title="Wiederholung auf neues Datum verschieben"
+                      aria-label={`Wiederholung ${k.frageId} auf neues Datum verschieben`} title="Wiederholung auf neues Datum verschieben"
                     />
                   </div>
                 </div>
@@ -272,7 +279,7 @@ export default function Kalender() {
               <Link className="btn btn-ghost btn-sm" to="/karteikarten">Zum Karteikarten-Training →</Link>
             </div>
           </div>
-        </div>
+          </AppDialog>
         )}
       </div>
 

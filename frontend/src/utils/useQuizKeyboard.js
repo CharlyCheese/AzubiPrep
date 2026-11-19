@@ -22,11 +22,11 @@ export function useQuizKeyboard({
     if (!aktiv) return undefined;
 
     function handleKeyDown(event) {
-      // Wenn der Nutzer gerade in einem Textfeld tippt, keine Quiz-Shortcuts abfangen
-      const tag = document.activeElement?.tagName?.toLowerCase();
-      if (istEingabeAktiv || tag === 'input' || tag === 'textarea') {
-        return;
-      }
+      const target = event.target;
+      if (event.defaultPrevented || event.altKey || event.ctrlKey || event.metaKey || event.isComposing || istEingabeAktiv) return;
+      if (target instanceof Element && target.closest('input, textarea, select, [contenteditable="true"], dialog, [role="dialog"]')) return;
+      // Enter auf einem fokussierten Bedienelement gehört dem Element selbst.
+      if (event.key === 'Enter' && target instanceof Element && target.closest('button, a[href], summary, [role="button"]')) return;
 
       const key = event.key.toUpperCase();
 

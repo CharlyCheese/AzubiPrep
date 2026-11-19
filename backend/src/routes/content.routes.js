@@ -5,12 +5,44 @@ import { fragenAnzahlFachrichtung, moduleFuerFachrichtung, loadContent } from '.
 import { pruefeAntwort, musterloesungFT } from '../answer.js';
 import { adminSchutz, rateLimiter } from '../sicherheit.js';
 import { config } from '../config.js';
-import { listTheory } from '../theory.js';
+import { describeTheoryTopic, findTheoryTopic, listTheory } from '../theory.js';
+import { buildPublicSearchIndex, searchPublicContent, SEARCH_TYPES } from '../public-search.js';
+import { loadJourneyPracticeSearchMetadata, loadWorkshopSearchMetadata } from '../workshop-search-metadata.js';
 
-export function buildContentRoutes(store) {
+export function buildContentRoutes(store, journey = null) {
   const router = Router();
+  const searchIndexes = new WeakMap();
 
   router.get('/theorie', (req, res) => res.json(listTheory(store.get(), req.query)));
+  router.get('/theorie/themen/:id', (req, res) => {
+    const content = store.get();
+    const topic = findTheoryTopic(content, req.params.id);
+    if (!topic) return res.status(404).json({ error: 'Thema nicht gefunden' });
+    const result = describeTheoryTopic(content, topic, req.query);
+    if (topic.kind === 'module') result.reading = content.theorieByModul?.get(topic.moduleIds[0]) || '';
+    res.json(result);
+  });
+
+  router.get('/suche/inhalte', async (req, res, next) => {
+    const q = typeof req.query.q === 'string' ? req.query.q.trim() : '';
+    if (q.length < 2 || q.length > 200) {
+      return res.status(400).json({ error: 'Bitte gib einen Suchbegriff mit 2 bis 200 Zeichen ein.' });
+    }
+    const { typ, seite, limit } = req.query;
+    if (typ && typ !== 'alle' && !SEARCH_TYPES.includes(typ)) {
+      return res.status(400).json({ error: 'Diese Trefferart ist unbekannt.' });
+    }
+    try {
+      const [workshop, practices] = await Promise.all([
+        loadWorkshopSearchMetadata(config.frontendDist), loadJourneyPracticeSearchMetadata(config.frontendDist),
+      ]);
+      const content = store.get();
+      if (!searchIndexes.has(content)) searchIndexes.set(content, buildPublicSearchIndex(content, journey, workshop, practices));
+      res.json(searchPublicContent(searchIndexes.get(content), { q, typ, seite, limit }));
+    } catch (err) {
+      next(err);
+    }
+  });
 
   router.get('/health', (req, res) => {
     const c = store.get();

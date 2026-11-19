@@ -182,6 +182,7 @@ test('WISO-Abschluss, Reihenfolge, verfügbares PM und Tastatur bleiben mobil na
   await other.evaluate(({key, raw}) => localStorage.setItem(key, raw), { key: journeyStorageKey(topics[4].id), raw: original });
   await expect(completed).toBeVisible(); await other.close();
   await page.setViewportSize({ width: 390, height: 844 });
+  await page.locator('.journey-directory > summary').click();
   const summary = stages.nth(1).locator('summary');
   await summary.focus(); await page.keyboard.press('Enter');
   await expect(stages.nth(1)).toHaveAttribute('open', '');
@@ -196,11 +197,19 @@ test('WISO-Abschluss, Reihenfolge, verfügbares PM und Tastatur bleiben mobil na
 
 test('Freie Modulreise ordnet WISO und PM vor LF2 ein und behält alle Module', async ({ page }) => {
   await setup(page);
+  await page.getByRole('link', { name: 'Freie Modulreise', exact: true }).click();
   await page.getByRole('button', { name: 'Listenansicht', exact: true }).click();
   const links = await page.locator('.reise-tabelle tbody a').evaluateAll(items => items.map(item => item.getAttribute('href')));
   expect(links).toHaveLength(10);
   expect(links.indexOf('/lernen/WISO')).toBeLessThan(links.indexOf('/lernen/PM'));
   expect(links.indexOf('/lernen/PM')).toBeLessThan(links.indexOf('/lernen/HARDWARE'));
+  const station = page.locator('.reise-tabelle a[href="/lernen/HARDWARE"]');
+  await station.click();
+  await page.getByRole('link', { name: 'Theorie lernen →' }).click();
+  await page.getByRole('link', { name: 'Glossar', exact: true }).click();
+  await page.getByRole('link', { name: '← Zum Modul HARDWARE' }).click();
+  await page.getByRole('main').getByRole('link', { name: '← Lernreise', exact: true }).click();
+  await expect(station).toBeFocused();
 });
 
 test('Electron: 16 Themen und WISO-Rückblick bleiben nach vollständigem Neustart im eigenen Profil', { tag: '@desktop' }, async ({}, info) => {

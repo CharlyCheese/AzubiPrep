@@ -101,10 +101,10 @@ export default function Pruefung() {
         </div>
       </header>
 
-      <div className="card">
+      <div className="card exam-setup">
         <div className="field">
-          <label>Fachrichtung</label>
-          <select className="select" value={fachrichtung} onChange={(e) => setFachrichtung(e.target.value)}>
+          <label htmlFor="exam-fachrichtung">Fachrichtung</label>
+          <select id="exam-fachrichtung" className="select" value={fachrichtung} onChange={(e) => setFachrichtung(e.target.value)}>
             {(fachrichtungen || []).map((fr) => (
               <option key={fr.code} value={fr.code}>{fr.code} – {fr.name}</option>
             ))}
@@ -113,24 +113,24 @@ export default function Pruefung() {
 
         <div className="grid grid-3">
           <div className="field">
-            <label>Anzahl Fragen</label>
-            <select className="select" value={anzahl} onChange={(e) => setAnzahl(Number(e.target.value))}>
+            <label htmlFor="exam-anzahl">Anzahl Fragen</label>
+            <select id="exam-anzahl" className="select" value={anzahl} onChange={(e) => setAnzahl(Number(e.target.value))}>
               {[10, 15, 20, 30, 40, 60].map((n) => (
                 <option key={n} value={n}>{n} Fragen</option>
               ))}
             </select>
           </div>
           <div className="field">
-            <label>Zeitlimit (Minuten)</label>
-            <select className="select" value={zeitlimit} onChange={(e) => setZeitlimit(Number(e.target.value))}>
+            <label htmlFor="exam-zeitlimit">Zeitlimit (Minuten)</label>
+            <select id="exam-zeitlimit" className="select" value={zeitlimit} onChange={(e) => setZeitlimit(Number(e.target.value))}>
               {[15, 30, 45, 60, 90, 120].map((n) => (
                 <option key={n} value={n}>{n} Minuten</option>
               ))}
             </select>
           </div>
           <div className="field">
-            <label>Schwierigkeit (optional)</label>
-            <select className="select" value={schwierigkeit} onChange={(e) => setSchwierigkeit(e.target.value)}>
+            <label htmlFor="exam-schwierigkeit">Schwierigkeit (optional)</label>
+            <select id="exam-schwierigkeit" className="select" value={schwierigkeit} onChange={(e) => setSchwierigkeit(e.target.value)}>
               <option value="alle">Alle Schwierigkeiten</option>
               <option value="leicht">Nur leicht</option>
               <option value="mittel">Nur mittel</option>
@@ -139,25 +139,21 @@ export default function Pruefung() {
           </div>
         </div>
 
-        <div className="alert alert-info">
-          <strong>Hinweis:</strong> Die Simulation mischt zufällige Fragen aus allen Modulen deiner Fachrichtung
-          (inkl. gemeinsamer Module WiSo/Projektmanagement) und zieht Themen, in denen du bisher unter 60 %
-          richtig lagst, dabei bevorzugt. Bestehensgrenze: 50 %.
-          <div className="small mt-1">
-            Ergebnisse dienen der <strong>Selbstkontrolle</strong> und werden nur lokal gespeichert – sie
-            sind kein zertifizierter Prüfungsnachweis.
-          </div>
-        </div>
+        <p className="exam-rule">Bestanden ab 50 % richtigen Antworten.</p>
 
-        {fehler && <div className="alert alert-danger">{fehler}</div>}
+        {fehler && <div role="alert" className="alert alert-danger">{fehler}</div>}
 
-        <button className="btn btn-primary btn-block" onClick={starten} disabled={laden}>
+        <button className="btn btn-primary" onClick={starten} disabled={laden}>
           {laden ? 'Generiere Prüfung …' : 'Prüfung starten ⏱'}
         </button>
 
-        <div className="flex wrap mt-2">
-          <Link className="btn btn-ghost btn-sm" to="/pruefung/verlauf">🗂️ Vergangene Prüfungen ansehen →</Link>
+        <div className="exam-review-link">
+          <Link className="btn btn-ghost btn-sm" to="/pruefung/verlauf">Prüfungsverlauf öffnen</Link>
         </div>
+        <details className="exam-details">
+          <summary>Wie werden die Fragen ausgewählt?</summary>
+          <p>Die Simulation mischt Aufgaben deiner Fachrichtung mit gemeinsamen Themen wie WISO und Projektmanagement. Themen mit bisher weniger als 60 % richtigen Antworten kommen häufiger vor. Das Ergebnis dient der Selbstkontrolle und wird lokal gespeichert.</p>
+        </details>
       </div>
     </div>
   );

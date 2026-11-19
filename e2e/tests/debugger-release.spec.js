@@ -49,6 +49,7 @@ function packageFiles(kind) {
   const executablePath = path.join(root, web ? 'AzubiPrep Web.exe' : 'AzubiPrep.exe');
   expect(fs.existsSync(executablePath), 'Das aktuelle Windows-Paket muss vorher gebaut werden.').toBe(true);
   for (const directory of [path.dirname(root), root, resources]) expect(fs.lstatSync(directory).isSymbolicLink()).toBe(false);
+  expect(fs.existsSync(path.join(resources, 'backend', '.env')), 'Paket darf keine lokale Konfiguration laden.').toBe(false);
   const requireDesktop = createRequire(path.join(repo, 'desktop/package.json'));
   const asar = requireDesktop('@electron/asar');
   const archive = path.join(resources, 'app.asar');
@@ -59,12 +60,50 @@ function packageFiles(kind) {
   return { resources, executablePath, archive, asar };
 }
 
-async function checkHealth(page, origin) {
-  const response = await page.request.get(`${origin}/api/health`);
-  expect(response.ok()).toBe(true);
-  const health = await response.json();
-  expect(health.status).toBe('ok');
-  expect(health.fragenAnzahl).toBeGreaterThanOrEqual(7000);
+async function checkPublicContent(page, origin) {
+  const get = async url => {
+    const response = await page.request.get(origin + url);
+    await expect(response).toBeOK();
+    return response.json();
+  };
+  const [health, journey, lessons, questions] = await Promise.all([
+    get('/api/health'), get('/api/journey/fiae/progress-catalog'), get('/workshop-search.json'),
+    get('/api/suche/inhalte?q=Pr%C3%BCfungsfrage&typ=fragen&limit=1'),
+  ]);
+  expect(health).toMatchObject({ status: 'ok', fragenAnzahl: 7000, modulAnzahl: 26, fachrichtungAnzahl: 4, warnungen: 0 });
+  expect(questions.total).toBe(health.fragenAnzahl);
+  expect(journey.readyTopics).toHaveLength(94);
+  expect(journey.readyTopics.flatMap(topic => topic.objectives)).toHaveLength(248);
+  const journeyQuestions = journey.readyTopics.flatMap(topic => topic.questionLinks.map(link => link.questionId));
+  expect(new Set(journeyQuestions).size).toBe(1316);
+  expect(lessons).toHaveLength(167);
+}
+
+async function checkWelcomeAndSearch(page, origin) {
+  const main = page.getByRole('main');
+  await expect(main.getByRole('heading', { name: 'Willkommen bei AzubiPrep', exact: true })).toBeVisible();
+  await main.getByRole('button', { name: /Ohne Konto weiter/ }).click();
+  await expect(page).toHaveURL(origin + '/dashboard');
+  await expect(main.getByRole('heading', { name: 'Dashboard', exact: true })).toBeVisible();
+  await page.getByRole('link', { name: 'Suche', exact: true }).click();
+  const search = main.getByRole('searchbox');
+  await search.fill('Gewinnkalkulation');
+  await search.press('Enter');
+  const pricing = 'Verkaufspreis, Gewinn und Marge';
+  await main.getByRole('link', { name: pricing, exact: true }).click();
+  await expect(page).toHaveURL(origin + '/lernreise/fiae/common-pm-pricing');
+  await expect(main.getByRole('heading', { name: 'Zuerst die Grundlage abschließen' })).toBeVisible();
+  await expect(main.getByText(`Für „${pricing}“`, { exact: false })).toBeVisible();
+  await main.getByRole('link', { name: /Suchergebnisse/ }).click();
+  await expect(search).toHaveValue('Gewinnkalkulation');
+  await search.fill('Flexbox');
+  await search.press('Enter');
+  const flexbox = 'Flexbox: Haupt- und Querachse';
+  await main.getByRole('link', { name: flexbox, exact: true }).click();
+  await expect(page).toHaveURL(origin + '/frontendkurs?lektion=flex-achsen');
+  await expect(main.getByRole('heading', { name: flexbox, exact: true })).toBeVisible();
+  await main.getByRole('link', { name: /Suchergebnisse/ }).click();
+  await expect(search).toHaveValue('Flexbox');
 }
 
 async function resume(page) {
@@ -87,8 +126,9 @@ async function drain(page, target) {
   throw Error('Paket-Debugger erreicht den erwarteten Abschluss nicht.');
 }
 
-async function checkExamples(page, origin) {
-  await checkHealth(page, origin);
+async function checkRelease(page, origin) {
+  await checkPublicContent(page, origin);
+  await checkWelcomeAndSearch(page, origin);
   await unterdrueckeOnboardingPopups(page);
   await page.goto(`${origin}/frontendkurs/debugger`);
   await openDebugger(page);
@@ -194,7 +234,7 @@ async function stopChild(child) {
   } finally { clearTimeout(timer); }
 }
 
-test('Release: Desktop-Paket startet React und TypeScript @desktop', async ({}, info) => {
+test('Release: Desktop-Paket startet mit Willkommen, öffnet Suchtreffer und führt React und TypeScript aus @desktop', async ({}, info) => {
   const files = packageFiles('desktop');
   const profile = testProfile(info);
   let app, child;
@@ -204,7 +244,7 @@ test('Release: Desktop-Paket startet React und TypeScript @desktop', async ({}, 
     child = app.process();
     const page = await app.firstWindow();
     await page.waitForURL(/^http:\/\/127\.0\.0\.1:/);
-    await checkExamples(page, new URL(page.url()).origin);
+    await checkRelease(page, new URL(page.url()).origin);
   } finally {
     if (app) {
       try { await app.close(); }
@@ -213,7 +253,7 @@ test('Release: Desktop-Paket startet React und TypeScript @desktop', async ({}, 
   }
 });
 
-test('Release: Web-Paketlaufzeit und frischer Browser führen React und TypeScript aus', async ({ browser }, info) => {
+test('Release: Web-Paket startet im frischen Browser mit Willkommen, öffnet Suchtreffer und führt React und TypeScript aus', async ({ browser }, info) => {
   const files = packageFiles('web');
   const profile = testProfile(info);
   const runtime = launchWebRuntime(files, profile, await freeLoopbackPort());
@@ -222,7 +262,8 @@ test('Release: Web-Paketlaufzeit und frischer Browser führen React und TypeScri
     const origin = await runtime.ready;
     context = await browser.newContext({ serviceWorkers: 'block' });
     const page = await context.newPage();
-    await checkExamples(page, origin);
+    await page.goto(origin);
+    await checkRelease(page, origin);
   } finally {
     try { await context?.close(); }
     finally {

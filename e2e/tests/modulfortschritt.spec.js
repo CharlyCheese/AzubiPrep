@@ -34,6 +34,7 @@ test('Lernbereich zeigt 20 von 100 und stuft nicht als beherrscht ein', async ({
 
 test('Lernreise führt das teilweise bearbeitete Modul weiterhin als nächste Station', async ({ page }) => {
   await page.goto('/lernreise');
+  await page.getByRole('link', { name: 'Freie Modulreise' }).click();
   await expect(page.getByText('0 / 1 Stationen beherrscht', { exact: true }).first()).toBeVisible();
   await expect(page.getByText('20 von 100 (20 %)', { exact: true })).toBeVisible();
   await expect(page.getByText('in Bearbeitung', { exact: true })).toBeVisible();

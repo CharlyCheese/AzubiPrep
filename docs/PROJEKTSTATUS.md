@@ -241,10 +241,10 @@ AzubiPrep/
 
 | Bereich | Technologie | Version |
 |---|---|---|
-| Laufzeit | Node.js | v24.19.0 |
+| Laufzeit | Node.js | v24.22.3 LTS |
 | Backend | Express | ^4.19.2 (+ cors) |
 | Frontend | React | ^18.3.1 |
-| Build/Routing | Vite ^5.4, React Router ^6.26 | – |
+| Build/Routing der App | Vite / React Router | 6.4.6 / 7.18.6 |
 | Persistenz | `localStorage` (kein SQL, kein Login) | – |
 | Inhalte | CSV (`;`-getrennt, UTF-8) + Markdown | – |
 

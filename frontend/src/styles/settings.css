@@ -1,0 +1,48 @@
+.settings-page .main-header h1, .settings-page .main-header p { margin: 0; }
+.settings-page .main-header p { color: var(--text-muted); margin-top: .2rem; }
+.settings-page .main-header { margin-bottom: 1rem; }
+.settings-page .btn { min-height: 44px; max-width: 100%; overflow-wrap: anywhere; white-space: normal; }
+.settings-quick, .settings-learning-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+  gap: .85rem;
+}
+.settings-page .settings-quick > .card, .settings-page .settings-learning-grid > .card {
+  margin: 0;
+  min-width: 0;
+  padding: clamp(.9rem, 1.6vw, 1.3rem);
+  overflow-wrap: anywhere;
+}
+.settings-quick h2, .settings-learning-grid h3 { font-size: 1.1rem; margin: 0 0 .55rem; }
+.settings-quick .small { margin: .45rem 0 0; }
+.settings-page .ki { margin: 1.3rem 0 1rem; }
+.settings-learning h2 { font-size: 1.25rem; margin: 0 0 .55rem; }
+.settings-learning label { font-weight: 600; }
+.settings-learning .ki-field select { min-height: 44px; min-width: 0; }
+.settings-learning .ki-actions { align-items: center; }
+.settings-learning .ki-material { border: 1px solid var(--border); }
+.settings-learning .ki-material > p:first-of-type { margin-top: .35rem; }
+.settings-learning .ki-material > p:last-child, .settings-provider > p:last-child { margin-bottom: 0; }
+.settings-learning .pilot-upload { position: relative; overflow: hidden; }
+.settings-learning .pilot-upload input[type=file] {
+  position: absolute; inset: 0; margin: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer;
+}
+.settings-learning .pilot-upload:focus-within, .settings-page :focus-visible {
+  outline: 3px solid var(--primary); outline-offset: 3px;
+}
+.settings-page :is(#ki-anbieter, #lernunterlagen) { scroll-margin-top: 1rem; }
+.settings-page summary { min-height: 44px; align-content: center; cursor: pointer; font-weight: 600; }
+.settings-info { margin-top: .6rem; border-top: 1px solid var(--border); }
+.settings-page > .settings-details { padding: .2rem 1rem; }
+.settings-page > .settings-details + .settings-details { margin-top: .5rem; }
+.settings-details[open] { padding-bottom: 1rem; }
+.settings-delete > summary { color: var(--danger-ink); }
+@media (max-width: 600px) {
+  .settings-quick { gap: .5rem; }
+  .settings-quick > .card { display: flex; align-items: center; flex-wrap: wrap; gap: .35rem .65rem; }
+  .settings-quick h2, .settings-quick .small { margin: 0; }
+  .settings-quick .small { flex-basis: 100%; }
+}
+
+.settings-links { display: flex; flex-wrap: wrap; gap: 0 .9rem; }
+.settings-links a { display: inline-flex; align-items: center; min-height: 44px; color: var(--primary-ink); text-decoration: underline; text-underline-offset: .15em; font-weight: 600; }

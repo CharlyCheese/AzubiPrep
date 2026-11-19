@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { useExamStore, setExamState } from '../store/examStore.js';
+import { getExamState, useExamStore, setExamState } from '../store/examStore.js';
 import { examStore, progressStore, activityStore, flashcardStore, todayKey } from '../store/localStore.js';
 import { gamificationStore } from '../store/gamificationStore.js';
 import { XP_REGELN } from '../utils/gamification.js';
@@ -21,7 +21,8 @@ export default function PruefungErgebnis() {
 
   // Ergebnis genau einmal lokal speichern (StrictMode-sicher)
   useEffect(() => {
-    if (!ergebnis || store.gespeichert) return;
+    const current = getExamState();
+    if (!ergebnis || current.ergebnis !== ergebnis || current.gespeichert) return;
     examStore.add({ ...ergebnis, fachrichtung: konfig?.fachrichtung, schwierigkeit: konfig?.schwierigkeit, anzahl: ergebnis.gesamt });
     ergebnis.detail?.forEach((d) => {
       progressStore.record(d.frageId, d.richtig, d.modulId);
@@ -56,7 +57,10 @@ export default function PruefungErgebnis() {
     return (
       <div className="empty">
         Kein Prüfungsergebnis vorhanden.
-        <div className="mt-2"><Link className="btn btn-primary" to="/pruefung">Neue Prüfung starten</Link></div>
+        <div className="flex wrap mt-2">
+          <Link className="btn btn-ghost" to="/pruefung/verlauf">Prüfungsverlauf öffnen</Link>
+          <Link className="btn btn-primary" to="/pruefung">Neue Prüfung starten</Link>
+        </div>
       </div>
     );
   }
@@ -71,7 +75,8 @@ export default function PruefungErgebnis() {
           <h1 className="mb-0">Prüfungsergebnis</h1>
           <p className="text-muted mt-0">{konfig?.fachrichtung} · {ergebnis.gesamt} Fragen</p>
         </div>
-        <div>
+        <div className="flex wrap">
+          <Link className="btn btn-ghost" to="/pruefung/verlauf">Prüfungsverlauf öffnen</Link>
           <Link className="btn btn-ghost" to="/pruefung">Neue Prüfung</Link>
         </div>
       </header>

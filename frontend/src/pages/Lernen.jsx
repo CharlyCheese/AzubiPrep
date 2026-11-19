@@ -1,151 +1,127 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useSearchParams } from 'react-router-dom';
 import { useApi } from '../utils/useApi.js';
 import { api } from '../api/client.js';
 import { profileStore, progressStore } from '../store/localStore.js';
 import { modulStatusAusFortschritt, statusAnzeige, abdeckungProzent } from '../utils/modulStatus.js';
-import { BEHERRSCHT_AB } from '../utils/gamification.js';
 import { gruppiereNachLernfeld } from '../utils/lernfeldOrdnung.js';
-import Akkordeon from '../components/Akkordeon.jsx';
+import '../styles/learning-home.css';
 
-// Statusfarbe als Kartenakzent (linker Rand) – macht den Bearbeitungsstand
-// einer Modulkarte auf einen Blick erkennbar, ohne den Fließtext lesen zu
-// müssen (Stitch-Leitlinie: "Gruppierung … mit subtilen Status-Badges").
-const STATUS_AKZENT = {
-  beherrscht: 'var(--success)',
-  bearbeitet: 'var(--warning, var(--primary))',
-  offen: 'var(--border)',
-};
-
-// Modulkarte – identisch für Allgemein- und Fachrichtungsblöcke.
-function ModulKarte({ m, status }) {
-  const stufe = statusAnzeige(status);
-  const gesamt = m.fragenAnzahl || 0;
-  const bearbeitet = status?.anzahl || 0;
-  const abdeckung = abdeckungProzent(bearbeitet, gesamt);
-  const stufeKey = status?.beherrscht ? 'beherrscht' : status?.bearbeitet ? 'bearbeitet' : 'offen';
+function ModuleCard({ module, status, catalogSearch, direction }) {
+  const stage = statusAnzeige(status);
+  const total = module.fragenAnzahl || 0;
+  const covered = status?.anzahl || 0;
+  const percentage = abdeckungProzent(covered, total);
   return (
-    <div
-      className="card"
-      key={m.modul_id}
-      style={{ borderLeft: `3px solid ${STATUS_AKZENT[stufeKey]}` }}
-    >
-      <div className="flex-between wrap">
-        <h3 className="mb-0">{m.titel}</h3>
-        <div className="flex wrap" style={{ gap: 6, justifyContent: 'flex-end' }}>
-          <span className={`badge ${stufe.klasse}`}>{stufe.label}</span>
-          <span className={`badge ${m.fachrichtung === 'ALLE' ? 'badge-neutral' : `badge-${m.fachrichtung.toLowerCase()}`}`}>
-            {m.fachrichtung === 'ALLE' ? 'Allgemein' : m.fachrichtung}
-          </span>
-        </div>
+    <article className="card lh-module-card">
+      <div className="lh-meta">
+        <span>{module.fachrichtung === 'ALLE' ? 'Alle Fachrichtungen' : module.fachrichtung}{module.fachrichtung === direction && ' · deine Fachrichtung'}</span>
+        {module.lernfeld && module.lernfeld !== 'KEIN_LF' && <span>{module.lernfeld}</span>}
+        <span>{total} Fragen</span>
+        {status?.bearbeitet && <span className={`badge ${stage.klasse}`}>{stage.label}</span>}
       </div>
-      <p className="text-muted small">{m.beschreibung}</p>
-      <div className="progress-label mt-2">
-        <span>Fragen bearbeitet</span>
-        <span>{bearbeitet} von {gesamt} ({abdeckung} %)</span>
-      </div>
-      <div className="progress">
-        <div style={{ width: `${abdeckung}%`, background: status?.beherrscht ? 'var(--success)' : undefined }} />
-      </div>
+      <h3><Link to={`/lernen/${module.modul_id}`} state={{ catalogSearch }}>{module.titel} <span aria-hidden="true">→</span></Link></h3>
+      <p>{module.beschreibung}</p>
       {status?.bearbeitet && (
-        <div className="flex wrap mt-2" style={{ gap: 6 }}>
-          <span className="badge badge-neutral">
-            {status.richtig} von {gesamt} richtig · {status.beherrschung}% des Moduls
-          </span>
+        <div>
+          <div className="progress-label"><span>Bearbeitet</span><span>{covered} von {total} ({percentage} %)</span></div>
+          <div className="progress"><div style={{ width: `${percentage}%` }} /></div>
+          <small>{status.richtig} von {total} richtig · {status.beherrschung}% des Moduls</small>
         </div>
       )}
-      <div className="flex-between mt-2">
-        <span className="small text-muted">{gesamt} Fragen</span>
-        <Link className="btn btn-primary btn-sm" to={`/lernen/${m.modul_id}`}>Öffnen →</Link>
-      </div>
-    </div>
-  );
-}
-
-// FE-020: Lernfeld-Gruppe als Akkordeon statt fester Fachrichtungs-Blöcke –
-// führt Lernende chronologisch durch die KMK-Lernfeldstruktur (LF1…LF12,
-// siehe CONTENT-007) statt sie nach Fachrichtung zu sortieren.
-function LernfeldBlock({ lernfeld, titel, module, statusMap, eigeneFachrichtung, offen, onToggle }) {
-  if (!module.length) return null;
-  const bearbeitetAnzahl = module.filter((m) => statusMap[m.modul_id]?.bearbeitet).length;
-  const beherrschtAnzahl = module.filter((m) => statusMap[m.modul_id]?.beherrscht).length;
-  const enthaeltEigene = module.some((m) => m.fachrichtung === eigeneFachrichtung);
-  const untertitel = `${module.length} Modul${module.length === 1 ? '' : 'e'} · `
-    + `${bearbeitetAnzahl} begonnen · ${beherrschtAnzahl} beherrscht (ab ${BEHERRSCHT_AB} % aller Fragen richtig)`;
-  return (
-    <div className="mb-2">
-      <Akkordeon
-        titel={(
-          <>
-            {titel}
-            {enthaeltEigene && lernfeld !== 'KEIN_LF' && (
-              <span className="badge badge-leicht" style={{ marginLeft: 8 }}>deine Fachrichtung</span>
-            )}
-          </>
-        )}
-        untertitel={untertitel}
-        offen={offen}
-        onToggle={onToggle}
-      >
-        <div className="grid grid-2-max">
-          {module.map((m) => <ModulKarte key={m.modul_id} m={m} status={statusMap[m.modul_id]} />)}
-        </div>
-      </Akkordeon>
-    </div>
+    </article>
   );
 }
 
 export default function Lernen() {
-  const profil = profileStore.get();
-  const eigeneFachrichtung = profil.fachrichtung || 'FIAE';
-  const { daten: module } = useApi(() => api.get('/module'), []);
-
-  const statusMap = modulStatusAusFortschritt(
-    progressStore.get(),
-    (id) => module?.find((m) => m.modul_id === id)?.fragenAnzahl || 0,
-  );
-
-  const lernfeldGruppen = gruppiereNachLernfeld(module || [], eigeneFachrichtung);
-
-  // Alle Gruppen starten eingeklappt (Sven, 2026-09-18: "am besten die zu
-  // Start alle eingeklappt laden") – ein Set statt eines einzelnen Werts,
-  // damit mehrere Gruppen gleichzeitig offen sein können und Zuklappen
-  // (Entfernen aus dem Set) nicht mit "noch nicht initialisiert" kollidiert.
-  const [offeneGruppen, setOffeneGruppen] = useState(() => new Set());
-  function toggleGruppe(lernfeld) {
-    setOffeneGruppen((vorher) => {
-      const naechste = new Set(vorher);
-      if (naechste.has(lernfeld)) naechste.delete(lernfeld); else naechste.add(lernfeld);
-      return naechste;
-    });
+  const { fachrichtung = 'FIAE' } = profileStore.get();
+  const { daten: modules, laden, fehler } = useApi(() => api.get('/module'), []);
+  const [params, setParams] = useSearchParams();
+  const { search } = useLocation();
+  const query = params.get('q') || '';
+  const direction = params.get('richtung') || '';
+  const expanded = params.getAll('offen');
+  const moduleCounts = new Map((modules || []).map((module) => [module.modul_id, module.fragenAnzahl]));
+  const statuses = modulStatusAusFortschritt(progressStore.get(), (id) => moduleCounts.get(id));
+  const needle = query.trim().toLocaleLowerCase('de');
+  const filtered = (modules || []).filter((module) => {
+    const matchesDirection = !direction || module.fachrichtung === direction || module.fachrichtung === 'ALLE';
+    const terms = [module.titel, module.beschreibung, module.modul_id, module.lernfeld].join(' ').toLocaleLowerCase('de');
+    return matchesDirection && terms.includes(needle);
+  });
+  const groups = gruppiereNachLernfeld(filtered, fachrichtung);
+  function changeFilter(key, value) {
+    const next = new URLSearchParams(params);
+    if (value) next.set(key, value); else next.delete(key);
+    setParams(next, { replace: true, preventScrollReset: true });
+  }
+  function toggleGroup(field) {
+    const next = new URLSearchParams(params);
+    next.delete('offen');
+    expanded.filter((code) => code !== field).forEach((code) => next.append('offen', code));
+    if (!expanded.includes(field)) next.append('offen', field);
+    setParams(next, { replace: true, preventScrollReset: true });
+  }
+  function renderModule(module) {
+    return <ModuleCard key={module.modul_id} module={module} status={statuses[module.modul_id]} catalogSearch={search} direction={fachrichtung} />;
   }
 
   return (
-    <div>
-      <header className="main-header">
+    <div className="learning-home">
+      <header className="lh-header">
         <div>
-          <h1 className="mb-0">Lernbereich</h1>
-          <p className="text-muted mt-0">
-            Alle Module aller Fachrichtungen stehen dir offen, gegliedert nach Lernfeld (LF1–LF12) – so folgst du dem
-            tatsächlichen Ausbildungsverlauf. Deine Fachrichtung ({eigeneFachrichtung}) ist markiert, keine
-            Einschränkung.
-          </p>
+          <h1>Lernbereich</h1>
+          <p>Finde dein Modul nach Thema, Lernfeld oder Fachrichtung.</p>
         </div>
+        <Link className="lh-text-link" to="/theorie">Theorie &amp; Glossar →</Link>
       </header>
 
-      <div className="card mb-2"><h2>Theorie vor der Wissensabfrage</h2><p>Lernfelder und Begriffe verstehen, Quellen lesen und danach üben.</p><Link className="btn btn-primary" to="/theorie">Theorie & Glossar öffnen →</Link></div>
-      {lernfeldGruppen.map((g) => (
-        <LernfeldBlock
-          key={g.lernfeld}
-          lernfeld={g.lernfeld}
-          titel={g.titel}
-          module={g.module}
-          statusMap={statusMap}
-          eigeneFachrichtung={eigeneFachrichtung}
-          offen={offeneGruppen.has(g.lernfeld)}
-          onToggle={() => toggleGruppe(g.lernfeld)}
-        />
-      ))}
+      <div className="lh-panel lh-catalog-filters">
+        <div>
+          <label htmlFor="catalog-query">Modul suchen</label>
+          <input id="catalog-query" className="input" type="search" value={query} onChange={(event) => changeFilter('q', event.target.value)} placeholder="Thema oder Lernfeld, z. B. SQL" />
+        </div>
+        <div>
+          <label htmlFor="catalog-direction">Fachrichtung</label>
+          <select id="catalog-direction" className="select" value={direction} onChange={(event) => changeFilter('richtung', event.target.value)}>
+            <option value="">Alle Fachrichtungen</option>
+            {['FIAE', 'FISI', 'DPA', 'DVK'].map((code) => <option key={code} value={code}>{code}{code === fachrichtung ? ' (deine)' : ''} + Grundlagen</option>)}
+          </select>
+        </div>
+      </div>
+
+      {laden ? <p role="status">Module werden geladen …</p> : fehler ? <p className="alert alert-danger" role="alert">Module konnten nicht geladen werden. {fehler}</p> : (
+        <section aria-labelledby="catalog-groups">
+          <div className="lh-section-head">
+            <h2 id="catalog-groups">{needle || direction ? 'Passende Module' : 'Module nach Lernfeld'}</h2>
+            <span className="lh-count" role="status">{filtered.length} {filtered.length === 1 ? 'Modul' : 'Module'}</span>
+          </div>
+          {filtered.length === 0 && <div className="lh-panel"><p>Kein Modul passt zu deiner Auswahl.</p><button className="btn btn-ghost" onClick={() => setParams({}, { replace: true })}>Filter zurücksetzen</button></div>}
+          {needle || direction ? (
+            <div className="lh-module-grid">{groups.flatMap((group) => group.module).map(renderModule)}</div>
+          ) : (
+            <div className="lh-fields">
+              {groups.map((group) => {
+                const open = expanded.includes(group.lernfeld);
+                const topics = [...new Set(group.module.map((module) => module.titel))];
+                const field = group.lernfeld === 'KEIN_LF' ? 'Weitere' : group.titel;
+                return (
+                  <div className="lh-field" key={group.lernfeld}>
+                    <button className="lh-field-toggle" aria-expanded={open} aria-controls={`field-${group.lernfeld}`} onClick={() => toggleGroup(group.lernfeld)}>
+                      <span className="lh-field-code">{field}</span>
+                      <span className="lh-field-topic">{topics.slice(0, 2).join(' · ')}{topics.length > 2 ? ' …' : ''}</span>
+                      <span className="lh-count">{group.module.length} {group.module.length === 1 ? 'Modul' : 'Module'}</span>
+                      <span className="lh-chevron" aria-hidden="true" />
+                    </button>
+                    <div id={`field-${group.lernfeld}`} hidden={!open}>
+                      {open && <div className="lh-module-grid">{group.module.map(renderModule)}</div>}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+        </section>
+      )}
     </div>
   );
 }

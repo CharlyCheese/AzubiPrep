@@ -1,9 +1,5 @@
-// Kurze Seiten-Tour (Popups, die Dashboard/Lernreise/Lernbereich/
-// Prüfungssimulation kurz erklären). Wird einmalig automatisch gezeigt
-// (dauerhaftes Flag in localStorage, anders als das session-basierte
-// Begrüßungs-Popup FE-005) und ist über Einstellungen jederzeit erneut
-// aufrufbar (Custom-Event, damit AppTour.jsx nicht global im Store
-// verankert werden muss).
+// Die optionale Führung startet auf der Willkommensseite oder über die Einstellungen.
+// Der gesehene Status bleibt mit bestehenden Browserprofilen kompatibel.
 const FLAG_KEY = 'azubiprep.tour-gezeigt';
 const EVENT_NAME = 'azubiprep:tour-start';
 

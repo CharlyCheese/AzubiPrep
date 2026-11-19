@@ -1,31 +1,11 @@
-// Begrüßungs-Popup beim Programm-/Browserstart. Wird einmal pro
-// Browser-Sitzung gezeigt (sessionStorage – verschwindet automatisch bei
-// Neustart) und zusätzlich bei jedem neuen Login zurückgesetzt, damit es
-// nach der nächsten Anmeldung wieder erscheint (siehe FE-005).
+// Begrüßt nach einer neuen Anmeldung innerhalb der App (z. B. im Profil).
 import { useEffect, useRef, useState } from 'react';
+import AppDialog from './AppDialog.jsx';
 import { profileStore } from '../store/localStore.js';
 import { authStore } from '../store/authStore.js';
 
-const FLAG_KEY = 'azubiprep.begruessung-gezeigt';
-
-function schonGezeigt() {
-  try {
-    return sessionStorage.getItem(FLAG_KEY) === 'true';
-  } catch {
-    return false;
-  }
-}
-
-function alsGezeigtMerken() {
-  try {
-    sessionStorage.setItem(FLAG_KEY, 'true');
-  } catch {
-    /* ignore */
-  }
-}
-
 export default function WillkommenModal() {
-  const [sichtbar, setSichtbar] = useState(() => !schonGezeigt());
+  const [sichtbar, setSichtbar] = useState(false);
   const vorherigerToken = useRef(authStore.token());
 
   useEffect(() => {
@@ -35,7 +15,6 @@ export default function WillkommenModal() {
       const aktuellerToken = authStore.token();
       if (aktuellerToken && aktuellerToken !== vorherigerToken.current) {
         vorherigerToken.current = aktuellerToken;
-        try { sessionStorage.removeItem(FLAG_KEY); } catch { /* ignore */ }
         setSichtbar(true);
       } else {
         vorherigerToken.current = aktuellerToken;
@@ -44,19 +23,8 @@ export default function WillkommenModal() {
     return unsubscribe;
   }, []);
 
-  useEffect(() => {
-    if (!sichtbar) return undefined;
-    function aufEscape(e) {
-      if (e.key === 'Escape') schliessen();
-    }
-    window.addEventListener('keydown', aufEscape);
-    return () => window.removeEventListener('keydown', aufEscape);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [sichtbar]);
-
   function schliessen() {
     setSichtbar(false);
-    alsGezeigtMerken();
   }
 
   if (!sichtbar) return null;
@@ -65,18 +33,10 @@ export default function WillkommenModal() {
   const name = profil.name && profil.name !== 'Lernende:r' ? profil.name : '';
 
   return (
-    <div
-      className="modal-overlay"
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="willkommen-titel"
-      onClick={(e) => { if (e.target === e.currentTarget) schliessen(); }}
-    >
-      <div className="modal-box">
+    <AppDialog titleId="willkommen-titel" onDismiss={schliessen}>
         <h2 id="willkommen-titel" className="mb-0">Willkommen zurück{name ? `, ${name}` : ''} 👋</h2>
         <p className="text-muted">Schön, dass du lernst! Deine Prüfungsvorbereitung läuft.</p>
         <button className="btn btn-primary btn-block" onClick={schliessen} autoFocus>Los geht's</button>
-      </div>
-    </div>
+    </AppDialog>
   );
 }

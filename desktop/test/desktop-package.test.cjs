@@ -24,12 +24,12 @@ test('Desktopdistribution schließt .env-Dateien in allen Ressourcen aus', () =>
 });
 
 test('Desktopversion und Lockmetadaten passen zusammen und behalten Desktop-Einstieg', () => {
-  assert.equal(pkg.version, '0.1.5');
+  assert.equal(pkg.version, '0.1.7');
   assert.equal(lock.version, pkg.version);
   assert.equal(lock.packages[''].version, pkg.version);
   assert.equal(pkg.main, 'main.js');
   assert.deepEqual(pkg.build.files, ['main.js', 'preload.cjs', 'pilot-runtime.cjs', 'journey-storage.cjs', 'pilot-inspector.cjs', 'js-pilot.cjs', 'js-pilot-fixtures.cjs', 'package.json']);
-  assert.equal(pkg.devDependencies.electron, '45.2.0');
+  assert.equal(pkg.devDependencies.electron, '45.4.1');
   assert.equal(pkg.scripts.dist, 'node scripts/build-desktop.cjs');
   assert.equal(pkg.scripts['prepare:electron'], 'node scripts/prepare-electron.cjs');
   assert.equal(pkg.scripts.predist, 'npm run prepare:electron');

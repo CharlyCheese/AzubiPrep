@@ -1,0 +1,128 @@
+/* Dashboard, Modulübersicht, Modulseite und Suche. */
+.learning-home {
+  display: grid;
+  align-content: start;
+  gap: 1.15rem;
+  width: 100%;
+  max-width: 76rem;
+  margin-inline: auto;
+  overflow-wrap: anywhere;
+}
+.learning-home > *, .learning-home .lh-columns > *, .learning-home label { min-width: 0; }
+.learning-home h1 { margin: 0; font-size: clamp(1.8rem, 3vw, 2.35rem); letter-spacing: -.035em; }
+.learning-home h2 { margin: 0; font-size: clamp(1.15rem, 2vw, 1.35rem); letter-spacing: -.02em; }
+.learning-home h3 { margin: 0; font-size: 1.05rem; }
+.learning-home p { margin: .45rem 0; }
+.learning-home small { display: block; font-size: .84rem; color: var(--text-muted); }
+.learning-home .lh-header, .learning-home .lh-section-head, .learning-home .lh-row {
+  display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: .45rem 1rem;
+}
+.learning-home .lh-header { align-items: flex-start; }
+.learning-home .lh-header p, .learning-home .lh-module-heading p { color: var(--text-muted); margin-bottom: 0; max-width: 72ch; }
+.learning-home .lh-back, .learning-home .lh-text-link { display: inline-flex; align-items: center; min-height: 2.5rem; color: var(--primary-ink); font-weight: 650; font-size: .92rem; }
+.learning-home .lh-bottom-link { justify-self: start; }
+.learning-home .btn { justify-content: center; min-height: 2.75rem; text-align: center; }
+.learning-home .btn-primary { background: var(--primary-ink); color: var(--bg-card); }
+.learning-home .btn-primary:hover { background: var(--text); color: var(--bg-card); }
+.learning-home .lh-panel, .learning-home .lh-disclosure, .learning-home .lh-fields, .learning-home .lh-hits {
+  background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius);
+}
+.learning-home .lh-panel { padding: clamp(1rem, 2.25vw, 1.5rem); }
+.learning-home .lh-feature {
+  background: linear-gradient(115deg, var(--primary-soft), var(--bg-card) 100%);
+  border-color: color-mix(in srgb, var(--primary-ink) 35%, var(--border));
+}
+.learning-home .lh-feature-copy p { max-width: 60ch; }
+.learning-home .lh-feature-copy + .lh-actions { margin-top: .9rem; }
+.learning-home .lh-feature h2 { font-size: clamp(1.35rem, 2.5vw, 1.65rem); }
+.learning-home .lh-actions, .learning-home .lh-meta, .learning-home .lh-result-types {
+  display: flex; align-items: center; flex-wrap: wrap; gap: .35rem 1rem;
+}
+.learning-home .lh-shortcuts, .learning-home .lh-columns { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+.learning-home .lh-shortcuts a {
+  padding: .75rem 1rem; display: flex; align-items: center; justify-content: space-between; gap: .5rem;
+  font-weight: 650; color: var(--text); background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-sm);
+}
+.learning-home .lh-shortcuts a span { color: var(--primary-ink); }
+.learning-home .lh-shortcuts a:hover, .learning-home .lh-field-toggle:hover { background: var(--primary-soft); }
+.learning-home .lh-row { font-size: .9rem; margin-bottom: .35rem; }
+.learning-home .lh-row > span { color: var(--text-muted); font-variant-numeric: tabular-nums; }
+.learning-home .lh-goal { margin-top: 1.05rem; }
+.learning-home .progress { background: var(--border); height: 6px; }
+.learning-home .progress + small { margin-top: .5rem; }
+.learning-home .lh-facts { display: flex; gap: 1.25rem; flex-wrap: wrap; margin: .8rem 0; }
+.learning-home .lh-facts dt { color: var(--text-muted); font-size: .83rem; }
+.learning-home .lh-facts dd { margin: 0; font-size: 1.45rem; font-weight: 750; font-variant-numeric: tabular-nums; }
+.learning-home .lh-level { border-top: 1px solid var(--border); padding-top: .65rem; font-size: .93rem; }
+.learning-home .lh-disclosure > summary {
+  display: grid; align-items: center; grid-template-columns: minmax(0, 1fr) auto auto; gap: .25rem .75rem;
+  list-style: none; cursor: pointer; padding: .9rem 1.1rem; border-radius: var(--radius);
+}
+.learning-home .lh-disclosure > summary::-webkit-details-marker { display: none; }
+.learning-home .lh-disclosure > summary strong:only-child { grid-column: 1 / 3; }
+.learning-home .lh-disclosure > summary span { font-size: .84rem; color: var(--text-muted); }
+.learning-home .lh-disclosure > summary::after, .learning-home .lh-chevron {
+  content: ''; display: inline-block; flex: none; width: .52rem; height: .52rem;
+  border-right: 2px solid var(--primary-ink); border-bottom: 2px solid var(--primary-ink); transform: rotate(45deg);
+}
+.learning-home .lh-disclosure[open] > summary::after, .learning-home .lh-field-toggle[aria-expanded="true"] .lh-chevron { transform: rotate(225deg); }
+.learning-home .lh-inset { padding: .5rem 1.1rem 1.1rem; }
+.learning-home .lh-missions { list-style: none; padding: 0; margin: 0; }
+.learning-home .lh-missions li { border-top: 1px solid var(--border); margin-top: .6rem; padding-top: .6rem; }
+.learning-home .lh-section-head + .lh-fields, .learning-home .lh-section-head + .lh-module-grid { margin-top: .7rem; }
+.learning-home .lh-catalog-filters { display: grid; grid-template-columns: minmax(0, 2fr) minmax(12rem, 1fr); gap: .7rem 1rem; }
+.learning-home .lh-catalog-filters label { margin: 0; }
+.learning-home .lh-catalog-filters .input, .learning-home .lh-catalog-filters .select { margin-top: .35rem; }
+.learning-home .input, .learning-home .select { min-width: 0; min-height: 2.75rem; background: var(--bg-soft); border-color: var(--border-strong); }
+.learning-home .lh-field + .lh-field { border-top: 1px solid var(--border); }
+.learning-home .lh-field-toggle {
+  display: grid; align-items: center; grid-template-columns: 5rem minmax(0, 1fr) auto auto; gap: .5rem .8rem;
+  width: 100%; padding: .8rem 1rem; border: 0; border-radius: var(--radius-sm); background: transparent; color: var(--text);
+  text-align: left; font: inherit; cursor: pointer;
+}
+.learning-home .lh-field-code { color: var(--primary-ink); font-weight: 700; font-size: .92rem; }
+.learning-home .lh-field-topic { font-weight: 600; }
+.learning-home .lh-count { color: var(--text-muted); font-size: .84rem; }
+.learning-home .lh-module-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr)); gap: .8rem; }
+.learning-home .lh-field .lh-module-grid { padding: .25rem 1rem 1rem; }
+.learning-home .lh-module-card { margin: 0; padding: 1rem; box-shadow: none; }
+.learning-home .lh-module-card h3, .learning-home .lh-hits h3 { margin: .3rem 0; }
+.learning-home .lh-module-card h3 a, .learning-home .lh-hits h3 a { color: var(--primary-ink); }
+.learning-home .lh-module-card p, .learning-home .lh-hits p { font-size: .91rem; color: var(--text-muted); }
+.learning-home .lh-meta { gap: .25rem .65rem; color: var(--text-muted); font-size: .83rem; }
+.learning-home .lh-meta > span + span:not(.badge)::before { content: '·'; margin-right: .65rem; }
+.learning-home .lh-module-heading .lh-meta { margin: .45rem 0; }
+.learning-home .lh-module-actions label { margin: .9rem 0 .3rem; }
+.learning-home .lh-module-actions .lh-actions { margin-top: .8rem; }
+.learning-home .lh-quiz-controls, .learning-home .lh-search-controls {
+  display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: .55rem;
+}
+.learning-home .lh-panel .lh-section-head + .lh-row { margin-top: 1rem; }
+.learning-home .lh-question-number { font-weight: 650; color: var(--text-muted); font-variant-numeric: tabular-nums; }
+.learning-home .lh-search-form small { margin-top: .45rem; }
+.learning-home .lh-result-types { margin: .8rem 0; gap: .4rem; }
+.learning-home .lh-result-types [aria-pressed="true"] { background: var(--primary-soft); border-color: var(--primary-ink); color: var(--primary-ink); }
+.learning-home .lh-hits { list-style: none; padding: 0; margin: 0; }
+.learning-home .lh-hits > li { padding: .85rem 1.1rem; }
+.learning-home .lh-hits > li + li { border-top: 1px solid var(--border); }
+.learning-home .lh-hits .lh-actions { margin-top: .35rem; }
+.learning-home .lh-pager { display: flex; align-items: center; justify-content: space-between; gap: .4rem; margin-top: .75rem; }
+.learning-home .lh-pager span { font-size: .9rem; color: var(--text-muted); }
+.learning-home .lh-disclosure > .theorie-lesson { border: 0; box-shadow: none; }
+@media (max-width: 1050px) and (min-width: 861px), (max-width: 690px) {
+  .learning-home .lh-columns { grid-template-columns: 1fr; }
+}
+@media (max-width: 580px) {
+  .learning-home { gap: .85rem; }
+  .learning-home .lh-header { display: block; }
+  .learning-home .lh-header p { margin-top: .25rem; }
+  .learning-home .lh-header .lh-text-link { min-height: 2.4rem; }
+  .learning-home .lh-shortcuts { gap: .5rem; }
+  .learning-home .lh-shortcuts a { align-items: flex-start; padding: .7rem; font-size: .9rem; }
+  .learning-home .lh-field-toggle { grid-template-columns: minmax(0, 1fr) auto auto; row-gap: .1rem; }
+  .learning-home .lh-field-topic { grid-column: 1 / 3; grid-row: 2; }
+  .learning-home .lh-field-toggle .lh-count { grid-row: 1; grid-column: 2; }
+  .learning-home .lh-chevron { grid-column: 3; grid-row: 1 / 3; }
+  .learning-home .lh-catalog-filters { grid-template-columns: 1fr; }
+  .learning-home .lh-field .lh-module-grid { min-width: 0; }
+}

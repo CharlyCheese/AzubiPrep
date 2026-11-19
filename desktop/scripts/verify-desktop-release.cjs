@@ -2,7 +2,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const assert = require('node:assert/strict');
 const crypto = require('node:crypto');
-const { spawnSync } = require('node:child_process');
+const { unpackRelease } = require('./unpack-release.cjs');
 const asar = require('@electron/asar');
 const pkg = require('../package.json');
 
@@ -31,39 +31,36 @@ function files(root) {
 }
 const resourceFiles = files(release);
 const archive = path.join(resources, 'app.asar');
-const archiveFiles = asar.listPackage(archive).map(normal);
+const archiveFiles = asar.listPackage(archive).map(normal).sort();
 assert.ok(archiveFiles.every(name => !forbidden.test(name)), 'ASAR enthält eine ausgeschlossene private Dateiklasse.');
+assert.deepEqual(archiveFiles, [...pkg.build.files].sort(), 'Desktoparchiv weicht von der freigegebenen Dateiliste ab.');
 const archivedPackage = JSON.parse(asar.extractFile(archive, 'package.json').toString('utf8'));
 assert.equal(archivedPackage.version, pkg.version, 'Gebaute Version weicht vom Quellstand ab.');
 assert.equal(archivedPackage.main, 'main.js');
 const hash = file => crypto.createHash('sha256').update(fs.readFileSync(file)).digest('hex');
 let compared = 0;
-for (const name of ['main.js', 'preload.cjs', 'pilot-runtime.cjs', 'pilot-inspector.cjs', 'js-pilot.cjs', 'js-pilot-fixtures.cjs']) {
+for (const name of archiveFiles.filter(file => file !== 'package.json')) {
   const content = asar.extractFile(archive, name);
   assert.ok(content.equals(fs.readFileSync(path.join(repo, 'desktop', name))), 'Archivierter App-Code weicht ab.'); compared++;
 }
 for (const relativeRoot of ['content', 'frontend/dist', 'backend/src']) {
   const source = path.join(repo, relativeRoot);
-  for (const file of files(source)) {
+  const sourceFiles = files(source).sort();
+  assert.deepEqual(files(path.join(resources, relativeRoot)).sort(), sourceFiles, 'Öffentliche Paketdateien weichen vom Quellstand ab.');
+  for (const file of sourceFiles) {
     assert.equal(hash(path.join(resources, relativeRoot, file)), hash(path.join(source, file)), 'Öffentlicher Paketinhalt weicht vom Quellstand ab.'); compared++;
   }
 }
+assert.equal(hash(path.join(resources, 'backend/package.json')), hash(path.join(repo, 'backend/package.json')), 'Backendmetadaten weichen vom Quellstand ab.');
+compared++;
 assert.ok(fs.existsSync(path.join(release, 'AzubiPrep.exe')), 'Gebaute Anwendung fehlt.');
 const installerRoot = path.join(repo, 'Installer');
 assert.ok(!fs.lstatSync(installerRoot).isSymbolicLink(), 'Installerordner darf keine Verknüpfung sein.');
 const installer = path.join(installerRoot, `AzubiPrep Setup ${pkg.version}.exe`);
 assert.ok(fs.existsSync(installer), 'Installer fehlt.');
-// Bereits vorhandenes Builder-Werkzeug verwenden; Installer nicht ausführen.
-const seven = path.join(repo, 'desktop/node_modules/electron-winstaller/vendor/7z-x64.exe');
 const scratch = fs.mkdtempSync(path.join(installerRoot, 'verify-'));
-function unpack(source, destination, selection = []) {
-  const result = spawnSync(seven, ['x', source, '-y', `-o${destination}`, ...selection], { windowsHide: true, stdio: 'pipe' });
-  assert.equal(result.status, 0, 'Installerinhalt konnte nicht zur Prüfung entpackt werden.');
-}
 try {
-  unpack(installer, scratch, ['$PLUGINSDIR/app-64.7z']);
-  const payloadRoot = path.join(scratch, 'payload');
-  unpack(path.join(scratch, '$PLUGINSDIR', 'app-64.7z'), payloadRoot);
+  const payloadRoot = unpackRelease(installer, scratch);
   const payloadFiles = files(payloadRoot);
   assert.deepEqual(payloadFiles.sort(), [...resourceFiles].sort(), 'Installer enthält andere Anwendungsdateien.');
   for (const file of resourceFiles) assert.equal(hash(path.join(payloadRoot, file)), hash(path.join(release, file)), 'Installerinhalt weicht vom geprüften Anwendungsstand ab.');

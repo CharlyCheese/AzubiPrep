@@ -94,10 +94,10 @@ das Original im Editor bleibt erhalten. Für Testlektionen 27.1/2 landet der
 eigene Node-Test unter `tests/lernaufgabe.test.js` mit passenden relativen Importen,
 nicht im Browser-Einstieg. `npm test` führt diese Tests tatsächlich aus.
 
-Geprüfte Vorlage: Node ab 22.12, React/ReactDOM 18.3.1, TypeScript 5.9.3,
-Vite 8.3.5 und React Router 7.18.5; feste React-Typdefinitionen und transitive
-Versionen im Lock. Die VM verwendet den vorhandenen Router 6.30.6 mit denselben
-hier benutzten deklarativen Komponenten; sie erhält keine Browser-/Netzrechte.
+Die Kursvorlage verwendet Node ab 22.12, React/ReactDOM 18.3.1, TypeScript 5.9.3,
+Vite 8.3.8 und React Router 7.18.6. Das Lockfile legt auch React-Typdefinitionen
+und indirekte Abhängigkeiten fest. Die VM verwendet dieselbe Router-Version.
+Ihre Übungen laufen weiterhin mit den bisherigen Zugriffsgrenzen.
 Die neue externe Vorlage hatte bei der Paketprüfung keine gemeldeten Probleme.
 Das ist keine Zusage über künftige Paketmeldungen oder alle externen Projekte.
 

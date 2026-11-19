@@ -83,6 +83,18 @@ test('Zweites Thema bleibt ohne bestandenen Vorgänger auch über direkte URL ge
   expect(await rawOf(page, second)).toBeNull();
 });
 
+test('Später Direktlink bietet genau einen bearbeitbaren Einstieg und die Lernreiseübersicht', async ({ page }) => {
+  await setup(page);
+  await page.setViewportSize({ width: 320, height: 640 });
+  await page.goto('/lernreise/fiae/fiae-lf12a-review');
+  const next = page.getByRole('link', { name: `${first.title} öffnen`, exact: true });
+  await expect(next).toBeInViewport();
+  await expect(page.locator('main a:visible')).toHaveCount(2);
+  await next.click();
+  await expect(page.getByRole('button', { name: 'Abschnitt beginnen' })).toBeInViewport();
+  await expect(page.locator('main .journey-detail')).not.toHaveAttribute('open', '');
+});
+
 test('Zweites LF1-Thema durchläuft alle Phasen, Fortsetzung und acht passende Testfragen', async ({ page }, info) => {
   test.setTimeout(120_000);
   await setup(page);

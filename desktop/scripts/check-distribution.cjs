@@ -1,7 +1,7 @@
 const assert = require('node:assert/strict');
 
 const PRIVATE_FILTERS = Object.freeze([
-  '!**/.env*', '!**/local-ai/**', '!**/local-rag/**',
+  '!**/.env*', '!**/*.[pP][dD][fF]', '!**/local-ai/**', '!**/local-rag/**',
   '!**/accounts.json', '!**/chatgpt-auth.json', '!**/chatgpt-host.json',
 ]);
 const ROOTS = new Map([

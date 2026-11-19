@@ -15,6 +15,8 @@ Statische Frontend-Auslieferung über dieselbe Origin im Produktions-Build.
 | GET | `/api/fragen/:id` | einzelne Frage (inkl. Lösung) |
 | POST | `/api/fragen/:id/pruefen` | Einzelfrage prüfen `{ antwort }` |
 | GET | `/api/suche?q=` | Volltextsuche über Fragen & Module |
+| GET | `/api/suche/inhalte?q=&typ=&seite=&limit=` | Öffentliche App-Inhalte mit Gesamtzahl, Trefferzahlen je Bereich und seitenweiser Ausgabe. App-Funktionen und persönliche Notizen sucht der jeweilige Client. |
+| GET | `/api/theorie/themen/:id` | Einzelnes öffentliches Theoriethema oder Glossarstichwort. Optionale Filter `module` und `fachrichtung` berücksichtigen den Übungskontext. |
 | POST | `/api/pruefung/generieren` | Prüfung erzeugen (ohne Lösungen) |
 | POST | `/api/pruefung/auswerten` | Prüfung auswerten |
 | POST | `/api/admin/reload` | Inhalte aus CSV neu laden (nur lokal oder mit Header `x-admin-token`) |

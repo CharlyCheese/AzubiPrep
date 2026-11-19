@@ -53,9 +53,9 @@ bestätigt. Praktische Nutzerabnahme und freier Quellcodedebugger bleiben offen.
 
 Die historische Quellenfassung und ihre 85 Referenzen bleiben erhalten. Aktive
 Lektionen und Lesefläche zeigen aktualisierte Laufzeithinweise. Die externe
-Vorlage verwendet feste aktuelle Werkzeuge; React 18 bleibt gleich, die VM
-verwendet den vorhandenen Router 6, die externe Vorlage Router 7 mit den hier
-verwendeten deklarativen APIs. Kein neues Desktop-/Webpaket wurde gebaut.
+Vorlage verwendet feste Werkzeugversionen. Mit der [Paketpflege](agent-briefs/OPS-043-node-patches.md)
+verwenden sowohl VM als auch externe Vorlage React 18 und React Router 7 für die
+deklarativen Routingübungen.
 
 ## Nachweise dieser Inhaltsphase
 

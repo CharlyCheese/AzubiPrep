@@ -8,13 +8,14 @@ import { Link } from 'react-router-dom';
 import { useApi } from '../utils/useApi.js';
 import { api } from '../api/client.js';
 import { authStore } from '../store/authStore.js';
+import '../styles/account.css';
 
 const EDITIERBARE_FELDER = [
   'frage', 'option_a', 'option_b', 'option_c', 'option_d',
   'antwort', 'erklaerung', 'thema', 'schwierigkeit', 'quelle',
 ];
 const SCHWIERIGKEITEN = ['leicht', 'mittel', 'schwer'];
-const REVIEW_STATUS = ['ungeprueft', 'geprueft', 'gemeldet', 'korrigiert', 'deaktiviert'];
+const REVIEW_STATUS = { ungeprueft: 'Ungeprüft', geprueft: 'Geprüft', gemeldet: 'Gemeldet', korrigiert: 'Korrigiert', deaktiviert: 'Deaktiviert' };
 const SEITENGROESSE = 20;
 
 function leeresFormular(frage) {
@@ -26,10 +27,11 @@ function leeresFormular(frage) {
 export default function Autoren() {
   const auth = useSyncExternalStore(authStore.subscribe, authStore.snapshot);
   const rolle = auth?.user?.rolle;
-  const darfPflegen = rolle === 'autor' || rolle === 'admin';
+  const darfPflegen = Boolean(auth?.token) && (rolle === 'autor' || rolle === 'admin');
 
   const [modulFilter, setModulFilter] = useState('');
   const [statusFilter, setStatusFilter] = useState('');
+  const [filterOffen, setFilterOffen] = useState(() => window.matchMedia('(min-width: 861px)').matches);
   const [suche, setSuche] = useState('');
   const [seite, setSeite] = useState(1);
   const [reloadKey, setReloadKey] = useState(0);
@@ -38,8 +40,16 @@ export default function Autoren() {
   const [speichern, setSpeichern] = useState(false);
   const [meldung, setMeldung] = useState('');
   const formularRef = useRef(null);
+  const listRef = useRef(null);
+  const returnId = useRef(null);
+  const selectedId = ausgewaehlt?.id;
+  const ungespeichert = formular && ausgewaehlt && EDITIERBARE_FELDER.some(
+    feld => formular[feld] !== (ausgewaehlt[feld] ?? ''),
+  );
 
-  const { daten: module } = useApi(() => api.get('/module'), []);
+  const modulePath = rolle === 'autor'
+    ? `/module?fachrichtung=${encodeURIComponent(auth.user.fachrichtung || 'ALLE')}` : '/module';
+  const { daten: module } = useApi(() => darfPflegen ? api.get(modulePath) : Promise.resolve([]), [darfPflegen, modulePath]);
 
   const query = new URLSearchParams();
   if (modulFilter) query.set('modul_id', modulFilter);
@@ -69,21 +79,31 @@ export default function Autoren() {
   // einer jetzt nicht mehr existierenden Seite "landen").
   useEffect(() => {
     setSeite(1);
-  }, [modulFilter, statusFilter, suche, reloadKey]);
+  }, [modulFilter, statusFilter, suche]);
 
-  // Formular nach dem Öffnen automatisch in den sichtbaren Bereich scrollen
-  // (es steht unterhalb der – teils langen – Tabelle, ohne das würde man
-  // es sonst leicht übersehen/für "passiert nichts" halten).
   useEffect(() => {
-    if (ausgewaehlt) {
-      formularRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (selectedId) formularRef.current?.focus();
+  }, [selectedId]);
+
+  useEffect(() => {
+    if (!selectedId && returnId.current && !laden) {
+      const trigger = document.getElementById(`edit-${returnId.current}`);
+      (trigger || listRef.current)?.focus();
+      returnId.current = null;
     }
-  }, [ausgewaehlt]);
+  }, [selectedId, laden]);
 
   function bearbeiten(frage) {
+    returnId.current = frage.id;
     setAusgewaehlt(frage);
     setFormular(leeresFormular(frage));
     setMeldung('');
+  }
+
+  function zurListe() {
+    if (ungespeichert && !window.confirm('Ungespeicherte Änderungen verwerfen und zur Fragenliste zurückkehren?')) return;
+    setAusgewaehlt(null);
+    setFormular(null);
   }
 
   async function speichernAbsenden(e) {
@@ -144,7 +164,8 @@ export default function Autoren() {
       <div>
         <header className="main-header"><h1 className="mb-0">Fragenpflege</h1></header>
         <div className="card">
-          <p className="text-muted">Bitte zuerst in <Link to="/profil">Profil</Link> einloggen – die Fragenpflege ist nur für Autor:innen zugänglich.</p>
+          <p className="text-muted">Melde dich mit einem Autoren- oder Admin-Konto an, um Fragen zu bearbeiten.</p>
+          <Link className="btn btn-primary" to="/profil#konto">Zur Anmeldung</Link>
         </div>
       </div>
     );
@@ -156,13 +177,14 @@ export default function Autoren() {
         <header className="main-header"><h1 className="mb-0">Fragenpflege</h1></header>
         <div className="card">
           <p className="text-muted">Dein Konto hat keine Autor:innen-Rolle. Diese Rolle wird manuell vergeben – wende dich an die Projektleitung, falls du Fragen pflegen sollst.</p>
+          <Link className="btn btn-ghost" to="/profil">Zum Profil</Link>
         </div>
       </div>
     );
   }
 
   return (
-    <div>
+    <div className="account-page">
       <header className="main-header">
         <div>
           <h1 className="mb-0">Fragenpflege</h1>
@@ -175,169 +197,167 @@ export default function Autoren() {
         </div>
       </header>
 
-      <div className="card mb-2">
-        <div className="flex-between wrap">
-          <div className="field">
-            <label>Suche (ID, Frage, Thema)</label>
-            <input
-              className="input"
-              type="search"
-              placeholder="z. B. Ausreißer, FIAE-DB-057 …"
-              value={suche}
-              onChange={(e) => setSuche(e.target.value)}
-            />
-          </div>
-          <div className="field">
-            <label>Modul</label>
-            <select className="select" value={modulFilter} onChange={(e) => setModulFilter(e.target.value)}>
-              <option value="">Alle Module</option>
-              {(module || []).map((m) => (
-                <option key={m.modul_id} value={m.modul_id}>{m.titel} ({m.modul_id})</option>
-              ))}
-            </select>
-          </div>
-          <div className="field">
-            <label>Review-Status</label>
-            <select className="select" value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)}>
-              <option value="">Alle Status</option>
-              {REVIEW_STATUS.map((s) => <option key={s} value={s}>{s}</option>)}
-            </select>
-          </div>
-        </div>
-      </div>
-
-      {laden && <p className="text-muted">Lädt …</p>}
-      {fehler && <p className="text-muted">Fehler: {fehler}</p>}
-
-      {!laden && !fehler && (
-        <div className="card mb-2 reise-tabelle-wrapper">
-          <table className="reise-tabelle">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Modul</th>
-                <th>Frage</th>
-                <th>Status</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              {sichtbar.map((f) => (
-                <tr key={f.id}>
-                  <td className="small text-muted">{f.id}</td>
-                  <td>{f.modul_id}</td>
-                  <td>{f.frage.length > 80 ? `${f.frage.slice(0, 80)}…` : f.frage}</td>
-                  <td><span className="badge badge-neutral">{f.review_status}</span></td>
-                  <td><button className="btn btn-ghost btn-sm" onClick={() => bearbeiten(f)}>Bearbeiten</button></td>
-                </tr>
-              ))}
-              {gefiltert.length === 0 && (
-                <tr><td colSpan={5} className="text-muted">Keine Fragen für diese Filter/Suche.</td></tr>
-              )}
-            </tbody>
-          </table>
-
-          {gefiltert.length > 0 && (
-            <div className="flex-between wrap mt-2">
-              <span className="small text-muted">
-                {gefiltert.length} Frage(n) – Seite {seiteBegrenzt} von {seitenAnzahl}
-              </span>
-              <div>
-                <button
-                  type="button"
-                  className="btn btn-ghost btn-sm"
-                  onClick={() => setSeite((s) => Math.max(1, s - 1))}
-                  disabled={seiteBegrenzt <= 1}
-                >
-                  ← Zurück
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-ghost btn-sm"
-                  onClick={() => setSeite((s) => Math.min(seitenAnzahl, s + 1))}
-                  disabled={seiteBegrenzt >= seitenAnzahl}
-                  style={{ marginLeft: 8 }}
-                >
-                  Weiter →
-                </button>
-              </div>
+      {!ausgewaehlt && <>
+        <div className="card mb-2">
+          <div className="management-search">
+            <div className="field">
+              <label htmlFor="author-suche-id-frage-thema">Suche (ID, Frage, Thema)</label>
+              <input id="author-suche-id-frage-thema"
+                className="input"
+                type="search"
+                placeholder="z. B. Ausreißer, FIAE-DB-057 …"
+                value={suche}
+                onChange={(e) => setSuche(e.target.value)}
+              />
             </div>
-          )}
+            <details open={filterOffen} onToggle={event => setFilterOffen(event.currentTarget.open)}>
+              <summary>Modul und Review-Status{(modulFilter || statusFilter) && ' · gefiltert'}</summary>
+              <div className="management-filters">
+                <div className="field">
+                  <label htmlFor="author-modul">Modul</label>
+                  <select id="author-modul" className="select" value={modulFilter} onChange={(e) => setModulFilter(e.target.value)}>
+                    <option value="">Alle Module</option>
+                    {(module || []).map((m) => (
+                      <option key={m.modul_id} value={m.modul_id}>{m.titel} ({m.modul_id})</option>
+                    ))}
+                  </select>
+                </div>
+                <div className="field">
+                  <label htmlFor="author-review-status">Review-Status</label>
+                  <select id="author-review-status" className="select" value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)}>
+                    <option value="">Alle Status</option>
+                    {Object.entries(REVIEW_STATUS).map(([wert, label]) => <option key={wert} value={wert}>{label}</option>)}
+                  </select>
+                </div>
+              </div>
+            </details>
+          </div>
         </div>
-      )}
+
+        {laden && <p className="text-muted">Lädt …</p>}
+        {fehler && <p className="text-muted">Fehler: {fehler}</p>}
+
+        {!laden && !fehler && (
+          <div className="card mb-2">
+            <h2 className="mb-0" ref={listRef} tabIndex={-1}>{gefiltert.length} {gefiltert.length === 1 ? 'Frage' : 'Fragen'}</h2>
+            {gefiltert.length === 0 && <p role="status" className="text-muted">Keine Fragen für diese Filter oder Suche.</p>}
+            <ul className="management-list" aria-label="Fragen">
+              {sichtbar.map(f => <li key={f.id}>
+                <div>
+                  <strong>{f.frage}</strong>
+                  <div className="small text-muted">
+                    <span className="badge badge-neutral">{REVIEW_STATUS[f.review_status] || f.review_status}</span>
+                    {f.id} · Modul {f.modul_id}
+                  </div>
+                </div>
+                <button id={`edit-${f.id}`} className="btn btn-ghost btn-sm" aria-label={`Bearbeiten: ${f.id}`} onClick={() => bearbeiten(f)}>Bearbeiten</button>
+              </li>)}
+            </ul>
+
+            {seitenAnzahl > 1 && (
+              <div className="flex-between wrap mt-2">
+                <span className="small text-muted">
+                  Seite {seiteBegrenzt} von {seitenAnzahl}
+                </span>
+                <div>
+                  <button
+                    type="button"
+                    className="btn btn-ghost btn-sm"
+                    onClick={() => { setSeite(seiteBegrenzt - 1); listRef.current?.focus(); }}
+                    disabled={seiteBegrenzt <= 1}
+                  >
+                    ← Zurück
+                  </button>
+                  <button
+                    type="button"
+                    className="btn btn-ghost btn-sm"
+                    onClick={() => { setSeite(seiteBegrenzt + 1); listRef.current?.focus(); }}
+                    disabled={seiteBegrenzt >= seitenAnzahl}
+                    style={{ marginLeft: 8 }}
+                  >
+                    Weiter →
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+      </>}
 
       {ausgewaehlt && formular && (
-        <div className="card" ref={formularRef}>
+        <div className="card">
+          <button type="button" className="btn btn-ghost btn-sm mb-2" onClick={zurListe} disabled={speichern}>← Zur Fragenliste</button>
           <div className="flex-between wrap mb-2">
-            <h2 className="mb-0">Bearbeiten: {ausgewaehlt.id}</h2>
-            <span className="badge badge-neutral">{ausgewaehlt.review_status}</span>
+            <h2 className="mb-0" tabIndex={-1} ref={formularRef}>Bearbeiten: {ausgewaehlt.id}</h2>
+            <span className="badge badge-neutral">{REVIEW_STATUS[ausgewaehlt.review_status] || ausgewaehlt.review_status}</span>
           </div>
 
           <form onSubmit={speichernAbsenden}>
             <div className="field">
-              <label>Frage</label>
-              <textarea className="input" rows={2} value={formular.frage} onChange={(e) => setFormular({ ...formular, frage: e.target.value })} required />
+              <label htmlFor="author-frage">Frage</label>
+              <textarea id="author-frage" className="input" rows={2} value={formular.frage} onChange={(e) => setFormular({ ...formular, frage: e.target.value })} required />
             </div>
             <div className="field">
-              <label>Option A</label>
-              <input className="input" value={formular.option_a} onChange={(e) => setFormular({ ...formular, option_a: e.target.value })} />
+              <label htmlFor="author-option-a">Option A</label>
+              <input id="author-option-a" className="input" value={formular.option_a} onChange={(e) => setFormular({ ...formular, option_a: e.target.value })} />
             </div>
             <div className="field">
-              <label>Option B</label>
-              <input className="input" value={formular.option_b} onChange={(e) => setFormular({ ...formular, option_b: e.target.value })} />
+              <label htmlFor="author-option-b">Option B</label>
+              <input id="author-option-b" className="input" value={formular.option_b} onChange={(e) => setFormular({ ...formular, option_b: e.target.value })} />
             </div>
             <div className="field">
-              <label>Option C</label>
-              <input className="input" value={formular.option_c} onChange={(e) => setFormular({ ...formular, option_c: e.target.value })} />
+              <label htmlFor="author-option-c">Option C</label>
+              <input id="author-option-c" className="input" value={formular.option_c} onChange={(e) => setFormular({ ...formular, option_c: e.target.value })} />
             </div>
             <div className="field">
-              <label>Option D</label>
-              <input className="input" value={formular.option_d} onChange={(e) => setFormular({ ...formular, option_d: e.target.value })} />
+              <label htmlFor="author-option-d">Option D</label>
+              <input id="author-option-d" className="input" value={formular.option_d} onChange={(e) => setFormular({ ...formular, option_d: e.target.value })} />
             </div>
             <div className="field">
-              <label>Antwort (Musterlösung)</label>
-              <input className="input" value={formular.antwort} onChange={(e) => setFormular({ ...formular, antwort: e.target.value })} required />
+              <label htmlFor="author-antwort-musterlosung">Antwort (Musterlösung)</label>
+              <input id="author-antwort-musterlosung" className="input" value={formular.antwort} onChange={(e) => setFormular({ ...formular, antwort: e.target.value })} required />
             </div>
             <div className="field">
-              <label>Erklärung</label>
-              <textarea className="input" rows={3} value={formular.erklaerung} onChange={(e) => setFormular({ ...formular, erklaerung: e.target.value })} />
+              <label htmlFor="author-erklarung">Erklärung</label>
+              <textarea id="author-erklarung" className="input" rows={3} value={formular.erklaerung} onChange={(e) => setFormular({ ...formular, erklaerung: e.target.value })} />
             </div>
             <div className="field">
-              <label>Thema</label>
-              <input className="input" value={formular.thema} onChange={(e) => setFormular({ ...formular, thema: e.target.value })} />
+              <label htmlFor="author-thema">Thema</label>
+              <input id="author-thema" className="input" value={formular.thema} onChange={(e) => setFormular({ ...formular, thema: e.target.value })} />
             </div>
             <div className="field">
-              <label>Schwierigkeit</label>
-              <select className="select" value={formular.schwierigkeit} onChange={(e) => setFormular({ ...formular, schwierigkeit: e.target.value })}>
+              <label htmlFor="author-schwierigkeit">Schwierigkeit</label>
+              <select id="author-schwierigkeit" className="select" value={formular.schwierigkeit} onChange={(e) => setFormular({ ...formular, schwierigkeit: e.target.value })}>
                 {SCHWIERIGKEITEN.map((s) => <option key={s} value={s}>{s}</option>)}
               </select>
             </div>
             <div className="field">
-              <label>Quelle</label>
-              <input className="input" value={formular.quelle} onChange={(e) => setFormular({ ...formular, quelle: e.target.value })} />
+              <label htmlFor="author-quelle">Quelle</label>
+              <input id="author-quelle" className="input" value={formular.quelle} onChange={(e) => setFormular({ ...formular, quelle: e.target.value })} />
             </div>
 
             <div className="flex-between wrap mt-2">
-              <div>
+              <div className="flex wrap">
                 <button type="submit" className="btn btn-primary" disabled={speichern}>Speichern</button>
-                <button type="button" className="btn btn-ghost" onClick={() => setAusgewaehlt(null)} disabled={speichern} style={{ marginLeft: 8 }}>Abbrechen</button>
+                <button type="button" className="btn btn-ghost" onClick={zurListe} disabled={speichern}>Zur Fragenliste</button>
               </div>
-              <div>
+              <div className="flex wrap">
                 {rolle === 'admin' && ausgewaehlt.review_status !== 'geprueft' && ausgewaehlt.review_status !== 'deaktiviert' && (
-                  <button type="button" className="btn btn-ghost" onClick={alsGeprueftMarkieren} disabled={speichern} style={{ marginRight: 8 }}>
+                  <button type="button" className="btn btn-ghost" onClick={alsGeprueftMarkieren} disabled={speichern || ungespeichert}>
                     Als geprüft markieren
                   </button>
                 )}
                 {ausgewaehlt.review_status === 'deaktiviert' ? (
-                  <button type="button" className="btn btn-ghost" onClick={() => statusUmschalten(false)} disabled={speichern}>Reaktivieren</button>
+                  <button type="button" className="btn btn-ghost" onClick={() => statusUmschalten(false)} disabled={speichern || ungespeichert}>Reaktivieren</button>
                 ) : (
-                  <button type="button" className="btn btn-ghost" onClick={() => statusUmschalten(true)} disabled={speichern}>Deaktivieren</button>
+                  <button type="button" className="btn btn-ghost" onClick={() => statusUmschalten(true)} disabled={speichern || ungespeichert}>Deaktivieren</button>
                 )}
               </div>
             </div>
           </form>
 
-          {meldung && <p className="small mt-1">{meldung}</p>}
+          {ungespeichert && <p className="small text-muted">Speichere deine Änderungen, bevor du den Status wechselst.</p>}
+          {meldung && <p role="status" className="small mt-1">{meldung}</p>}
         </div>
       )}
     </div>

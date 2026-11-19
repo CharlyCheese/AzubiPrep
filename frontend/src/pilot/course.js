@@ -75,7 +75,7 @@ function lesson(id, chapter, title, prerequisite, explain, example, task, rules,
 }
 export const LESSONS = [
   lesson('erste-seite', 1, 'Deine erste sichtbare Seite', 'Keine Vorkenntnisse.', [
-    'Links steht die Aufgabe. Unter „Schreiben“ bearbeitest du Dateien; unter „Vorschau“ siehst du die Darstellung. HTML beschreibt Inhalte, CSS gestaltet sie. JavaScript macht Seiten interaktiv und kommt erst später.',
+    'Unter „Schreiben“ bearbeitest du deine Dateien. In der „Vorschau“ siehst du, wie die Seite im Browser aussieht. HTML beschreibt Inhalte, CSS gestaltet sie. Mit JavaScript machst du die Seite später interaktiv.',
     'Ein Element besteht häufig aus Start-Tag, Inhalt und End-Tag. <h1> ist die wichtigste Überschrift; <p> kennzeichnet einen Absatz. Beim End-Tag steht vor dem Namen ein Schrägstrich. Die vorbereitete Dokumenthülle erklären wir in der nächsten Lektion.',
   ], '<h1>Hallo Welt</h1>\n<p>Das ist mein erster Absatz.</p>', 'Übe die beiden eingeführten Elemente: Schreibe eine eigene Hauptüberschrift mit <h1> und einen Textabsatz mit <p>. Deine Texte sind frei wählbar. Schau danach in die Vorschau.', ['heading', 'paragraph'], ['Nutze h1 für die Hauptüberschrift und p für den Absatz.', 'Schreibe beispielsweise <h1>Mein Thema</h1> und darunter <p>Mein erster Text.</p>.'], 1),
   lesson('dokument', 2, 'Das HTML-Dokument verstehen', 'Überschrift, Absatz und Vorschau.', [

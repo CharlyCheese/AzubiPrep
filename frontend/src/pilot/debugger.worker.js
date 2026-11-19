@@ -208,7 +208,7 @@ async function start(data){
         try{if(reason)return vm.false;const text=primitiveText(value,DOM_LIMITS.snapshotBytes);if(encodedSize(text)>DOM_LIMITS.snapshotBytes)throw new Error('React-DOM-Bytegrenze erreicht.');const tree=JSON.parse(text);if(!validDOMTree(tree))throw new Error('Ungültige React-Darstellung.');send('dom',{tree});return vm.true;}catch(error){reason=error.message;return vm.false;}
       });
       vm.setProp(vm.global,'__azubi_dbg_native_dom',domEmit);domEmit.dispose();
-      const vendor=(await import('virtual:course-vendor')).default;
+      const vendor=(await import('virtual:debugger-vendor')).default;
       for(const [name,code] of [
         ['react-dom-bibliothek.js',vendor.dom],
         ['react-umgebung.js','globalThis.__azubi_dbg_react_environment=('+installDebugReactEnvironment.toString()+')('+JSON.stringify(REACT_LIMITS)+');'],

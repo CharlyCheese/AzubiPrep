@@ -8,10 +8,12 @@ export default function Debugger() {
   const heading = useRef(null);
   useEffect(() => { heading.current?.focus(); window.scrollTo(0, 0); }, []);
   return <div className="pilot debugger-page">
-    <header className="main-header"><div><h1 ref={heading} tabIndex={-1}>Debugger</h1><p>Eigenen JavaScript-Code, Module und HTML-Klickereignisse Schritt für Schritt untersuchen.</p></div></header>
-    <Link className="btn btn-ghost" to="/frontendkurs">← Zurück zur Werkstatt</Link>
+    <header className="main-header pilot-page-header">
+      <div><h1 ref={heading} tabIndex={-1}>Debugger</h1><p>JavaScript schrittweise ausführen und Variablen untersuchen.</p></div>
+      <Link className="btn btn-ghost" to="/frontendkurs">← Zurück zur Werkstatt</Link>
+    </header>
     <p className="pilot-status" role="status">{saveStatus}</p>
-    <p className="small">Deine Entwürfe verwenden denselben lokalen Speicher wie die Werkstatt. Beim Verlassen endet die Ausführung. Starte deinen Code hier immer ausdrücklich neu.</p>
+    <p className="small debug-exit-note">Dein Entwurf gehört zur lokalen Werkstatt. Beim Verlassen endet der Debuglauf.</p>
     <Suspense fallback={<p>Debugger wird geladen …</p>}><JsDebuggerPilot standalone moduleProject={state.debugProject} onModuleChange={debugProject => changeState(previous => ({ ...previous, debugProject }))} draft={state.jsDraft} onChange={jsDraft => changeState(previous => ({ ...previous, jsDraft }))} ready={ready} /></Suspense>
   </div>;
 }

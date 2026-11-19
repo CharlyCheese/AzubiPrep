@@ -1,7 +1,7 @@
 {
   "name": "azubiprep-desktop",
   "private": true,
-  "version": "0.1.5",
+  "version": "0.1.7",
   "author": "Sven Weyers",
   "description": "AzubiPrep als installierbare Windows-Desktop-App (Electron-Hülle um das bestehende React-Frontend + Node/Express-Backend).",
   "main": "main.js",
@@ -16,8 +16,8 @@
     "test:web": "node --test test/web-runtime.test.cjs"
   },
   "devDependencies": {
-    "electron": "45.2.0",
-    "electron-builder": "26.18.0"
+    "electron": "45.4.1",
+    "electron-builder": "26.18.1"
   },
   "build": {
     "electronDist": "node_modules/electron/dist",
@@ -43,7 +43,7 @@
         "filter": [
           "src/**/*",
           "package.json",
-          "!**/.env*",
+          "!**/.env*", "!**/*.[pP][dD][fF]",
           "!**/local-ai/**", "!**/local-rag/**", "!**/accounts.json", "!**/chatgpt-auth.json", "!**/chatgpt-host.json",
           "!**/*.log",
           "!**/.cache/**/*"
@@ -54,7 +54,7 @@
         "to": "backend/node_modules",
         "filter": [
           "**/*",
-          "!**/.env*",
+          "!**/.env*", "!**/*.[pP][dD][fF]",
           "!**/local-ai/**", "!**/local-rag/**", "!**/accounts.json", "!**/chatgpt-auth.json", "!**/chatgpt-host.json",
           "!**/*.log",
           "!**/.cache/**/*",
@@ -67,7 +67,7 @@
         "to": "content",
         "filter": [
           "**/*",
-          "!**/.env*", "!**/local-ai/**", "!**/local-rag/**", "!**/accounts.json", "!**/chatgpt-auth.json", "!**/chatgpt-host.json"
+          "!**/.env*", "!**/*.[pP][dD][fF]", "!**/local-ai/**", "!**/local-rag/**", "!**/accounts.json", "!**/chatgpt-auth.json", "!**/chatgpt-host.json"
         ]
       },
       {
@@ -75,7 +75,7 @@
         "to": "frontend/dist",
         "filter": [
           "**/*",
-          "!**/.env*", "!**/local-ai/**", "!**/local-rag/**", "!**/accounts.json", "!**/chatgpt-auth.json", "!**/chatgpt-host.json"
+          "!**/.env*", "!**/*.[pP][dD][fF]", "!**/local-ai/**", "!**/local-rag/**", "!**/accounts.json", "!**/chatgpt-auth.json", "!**/chatgpt-host.json"
         ]
       }
     ],

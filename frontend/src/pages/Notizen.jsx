@@ -1,4 +1,5 @@
 import { useRef, useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { useApi } from '../utils/useApi.js';
 import { api } from '../api/client.js';
 import { notesStore } from '../store/localStore.js';
@@ -15,7 +16,16 @@ function notify() {
 }
 
 export default function Notizen() {
+  const scope = useSyncExternalStore(notesStore.subscribe, notesStore.scope);
+  if (!scope) return <p role="status">Öffne dein Profil und melde dich erneut an, um deine Lernnotizen zu verwenden.</p>;
+  return <ProfileNotes key={scope} scope={scope} />;
+}
+
+function ProfileNotes({ scope }) {
   const notizen = useNotizen();
+  const { state, hash } = useLocation();
+  const selectedId = new URLSearchParams(hash.slice(1)).get('notiz');
+  const visibleNotes = selectedId ? notizen.filter(note => note.id === selectedId) : notizen;
   const { daten: module } = useApi(() => api.get('/module'), []);
   const [titel, setTitel] = useState('');
   const [inhalt, setInhalt] = useState('');
@@ -80,6 +90,7 @@ export default function Notizen() {
     if (!datei) return;
     const reader = new FileReader();
     reader.onload = () => {
+      if (scope !== notesStore.scope()) return;
       try {
         const neu = textToNotizen(String(reader.result || ''));
         if (neu.length === 0) {
@@ -106,7 +117,7 @@ export default function Notizen() {
           <h1 className="mb-0">Lernnotizen</h1>
           <p className="text-muted mt-0">Halte Merksätze, Fehler und Erkenntnisse fest – lokal auf diesem Gerät.</p>
         </div>
-        <div className="flex wrap">
+        {selectedId ? <Link className="btn btn-ghost" to="/notizen" state={state}>Alle Notizen</Link> : <div className="flex wrap">
           <button className="btn btn-ghost btn-sm" onClick={exportieren} title="Notizen als Textdatei speichern">⬇ Exportieren (.txt)</button>
           <button className="btn btn-ghost btn-sm" onClick={() => dateiInput.current?.click()} title="Textdatei importieren">⬆ Importieren</button>
           <input
@@ -116,59 +127,59 @@ export default function Notizen() {
             style={{ display: 'none' }}
             onChange={importieren}
           />
-        </div>
+        </div>}
       </header>
-
-      <div className="alert alert-info">
-        <strong>Tipp:</strong> Notizen als <code>.txt</code> exportieren, in <strong>Notepad/Editor</strong> bearbeiten
-        und anschließend wieder importieren. Das Format ist zeilenbasiert
-        (<code>Titel:</code>, <code>Modul:</code>, <code>Inhalt:</code>, Blöcke durch <code>===NOTE===</code>).
-      </div>
 
       {meldung && <div className="alert alert-success">{meldung}</div>}
 
-      <div className="card mb-2">
+      {!selectedId && <><div className="card mb-2">
         <div className="grid grid-2">
           <div className="field">
-            <label>Titel</label>
-            <input className="input" value={titel} onChange={(e) => setTitel(e.target.value)} placeholder="z. B. Subnetting-Merkregel" />
+            <label htmlFor="note-title">Titel</label>
+            <input id="note-title" className="input" value={titel} onChange={(e) => setTitel(e.target.value)} placeholder="z. B. Subnetting-Merkregel" />
           </div>
           <div className="field">
-            <label>Modul (optional)</label>
-            <select className="select" value={modulId} onChange={(e) => setModulId(e.target.value)}>
+            <label htmlFor="note-module">Modul (optional)</label>
+            <select id="note-module" className="select" value={modulId} onChange={(e) => setModulId(e.target.value)}>
               <option value="">– Allgemein –</option>
               {(module || []).map((m) => <option key={m.modul_id} value={m.modul_id}>{m.modul_id} · {m.titel}</option>)}
             </select>
           </div>
         </div>
         <div className="field">
-          <label>Notiz</label>
-          <textarea className="input" rows={3} value={inhalt} onChange={(e) => setInhalt(e.target.value)} placeholder="Notiz eingeben …" />
+          <label htmlFor="note-content">Notiz</label>
+          <textarea id="note-content" className="input" rows={3} value={inhalt} onChange={(e) => setInhalt(e.target.value)} placeholder="Notiz eingeben …" />
         </div>
         <button className="btn btn-primary" onClick={add}>Notiz speichern</button>
       </div>
 
-      {notizen.length === 0 && <div className="empty">Noch keine Notizen vorhanden.</div>}
+      <details className="notes-format"><summary>Dateiformat für Import und Export</summary><p>
+        <strong>Tipp:</strong> Notizen als <code>.txt</code> exportieren, in <strong>Notepad/Editor</strong> bearbeiten
+        und anschließend wieder importieren. Das Format ist zeilenbasiert
+        (<code>Titel:</code>, <code>Modul:</code>, <code>Inhalt:</code>, Blöcke durch <code>===NOTE===</code>).
+      </p>{scope !== 'notizen' && <p>Ältere Notizen ohne Kontozuordnung findest du, wenn du die App ohne Konto öffnest. Dort kannst du sie exportieren und anschließend in dein Konto importieren.</p>}</details></>}
+
+      {visibleNotes.length === 0 && <div className="empty" role="status">{selectedId ? 'Diese Notiz ist in diesem Profil nicht mehr vorhanden.' : 'Noch keine Notizen vorhanden.'}</div>}
 
       <div className="grid grid-2">
-        {notizen.map((n) => (
+        {visibleNotes.map((n) => (
           <div className="card" key={n.id}>
             {bearbeitenId === n.id ? (
               <>
                 <div className="field">
-                  <label>Titel</label>
-                  <input className="input" value={editTitel} onChange={(e) => setEditTitel(e.target.value)} />
+                  <label htmlFor="edit-note-titel">Titel</label>
+                  <input id="edit-note-titel" className="input" value={editTitel} onChange={(e) => setEditTitel(e.target.value)} />
                 </div>
                 <div className="field">
-                  <label>Modul (optional)</label>
-                  <select className="select" value={editModul} onChange={(e) => setEditModul(e.target.value)}>
+                  <label htmlFor="edit-note-modul-optional">Modul (optional)</label>
+                  <select id="edit-note-modul-optional" className="select" value={editModul} onChange={(e) => setEditModul(e.target.value)}>
                     <option value="">– Allgemein –</option>
                     {(module || []).map((m) => <option key={m.modul_id} value={m.modul_id}>{m.modul_id} · {m.titel}</option>)}
                   </select>
                 </div>
                 <div className="field">
-                  <label>Notiz</label>
-                  <textarea className="input" rows={4} value={editInhalt} onChange={(e) => setEditInhalt(e.target.value)} />
+                  <label htmlFor="edit-note-notiz">Notiz</label>
+                  <textarea id="edit-note-notiz" className="input" rows={4} value={editInhalt} onChange={(e) => setEditInhalt(e.target.value)} />
                 </div>
                 <div className="flex wrap">
                   <button className="btn btn-primary btn-sm" onClick={speichernEdit}>Speichern</button>

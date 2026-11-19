@@ -1,4 +1,5 @@
-import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useApi } from '../utils/useApi.js';
 import { api } from '../api/client.js';
 import { resetAll } from '../store/localStore.js';
@@ -6,46 +7,60 @@ import { useTheme } from '../context/ThemeContext.jsx';
 import { tourManuellStarten } from '../utils/tour.js';
 import KiEinstellungen from '../components/KiEinstellungen.jsx';
 import { aiStore } from '../store/aiStore.js';
+import '../styles/settings.css';
 
 export default function Einstellungen() {
   const navigate = useNavigate();
+  const { hash } = useLocation();
+  useEffect(() => {
+    if (hash !== '#ki-anbieter' && hash !== '#lernunterlagen') return;
+    const frame = requestAnimationFrame(() => {
+      const target = document.getElementById(hash.slice(1));
+      target?.focus({ preventScroll: true });
+      target?.scrollIntoView({ block: 'start' });
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [hash]);
   const { theme, toggleTheme } = useTheme();
   const { daten: status } = useApi(() => api.get('/status'), []);
   const syncAktiviert = Boolean(status?.syncAktiviert);
 
   function reset() {
-    if (!confirm('Wirklich alle lokalen Lerndaten löschen? Diese Aktion kann nicht rückgängig gemacht werden.')) return;
+    if (!confirm('Die aufgeführten lokalen Lern- und Übungsdaten endgültig löschen und die KI-Einstellungen zurücksetzen?')) return;
     resetAll();
     aiStore.reset();
-    navigate('/');
+    navigate('/dashboard');
   }
 
   return (
-    <div>
+    <div className="settings-page">
       <header className="main-header">
-        <div>
-          <h1 className="mb-0">Einstellungen</h1>
-          <p className="text-muted mt-0">Darstellung, Datenschutz und Geräte-Daten. Lernprofil und Konto findest du unter Profil.</p>
-        </div>
+        <h1>Einstellungen</h1>
+        <nav aria-label="Einstellungsbereiche" className="settings-links">
+          <Link to="#ki-anbieter">KI-Anbieter</Link>
+          <Link to="#lernunterlagen">Lernunterlagen</Link>
+          <Link to="/profil">Lernprofil und Konto</Link>
+        </nav>
       </header>
 
-      <div className="card mb-2">
-        <h2>Darstellung</h2>
-        <button className="btn btn-ghost" onClick={toggleTheme}>
-          {theme === 'dark' ? '☀️ Helles Design aktivieren' : '🌙 Dunkles Design aktivieren'}
-        </button>
-      </div>
-
-      <div className="card mb-2">
-        <h2>Hilfe</h2>
-        <p className="text-muted mt-0">Kurze Führung durch Dashboard, Lernreise, Lernbereich, Frontend-Werkstatt und Prüfungssimulation.</p>
-        <button className="btn btn-ghost" onClick={tourManuellStarten}>🧭 Kurze Tour erneut anzeigen</button>
-      </div>
+      <section className="settings-quick" aria-label="Darstellung und Hilfe">
+        <div className="card">
+          <h2>Darstellung</h2>
+          <button className="btn btn-ghost" onClick={toggleTheme}>
+            {theme === 'dark' ? '☀️ Helles Design aktivieren' : '🌙 Dunkles Design aktivieren'}
+          </button>
+        </div>
+        <div className="card settings-help">
+          <h2>Hilfe</h2>
+          <button className="btn btn-ghost" onClick={tourManuellStarten}>🧭 Kurze Tour erneut anzeigen</button>
+          <p className="small text-muted">Kurze Führung durch Dashboard, Lernreise, Lernbereich, Frontend-Werkstatt und Prüfungssimulation.</p>
+        </div>
+      </section>
 
       <KiEinstellungen />
 
-      <div className="card mb-2">
-        <h2>Datenschutz & Hinweise</h2>
+      <details className="card settings-details">
+        <summary>Datenschutz &amp; Hinweise</summary>
         <ul className="small text-muted" style={{ paddingLeft: 18 }}>
           <li>
             Alle Lernstände, Notizen, Karteikarten und Einstellungen liegen <strong>grundsätzlich lokal im
@@ -56,7 +71,7 @@ export default function Einstellungen() {
           </li>
           <li>
             Auf gemeinsam genutzten Geräten kann jede Person diese lokalen Daten einsehen. Sichere Notizen bei
-            Bedarf über den Export und nutze danach „Alle lokalen Lerndaten löschen“.
+            Bedarf über den Export und nutze danach „Aufgeführte Daten löschen“.
           </li>
           <li>
             AzubiPrep ist ein <strong>Lernwerkzeug zur Selbstkontrolle</strong>; Ergebnisse sind nicht
@@ -67,13 +82,13 @@ export default function Einstellungen() {
             Bitte als Lernhilfe nutzen (Details in docs/17-Sicherheit.md).
           </li>
         </ul>
-      </div>
+      </details>
 
-      <div className="card">
-        <h2 style={{ color: 'var(--danger-ink)' }}>Gefahrenzone</h2>
-        <p className="text-muted">Löscht Fortschritt, Karteikarten, Notizen und Prüfungsverlauf auf diesem Gerät.</p>
-        <button className="btn btn-danger" onClick={reset}>Alle lokalen Lerndaten löschen</button>
-      </div>
+      <details className="card settings-details settings-delete">
+        <summary>Lokale Lerndaten zurücksetzen</summary>
+        <p>Du löschst auf diesem Gerät den Modulfortschritt, Prüfungsverlauf, Karteikarten, Lernplan und Lernaktivitäten einschließlich Punkten. Auch die Notizen des aktuellen Profils sowie Quiz-, Karteikarten- und KI-Einstellungen werden zurückgesetzt. Sichere wichtige Notizen vorher über den Export.</p>
+        <button className="btn btn-danger" onClick={reset}>Aufgeführte Daten löschen</button>
+      </details>
     </div>
   );
 }

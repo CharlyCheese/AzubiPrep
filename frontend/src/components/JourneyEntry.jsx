@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useEffect, useRef, useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { journeyApi } from '../api/journey.js';
 import { createJourneyStore, journeyStorageKey, latestObjectiveScores } from '../store/journeyStore.js';
 import '../styles/journey.css';
@@ -50,8 +50,15 @@ export default function JourneyEntry() {
     window.addEventListener('storage', changed);
     return () => { active = false; window.removeEventListener('storage', changed); };
   }, []);
+  const { hash } = useLocation();
+  const resumeLink = useRef(null);
+  const loaded = Boolean(entry.topics);
+  useEffect(() => {
+    if (loaded && hash === '#reise-fortsetzen') resumeLink.current?.focus();
+  }, [loaded, hash]);
   const topics = entry.topics || [];
-  const available = item => (item.topic.navigationPrerequisites || item.topic.prerequisites).every(id => topics.find(other => other.topic.id === id)?.saved.state?.bestResult?.passed);
+  const passedIds = new Set(topics.filter(item => item.saved.state?.bestResult?.passed).map(item => item.topic.id));
+  const available = item => (item.topic.navigationPrerequisites || item.topic.prerequisites).every(id => passedIds.has(id));
   const next = topics.find(item => available(item) && !item.saved.state?.bestResult?.passed) || topics[0];
   const started = topics.some(item => item.saved.state);
   const complete = topics.length > 0 && topics.every(item => item.saved.state?.bestResult?.passed);
@@ -60,17 +67,31 @@ export default function JourneyEntry() {
     const passed = items.filter(item => item.saved.state?.bestResult?.passed).length;
     return { ...stage, items, passed, complete: Boolean(stage.reviewTopicId && stage.topicIds.length > 0 && passed === stage.topicIds.length) };
   });
+  const currentStage = stages.find(stage => stage.id === next?.topic.fieldId);
+  const lastCompleted = stages.filter(stage => stage.complete).at(-1);
+  const totalPassed = stages.reduce((sum, stage) => sum + stage.passed, 0);
   return (
-    <section className="card mb-2" aria-labelledby="journey-entry-title">
-      <span className="badge badge-neutral">Geführte Lernreise · FIAE</span>
-      <h2 id="journey-entry-title">Allgemeine Grundlagen zuerst</h2>
-      <p>Dein Weg: LF1 → Wirtschafts- und Sozialkunde → Projektmanagement → LF2 und die weiteren Lernfelder. Passende Theorie, Quiz, Selbstreflexion,
-        Karteikarten und ein kleiner Test gehören jeweils zusammen.</p>
+    <section aria-label="Geführte Lernreise">
       {entry.loading ? <p role="status">Lernreise wird geladen …</p> : entry.error ? (
         <p role="alert">{entry.error} <Link to={`/lernreise/fiae/${FIRST_JOURNEY_TOPIC}`}>Abschnitt erneut öffnen</Link></p>
       ) : (
         <>
-          <p>{topics.length} von {entry.catalog.totalTopics} geplanten Themen sind verfügbar. {topics.length < entry.catalog.totalTopics && 'Weitere Themen und Lernfelder folgen.'}</p>
+          <div className="card journey-lead">
+            {next && <>
+              <p className="journey-kicker">{complete ? 'Wiederholung' : 'Nächstes Thema'} · {next.topic.fieldId}</p>
+              <h2>{next.topic.title}</h2>
+              <p>{currentStage?.title}</p>
+              <Link id="reise-fortsetzen" ref={resumeLink} className="btn btn-primary" to={`/lernreise/fiae/${next.topic.id}`}>
+                {next.saved.error ? 'Gespeicherten Stand prüfen' : complete ? 'Lernreise wiederholen' : started ? 'Lernreise fortsetzen' : 'Lernreise beginnen'}
+              </Link>
+              <div className="journey-progress">
+                <strong>{currentStage.id}: {currentStage.passed} von {currentStage.total} Themen bestanden.</strong>
+                <progress aria-label={`Fortschritt in ${currentStage.id}`} max={currentStage.total} value={currentStage.passed} />
+                <span className="small text-muted">Gesamte Lernreise · {totalPassed} von {entry.catalog.totalTopics} Themen bestanden</span>
+              </div>
+            </>}
+            {!next && <p>Die ersten Themen werden vorbereitet.</p>}
+          </div>
           {complete && topics.length === entry.catalog.totalTopics && stages.length === 14 && stages.every(stage => stage.complete) &&
             <section className="alert alert-success" aria-label="FIAE-Abschluss">
               <h3>FIAE-Lernreise abgeschlossen</h3>
@@ -94,47 +115,50 @@ export default function JourneyEntry() {
               </details>
             </section>}
           {topics.some(item => item.saved.error) && <p className="alert alert-warning">Ein vorhandener Lernstand braucht Aufmerksamkeit. Er wird nicht überschrieben.</p>}
-          {stages.filter(stage => stage.available).map(stage => <p key={stage.id}><strong>{stage.id}: {stage.passed} von {stage.total} Themen bestanden.</strong></p>)}
-          {stages.filter(stage => stage.complete).map(stage => <div key={stage.id} className="alert alert-success" role="status">
-            <h3>{stage.id} in der Lernreise abgeschlossen</h3>
+          {lastCompleted && <div className="alert alert-success journey-milestone" role="status">
+            <h3>{lastCompleted.id} in der Lernreise abgeschlossen</h3>
+            {lastCompleted.id !== currentStage?.id && <strong>{lastCompleted.id}: {lastCompleted.passed} von {lastCompleted.total} Themen bestanden.</strong>}
+            {nextStageHints[lastCompleted.id] && stages[stages.indexOf(lastCompleted) + 1]?.available > 0 && <p>{nextStageHints[lastCompleted.id]}</p>}
+          </div>}
+          <details className="card journey-directory">
+            <summary>Etappen und Themen ansehen <span className="small text-muted">{stages.length} Etappen</span></summary>
+            <p className="text-muted">Jede Etappe führt von der Theorie über Quiz, Selbstreflexion und Karteikarten zum Mini-Test. Nach einem bestandenen Themencheck wird das nächste Thema frei. Der Rückblick gehört zum letzten Thema.</p>
+            <div className="journey-stages" role="group" aria-label="Etappen der geführten Lernreise">
+          {stages.map(stage => <details className="journey-stage" key={stage.id}
+            open={expanded[stage.id] ?? stage.id === next?.topic.fieldId}>
+            <summary onClick={event => { event.preventDefault(); setExpanded(current => ({ ...current, [stage.id]: !(current[stage.id] ?? stage.id === next?.topic.fieldId) })); }}>
+              {stage.id === 'WISO' ? 'WISO · Wirtschafts- und Sozialkunde' : stage.id === 'PM' ? stage.title : `${stage.id} · ${stage.title}`}
+              <span className="small">{stage.available ? `${stage.passed} von ${stage.total} Themen bestanden` : 'In Vorbereitung'}</span>
+            </summary>
+            {stage.complete && <div className="alert alert-success">
+            <strong>Etappenrückblick</strong>
             <p>Alle {stage.topicIds.length} Themenchecks bestanden und den Rückblick bearbeitet.
               {stage.id === 'LF1' && ' Die praktische Präsentation hast du selbst durchgeführt und bestätigt; ihre Qualität wurde nicht automatisch benotet.'}
               {stage.id === 'LF3' && ' Die drei Netzwerkfälle hast du im Modell geprüft und bestätigt; echte Netzwerke wurden dabei nicht konfiguriert.'}
               {['LF4', 'LF5', 'LF6', 'LF7', 'LF8', 'LF9'].includes(stage.id) && ' Die praktische Übung hast du im lokalen Modell geprüft und bestätigt.'}
               {stage.id === 'LF2' && ' Die Modellübung hast du geprüft und bestätigt; sie ist kein Nachweis der Einrichtung echter Hardware.'}</p>
             {stage.id.endsWith('a') && <p>Den Praxisauftrag hast du anhand der Checkliste selbst geprüft und bestätigt.</p>}
-            {nextStageHints[stage.id] && stages[stages.indexOf(stage) + 1]?.available > 0 && <p>{nextStageHints[stage.id]}</p>}
-          </div>)}
-          {next && <Link className="btn btn-primary" to={`/lernreise/fiae/${next.topic.id}`}>
-            {next.saved.error ? 'Gespeicherten Stand prüfen' : complete ? 'Lernreise wiederholen' : started ? 'Lernreise fortsetzen' : 'Lernreise beginnen'}
-          </Link>}
-          <div className="journey-stages" role="group" aria-label="Etappen der geführten Lernreise">
-          {stages.map(stage => <details className="journey-stage" key={stage.id}
-            open={expanded[stage.id] ?? stage.id === next?.topic.fieldId}>
-            <summary onClick={event => { event.preventDefault(); setExpanded(current => ({ ...current, [stage.id]: !(current[stage.id] ?? stage.id === next?.topic.fieldId) })); }}>{stage.id === 'WISO' ? 'Sonstige Prüfungsbereiche · Wirtschafts- und Sozialkunde' : stage.id === 'PM' ? stage.title : `${stage.id} · ${stage.title}`}
-              <span className="small">{stage.available ? `${stage.passed} von ${stage.total} Themen bestanden` : 'In Vorbereitung'}</span>
-            </summary>
+            </div>}
             {stage.items.length > 0 ? <>
-              <p>Der Rückblick gehört zum letzten Thema.</p>
               <ol className="journey-topic-list" aria-label={`Verfügbare Themen in ${stage.id}`}>
             {stage.items.map(item => {
               const { topic, saved } = item;
               const unlocked = available(item);
               return <li key={topic.id}>
                 <h3>{topic.title}</h3>
-                <p className="small">{topic.fieldId} · {saved.error ? 'Gespeicherten Stand prüfen' : saved.state?.bestResult?.passed ? 'Bestanden' : saved.state ? 'Begonnen' : 'Noch nicht begonnen'}</p>
                 {unlocked ? <Link className="btn btn-ghost" to={`/lernreise/fiae/${topic.id}`} aria-label={`${topic.title}: ${saved.state ? 'öffnen' : 'beginnen'}`}>
                   {saved.error ? 'Stand prüfen' : saved.state?.bestResult?.passed ? 'Ergebnis und Wiederholung' : saved.state ? 'Abschnitt fortsetzen' : 'Abschnitt öffnen'}
-                </Link> : <p>Zuerst abschließen: {(topic.navigationPrerequisites || topic.prerequisites).map(id => topics.find(other => other.topic.id === id)).filter(required => required && !required.saved.state?.bestResult?.passed).map(required => required.topic.title).join(' · ')}.</p>}
+                </Link> : <span className="small text-muted">Gesperrt</span>}
               </li>;
             })}
               </ol>
             </> : <p>{stage.id === 'PM' ? 'Die geführte Etappe Projektmanagement folgt nach WISO. Inhalte und Themenchecks sind noch in Vorbereitung.' : 'Diese Etappe wird später ergänzt.'}</p>}
           </details>)}
           </div>
+          </details>
+          <p className="small text-muted">{topics.length} von {entry.catalog.totalTopics} geplanten Themen sind verfügbar. Dein Stand bleibt in diesem Browser- bzw. App-Profil.</p>
         </>
       )}
-      <p className="small text-muted mb-0">Ohne KI und ohne Konto nutzbar. Der Lernstand bleibt in diesem Browser- bzw. App-Profil; Kontosync übernimmt ihn noch nicht.</p>
     </section>
   );
 }

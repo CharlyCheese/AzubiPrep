@@ -43,6 +43,20 @@ export function theoryCatalog(content) {
   cache.set(content, result); return result;
 }
 export function findTheoryTopic(content, id) { return theoryCatalog(content).topics.get(id); }
+export function describeTheoryTopic(content, topic, filters = {}) {
+  const { questionIds, ...details } = topic;
+  const matching = questionIds.filter(id => {
+    const { modul_id } = content.questionsById.get(id);
+    const direction = content.modulesById.get(modul_id)?.fachrichtung;
+    return (!filters.module || filters.module === modul_id) &&
+      (!filters.fachrichtung || direction === 'ALLE' || direction === filters.fachrichtung);
+  });
+  const first = content.questionsById.get(matching[0]);
+  return {
+    ...details, sections: theorySections(topic), questionCount: matching.length,
+    practice: first ? { id: first.id, moduleId: first.modul_id } : null,
+  };
+}
 export function listTheory(content, filters = {}) {
   const catalog = theoryCatalog(content);
   const glossary = filters.mode === 'glossary';
@@ -57,13 +71,7 @@ export function listTheory(content, filters = {}) {
   topics.sort((a, b) => compareFields(a.field, b.field) || a.title.localeCompare(b.title, 'de'));
   const page = Math.min(10000, Math.max(1, parseInt(filters.page, 10) || 1)); const size = 24;
   const fields = [...new Set([...catalog.topics.values()].map(topic => topic.field))].sort(compareFields).map(id => ({ id, title: [...THEORY_FIELDS, ...SPECIAL_FIELDS].find(field => field[0] === id)?.[1] || (id === 'WISO' ? 'Wirtschafts- und Sozialkunde' : id === 'PM' ? 'Projektmanagement' : id) }));
-  const pageTopics = topics.slice((page - 1) * size, page * size).map(({ questionIds, ...topic }) => {
-    const matching = questionIds.filter(id => {
-      const question = content.questionsById.get(id);
-      return (!filters.module || question.modul_id === filters.module) && matchesDirection(catalog.modules.get(question.modul_id));
-    });
-    return { ...topic, sections: theorySections(topic), questionCount: matching.length, practice: matching.length ? { id: matching[0], moduleId: content.questionsById.get(matching[0]).modul_id } : null };
-  });
+  const pageTopics = topics.slice((page - 1) * size, page * size).map(topic => describeTheoryTopic(content, topic, filters));
   return {
     fields, modules: [...catalog.modules.values()].filter(matchesDirection).map(module => ({ id: module.modul_id, title: module.titel, fachrichtung: module.fachrichtung })),
     topics: pageTopics, total: topics.length, page, pageSize: size,

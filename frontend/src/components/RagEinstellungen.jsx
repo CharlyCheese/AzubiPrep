@@ -37,10 +37,10 @@ export default function RagEinstellungen() {
       setMessage(result.modelContextCleared ? 'Material und zugehörige Suchdaten entfernt; der lokale Modellkontext wurde entladen.' : 'Suchdaten entfernt. Der Modellkontext konnte nicht bestätigt entladen werden; beende gegebenenfalls die laufende Ollama-Sitzung.');
     });
   }
-  return <section className="ki-material" aria-label="Eigene lokale Lernunterlagen">
-    <h3>Eigene lokale Lernunterlagen</h3>
-    <p>PDFs werden ausschließlich auf diesem Rechner verarbeitet. Originale, Seitentexte und Suchindex bleiben in der privaten Ablage und werden weder veröffentlicht noch mit der App verteilt. Andere Anwender fügen ihr eigenes Material hinzu.</p>
-    <p className="small">Zuerst eine PDF hinzufügen oder im Materialordner ablegen, dann aufbereiten. Die Suche arbeitet zunächst mit Textbegriffen, ohne zusätzliches Embedding-Modell. Gescannte PDFs ohne lesbaren Text benötigen eine später separat verfügbare OCR-Erkennung.</p>
+  return <section className="card ki-material" aria-label="Eigene lokale Lernunterlagen">
+    <h3 id="lernunterlagen" tabIndex={-1}>Eigene lokale Lernunterlagen</h3>
+    <p>PDFs werden ausschließlich auf diesem Rechner verarbeitet. Füge eine PDF hinzu und bereite sie anschließend für die Suche auf.</p>
+    {!isLocalAi() && <p>Öffne AzubiPrep auf deinem Rechner, um lokale Unterlagen hinzuzufügen und aufzubereiten.</p>}
     {status && <><p role="status">{labels[status.state] || 'Lokalen Materialstatus prüfen'}{status.pending ? ` · ${status.pending} noch nicht eingelesene PDF(s)` : ''}</p>{status.location && <p className="ki-text small">Privater Materialordner: {status.location}</p>}{status.progress && <p>{status.progress.label}: {status.progress.page} / {status.progress.total || '?'} PDF-Seiten</p>}</>}
     <div className="ki-actions">
       <label className="btn btn-primary pilot-upload">PDF hinzufügen<input type="file" accept=".pdf,application/pdf" aria-label="PDF hinzufügen" disabled={busy || status?.state === 'processing' || !isLocalAi()} onChange={add} /></label>
@@ -51,6 +51,11 @@ export default function RagEinstellungen() {
     {busy && <p role="status">Lokaler Vorgang läuft …</p>}
     {(status?.documents || []).map(document => <div className="ki-document" key={document.id}><strong>{document.label}</strong><p>{labels[document.state] || document.state}{document.pages ? ` · ${document.pages} PDF-Seiten` : ''}</p>{document.emptyPages > 0 && <p className="small">{document.emptyPages} Seite(n) mit wenig oder keinem Text. Bilder und Tabellen können unvollständig erfasst sein.</p>}{document.failedPages > 0 && <p className="small">{document.failedPages} Seite(n) konnten nicht gelesen werden.</p>}{document.error && <p role="alert">{document.error}</p>}<button className="btn btn-ghost" disabled={busy || status?.state === 'processing'} onClick={() => remove(document)}>Unterlage entfernen</button></div>)}
     {(error || status?.error) && <p role="alert">{error || status.error}</p>}{message && <p role="status">{message}</p>}
-    <p className="small">Quellenbelege nennen neutrale Unterlagenkennungen und PDF-Seiten; gedruckte Seitennummern können davon abweichen. Eigene Unterlagen werden erst mit deiner Zustimmung bei der jeweiligen Lernanfrage verwendet. Sie können veraltet sein und ersetzen keine fachliche Prüfung.</p>
+    <details className="settings-info">
+      <summary>Speicherung und Quellenbelege</summary>
+      <p>Originale, Seitentexte und Suchindex bleiben in der privaten Ablage. Du kannst PDFs auch im Materialordner ablegen. Die Suche verwendet Textbegriffe. Für gescannte PDFs ohne lesbaren Text ist eine separate Texterkennung erforderlich.</p>
+      <p>Quellenbelege nennen die Unterlage und die PDF-Seite. Gedruckte Seitennummern können abweichen. Prüfe die Fundstellen auf Aktualität und fachliche Richtigkeit.</p>
+    </details>
+    <p className="small">Erst mit deiner Zustimmung zur jeweiligen Lernanfrage verwendet die lokale Lernbegleitung passende Ausschnitte.</p>
   </section>;
 }

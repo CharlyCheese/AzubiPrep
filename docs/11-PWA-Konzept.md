@@ -12,41 +12,27 @@ Fenster/Icon. Grundlage sind Manifest + Service Worker.
 - Sprache `de`
 
 ## Service Worker (`frontend/public/sw.js`)
+
 | Strategie | Anwendung |
 |---|---|
-| **Cache-first** | App-Shell (HTML, CSS, JS, Icons) → sofortiges Laden offline |
-| **Network-first, Cache-Fallback** | `GET /api/*` → Inhalte bleiben offline nutzbar, nachdem sie einmal geladen wurden |
-| Kein Caching | alle Nicht-GET-Requests |
+| Gemeinsame Installation | Beim Bauen ermittelt Vite die zur Startseite gehörenden Skripte, Styles und Icons. Der Browser prüft ihre SHA-256-Werte, bevor er den neuen Stand aktiviert. |
+| Navigation mit Offline-Startseite | Online lädt die App die aktuelle Seite vom lokalen Webdienst. Ist er unerreichbar, können auch direkte Lernlinks die gespeicherte Oberfläche öffnen. |
+| Zwischenspeicher für öffentliche Inhalte | Bereits geladene Katalogdaten, Module, Fragen und Theoriethemen können aus dem Cache der jeweiligen Version gelesen werden. |
+| Nur Netzwerk | Konten, eigene Materialien, KI-Anfragen, die allgemeine Inhaltssuche, schreibende Operationen und Anfragen mit Anmeldetoken. |
 
 Der Service Worker wird nur im **Produktions-Build** registriert
 (`import.meta.env.PROD`), im Dev-Modus bleibt er deaktiviert (kein
 Cache-Konflikt während der Entwicklung).
 
-## Offline-Verhalten (Stand 2026-09-17, nach DB-001/BE-001/BE-003/CONTENT-001)
+## Aktualisierung und Offline-Betrieb
 
-> Korrektur: Dieser Abschnitt beschrieb ursprünglich den reinen MVP-Stand
-> (vor Login/Sync/Push/Melden/Autoren-Pflege) und wurde bei deren Einführung
-> nicht mitgepflegt. "Vollständig offline nutzbar" stimmte seither nicht
-> mehr; außerdem beschrieb ein Absatz eine Offline-Zwischenspeicherung für
-> Prüfungsantworten, die nie implementiert wurde (siehe `PruefungLauf.jsx`
-> – dort gibt es keine Offline-Erkennung, ein fehlgeschlagenes `POST
-> /pruefung/auswerten` zeigt nur die rohe Fehlermeldung, die Antworten sind
-> danach verloren). Nachfolgend der tatsächliche, geprüfte Stand.
+Für ein Update muss die installierte PWA ihren bisherigen Webdienst unter derselben Adresse erreichen. Beim Wechsel von einer älteren PWA kann zunächst noch die alte Seite erscheinen. Speichere deine Arbeit und öffne die App erneut. Eine unterbrochene Installation lässt die zuletzt vollständig gespeicherte Version verfügbar.
 
-- Die **App-Shell** (HTML/CSS/JS/Icons) lädt dank Cache-first-Strategie
-  auch offline sofort.
-- Bereits einmal geladene `GET /api/*`-Antworten (z. B. Fragen/Module/
-  Theorie) bleiben dank Cache-Fallback offline sichtbar – der Stand kann
-  aber veraltet sein, es gibt keine Kennzeichnung "zuletzt aktualisiert am".
+- Nach erfolgreicher Erstinstallation startet die Oberfläche auch ohne Netzverbindung. Für noch nicht geladene Lektionen, Inhalte oder zusätzliche Programmteile kann der Webdienst erforderlich sein.
+- Bereits zwischengespeicherte öffentliche Katalogdaten können vom aktuellen Serverstand abweichen.
 - Fortschritt, Karteikarten und Notizen liegen ohnehin lokal
   (`localStorage`) und sind unabhängig vom Server verfügbar.
-- **Alles, was einen Server-Request auslöst, funktioniert offline nicht**:
-  Login/Registrierung/Konto-Sync (DB-001), Frage melden (BE-003), Als-
-  geprüft-Markieren/Autoren-Pflege (CONTENT-001), Push-Benachrichtigungen
-  und die Benachrichtigungs-Historie (BE-001/BE-005/BE-006), sowie die
-  **Auswertung** einer Prüfungssimulation. Ohne Verbindung erscheint dabei
-  aktuell nur die generische Fehlermeldung des fehlgeschlagenen Requests –
-  keine spezielle Offline-Behandlung, keine lokale Zwischenspeicherung.
+- Anmeldung, Kontosynchronisation, Autorenpflege, Benachrichtigungen, allgemeine Inhaltssuche und Prüfungsauswertung benötigen den laufenden Webdienst. Eine Prüfungsabgabe muss bei bestehender Verbindung erfolgen.
 
 ## Installation
 - Desktop (Chrome/Edge): Icon in der Adressleiste bzw. Menü „App installieren".

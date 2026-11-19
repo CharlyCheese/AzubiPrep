@@ -249,14 +249,14 @@ function JourneySession({ topic }) {
   return (
     <div className="journey-page">
       <header className="main-header">
-        <div><Link to="/lernreise?fr=FIAE" onClick={event => { if (saving || requesting) event.preventDefault(); }}>← Lernreise</Link>
-          <h1>{topic.title}</h1><p className="text-muted">FIAE · {externalProject ? 'Spezialisierung' : 'Allgemeine Grundlagen'} · {topic.fieldId} · Themenabschnitt</p>
+        <div><Link to="/lernreise?fr=FIAE#reise-fortsetzen" onClick={event => { if (saving || requesting) event.preventDefault(); }}>← Lernreise</Link>
+          <p className="journey-kicker">FIAE · {topic.fieldId} · {externalProject ? 'Spezialisierung' : 'Allgemeine Grundlagen'}</p>
+          <h1>{topic.title}</h1>
         </div>
       </header>
       <div className="journey-status" role="status" aria-live="polite">
         {!loaded ? 'Lernstand wird geladen …' : storageError ? 'Nicht gespeichert – bitte Hinweis beachten' : requesting ? 'Antwort wird geprüft …' : saving ? 'Wird gespeichert …' : state ? 'Gespeichert' : 'Bereit zum Beginnen'}
       </div>
-      <p className="small text-muted">Dein Stand bleibt in diesem Browser- bzw. App-Profil. Er wird noch nicht mit einem Konto synchronisiert.</p>
       {storageError && <div className="alert alert-warning" role="alert"><p>{storageError.message}</p>
         <div className="journey-actions">
           {stateRef.current && storageError.code !== 'CONFLICT' && <button className="btn btn-primary" disabled={saving} onClick={() => { blocked.current = false; setStorageError(null); persist(stateRef.current); }}>Speichern erneut versuchen</button>}
@@ -271,10 +271,12 @@ function JourneySession({ topic }) {
 
       {loaded && !state && !storageError && <section className="card journey-work">
         <h2 ref={heading} tabIndex={-1}>{topic.prerequisites.length ? `Dein nächster Schritt in ${topic.fieldId}` : `Dein Einstieg in ${topic.fieldId}`}</h2>
-        <p>{topic.caseStudy.text}</p><h3>Danach kannst du …</h3>
-        <ul>{topic.objectives.map(goal => <li key={goal.id}>{goal.text}</li>)}</ul>
-        <p>Theorie → Quiz → Selbstreflexion → Karteikarten → Mini-Test. Du kannst jederzeit unterbrechen und später fortsetzen.</p>
+        <p>Theorie, Quiz, Selbstreflexion, Karteikarten und Mini-Test. Dein Stand wird in diesem Profil gespeichert.</p>
         <button className="btn btn-primary" onClick={start} disabled={saving}>Abschnitt beginnen</button>
+        <details className="journey-detail"><summary>Fallbeispiel und Lernziele</summary>
+          <p>{topic.caseStudy.text}</p><h3>Danach kannst du …</h3>
+          <ul>{topic.objectives.map(goal => <li key={goal.id}>{goal.text}</li>)}</ul>
+        </details>
       </section>}
 
       {state && <>
@@ -363,6 +365,12 @@ function JourneySession({ topic }) {
             <h2 ref={heading} tabIndex={-1}>Deine Auswertung</h2>
             <p className={`alert ${result.passed ? 'alert-success' : 'alert-warning'}`}><strong>{result.correct} von {result.total} richtig ({result.percent} %).</strong> {result.passed ? (topic.prerequisites.length ? 'Themenabschnitt bestanden.' : 'Erster Themenabschnitt bestanden.') : 'Noch nicht bestanden – wiederhole gezielt die unsicheren Inhalte.'}</p>
             {!result.passed && state.bestResult?.passed && <p>Ein früherer bestandener Versuch bleibt erhalten. Dieser Versuch zeigt zusätzlichen Wiederholungsbedarf.</p>}
+            <div className="journey-actions">
+              {topic.nextTopic && state.bestResult?.passed && !disabled &&
+                <Link className="btn btn-primary" to={`/lernreise/fiae/${topic.nextTopic.id}`}>Nächstes Thema: {topic.nextTopic.title}</Link>}
+              <button className={`btn ${state.bestResult?.passed ? 'btn-ghost' : 'btn-primary'}`} disabled={disabled} onClick={() => act({ type: 'repeat-exam' })}>Mini-Test wiederholen</button>
+              <Link className="btn btn-ghost" to="/lernreise?fr=FIAE#reise-fortsetzen">Zur Lernreise</Link>
+            </div>
             <h3>Deine Lernziele</h3><ul>{result.objectives.map(goal => <li key={goal.id}>
               <strong>{goal.correct} von {goal.total} richtig:</strong> {topic.objectives.find(item => item.id === goal.id)?.text}
               {goal.correct < goal.total && <span> – hier noch einmal nachlesen.</span>}
@@ -373,9 +381,7 @@ function JourneySession({ topic }) {
             {Object.values(state.cards.ratings).includes('repeat') && <details className="journey-detail"><summary>Karten zum Wiederholen</summary>
               {topic.cards.filter(item => state.cards.ratings[item.id] === 'repeat').map(item => <div key={item.id}><h3>{item.front}</h3><p>{item.back}</p></div>)}
             </details>}
-            <div className="journey-actions"><button className="btn btn-primary" disabled={disabled} onClick={() => act({ type: 'repeat-exam' })}>Mini-Test wiederholen</button><Link className="btn btn-ghost" to="/lernreise?fr=FIAE">Zur Lernreise</Link></div>
-            {topic.nextTopic ? state.bestResult?.passed && !disabled && <p><Link className="btn btn-primary" to={`/lernreise/fiae/${topic.nextTopic.id}`}>Nächstes Thema: {topic.nextTopic.title}</Link></p>
-              : topic.id === 'fiae-lf12a-review' ? <p>Dies ist das letzte Thema. Deinen Gesamtstand und deine Lernziele findest du in der Lernreiseübersicht.</p> : <p>Weitere Themenabschnitte sind noch in Vorbereitung.</p>}
+            {!topic.nextTopic && <p>{topic.id === 'fiae-lf12a-review' ? 'Deinen Gesamtstand und deine Lernziele findest du in der Lernreiseübersicht.' : 'Weitere Themenabschnitte sind noch in Vorbereitung.'}</p>}
             {topic.fieldReview ? <p>Der {topic.fieldId}-Abschluss setzt alle {topic.field.topicIds.length} bestandenen Themen und diesen Rückblick{externalProject ? ' sowie deinen bestätigten Projektauftrag' : topic.fieldId === 'LF1' ? ' sowie deine bestätigte Präsentationsaufgabe' : ['LF2', 'LF3', 'LF4', 'LF5', 'LF6', 'LF7', 'LF8', 'LF9'].includes(topic.fieldId) ? ' sowie deine geprüfte und bestätigte Modellübung' : ''} voraus. Den Gesamtstand siehst du in der Lernreiseübersicht. {topic.nextTopic && 'Danach geht es mit „' + topic.nextTopic.title + '“ weiter.'}</p>
               : <p>Dieser Abschluss gilt für dieses Thema. Zum {topic.fieldId}-Abschluss gehören alle {topic.field.topicIds.length} Themen und der Rückblick.</p>}
             <p className="small text-muted">Die Einschätzung ist eine Lernhilfe, keine IHK-Note. Dieser Pilot vergibt keine zusätzlichen XP und verändert deine bisherigen Quiz- oder Kartenstände nicht.</p>
@@ -418,6 +424,7 @@ export default function LernreiseAbschnitt() {
   const { topicId } = useParams();
   const [topic, setTopic] = useState(null);
   const [missing, setMissing] = useState([]);
+  const [firstOpen, setFirstOpen] = useState(null);
   const [error, setError] = useState('');
   const [retry, setRetry] = useState(0);
   useEffect(() => {
@@ -432,13 +439,27 @@ export default function LernreiseAbschnitt() {
         prerequisiteIds = value.navigationPrerequisites || value.prerequisites;
         const store = createJourneyStore();
         const catalog = prerequisiteIds.length ? await journeyApi.progressCatalog() : { readyTopics: [] };
-        const byId = new Map(catalog.readyTopics.map(topic => [topic.id, topic]));
-        const requirements = await Promise.all(value.prerequisiteTopics.map(async item => {
-          const saved = await store.load(byId.get(item.id));
+        const byId = new Map(catalog.readyTopics.map(item => [item.id, item]));
+        // Include indirect prerequisites so even a deep link can lead directly to an open topic.
+        const ancestors = new Set();
+        function include(id) {
+          if (ancestors.has(id)) return;
+          ancestors.add(id);
+          const item = byId.get(id);
+          if (!item) throw new Error('Die Voraussetzungen konnten nicht vollständig geladen werden.');
+          (item.navigationPrerequisites || item.prerequisites).forEach(include);
+        }
+        prerequisiteIds.forEach(include);
+        prerequisiteIds = [...ancestors];
+        const requirements = await Promise.all(catalog.readyTopics.filter(item => ancestors.has(item.id)).map(async item => {
+          const saved = await store.load(item);
           return { ...item, passed: Boolean(saved.state?.bestResult?.passed), error: saved.error };
         }));
         if (active && current === generation) {
-          setMissing(requirements.filter(item => !item.passed));
+          const direct = new Set(value.prerequisiteTopics.map(item => item.id));
+          const outstanding = requirements.filter(item => !item.passed);
+          setMissing(outstanding.some(item => direct.has(item.id)) ? outstanding : []);
+          setFirstOpen(outstanding[0]);
           setTopic(previous => previous?.id === value.id && previous.version === value.version ? previous : value);
           setError('');
         }
@@ -451,16 +472,14 @@ export default function LernreiseAbschnitt() {
     window.addEventListener('storage', changed);
     return () => { active = false; window.removeEventListener('storage', changed); };
   }, [topicId, retry]);
-  if (error) return <div className="card"><h1>Lernabschnitt nicht erreichbar</h1><p role="alert">{error}</p><button className="btn btn-primary" onClick={() => setRetry(value => value + 1)}>Erneut laden</button> <Link to="/lernreise">Zur Lernreise</Link></div>;
-  if (!topic) return <p role="status">Lernabschnitt wird geladen …</p>;
+  if (error) return <div className="card"><h1>Lernabschnitt nicht erreichbar</h1><p role="alert">{error}</p><button className="btn btn-primary" onClick={() => setRetry(value => value + 1)}>Erneut laden</button> <Link to="/lernreise?fr=FIAE#reise-fortsetzen">Zur Lernreise</Link></div>;
+  if (topic?.id !== topicId) return <p role="status">Lernabschnitt wird geladen …</p>;
   if (missing.length) return <section className="card journey-page">
     <h1>Zuerst die Grundlage abschließen</h1>
-    <p>„{topic.title}“ baut auf dem vorherigen Thema auf. Bestehe zuerst dessen Mini-Test. Dein gespeicherter Stand bleibt erhalten.</p>
-    {missing.map(item => <div key={item.id}>
-      {item.error && <p role="alert">Der gespeicherte Stand des Vorgängerthemas muss zuerst geprüft werden.</p>}
-      <Link className="btn btn-primary" to={`/lernreise/fiae/${item.id}`}>{item.title} öffnen</Link>
-    </div>)}
-    <p><Link to="/lernreise?fr=FIAE">Zur Lernreise</Link></p>
+    <p>Für „{topic.title}“ {missing.length === 1 ? 'fehlt noch ein bestandener Themencheck' : `fehlen noch ${missing.length} bestandene Themenchecks`}. Hier kannst du weiterlernen.</p>
+    {(firstOpen?.error || missing.some(item => item.error)) && <p role="alert">Der gespeicherte Stand eines Vorgängerthemas muss zuerst geprüft werden.</p>}
+    {firstOpen && <Link className="btn btn-primary" to={`/lernreise/fiae/${firstOpen.id}`}>{firstOpen.title} öffnen</Link>}
+    <p><Link to="/lernreise?fr=FIAE#reise-fortsetzen">Zur Lernreise</Link></p>
   </section>;
   return <JourneySession key={`${topic.id}:${topic.version}`} topic={topic} />;
 }

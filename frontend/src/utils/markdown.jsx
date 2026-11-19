@@ -1,7 +1,7 @@
 // Leichtgewichtiges Markdown-Rendering für Theorietexte (ohne Externe).
 // Unterstützt: Überschriften, Listen, Code, fett. Reicht für die Inhalte.
 
-export function renderMarkdown(md) {
+export function renderMarkdown(md, headingOffset = 0) {
   if (!md) return [];
   const lines = md.split(/\r?\n/);
   const out = [];
@@ -17,9 +17,13 @@ export function renderMarkdown(md) {
   for (const raw of lines) {
     const line = raw.trimEnd();
     if (!line.trim()) { flushList(); continue; }
-    if (line.startsWith('### ')) { flushList(); out.push(<h3 key={out.length}>{inline(line.slice(4))}</h3>); continue; }
-    if (line.startsWith('## ')) { flushList(); out.push(<h2 key={out.length}>{inline(line.slice(3))}</h2>); continue; }
-    if (line.startsWith('# ')) { flushList(); out.push(<h1 key={out.length}>{inline(line.slice(2))}</h1>); continue; }
+    const heading = /^(#{1,3}) (.*)$/.exec(line);
+    if (heading) {
+      flushList();
+      const Heading = `h${heading[1].length + headingOffset}`;
+      out.push(<Heading key={out.length}>{inline(heading[2])}</Heading>);
+      continue;
+    }
     if (/^[-*]\s/.test(line)) {
       list = list || [];
       list.push(<li key={list.length}>{inline(line.replace(/^[-*]\s/, ''))}</li>);

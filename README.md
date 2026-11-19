@@ -9,7 +9,7 @@ Theorie & Glossar und freiwillige Lernhilfe mit lokalem Qwen oder eigenem ChatGP
 ![Node](https://img.shields.io/badge/Node-%E2%89%A522.13-339933?logo=node.js&logoColor=white)
 ![React](https://img.shields.io/badge/React-18-61DAFB?logo=react&logoColor=black)
 ![Express](https://img.shields.io/badge/Express-4-000000?logo=express&logoColor=white)
-![Electron](https://img.shields.io/badge/Electron-45.2-47848F?logo=electron&logoColor=white)
+![Electron](https://img.shields.io/badge/Electron-45.4-47848F?logo=electron&logoColor=white)
 ![License](https://img.shields.io/badge/Lizenz-MIT-yellow)
 
 ---
@@ -38,9 +38,11 @@ zeitlimitierte Prüfungssimulation mit automatischer Auswertung. Lernfelder
 gliedern den Einstieg. Theorie & Glossar helfen beim Verstehen vor dem Quiz;
 die Frontend-Werkstatt bietet **167 eingebundene Lektionen in Kapitel 1–31**, einschließlich lokaler DOM-/React-Übungen, TypeScript-Prüfung und externer Werkzeugvorlage. Der eigene Quellcode-Debugger verbindet echte Haltepunkte mit HTML/CSS, Formularen, asynchronen JavaScript-Abläufen sowie TypeScript und React.
 
-**Aktuelle Windows-Pakete: 0.1.5** für Desktop und lokale Webversion. Beide
-enthalten 7.000 Fragen, Theorie & Glossar, die freiwillige KI-Auswahl, lokale
-PDF-Wissenssuche, alle eingebundenen Kurskapitel und den erweiterten Debugger.
+**Windows-Version 0.1.7** enthält die aktuelle Willkommen-Seite, die bereichsübergreifende
+Suche und die vollständige FIAE-Lernreise mit 94 Themen. Electron, lokale Webversion und
+installierbare PWA verwenden dieselbe Oberfläche. Dazu gehören 7.000 Fragen,
+Theorie & Glossar, die freiwillige KI-Auswahl, lokale PDF-Wissenssuche, die
+Frontend-Werkstatt mit 167 Lektionen und der Debugger.
 Modelle, eigene Unterlagen und angemeldete Konten werden nicht mitgeliefert.
 Jeder Anwender richtet seine eigene freiwillige KI-Verbindung ein.
 Die Screenshots zeigen ausgewählte App-Ansichten.
@@ -114,7 +116,7 @@ Unterlagen, persönlichen Lerndaten oder Modellantworten sind abgebildet.
 - Quizmodus mit Sofort-Feedback und Erklärung (Single-Choice, Multiple-Choice, Freitext)
 - Karteikartenmodus mit Spaced Repetition (Leitner-System, 5 Boxen)
 - Prüfungssimulation mit Zeitlimit, Zufallsfragen, Themengewichtung und Bestehensgrenze
-- Volltextsuche über Fragen, Erklärungen, Themen und Module
+- Die Suche findet Fragen und Erklärungen, Module, Theorie- und Glossarthemen, Abschnitte der Lernreise, Werkstattlektionen und App-Funktionen. Treffer führen direkt zur Frage, Lektion oder Ansicht. Mit dem Suchbereich „Eigene Notizen“ bleibt auch der Suchbegriff im Browser.
 
 **Fortschritt & Motivation**
 
@@ -180,8 +182,7 @@ Unterlagen, persönlichen Lerndaten oder Modellantworten sind abgebildet.
 - In-App-Feedback-Kanal: eingeloggte Nutzer können eine Frage direkt im
   Quiz als falsch/unklar melden (optionaler Freitext-Grund) – Ergänzung
   zum verpflichtenden Fachreview, kein Ersatz dafür
-- Landing-Page (`/willkommen`) als Startseite/Login-Fenster für neue
-  Besucher:innen, jederzeit ohne Konto überspringbar
+- Beim Öffnen der App unter `/` oder `/willkommen` erscheint die Willkommensseite. Von dort geht es mit oder ohne Konto zum Dashboard unter `/dashboard`. Direkte Links zu Lerninhalten öffnen das gewählte Ziel.
 - Optionale Push-Benachrichtigungen (Web-Push, kontogebunden), erster
   Anwendungsfall: Benachrichtigung bei bearbeiteter Meldung
 
@@ -315,14 +316,13 @@ voraus; das eigenständige Paket nutzt den mitgelieferten CSV-Katalog.
 Paket für die Weitergabe bauen (nur auf dem Entwicklungsrechner):
 `cd desktop` und `npm run dist:web`. Die fertigen EXE-Dateien liegen unter
 `Installer-Web/`. Entwickler-Zugangsdaten werden nicht mitgeliefert.
-Für Lernende genügt die Weitergabe von `AzubiPrep-Web-0.1.5-portabel.exe`;
+Für Lernende genügt die Weitergabe von `AzubiPrep-Web-0.1.7-portabel.exe`;
 die Projektordner müssen nicht mitkopiert werden. Das Entpacken beim Start
-kann einen Moment dauern. Alternativ richtet `AzubiPrep-Web-Setup-0.1.5.exe`
+kann einen Moment dauern. Alternativ richtet `AzubiPrep-Web-Setup-0.1.7.exe`
 die App im Benutzerkonto ein. Die Pakete sind derzeit unsigniert;
 Windows kann deshalb beim Öffnen eine Rückfrage anzeigen.
 
-Die Webpakete 0.1.5 enthalten denselben aktuellen Lern- und Debuggerumfang
-wie Desktop 0.1.5. `node desktop/scripts/verify-web-release.cjs` prüft
+`node desktop/scripts/verify-web-release.cjs` prüft
 Setup und portable Ausgabe gegen die öffentlichen Quelldateien und Ausschlüsse.
 
 **Start aus dem Quellprojekt:**
@@ -342,7 +342,7 @@ benötigt weiterhin den laufenden Server auf diesem PC.
 
 ### Entwicklung und manuelle Einrichtung
 
-Voraussetzung: **Node.js ≥ 22.13**, empfohlen Node.js 24
+Voraussetzung: **Node.js ≥ 22.13**. Der Entwicklungsstand und die GitHub-Prüfungen verwenden Node.js **24.22.3 LTS** aus `.node-version`.
 
 ```bash
 # 1) Backend starten (Port 3001)
@@ -365,7 +365,7 @@ cd ../backend && npm start   # http://localhost:3001
 
 ## Desktop-App (Electron)
 
-Desktop 0.1.5 enthält die [lokale Lernbegleitung](#lokale-lernbegleitung-und-eigene-unterlagen),
+Desktop 0.1.7 enthält die [lokale Lernbegleitung](#lokale-lernbegleitung-und-eigene-unterlagen),
 Theorie & Glossar, alle 167 eingebundenen Lektionen und den eigenen Debugger.
 Qwen/Ollama wird bei Bedarf separat eingerichtet; für ChatGPT ist die eigene
 Anmeldung erforderlich. Ohne KI bleiben Quiz und feste Übungen nutzbar.
@@ -389,7 +389,7 @@ daher vorher `npm run prepare:electron`; CI und Installerbuild erledigen diesen
 Schritt ausdrücklich. Dabei wird die bereits festgelegte Electron-Version geladen,
 kein KI-Modell.
 
-Der aktuelle Desktopinstaller heißt **`AzubiPrep Setup 0.1.5.exe`** und liegt
+Der aktuelle Desktopinstaller heißt **`AzubiPrep Setup 0.1.7.exe`** und liegt
 nach dem Build in `Installer/`. Er enthält 7.000 Fragen mit Lernfeldzuordnung,
 Theorie/Glossar, die KI-Auswahl, alle eingebundenen Werkstattkapitel und den
 Debugger einschließlich Formularen, asynchronem JavaScript, TypeScript und React.
@@ -405,7 +405,7 @@ Desktopprojekte der Werkstatt werden im lokalen App-Profil gesichert und
 bleiben auch bei wechselnder interner Serveradresse erhalten. Ordner und
 Dateien werden über die Windows-Auswahl freigegeben; externe Originale bleiben
 unverändert. F12 in der Vorschau öffnet eine getrennte Projektprüfung ohne
-Zugriff auf App-Daten oder Node.js. Electron: 45.2.0.
+Zugriff auf App-Daten oder Node.js. Electron: 45.4.1.
 Die genaue Testmatrix und ihre Grenzen stehen in der
 [Pilotabnahme](docs/21-Frontendpilot-Abnahme.md) und im
 [Kursstand 18–31](docs/35-Frontendkurs-Kapitel-18-31.md). Webpakete werden mit
@@ -485,7 +485,7 @@ Frontend-Werkstatt im Quellstand mit 167 eingebundenen Lektionen bis Kapitel 31,
 optionale Content-Datenbank mit CSV-Fallback, Autoren-Weboberfläche und
 Fragenfeedback. Qwen/eigenes ChatGPT, lokale PDF-Wissenssuche und Theorie/Glossar
 sind zusammen mit allen eingebundenen Kapiteln und dem erweiterten Debugger
-in den Desktop- und Webpaketen 0.1.5 enthalten.
+in den Desktop- und Webpaketen 0.1.7 enthalten.
 
 Offen bleiben praktische Nutzerabnahme der neuen Kapitel und externe Bedien-/
 Werkzeugnachweise, Erweiterungen jenseits des dokumentierten Debuggerumfangs,

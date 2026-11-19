@@ -6,7 +6,7 @@ import { config } from './config.js';
 import { securityHeaders, jsWorkerAssetHeaders, rateLimiter, fehlerHandler } from './sicherheit.js';
 import { buildContentRoutes } from './routes/content.routes.js';
 import { buildExamRoutes } from './routes/exam.routes.js';
-import { buildJourneyRoutes } from './routes/journey.routes.js';
+import { buildJourneyRoutes, loadAvailableJourney } from './routes/journey.routes.js';
 import { buildAuthRoutes } from './routes/auth.routes.js';
 import { buildSyncRoutes } from './routes/sync.routes.js';
 import { buildContentAdminRoutes } from './routes/content-admin.routes.js';
@@ -36,9 +36,10 @@ export function createApp(store) {
     res.json({ syncAktiviert: isDbAktiviert(), pushAktiviert: isDbAktiviert() && isPushAktiviert() });
   });
 
-  app.use('/api', buildContentRoutes(store));
+  const journey = loadAvailableJourney(config.contentDir);
+  app.use('/api', buildContentRoutes(store, journey));
   app.use('/api', buildExamRoutes(store));
-  app.use('/api/journey', buildJourneyRoutes(config.contentDir));
+  app.use('/api/journey', buildJourneyRoutes(config.contentDir, journey));
   app.use('/api/ai', buildAiRoutes(store));
 
   // Login/Sync nur aktiv, wenn DATABASE_URL gesetzt ist – ohne DB bleibt die

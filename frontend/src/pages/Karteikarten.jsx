@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useApi } from '../utils/useApi.js';
 import { api } from '../api/client.js';
@@ -22,6 +22,9 @@ export default function Karteikarten() {
   const [faellige, setFaellige] = useState([]);
   const [index, setIndex] = useState(0);
   const [umgedreht, setUmgedreht] = useState(false);
+  const visibleFace = useRef(null);
+  const focusAfterAction = useRef(false);
+  const flipButton = useRef(null);
   const [zusammenfassung, setZusammenfassung] = useState({ leicht: 0, mittel: 0, schwer: 0, gesamt: 0 });
 
   // Stapelgröße: 0 = alle fälligen Karten, sonst feste Anzahl (z. B. 10/25/50).
@@ -102,6 +105,21 @@ export default function Karteikarten() {
   const karte = faellige[index];
   const frage = fragen && karte ? fragen.find((f) => f.id === karte.frageId) : null;
 
+  useLayoutEffect(() => {
+    if (focusAfterAction.current) {
+      visibleFace.current?.focus();
+      focusAfterAction.current = false;
+    }
+  }, [umgedreht, frage?.id]);
+
+  function flipCard(showAnswer) {
+    if (showAnswer === umgedreht) return;
+    // Eine fokussierte Antwortoption darf nicht in der versteckten Kartenseite bleiben.
+    if (document.activeElement?.closest('.flashcard-face')) flipButton.current?.focus({ preventScroll: true });
+    focusAfterAction.current = true;
+    setUmgedreht(showAnswer);
+  }
+
   // Optionen neu mischen und Auswahl zuruecksetzen, sobald eine neue Karte
   // angezeigt wird (Kartenwechsel = anderer frageId).
   useEffect(() => {
@@ -116,9 +134,9 @@ export default function Karteikarten() {
   // toggleAuswahl/bewerten sind weiter unten als function-Deklarationen
   // definiert und dank Hoisting hier bereits nutzbar.
   useQuizKeyboard({
-    optionen: BUCHSTABEN.slice(0, frage?.optionen?.length || 4),
+    optionen: BUCHSTABEN.slice(0, frage?.optionen?.length || 0),
     onSelectOption: (buchstabe) => toggleAuswahl(buchstabe, { stopPropagation() {} }),
-    onSubmitOrNext: () => { if (!umgedreht) setUmgedreht(true); },
+    onSubmitOrNext: () => flipCard(!umgedreht),
     istEingabeAktiv: false,
     aktiv: !laden && !!frage,
   });
@@ -128,16 +146,17 @@ export default function Karteikarten() {
   const stapelAuswahl = (
     <div className="card mb-2">
       <div className="flex-between wrap" style={{ alignItems: 'flex-start', rowGap: 10 }}>
-        <div style={{ flex: '1 1 240px', minWidth: 240 }}>
+        <div style={{ flex: '1 1 220px', minWidth: 0 }}>
           <h2 className="mb-0" style={{ fontSize: '1.05rem' }}>Stapelgröße</h2>
           <p className="small text-muted mt-0 mb-0">
             {alleFaelligen.length} Karte(n) insgesamt fällig – wie viele davon jetzt bearbeiten?
           </p>
         </div>
-        <div className="flex wrap" style={{ gap: 6, flexShrink: 0 }}>
+        <div className="flex wrap" style={{ gap: 6, minWidth: 0 }}>
           {STAPEL_PRESETS.map((n) => (
             <button
               key={n}
+              aria-pressed={anzahl === n}
               className={`btn btn-sm ${anzahl === n ? 'btn-primary' : 'btn-ghost'}`}
               onClick={() => stapelgroesseWaehlen(n)}
             >
@@ -145,21 +164,23 @@ export default function Karteikarten() {
             </button>
           ))}
           <button
+            aria-pressed={anzahl === 0}
             className={`btn btn-sm ${anzahl === 0 ? 'btn-primary' : 'btn-ghost'}`}
             onClick={() => stapelgroesseWaehlen(0)}
           >
             Alle
           </button>
-          <input
-            type="number"
-            min={1}
-            className="input"
-            style={{ width: 90 }}
-            placeholder="Andere…"
-            value={anzahl > 0 && !STAPEL_PRESETS.includes(anzahl) ? anzahl : ''}
-            onChange={(e) => stapelgroesseWaehlen(e.target.value)}
-            title="Eigene Anzahl eingeben"
-          />
+          <label className="flashcard-size">Eigene Anzahl
+            <input
+              type="number"
+              min={1}
+              className="input"
+              style={{ width: 90 }}
+              placeholder="15"
+              value={anzahl || ''}
+              onChange={(e) => stapelgroesseWaehlen(e.target.value)}
+            />
+          </label>
         </div>
       </div>
     </div>
@@ -172,7 +193,7 @@ export default function Karteikarten() {
         <p className="text-muted mt-0">Lerne mit Spaced Repetition – Karten kommen automatisch zum idealen Zeitpunkt zurück.</p>
         {alleFaelligen.length > 0 && stapelAuswahl}
         <div className="card">
-          <div className="empty">
+          <div className="empty" ref={visibleFace} tabIndex={-1}>
             {alleFaelligen.length > 0
               ? 'Stapel für diese Sitzung erledigt 🎉 – die restlichen fälligen Karten warten beim nächsten Besuch.'
               : 'Keine Karten fällig 🎉 – neue Fragen erscheinen nach dem ersten Quiz automatisch im Deck.'}
@@ -221,10 +242,11 @@ export default function Karteikarten() {
     } else {
       setAuswahl((prev) => (prev.includes(buchstabe) ? prev.filter((l) => l !== buchstabe) : [...prev, buchstabe]));
     }
-    setUmgedreht(true);
+    flipCard(true);
   }
 
   function bewerten(bewertung) {
+    focusAfterAction.current = true;
     flashcardStore.review(frage.id, bewertung);
     setBewertungen((b) => ({ ...b, [bewertung]: b[bewertung] + 1 }));
     setFaellige((deck) => {
@@ -258,36 +280,30 @@ export default function Karteikarten() {
             <div className="badge badge-neutral">Schwer: {zusammenfassung.schwer}</div>
           </div>
 
-          <div className={`flashcard ${umgedreht ? 'flipped' : ''}`} onClick={() => setUmgedreht((u) => !u)}>
+          <div className={`flashcard ${umgedreht ? 'flipped' : ''}`} onClick={() => flipCard(!umgedreht)}>
             <div className="flashcard-inner">
-              <div className="flashcard-face">
+              <div className="flashcard-face" aria-hidden={umgedreht}>
                 <span className="small text-muted mb-2">Frage · Box {karte.box} · {frage.schwierigkeit}</span>
-                <h3>{frage.frage}</h3>
+                <h3 tabIndex={-1} ref={umgedreht ? null : visibleFace}>{frage.frage}</h3>
                 {optionenAnzeige.length > 0 && (
                   <div className="mt-2">
                     {optionenAnzeige.map((o) => (
-                      <div
+                      <button type="button"
                         key={o.buchstabe}
                         className={`option-row ${auswahl.includes(o.buchstabe) ? 'selected' : ''}`}
-                        role="button"
-                        tabIndex={0}
+                        tabIndex={umgedreht ? -1 : 0}
+                        aria-pressed={auswahl.includes(o.buchstabe)}
                         onClick={(e) => toggleAuswahl(o.buchstabe, e)}
-                        onKeyDown={(e) => { if (e.key === 'Enter') toggleAuswahl(o.buchstabe, e); }}
                       >
                         <span className="option-letter">{buchstabeZuZiffer(o.buchstabe)}</span>
                         <span>{o.text}</span>
-                      </div>
+                      </button>
                     ))}
                   </div>
                 )}
-                {!umgedreht && (
-                  <p className="text-muted small mt-2">
-                    {optionenAnzeige.length > 0 ? '👆 Antwort auswählen oder Karte antippen für die Lösung' : '👆 Karte antippen für die Lösung'}
-                  </p>
-                )}
               </div>
-              <div className="flashcard-face flashcard-back">
-                <span className="small text-muted mb-2">Lösung</span>
+              <div className="flashcard-face flashcard-back" aria-hidden={!umgedreht}>
+                <h3 className="mb-2" tabIndex={-1} ref={umgedreht ? visibleFace : null}>Lösung</h3>
                 {optionenAnzeige.length > 0 ? (
                   <div className="mb-2">
                     <div className="alert alert-success mb-2"><strong>Richtige Antwort: {buchstabenText(korrektBuchstaben)}</strong></div>
@@ -303,6 +319,9 @@ export default function Karteikarten() {
             </div>
           </div>
 
+          <button ref={flipButton} type="button" className="btn btn-ghost mt-1" onClick={() => flipCard(!umgedreht)}>
+            {umgedreht ? 'Frage wieder ansehen' : 'Lösung anzeigen'}
+          </button>
           {umgedreht && (
             <div className="flex wrap mt-2" style={{ justifyContent: 'center' }}>
               <button className="btn btn-danger" onClick={() => bewerten('schwer')}>Nochmal üben</button>

@@ -393,3 +393,11 @@
 - [FE-078] Lernreise: LF7, LF8 und LF9 vollständig mit 17 Themen, 238 neuen Fragen und lokalen Laboren für Sensorsteuerung, Datenbereitstellung und Netzwerkdienste; 74 Themenstände, drei vollständige Fachreviews und Technik-/Mobilreview, 537 Inhalts-/Zustands-, 987 Backend-, 47 native Desktop- und 147 Browser-/Electronfälle einschließlich korrigierter Nachprüfung abgedeckt — 2026-11-16 — [Brief](FE-078-lernreise-lf7-lf9.md)
 
 - [FE-079] FIAE-Lernreise bis LF12a abgeschlossen. 20 Spezialisierungsthemen mit drei zusammenhängenden Praxisaufträgen und 280 unabhängig geprüften Fragen. 94 Themen, 248 Lernziele und 1.316 Lernreisefragen. Gesamtübersicht mit Lernzielergebnissen und Erhalt bei Wiederholung. 540 Inhalts-/Zustands-, 1.069 Backend-, 47 native Desktop- und 157 Browser-/Electronfälle bestanden — 2026-11-19 — [Brief](FE-079-lernreise-fiae-spezialisierung.md)
+
+- [FE-080] Mobile und Desktop-Navigation, Rückwege, Kontrast und Lernaktionen überarbeitet. 19 Seiten bei zwei Fenstergrößen in Hell und Dunkel geprüft, ergänzende schmale Ansichten und Tastaturwege unabhängig abgenommen. 106 gezielte Browser-, 59 Electron- und 15 Frontendprüfungen am Endstand bestanden — 2026-11-19 — [Brief](FE-080-ui-ux.md)
+
+- [FE-081] Willkommensseite für jeden regulären Start, eigenes Dashboard und eine bereichsübergreifende Suche mit direkten Lernzielen und lokaler Notizsuche pro Profil. 1.074 Backendtests und 36 gezielte Browser-/Electron-Fälle am abschließenden Build bestanden, unabhängiger Review und Praxistest am laufenden Webdienst — 2026-11-19 — [Brief](FE-081-einstieg-suche.md)
+
+- [FE-082] Desktop, Web-Setup und portable Webversion 0.1.6 mit gemeinsamem Inhaltsstand ausgeliefert, PWA-Start und Update geprüft. Paketinhalt und Benutzerinstallation verifiziert — 2026-11-19 — [Brief](FE-082-pakete-angleichen.md)
+
+- [OPS-043] Node 24.22.3, Electron 45.4.1, Vite 6 und React Router 7 übernommen. Windows-Pakete und Benutzerinstallation 0.1.7 geprüft, Browser- und Desktopabnahme bestanden, verbleibenden Paketbauerbefund dokumentiert — 2026-11-19 — [Brief](OPS-043-node-patches.md)

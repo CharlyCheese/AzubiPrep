@@ -1,78 +1,69 @@
-// AzubiPrep Service Worker – einfache Offline-Strategie:
-// - App-Shell: Cache-first (Precache beim Installieren)
-// - API-GET-Antworten: Network-first mit Cache-Fallback (Inhalte offline verfügbar)
-// - Nicht-GET-/POST-Requests: nur Netzwerk (kein Caching)
-
-const VERSION = 'azubiprep-v68'; // FE-079: vollständige FIAE-Lernreise
-const APP_SHELL = [
-  '/',
-  '/index.html',
-  '/manifest.webmanifest',
-  '/theme-init.js',
-  '/icon.svg',
-  '/icon-192.png',
-  '/icon-512.png',
-];
+// Der Produktionsbuild setzt BUILD_REVISION und SHELL_INTEGRITY vor diesen Worker.
+const VERSION = 'azubiprep-v72';
+const CACHE_NAME = VERSION + '-' + BUILD_REVISION;
+const publicCatalog = /^\/api\/(?:fachrichtungen|konstanten|module(?:\/[^/]+)?|fragen(?:\/[^/]+)?|theorie(?:\/themen\/[^/]+)?)$/;
 
 self.addEventListener('install', (event) => {
-  event.waitUntil(
-    caches
-      .open(VERSION)
-      .then((cache) => cache.addAll(APP_SHELL))
-      .then(() => self.skipWaiting()),
+  // addAll schreibt atomar. Auch eine als HTML ausgelieferte fehlende JS-Datei
+  // lässt den Integritätscheck scheitern und der bisherige Worker bleibt aktiv.
+  const files = Object.entries(SHELL_INTEGRITY).map(([url, integrity]) =>
+    new Request(url, { cache: 'reload', integrity }),
   );
+  event.waitUntil(caches.open(CACHE_NAME).then((cache) => cache.addAll(files)).then(() => self.skipWaiting()));
 });
 
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches
       .keys()
-      .then((keys) => Promise.all(keys.filter((k) => k !== VERSION).map((k) => caches.delete(k))))
+      .then((keys) => Promise.all(keys
+        .filter((key) => /^azubiprep-v\d+(?:-[a-f0-9]+)?$/.test(key) && key !== CACHE_NAME)
+        .map((key) => caches.delete(key))))
       .then(() => self.clients.claim()),
   );
 });
 
+async function navigate(request) {
+  try {
+    const response = await fetch(request, { cache: 'no-cache' });
+    if (response.status < 500) return response;
+    return await caches.match('/index.html', { cacheName: CACHE_NAME }) || response;
+  } catch {
+    return await caches.match('/index.html', { cacheName: CACHE_NAME }) || Response.error();
+  }
+}
+
+async function fetchAndCache(request, cache) {
+  const response = await fetch(request);
+  if (response.ok && !response.headers.get('Content-Type')?.includes('text/html')
+      && !/private|no-store/i.test(response.headers.get('Cache-Control') || '')) {
+    // Bei ausgeschöpftem Gerätespeicher steht die Online-Antwort weiter zur Verfügung.
+    await cache.put(request, response.clone()).catch(() => {});
+  }
+  return response;
+}
+
 self.addEventListener('fetch', (event) => {
   const { request } = event;
-  if (request.method !== 'GET') return;
-
   const url = new URL(request.url);
+  if (request.method !== 'GET' || url.origin !== self.location.origin || request.headers.has('Authorization')) return;
 
-  // Nur eigene Origin (kein Cross-Origin-Caching von Fremdressourcen)
-  if (url.origin !== self.location.origin) return;
-
-  // Modellstatus und Lernhilfe niemals als Offline-Antwort zwischenspeichern.
-  if (url.pathname.startsWith('/api/ai/') || url.pathname.startsWith('/api/journey/')) return;
-
-  // API-Antworten: Network-first, Fallback auf Cache
   if (url.pathname.startsWith('/api/')) {
-    event.respondWith(
-      fetch(request)
-        .then((response) => {
-          const copy = response.clone();
-          caches.open(VERSION).then((cache) => cache.put(request, copy));
-          return response;
-        })
-        .catch(() => caches.match(request)),
-    );
+    // Nur öffentliche Lerninhalte: Konto, Suchbegriffe, KI, Dokumente und
+    // nutzerbezogene Routen werden weder gespeichert noch aus dem Cache gelesen.
+    if (publicCatalog.test(url.pathname) && !url.searchParams.get('q')) {
+      event.respondWith(caches.open(CACHE_NAME).then((cache) =>
+        fetchAndCache(request, cache).catch(async () => await cache.match(request) || Response.error())));
+    }
     return;
   }
 
-  // App-Shell & Vite-Assets: Cache-first mit Netzwerk-Update
-  event.respondWith(
-    caches.match(request).then((cached) => {
-      const network = fetch(request)
-        .then((response) => {
-          if (response && response.ok) {
-            const copy = response.clone();
-            caches.open(VERSION).then((cache) => cache.put(request, copy));
-          }
-          return response;
-        })
-        .catch(() => cached);
-      return cached || network;
-    }),
-  );
+  if (request.mode === 'navigate') {
+    event.respondWith(navigate(request));
+  } else if (Object.hasOwn(SHELL_INTEGRITY, url.pathname) || url.pathname.startsWith('/assets/')) {
+    event.respondWith(caches.open(CACHE_NAME).then(async (cache) =>
+      await cache.match(request) || fetchAndCache(request, cache)));
+  }
 });
 
 // BE-001: eingehende Push-Nachricht als System-Benachrichtigung anzeigen.

@@ -1,5 +1,4 @@
-import { Routes, Route, Navigate } from 'react-router-dom';
-import { useSyncExternalStore } from 'react';
+import { Routes, Route } from 'react-router-dom';
 import Layout from './components/Layout.jsx';
 import Landing from './pages/Landing.jsx';
 import Dashboard from './pages/Dashboard.jsx';
@@ -26,28 +25,15 @@ import LernreiseAbschnitt from './pages/LernreiseAbschnitt.jsx';
 import Autoren from './pages/Autoren.jsx';
 import Nutzerverwaltung from './pages/Nutzerverwaltung.jsx';
 import PasswortZuruecksetzen from './pages/PasswortZuruecksetzen.jsx';
-import { authStore } from './store/authStore.js';
-import { landingBereitsGesehen } from './utils/landing.js';
-
-// FE-012: beim allerersten Besuch (kein Konto UND Landing-Page noch nie
-// gesehen/übersprungen) zur Landing-Page weiterleiten. Bewusst kein Zwang –
-// sobald einmal übersprungen oder eingeloggt, landet man direkt wieder im
-// Dashboard wie bisher (siehe utils/landing.js).
-function Startpunkt() {
-  const auth = useSyncExternalStore(authStore.subscribe, authStore.snapshot);
-  if (!auth?.token && !landingBereitsGesehen()) {
-    return <Navigate to="/willkommen" replace />;
-  }
-  return <Dashboard />;
-}
 
 export default function App() {
   return (
     <Routes>
+      <Route index element={<Landing />} />
       <Route path="willkommen" element={<Landing />} />
       <Route path="passwort-zuruecksetzen" element={<PasswortZuruecksetzen />} />
       <Route element={<Layout />}>
-        <Route index element={<Startpunkt />} />
+        <Route path="dashboard" element={<Dashboard />} />
         <Route path="lernen" element={<Lernen />} />
         <Route path="theorie" element={<Theorie />} />
         <Route path="frontendkurs" element={<FrontendKurs />}><Route path="debugger" element={<Debugger />} /></Route>

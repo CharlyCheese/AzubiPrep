@@ -2,204 +2,139 @@ import { useSyncExternalStore } from 'react';
 import { Link } from 'react-router-dom';
 import { useApi } from '../utils/useApi.js';
 import { api } from '../api/client.js';
-import { profileStore, progressStore, flashcardStore, examStore, activityStore, todayKey } from '../store/localStore.js';
+import { profileStore, progressStore, flashcardStore, examStore, activityStore } from '../store/localStore.js';
 import { gamificationStore } from '../store/gamificationStore.js';
 import { levelAusXp, naechsteStufe } from '../utils/gamification.js';
 import { tagesFortschritt, wochenFortschritt } from '../utils/ziele.js';
 import { missionenMitStatus } from '../utils/missionen.js';
+import '../styles/learning-home.css';
 
-function Missionsliste({ titel, missionen }) {
-  const erledigt = missionen.filter((m) => m.erreicht).length;
+function MissionList({ title, missions }) {
   return (
-    <div>
-      <div className="flex-between wrap mb-1">
-        <h3 className="mb-0">{titel}</h3>
-        <span className="badge badge-neutral">{erledigt} / {missionen.length}</span>
+    <section>
+      <h3>{title}</h3>
+      <ul className="lh-missions">
+        {missions.map((mission) => (
+          <li key={mission.id}>
+            <div className="lh-row">
+              <strong>{mission.erreicht ? '✓ ' : ''}{mission.titel}</strong>
+              <span>{mission.ist} / {mission.ziel}</span>
+            </div>
+            <small>{mission.beschreibung} · +{mission.xp} XP</small>
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+}
+
+function Goal({ label, value, unit }) {
+  return (
+    <div className="lh-goal">
+      <div className="lh-row">
+        <strong>{label}</strong>
+        <span>{value.ist} / {value.ziel} {unit}</span>
       </div>
-      {missionen.map((m) => (
-        <div key={m.id} style={{ marginBottom: 10 }}>
-          <div className="progress-label">
-            <span>{m.erreicht ? '✓ ' : ''}{m.titel}</span>
-            <span>{m.ist} / {m.ziel}</span>
-          </div>
-          <div className="progress">
-            <div style={{ width: `${Math.round(m.fortschritt * 100)}%`, background: m.erreicht ? 'var(--success)' : undefined }} />
-          </div>
-          <div className="small text-muted">{m.beschreibung} · +{m.xp} XP</div>
-        </div>
-      ))}
+      <div className="progress" aria-hidden="true"><div style={{ width: `${value.prozent}%` }} /></div>
+      {value.erreicht && <small>{label === 'Tagesziel' ? 'Tagesziel erreicht (+30 XP)' : 'Wochenziel erreicht'}</small>}
     </div>
   );
 }
 
 export default function Dashboard() {
-  const profil = profileStore.get();
+  const profile = profileStore.get();
   const game = useSyncExternalStore(gamificationStore.subscribe, gamificationStore.snapshot);
+  const { daten: modules } = useApi(() => api.get('/module'), []);
+  const records = Object.values(progressStore.get()).filter(Boolean);
+  const correct = records.filter((record) => record.letztesErgebnis === true).length;
+  const moduleIds = new Map((modules || []).map((module) => [module.modul_id, module]));
+  const recent = records.reduce((latest, record) => {
+    if (!moduleIds.has(record.modulId) || !record.geübtAm) return latest;
+    return !latest || record.geübtAm > latest.geübtAm ? record : latest;
+  }, null);
+  const currentModule = moduleIds.get(recent?.modulId);
+  const due = flashcardStore.alle(true).length;
+  const exams = examStore.get();
+  const latestExam = exams.at(-1);
   const xp = game.xp || 0;
   const level = levelAusXp(xp);
-  const naechste = naechsteStufe(xp);
-  const xpInLevel = xp - (level.minXp || 0);
-  const xpSpanne = naechste ? naechste.minXp - level.minXp : 1;
-  const xpProzent = naechste ? Math.min(100, Math.round((xpInLevel / xpSpanne) * 100)) : 100;
-  const { daten: meta, laden } = useApi(() => api.get('/health'), []);
-
-  const progress = progressStore.get();
-  const beantwortet = Object.keys(progress).length;
-  const richtig = Object.values(progress).filter((p) => p.letztesErgebnis === true).length;
-  const faellige = flashcardStore.alle(true).length;
-  const pruefungen = examStore.get();
-  const letztePruefung = pruefungen[0] || null;
-
-  const aktivitaet = activityStore.get();
-  const letzteLernTage = Object.keys(aktivitaet).length;
-  const tages = tagesFortschritt();
-  const woche = wochenFortschritt();
-  const missionen = missionenMitStatus(game.missionen);
-
-  // Onboarding-Hinweis nur vor der ersten Lernaktivitaet
-  const neuling = xp === 0 && beantwortet === 0 && pruefungen.length === 0;
-  const fragenGesamt = meta?.fragenAnzahl ?? 0;
+  const nextLevel = naechsteStufe(xp);
+  const missions = missionenMitStatus(game.missionen);
+  const today = tagesFortschritt();
+  const week = wochenFortschritt();
+  const date = new Date().toLocaleDateString('de-DE', { weekday: 'long', day: 'numeric', month: 'long' });
 
   return (
-    <div>
-      <header className="main-header">
+    <div className="learning-home">
+      <header className="lh-header">
         <div>
-          <h1 className="mb-0">Dashboard</h1>
-          <p className="text-muted mt-0">Dein Lernfortschritt auf einen Blick.</p>
+          <h1>Dashboard</h1>
+          <p>{date} · {profile.fachrichtung || 'FIAE'}</p>
         </div>
+        <Link className="lh-text-link" to="/profil">Lernprofil</Link>
       </header>
 
-      {neuling && (
-        <div className="alert alert-info">
-          <strong>Willkommen bei AzubiPrep!</strong> Starte im <Link to="/lernen">Lernbereich</Link> mit einem
-          Modul – Fortschritt, XP und Abzeichen werden automatisch gespeichert. Alle Stationen im Überblick
-          zeigt die <Link to="/lernreise">Lernreise</Link>.
+      <section className="lh-panel lh-feature" aria-labelledby="home-next">
+        <div className="lh-feature-copy">
+          <h2 id="home-next">{currentModule ? 'Weiterlernen' : 'Mit einem Modul starten'}</h2>
+          <p>{currentModule ? `Zuletzt geübt: ${currentModule.titel}.` : 'Wähle ein Thema aus deinem Lernbereich und übe die ersten Fragen.'}</p>
         </div>
-      )}
-<div className="card mb-2">
-        <div className="flex-between wrap">
-          <div style={{ minWidth: 0 }}>
-            <div className="small text-muted">Level {level.level} · {level.titel}</div>
-            <div className="stat-value" style={{ fontSize: '1.4rem' }}>{xp} XP</div>
-          </div>
-          <div style={{ flex: 1, minWidth: 200 }}>
-            <div className="progress-label">
-              <span>{naechste ? `Nächstes Level: ${naechste.titel}` : 'Höchstes Level'}</span>
-              <span>{naechste ? `${xpInLevel} / ${xpSpanne} XP` : 'Max.'}</span>
-            </div>
-            <div className="progress"><div style={{ width: `${xpProzent}%` }} /></div>
-            {naechste ? (
-              <div className="small text-muted mt-1">Noch {naechste.minXp - xp} XP bis Level {naechste.level}</div>
-            ) : (
-              <div className="small text-muted mt-1">Höchstes Level erreicht</div>
-            )}
-          </div>
+        <div className="lh-actions">
+          <Link className="btn btn-primary" to={currentModule ? `/lernen/${currentModule.modul_id}` : '/lernen'}>
+            {currentModule ? 'Modul fortsetzen' : 'Modul auswählen'} →
+          </Link>
+          <Link className="lh-text-link" to="/lernreise">Zur Lernreise</Link>
         </div>
+      </section>
+
+      <div className="lh-shortcuts" aria-label="Weitere Lernwege">
+        <Link to="/pruefung">Prüfung simulieren <span aria-hidden="true">→</span></Link>
+        <Link to="/karteikarten">Karteikarten{due > 0 && ` (${due} fällig)`} <span aria-hidden="true">→</span></Link>
       </div>
-      {laden ? (
-        <div className="loading">Lade Lernstand …</div>
-      ) : (
-        <div className="dashboard-layout">
-          {/* Hauptspalte: Ziele, Missionen, letzte Prüfung */}
-          <div>
-            <div className="card mb-2">
-              <h2 className="mb-0">Tages- und Wochenziel</h2>
-              <div className="grid grid-2 mt-2">
-                <div>
-                  <div className="progress-label"><span>Tagesziel (Fragen)</span><span>{tages.ist} / {tages.ziel}</span></div>
-                  <div className="progress"><div style={{ width: `${tages.prozent}%` }} /></div>
-                  <div className="small text-muted mt-1">
-                    {tages.erreicht ? 'Tagesziel erreicht (+30 XP)' : `Noch ${Math.max(0, tages.ziel - tages.ist)} Frage(n) bis zum Ziel`}
-                  </div>
-                </div>
-                <div>
-                  <div className="progress-label"><span>Wochenziel (aktive Tage)</span><span>{woche.ist} / {woche.ziel}</span></div>
-                  <div className="progress"><div style={{ width: `${woche.prozent}%` }} /></div>
-                  <div className="small text-muted mt-1">
-                    {woche.erreicht ? 'Wochenziel erreicht' : `Noch ${Math.max(0, woche.ziel - woche.ist)} aktive(r) Tag(e)`}
-                  </div>
-                </div>
-              </div>
-            </div>
 
-            <div className="card mb-2">
-              <h2 className="mb-0">Missionen</h2>
-              <p className="small text-muted mt-0 mb-2">
-                Tagesmissionen starten jeden Tag neu, Wochenmissionen jeden Montag.
-              </p>
-              <div className="grid grid-2">
-                <Missionsliste titel="Heute" missionen={missionen.tag} />
-                <Missionsliste titel="Diese Woche" missionen={missionen.woche} />
-              </div>
-            </div>
-
-            {letztePruefung && (
-              <div className="card">
-                <h2 className="mb-0">Letzte Prüfungssimulation</h2>
-                <p className="text-muted mt-0 small">
-                  {new Date(letztePruefung.am).toLocaleDateString('de-DE')} · {letztePruefung.fachrichtung}
-                </p>
-                <div className="progress-label"><span>Ergebnis</span><span>{letztePruefung.scoreProzent}%</span></div>
-                <div className="progress">
-                  <div style={{ width: `${Math.min(100, letztePruefung.scoreProzent || 0)}%` }} />
-                </div>
-                <p className={letztePruefung.bestanden ? 'alert alert-success mt-2' : 'alert alert-danger mt-2'}>
-                  {letztePruefung.bestanden ? '✓ Bestanden' : '✗ Nicht bestanden'} – {letztePruefung.richtig} von {letztePruefung.gesamt} richtig
-                </p>
-              </div>
-            )}
+      <div className="lh-columns">
+        <section className="lh-panel" aria-labelledby="home-goals">
+          <div className="lh-section-head">
+            <h2 id="home-goals">Deine Lernziele</h2>
+            <Link className="lh-text-link" to="/kalender">Kalender</Link>
           </div>
+          <Goal label="Tagesziel" value={today} unit="Fragen" />
+          <Goal label="Wochenziel" value={week} unit="Tage" />
+          {profile.prüfungstermin && <p className="small">Geplante Prüfung am {new Date(profile.prüfungstermin).toLocaleDateString('de-DE')}.</p>}
+        </section>
+        <section className="lh-panel" aria-labelledby="home-progress">
+          <div className="lh-section-head">
+            <h2 id="home-progress">Dein Lernstand</h2>
+            <Link className="lh-text-link" to="/statistik">Statistik</Link>
+          </div>
+          <dl className="lh-facts">
+            <div><dt>Beantwortet</dt><dd>{records.length}</dd></div>
+            <div><dt>Zuletzt richtig</dt><dd>{records.length ? `${Math.round(correct / records.length * 100)} %` : '–'}</dd></div>
+            <div><dt>Lerntage</dt><dd>{Object.keys(activityStore.get()).length}</dd></div>
+          </dl>
+          <p className="lh-level"><strong>{xp} XP</strong> · Level {level.level} · {level.titel}</p>
+          <small>{nextLevel ? `Noch ${nextLevel.minXp - xp} XP bis Level ${nextLevel.level} (${nextLevel.titel}).` : 'Höchstes Level erreicht.'}</small>
+        </section>
+      </div>
 
-          {/* Nebenspalte: Schnellstart, KPIs, Fachrichtung */}
-          <aside>
-            <div className="card mb-2">
-              <h2 className="mb-0" style={{ fontSize: '1.05rem' }}>⚡ Schnellstart</h2>
-              <Link className="btn btn-primary btn-block mt-2" to="/pruefung">Prüfungssimulation →</Link>
-              <div className="grid-kpi mt-1">
-                <Link className="btn btn-ghost btn-sm" to="/karteikarten">🗂 Karteikarten</Link>
-                <Link className="btn btn-ghost btn-sm" to="/statistik">📊 Statistik</Link>
-              </div>
-            </div>
-
-            <div className="grid-kpi mb-2">
-              <div className="card">
-                <div className="small text-muted">Fragen gesamt</div>
-                <div className="stat-value" style={{ fontSize: '1.5rem' }}>{beantwortet}</div>
-                <div className="small text-muted">von {fragenGesamt} im Bestand</div>
-              </div>
-              <div className="card">
-                <div className="small text-muted">Erfolgsquote</div>
-                <div className="stat-value" style={{ fontSize: '1.5rem', color: 'var(--primary)' }}>
-                  {beantwortet ? Math.round((richtig / beantwortet) * 100) : 0}%
-                </div>
-                <div className="small text-muted">{richtig} zuletzt richtig</div>
-              </div>
-              <div className="card">
-                <div className="small text-muted">Fällige Karten</div>
-                <div className="stat-value" style={{ fontSize: '1.5rem', color: 'var(--warning)' }}>{faellige}</div>
-                <Link to="/karteikarten" className="small">→ Jetzt wiederholen</Link>
-              </div>
-              <div className="card">
-                <div className="small text-muted">Lerntage</div>
-                <div className="stat-value" style={{ fontSize: '1.5rem' }}>{letzteLernTage}</div>
-                <div className="small text-muted">aktive Sessions</div>
-              </div>
-            </div>
-
-            <div className="card">
-              <h2 className="mb-0" style={{ fontSize: '1.05rem' }}>Deine Fachrichtung</h2>
-              <div className="flex wrap mt-1">
-                <span className={`badge badge-${profil.fachrichtung.toLowerCase()}`}>{profil.fachrichtung}</span>
-                <span>{profil.name || 'Lernende:r'}</span>
-              </div>
-              <p className="text-muted mt-2 mb-2 small">
-                Geplante Prüfung: {profil.prüfungstermin ? new Date(profil.prüfungstermin).toLocaleDateString('de-DE') : 'noch nicht gesetzt'}
-              </p>
-              <Link className="btn btn-ghost btn-sm btn-block" to="/lernen">Zum Lernbereich →</Link>
-            </div>
-          </aside>
-        </div>
+      {latestExam && (
+        <section className="lh-panel lh-section-head">
+          <div>
+            <h2>Letzte Prüfungssimulation</h2>
+            <p>{new Date(latestExam.am).toLocaleDateString('de-DE')} · {latestExam.fachrichtung} · {latestExam.bestanden ? 'Bestanden' : 'Nicht bestanden'}</p>
+            <strong>{latestExam.scoreProzent} %</strong> · {latestExam.richtig} von {latestExam.gesamt} richtig
+          </div>
+          <Link className="lh-text-link" to={`/pruefung/verlauf?index=${exams.length - 1}`}>Auswertung öffnen</Link>
+        </section>
       )}
+
+      <details className="lh-disclosure">
+        <summary><strong>Missionen</strong><span>{missions.liste.filter((mission) => mission.erreicht).length} von {missions.liste.length} erreicht</span></summary>
+        <div className="lh-columns lh-inset">
+          <MissionList title="Heute" missions={missions.tag} />
+          <MissionList title="Diese Woche" missions={missions.woche} />
+        </div>
+      </details>
     </div>
   );
 }

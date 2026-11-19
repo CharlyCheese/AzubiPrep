@@ -2,7 +2,7 @@
 // Landkarte des Lernwegs mit barrierefreier Listenansicht. Die Logik liegt
 // in utils/lernreise.js, hier nur Darstellung.
 import { useEffect, useState } from 'react';
-import { Link, useSearchParams } from 'react-router-dom';
+import { Link, useLocation, useSearchParams } from 'react-router-dom';
 import { useApi } from '../utils/useApi.js';
 import { api } from '../api/client.js';
 import { profileStore, progressStore } from '../store/localStore.js';
@@ -17,7 +17,7 @@ import {
 import Akkordeon from '../components/Akkordeon.jsx';
 import JourneyEntry from '../components/JourneyEntry.jsx';
 
-function ReiseStation({ station }) {
+function ReiseStation({ station, journeyReturn }) {
   const s = station;
   return (
     <li className={`reise-station ${s.stufe}`}>
@@ -44,14 +44,14 @@ function ReiseStation({ station }) {
           <div style={{ width: `${s.abdeckung}%`, background: s.beherrscht ? 'var(--success)' : undefined }} />
         </div>
         <div className="mt-1">
-          <Link className="btn btn-primary btn-sm" to={`/lernen/${s.modulId}`}>Station öffnen →</Link>
+          <Link id={`reise-station-${s.modulId}`} className="btn btn-primary btn-sm" to={`/lernen/${s.modulId}`} state={{ journeyReturn, journeyEntry: 'station' }}>Station öffnen →</Link>
         </div>
       </div>
     </li>
   );
 }
 
-function ReiseBlock({ titel, stationen, offen, onToggle }) {
+function ReiseBlock({ titel, stationen, offen, onToggle, journeyReturn }) {
   if (!stationen.length) return null;
   const beherrschtAnzahl = stationen.filter((s) => s.beherrscht).length;
   const untertitel = `${beherrschtAnzahl} / ${stationen.length} Stationen beherrscht`;
@@ -59,14 +59,14 @@ function ReiseBlock({ titel, stationen, offen, onToggle }) {
     <div className="mb-2">
       <Akkordeon titel={titel} untertitel={untertitel} offen={offen} onToggle={onToggle}>
         <ol className="reise-pfad">
-          {stationen.map((s) => <ReiseStation key={s.modulId} station={s} />)}
+          {stationen.map((s) => <ReiseStation key={s.modulId} station={s} journeyReturn={journeyReturn} />)}
         </ol>
       </Akkordeon>
     </div>
   );
 }
 
-function ReiseTabelle({ stationen }) {
+function ReiseTabelle({ stationen, journeyReturn }) {
   return (
     <div className="card mb-2">
       <h2 className="mb-0">Alle Stationen als Liste</h2>
@@ -96,7 +96,7 @@ function ReiseTabelle({ stationen }) {
                 <td>{s.fragenAnzahl}</td>
                 <td>{s.anzeige.label}</td>
                 <td>{s.gesamt ? `${s.anzahl} von ${s.gesamt} bearbeitet (${s.abdeckung} %) · ${s.beherrschung}% des Moduls richtig` : '–'}</td>
-                <td><Link to={`/lernen/${s.modulId}`}>Öffnen</Link></td>
+                <td><Link id={`reise-station-${s.modulId}`} to={`/lernen/${s.modulId}`} state={{ journeyReturn, journeyEntry: 'station' }} aria-label={`${s.titel} öffnen`}>Öffnen</Link></td>
               </tr>
             ))}
           </tbody>
@@ -108,10 +108,17 @@ function ReiseTabelle({ stationen }) {
 
 export default function Lernreise() {
   const profil = profileStore.get();
-  const [searchParams] = useSearchParams();
-  const { daten: module } = useApi(() => api.get('/module'), []);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const { state: origin } = useLocation();
+  const { daten: module, laden, fehler } = useApi(() => api.get('/module'), []);
   const { daten: fachrichtungen } = useApi(() => api.get('/fachrichtungen'), []);
-  const [ansicht, setAnsicht] = useState('karte');
+  const ansicht = searchParams.get('ansicht') === 'liste' ? 'liste' : 'karte';
+  function setAnsicht(value) {
+    const next = new URLSearchParams(searchParams);
+    if (value === 'liste') next.set('ansicht', value);
+    else next.delete('ansicht');
+    setSearchParams(next);
+  }
   // FE-020: welche Lernfeld-Gruppen aufgeklappt sind – standardmäßig nur die
   // erste Gruppe mit einer noch nicht beherrschten Station (also der
   // nächste sinnvolle Einstiegspunkt), damit die Seite nicht mit 10+
@@ -125,6 +132,8 @@ export default function Lernreise() {
 
   const frListe = fachrichtungen || [];
   const gewaehlt = searchParams.get('fr') || profil.fachrichtung || 'FIAE';
+  const guided = gewaehlt === 'FIAE' && searchParams.get('weg') !== 'module';
+  const journeyReturn = `/lernreise?fr=${encodeURIComponent(gewaehlt)}&weg=module${ansicht === 'liste' ? '&ansicht=liste' : ''}`;
   const gewaehltName = frListe.find((f) => f.code === gewaehlt)?.name || gewaehlt;
 
   const statusMap = modulStatusAusFortschritt(
@@ -137,9 +146,15 @@ export default function Lernreise() {
   const f = reise.fortschritt;
 
   if (offeneGruppen === null && reise.gruppen.length) {
-    const ersteOffene = reise.gruppen.find((g) => g.stationen.some((s) => !s.beherrscht)) || reise.gruppen[0];
+    const originGroup = origin?.journeyStation && reise.gruppen.find(group => group.stationen.some(station => station.modulId === origin.journeyStation));
+    const ersteOffene = originGroup || reise.gruppen.find((g) => g.stationen.some((s) => !s.beherrscht)) || reise.gruppen[0];
     setOffeneGruppen(new Set([ersteOffene.lernfeld]));
   }
+  useEffect(() => {
+    if (!module || guided || !origin?.journeyEntry) return;
+    const id = origin.journeyEntry === 'next' ? 'reise-naechste-station' : `reise-station-${origin.journeyStation}`;
+    document.getElementById(id)?.focus();
+  }, [module, guided, origin]);
   const gruppenOffen = offeneGruppen || new Set();
   function toggleGruppe(lernfeld) {
     setOffeneGruppen((vorher) => {
@@ -150,55 +165,37 @@ export default function Lernreise() {
   }
 
   return (
-    <div>
+    <div className="journey-overview">
       <header className="main-header">
-        <div>
-          <h1 className="mb-0">Lernreise</h1>
-          <p className="text-muted mt-0">
-            Lerne Schritt für Schritt oder wähle frei aus den vorhandenen Modulen.
-            Der erste geführte Themenabschnitt startet mit FIAE-Grundlagen.
-          </p>
+        <div><h1 className="mb-0">Lernreise</h1>
+          <p className="text-muted mt-0">Folge der geführten FIAE-Lernreise oder wähle Module aus deiner Fachrichtung.</p>
         </div>
       </header>
-
-      <div className="flex wrap mb-2">
-        {frListe.map((fr) => (
-          <Link
-            key={fr.code}
-            className={`btn ${fr.code === gewaehlt ? 'btn-primary' : 'btn-ghost'} btn-sm`}
-            to={`/lernreise?fr=${fr.code}`}
-          >
-            {fr.code}
-          </Link>
-        ))}
-      </div>
-
-      {gewaehlt === 'FIAE' && <JourneyEntry />}
-
-      <h2>Module zum freien Lernen</h2>
-      <div className="card mb-2">
-        <div className="flex-between wrap">
-          <h2 className="mb-0">Reise durch {gewaehlt} – {gewaehltName}</h2>
-          <span className="badge badge-neutral">{f.beherrscht} / {f.gesamt} Stationen beherrscht</span>
+      <nav className="journey-switch" aria-label="Lernweg wählen">
+        <Link to="/lernreise?fr=FIAE" aria-current={guided ? 'page' : undefined}>Geführte Lernreise</Link>
+        <Link to={`/lernreise?fr=${gewaehlt}&weg=module`} aria-current={!guided ? 'page' : undefined}>Freie Modulreise</Link>
+      </nav>
+      {guided ? <JourneyEntry /> : <>
+      <div className="card journey-lead mb-2">
+        <div className="journey-module-head">
+          <h2 className="mb-0">Module zum freien Lernen</h2>
+          <nav className="journey-directions" aria-label="Fachrichtung wählen">
+            {frListe.map(fr => <Link key={fr.code} to={`/lernreise?fr=${fr.code}&weg=module`}
+              aria-current={fr.code === gewaehlt ? 'page' : undefined}>{fr.code}</Link>)}
+          </nav>
         </div>
-        <div className="grid grid-3 mt-2">
-          <div><div className="stat-value">{f.beherrscht}</div><div className="stat-label">beherrscht</div></div>
-          <div><div className="stat-value">{f.bearbeitet}</div><div className="stat-label">begonnen</div></div>
-          <div><div className="stat-value">{f.gesamt}</div><div className="stat-label">Stationen gesamt</div></div>
-        </div>
-        <div className="progress-label mt-2">
-          <span>Reisefortschritt (ab {BEHERRSCHT_AB} % aller Fragen einer Station richtig)</span>
-          <span>{f.prozentBeherrscht}%</span>
-        </div>
-        <div className="progress"><div style={{ width: `${f.prozentBeherrscht}%` }} /></div>
-        {naechste ? (
-          <p className="alert alert-info mt-2 mb-0">
-            Nächste Station: <strong>{naechste.titel}</strong> ({naechste.fragenAnzahl} Fragen) –{' '}
-            <Link to={`/lernen/${naechste.modulId}`}>jetzt starten</Link>
-          </p>
-        ) : (
-          <p className="alert alert-success mt-2 mb-0">Alle Stationen beherrscht – stark! 🎉</p>
-        )}
+        {laden ? <p role="status">Stationen werden geladen …</p> : fehler ? <p role="alert">{fehler}</p> :
+          !f.gesamt ? <p>Für diese Fachrichtung sind noch keine Stationen verfügbar.</p> : <>
+          {naechste ? <>
+            <p>Nächste Station: <strong>{naechste.titel}</strong> · {naechste.fragenAnzahl} Fragen</p>
+            <Link id="reise-naechste-station" className="btn btn-primary" to={`/lernen/${naechste.modulId}`} state={{ journeyReturn, journeyEntry: 'next' }}>{naechste.bearbeitet ? 'Station fortsetzen' : 'Station beginnen'}</Link>
+          </> : <p className="alert alert-success">Alle Stationen beherrscht.</p>}
+          <div className="journey-progress">
+            <span>{f.beherrscht} / {f.gesamt} Stationen beherrscht</span>
+            <progress aria-label="Modulfortschritt" max={100} value={f.prozentBeherrscht} />
+            <span className="small text-muted">{gewaehltName} · {f.bearbeitet} begonnen · Eine Station zählt ab {BEHERRSCHT_AB} % richtig beantworteten Fragen als beherrscht.</span>
+          </div>
+        </>}
       </div>
 
       <div className="flex wrap mb-2" role="group" aria-label="Ansicht der Lernreise wählen">
@@ -228,6 +225,7 @@ export default function Lernreise() {
           {reise.gruppen.map((g) => (
             <ReiseBlock
               key={g.lernfeld}
+              journeyReturn={journeyReturn}
               titel={g.titel}
               stationen={g.stationen}
               offen={gruppenOffen.has(g.lernfeld)}
@@ -236,11 +234,11 @@ export default function Lernreise() {
           ))}
         </>
       ) : (
-        <ReiseTabelle stationen={reise.alle} />
+        <ReiseTabelle stationen={reise.alle} journeyReturn={journeyReturn} />
       )}
 
-      <div className="card mb-2">
-        <h2 className="mb-0">Alle Fachrichtungen</h2>
+      <details className="card journey-directory mb-2">
+        <summary>Fortschritt aller Fachrichtungen vergleichen</summary>
         <p className="small text-muted mt-0">
           Die gemeinsamen Module zählen in jeder Fachrichtung mit. Dieser Modulstatus ist vom geführten Themenabschnitt getrennt.
         </p>
@@ -249,7 +247,7 @@ export default function Lernreise() {
             <div className="progress-label">
               <span>
                 {u.code}{' '}
-                <Link className="small" to={`/lernreise?fr=${u.code}`}>{u.name}</Link>
+                <Link className="small" to={`/lernreise?fr=${u.code}&weg=module`}>{u.name}</Link>
               </span>
               <span>{u.beherrscht} / {u.gesamt} beherrscht · {u.bearbeitet} bearbeitet</span>
             </div>
@@ -259,7 +257,8 @@ export default function Lernreise() {
           </div>
         ))}
         {uebersicht.length === 0 && <p className="text-muted">Noch keine Module geladen.</p>}
-      </div>
+      </details>
+      </>}
     </div>
   );
 }

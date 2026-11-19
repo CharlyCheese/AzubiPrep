@@ -130,6 +130,8 @@ test('LF1 vollständig: Theorie, getrenntes Quiz, Reflexion, Karten, 6/8 und 7/8
   expect(state.history).toHaveLength(2); expect(state.bestResult.correct).toBe(7);
   await page.getByRole('link', { name: 'Zur Lernreise', exact: true }).click();
   await expect(page.getByRole('link', { name: 'Lernreise fortsetzen', exact: true })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Lernreise fortsetzen', exact: true })).toBeFocused();
+  await page.getByRole('link', { name: 'Freie Modulreise', exact: true }).click();
   await page.getByRole('link', { name: 'FISI', exact: true }).click();
   await expect(page.getByRole('link', { name: 'Lernreise fortsetzen', exact: true })).toHaveCount(0);
   await expect(page.getByRole('heading', { name: 'Module zum freien Lernen' })).toBeVisible();

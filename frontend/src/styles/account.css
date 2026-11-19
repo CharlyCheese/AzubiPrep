@@ -1,0 +1,21 @@
+.account-page { min-width: 0; overflow-wrap: anywhere; }
+.account-page:not(main) { max-width: 68rem; }
+.account-page .btn, .account-form .btn { min-height: 44px; max-width: 100%; white-space: normal; }
+.account-shortcut, .account-form a { display: inline-flex; align-items: center; min-height: 44px; }
+.profile-grid { display: grid; gap: 18px; align-items: start; grid-template-columns: repeat(auto-fit, minmax(min(100%, 24rem), 1fr)); }
+.account-page .profile-grid > .card { margin: 0; min-width: 0; }
+.profile-grid > :only-child { width: 100%; max-width: 38rem; }
+.reset-card { width: min(100%, 34rem); }
+.account-page input, .account-page select, .account-form input, .account-form select { min-width: 0; }
+.management-filters { display: grid; gap: .75rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr)); }
+.management-search .field { margin: 0; min-width: 0; }
+.management-search summary { min-height: 44px; align-content: center; cursor: pointer; font-weight: 600; }
+@media (min-width: 1080px) {
+  .management-search { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: 1rem; align-items: end; }
+}
+.management-list { list-style: none; padding: 0; margin: .75rem 0 0; }
+.management-list li { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .35rem 1rem; padding-block: .75rem; border-top: 1px solid var(--border); }
+.management-list li > div { flex: 1 1 22rem; min-width: 0; }
+.management-list li > button { flex: none; }
+.management-list .badge { margin-inline-end: .5rem; }
+.management-list .small { margin-top: .25rem; }

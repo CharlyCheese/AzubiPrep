@@ -1,10 +1,9 @@
 # Agent-Status (nur offene Punkte)
 
-- Geführte FIAE-Lernreise – neue Weitergabepakete stehen aus.
-  Web und Desktop teilen sich die Inhalte aller 94 Themen. In LF10a, LF11a und
-  LF12a begleitet ein Reparaturauftrag die Oberflächengestaltung, die Entwicklung
-  der Ticketlogik und die Kundenübergabe. Der Abschluss zeigt die Ergebnisse zu
-  allen 248 Lernzielen. → [Plan und Etappen](../61-Lernreise-FIAE-Planung.md)
+- **Windows-Paketbauer** – Electron Builder 26.18.1 verwendet zwei betroffene
+  Versionslinien von `minimatch`. Sobald der Paketbauer eine korrigierte Version
+  unterstützt, Entwicklungsabhängigkeiten und Paketbau erneut prüfen.
+  [Stand der Paketprüfung](OPS-043-node-patches.md)
 
 - Frontendkurs und gemeinsame Qwen-Lernbegleitung (Pilot in dokumentierter Matrix abgenommen, Ausbau offen) —
   Abschlusskompetenzen, 31 Kapitel, regelmäßige Projekte, Vorschau/Inspect,
@@ -33,13 +32,13 @@
   mit ausdrücklich begrenzten automatisierten Nachweisen abgeschlossen.
   OPS-024: lokale Qwen-Grundanbindung im Entwicklungsstand mit freiwilligen
   Hinweisen/Prüfer-/Element-/Quizerklärungen umgesetzt. Keine private PDF gelesen,
-  kein RAG oder KI-Benotung; vertiefte Evaluation und Paketverteilung offen.
+  kein RAG oder KI-Benotung. Die vertiefte Evaluation bleibt offen.
   → [Einrichtung und Grenzen](../23-Qwen-Grundanbindung.md)
   OPS-025 sichert einen klar erkennbaren h1-Tagfehler mit festem Codehinweis
   ab; Browser-Fehlerbehandlung und Erhalt eigener Texte präzisiert.
   OPS-026: private RAG-Verwendung pro Lernanfrage, neutrale Quellen/PDF-Seiten,
   kontrolliertes Entfernen und lokale Aufbereitung implementiert.
-  Semantische Suche/OCR, vertiefte Evaluation und neue Pakete bleiben offen.
+  Semantische Suche/OCR und vertiefte Evaluation bleiben offen.
   → [Lokales RAG](../24-Lokales-RAG.md)
   OPS-027 ergänzt einen praktischen Theorie-/Glossareinstieg und lokale
   Wissenssuche mit Qwen-Erklärung oder modellfreiem Quellenlesen. Themen
@@ -70,7 +69,7 @@
   und erweiterten Browser-/Electronnachweisen. Alte Entwürfe bleiben erhalten.
   FE-027 ergänzt sechs Formularlektionen in Kapitel 13 mit lokaler nativer
   Prüfung, offenen Startern und Formularprojekt. Kein Versand, Upload oder
-  Lern-JavaScript in der HTML-Vorschau. Neue Installationspakete bleiben separat.
+  Lern-JavaScript in der HTML-Vorschau.
   → [CSS-Umfang und Abnahmepunkte](../27-CSS-Kurs-Abnahme.md)
   → [Formularumfang und Abnahmepunkte](../28-HTML-Formulare-Abnahme.md)
   OPS-036 ergänzt einen Desktop-JS-Technikpilot mit sieben festen Programmen,
@@ -248,9 +247,9 @@
   → [Kapitel 18](../36-JavaScript-Kapitel-18.md)
   OPS-039: Desktop 0.1.4 mit damaligem Kurs/KI/Theorie neu gebaut und als echte
   Paket-EXE geprüft. NSIS-Inhalt identisch zum kontrollierten Build, private
-  Dateiklassen ausgeschlossen; README aktualisiert. Vorhandene Webpakete 0.1.2
-  bleiben älterer Stand. Desktop 0.1.4 enthält weiterhin 82 praktische und 85
-  vorbereitete Lektionen; Kapitel 18–31 bislang nur im Entwicklungsstand.
+  Dateiklassen ausgeschlossen; README aktualisiert. Desktop 0.1.4 enthielt
+  damals 82 praktische und 85 vorbereitete Lektionen. Die gemeinsamen
+  Windows-Pakete 0.1.6 sind in der [Paketabnahme](FE-082-pakete-angleichen.md) dokumentiert.
   → [Desktopbuild](OPS-039-desktop-014-readme.md)
   → [Kapitel 18–31 und Integrationsgrenzen](../35-Frontendkurs-Kapitel-18-31.md)
   Reihenfolge laut FE-035: Kapitel 18–31 zunächst vollständig inhaltlich

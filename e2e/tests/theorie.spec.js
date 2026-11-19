@@ -17,7 +17,7 @@ async function setup(page, enabled = true) {
   await page.route('**/api/ai/material/status', route => route.fulfill({ json: ready }));
 }
 const lesson = page => page.getByRole('region', { name: 'Theorie lernen', exact: true });
-async function openTopic(page) { await page.goto('/theorie'); await page.getByRole('button', { name: /LF2.*Arbeitsplätze/ }).click(); }
+async function openTopic(page) { await page.goto('/theorie'); await page.getByRole('link', { name: /LF2.*Arbeitsplätze/ }).click(); }
 
 const sections = ['Bedarf', 'Hardware', 'Übergabe'].map((title, index) => ({ id: `LF2-${index + 1}`, title, number: index + 1 }));
 async function withSections(page) { await page.route('**/api/theorie?**', route => route.fulfill({ json: { ...catalog, topics: [{ ...topic, sections }] } })); }
@@ -71,9 +71,28 @@ test('Modul ersetzt den alten Theorieblock durch Lernzugang, Glossar und Filter'
   await expect(page.getByRole('button', { name: /^Theorie Lies/ })).toHaveCount(0);
   await page.getByRole('link', { name: 'Theorie lernen →', exact: true }).click(); await expect(page).toHaveURL(/theorie\?modul=WISO/);
   await expect(page.getByRole('heading', { name: 'Theorie & Glossar' })).toBeVisible();
+  await page.locator('.theorie-filter-panel > summary').click();
   await page.getByLabel('Fachrichtung', { exact: true }).selectOption('FISI'); await expect(page).toHaveURL(/fachrichtung=FISI/); await expect(page).not.toHaveURL(/modul=WISO/);
-  await page.getByLabel('Ansicht', { exact: true }).selectOption('glossary'); await expect(page).toHaveURL(/modus=glossary/);
+  await page.getByRole('link', { name: 'Glossar', exact: true }).click(); await expect(page).toHaveURL(/modus=glossary/);
   await page.getByRole('button', { name: 'Filter zurücksetzen' }).click(); await expect(page).toHaveURL(/\/theorie$/);
+});
+
+test('Themenansicht erhält Filter, Seite und Tastaturfokus beim Zurückgehen', async ({ page }) => {
+  await setup(page);
+  const many = Array.from({ length: 17 }, (_, i) => ({ ...topic, id: `t${i}`, title: `Thema ${i + 1}` }));
+  await page.route('**/api/theorie?**', route => route.fulfill({ json: { ...catalog, topics: many, total: many.length } }));
+  await page.goto('/theorie?lf=LF2');
+  await expect(page.locator('.theorie-topic')).toHaveCount(8);
+  await page.getByRole('button', { name: 'Weitere Themen' }).click();
+  const item = page.getByRole('link', { name: /LF2.*Thema 10 / });
+  await item.focus(); await page.keyboard.press('Enter');
+  await expect(page.getByRole('heading', { name: 'Thema 10', exact: true })).toBeFocused();
+  await page.reload();
+  await page.getByRole('link', { name: /Zur Themenübersicht/ }).click();
+  await expect(item).toBeFocused();
+  await expect(page).toHaveURL(/lf=LF2.*gruppe=2/);
+  await item.click(); await page.goBack();
+  await expect(item).toBeFocused();
 });
 
 test('Theorie erklärt ohne Quiz und trennt unveränderte Fundstelle von inertem Modelltext', async ({ page }, info) => {
@@ -106,7 +125,7 @@ test('Private Quellen verlangen Auswahl und eine einzelne geänderte Unterlage v
 
 test('Wissenssuche erlaubt Quellenlesen ohne aktivierte KI und Abbruch verwirft späte Antworten', async ({ page }) => {
   await setup(page, false); await page.route('**/api/ai/help', async route => { const body = route.request().postDataJSON(); expect(body.intent).toBe('read'); await new Promise(resolve => setTimeout(resolve, 250)); await route.fulfill({ json: { ...reply, source: 'sources' } }).catch(() => {}); });
-  await page.goto('/suche'); await page.getByText('Wissen mit Qwen suchen oder Originalfundstellen lesen', { exact: true }).click();
+  await page.goto('/suche'); await page.getByText('Wissensfrage stellen oder Fundstellen lesen', { exact: true }).click();
   await lesson(page).getByLabel('Deine Frage oder Rückfrage', { exact: true }).fill('Was ist RAM?'); await expect(lesson(page).getByRole('button', { name: 'Frage erklären', exact: true })).toBeDisabled();
   await lesson(page).getByRole('button', { name: 'Fundstellen lesen' }).click(); await lesson(page).getByRole('button', { name: 'Anfrage abbrechen' }).click(); await expect(lesson(page).getByRole('alert')).toContainText('abgebrochen');
   await expect(lesson(page).getByLabel('Theorieantwort')).toHaveCount(0); await lesson(page).getByRole('button', { name: 'Fundstellen lesen' }).click(); await expect(lesson(page).getByLabel('Fundstellen')).toContainText('Synthetischer Originaltext');
@@ -120,7 +139,7 @@ test('Echter Desktop liest öffentliche Fundstellen bei serverseitig ausgeschalt
   try {
     app = await _electron.launch({ executablePath: path.join(repo, 'desktop/node_modules/electron/dist/electron.exe'), args: [path.join(repo, 'desktop'), `--user-data-dir=${info.outputPath('profil')}`], env });
     const page = await app.firstWindow(); await page.waitForURL(/^http:/); const origin = new URL(page.url()).origin; await unterdrueckeOnboardingPopups(page); await page.goto(`${origin}/theorie?modul=HARDWARE`);
-    await page.getByRole('button', { name: /Hardware-Grundlagen/ }).click(); await lesson(page).getByRole('button', { name: 'Fundstellen lesen' }).click();
+    await page.getByRole('link', { name: /Hardware-Grundlagen/ }).click(); await lesson(page).getByRole('button', { name: 'Fundstellen lesen' }).click();
     await expect(lesson(page).getByLabel('Theorieantwort')).toContainText('ohne KI-Erklärung'); await expect(lesson(page).getByLabel('Fundstellen')).toContainText('App-'); expect(await lesson(page).locator('blockquote').count()).toBeLessThanOrEqual(3);
     await expect(lesson(page).getByRole('button', { name: 'Thema erklären', exact: true })).toBeDisabled();
   } finally { await app?.close(); expect(path.dirname(await fs.realpath(root))).toBe(await fs.realpath(os.tmpdir())); expect(path.basename(root)).toMatch(/^azubiprep-theory-e2e-/); await fs.rm(root, { recursive: true, force: true }); }

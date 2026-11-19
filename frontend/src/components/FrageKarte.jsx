@@ -1,9 +1,9 @@
 // Wiederverwendbare Anzeige einer Frage mit Antwortoptionen.
 // Props: frage, auswahl (Array von Buchstaben), onToggle(letter), feedback (bool)
 
-import { BUCHSTABEN, optionenListe, TYP_LABEL, buchstabeZuZiffer } from '../utils/fragen.js';
+import { optionenListe, TYP_LABEL, buchstabeZuZiffer } from '../utils/fragen.js';
 
-export default function FrageKarte({ frage, auswahl = [], onToggle, zeigeFeedback, korrektBuchstaben = [], optionen: optionenProp }) {
+export default function FrageKarte({ frage, auswahl = [], onToggle, disabled = false, zeigeFeedback, korrektBuchstaben = [], optionen: optionenProp }) {
   // Gemischte Reihenfolge kann übergeben werden; sonst Originalreihenfolge.
   const optionen = optionenProp && optionenProp.length
     ? optionenProp.map((o) => ({ buchstabe: o.buchstabe, text: o.text }))
@@ -34,22 +34,21 @@ export default function FrageKarte({ frage, auswahl = [], onToggle, zeigeFeedbac
   }
 
   return (
-    <div>
+    <div className="quiz-options" role="group" aria-label="Antwortmöglichkeiten">
       <div className="small text-muted mb-2">
         <span className="badge badge-neutral">{TYP_LABEL[frage.typ] || frage.typ}</span>
       </div>
       {optionen.map((opt) => (
-        <div
+        <button type="button"
           key={opt.buchstabe}
           className={cssClass(opt.buchstabe)}
-          role="button"
-          tabIndex={0}
-          onClick={() => onToggle && onToggle(opt.buchstabe)}
-          onKeyDown={(e) => e.key === 'Enter' && onToggle && onToggle(opt.buchstabe)}
+          aria-pressed={isSelected(opt.buchstabe)}
+          disabled={disabled || zeigeFeedback}
+          onClick={() => onToggle?.(opt.buchstabe)}
         >
           <span className="option-letter">{buchstabeZuZiffer(opt.buchstabe)}</span>
           <span>{opt.text}</span>
-        </div>
+        </button>
       ))}
     </div>
   );

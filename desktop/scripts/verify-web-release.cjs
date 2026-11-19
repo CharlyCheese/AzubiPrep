@@ -2,7 +2,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const assert = require('node:assert/strict');
 const crypto = require('node:crypto');
-const { spawnSync } = require('node:child_process');
+const { unpackRelease } = require('./unpack-release.cjs');
 const asar = require('@electron/asar');
 const pkg = require('../package.json');
 const config = require('../web-builder.json');
@@ -67,21 +67,13 @@ for (const dependency of Object.keys(backendPackage.dependencies || {})) {
 }
 assert.ok(fs.existsSync(path.join(release, 'AzubiPrep Web.exe')), 'Gebaute Webanwendung fehlt.');
 const releaseHashes = new Map(releaseFiles.map(file => [file, hash(path.join(release, file))]));
-// Bereits vorhandenes Builder-Werkzeug nutzen; Setup und Portable nicht ausführen.
-const seven = path.join(repo, 'desktop/node_modules/electron-winstaller/vendor/7z-x64.exe');
-function unpack(source, destination, selection = []) {
-  const result = spawnSync(seven, ['x', source, '-y', `-o${destination}`, ...selection], { windowsHide: true, stdio: 'pipe' });
-  assert.equal(result.status, 0, 'Paketinhalt konnte nicht zur Prüfung entpackt werden.');
-}
 for (const name of [`AzubiPrep-Web-Setup-${pkg.version}.exe`, `AzubiPrep-Web-${pkg.version}-portabel.exe`]) {
   const installer = path.join(installerRoot, name);
   assert.ok(fs.existsSync(installer), 'Web-Setup oder Portable fehlt.');
   assert.ok(!fs.lstatSync(installer).isSymbolicLink(), 'Paket darf keine Verknüpfung sein.');
   const scratch = fs.mkdtempSync(path.join(installerRoot, 'verify-'));
   try {
-    unpack(installer, scratch, ['$PLUGINSDIR/app-64.7z']);
-    const payloadRoot = path.join(scratch, 'payload');
-    unpack(path.join(scratch, '$PLUGINSDIR', 'app-64.7z'), payloadRoot);
+    const payloadRoot = unpackRelease(installer, scratch);
     assert.deepEqual(files(payloadRoot), releaseFiles, 'Webpaket enthält andere Anwendungsdateien.');
     for (const file of releaseFiles) {
       assert.equal(hash(path.join(payloadRoot, file)), releaseHashes.get(file), 'Webpaketinhalt weicht vom geprüften Anwendungsstand ab.');

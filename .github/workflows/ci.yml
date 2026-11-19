@@ -16,7 +16,7 @@ jobs:
       - name: Node 24 einrichten
         uses: actions/setup-node@v4
         with:
-          node-version: "24"
+          node-version-file: ".node-version"
 
       - name: Backend-Abhängigkeiten installieren
         working-directory: backend
@@ -88,7 +88,7 @@ jobs:
       - name: Node 24 einrichten
         uses: actions/setup-node@v4
         with:
-          node-version: "24"
+          node-version-file: ".node-version"
 
       - name: PostgreSQL-Client installieren
         run: sudo apt-get update && sudo apt-get install -y postgresql-client
@@ -113,7 +113,7 @@ jobs:
       - name: Node 24 einrichten
         uses: actions/setup-node@v4
         with:
-          node-version: "24"
+          node-version-file: ".node-version"
 
       - name: Frontend-Abhängigkeiten installieren
         working-directory: frontend
@@ -132,7 +132,7 @@ jobs:
       - name: Node 24 einrichten
         uses: actions/setup-node@v4
         with:
-          node-version: "24"
+          node-version-file: ".node-version"
 
       - name: Backend-Abhängigkeiten installieren
         working-directory: backend
@@ -179,7 +179,7 @@ jobs:
       - name: Node 24 einrichten
         uses: actions/setup-node@v4
         with:
-          node-version: "24"
+          node-version-file: ".node-version"
 
       - name: Backend-Abhängigkeiten installieren
         working-directory: backend

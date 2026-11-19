@@ -107,11 +107,8 @@ export default function Statistik() {
           </div>
 
           {/* Abzeichen & Trophäen */}
-          <div className="card">
-            <div className="flex-between wrap mb-2">
-              <h2 className="mb-0">Abzeichen</h2>
-              <span className="badge badge-neutral">{badgesErreicht} / {badges.length} freigeschaltet</span>
-            </div>
+          <details className="card stats-awards">
+            <summary>Abzeichen <span className="badge badge-neutral">{badgesErreicht} / {badges.length} freigeschaltet</span></summary>
             <div className="abzeichen-grid">
               {badges.map((b) => (
                 <div key={b.id} className={`abzeichen ${b.erreicht ? 'erreicht' : 'gesperrt'}`}>
@@ -131,7 +128,7 @@ export default function Statistik() {
                 </div>
               ))}
             </div>
-          </div>
+          </details>
         </div>
 
         {/* Nebenspalte: KPI-Grid, Leitner-Boxen, Letzte Prüfungen */}

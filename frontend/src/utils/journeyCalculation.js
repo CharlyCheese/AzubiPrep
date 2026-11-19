@@ -162,6 +162,7 @@ const SHEETS = {
   },
 };
 
+export const CALCULATION_TOPICS = Object.keys(SHEETS);
 export function calculationSheet(topicId) { return Object.hasOwn(SHEETS, topicId) ? SHEETS[topicId] : null; }
 export function createCalculation(topicId) {
   const sheet = calculationSheet(topicId);

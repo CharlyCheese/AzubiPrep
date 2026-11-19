@@ -47,9 +47,12 @@ export default function KiEinstellungen() {
     await accountAction(async () => { const result = await ai.chatgptSignin(accountId); if (aiStore.get().provider !== 'chatgpt') { await ai.chatgptCancel(); return; } setAuthorizeUrl(result.authorizeUrl); window.open(result.authorizeUrl, '_blank', 'noopener,noreferrer'); });
   }
   function chooseProvider(provider) { active.current?.abort(); if (cloud && provider !== 'chatgpt') ai.chatgptCancel().catch(() => {}); aiStore.set({ provider }); }
-  return <section className="card mb-2 ki" aria-labelledby="ki-settings-title">
+  return <section className="ki settings-learning" aria-labelledby="ki-settings-title">
     <h2 id="ki-settings-title">KI und Lernmaterial</h2>
-    <p>Wähle freiwillige Lernhilfe. Quiz, Werkstatt und feste Prüfungen funktionieren auch ohne KI. Es werden keine Modelle automatisch installiert.</p>
+    <div className="settings-learning-grid">
+      <section className="card settings-provider" aria-labelledby="ki-anbieter">
+        <h3 id="ki-anbieter" tabIndex={-1}>Lernbegleitung einrichten</h3>
+        <p className="small">Für Quiz und Werkstatt kannst du eine Lernhilfe zuschalten. AzubiPrep installiert keine Modelle automatisch.</p>
     <label className="ki-field">KI-Anbieter<select value={settings.provider} disabled={!isLocalAi()} onChange={event => chooseProvider(event.target.value)}><option value="none">Ohne KI</option><option value="qwen">Lokales Qwen über Ollama</option><option value="chatgpt">Eigenes ChatGPT-Abo</option></select></label>
     {!isLocalAi() && <p>Die Anbieterauswahl steht in der lokal gestarteten AzubiPrep-App zur Verfügung.</p>}
     {settings.provider === 'none' && <p>KI ist ausgeschaltet. Eigene PDFs bleiben lokal durchsuchbar; Fundstellen lesen benötigt kein Sprachmodell.</p>}
@@ -76,6 +79,8 @@ export default function KiEinstellungen() {
     </>}
     {(error || settings.storageError) && <p role="alert">{error || settings.storageError}</p>}
     <p className="small">Antworten werden nicht dauerhaft gespeichert und vergeben keine Punkte. Bei Anbieter- oder Kontowechsel werden alte Antworten verworfen.</p>
-    <RagEinstellungen />
+      </section>
+      <RagEinstellungen />
+    </div>
   </section>;
 }

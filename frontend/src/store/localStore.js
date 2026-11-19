@@ -1,7 +1,6 @@
 import { gamificationStore } from './gamificationStore.js';
-// Lokale Datenhaltung (localStorage). Da es kein Login/keine Benutzer-IDs gibt,
-// wird ein einzelner lokaler Profilbereich verwendet. Alle Module hier sind
-// synchron und werfen bei JSON-Fehlern keine Ausnahme (Defensive).
+import { authStore } from './authStore.js';
+// Lokale Datenhaltung im Browserprofil. Notizen angemeldeter Nutzer haben eine eigene Ablage.
 const PREFIX = 'azubiprep.';
 
 function read(key, fallback) {
@@ -89,10 +88,24 @@ export const examStore = {
 let notizenCache = [];
 let notizenRaw = null;
 
+function noteScope() {
+  const session = authStore.get();
+  if (!session?.token) return 'notizen';
+  const id = session.user?.id;
+  const hasId = (typeof id === 'string' && id.length > 0) || Number.isSafeInteger(id);
+  return hasId ? `notizen.konto.${id}` : null;
+}
+
+function writeNotes(list) {
+  const scope = noteScope();
+  if (scope) write(scope, list);
+}
+
 function notizenSnapshot() {
   let raw = '[]';
   try {
-    raw = localStorage.getItem(PREFIX + 'notizen') || '[]';
+    const scope = noteScope();
+    if (scope) raw = localStorage.getItem(PREFIX + scope) || '[]';
   } catch {
     raw = '[]';
   }
@@ -109,6 +122,7 @@ function notizenSnapshot() {
 }
 
 export const notesStore = {
+  scope: noteScope,
   get() {
     return notizenSnapshot();
   },
@@ -120,9 +134,11 @@ export const notesStore = {
   subscribe(cb) {
     const handler = () => cb();
     window.addEventListener('azubiprep-notizen', handler);
+    window.addEventListener('azubiprep-auth', handler);
     window.addEventListener('storage', handler);
     return () => {
       window.removeEventListener('azubiprep-notizen', handler);
+      window.removeEventListener('azubiprep-auth', handler);
       window.removeEventListener('storage', handler);
     };
   },
@@ -135,7 +151,7 @@ export const notesStore = {
       inhalt: inhalt || '',
       erstelltAm: new Date().toISOString(),
     });
-    write('notizen', list);
+    writeNotes(list);
     return list;
   },
   /** Mehrere Notizen in einem Schritt ergänzen (Import). */
@@ -152,7 +168,7 @@ export const notesStore = {
         erstelltAm: new Date().toISOString(),
       });
     });
-    write('notizen', list);
+    writeNotes(list);
     return list;
   },
   /** Notiz bearbeiten (Titel/Modul/Inhalt). */
@@ -160,15 +176,15 @@ export const notesStore = {
     const list = this.get().map((n) =>
       n.id === id ? { ...n, ...patch, geaendertAm: new Date().toISOString() } : n,
     );
-    write('notizen', list);
+    writeNotes(list);
     return list;
   },
   setAll(list) {
-    write('notizen', Array.isArray(list) ? list : []);
+    writeNotes(Array.isArray(list) ? list : []);
     return this.get();
   },
   remove(id) {
-    write('notizen', this.get().filter((n) => n.id !== id));
+    writeNotes(this.get().filter((n) => n.id !== id));
   },
 };
 
@@ -337,7 +353,7 @@ export const kartenOptionenStore = {
 };
 
 export function resetAll() {
-  write('notizen', []);
+  writeNotes([]);
   progressStore.reset();
   examStore.reset();
   activityStore.reset();

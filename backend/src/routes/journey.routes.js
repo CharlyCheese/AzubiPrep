@@ -1,14 +1,17 @@
 import { Router } from 'express';
 import { loadJourney } from '../journey.js';
 
-export function buildJourneyRoutes(contentDir) {
-  const router = Router();
-  let journey;
+export function loadAvailableJourney(contentDir) {
   try {
-    journey = loadJourney(contentDir);
+    return loadJourney(contentDir);
   } catch {
     // Ein fehlender Pilot darf das bisherige Modullernen nicht verhindern.
+    return null;
   }
+}
+
+export function buildJourneyRoutes(contentDir, journey = loadAvailableJourney(contentDir)) {
+  const router = Router();
   router.use((req, res, next) => {
     res.set('Cache-Control', 'no-store');
     if (!journey) {

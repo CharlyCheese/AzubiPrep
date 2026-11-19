@@ -21,7 +21,7 @@ test('ChatGPT zeigt Cloudhinweis, eigenes Konto und Modellauswahl ohne Ollama', 
 test('Private lokale Suchfrage bleibt beim Wechsel zu öffentlicher Cloudquelle nicht im Prompt', async ({ page }) => {
   await setup(page); const sent = [];
   await page.route('**/api/ai/help', async route => { const body = route.request().postDataJSON(); sent.push(body); await route.fulfill({ json: { text: 'Synthetische Antwort', source: body.intent === 'read' ? 'sources' : 'model', model: 'synthetic-model', sources: [] } }); });
-  await page.goto('/theorie'); await openWorkshopTools(page); const region = page.getByRole('region', { name: 'Theorie lernen', exact: true });
+  await page.goto('/theorie'); await page.getByRole('link', { name: 'Freie Wissenssuche' }).click(); const region = page.getByRole('region', { name: 'Theorie lernen', exact: true });
   await region.getByRole('radio', { name: 'Eigene lokale Unterlagen', exact: true }).check();
   const question = region.getByRole('textbox', { name: /Deine Frage oder Rückfrage/ }); await question.fill('SYNTHETIC-PRIVATE-DERIVED');
   await expect(region.getByRole('button', { name: 'Frage erklären', exact: true })).toBeDisabled();

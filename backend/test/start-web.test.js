@@ -36,16 +36,20 @@ describe('Lokaler Webstart', () => {
       .mockResolvedValueOnce(new globalThis.Response('Nicht gefunden', { status: 404 })));
     expect(await isWebRunning('http://127.0.0.1:3456')).toBe(false);
   });
-  it.each(['.env', '.env.local', '.env.production', '.env.production.local'])('erkennt geänderte Build-Konfiguration %s', (name) => {
+  it.each(['.env', '.env.local', '.env.production', '.env.production.local', 'advanced-vendor.mjs', 'course-template/package-lock.json'])('erkennt geänderte Build-Eingabe %s', (name) => {
     const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'azubiprep-webstart-'));
     directories.push(dir);
     const dist = path.join(dir, 'dist');
     fs.mkdirSync(dist);
     fs.writeFileSync(path.join(dist, 'index.html'), '<html></html>');
-    const env = path.join(dir, name);
-    fs.writeFileSync(env, 'VITE_API_BASE_URL=/api');
+    const input = path.join(dir, name);
+    fs.mkdirSync(path.dirname(input), { recursive: true });
+    fs.writeFileSync(input, 'Test');
+    const baseline = new Date(Date.now() + 2000);
+    fs.utimesSync(path.join(dist, 'index.html'), baseline, baseline);
+    expect(needsBuild(dir, dist)).toBe(false);
     const future = new Date(Date.now() + 5000);
-    fs.utimesSync(env, future, future);
+    fs.utimesSync(input, future, future);
     expect(needsBuild(dir, dist)).toBe(true);
   });
   it('erkennt gelöschte öffentliche Dateien über den Ordnerzeitstempel', () => {

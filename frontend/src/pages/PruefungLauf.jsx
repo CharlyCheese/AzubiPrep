@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useExamStore, setExamState } from '../store/examStore.js';
 import { api } from '../api/client.js';
@@ -10,7 +10,7 @@ export default function PruefungLauf() {
   const { fragen, antworten, konfig } = store;
 
   const [aktuell, setAktuell] = useState(0);
-  const [freitext, setFreitext] = useState('');
+  const questionHeading = useRef(null);
   const [abgabe, setAbgabe] = useState(false);
   const [fehler, setFehler] = useState('');
 
@@ -64,15 +64,12 @@ export default function PruefungLauf() {
     setAbgabe(true);
     setFehler('');
     try {
-      // Freitext der aktuellen Frage übernehmen
-      const antwortenFinal = { ...antworten };
-      if (frage.typ === 'FT' && freitext.trim()) antwortenFinal[frage.id] = freitext.trim();
       // Anzeige-Buchstaben (gemischt) zurück auf Original-Buchstaben abbilden
       const payload = fragen.map((f) => {
-        const roh = antwortenFinal[f.id];
+        const roh = antworten[f.id];
         let antwort = '';
         if (f.typ === 'FT') {
-          antwort = roh || '';
+          antwort = (roh || '').trim();
         } else {
           const zuOriginal = f.gemischt?.anzeigeZuOriginal || {};
           const liste = Array.isArray(roh) ? roh : (roh ? [roh] : []);
@@ -81,7 +78,7 @@ export default function PruefungLauf() {
         return { id: f.id, antwort };
       });
       const ergebnis = await api.post('/pruefung/auswerten', { fragen: payload });
-      setExamState({ ergebnis, antworten: antwortenFinal });
+      setExamState({ ergebnis });
       navigate('/pruefung/ergebnis');
     } catch (e) {
       setFehler(e.message);
@@ -89,9 +86,9 @@ export default function PruefungLauf() {
     }
   }
 
-  function freitextMerken(text) {
-    setFreitext(text);
-    setExamState({ antworten: { ...antworten, [frage.id]: text } });
+  function moveQuestion(direction) {
+    setAktuell(value => value + direction);
+    requestAnimationFrame(() => questionHeading.current?.focus());
   }
 
   const beantwortet = fragen.filter((f) => (antworten[f.id]?.length ?? 0) > 0).length;
@@ -130,34 +127,38 @@ export default function PruefungLauf() {
           <span className="small text-muted">Frage {aktuell + 1} von {fragen.length}</span>
           <span className={`badge badge-${frage.schwierigkeit}`}>{frage.schwierigkeit}</span>
         </div>
-        <h2 style={{ fontSize: '1.15rem' }}>{frage.frage}</h2>
+        <h2 id="exam-question" tabIndex={-1} ref={questionHeading} style={{ fontSize: '1.15rem' }}>{frage.frage}</h2>
 
         {frage.typ === 'FT' ? (
-          <textarea
-            className="input"
-            rows={3}
-            value={antworten[frage.id] || ''}
-            onChange={(e) => freitextMerken(e.target.value)}
-            placeholder="Antwort eingeben …"
-          />
+          <div className="field">
+            <label htmlFor="exam-answer">Deine Antwort</label>
+            <textarea id="exam-answer" className="input" rows={3}
+              disabled={abgabe}
+              value={antworten[frage.id] || ''}
+              onChange={event => setExamState({ antworten: { ...antworten, [frage.id]: event.target.value } })}
+              placeholder="Antwort eingeben …"
+            />
+          </div>
         ) : (
-          <div>
+          <div className="exam-options" role="group" aria-labelledby="exam-question" aria-describedby="exam-choice-hint">
+            <p className="small text-muted" id="exam-choice-hint">{frage.typ === 'MC' ? 'Mehrere Antworten möglich.' : 'Wähle eine Antwort.'}</p>
             {optionen.map((o) => {
               const isSel = auswahl.includes(o.buchstabe);
               return (
-                <div key={o.buchstabe} className={`option-row ${isSel ? 'selected' : ''}`} onClick={() => waehle(o.buchstabe)}>
+                <button type="button" key={o.buchstabe} className={`option-row ${isSel ? 'selected' : ''}`}
+                  aria-pressed={isSel} disabled={abgabe} onClick={() => waehle(o.buchstabe)}>
                   <span className="option-letter">{buchstabeZuZiffer(o.buchstabe)}</span>
                   <span>{o.text}</span>
-                </div>
+                </button>
               );
             })}
           </div>
         )}
 
         <div className="flex-between mt-2 wrap">
-          <button className="btn btn-ghost" disabled={aktuell === 0} onClick={() => setAktuell((a) => a - 1)}>← Zurück</button>
+          <button className="btn btn-ghost" disabled={abgabe || aktuell === 0} onClick={() => moveQuestion(-1)}>← Zurück</button>
           {aktuell + 1 < fragen.length ? (
-            <button className="btn btn-primary" onClick={() => setAktuell((a) => a + 1)}>Weiter →</button>
+            <button className="btn btn-primary" disabled={abgabe} onClick={() => moveQuestion(1)}>Weiter →</button>
           ) : (
             <button className="btn btn-success" onClick={abgeben} disabled={abgabe}>Prüfung abgeben ✓</button>
           )}

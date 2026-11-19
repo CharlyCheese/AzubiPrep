@@ -5,12 +5,14 @@
 // das Ergebnis (eingeloggter Nutzer) geschrieben werden, entscheidet die
 // aufrufende Seite über die Props (gleiches Verhalten wie vorher in
 // Einstellungen.jsx, nur wiederverwendbar gemacht).
-import { useState } from 'react';
+import { useId, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { api } from '../api/client.js';
 import { authStore } from '../store/authStore.js';
+import '../styles/account.css';
 
 export default function KontoFormular({ fachrichtungen, fachrichtung, onFachrichtungChange, onErfolg, startModus = 'login' }) {
+  const formId = useId();
   const [modus, setModus] = useState(startModus); // 'login' | 'register'
   const [email, setEmail] = useState('');
   const [passwort, setPasswort] = useState('');
@@ -39,26 +41,26 @@ export default function KontoFormular({ fachrichtungen, fachrichtung, onFachrich
   }
 
   return (
-    <form onSubmit={absenden}>
+    <form className="account-form" onSubmit={absenden}>
       <div className="grid grid-2">
         <div className="field">
-          <label>E-Mail</label>
-          <input type="email" className="input" required value={email} onChange={(e) => setEmail(e.target.value)} />
+          <label htmlFor={`${formId}-email`}>E-Mail</label>
+          <input id={`${formId}-email`} type="email" autoComplete="email" className="input" required value={email} onChange={(e) => setEmail(e.target.value)} />
         </div>
         <div className="field">
-          <label>Passwort</label>
-          <input type="password" className="input" required minLength={8} value={passwort} onChange={(e) => setPasswort(e.target.value)} />
+          <label htmlFor={`${formId}-password`}>Passwort</label>
+          <input id={`${formId}-password`} type="password" autoComplete={modus === 'login' ? 'current-password' : 'new-password'} className="input" required minLength={modus === 'register' ? 8 : undefined} aria-describedby={modus === 'register' ? `${formId}-rules` : undefined} value={passwort} onChange={(e) => setPasswort(e.target.value)} />
           {modus === 'register' && (
-            <div className="field-hint">
-              Mind. 8 Zeichen, mit Groß- und Kleinbuchstaben, einer Zahl und einem Sonderzeichen (z. B. „Azubi2026!").
+            <div className="field-hint" id={`${formId}-rules`}>
+              Mindestens 8 Zeichen mit Groß- und Kleinbuchstaben, einer Zahl und einem Sonderzeichen.
             </div>
           )}
         </div>
       </div>
       {modus === 'register' && (
         <div className="field">
-          <label>Fachrichtung</label>
-          <select
+          <label htmlFor={`${formId}-track`}>Fachrichtung</label>
+          <select id={`${formId}-track`}
             className="select"
             value={fachrichtung || 'FIAE'}
             onChange={(e) => onFachrichtungChange?.(e.target.value)}
@@ -70,13 +72,14 @@ export default function KontoFormular({ fachrichtungen, fachrichtung, onFachrich
           <div className="field-hint">Wird mit deinem Konto gespeichert – nur eine Vorauswahl, keine Zugriffsbeschränkung.</div>
         </div>
       )}
-      {fehler && <div className="alert alert-danger">{fehler}</div>}
+      {fehler && <div className="alert alert-danger" role="alert">{fehler}</div>}
       <div className="flex wrap">
         <button className="btn btn-primary" disabled={laden}>
-          {laden ? '…' : modus === 'login' ? 'Anmelden' : 'Registrieren'}
+          {modus === 'login' ? (laden ? 'Anmeldung läuft …' : 'Anmelden') : (laden ? 'Konto wird erstellt …' : 'Registrieren')}
         </button>
         <button
           type="button"
+          disabled={laden}
           className="btn btn-ghost btn-sm"
           onClick={() => { setModus(modus === 'login' ? 'register' : 'login'); setFehler(''); }}
         >

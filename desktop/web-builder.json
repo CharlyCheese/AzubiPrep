@@ -9,15 +9,15 @@
     {
       "from": "../backend",
       "to": "backend",
-      "filter": ["src/**/*", "package.json", "!**/.env*", "!**/local-ai/**", "!**/local-rag/**", "!**/accounts.json", "!**/chatgpt-auth.json", "!**/chatgpt-host.json", "!**/*.log", "!**/.cache/**/*"]
+      "filter": ["src/**/*", "package.json", "!**/.env*", "!**/*.[pP][dD][fF]", "!**/local-ai/**", "!**/local-rag/**", "!**/accounts.json", "!**/chatgpt-auth.json", "!**/chatgpt-host.json", "!**/*.log", "!**/.cache/**/*"]
     },
     {
       "from": "../backend/node_modules",
       "to": "backend/node_modules",
-      "filter": ["**/*", "!**/.env*", "!**/local-ai/**", "!**/local-rag/**", "!**/accounts.json", "!**/chatgpt-auth.json", "!**/chatgpt-host.json", "!**/*.log", "!**/.cache/**/*", "!**/.vite/**/*", "!**/.vite-temp/**/*"]
+      "filter": ["**/*", "!**/.env*", "!**/*.[pP][dD][fF]", "!**/local-ai/**", "!**/local-rag/**", "!**/accounts.json", "!**/chatgpt-auth.json", "!**/chatgpt-host.json", "!**/*.log", "!**/.cache/**/*", "!**/.vite/**/*", "!**/.vite-temp/**/*"]
     },
-    { "from": "../content", "to": "content", "filter": ["**/*", "!**/.env*", "!**/local-ai/**", "!**/local-rag/**", "!**/accounts.json", "!**/chatgpt-auth.json", "!**/chatgpt-host.json"] },
-    { "from": "../frontend/dist", "to": "frontend/dist", "filter": ["**/*", "!**/.env*", "!**/local-ai/**", "!**/local-rag/**", "!**/accounts.json", "!**/chatgpt-auth.json", "!**/chatgpt-host.json"] }
+    { "from": "../content", "to": "content", "filter": ["**/*", "!**/.env*", "!**/*.[pP][dD][fF]", "!**/local-ai/**", "!**/local-rag/**", "!**/accounts.json", "!**/chatgpt-auth.json", "!**/chatgpt-host.json"] },
+    { "from": "../frontend/dist", "to": "frontend/dist", "filter": ["**/*", "!**/.env*", "!**/*.[pP][dD][fF]", "!**/local-ai/**", "!**/local-rag/**", "!**/accounts.json", "!**/chatgpt-auth.json", "!**/chatgpt-host.json"] }
   ],
   "win": {
     "target": ["nsis", "portable"],
