@@ -15,6 +15,7 @@ import {
   GRUPPE_GEMEINSAM,
 } from '../utils/lernreise.js';
 import Akkordeon from '../components/Akkordeon.jsx';
+import JourneyEntry from '../components/JourneyEntry.jsx';
 
 function ReiseStation({ station }) {
   const s = station;
@@ -154,8 +155,8 @@ export default function Lernreise() {
         <div>
           <h1 className="mb-0">Lernreise</h1>
           <p className="text-muted mt-0">
-            Dein Weg durch die Module – Station für Station. Wähle die Kartenansicht für den Überblick oder die
-            Listenansicht als barrierefreie Alternative.
+            Lerne Schritt für Schritt oder wähle frei aus den vorhandenen Modulen.
+            Der erste geführte Themenabschnitt startet mit FIAE-Grundlagen.
           </p>
         </div>
       </header>
@@ -172,6 +173,9 @@ export default function Lernreise() {
         ))}
       </div>
 
+      {gewaehlt === 'FIAE' && <JourneyEntry />}
+
+      <h2>Module zum freien Lernen</h2>
       <div className="card mb-2">
         <div className="flex-between wrap">
           <h2 className="mb-0">Reise durch {gewaehlt} – {gewaehltName}</h2>
@@ -238,7 +242,7 @@ export default function Lernreise() {
       <div className="card mb-2">
         <h2 className="mb-0">Alle Fachrichtungen</h2>
         <p className="small text-muted mt-0">
-          Die gemeinsamen Module (WiSo, Projektmanagement) zählen in jeder Fachrichtung mit.
+          Die gemeinsamen Module zählen in jeder Fachrichtung mit. Dieser Modulstatus ist vom geführten Themenabschnitt getrennt.
         </p>
         {uebersicht.map((u) => (
           <div key={u.code} style={{ marginBottom: 12 }}>

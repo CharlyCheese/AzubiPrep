@@ -1,0 +1,474 @@
+{
+  "schemaVersion": 1,
+  "version": "1.0.0",
+  "id": "fiae-lf10a-prototype",
+  "title": "Bedienabläufe gemeinsam entwerfen",
+  "fieldId": "LF10a",
+  "scope": "specialization",
+  "prerequisites": [
+    "fiae-lf10a-process"
+  ],
+  "objectives": [
+    {
+      "id": "fiae-lf10a-prototype-flow",
+      "text": "Für eine Nutzeraufgabe einen nachvollziehbaren Bedienablauf mit Erfolgs- und Fehlerzustand entwerfen."
+    },
+    {
+      "id": "fiae-lf10a-prototype-prototype",
+      "text": "Den Ablauf als einfachen Prototyp darstellen und Rückmeldungen für eine nächste kurze Entwicklungsrunde priorisieren."
+    }
+  ],
+  "sourceIds": [
+    "kmk-fachinformatiker-2019",
+    "lf10a-gds-prototypes",
+    "lf10a-wai-forms",
+    "lf10a-gds-testing"
+  ],
+  "sources": [
+    {
+      "id": "kmk-fachinformatiker-2019",
+      "title": "KMK-Rahmenlehrplan Fachinformatiker/Fachinformatikerin vom 13.12.2019",
+      "url": "https://www.kmk.org/fileadmin/Dateien/pdf/Bildung/BeruflicheBildung/rlp/Fachinformatiker_19-12-13_EL.pdf",
+      "checkedAt": "2026-11-19",
+      "note": "Lernfeld 10a, Seite 21 des Rahmenlehrplans, verbindet Prozessmodellierung, Oberflächengestaltung, Tests und Wirtschaftlichkeit."
+    },
+    {
+      "id": "lf10a-gds-prototypes",
+      "title": "Government Digital Service: Making prototypes",
+      "url": "https://www.gov.uk/service-manual/design/making-prototypes",
+      "note": "Prototyptiefe nach Fragestellung wählen und Entwürfe im Team erproben.",
+      "checkedAt": "2026-11-19"
+    },
+    {
+      "id": "lf10a-wai-forms",
+      "title": "W3C WAI: Forms Tutorial",
+      "url": "https://www.w3.org/WAI/tutorials/forms/",
+      "note": "Beschriftung, Eingabehilfen, Validierung und Rückmeldungen zu Formularen.",
+      "checkedAt": "2026-11-19"
+    },
+    {
+      "id": "lf10a-gds-testing",
+      "title": "Government Digital Service: Using moderated usability testing",
+      "url": "https://www.gov.uk/service-manual/user-research/using-moderated-usability-testing",
+      "note": "Aufgaben mit offenem Lösungsweg stellen und Verhalten bei der Durchführung beobachten.",
+      "checkedAt": "2026-11-19"
+    }
+  ],
+  "caseStudy": {
+    "title": "Ein Entwurf für den Schalter",
+    "text": "Die Werkstatt soll aus der neuen Eingabemaske brauchbare Aufträge erhalten. Annahme und Entwicklung erproben gemeinsam, ob man G-17 melden, eine vergessene Angabe ergänzen und den Eingang des Tickets erkennen kann. Sie verwenden erfundene Beispieldaten."
+  },
+  "blocks": [
+    {
+      "id": "fiae-lf10a-prototype-flow",
+      "title": "1. Zustände und Übergänge festlegen",
+      "objectiveIds": [
+        "fiae-lf10a-prototype-flow"
+      ],
+      "sourceIds": [
+        "kmk-fachinformatiker-2019",
+        "lf10a-gds-prototypes"
+      ],
+      "paragraphs": [
+        "Zeichne für jeden sichtbaren Zustand ein Kästchen und für jede Handlung einen beschrifteten Pfeil. Der Start ist die leere Meldung. Nach Eingabe von Gerät und Symptom ist das Formular ausgefüllt. Beim Absenden sind verschiedene Ergebnisse möglich.",
+        "Trenne die Anzeige während der Verarbeitung vom Ergebnis. Während die Antwort aussteht, zeigt die Maske „Wird gespeichert“. Erst ein bestätigter Erfolg führt zur Ansicht mit Ticketnummer. Ein Fehler braucht einen eigenen Weg zurück zur bearbeitbaren Eingabe."
+      ],
+      "example": {
+        "title": "Welche Karte kommt als Nächstes?",
+        "text": "Lege die Karten „Eingabe“, „Warten“ und „Bestätigt“ auf den Tisch. Verbinde Eingabe und Warten mit „gültige Meldung absenden“. Beschrifte den Pfeil zur Bestätigung mit „Speichern erfolgreich“. Die Annahme liest dann R-41 ab."
+      },
+      "misconception": {
+        "claim": "Die Pixelposition des Absendeelements bestimmt den nächsten Zustand.",
+        "correction": "Erst Handlung und Verarbeitungsergebnis legen fest, was die Person als Nächstes sieht."
+      },
+      "takeaway": "Gib einem Übergang eine Handlung oder ein überprüfbares Ereignis."
+    },
+    {
+      "id": "fiae-lf10a-prototype-recover",
+      "title": "2. Die Korrekturschleife durchspielen",
+      "objectiveIds": [
+        "fiae-lf10a-prototype-flow"
+      ],
+      "sourceIds": [
+        "lf10a-wai-forms",
+        "lf10a-gds-prototypes"
+      ],
+      "paragraphs": [
+        "Fehlt die Gerätekennung, kann die Maske das vor dem Speichern erkennen. Sie benennt das Feld, erklärt die erwartete Eingabe und erhält das schon erfasste Symptom. Nach der Korrektur darf die Annahme erneut absenden.",
+        "Ein nachweislich fehlgeschlagener Speicherversuch ist ein anderer Zustand. Die Maske meldet den Fehlschlag und erhält die Angaben für einen weiteren Versuch. Ist der Ausgang wegen eines Verbindungsabbruchs unklar, muss vor einer Neuanlage erst der Status geklärt werden, damit kein Doppelauftrag entsteht."
+      ],
+      "example": {
+        "title": "Zwei Fehlerkarten für denselben Bildschirm",
+        "text": "Schicke zuerst „Einzug klemmt“ ohne Gerätekennung ab. Lege die Karte „Gerätekennung fehlt“ auf und ergänze G-17. Simuliere dann eine ausdrücklich abgelehnte Speicherung. Jetzt passt „Auftrag nicht gespeichert, erneut versuchen“ zur Ursache."
+      },
+      "misconception": {
+        "claim": "Für jeden Fehler reicht der Weg zurück an den leeren Start.",
+        "correction": "Ein passender Rückweg erhält die Eingabe und unterscheidet fehlende Angaben, sicheren Fehlschlag und unklaren Ausgang."
+      },
+      "takeaway": "Erkläre beim Fehler, was bekannt ist und wie die Annahme weiterkommt."
+    },
+    {
+      "id": "fiae-lf10a-prototype-prototype",
+      "title": "3. Das passende Material für die Frage wählen",
+      "objectiveIds": [
+        "fiae-lf10a-prototype-prototype"
+      ],
+      "sourceIds": [
+        "lf10a-gds-prototypes"
+      ],
+      "paragraphs": [
+        "Zum Diskutieren von Reihenfolge und Wörtern reichen Karten mit gezeichneten Ansichten. Eine Person spielt das System und wechselt die Karte, wenn die andere eine Aktion auswählt. Lege auch die Fehlerkarte bereit, damit die Gruppe den Rückweg erprobt.",
+        "Für echte Tab-Reihenfolge, Fokusdarstellung oder Umbruch im Browser braucht es eine bedienbare Umsetzung. Eine lokal verknüpfte Skizze kann Seitenwechsel vortäuschen. Beschrifte simulierte Speicherergebnisse als solche, wenn du die Auswertung festhältst."
+      ],
+      "example": {
+        "title": "Zwei Fragen, zwei Prototypen",
+        "text": "Lege der Annahme zunächst die Karte „Weiter“ vor und frage, was sie als Nächstes erwartet. Zum Prüfen der Tab-Reihenfolge baust du dann eine kleine HTML-Maske und gehst vom ersten Feld bis zur Schaltfläche durch."
+      },
+      "misconception": {
+        "claim": "Eine gezeichnete Maske belegt schon, dass alle Felder per Tastatur erreichbar sind.",
+        "correction": "Eine Skizze erlaubt ein Gespräch über eine geplante Reihenfolge. Erst die bedienbare Fassung liefert den tatsächlichen Fokusweg."
+      },
+      "takeaway": "Wähle den einfachsten Prototyp, mit dem sich die konkrete Frage beobachten lässt."
+    },
+    {
+      "id": "fiae-lf10a-prototype-iterate",
+      "title": "4. Rückmeldung in einen überprüfbaren Auftrag übersetzen",
+      "objectiveIds": [
+        "fiae-lf10a-prototype-prototype"
+      ],
+      "sourceIds": [
+        "lf10a-gds-prototypes",
+        "lf10a-gds-testing"
+      ],
+      "paragraphs": [
+        "Notiere zuerst das beobachtete Verhalten und getrennt davon die mögliche Erklärung. Wenn mehrere Personen „Weiter“ wählen und anschließend eine weitere Eingabeseite erwarten, ist die Wirkung der Beschriftung prüfenswert.",
+        "Für die nächste kurze Runde ordnet das Team Befunde nach Auswirkung auf den Auftrag, Häufigkeit und Aufwand der Änderung. Eine blockierte Meldung wiegt schwerer als ein Farbwunsch. Formuliere die Änderung zusammen mit einem Nachtest an derselben Aufgabe und einem erkennbaren Ergebnis."
+      ],
+      "example": {
+        "title": "Eine Runde bis zum Nachtest",
+        "text": "Im ersten Entwurf sucht die Annahme nach „Weiter“ die eigentliche Sendefunktion. Ersetze die Beschriftung durch „Reparatur melden“. Lass die Aufgabe mit der geänderten Karte erneut durchspielen und beobachte, ob die Person den Abschluss erwartet."
+      },
+      "misconception": {
+        "claim": "Jedes Feedback sollte ungeprüft in die nächste Version übernommen werden.",
+        "correction": "Eine Rückmeldung ist ein Hinweis. Beobachtung, Auswirkung und erneute Erprobung begründen die Entscheidung."
+      },
+      "takeaway": "Vereinbare zu einer priorisierten Änderung einen passenden Nachtest."
+    }
+  ],
+  "questionFile": "questions/fiae-lf10a-prototype.v1.csv",
+  "quiz": {
+    "questionIds": [
+      "LJ-LF10A-PROTOTYPE-Q01",
+      "LJ-LF10A-PROTOTYPE-Q02",
+      "LJ-LF10A-PROTOTYPE-Q03",
+      "LJ-LF10A-PROTOTYPE-Q04",
+      "LJ-LF10A-PROTOTYPE-Q05",
+      "LJ-LF10A-PROTOTYPE-Q06"
+    ]
+  },
+  "exam": {
+    "questionIds": [
+      "LJ-LF10A-PROTOTYPE-E01",
+      "LJ-LF10A-PROTOTYPE-E02",
+      "LJ-LF10A-PROTOTYPE-E03",
+      "LJ-LF10A-PROTOTYPE-E04",
+      "LJ-LF10A-PROTOTYPE-E05",
+      "LJ-LF10A-PROTOTYPE-E06",
+      "LJ-LF10A-PROTOTYPE-E07",
+      "LJ-LF10A-PROTOTYPE-E08"
+    ],
+    "passPercent": 80,
+    "scoring": "all-or-nothing-per-question",
+    "timed": false
+  },
+  "questionLinks": [
+    {
+      "questionId": "LJ-LF10A-PROTOTYPE-Q01",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf10a-prototype-flow"
+      ],
+      "blockIds": [
+        "fiae-lf10a-prototype-flow"
+      ]
+    },
+    {
+      "questionId": "LJ-LF10A-PROTOTYPE-Q02",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf10a-prototype-flow"
+      ],
+      "blockIds": [
+        "fiae-lf10a-prototype-recover"
+      ]
+    },
+    {
+      "questionId": "LJ-LF10A-PROTOTYPE-Q03",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf10a-prototype-flow"
+      ],
+      "blockIds": [
+        "fiae-lf10a-prototype-recover"
+      ]
+    },
+    {
+      "questionId": "LJ-LF10A-PROTOTYPE-Q04",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf10a-prototype-prototype"
+      ],
+      "blockIds": [
+        "fiae-lf10a-prototype-prototype"
+      ]
+    },
+    {
+      "questionId": "LJ-LF10A-PROTOTYPE-Q05",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf10a-prototype-prototype"
+      ],
+      "blockIds": [
+        "fiae-lf10a-prototype-prototype"
+      ]
+    },
+    {
+      "questionId": "LJ-LF10A-PROTOTYPE-Q06",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf10a-prototype-prototype"
+      ],
+      "blockIds": [
+        "fiae-lf10a-prototype-iterate"
+      ]
+    },
+    {
+      "questionId": "LJ-LF10A-PROTOTYPE-E01",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf10a-prototype-flow"
+      ],
+      "blockIds": [
+        "fiae-lf10a-prototype-flow"
+      ]
+    },
+    {
+      "questionId": "LJ-LF10A-PROTOTYPE-E02",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf10a-prototype-flow"
+      ],
+      "blockIds": [
+        "fiae-lf10a-prototype-recover"
+      ]
+    },
+    {
+      "questionId": "LJ-LF10A-PROTOTYPE-E03",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf10a-prototype-flow"
+      ],
+      "blockIds": [
+        "fiae-lf10a-prototype-flow",
+        "fiae-lf10a-prototype-recover"
+      ]
+    },
+    {
+      "questionId": "LJ-LF10A-PROTOTYPE-E04",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf10a-prototype-prototype"
+      ],
+      "blockIds": [
+        "fiae-lf10a-prototype-prototype"
+      ]
+    },
+    {
+      "questionId": "LJ-LF10A-PROTOTYPE-E05",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf10a-prototype-prototype"
+      ],
+      "blockIds": [
+        "fiae-lf10a-prototype-iterate"
+      ]
+    },
+    {
+      "questionId": "LJ-LF10A-PROTOTYPE-E06",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf10a-prototype-prototype"
+      ],
+      "blockIds": [
+        "fiae-lf10a-prototype-iterate"
+      ]
+    },
+    {
+      "questionId": "LJ-LF10A-PROTOTYPE-E07",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf10a-prototype-flow",
+        "fiae-lf10a-prototype-prototype"
+      ],
+      "blockIds": [
+        "fiae-lf10a-prototype-recover",
+        "fiae-lf10a-prototype-prototype"
+      ]
+    },
+    {
+      "questionId": "LJ-LF10A-PROTOTYPE-E08",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf10a-prototype-prototype"
+      ],
+      "blockIds": [
+        "fiae-lf10a-prototype-prototype",
+        "fiae-lf10a-prototype-iterate"
+      ]
+    }
+  ],
+  "interview": [
+    {
+      "id": "fiae-lf10a-prototype-talk-1",
+      "prompt": "Zeichne den Weg durch die Meldung, wenn zuerst das Gerät fehlt und das Speichern später gelingt.",
+      "objectiveIds": [
+        "fiae-lf10a-prototype-flow"
+      ],
+      "blockIds": [
+        "fiae-lf10a-prototype-flow",
+        "fiae-lf10a-prototype-recover"
+      ],
+      "keyPoints": [
+        "Fehlendes Feld und erhaltenes Symptom zeigen.",
+        "Korrektur und Absenden verbinden.",
+        "Erfolg erst nach der Speicherantwort zeigen."
+      ],
+      "acceptableAlternatives": [
+        "Ein Zustandsdiagramm oder beschriftete Karten können den Ablauf gleich gut vermitteln."
+      ],
+      "misconceptions": [
+        "Eine einzelne lineare Erfolgsfolge verschweigt die Korrektur."
+      ],
+      "sampleAnswer": "Ich starte mit dem Symptom, sende ohne Kennung und lande bei der Feldmeldung. Nach G-17 sende ich erneut. Auf „Wird gespeichert“ folgt mit der erfolgreichen Antwort die Kennung R-41.",
+      "followUp": "Was würde sich bei abgelehnter Speicherung ändern?"
+    },
+    {
+      "id": "fiae-lf10a-prototype-talk-2",
+      "prompt": "Welchen Prototyp baust du zuerst, wenn Annahme und Werkstatt über die Bedeutung der Schaltfläche streiten?",
+      "objectiveIds": [
+        "fiae-lf10a-prototype-prototype"
+      ],
+      "blockIds": [
+        "fiae-lf10a-prototype-prototype"
+      ],
+      "keyPoints": [
+        "Offene Frage auf die Beschriftung begrenzen.",
+        "Zwei Zustände und deren Auslöser darstellen.",
+        "Benennen, was das Modell tatsächlich prüft."
+      ],
+      "acceptableAlternatives": [
+        "Ein klickbarer Entwurf mit denselben Wörtern und Zuständen kann ebenfalls die Erwartung sichtbar machen."
+      ],
+      "misconceptions": [
+        "Ein besonders genauer Farbentwurf ersetzt das Durchspielen nicht."
+      ],
+      "sampleAnswer": "Ich schreibe „Weiter“ auf eine Papierkarte. Die Annahme erklärt vor dem Antippen, wohin das führt. Dann spiele ich den Folgezustand vor und vergleiche Erwartung und Ergebnis.",
+      "followUp": "Wann würdest du auf einen ausführbaren HTML-Prototyp umsteigen?"
+    },
+    {
+      "id": "fiae-lf10a-prototype-talk-3",
+      "prompt": "Wie entscheidest du zwischen einem Farbwunsch und häufigen Abbrüchen beim Speichern?",
+      "objectiveIds": [
+        "fiae-lf10a-prototype-prototype"
+      ],
+      "blockIds": [
+        "fiae-lf10a-prototype-iterate"
+      ],
+      "keyPoints": [
+        "Beobachtung und Deutung trennen.",
+        "Wirkung auf die Aufgabe und Aufwand abwägen.",
+        "Änderung mit Nachtest vereinbaren."
+      ],
+      "acceptableAlternatives": [
+        "Ein einziger schwerer Blocker kann auch bei kleiner Stichprobe zuerst bearbeitet werden."
+      ],
+      "misconceptions": [
+        "Die lauteste Wortmeldung ist keine zuverlässige Priorisierung."
+      ],
+      "sampleAnswer": "Ich kläre, wo die Abbrüche auftreten. Wenn die Beschriftung vom Absenden abhält, ändere ich sie zuerst und beobachte denselben Auftrag erneut. Den Farbwunsch halte ich für eine spätere Runde fest.",
+      "followUp": "Was müsste zu sehen sein, damit ihr die Wortwahl beibehaltet?"
+    }
+  ],
+  "cards": [
+    {
+      "id": "fiae-lf10a-prototype-card-01",
+      "front": "Wie unterscheidest du Zustand und Übergang?",
+      "back": "„Wird gespeichert“ beschreibt eine Situation. „Speichern erfolgreich“ ist ein Ereignis, das zur Bestätigung führt.",
+      "objectiveIds": [
+        "fiae-lf10a-prototype-flow"
+      ],
+      "blockIds": [
+        "fiae-lf10a-prototype-flow"
+      ]
+    },
+    {
+      "id": "fiae-lf10a-prototype-card-02",
+      "front": "Was behält der Fehlerzustand bei vergessener Kennung?",
+      "back": "Das gültige Symptom, einen verständlichen Hinweis und den Weg zum Gerätefeld.",
+      "objectiveIds": [
+        "fiae-lf10a-prototype-flow"
+      ],
+      "blockIds": [
+        "fiae-lf10a-prototype-recover"
+      ]
+    },
+    {
+      "id": "fiae-lf10a-prototype-card-03",
+      "front": "Was ist bei unklarem Speicherergebnis zu klären?",
+      "back": "Ob der Auftrag bereits angelegt wurde, bevor ein zweiter Anlageversuch ausgelöst wird.",
+      "objectiveIds": [
+        "fiae-lf10a-prototype-flow"
+      ],
+      "blockIds": [
+        "fiae-lf10a-prototype-recover"
+      ]
+    },
+    {
+      "id": "fiae-lf10a-prototype-card-04",
+      "front": "Wofür eignen sich Papierkarten beim gemeinsamen Entwurf?",
+      "back": "Für Reihenfolge, Wortwahl, Erwartungen und das Durchspielen möglicher Zustandswechsel.",
+      "objectiveIds": [
+        "fiae-lf10a-prototype-prototype"
+      ],
+      "blockIds": [
+        "fiae-lf10a-prototype-prototype"
+      ]
+    },
+    {
+      "id": "fiae-lf10a-prototype-card-05",
+      "front": "Wie prüfst du den Fokusweg eines Entwurfs?",
+      "back": "Mit einer bedienbaren Fassung und tatsächlichen Tastatureingaben.",
+      "objectiveIds": [
+        "fiae-lf10a-prototype-prototype"
+      ],
+      "blockIds": [
+        "fiae-lf10a-prototype-prototype"
+      ]
+    },
+    {
+      "id": "fiae-lf10a-prototype-card-06",
+      "front": "Wann ist eine Rückmeldung für eine kurze Entwicklungsrunde präzise genug?",
+      "back": "Beobachtung und Auswirkung sind beschrieben, die Änderung ist begrenzt und ein Nachtest vereinbart.",
+      "objectiveIds": [
+        "fiae-lf10a-prototype-prototype"
+      ],
+      "blockIds": [
+        "fiae-lf10a-prototype-iterate"
+      ]
+    }
+  ],
+  "review": {
+    "status": "reviewed",
+    "checkedAt": "2026-11-19"
+  }
+}

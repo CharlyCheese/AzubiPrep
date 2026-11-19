@@ -1,0 +1,537 @@
+{
+  "schemaVersion": 1,
+  "id": "common-wiso-pay",
+  "version": "1.0.0",
+  "title": "Entgeltabrechnung verstehen",
+  "fieldId": "WISO",
+  "scope": "common",
+  "prerequisites": [
+    "common-wiso-social-security"
+  ],
+  "sourceIds": [
+    "kmk-wiso-2021",
+    "gewo-108",
+    "entgbv-1",
+    "rv-rate-2026",
+    "sgb6-contribution-share",
+    "sgb3-contribution-rate",
+    "sgb3-contribution-share",
+    "estg-39b",
+    "drv-values-2026"
+  ],
+  "sources": [
+    {
+      "id": "kmk-wiso-2021",
+      "title": "KMK-Qualifikationsprofil Wirtschafts- und Sozialkunde vom 17.06.2021",
+      "url": "https://www.kmk.org/fileadmin/Dateien/veroeffentlichungen_beschluesse/2021/2021_06_17-Berufsschule-Unterricht-Wirtschafts-Sozialkunde.pdf",
+      "checkedAt": "2026-11-11",
+      "note": "Öffentliches KMK-Qualifikationsprofil: curricularer Bezug. Erklärungen, Fälle und Aufgaben eigenständig formuliert."
+    },
+    {
+      "id": "gewo-108",
+      "title": "Gewerbeordnung § 108 – Abrechnung des Arbeitsentgelts",
+      "url": "https://www.gesetze-im-internet.de/gewo/__108.html",
+      "checkedAt": "2026-11-11",
+      "note": "Abrechnungszeitraum, Zusammensetzung, Abzüge, Abschläge und Vorschüsse; Ausnahme bei unveränderten Angaben beachten."
+    },
+    {
+      "id": "entgbv-1",
+      "title": "Entgeltbescheinigungsverordnung § 1 – Inhalt der Entgeltbescheinigung",
+      "url": "https://www.gesetze-im-internet.de/entgbv/__1.html",
+      "checkedAt": "2026-11-11",
+      "note": "Gesamtbrutto, steuer- und sozialversicherungspflichtige Größen, gesetzliche Abzüge, Netto und Auszahlung unterscheiden."
+    },
+    {
+      "id": "rv-rate-2026",
+      "title": "Bekanntmachung der Beitragssätze in der Rentenversicherung für 2026",
+      "url": "https://www.gesetze-im-internet.de/rvbeitrsbek_2026/----.html",
+      "checkedAt": "2026-11-11",
+      "note": "Allgemeine Rentenversicherung 2026: 18,6 Prozent Gesamtbeitrag. Kein Rechenmodellwert, sondern datierter gültiger Satz."
+    },
+    {
+      "id": "sgb6-contribution-share",
+      "title": "SGB VI § 168 – Beitragstragung bei Beschäftigten",
+      "url": "https://www.gesetze-im-internet.de/sgb_6/__168.html",
+      "checkedAt": "2026-11-11",
+      "note": "Im dargestellten normalen Beschäftigungsfall hälftige Tragung: Arbeitnehmeranteil 9,3 Prozent bei Gesamtbeitrag 18,6 Prozent. Sonderfälle nicht übertragen."
+    },
+    {
+      "id": "sgb3-contribution-rate",
+      "title": "SGB III § 341 – Beitragssatz und Beitragsbemessung",
+      "url": "https://www.gesetze-im-internet.de/sgb_3/__341.html",
+      "checkedAt": "2026-11-11",
+      "note": "Arbeitsförderung: Gesamtbeitrag 2,6 Prozent, Bemessungsgrundlage und Beitragsbemessungsgrenze."
+    },
+    {
+      "id": "sgb3-contribution-share",
+      "title": "SGB III § 346 – Beitragstragung bei Beschäftigten",
+      "url": "https://www.gesetze-im-internet.de/sgb_3/__346.html",
+      "checkedAt": "2026-11-11",
+      "note": "Im dargestellten normalen versicherungspflichtigen Beschäftigungsfall hälftige Tragung: Arbeitnehmeranteil 1,3 Prozent."
+    },
+    {
+      "id": "estg-39b",
+      "title": "Einkommensteuergesetz § 39b – Einbehaltung der Lohnsteuer",
+      "url": "https://www.gesetze-im-internet.de/estg/__39b.html",
+      "checkedAt": "2026-11-11",
+      "note": "Lohnsteuerverfahren mit individuellen Merkmalen. Keine allgemeine Pauschalquote für Brutto zu Netto."
+    },
+    {
+      "id": "drv-values-2026",
+      "title": "Deutsche Rentenversicherung – Werte der Rentenversicherung",
+      "url": "https://www.deutsche-rentenversicherung.de/DRV/DE/Experten/Zahlen-und-Fakten/Werte-der-Rentenversicherung/werte-der-rentenversicherung?nn=6a097d95ca84ce5471c16794",
+      "checkedAt": "2026-11-11",
+      "note": "Stand 01.07.2026: Gegenprüfung Beitragssätze und monatliche RV-/AV-Beitragsbemessungsgrenze 8.450 Euro. Fälle 3.000/3.200 Euro liegen darunter."
+    }
+  ],
+  "objectives": [
+    {
+      "id": "common-wiso-pay-positions",
+      "text": "Bruttoentgelt, Steuerabzüge, Sozialversicherungsbeiträge und Auszahlung in einer Musterabrechnung zuordnen."
+    },
+    {
+      "id": "common-wiso-pay-calculate",
+      "text": "Mit vorgegebenen gültigen Sätzen eine vereinfachte Auszahlung berechnen und die Grenzen der Rechnung benennen."
+    }
+  ],
+  "caseStudy": {
+    "title": "Leas Musterabrechnung lesen",
+    "text": "Lea arbeitet im erfundenen IT-Betrieb Knotenpunkt. Für November 2026 übt sie mit einem ausdrücklich vereinfachten Rechenmodell für eine normale sozialversicherungspflichtige Beschäftigung in Deutschland: 3.000 Euro Monatsbrutto, außerhalb Minijob und Übergangsbereich, unter den einschlägigen Beitragsbemessungsgrenzen. RV und AV werden mit den am 11.11.2026 geprüften gültigen Arbeitnehmeranteilen berechnet. Andere Abzüge sind didaktisch vorgegebene Eurobeträge, keine individuell ermittelte Steuer- oder Beitragsabrechnung."
+  },
+  "blocks": [
+    {
+      "id": "common-wiso-pay-positions",
+      "title": "1. Die Positionen einer Abrechnung lesen",
+      "objectiveIds": [
+        "common-wiso-pay-positions"
+      ],
+      "sourceIds": [
+        "gewo-108",
+        "entgbv-1"
+      ],
+      "paragraphs": [
+        "Eine Entgeltabrechnung erläutert Zeitraum und Zusammensetzung des Arbeitsentgelts. Dazu gehören Bezüge, Abzüge und gegebenenfalls Vorschüsse. Brutto ist das Entgelt vor den gesetzlichen Arbeitnehmerabzügen. Steuerpflichtiger Arbeitslohn, Sozialversicherungsbrutto und Gesamtbrutto können in der Praxis voneinander abweichen.",
+        "Gesetzliche Abzüge umfassen gegebenenfalls Lohnsteuer, Kirchensteuer und Solidaritätszuschlag sowie Arbeitnehmerbeiträge zu Kranken-, Pflege-, Renten- und Arbeitslosenversicherung. Steuer ist kein Versicherungsbeitrag. Ob und in welcher Höhe ein Steuerabzug entsteht, hängt von den maßgeblichen Regeln und persönlichen Merkmalen ab.",
+        "Nettoentgelt ergibt sich aus Gesamtbrutto abzüglich der gesetzlichen Abzüge. Der Auszahlungsbetrag kann davon abweichen, beispielsweise wenn ein bereits gezahlter Vorschuss verrechnet wird. Im einfachen Modell ohne weitere Bezüge oder Verrechnungen gilt: Auszahlung = Brutto − Steuerabzüge − Arbeitnehmerbeiträge.",
+        "Arbeitgeberanteile zur Sozialversicherung sind zusätzliche Aufwendungen des Arbeitgebers. Sie werden nicht noch einmal als Arbeitnehmerabzug vom vereinbarten Brutto abgezogen. Das ausgewiesene Brutto ist daher weder identisch mit der Überweisung noch mit den gesamten Personalkosten."
+      ],
+      "example": {
+        "title": "Vorschuss erkennen",
+        "text": "Eine Musterabrechnung zeigt 2.052 Euro Netto und einen bereits erhaltenen Vorschuss von 100 Euro. Die noch ausstehende Überweisung beträgt 1.952 Euro. Der Vorschuss mindert hier die Auszahlung, nicht rückwirkend das Brutto."
+      },
+      "misconception": {
+        "claim": "Nettoentgelt und Überweisung müssen immer gleich sein.",
+        "correction": "Zusätzliche Nettoverrechnungen, beispielsweise ein Vorschuss, können die Auszahlung verändern."
+      },
+      "takeaway": "Trenne Brutto, gesetzliche Arbeitnehmerabzüge, Netto und Auszahlung."
+    },
+    {
+      "id": "common-wiso-pay-rates",
+      "title": "2. Mit gültigen Sätzen und passender Grundlage rechnen",
+      "objectiveIds": [
+        "common-wiso-pay-calculate"
+      ],
+      "sourceIds": [
+        "rv-rate-2026",
+        "sgb6-contribution-share",
+        "sgb3-contribution-rate",
+        "sgb3-contribution-share",
+        "drv-values-2026"
+      ],
+      "paragraphs": [
+        "Die Aufgaben verwenden den Stand November 2026. In der allgemeinen Rentenversicherung beträgt der Gesamtbeitrag 18,6 Prozent. Im hier angenommenen normalen Beschäftigungsfall tragen Arbeitgeber und Beschäftigte ihn je zur Hälfte: Arbeitnehmeranteil 9,3 Prozent. In der Arbeitslosenversicherung gilt insgesamt 2,6 Prozent, im dargestellten Fall jeweils 1,3 Prozent pro Seite.",
+        "Ein Prozentwert wird berechnet als beitragspflichtiger Betrag × Satz ÷ 100. Bei 3.000 Euro Grundlage ergibt der Arbeitnehmeranteil zur RV: 3.000 × 9,3 ÷ 100 = 279 Euro. Für AV: 3.000 × 1,3 ÷ 100 = 39 Euro. 9,3 Prozent bedeutet den Faktor 0,093, nicht 0,93.",
+        "Im Modell sind Monatsbrutto und die RV-/AV-Beitragsgrundlage gleich. Bei realen Fällen sind Versicherungsstatus, Einmalzahlungen, beitragspflichtige Einnahmen, Beitragsbemessungsgrenzen und Sonderfälle zu prüfen. Für Minijobs oder den Übergangsbereich darf die einfache Halbierung nicht ungeprüft übernommen werden.",
+        "Die verwendeten Beträge von 3.000 beziehungsweise 3.200 Euro liegen außerhalb des Übergangsbereichs und unter der für 2026 geltenden RV-/AV-Grenze. Damit lässt sich die Rechenmethode ohne Grenzfall üben. Die gültigen Sätze tragen ein Datum und sind für einen anderen Abrechnungszeitraum erneut zu prüfen."
+      ],
+      "example": {
+        "title": "Neue Grundlage, gleiche Methode",
+        "text": "Bei 3.200 Euro RV-/AV-Grundlage sind 9,3 Prozent = 297,60 Euro und 1,3 Prozent = 41,60 Euro. Der jeweilige Gesamtbeitrag wäre doppelt so hoch, wird aber im Fall nicht vollständig der beschäftigten Person abgezogen."
+      },
+      "misconception": {
+        "claim": "Der Gesamtbeitrag von 18,6 Prozent ist Leas RV-Abzug.",
+        "correction": "Im angenommenen normalen Beschäftigungsfall ist ihr Anteil die Hälfte, also 9,3 Prozent."
+      },
+      "takeaway": "Prüfe Zeitraum, Bemessungsgrundlage und Arbeitnehmeranteil, bevor du den Prozentwert bildest."
+    },
+    {
+      "id": "common-wiso-pay-calculation",
+      "title": "3. Eine vereinfachte Auszahlung berechnen",
+      "objectiveIds": [
+        "common-wiso-pay-positions",
+        "common-wiso-pay-calculate"
+      ],
+      "sourceIds": [
+        "entgbv-1",
+        "rv-rate-2026",
+        "sgb6-contribution-share",
+        "sgb3-contribution-rate",
+        "sgb3-contribution-share"
+      ],
+      "paragraphs": [
+        "Für das folgende Lernmodell sind vorgegeben: 3.000 Euro Brutto, als RV-/AV-Grundlage ebenfalls 3.000 Euro, RV-Arbeitnehmeranteil 9,3 Prozent und AV-Arbeitnehmeranteil 1,3 Prozent. Zusätzlich stehen 330 Euro für die Summe der Arbeitnehmerabzüge KV/PV und 300 Euro für die Summe der Steuerabzüge fest. Diese beiden Eurobeträge sind didaktische Vorgaben für die Rechenübung, keine aus persönlichen Merkmalen ermittelte Realabrechnung.",
+        "Erster Schritt: die zwei zu berechnenden Beiträge bestimmen. RV 279 Euro plus AV 39 Euro ergeben 318 Euro. Zweiter Schritt: weitere vorgegebene Abzüge addieren. 318 + 330 + 300 = 948 Euro gesetzliche Abzüge im Modell. Dritter Schritt: 3.000 − 948 = 2.052 Euro Netto.",
+        "Ohne weitere Verrechnung entspricht das Netto der Auszahlung. Wird im Modell ein bereits erhaltener Vorschuss von 100 Euro verrechnet, beträgt die verbleibende Auszahlung 2.052 − 100 = 1.952 Euro. Der Vorschuss wird einmal berücksichtigt; Arbeitgeberbeiträge werden nicht zusätzlich abgezogen.",
+        "Schreibe die Einheit und jeden Rechenschritt auf. Bei Dezimalbeträgen werden die einzelnen hier berechneten Beitragspositionen auf Cent angegeben. Die Modellrechnung ist arithmetisch prüfbar; sie behauptet nicht, dass eine reale Person bei diesem Brutto genau diese Steuer-, KV- oder PV-Abzüge hat."
+      ],
+      "example": {
+        "title": "Kontrollrechnung",
+        "text": "1.952 Euro Überweisung + 100 Euro zuvor erhaltener Vorschuss + 948 Euro gesetzliche Abzüge ergeben wieder 3.000 Euro Brutto. So lässt sich im Modell ein doppelt abgezogener Vorschuss erkennen."
+      },
+      "misconception": {
+        "claim": "Die Modell-Steuerabzüge lassen sich als allgemeine Steuerquote übernehmen.",
+        "correction": "Die Steuerbeträge sind vorgegeben, nicht aus einem gültigen allgemeinen Pauschalsatz berechnet. Sie dürfen nicht auf reale Personen übertragen werden."
+      },
+      "takeaway": "Berechne die fehlenden Beiträge, addiere gesetzliche Abzüge und berücksichtige Nettoverrechnungen genau einmal."
+    },
+    {
+      "id": "common-wiso-pay-check",
+      "title": "4. Grenzen erkennen und Abweichungen klären",
+      "objectiveIds": [
+        "common-wiso-pay-positions",
+        "common-wiso-pay-calculate"
+      ],
+      "sourceIds": [
+        "entgbv-1",
+        "estg-39b",
+        "drv-values-2026"
+      ],
+      "paragraphs": [
+        "Eine echte Abrechnung benötigt mehr Angaben als das Lernmodell: Abrechnungszeitraum, Steuermerkmale, Versicherungsstatus, beitragspflichtige Entgeltbestandteile, passende Grenzen und gegebenenfalls Einmalzahlungen. Bei Kranken- und Pflegeversicherung können unter anderem Kasse, Zusatzbeitrag und persönliche beziehungsweise regionale Merkmale eine Rolle spielen.",
+        "Die individuelle Lohnsteuer wird nach dem gesetzlichen Verfahren berechnet. Sie ist kein für alle Beschäftigten gleicher Prozentsatz des Monatsbruttos. Aus 300 Euro Modellsteuer bei 3.000 Euro darf daher kein allgemeiner Steuersatz von zehn Prozent abgeleitet werden.",
+        "Lea prüft eine Abweichung systematisch: Stimmen Zeitraum und Bruttobezüge? Wurden die richtigen Arbeitnehmeranteile auf die richtige Grundlage angewandt? Sind gesetzliche Abzüge und ein Vorschuss jeweils einmal erfasst? Passt die Überweisung zum ausgewiesenen Auszahlungsbetrag? Unklare Positionen fragt sie bei der Entgeltabrechnungsstelle mit den konkreten Unterlagen nach.",
+        "Für die Rechenaufgaben gelten ausschließlich die jeweils angegebenen Daten und Voraussetzungen. Wenn für eine reale Berechnung ein Merkmal fehlt, wird die Lücke benannt und nicht durch einen erfundenen Satz ersetzt. Eine Rechnung mit korrekter Arithmetik kann trotzdem sachlich falsch sein, wenn Grundlage oder Geltungsbereich nicht stimmen."
+      ],
+      "example": {
+        "title": "Gleiches Brutto, verschiedene Ergebnisse",
+        "text": "Zwei Beschäftigte erhalten gleiches Brutto. Unterschiede in Steuermerkmalen, Versicherungsdaten oder Nettoverrechnungen können zu verschiedenen Auszahlungen führen. Lea vergleicht die Positionen statt eine allgemeine Nettoquote zu behaupten."
+      },
+      "misconception": {
+        "claim": "Eine richtige Subtraktion beweist bereits eine gesetzlich richtige Abrechnung.",
+        "correction": "Auch Zeitraum, persönliche Merkmale, Beitragssätze und Bemessungsgrundlagen müssen passen."
+      },
+      "takeaway": "Nutze das Modell zum Verstehen; prüfe reale Abrechnungen mit ihren tatsächlichen Angaben."
+    }
+  ],
+  "questionFile": "questions/common-wiso-pay.v1.csv",
+  "quiz": {
+    "questionIds": [
+      "LJ-WISO-PAY-Q01",
+      "LJ-WISO-PAY-Q02",
+      "LJ-WISO-PAY-Q03",
+      "LJ-WISO-PAY-Q04",
+      "LJ-WISO-PAY-Q05",
+      "LJ-WISO-PAY-Q06"
+    ]
+  },
+  "exam": {
+    "questionIds": [
+      "LJ-WISO-PAY-E01",
+      "LJ-WISO-PAY-E02",
+      "LJ-WISO-PAY-E03",
+      "LJ-WISO-PAY-E04",
+      "LJ-WISO-PAY-E05",
+      "LJ-WISO-PAY-E06",
+      "LJ-WISO-PAY-E07",
+      "LJ-WISO-PAY-E08"
+    ],
+    "passPercent": 80,
+    "scoring": "all-or-nothing-per-question",
+    "timed": false
+  },
+  "questionLinks": [
+    {
+      "questionId": "LJ-WISO-PAY-Q01",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-wiso-pay-positions"
+      ],
+      "blockIds": [
+        "common-wiso-pay-positions"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-PAY-Q02",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-wiso-pay-positions"
+      ],
+      "blockIds": [
+        "common-wiso-pay-positions"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-PAY-Q03",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-wiso-pay-calculate"
+      ],
+      "blockIds": [
+        "common-wiso-pay-rates"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-PAY-Q04",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-wiso-pay-calculate"
+      ],
+      "blockIds": [
+        "common-wiso-pay-rates"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-PAY-Q05",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-wiso-pay-positions",
+        "common-wiso-pay-calculate"
+      ],
+      "blockIds": [
+        "common-wiso-pay-calculation"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-PAY-Q06",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-wiso-pay-calculate"
+      ],
+      "blockIds": [
+        "common-wiso-pay-calculation",
+        "common-wiso-pay-check"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-PAY-E01",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-wiso-pay-positions"
+      ],
+      "blockIds": [
+        "common-wiso-pay-positions"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-PAY-E02",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-wiso-pay-positions"
+      ],
+      "blockIds": [
+        "common-wiso-pay-positions"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-PAY-E03",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-wiso-pay-calculate"
+      ],
+      "blockIds": [
+        "common-wiso-pay-rates"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-PAY-E04",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-wiso-pay-calculate"
+      ],
+      "blockIds": [
+        "common-wiso-pay-rates"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-PAY-E05",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-wiso-pay-positions",
+        "common-wiso-pay-calculate"
+      ],
+      "blockIds": [
+        "common-wiso-pay-rates",
+        "common-wiso-pay-calculation"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-PAY-E06",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-wiso-pay-calculate"
+      ],
+      "blockIds": [
+        "common-wiso-pay-positions",
+        "common-wiso-pay-calculation"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-PAY-E07",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-wiso-pay-calculate"
+      ],
+      "blockIds": [
+        "common-wiso-pay-rates",
+        "common-wiso-pay-check"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-PAY-E08",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-wiso-pay-positions",
+        "common-wiso-pay-calculate"
+      ],
+      "blockIds": [
+        "common-wiso-pay-check"
+      ]
+    }
+  ],
+  "interview": [
+    {
+      "id": "common-wiso-pay-talk-1",
+      "prompt": "Erkläre an einer Musterabrechnung den Weg von Brutto zu Netto und Auszahlung. Wo gehören Steuerabzüge, Arbeitnehmerbeiträge, Arbeitgeberbeiträge und ein Vorschuss hin?",
+      "objectiveIds": [
+        "common-wiso-pay-positions"
+      ],
+      "blockIds": [
+        "common-wiso-pay-positions"
+      ],
+      "keyPoints": [
+        "Brutto minus gesetzliche Arbeitnehmerabzüge ergibt Netto.",
+        "Steuern und Arbeitnehmer-SV unterscheiden; Arbeitgeberanteile nicht zusätzlich abziehen.",
+        "Bereits ausgezahlter Vorschuss reduziert die noch offene Auszahlung."
+      ],
+      "acceptableAlternatives": [
+        "Weitere Nettoverrechnungen dürfen als mögliche Abweichung genannt werden."
+      ],
+      "misconceptions": [
+        "Brutto mit gesamten Personalkosten oder Netto mit jeder Überweisung gleichsetzen."
+      ],
+      "sampleAnswer": "Vom Brutto ziehe ich die gesetzlichen Steuer- und Arbeitnehmerbeiträge ab. Das ergibt Netto. Einen bereits gezahlten Vorschuss verrechne ich danach einmal. Arbeitgeberbeiträge sind zusätzliche Arbeitgeberkosten und kein weiterer Abzug von Leas Brutto.",
+      "followUp": "Welche Abrechnungsposition würdest du prüfen, wenn Banküberweisung und Netto abweichen?"
+    },
+    {
+      "id": "common-wiso-pay-talk-2",
+      "prompt": "Berechne das Lernmodell für November 2026: 3.000 Euro RV-/AV-Grundlage und Brutto, RV-Anteil 9,3 Prozent, AV-Anteil 1,3 Prozent, vorgegebene KV/PV-Abzüge 330 Euro, Steuerabzüge 300 Euro und bereits erhaltener Vorschuss 100 Euro. Benenne die Modellgrenze.",
+      "objectiveIds": [
+        "common-wiso-pay-calculate"
+      ],
+      "blockIds": [
+        "common-wiso-pay-rates",
+        "common-wiso-pay-calculation",
+        "common-wiso-pay-check"
+      ],
+      "keyPoints": [
+        "RV 279 und AV 39 Euro berechnen.",
+        "948 Euro gesetzliche Modellabzüge, 2.052 Euro Netto, 1.952 Euro verbleibende Auszahlung.",
+        "KV/PV und Steuern sind didaktische Eurovorgaben; keine individuelle Realabrechnung."
+      ],
+      "acceptableAlternatives": [
+        "Reihenfolge der Addition ist frei, alle Positionen müssen einmal berücksichtigt sein."
+      ],
+      "misconceptions": [
+        "Gesamte RV von 18,6 Prozent der beschäftigten Person abziehen; Steuerquote aus Modell verallgemeinern."
+      ],
+      "sampleAnswer": "3.000 mal 0,093 ergibt 279 Euro RV, mal 0,013 ergibt 39 Euro AV. Mit 330 und 300 Euro sind es 948 Euro Abzüge. Netto bleiben 2.052 Euro, nach 100 Euro Vorschuss noch 1.952 Euro. Die Zusatzbeträge sind Rechenvorgaben und keine für eine reale Person ermittelten Werte.",
+      "followUp": "Wie kontrollierst du das Ergebnis durch Rückaddition?"
+    },
+    {
+      "id": "common-wiso-pay-talk-3",
+      "prompt": "Jemand möchte das Modell mit einer festen Nettoquote auf alle Personen und das nächste Jahr übertragen. Welche Angaben würdest du vor einer realen Berechnung prüfen?",
+      "objectiveIds": [
+        "common-wiso-pay-calculate"
+      ],
+      "blockIds": [
+        "common-wiso-pay-rates",
+        "common-wiso-pay-check"
+      ],
+      "keyPoints": [
+        "Zeitraum und gültige Sätze prüfen.",
+        "Bemessungsgrundlage, Versicherungsstatus, Grenzen und Sonderfälle beachten.",
+        "Steuermerkmale und weitere Abzüge beziehungsweise Verrechnungen prüfen."
+      ],
+      "acceptableAlternatives": [
+        "Kassenabhängige oder persönliche Beitragsmerkmale können konkret genannt werden."
+      ],
+      "misconceptions": [
+        "Korrekte Arithmetik als Beweis aller rechtlichen Voraussetzungen behandeln."
+      ],
+      "sampleAnswer": "Ich brauche den Abrechnungszeitraum, passende beitragspflichtige Beträge, Versicherungsstatus und persönliche Steuermerkmale. Ich prüfe gültige Sätze und Grenzen sowie Vorschüsse. Eine Modellquote ersetzt diese Angaben nicht.",
+      "followUp": "Was teilst du der Abrechnungsstelle mit, wenn dir ein einzelner Abzug unklar ist?"
+    }
+  ],
+  "cards": [
+    {
+      "id": "common-wiso-pay-card-1",
+      "front": "Was unterscheidet Brutto und Netto?",
+      "back": "Brutto liegt vor den gesetzlichen Arbeitnehmerabzügen. Gesamtbrutto minus Steuerabzüge und Arbeitnehmerbeiträge ergibt im beschriebenen Modell das Nettoentgelt.",
+      "objectiveIds": [
+        "common-wiso-pay-positions"
+      ],
+      "blockIds": [
+        "common-wiso-pay-positions"
+      ]
+    },
+    {
+      "id": "common-wiso-pay-card-2",
+      "front": "Warum kann die Auszahlung vom Netto abweichen?",
+      "back": "Weitere Bezüge oder Verrechnungen können folgen. Ein bereits erhaltener Vorschuss von 100 Euro verringert die noch offene Auszahlung um 100 Euro.",
+      "objectiveIds": [
+        "common-wiso-pay-positions"
+      ],
+      "blockIds": [
+        "common-wiso-pay-positions"
+      ]
+    },
+    {
+      "id": "common-wiso-pay-card-3",
+      "front": "Welche RV- und AV-Anteile nutzt der normale Beschäftigungsfall für November 2026?",
+      "back": "RV insgesamt 18,6 Prozent, Arbeitnehmeranteil 9,3 Prozent. AV insgesamt 2,6 Prozent, Arbeitnehmeranteil 1,3 Prozent. Der Fall setzt normale Versicherungspflicht ohne Sonderregeln voraus.",
+      "objectiveIds": [
+        "common-wiso-pay-calculate"
+      ],
+      "blockIds": [
+        "common-wiso-pay-rates"
+      ]
+    },
+    {
+      "id": "common-wiso-pay-card-4",
+      "front": "Wie berechnest du 9,3 Prozent von 3.000 Euro?",
+      "back": "3.000 × 9,3 ÷ 100 = 279 Euro. 9,3 Prozent entspricht 0,093. Vorher Zeitraum, Bemessungsgrundlage und Arbeitnehmeranteil prüfen.",
+      "objectiveIds": [
+        "common-wiso-pay-calculate"
+      ],
+      "blockIds": [
+        "common-wiso-pay-rates"
+      ]
+    },
+    {
+      "id": "common-wiso-pay-card-5",
+      "front": "Wie geht die Modellrechnung mit 3.000 Euro Brutto weiter?",
+      "back": "RV 279 + AV 39 + vorgegebene KV/PV 330 + vorgegebene Steuern 300 = 948 Euro. Netto 2.052 Euro, nach 100 Euro Vorschuss Auszahlung 1.952 Euro. Die zusätzlichen Eurobeträge sind didaktische Vorgaben.",
+      "objectiveIds": [
+        "common-wiso-pay-calculate"
+      ],
+      "blockIds": [
+        "common-wiso-pay-calculation"
+      ]
+    },
+    {
+      "id": "common-wiso-pay-card-6",
+      "front": "Welche Grenze hat eine vereinfachte Abrechnungsaufgabe?",
+      "back": "Sie ist keine individuelle Lohnabrechnung. Reale Steuern, Beiträge und Auszahlung benötigen Zeitraum, persönliche Merkmale, Versicherungsdaten und passende Grundlagen. Modellbeträge sind keine allgemeingültigen Quoten.",
+      "objectiveIds": [
+        "common-wiso-pay-calculate"
+      ],
+      "blockIds": [
+        "common-wiso-pay-check"
+      ]
+    }
+  ],
+  "review": {
+    "status": "reviewed",
+    "checkedAt": "2026-11-11"
+  }
+}

@@ -1,0 +1,484 @@
+{
+  "schemaVersion": 1,
+  "id": "common-lf1-value-chain",
+  "version": "1.0.0",
+  "title": "Vom Kundenwunsch zur Wertschöpfung",
+  "fieldId": "LF1",
+  "scope": "common",
+  "prerequisites": [
+    "common-lf1-market"
+  ],
+  "sourceIds": [
+    "kmk-fachinformatiker-2019",
+    "fiausbv-annex"
+  ],
+  "sources": [
+    {
+      "id": "kmk-fachinformatiker-2019",
+      "title": "KMK-Rahmenlehrplan Fachinformatiker/Fachinformatikerin vom 13.12.2019",
+      "url": "https://www.kmk.org/fileadmin/Dateien/pdf/Bildung/BeruflicheBildung/rlp/Fachinformatiker_19-12-13_EL.pdf",
+      "checkedAt": "2026-11-11",
+      "note": "Lernfeld 1, gedruckte Seite 12: Wertschöpfungskette und eigene Rolle im Betrieb beschreiben. Öffentliche Originalquelle am angegebenen Datum geprüft. Der Ablauf mit sechs Stationen ist eine eigenständige didaktische Vereinfachung für den erfundenen Auftrag, kein vorgeschriebenes Vorgehensmodell und keine betriebswirtschaftliche Rechenmethode."
+    },
+    {
+      "id": "fiausbv-annex",
+      "title": "Fachinformatikerausbildungsverordnung – Ausbildungsrahmenplan",
+      "url": "https://www.gesetze-im-internet.de/fiausbv/anlage.html",
+      "checkedAt": "2026-11-11",
+      "note": "Abschnitt A Nr. 1 b bis e, g und i: Auftrag, Arbeitsschritte, Termine und Zusammenarbeit planen und reflektieren. Nr. 4 a und c sowie Nr. 5: umsetzen, testen, dokumentieren und verbessern. Nr. 7 a bis e und Nr. 8 e und f: Leistung abstimmen, einweisen, übergeben, Störungen bearbeiten und Dokumentation pflegen. Die Beispiele erläutern diese Aufgaben eigenständig."
+    }
+  ],
+  "objectives": [
+    {
+      "id": "common-lf1-value-chain-steps",
+      "text": "Die Arbeitsschritte eines einfachen IT-Auftrags als Ablauf darstellen."
+    },
+    {
+      "id": "common-lf1-value-chain-contribution",
+      "text": "Für einen Arbeitsschritt erklären, welchen Beitrag er zur nutzbaren Gesamtleistung leistet."
+    }
+  ],
+  "caseStudy": {
+    "title": "Aus einem Wunsch wird eine nutzbare Übersicht",
+    "text": "Radblick hat Knotenpunkt im frei erfundenen Lernfall mit der Reparaturübersicht beauftragt. Acht Beschäftigte sollen mit eigenen Zugängen den aktuellen Reparaturstand erkennen und Änderungen speichern können. Sam koordiniert die Arbeit, Mira unterstützt bei vereinbarten Aufgaben und Lea stimmt die Anforderungen für Radblick ab. Netzhafen liefert den benötigten Betriebsdienst. Eine gemeinsame Einweisung gehört zum vereinbarten Umfang. Du verfolgst, wie die Beteiligten den Auftrag von der Klärung bis zur Nutzung bearbeiten. Die Stationen sind ein einfaches Lernmodell und setzen keine Programmierkenntnisse voraus."
+  },
+  "blocks": [
+    {
+      "id": "common-lf1-value-chain-value",
+      "title": "1. Was trägt zur nutzbaren Leistung bei?",
+      "objectiveIds": [
+        "common-lf1-value-chain-contribution"
+      ],
+      "sourceIds": [
+        "kmk-fachinformatiker-2019",
+        "fiausbv-annex"
+      ],
+      "paragraphs": [
+        "Wertschöpfung betrachten wir hier als den betrieblichen Beitrag, durch den aus eingesetzten Mitteln und Vorleistungen eine für den Kunden nutzbare Gesamtleistung entsteht. Knotenpunkt verbindet Wissen, Arbeitszeit und den eingekauften Betriebsdienst zu einer Reparaturübersicht. Radblick soll damit den aktuellen Stand verlässlich finden und bearbeiten können. Es geht in dieser Station um die Beiträge im Ablauf, nicht um eine Berechnung von Gewinn oder Wertschöpfungsbeträgen.",
+        "Eine Wertschöpfungskette stellt zusammenhängende Beiträge zur Gesamtleistung dar. Bei einem IT-Auftrag gehören dazu nicht bloß technische Umsetzungsschritte. Die Bedarfsklärung hilft, die richtige Aufgabe zu lösen. Eine Prüfung deckt Abweichungen auf. Eine Einweisung hilft den Beschäftigten, die Lösung im Alltag anzuwenden. Die einzelnen Beiträge wirken zusammen, auch wenn sie von verschiedenen Personen oder Unternehmen stammen.",
+        "Eine Tätigkeit und ihr Nutzen sind zu unterscheiden. Mira hat zwei Stunden gearbeitet beschreibt einen Aufwand. Mira hat den Test durchgeführt und einen nicht gespeicherten Reparaturstatus erkannt beschreibt ein Ergebnis und dessen Beitrag. Mehr Arbeitsstunden, mehr Bildschirmseiten oder mehr Funktionen belegen für sich noch keine höhere Nutzbarkeit. Entscheidend ist, ob der Schritt die vereinbarte Leistung unterstützt.",
+        "Ein Beitrag lässt sich mit drei Fragen erklären: Was wird benötigt? Was wird bearbeitet? Welches verwertbare Ergebnis entsteht? Beim Prüfen sind dies beispielsweise die vereinbarte Anforderung und eine testbare Übersicht, der Vergleich von erwartetem und beobachtetem Verhalten sowie ein dokumentiertes Prüfergebnis. Dieses Ergebnis hilft bei der Entscheidung, ob eine Korrektur nötig ist."
+      ],
+      "example": {
+        "title": "Eine kleine Aufgabe mit erkennbarem Beitrag",
+        "text": "Mira prüft mit einem erfundenen Reparaturfall, ob der geänderte Status nach erneutem Öffnen erhalten bleibt. Der Status springt zurück. Sie dokumentiert die Abweichung, damit das Team den Fehler beheben kann. Der Beitrag liegt im gefundenen und nachvollziehbar beschriebenen Problem, nicht in der Zahl ihrer Mausklicks."
+      },
+      "misconception": {
+        "claim": "Wert für den Kunden entsteht erst beim Schreiben des Programms.",
+        "correction": "Auch Bedarfsklärung, Planung, Prüfung, Dokumentation, Einweisung und Betreuung können zur nutzbaren Gesamtleistung beitragen."
+      },
+      "takeaway": "Beschreibe den Beitrag mit seinem verwertbaren Ergebnis und dem Bezug zum Kundenbedarf. Aktivität allein beweist keinen Nutzen."
+    },
+    {
+      "id": "common-lf1-value-chain-sequence",
+      "title": "2. Den Auftrag in verständliche Stationen gliedern",
+      "objectiveIds": [
+        "common-lf1-value-chain-steps",
+        "common-lf1-value-chain-contribution"
+      ],
+      "sourceIds": [
+        "fiausbv-annex"
+      ],
+      "paragraphs": [
+        "Für den einfachen Auftrag verwenden wir sechs Stationen: Bedarf klären → planen und abstimmen → umsetzen → prüfen und verbessern → übergeben und einweisen → betreuen und rückmelden. Die Pfeile zeigen, welche Ergebnisse aufeinander aufbauen. In der Praxis können sich Tätigkeiten überschneiden und wiederholen. Die Folge ist eine Orientierung für diesen Fall, kein starres Gesetz für alle IT-Projekte.",
+        "Bei der Bedarfsklärung bespricht Sam mit Lea, welche Arbeit Radblick erledigen möchte. Ergebnis sind nachvollziehbare Anforderungen, etwa acht eigene Zugänge und ein nach dem Speichern wieder auffindbarer Reparaturstatus. Beim Planen legt das Team Arbeitsschritte, Zuständigkeiten, benötigte Vorleistungen und Termine fest. Die Zusage von Netzhafen zum Betriebsdienst wird mit dem geplanten Einrichten abgestimmt. Damit wird aus dem geklärten Was ein abgestimmtes Wie und Wann.",
+        "Bei der Umsetzung richtet das Team die vereinbarte Übersicht ein und passt sie an den Auftrag an. Ergebnis ist eine testbare Lösung. Beim Prüfen vergleicht es diese mit den Anforderungen. Abweichungen werden festgehalten, korrigiert und erneut geprüft. Ein gestartetes Programm allein beweist noch nicht, dass die beauftragten Arbeitsabläufe funktionieren.",
+        "Bei der Übergabe zeigt das Team Lea die vereinbarten Ergebnisse, übergibt die passende Anleitung und weist die Beschäftigten in ihre Arbeitsschritte ein. Offene Punkte und Zuständigkeiten werden festgehalten. Anschließend bearbeitet die vereinbarte Betreuung Rückmeldungen aus der Nutzung. Eine gemeldete Abweichung kann eine Korrektur auslösen, ein neuer Wunsch braucht Klärung des zusätzlichen Umfangs. Die Betreuung gehört in den abgestimmten Leistungsrahmen.",
+        "Auch frühere Stationen können wieder nötig werden: Ist unklar, welchen Status Radblick braucht, muss diese Anforderung geklärt werden. Ein gescheiterter Test führt zur Bearbeitung der Abweichung und zu einem erneuten Test. Rücksprünge sind sinnvoll, wenn sie eine erkannte Lücke schließen. Eine ungeklärte Anforderung still zu erraten macht den Ablauf nicht verlässlicher."
+      ],
+      "example": {
+        "title": "Sechs Ergebnisse für die Ablaufskizze",
+        "text": "Mira schreibt unter die Stationen: geklärter Bedarf → abgestimmter Arbeitsplan → testbare Übersicht → Prüfergebnis und Korrekturen → eingewiesenes Team mit Anleitung → bearbeitete Rückmeldungen. So wird sichtbar, was die nächste Station benötigt und was sie selbst beiträgt."
+      },
+      "misconception": {
+        "claim": "Wer beim Test einen Fehler findet, muss trotzdem direkt zur Übergabe weitergehen.",
+        "correction": "Die Abweichung wird geklärt und bearbeitet. Nach einer Korrektur wird erneut geprüft, bevor das betroffene Ergebnis als passend bestätigt wird."
+      },
+      "takeaway": "Zeige Stationen und Ergebnisse. Plane Rückfragen und Korrekturen ein, wenn Anforderungen oder Prüfergebnisse sie nötig machen."
+    },
+    {
+      "id": "common-lf1-value-chain-handoffs",
+      "title": "3. Übergänge und Abhängigkeiten sichtbar machen",
+      "objectiveIds": [
+        "common-lf1-value-chain-steps",
+        "common-lf1-value-chain-contribution"
+      ],
+      "sourceIds": [
+        "fiausbv-annex"
+      ],
+      "paragraphs": [
+        "Zwischen zwei Arbeitsschritten liegt ein Übergang: Eine Person stellt ein Ergebnis bereit, eine andere arbeitet damit weiter. Ein brauchbarer Übergang nennt Ergebnis, zuständige Person, benötigten Termin und noch offene Fragen. Wenn Sam die Anforderungen an das Umsetzungsteam gibt, muss beispielsweise die vereinbarte Zahl eigener Zugänge erkennbar sein. Eine Nachricht mit Macht eine schöne Übersicht reicht dafür nicht.",
+        "Eine Abhängigkeit besteht, wenn ein Schritt ein bestimmtes Ergebnis eines anderen Schritts benötigt. Für das Einrichten im vereinbarten Betriebsdienst muss dieser bereitstehen. Liefert Netzhafen später als zugesagt, prüft Sam die betroffenen Termine und stimmt den Ablauf ab. Eine Anleitung kann möglicherweise schon vorbereitet werden. Der abhängige Einrichtungsschritt wird dadurch aber noch nicht ausführbar.",
+        "Auch Prüfkriterien werden früh vorbereitet. Schon beim Klären des Bedarfs kann das Team festlegen: Ein geänderter Reparaturstatus muss nach Speichern und erneutem Öffnen wieder angezeigt werden. Ausführen lässt sich dieser konkrete Funktionstest, sobald eine entsprechende testbare Lösung vorliegt. Die Vorbereitung eines Tests und seine Durchführung sind verschiedene Tätigkeiten.",
+        "Dokumentation begleitet den Ablauf. Anforderungen helfen bei Umsetzung und Prüfung, Prüfergebnisse bei Korrekturen und eine verständliche Anleitung bei Nutzung und Betreuung. Bei einer Übergabe innerhalb des Teams reicht es deshalb nicht, die Zahl der erledigten Aufgaben zu nennen. Die nächste Person braucht die passenden Ergebnisse und ihren aktuellen Stand. Fehlende oder widersprüchliche Angaben werden mit der zuständigen Person geklärt."
+      ],
+      "example": {
+        "title": "Eine klare Übergabe an die Prüfung",
+        "text": "Sam gibt Mira die testbare Übersicht, die abgestimmte Anforderung zum Speichern und den Auftrag, erwarteten und beobachteten Status zu notieren. Mira kann damit gezielt prüfen. Fehlt die Information, welcher Status nach einer Aktion erwartet wird, fragt sie nach, bevor sie ein Ergebnis als bestanden einträgt."
+      },
+      "misconception": {
+        "claim": "Wenn jeder seine Aufgabe erledigt hat, ist die Zusammenarbeit bereits gesichert.",
+        "correction": "Die Ergebnisse müssen rechtzeitig und verständlich bei den nächsten Beteiligten ankommen. Unklare Anforderungen oder fehlende Vorleistungen können den weiteren Ablauf blockieren."
+      },
+      "takeaway": "Nenne für jeden Übergang das benötigte Ergebnis, den Verantwortlichen, den Termin und offene Punkte. Prüfe Abhängigkeiten, bevor du weiterplanst."
+    },
+    {
+      "id": "common-lf1-value-chain-quality",
+      "title": "4. Prüfen, übergeben und aus der Nutzung lernen",
+      "objectiveIds": [
+        "common-lf1-value-chain-steps",
+        "common-lf1-value-chain-contribution"
+      ],
+      "sourceIds": [
+        "fiausbv-annex"
+      ],
+      "paragraphs": [
+        "Eine Prüfung braucht einen Maßstab. Mira vergleicht die vereinbarte Erwartung mit dem beobachteten Ergebnis. Soll ein als fertig markierter Reparaturauftrag nach dem Speichern weiterhin fertig anzeigen, der Eintrag steht aber wieder auf offen, liegt eine Abweichung vor. Mira dokumentiert den Ablauf und das Ergebnis. Nach der Korrektur wird derselbe betroffene Ablauf erneut geprüft. Eine geänderte Datei allein belegt noch keine erfolgreiche Korrektur.",
+        "Die Übergabe verbindet die technische Leistung mit ihrer Anwendung im Betrieb. Die Beschäftigten üben beispielsweise, einen Reparaturauftrag zu finden, den Status zu ändern und das Ergebnis erneut aufzurufen. Die Anleitung unterstützt sie später bei denselben Schritten. Die Einweisung trägt damit dazu bei, dass die vorhandene Funktion im Alltag genutzt werden kann. Sie ersetzt weder die technische Prüfung noch die tatsächliche Bereitstellung der Lösung.",
+        "Eine gemeinsame Übergabeprüfung hält fest, welche vereinbarten Ergebnisse gezeigt wurden und welche Punkte noch offen sind. Sam und Lea klären Zuständigkeit und weiteres Vorgehen. Ein dokumentierter erfolgreicher Prüffall belegt das beobachtete Verhalten unter den geprüften Bedingungen, keine Fehlerfreiheit in allen denkbaren Situationen. Deshalb bleiben Rückmeldungen aus der Nutzung wichtig.",
+        "Bei einer späteren Rückmeldung unterscheidet das Team Abweichung und neuen Wunsch. Wenn ein vereinbarter Status nicht gespeichert wird, wird die Störung aufgenommen und entsprechend dem vereinbarten Rahmen bearbeitet. Wünscht Lea zusätzlich eine bisher nicht vereinbarte Auswertung, müssen Bedarf, Aufwand und Beauftragung geklärt werden. Die Rückmeldung ist wertvoll, aber noch keine erledigte Zusatzleistung.",
+        "Zum Rückblick verbindet Mira ihre Aufgabe mit dem Ganzen: Ich dokumentiere den fehlgeschlagenen Speichertest, damit das Team die Abweichung nachvollziehen und korrigieren kann. Dadurch unterstützt meine Arbeit eine verlässliche Reparaturübersicht. Diese Erklärung nennt Handlung, Ergebnis und Beitrag. Bei Verbesserungen betrachtet das Team auch den Ablauf, etwa ob die ursprüngliche Anforderung oder eine Übergabe deutlicher hätte sein können."
+      ],
+      "example": {
+        "title": "Die technische Lösung braucht eine verständliche Nutzung",
+        "text": "Die Statusänderung funktioniert im Test. In der Einweisung merkt Lea, dass die Beschäftigten die Schaltfläche zum Speichern nicht finden. Sam lässt die Anleitung und die Bedienhinweise prüfen. Funktion und verständliche Nutzung sind verschiedene Beiträge zur Gesamtleistung, die zusammenpassen müssen."
+      },
+      "misconception": {
+        "claim": "Ein bestandener Test macht Einweisung und spätere Rückmeldungen überflüssig.",
+        "correction": "Der Test prüft festgelegte Erwartungen. Einweisung unterstützt die Anwendung, Rückmeldungen zeigen Probleme oder neue Wünsche aus dem Alltag."
+      },
+      "takeaway": "Verbinde den Prüfnachweis mit verständlicher Übergabe und abgestimmter Betreuung. Erkläre für deine Aufgabe Ergebnis und Nutzen im Gesamtauftrag."
+    }
+  ],
+  "questionFile": "questions/common-lf1-value-chain.v1.csv",
+  "quiz": {
+    "questionIds": [
+      "LJ-LF1-VALUE-CHAIN-Q01",
+      "LJ-LF1-VALUE-CHAIN-Q02",
+      "LJ-LF1-VALUE-CHAIN-Q03",
+      "LJ-LF1-VALUE-CHAIN-Q04",
+      "LJ-LF1-VALUE-CHAIN-Q05",
+      "LJ-LF1-VALUE-CHAIN-Q06"
+    ]
+  },
+  "exam": {
+    "questionIds": [
+      "LJ-LF1-VALUE-CHAIN-E01",
+      "LJ-LF1-VALUE-CHAIN-E02",
+      "LJ-LF1-VALUE-CHAIN-E03",
+      "LJ-LF1-VALUE-CHAIN-E04",
+      "LJ-LF1-VALUE-CHAIN-E05",
+      "LJ-LF1-VALUE-CHAIN-E06",
+      "LJ-LF1-VALUE-CHAIN-E07",
+      "LJ-LF1-VALUE-CHAIN-E08"
+    ],
+    "passPercent": 80,
+    "scoring": "all-or-nothing-per-question",
+    "timed": false
+  },
+  "questionLinks": [
+    {
+      "questionId": "LJ-LF1-VALUE-CHAIN-Q01",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf1-value-chain-steps"
+      ],
+      "blockIds": [
+        "common-lf1-value-chain-sequence"
+      ]
+    },
+    {
+      "questionId": "LJ-LF1-VALUE-CHAIN-Q02",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf1-value-chain-steps"
+      ],
+      "blockIds": [
+        "common-lf1-value-chain-sequence",
+        "common-lf1-value-chain-handoffs"
+      ]
+    },
+    {
+      "questionId": "LJ-LF1-VALUE-CHAIN-Q03",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf1-value-chain-contribution"
+      ],
+      "blockIds": [
+        "common-lf1-value-chain-value"
+      ]
+    },
+    {
+      "questionId": "LJ-LF1-VALUE-CHAIN-Q04",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf1-value-chain-steps"
+      ],
+      "blockIds": [
+        "common-lf1-value-chain-handoffs"
+      ]
+    },
+    {
+      "questionId": "LJ-LF1-VALUE-CHAIN-Q05",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf1-value-chain-steps",
+        "common-lf1-value-chain-contribution"
+      ],
+      "blockIds": [
+        "common-lf1-value-chain-sequence",
+        "common-lf1-value-chain-quality"
+      ]
+    },
+    {
+      "questionId": "LJ-LF1-VALUE-CHAIN-Q06",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf1-value-chain-contribution"
+      ],
+      "blockIds": [
+        "common-lf1-value-chain-quality"
+      ]
+    },
+    {
+      "questionId": "LJ-LF1-VALUE-CHAIN-E01",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf1-value-chain-steps"
+      ],
+      "blockIds": [
+        "common-lf1-value-chain-sequence"
+      ]
+    },
+    {
+      "questionId": "LJ-LF1-VALUE-CHAIN-E02",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf1-value-chain-steps"
+      ],
+      "blockIds": [
+        "common-lf1-value-chain-handoffs"
+      ]
+    },
+    {
+      "questionId": "LJ-LF1-VALUE-CHAIN-E03",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf1-value-chain-contribution"
+      ],
+      "blockIds": [
+        "common-lf1-value-chain-value",
+        "common-lf1-value-chain-quality"
+      ]
+    },
+    {
+      "questionId": "LJ-LF1-VALUE-CHAIN-E04",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf1-value-chain-steps"
+      ],
+      "blockIds": [
+        "common-lf1-value-chain-handoffs"
+      ]
+    },
+    {
+      "questionId": "LJ-LF1-VALUE-CHAIN-E05",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf1-value-chain-contribution"
+      ],
+      "blockIds": [
+        "common-lf1-value-chain-quality"
+      ]
+    },
+    {
+      "questionId": "LJ-LF1-VALUE-CHAIN-E06",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf1-value-chain-steps",
+        "common-lf1-value-chain-contribution"
+      ],
+      "blockIds": [
+        "common-lf1-value-chain-sequence"
+      ]
+    },
+    {
+      "questionId": "LJ-LF1-VALUE-CHAIN-E07",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf1-value-chain-steps"
+      ],
+      "blockIds": [
+        "common-lf1-value-chain-sequence",
+        "common-lf1-value-chain-quality"
+      ]
+    },
+    {
+      "questionId": "LJ-LF1-VALUE-CHAIN-E08",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf1-value-chain-contribution"
+      ],
+      "blockIds": [
+        "common-lf1-value-chain-value",
+        "common-lf1-value-chain-quality"
+      ]
+    }
+  ],
+  "interview": [
+    {
+      "id": "common-lf1-value-chain-talk-sequence",
+      "prompt": "Stelle Radblicks Auftrag vom Bedarf bis zur Betreuung in sechs Stationen dar. Nenne zu jeder Station ein Ergebnis, das für den weiteren Ablauf gebraucht wird. An welcher Stelle wäre nach einem fehlgeschlagenen Speichertest ein Rücksprung sinnvoll?",
+      "objectiveIds": [
+        "common-lf1-value-chain-steps"
+      ],
+      "blockIds": [
+        "common-lf1-value-chain-sequence",
+        "common-lf1-value-chain-quality"
+      ],
+      "keyPoints": [
+        "Bedarf klären, planen und abstimmen, umsetzen, prüfen und verbessern, übergeben und einweisen, betreuen und rückmelden in nachvollziehbarer Reihenfolge darstellen.",
+        "Anforderungen, Arbeitsplan, testbare Lösung, Prüfergebnisse und Korrekturen, Anleitung und eingewiesene Nutzer sowie bearbeitete Rückmeldungen als Ergebnisse nennen.",
+        "Nach einem fehlgeschlagenen Test die Abweichung bearbeiten und die Korrektur erneut prüfen. Bei unklarer Anforderung zuerst deren Klärung veranlassen."
+      ],
+      "acceptableAlternatives": [
+        "Eigene Stationsnamen sind passend, wenn die Schritte und ihre Abhängigkeiten erkennbar bleiben.",
+        "Ein Ablauf mit begründetem Rückpfeil oder ergänzenden parallelen Vorbereitungen ist zulässig. Die sechs Stationen sind eine Lernvereinfachung."
+      ],
+      "misconceptions": [
+        "Den Ablauf als starre einmalige Folge ohne Rückfragen oder Korrekturen beschreiben.",
+        "Die technische Umsetzung bereits mit einer geprüften und eingewiesenen Nutzung gleichsetzen."
+      ],
+      "sampleAnswer": "Aus der Bedarfsklärung entstehen Anforderungen, aus der Planung ein abgestimmter Arbeitsplan. Die Umsetzung liefert eine testbare Übersicht. Die Prüfung liefert Ergebnisse und nötige Korrekturen. Bei der Übergabe bekommt Radblick Anleitung und Einweisung. Danach werden vereinbarte Rückmeldungen bearbeitet. Ein gescheiterter Speichertest führt zur Korrektur und erneuten Prüfung.",
+      "followUp": "Was müsste vor dem erneuten Test geklärt werden, wenn niemand den erwarteten Status benennen kann?"
+    },
+    {
+      "id": "common-lf1-value-chain-talk-handoff",
+      "prompt": "Netzhafen kann den benötigten Betriebsdienst später bereitstellen. Erkläre die Abhängigkeit für das Einrichten der Übersicht. Welche Angaben braucht Sam für eine brauchbare Abstimmung, und was könnte unabhängig davon vorbereitet werden?",
+      "objectiveIds": [
+        "common-lf1-value-chain-steps",
+        "common-lf1-value-chain-contribution"
+      ],
+      "blockIds": [
+        "common-lf1-value-chain-sequence",
+        "common-lf1-value-chain-handoffs"
+      ],
+      "keyPoints": [
+        "Das Einrichten im vorgesehenen Betriebsdienst benötigt dessen Bereitstellung als Vorleistung.",
+        "Ergebnis, zuständige Person, bestätigten Termin und offene Punkte benennen und betroffene Folgeschritte abstimmen.",
+        "Unabhängige Vorbereitungen wie Anleitung oder Prüfkriterien können geprüft werden, ersetzen aber die fehlende Vorleistung nicht."
+      ],
+      "acceptableAlternatives": [
+        "Andere vorbereitende Aufgaben sind passend, wenn erklärt wird, warum sie den noch fehlenden Betriebsdienst nicht benötigen.",
+        "Ein alternativer Ablauf darf vorgeschlagen werden, sofern Machbarkeit und Auswirkungen erst abgestimmt werden."
+      ],
+      "misconceptions": [
+        "Den abhängigen Einrichtungsschritt trotz fehlender Voraussetzung als ausführbar oder erledigt darstellen.",
+        "Aus der Verzögerung ableiten, dass auch jede unabhängige Vorbereitung unmöglich sei."
+      ],
+      "sampleAnswer": "Für das Einrichten braucht Knotenpunkt den Betriebsdienst. Sam benötigt deshalb einen belastbaren Bereitstellungstermin, den Ansprechpartner und offene Punkte. Er gleicht die betroffenen Folgetermine ab. Das Team kann vielleicht schon die Anleitung oder Prüfkriterien vorbereiten. Das ersetzt aber den noch fehlenden Dienst nicht.",
+      "followUp": "Wie würde eine klare Übergabe von der Umsetzung an Mira für den Speichertest aussehen?"
+    },
+    {
+      "id": "common-lf1-value-chain-talk-contribution",
+      "prompt": "Mira sagt: Ich habe heute zwei Stunden getestet. Formuliere daraus eine Erklärung ihres Beitrags zur Gesamtleistung, wenn sie einen nicht gespeicherten Reparaturstatus gefunden und dokumentiert hat. Erkläre zusätzlich den Beitrag der Einweisung und der Rückmeldungen aus dem Alltag.",
+      "objectiveIds": [
+        "common-lf1-value-chain-contribution"
+      ],
+      "blockIds": [
+        "common-lf1-value-chain-value",
+        "common-lf1-value-chain-quality"
+      ],
+      "keyPoints": [
+        "Handlung, Ergebnis und Nutzen verbinden: den Speichertest durchführen, Abweichung dokumentieren und dadurch eine gezielte Korrektur unterstützen.",
+        "Einweisung als Unterstützung der tatsächlichen Nutzung erklären, nicht als Ersatz für eine funktionierende Lösung.",
+        "Rückmeldungen können bisher unerkannte Probleme oder neue Wünsche zeigen. Neue Wünsche brauchen Klärung, erfolgreiche Tests gelten für die geprüften Bedingungen."
+      ],
+      "acceptableAlternatives": [
+        "Eigene Formulierungen mit erkennbarem Bezug zur verlässlichen Reparaturübersicht sind passend.",
+        "Die Dokumentation darf als Beitrag für nachfolgende Teammitglieder und Betreuung erklärt werden."
+      ],
+      "misconceptions": [
+        "Die Dauer oder Anzahl von Tests allein als Beleg eines hohen Kundennutzens verwenden.",
+        "Aus einem bestandenen Test die Fehlerfreiheit aller späteren Nutzung ableiten."
+      ],
+      "sampleAnswer": "Mira hat die Speicherung geprüft und die Abweichung nachvollziehbar dokumentiert. Damit kann das Team den Fehler gezielt beheben und die verlässliche Anzeige unterstützen. Die Einweisung hilft Radblick, die Funktion im Alltag zu bedienen. Spätere Rückmeldungen zeigen weitere Probleme oder Wünsche, die das Team im vereinbarten Rahmen klärt.",
+      "followUp": "Woran erkennst du, ob eine Rückmeldung eine vereinbarte Funktion betrifft oder einen zusätzlichen Wunsch beschreibt?"
+    }
+  ],
+  "cards": [
+    {
+      "id": "common-lf1-value-chain-card-value",
+      "front": "Was bedeutet Wertschöpfung in diesem einfachen IT-Auftrag?",
+      "back": "Knotenpunkt verbindet Wissen, Arbeit und Vorleistungen zu einer nutzbaren Übersicht für Radblick. Bedarfsklärung, Umsetzung, Prüfung und Einweisung tragen auf unterschiedliche Weise bei. Hier werden Beiträge im Ablauf erklärt, keine Gewinn- oder Wertschöpfungsbeträge berechnet.",
+      "objectiveIds": [
+        "common-lf1-value-chain-contribution"
+      ],
+      "blockIds": [
+        "common-lf1-value-chain-value"
+      ]
+    },
+    {
+      "id": "common-lf1-value-chain-card-sequence",
+      "front": "Welche sechs Stationen helfen, den Auftrag darzustellen?",
+      "back": "Bedarf klären → planen und abstimmen → umsetzen → prüfen und verbessern → übergeben und einweisen → betreuen und rückmelden. Nenne zu jeder Station ihr Ergebnis. Rückfragen, Wiederholungen und parallele Vorbereitungen sind je nach Abhängigkeit möglich.",
+      "objectiveIds": [
+        "common-lf1-value-chain-steps"
+      ],
+      "blockIds": [
+        "common-lf1-value-chain-sequence"
+      ]
+    },
+    {
+      "id": "common-lf1-value-chain-card-contribution",
+      "front": "Wie erklärst du den Beitrag deiner Arbeit statt bloß ihre Dauer?",
+      "back": "Nenne Handlung, verwertbares Ergebnis und Nutzen im Gesamtauftrag. Beispiel: Ich prüfe die Speicherung und dokumentiere die Abweichung, damit das Team sie korrigieren kann. Zwei Stunden Arbeit beschreiben Aufwand, aber noch kein nutzbares Ergebnis.",
+      "objectiveIds": [
+        "common-lf1-value-chain-contribution"
+      ],
+      "blockIds": [
+        "common-lf1-value-chain-value",
+        "common-lf1-value-chain-quality"
+      ]
+    },
+    {
+      "id": "common-lf1-value-chain-card-handoff",
+      "front": "Was macht einen Übergang zwischen Arbeitsschritten brauchbar?",
+      "back": "Die nächste Person erhält das benötigte Ergebnis, dessen aktuellen Stand, einen zuständigen Ansprechpartner, den Termin und offene Fragen. Fehlt eine Vorleistung, werden betroffene Folgeschritte abgestimmt. Unabhängige Vorbereitungen können trotzdem möglich sein.",
+      "objectiveIds": [
+        "common-lf1-value-chain-steps"
+      ],
+      "blockIds": [
+        "common-lf1-value-chain-handoffs"
+      ]
+    },
+    {
+      "id": "common-lf1-value-chain-card-test",
+      "front": "Wie wird eine Abweichung im Test bearbeitet?",
+      "back": "Vergleiche vereinbarte Erwartung und Beobachtung. Dokumentiere die Abweichung, veranlasse die Korrektur im zuständigen Team und prüfe den betroffenen Ablauf erneut. Kriterien können früh vorbereitet werden, ihre Durchführung braucht die passende testbare Lösung.",
+      "objectiveIds": [
+        "common-lf1-value-chain-steps",
+        "common-lf1-value-chain-contribution"
+      ],
+      "blockIds": [
+        "common-lf1-value-chain-handoffs",
+        "common-lf1-value-chain-quality"
+      ]
+    },
+    {
+      "id": "common-lf1-value-chain-card-use",
+      "front": "Welchen Beitrag leisten Einweisung und Betreuung nach der Umsetzung?",
+      "back": "Einweisung und Anleitung helfen Radblick, die Lösung tatsächlich zu nutzen. Die vereinbarte Betreuung nimmt Rückmeldungen auf und klärt deren Bearbeitung. Eine Abweichung betrifft eine vereinbarte Leistung, ein zusätzlicher Wunsch braucht eine neue Klärung des Umfangs.",
+      "objectiveIds": [
+        "common-lf1-value-chain-contribution"
+      ],
+      "blockIds": [
+        "common-lf1-value-chain-quality"
+      ]
+    }
+  ],
+  "review": {
+    "status": "reviewed",
+    "checkedAt": "2026-11-11"
+  }
+}

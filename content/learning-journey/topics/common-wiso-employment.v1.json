@@ -1,0 +1,551 @@
+{
+  "schemaVersion": 1,
+  "id": "common-wiso-employment",
+  "version": "1.0.0",
+  "title": "Arbeitsvertrag und Schutz am Arbeitsplatz",
+  "fieldId": "WISO",
+  "scope": "common",
+  "prerequisites": [
+    "common-wiso-training"
+  ],
+  "sourceIds": [
+    "kmk-wiso-2021",
+    "bgb-611a",
+    "bgb-622",
+    "bgb-623",
+    "arbzg-3",
+    "arbzg-4",
+    "burlg-3",
+    "jarbschg-8",
+    "entgfg-3",
+    "entgfg-5",
+    "kschg-4",
+    "betrvg-102"
+  ],
+  "sources": [
+    {
+      "id": "kmk-wiso-2021",
+      "title": "KMK-Qualifikationsprofil Wirtschafts- und Sozialkunde vom 17.06.2021",
+      "url": "https://www.kmk.org/fileadmin/Dateien/veroeffentlichungen_beschluesse/2021/2021_06_17-Berufsschule-Unterricht-Wirtschafts-Sozialkunde.pdf",
+      "checkedAt": "2026-11-11",
+      "note": "Öffentliches KMK-Qualifikationsprofil: curricularer Bezug. Erklärungen, Fälle und Aufgaben eigenständig formuliert."
+    },
+    {
+      "id": "bgb-611a",
+      "title": "BGB § 611a – Arbeitsvertrag",
+      "url": "https://www.gesetze-im-internet.de/bgb/__611a.html",
+      "checkedAt": "2026-11-11",
+      "note": "Weisungsgebundene Arbeit und Vergütung als Hauptpflichten."
+    },
+    {
+      "id": "bgb-622",
+      "title": "BGB § 622 – Kündigungsfristen",
+      "url": "https://www.gesetze-im-internet.de/bgb/__622.html",
+      "checkedAt": "2026-11-11",
+      "note": "Grundfrist, Probezeit, verlängerte Arbeitgeberfristen sowie tarifliche und vertragliche Abweichungen beachten."
+    },
+    {
+      "id": "bgb-623",
+      "title": "BGB § 623 – Schriftform der Kündigung",
+      "url": "https://www.gesetze-im-internet.de/bgb/__623.html",
+      "checkedAt": "2026-11-11",
+      "note": "Schriftform, Ausschluss elektronischer Form; amtlicher Suchindex zusätzlich wegen zeitweiser Abrufprobleme geprüft."
+    },
+    {
+      "id": "arbzg-3",
+      "title": "Arbeitszeitgesetz § 3 – Arbeitszeit",
+      "url": "https://www.gesetze-im-internet.de/arbzg/__3.html",
+      "checkedAt": "2026-11-11",
+      "note": "Acht Stunden werktäglich; bis zehn mit Ausgleich innerhalb sechs Kalendermonaten oder 24 Wochen. Im Lernfall keine Sonderregelung."
+    },
+    {
+      "id": "arbzg-4",
+      "title": "Arbeitszeitgesetz § 4 – Ruhepausen",
+      "url": "https://www.gesetze-im-internet.de/arbzg/__4.html",
+      "checkedAt": "2026-11-11",
+      "note": "Pausenstaffel und Grenze ununterbrochener Arbeit für Erwachsene."
+    },
+    {
+      "id": "burlg-3",
+      "title": "Bundesurlaubsgesetz § 3 – Dauer des Urlaubs",
+      "url": "https://www.gesetze-im-internet.de/burlg/__3.html",
+      "checkedAt": "2026-11-11",
+      "note": "24 Werktage in Sechstagewoche entsprechen 20 Arbeitstagen in gleichmäßiger Fünftagewoche bei vollem Jahresanspruch."
+    },
+    {
+      "id": "jarbschg-8",
+      "title": "Jugendarbeitsschutzgesetz § 8 – Dauer der Arbeitszeit",
+      "url": "https://www.gesetze-im-internet.de/jarbschg/__8.html",
+      "checkedAt": "2026-11-11",
+      "note": "Grundregel acht Stunden täglich, 40 wöchentlich, gesetzliche Ausnahmen gesondert prüfen."
+    },
+    {
+      "id": "entgfg-3",
+      "title": "Entgeltfortzahlungsgesetz § 3 – Krankheitsfall",
+      "url": "https://www.gesetze-im-internet.de/entgfg/__3.html",
+      "checkedAt": "2026-11-11",
+      "note": "Bis sechs Wochen bei unverschuldeter Arbeitsunfähigkeit nach vierwöchiger Wartezeit; Wiederholung derselben Krankheit gesondert geregelt."
+    },
+    {
+      "id": "entgfg-5",
+      "title": "Entgeltfortzahlungsgesetz § 5 – Anzeige und Nachweis",
+      "url": "https://www.gesetze-im-internet.de/entgfg/__5.html",
+      "checkedAt": "2026-11-11",
+      "note": "Unverzügliche Mitteilung von Arbeitsunfähigkeit und voraussichtlicher Dauer. Nachweis einschließlich eAU vom Melden unterscheiden."
+    },
+    {
+      "id": "kschg-4",
+      "title": "Kündigungsschutzgesetz § 4 – Anrufung des Arbeitsgerichts",
+      "url": "https://www.gesetze-im-internet.de/kschg/__4.html",
+      "checkedAt": "2026-11-11",
+      "note": "Drei Wochen nach Zugang schriftlicher Kündigung; gesetzliche Sonderfälle bleiben zu prüfen."
+    },
+    {
+      "id": "betrvg-102",
+      "title": "Betriebsverfassungsgesetz § 102 – Anhörung bei Kündigung",
+      "url": "https://www.gesetze-im-internet.de/betrvg/__102.html",
+      "checkedAt": "2026-11-11",
+      "note": "Bestehender Betriebsrat vor Kündigung anzuhören; Anhörung ist keine allgemeine Zustimmungspflicht."
+    }
+  ],
+  "objectives": [
+    {
+      "id": "common-wiso-employment-contract",
+      "text": "Wesentliche Vereinbarungen eines Arbeitsvertrags benennen und von Ausbildungsregelungen unterscheiden."
+    },
+    {
+      "id": "common-wiso-employment-protection",
+      "text": "Für einen einfachen Fall zu Arbeitszeit, Urlaub oder Krankheit eine einschlägige aktuelle Regelung finden."
+    },
+    {
+      "id": "common-wiso-employment-termination",
+      "text": "Bei einer Kündigung Beteiligte, zu prüfende Fristen und geeignete Beratungsstellen benennen."
+    }
+  ],
+  "caseStudy": {
+    "title": "Leas erster Arbeitsvertrag",
+    "text": "Lea arbeitet nach abgeschlossener Ausbildung im erfundenen IT-Unternehmen Knotenpunkt in Deutschland. Sie ist volljährig, ihr neuer Vertrag ist ein Arbeitsvertrag. Sie vergleicht Absprachen zu Tätigkeit, Entgelt, Arbeitszeit und Urlaub und übt an erfundenen Fällen, eine passende Rechtsquelle und Beratung zu finden. Rechtsstandprüfung: 11.11.2026."
+  },
+  "blocks": [
+    {
+      "id": "common-wiso-employment-agreement",
+      "title": "1. Arbeitsvertrag und Ausbildung unterscheiden",
+      "objectiveIds": [
+        "common-wiso-employment-contract"
+      ],
+      "sourceIds": [
+        "bgb-611a",
+        "kmk-wiso-2021"
+      ],
+      "paragraphs": [
+        "Ein Arbeitsvertrag verpflichtet Beschäftigte zu weisungsgebundener Arbeit und Arbeitgeber zur vereinbarten Vergütung (§ 611a BGB). Wichtige Absprachen betreffen Tätigkeit, Arbeitsort, Beginn, Arbeitszeit, Entgelt, Urlaub sowie Kündigungsbedingungen. Auch eine Befristung und anwendbare Tarifverträge können für die Einordnung wichtig sein.",
+        "Bei der Berufsausbildung steht der Erwerb beruflicher Handlungsfähigkeit im Mittelpunkt. Der Ausbildungsbetrieb schuldet planmäßige Ausbildung; im normalen Arbeitsvertrag steht die vereinbarte Arbeitsleistung gegen Vergütung im Mittelpunkt. Lernmöglichkeiten können weiterhin bestehen, ersetzen aber nicht diese Unterscheidung.",
+        "Lea prüft den konkreten Vertrag zusammen mit Gesetz und anwendbaren kollektiven Regelungen. Eine Vertragsklausel macht eine Unterschreitung gesetzlicher Schutzvorgaben nicht allein durch die Unterschrift zulässig. Die genaue Wirksamkeit einer Klausel kann fachkundige Prüfung benötigen."
+      ],
+      "example": {
+        "title": "Vom Lernplan zur Tätigkeit",
+        "text": "Mira hat einen Ausbildungsplan. Lea vereinbart im Arbeitsvertrag die Tätigkeit in der Anwendungsentwicklung, Arbeitsort und Entgelt. Beide Dokumente haben einen anderen Zweck."
+      },
+      "misconception": {
+        "claim": "Nach der Ausbildung gelten unverändert alle BBiG-Kündigungsregeln.",
+        "correction": "Für ein anschließendes normales Arbeitsverhältnis sind die arbeitsrechtlichen Regeln zu prüfen."
+      },
+      "takeaway": "Prüfe Vertragsart, wesentliche Absprachen und den dazugehörigen Rechtsrahmen."
+    },
+    {
+      "id": "common-wiso-employment-hours",
+      "title": "2. Arbeitszeit und Urlaub mit Geltungsbereich prüfen",
+      "objectiveIds": [
+        "common-wiso-employment-protection"
+      ],
+      "sourceIds": [
+        "arbzg-3",
+        "arbzg-4",
+        "burlg-3",
+        "jarbschg-8"
+      ],
+      "paragraphs": [
+        "Für die folgenden volljährigen Beschäftigten ohne Sonderregelung gilt § 3 ArbZG: acht Stunden werktägliche Arbeitszeit. Bis zu zehn sind möglich, wenn innerhalb von sechs Kalendermonaten oder 24 Wochen durchschnittlich acht werktägliche Stunden eingehalten werden. Werktage umfassen regelmäßig Montag bis Samstag; Arbeitszeit ist nicht einfach Anwesenheitszeit inklusive Ruhepausen. Das ist keine Erlaubnis für dauerhaft zehn Stunden ohne Ausgleich.",
+        "§ 4 ArbZG verlangt bei mehr als sechs bis neun Stunden Arbeit mindestens 30 Minuten Pause, bei mehr als neun Stunden mindestens 45 Minuten. Abschnitte müssen mindestens 15 Minuten dauern. Mehr als sechs Stunden Arbeit ohne Ruhepause sind nicht erlaubt. Diese Erwachsenenregeln werden nicht ungeprüft auf Jugendliche übertragen.",
+        "Für Jugendliche ist das JArbSchG maßgeblich. Dessen § 8 nennt als Grundregel höchstens acht Stunden täglich und 40 Stunden wöchentlich; begrenzte gesetzliche Ausnahmen sind gesondert zu prüfen. Alter und Beschäftigungsbereich gehören deshalb vor der Rechnung geklärt.",
+        "§ 3 BUrlG nennt mindestens 24 Werktage Jahresurlaub bei einer Sechstagewoche. Bei gleichmäßiger Fünftagewoche entsprechen vier Wochen Erholungsurlaub 20 Arbeitstagen. Hier wird ein bereits erworbener voller Jahresanspruch für Erwachsene betrachtet. Eintritt, Austritt, Wartezeit, Jugendschutz und günstigere Tarif- oder Vertragsregelungen können das Ergebnis beeinflussen."
+      ],
+      "example": {
+        "title": "Pausen im Tagesplan",
+        "text": "Lea soll acht Stunden tatsächliche Arbeit leisten. Ohne Sonderregelung sind mindestens 30 Minuten Ruhepause einzuplanen; die Anwesenheit beträgt dann mindestens achteinhalb Stunden."
+      },
+      "misconception": {
+        "claim": "24 Werktage bedeuten bei jeder Wochenverteilung 24 Arbeitstage.",
+        "correction": "Die Zahl hängt von den regelmäßigen Arbeitstagen ab. Vier Wochen entsprechen bei fünf Arbeitstagen 20 Urlaubstagen."
+      },
+      "takeaway": "Suche die passende Norm erst nach Alter, Arbeitszeitmodell und Anspruchsvoraussetzungen."
+    },
+    {
+      "id": "common-wiso-employment-illness",
+      "title": "3. Krankmeldung und Entgeltfortzahlung",
+      "objectiveIds": [
+        "common-wiso-employment-protection"
+      ],
+      "sourceIds": [
+        "entgfg-3",
+        "entgfg-5"
+      ],
+      "paragraphs": [
+        "Arbeitsunfähigkeit und ihre voraussichtliche Dauer müssen dem Arbeitgeber unverzüglich mitgeteilt werden (§ 5 EntgFG). Der erforderliche ärztliche Nachweis ist eine zusätzliche Frage. Ein elektronischer Abruf von Arbeitsunfähigkeitsdaten ersetzt die eigene rechtzeitige Krankmeldung nicht.",
+        "Nach § 3 EntgFG besteht bei unverschuldeter krankheitsbedingter Arbeitsunfähigkeit ein Anspruch auf Entgeltfortzahlung bis zu sechs Wochen. Der Anspruch entsteht nach vier Wochen ununterbrochenem Arbeitsverhältnis. Das Lernbeispiel betrifft eine erstmals auftretende Krankheit und erfüllte Voraussetzungen.",
+        "Bei wiederholter Arbeitsunfähigkeit wegen derselben Krankheit entsteht nicht bei jeder Meldung eine neue volle Sechswochenfrist. Das Gesetz enthält dazu besondere Zeitbedingungen. Bei längerer Krankheit sind mögliche Leistungen der Krankenversicherung und deren Voraussetzungen gesondert zu klären; Entgeltfortzahlung ist keine unbegrenzte Arbeitgeberleistung.",
+        "Lea klärt mit der Personalstelle die betriebliche Meldestelle und rechtzeitige ärztliche Feststellung. Bei Fragen zur Krankenversicherung ist die Krankenkasse passend, bei einem Streit über arbeitsvertragliches Entgelt fachkundige arbeitsrechtliche Beratung."
+      ],
+      "example": {
+        "title": "Melden und nachweisen",
+        "text": "Lea ist seit drei Monaten beschäftigt und erstmals unverschuldet krankheitsbedingt arbeitsunfähig. Sie informiert die vorgesehene Meldestelle sofort und kümmert sich zusätzlich um den erforderlichen Nachweis."
+      },
+      "misconception": {
+        "claim": "Ein ärztlicher Nachweis ersetzt die Krankmeldung an den Arbeitgeber.",
+        "correction": "Meldung und Nachweis sind verschiedene Pflichten. Beide müssen nach den jeweils einschlägigen Regeln erfüllt werden."
+      },
+      "takeaway": "Trenne unverzügliche Meldung, Nachweis und Voraussetzungen der Entgeltfortzahlung."
+    },
+    {
+      "id": "common-wiso-employment-termination",
+      "title": "4. Kündigung: Form, Fristen und Unterstützung",
+      "objectiveIds": [
+        "common-wiso-employment-termination"
+      ],
+      "sourceIds": [
+        "bgb-622",
+        "bgb-623",
+        "kschg-4",
+        "betrvg-102"
+      ],
+      "paragraphs": [
+        "Die Kündigung eines Arbeitsverhältnisses benötigt nach § 623 BGB Schriftform; die elektronische Form ist ausgeschlossen. Eine einfache E-Mail oder Chatnachricht genügt nicht. Form, Zugang, Kündigungsfrist und gegebenenfalls Kündigungsgrund sind unterschiedliche Prüfpunkte.",
+        "Die gesetzliche Grundfrist nach § 622 Absatz 1 BGB beträgt vier Wochen zum 15. oder zum Monatsende. Während vereinbarter Probezeit, längstens sechs Monate, gilt gesetzlich eine Zweiwochenfrist. Für Arbeitgeber können mit der Beschäftigungsdauer längere Fristen gelten. Tarifvertrag, Arbeitsvertrag und Sonderregeln müssen mitgeprüft werden; vier Wochen sind nicht immer ein Kalendermonat.",
+        "Besteht ein Betriebsrat im Anwendungsbereich des BetrVG, muss der Arbeitgeber ihn vor der Kündigung anhören (§ 102). Die Anhörung ist nicht dasselbe wie eine allgemeine Pflicht, jede Kündigung genehmigen zu lassen. Der allgemeine und besondere Kündigungsschutz benötigt zusätzliche Einzelfallprüfung.",
+        "Wer eine schriftliche Kündigung gerichtlich angreifen will, muss die Dreiwochenfrist ab Zugang nach § 4 KSchG beachten. Gesetzliche Sonderfälle können eine Rolle spielen. Eine Beschwerde beim Betriebsrat ersetzt keine Klage und wahrt deren Frist nicht. Daher Zugang dokumentieren, Unterlagen sichern und umgehend Gewerkschaft oder arbeitsrechtliche Beratung kontaktieren. Die Rechtsantragstelle des Arbeitsgerichts hilft bei der Aufnahme einer Klage, ersetzt aber keine individuelle Rechtsberatung."
+      ],
+      "example": {
+        "title": "Zwei Fristen unterscheiden",
+        "text": "Lea liest im Schreiben einen späteren Beendigungstermin. Trotzdem läuft die Frist für eine Kündigungsschutzklage vom Zugang der schriftlichen Kündigung an; sie wartet nicht bis zum letzten Arbeitstag."
+      },
+      "misconception": {
+        "claim": "Eine Beschwerde beim Betriebsrat hält die Klagefrist offen.",
+        "correction": "Die gerichtliche Frist ist gesondert einzuhalten. Innerbetriebliche Gespräche ersetzen die Klage nicht."
+      },
+      "takeaway": "Dokumentiere Zugang und prüfe Form, Kündigungsfrist, Schutz und Klagefrist getrennt."
+    }
+  ],
+  "questionFile": "questions/common-wiso-employment.v1.csv",
+  "quiz": {
+    "questionIds": [
+      "LJ-WISO-EMPLOYMENT-Q01",
+      "LJ-WISO-EMPLOYMENT-Q02",
+      "LJ-WISO-EMPLOYMENT-Q03",
+      "LJ-WISO-EMPLOYMENT-Q04",
+      "LJ-WISO-EMPLOYMENT-Q05",
+      "LJ-WISO-EMPLOYMENT-Q06"
+    ]
+  },
+  "exam": {
+    "questionIds": [
+      "LJ-WISO-EMPLOYMENT-E01",
+      "LJ-WISO-EMPLOYMENT-E02",
+      "LJ-WISO-EMPLOYMENT-E03",
+      "LJ-WISO-EMPLOYMENT-E04",
+      "LJ-WISO-EMPLOYMENT-E05",
+      "LJ-WISO-EMPLOYMENT-E06",
+      "LJ-WISO-EMPLOYMENT-E07",
+      "LJ-WISO-EMPLOYMENT-E08"
+    ],
+    "passPercent": 80,
+    "scoring": "all-or-nothing-per-question",
+    "timed": false
+  },
+  "questionLinks": [
+    {
+      "questionId": "LJ-WISO-EMPLOYMENT-Q01",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-wiso-employment-contract"
+      ],
+      "blockIds": [
+        "common-wiso-employment-agreement"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-EMPLOYMENT-Q02",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-wiso-employment-protection"
+      ],
+      "blockIds": [
+        "common-wiso-employment-hours"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-EMPLOYMENT-Q03",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-wiso-employment-protection"
+      ],
+      "blockIds": [
+        "common-wiso-employment-hours"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-EMPLOYMENT-Q04",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-wiso-employment-protection"
+      ],
+      "blockIds": [
+        "common-wiso-employment-illness"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-EMPLOYMENT-Q05",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-wiso-employment-termination"
+      ],
+      "blockIds": [
+        "common-wiso-employment-termination"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-EMPLOYMENT-Q06",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-wiso-employment-contract"
+      ],
+      "blockIds": [
+        "common-wiso-employment-agreement"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-EMPLOYMENT-E01",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-wiso-employment-contract"
+      ],
+      "blockIds": [
+        "common-wiso-employment-agreement"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-EMPLOYMENT-E02",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-wiso-employment-protection"
+      ],
+      "blockIds": [
+        "common-wiso-employment-hours"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-EMPLOYMENT-E03",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-wiso-employment-protection"
+      ],
+      "blockIds": [
+        "common-wiso-employment-hours"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-EMPLOYMENT-E04",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-wiso-employment-protection"
+      ],
+      "blockIds": [
+        "common-wiso-employment-illness"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-EMPLOYMENT-E05",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-wiso-employment-termination"
+      ],
+      "blockIds": [
+        "common-wiso-employment-termination"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-EMPLOYMENT-E06",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-wiso-employment-termination"
+      ],
+      "blockIds": [
+        "common-wiso-employment-termination"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-EMPLOYMENT-E07",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-wiso-employment-termination"
+      ],
+      "blockIds": [
+        "common-wiso-employment-termination"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-EMPLOYMENT-E08",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-wiso-employment-contract",
+        "common-wiso-employment-termination"
+      ],
+      "blockIds": [
+        "common-wiso-employment-agreement",
+        "common-wiso-employment-termination"
+      ]
+    }
+  ],
+  "interview": [
+    {
+      "id": "common-wiso-employment-talk-1",
+      "prompt": "Lea vergleicht einen Arbeitsvertrag mit Miras Ausbildungsvertrag. Nenne wesentliche Arbeitsbedingungen und erkläre den unterschiedlichen Hauptzweck.",
+      "objectiveIds": [
+        "common-wiso-employment-contract"
+      ],
+      "blockIds": [
+        "common-wiso-employment-agreement"
+      ],
+      "keyPoints": [
+        "Tätigkeit, Arbeitsort, Beginn, Zeit, Vergütung und Urlaub beispielhaft nennen.",
+        "Arbeitsleistung gegen Vergütung erklären.",
+        "Planmäßigen Erwerb beruflicher Handlungsfähigkeit als Ausbildungszweck abgrenzen."
+      ],
+      "acceptableAlternatives": [
+        "Mehrere passende Vertragsinhalte genügen; vollständige Gesetzesliste ist nicht nötig."
+      ],
+      "misconceptions": [
+        "Alle Ausbildungsregeln unverändert auf den Arbeitsvertrag übertragen."
+      ],
+      "sampleAnswer": "Lea prüft Tätigkeit, Ort, Zeit, Entgelt und Urlaub. Im Arbeitsverhältnis schuldet sie vereinbarte Arbeit gegen Vergütung. Mira soll dagegen im Betrieb planmäßig berufliche Handlungsfähigkeit erwerben.",
+      "followUp": "Welche anderen Regelungen können neben dem Vertrag gelten?"
+    },
+    {
+      "id": "common-wiso-employment-talk-2",
+      "prompt": "Plane für eine erwachsene Beschäftigte acht Stunden tatsächliche Arbeit ohne Sonderregelung und erläutere den gesetzlichen Mindesturlaub bei gleichmäßiger Fünftagewoche und vollem Jahresanspruch.",
+      "objectiveIds": [
+        "common-wiso-employment-protection"
+      ],
+      "blockIds": [
+        "common-wiso-employment-hours"
+      ],
+      "keyPoints": [
+        "Mindestens 30 Minuten Pause, keine Arbeit länger als sechs Stunden am Stück.",
+        "Anwesenheit bei acht Stunden Arbeit und 30 Minuten Pause: achteinhalb Stunden.",
+        "20 Arbeitstage entsprechen vier Wochen Mindesturlaub."
+      ],
+      "acceptableAlternatives": [
+        "Pausen in zulässige Abschnitte von mindestens 15 Minuten aufteilen."
+      ],
+      "misconceptions": [
+        "Pausen als tatsächliche Arbeitszeit zählen; 24 Werktage ungeprüft auf Fünftagewoche übertragen."
+      ],
+      "sampleAnswer": "Ich plane mindestens eine halbe Stunde Pause so ein, dass keine Arbeitsphase länger als sechs Stunden dauert. Acht Stunden Arbeit plus Pause ergeben achteinhalb Stunden Anwesenheit. Der volle gesetzliche Mindesturlaub beträgt in der Fünftagewoche 20 Arbeitstage.",
+      "followUp": "Warum muss bei einer 17-jährigen Person eine andere Schutzregel geprüft werden?"
+    },
+    {
+      "id": "common-wiso-employment-talk-3",
+      "prompt": "Lea erhält eine schriftliche Kündigung und möchte widersprechen. Welche Unterlagen, Fristen, Beteiligten und Anlaufstellen sind jetzt wichtig?",
+      "objectiveIds": [
+        "common-wiso-employment-termination"
+      ],
+      "blockIds": [
+        "common-wiso-employment-termination"
+      ],
+      "keyPoints": [
+        "Schreiben und Zugang dokumentieren, Vertrag und Tarifregelungen sichern.",
+        "Kündigungsfrist und Dreiwochenfrist für Klage getrennt prüfen.",
+        "Betriebsrat bei bestehendem Gremium, Gewerkschaft oder arbeitsrechtliche Beratung nennen."
+      ],
+      "acceptableAlternatives": [
+        "Rechtsantragstelle für Aufnahme der Klage nennen, ohne sie mit Rechtsberatung gleichzusetzen."
+      ],
+      "misconceptions": [
+        "Gespräch beim Betriebsrat als Ersatz der Klage behandeln."
+      ],
+      "sampleAnswer": "Ich sichere Schreiben und Zugangsdatum sowie Vertrag und Tarifunterlagen. Die Beendigungsfrist ist von der Dreiwochenfrist für eine Klage zu unterscheiden. Ein vorhandener Betriebsrat und fachkundige Beratung helfen; die gerichtliche Frist bleibt gesondert einzuhalten.",
+      "followUp": "Warum ist der letzte Arbeitstag nicht der Beginn der regulären Klagefrist?"
+    }
+  ],
+  "cards": [
+    {
+      "id": "common-wiso-employment-card-1",
+      "front": "Welche Hauptpflichten prägen den Arbeitsvertrag?",
+      "back": "Weisungsgebundene Arbeitsleistung und vereinbarte Vergütung. Tätigkeit, Ort, Beginn, Zeit, Urlaub und Kündigungsbedingungen helfen, die konkrete Vereinbarung einzuordnen.",
+      "objectiveIds": [
+        "common-wiso-employment-contract"
+      ],
+      "blockIds": [
+        "common-wiso-employment-agreement"
+      ]
+    },
+    {
+      "id": "common-wiso-employment-card-2",
+      "front": "Was unterscheidet Arbeit und Ausbildung?",
+      "back": "Berufsausbildung zielt auf planmäßigen Erwerb beruflicher Handlungsfähigkeit. Im normalen Arbeitsverhältnis steht die vereinbarte Arbeitsleistung gegen Entgelt im Mittelpunkt.",
+      "objectiveIds": [
+        "common-wiso-employment-contract"
+      ],
+      "blockIds": [
+        "common-wiso-employment-agreement"
+      ]
+    },
+    {
+      "id": "common-wiso-employment-card-3",
+      "front": "Wann sind für Erwachsene zehn Stunden Arbeit möglich?",
+      "back": "Nach § 3 ArbZG ohne Sonderregelung bis zehn Stunden, wenn innerhalb sechs Kalendermonaten oder 24 Wochen durchschnittlich acht werktägliche Stunden eingehalten werden. Pausen und weitere Schutzregeln bleiben zu prüfen.",
+      "objectiveIds": [
+        "common-wiso-employment-protection"
+      ],
+      "blockIds": [
+        "common-wiso-employment-hours"
+      ]
+    },
+    {
+      "id": "common-wiso-employment-card-4",
+      "front": "Was bleibt trotz elektronischem Krankheitsnachweis zu tun?",
+      "back": "Arbeitsunfähigkeit und voraussichtliche Dauer unverzüglich dem Arbeitgeber melden. Nachweis und Voraussetzungen einer Entgeltfortzahlung sind zusätzliche Prüfpunkte.",
+      "objectiveIds": [
+        "common-wiso-employment-protection"
+      ],
+      "blockIds": [
+        "common-wiso-employment-illness"
+      ]
+    },
+    {
+      "id": "common-wiso-employment-card-5",
+      "front": "Welche Form und Beteiligung sind bei Kündigung zu prüfen?",
+      "back": "§ 623 BGB verlangt Schriftform und schließt elektronische Form aus. Besteht ein Betriebsrat im BetrVG-Bereich, ist er vor einer Arbeitgeberkündigung anzuhören.",
+      "objectiveIds": [
+        "common-wiso-employment-termination"
+      ],
+      "blockIds": [
+        "common-wiso-employment-termination"
+      ]
+    },
+    {
+      "id": "common-wiso-employment-card-6",
+      "front": "Welche zwei Fristen dürfen nicht verwechselt werden?",
+      "back": "Kündigungsfrist bis zum Arbeitsende und reguläre Dreiwochenfrist für eine Klage ab Zugang der schriftlichen Kündigung. Betriebliche Gespräche ersetzen die Klage nicht.",
+      "objectiveIds": [
+        "common-wiso-employment-termination"
+      ],
+      "blockIds": [
+        "common-wiso-employment-termination"
+      ]
+    }
+  ],
+  "review": {
+    "status": "reviewed",
+    "checkedAt": "2026-11-11"
+  }
+}

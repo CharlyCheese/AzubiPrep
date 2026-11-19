@@ -1,0 +1,499 @@
+{
+  "schemaVersion": 1,
+  "id": "common-lf7-signals",
+  "version": "1.0.0",
+  "title": "Signale, Daten- und Energieflüsse",
+  "fieldId": "LF7",
+  "scope": "common",
+  "prerequisites": [
+    "common-lf7-components",
+    "common-lf3-protocols"
+  ],
+  "sourceIds": [
+    "lf7-nist-cps",
+    "lf7-arduino-adc",
+    "lf7-adi-uart",
+    "lf7-vt-energy"
+  ],
+  "sources": [
+    {
+      "id": "lf7-nist-cps",
+      "title": "NIST: Cyber-Physical Systems and Internet of Things Foundations",
+      "url": "https://www.nist.gov/programs-projects/cyber-physical-systems-and-internet-things-foundations",
+      "checkedAt": "2026-11-16",
+      "note": "Öffentliche HTML-Projektbeschreibung zu physikalischen Komponenten, Sensorik, Aktorik, Logik sowie überprüfbaren Anforderungen gelesen. Tischmodell, Rollen und alle Fallwerte sind eigene Fiktion."
+    },
+    {
+      "id": "lf7-arduino-adc",
+      "title": "Arduino: Read Analog Voltage",
+      "url": "https://docs.arduino.cc/built-in-examples/basics/ReadAnalogVoltage",
+      "checkedAt": "2026-11-16",
+      "note": "Öffentlich indexierter Herstellertext zum ADC und den 1024 Codes 0–1023 bei 10 Bit geprüft. Keine Schaltungsanleitung übernommen; Sensorformat und Modellgenauigkeit sind fiktive Vorgaben."
+    },
+    {
+      "id": "lf7-adi-uart",
+      "title": "Analog Devices: UART – A Hardware Communication Protocol",
+      "url": "https://www.analog.com/en/resources/analog-dialogue/articles/uart-a-hardware-communication-protocol.html",
+      "checkedAt": "2026-11-16",
+      "note": "HTML-Herstellerartikel zu asynchroner serieller Übertragung, Datenrahmen und abgestimmten Parametern gelesen. Das konkrete UART-Format und die elektrischen Eigenschaften der Übung sind erfundene Dokumentauszüge."
+    },
+    {
+      "id": "lf7-vt-energy",
+      "title": "Virginia Tech: Estimating Appliance and Home Electronic Energy Use",
+      "url": "https://www.pubs.ext.vt.edu/2901/2901-9014/2901-9014.html",
+      "checkedAt": "2026-11-16",
+      "note": "HTML-Lehrtext der Universität zu Leistung aus Spannung/Strom und Energie aus Leistung/Laufzeit geprüft. Verwendet wird ein eigenes idealisiertes Gleichstrommodell; keine Anleitung zum Messen oder Anschließen echter Geräte."
+    }
+  ],
+  "objectives": [
+    {
+      "id": "common-lf7-signals-signal",
+      "text": "Analoge Messgrößen und digitale Werte an einem Sensorbeispiel unterscheiden."
+    },
+    {
+      "id": "common-lf7-signals-flows",
+      "text": "Informations-, Energie- und Stoffflüsse eines kleinen Systems in einer Skizze zuordnen."
+    },
+    {
+      "id": "common-lf7-signals-communication",
+      "text": "Aus technischen Unterlagen das Format und den Übertragungsweg eines Sensorsignals ermitteln."
+    }
+  ],
+  "caseStudy": {
+    "title": "Nora liest die Modellunterlagen von Luftpunkt",
+    "text": "Nora erhält selbst erfundene Dokumentauszüge für das Tischmodell. Ein Sensor bildet Temperatur als digitale Nachricht ab, ein Steuerbaustein wertet sie aus und ein Lüfter stellt Luftbewegung dar. Alle Spannungen und Nachrichten sind Lernwerte ohne Verbindung zu Geräten. Nora trennt Messgröße, Nachrichtenformat, Energieversorgung und Luftstrom."
+  },
+  "blocks": [
+    {
+      "id": "common-lf7-signals-signal",
+      "title": "1. Messgröße und Darstellung auseinanderhalten",
+      "objectiveIds": [
+        "common-lf7-signals-signal"
+      ],
+      "sourceIds": [
+        "lf7-arduino-adc"
+      ],
+      "paragraphs": [
+        "Die Lufttemperatur ist eine physikalische Messgröße, die sich innerhalb eines Bereichs kontinuierlich verändern kann. Ein analoges Sensorsignal bildet eine Größe beispielsweise durch eine veränderliche Spannung ab. Eine digitale Darstellung verwendet dagegen unterscheidbare Codes oder Zahlenwerte. Eine Zahl wie 28,0 °C ist eine Darstellung der Messung, nicht die warme Luft selbst.",
+        "Ein Analog-Digital-Wandler, kurz ADC, ordnet einer analogen Eingangsgröße einen digitalen Code zu. Ein Wandler mit 10 Bit kann 2 hoch 10 = 1024 Codes darstellen, etwa 0 bis 1023. Was ein Code als Temperatur bedeutet, ergibt sich erst aus Sensorbeschreibung, Messbereich und Umrechnung. Code 512 heißt deshalb nicht von sich aus 512 °C.",
+        "Luftpunkt verwendet einen fiktiven Sensor mit digitaler Ausgabe. Seine interne Messung ist im Modell bereits in Grad Celsius umgerechnet. Die Ausgabe hat eine Nachkommastelle; die erfundene Unterlage nennt eine Genauigkeit von ±0,5 °C. Anzeigeschritt und Genauigkeit sind verschiedene Angaben: 28,0 °C ist keine Garantie für einen exakt bekannten wahren Wert."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Lernfall",
+        "text": "Nora unterscheidet Lufttemperatur, internes elektrisches Signal und den übermittelten Text temp=28.0 degC. Für die spätere Funktion wird daraus die Zahl 28."
+      },
+      "misconception": {
+        "claim": "Ein digitaler Messwert ist wegen seiner Ziffern automatisch exakt.",
+        "correction": "Digitale Darstellung verhindert keine Messabweichung; Auflösung und Genauigkeit sind getrennt zu bewerten."
+      },
+      "takeaway": "Unterscheide physikalische Größe, Signal, Code und umgerechneten Messwert."
+    },
+    {
+      "id": "common-lf7-signals-flows",
+      "title": "2. Drei verschiedene Flüsse skizzieren",
+      "objectiveIds": [
+        "common-lf7-signals-flows",
+        "common-lf7-signals-signal"
+      ],
+      "sourceIds": [
+        "lf7-nist-cps",
+        "lf7-vt-energy"
+      ],
+      "paragraphs": [
+        "Eine Skizze wird verständlicher, wenn Pfeile benennen, was fließt. Informationsfluss: Sensor → Steuerung trägt Temperaturdaten; Steuerung → Aktor trägt die Schaltentscheidung. Energiefluss: Versorgung → Sensor, Steuerung und Lüfter stellt elektrische Energie bereit. Stofffluss: Umgebungsluft → Lüfterbereich → Umgebungsluft beschreibt bewegte Luft als Materie.",
+        "Zeichne für Luftpunkt drei Arten von Pfeilen mit einer kleinen Legende, etwa Daten, Energie und Luft. Temperaturdaten sind keine Luftteilchen. Der Datenpfeil zur Steuerung beschreibt auch nicht die elektrische Energie, die den Lüfter antreibt. Ein Gegenstand kann mehrere Flüsse verbinden, deshalb sind getrennte Pfeile hilfreich.",
+        "Die Modellversorgung beträgt 5 V. Die Unterlage nennt 0,1 A für das Sensormodul, 0,2 A für die Steuerung einschließlich Anzeigen und 0,4 A für den laufenden Lüfter. Diese idealisierten Betriebswerte dienen später der Rechnung. Ein Datenpegel von 3,3 V am UART beschreibt dagegen die Signalverträglichkeit und ist keine Ersatzangabe für die 5-V-Versorgung."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Lernfall",
+        "text": "Nora zeichnet einen Datenpfeil vom Sensor zur Steuerung, drei Energiepfeile von der Versorgung und einen Luftpfeil durch den Lüfterbereich."
+      },
+      "misconception": {
+        "claim": "Der Datenpfeil zum Lüfter steht gleichzeitig für seine gesamte Energieversorgung.",
+        "correction": "Ein Steuerbefehl und die Antriebsenergie beschreiben verschiedene Flüsse, auch wenn ein realer Aufbau sie räumlich verbinden kann."
+      },
+      "takeaway": "Beschrifte Pfeile als Information, Energie oder Stoff."
+    },
+    {
+      "id": "common-lf7-signals-communication",
+      "title": "3. Einen fiktiven Dokumentauszug auswerten",
+      "objectiveIds": [
+        "common-lf7-signals-communication",
+        "common-lf7-signals-signal"
+      ],
+      "sourceIds": [
+        "lf7-adi-uart",
+        "lf7-arduino-adc"
+      ],
+      "paragraphs": [
+        "Erfundene Unterlage Sensor A, Stand 1: Versorgung des Moduls 5 V; UART-Datenpegel 3,3 V; UART mit 9600 Baud, 8 Datenbits, keiner Parität und 1 Stoppbit, kurz 8N1. Einmal pro Sekunde wird eine ASCII-Zeile gesendet, zum Beispiel temp=28.0 degC, abgeschlossen mit einem Zeilenende LF. Gültiger Messbereich: −20 bis +80 °C einschließlich der Grenzen; Anzeigeschritt 0,1 °C; Genauigkeit ±0,5 °C.",
+        "UART beschreibt eine asynchrone serielle Übertragung. Sender und Empfänger brauchen passende Einstellungen für Geschwindigkeit und Rahmen. 8N1 bezeichnet den Rahmen pro Zeichen, nicht die Länge der gesamten Temperaturmeldung. Der Nachrichtentext mit Feldname, Dezimalpunkt und Einheit ist eine zusätzliche Festlegung dieses fiktiven Sensors.",
+        "Lies Unterlagen in zwei Schritten. Zuerst prüfst du den Übertragungsweg mit Schnittstelle, Signalpegel und Parametern. Danach liest du die Bedeutung der Nutzdaten: temp ist der Feldname, 28.0 der Zahlenanteil, degC steht für Grad Celsius, LF beendet die Zeile. Wer bloß die Ziffern erkennt, hat die Einheit oder das vollständige Format noch nicht geprüft."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Lernfall",
+        "text": "Aus dem Auszug notiert Nora UART/3,3 V/9600/8N1 und separat ASCII-Zeile mit temp, Dezimalpunkt, degC und LF. 5 V notiert sie unter Versorgung."
+      },
+      "misconception": {
+        "claim": "UART legt bereits fest, dass jede empfangene Zahl eine Temperatur in Grad Celsius ist.",
+        "correction": "UART regelt den Transport; Bedeutung und Aufbau der Sensornachricht stehen zusätzlich im Datenformat."
+      },
+      "takeaway": "Prüfe Transport und Bedeutung der Nutzdaten getrennt anhand der Unterlage."
+    },
+    {
+      "id": "common-lf7-signals-interpret",
+      "title": "4. Aus einer Nachricht eine verwendbare Eingabe machen",
+      "objectiveIds": [
+        "common-lf7-signals-communication",
+        "common-lf7-signals-signal",
+        "common-lf7-signals-flows"
+      ],
+      "sourceIds": [
+        "lf7-adi-uart",
+        "lf7-nist-cps"
+      ],
+      "paragraphs": [
+        "Für Luftpunkt übernimmt ein vorgegebener Modelladapter die Auswertung der fiktiven Zeile. Er prüft Feldname, Zahlenformat und Einheit und stellt der späteren Funktion eine Zahl in Grad Celsius bereit. Der Text temp=28.0 degC und die Zahl 28 sind damit nicht derselbe Datentyp. Die selbst geschriebene Steuerfunktion erhält die Zahl und den Verbindungszustand, keine UART-Bytes.",
+        "Eine Textzeile temp=28.0 degF erfüllt den festgelegten Formatvertrag nicht, obwohl ihr Zahlenanteil gleich aussieht. Ebenso ist ein Übertragungsweg ohne neue Nachricht nicht automatisch ein aktueller Messwert. Die Simulation vereinfacht dies zu connected=true für eine gültige Modellverbindung und connected=false für Ausfall; einen echten zeitabhängigen Timeout baust du hier nicht.",
+        "Für die Systemskizze bleibt die Zuordnung gleich: Zeile und umgerechnete Zahl sind Information; die vorgegebenen 5 V und Ströme gehören zur Versorgung; die bewegte Luft gehört zum Stofffluss. Dokumentiere auch die Vereinfachungen. Du bestätigst damit das Lernmodell, nicht das Verhalten eines realen seriellen Geräts."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Lernfall",
+        "text": "temp=28.0 degC wird im beschriebenen Adapter zu 28 °C. temp=28.0 degF wird als abweichende Einheit zurückgewiesen, statt still als Celsius verarbeitet zu werden."
+      },
+      "misconception": {
+        "claim": "Ein lesbarer Zahlenanteil genügt, um eine Sensornachricht fachlich richtig zu verwenden.",
+        "correction": "Format, Einheit, Bereich und Verbindungsstatus müssen zum vereinbarten Vertrag passen."
+      },
+      "takeaway": "Eine Zahl wird erst mit Format, Einheit und gültigem Eingang zu einer brauchbaren Messinformation."
+    }
+  ],
+  "questionFile": "questions/common-lf7-signals.v1.csv",
+  "quiz": {
+    "questionIds": [
+      "LJ-LF7-SIGNALS-Q01",
+      "LJ-LF7-SIGNALS-Q02",
+      "LJ-LF7-SIGNALS-Q03",
+      "LJ-LF7-SIGNALS-Q04",
+      "LJ-LF7-SIGNALS-Q05",
+      "LJ-LF7-SIGNALS-Q06"
+    ]
+  },
+  "exam": {
+    "questionIds": [
+      "LJ-LF7-SIGNALS-E01",
+      "LJ-LF7-SIGNALS-E02",
+      "LJ-LF7-SIGNALS-E03",
+      "LJ-LF7-SIGNALS-E04",
+      "LJ-LF7-SIGNALS-E05",
+      "LJ-LF7-SIGNALS-E06",
+      "LJ-LF7-SIGNALS-E07",
+      "LJ-LF7-SIGNALS-E08"
+    ],
+    "passPercent": 80,
+    "scoring": "all-or-nothing-per-question",
+    "timed": false
+  },
+  "questionLinks": [
+    {
+      "questionId": "LJ-LF7-SIGNALS-Q01",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf7-signals-signal"
+      ],
+      "blockIds": [
+        "common-lf7-signals-signal"
+      ]
+    },
+    {
+      "questionId": "LJ-LF7-SIGNALS-Q02",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf7-signals-signal"
+      ],
+      "blockIds": [
+        "common-lf7-signals-signal"
+      ]
+    },
+    {
+      "questionId": "LJ-LF7-SIGNALS-Q03",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf7-signals-flows"
+      ],
+      "blockIds": [
+        "common-lf7-signals-flows"
+      ]
+    },
+    {
+      "questionId": "LJ-LF7-SIGNALS-Q04",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf7-signals-communication"
+      ],
+      "blockIds": [
+        "common-lf7-signals-communication"
+      ]
+    },
+    {
+      "questionId": "LJ-LF7-SIGNALS-Q05",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf7-signals-communication",
+        "common-lf7-signals-signal"
+      ],
+      "blockIds": [
+        "common-lf7-signals-communication",
+        "common-lf7-signals-interpret"
+      ]
+    },
+    {
+      "questionId": "LJ-LF7-SIGNALS-Q06",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf7-signals-communication",
+        "common-lf7-signals-flows"
+      ],
+      "blockIds": [
+        "common-lf7-signals-flows",
+        "common-lf7-signals-interpret"
+      ]
+    },
+    {
+      "questionId": "LJ-LF7-SIGNALS-E01",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf7-signals-signal"
+      ],
+      "blockIds": [
+        "common-lf7-signals-signal"
+      ]
+    },
+    {
+      "questionId": "LJ-LF7-SIGNALS-E02",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf7-signals-signal"
+      ],
+      "blockIds": [
+        "common-lf7-signals-signal"
+      ]
+    },
+    {
+      "questionId": "LJ-LF7-SIGNALS-E03",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf7-signals-flows"
+      ],
+      "blockIds": [
+        "common-lf7-signals-flows"
+      ]
+    },
+    {
+      "questionId": "LJ-LF7-SIGNALS-E04",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf7-signals-flows",
+        "common-lf7-signals-communication"
+      ],
+      "blockIds": [
+        "common-lf7-signals-flows",
+        "common-lf7-signals-communication"
+      ]
+    },
+    {
+      "questionId": "LJ-LF7-SIGNALS-E05",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf7-signals-communication"
+      ],
+      "blockIds": [
+        "common-lf7-signals-communication"
+      ]
+    },
+    {
+      "questionId": "LJ-LF7-SIGNALS-E06",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf7-signals-communication"
+      ],
+      "blockIds": [
+        "common-lf7-signals-communication"
+      ]
+    },
+    {
+      "questionId": "LJ-LF7-SIGNALS-E07",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf7-signals-communication",
+        "common-lf7-signals-signal"
+      ],
+      "blockIds": [
+        "common-lf7-signals-interpret"
+      ]
+    },
+    {
+      "questionId": "LJ-LF7-SIGNALS-E08",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf7-signals-communication",
+        "common-lf7-signals-flows"
+      ],
+      "blockIds": [
+        "common-lf7-signals-interpret",
+        "common-lf7-signals-flows"
+      ]
+    }
+  ],
+  "interview": [
+    {
+      "id": "common-lf7-signals-talk-1",
+      "prompt": "Erkläre den Unterschied zwischen Temperatur, ADC-Code und dem Messwert 28,0 °C. Beziehe Auflösung und Genauigkeit ein.",
+      "objectiveIds": [
+        "common-lf7-signals-signal"
+      ],
+      "blockIds": [
+        "common-lf7-signals-signal"
+      ],
+      "keyPoints": [
+        "Physikalische Größe von digitaler Darstellung trennen.",
+        "10 Bit ergeben 1024 Codes; Temperaturzuordnung benötigt Umrechnung.",
+        "0,1-°C-Anzeigeschritt bedeutet nicht ±0,1-°C-Genauigkeit."
+      ],
+      "acceptableAlternatives": [
+        "Eine fachlich gleichwertige Erklärung mit passenden Modellbefunden und nachvollziehbarer Begründung."
+      ],
+      "misconceptions": [
+        "Ziffernanzahl mit Messgenauigkeit gleichsetzen."
+      ],
+      "sampleAnswer": "Temperatur ist die physikalische Größe. Ein ADC stellt sein Eingangssignal als Code dar; dessen Temperaturbedeutung braucht Sensorangaben und Umrechnung. Luftpunkt liefert schon Celsiuswerte. Der Schritt 0,1 °C und die angegebene Genauigkeit ±0,5 °C sagen Verschiedenes aus.",
+      "followUp": "Warum ist der Code 512 ohne weitere Unterlage keine Temperaturangabe?"
+    },
+    {
+      "id": "common-lf7-signals-talk-2",
+      "prompt": "Beschreibe eine Skizze für Luftpunkt mit Informations-, Energie- und Stoffpfeilen.",
+      "objectiveIds": [
+        "common-lf7-signals-flows",
+        "common-lf7-signals-signal"
+      ],
+      "blockIds": [
+        "common-lf7-signals-flows"
+      ],
+      "keyPoints": [
+        "Sensorwert und Schaltbefehl als Information eintragen.",
+        "5-V-Versorgung zu den Verbrauchern als Energie markieren.",
+        "Bewegte Umgebungsluft als Stofffluss darstellen."
+      ],
+      "acceptableAlternatives": [
+        "Eine fachlich gleichwertige Erklärung mit passenden Modellbefunden und nachvollziehbarer Begründung."
+      ],
+      "misconceptions": [
+        "Nachricht, elektrische Energie und Luftbewegung als denselben Fluss behandeln."
+      ],
+      "sampleAnswer": "Daten fließen vom Sensor zur Steuerung und als Befehl zum Aktor. Energie kommt von der Versorgung zu Sensor, Steuerung und Lüfter. Luft bewegt sich durch den dargestellten Lüfterbereich. Eine Legende hält diese drei Pfeilarten auseinander.",
+      "followUp": "Welchem Pfeil ordnest du die Nachricht temp=28.0 degC zu?"
+    },
+    {
+      "id": "common-lf7-signals-talk-3",
+      "prompt": "Lies den fiktiven Sensor-A-Auszug als Übergabe an Nora: Welche Transport- und Formatangaben muss sie berücksichtigen?",
+      "objectiveIds": [
+        "common-lf7-signals-communication",
+        "common-lf7-signals-signal",
+        "common-lf7-signals-flows"
+      ],
+      "blockIds": [
+        "common-lf7-signals-communication",
+        "common-lf7-signals-interpret",
+        "common-lf7-signals-flows"
+      ],
+      "keyPoints": [
+        "UART, 3,3-V-Datenpegel, 9600 Baud und 8N1 nennen.",
+        "ASCII, Feldname temp, Dezimalpunkt, degC und LF erklären.",
+        "5 V Versorgung getrennt halten; Adapter liefert Zahl und Verbindungsstatus."
+      ],
+      "acceptableAlternatives": [
+        "Eine fachlich gleichwertige Erklärung mit passenden Modellbefunden und nachvollziehbarer Begründung."
+      ],
+      "misconceptions": [
+        "Die Einheit aus dem Zahlenanteil erraten."
+      ],
+      "sampleAnswer": "Der Transport ist UART mit 3,3-V-Pegeln, 9600 Baud und 8N1. Die Nutzdaten sind eine ASCII-Zeile mit temp, Zahlenwert, degC und LF. Versorgung 5 V gehört zur Energiefrage. Der Modelladapter prüft das Format und liefert der Funktion eine Celsiuszahl und den Verbindungszustand.",
+      "followUp": "Warum reicht eine passende Baudrate nicht für die richtige fachliche Interpretation?"
+    }
+  ],
+  "cards": [
+    {
+      "id": "common-lf7-signals-card-01",
+      "front": "Was unterscheidet analoge Größe und digitale Darstellung?",
+      "back": "Eine physikalische Größe kann kontinuierlich variieren; die digitale Darstellung nutzt unterscheidbare Codes oder Zahlen.",
+      "objectiveIds": [
+        "common-lf7-signals-signal"
+      ],
+      "blockIds": [
+        "common-lf7-signals-signal"
+      ]
+    },
+    {
+      "id": "common-lf7-signals-card-02",
+      "front": "Wie viele Codes liefert ein 10-Bit-ADC?",
+      "back": "1024 Codes, beispielsweise 0–1023. Die Zuordnung zu °C braucht Sensor- und Umrechnungsangaben.",
+      "objectiveIds": [
+        "common-lf7-signals-signal"
+      ],
+      "blockIds": [
+        "common-lf7-signals-signal"
+      ]
+    },
+    {
+      "id": "common-lf7-signals-card-03",
+      "front": "Welche drei Flüsse zeigt die Skizze?",
+      "back": "Information: Messwerte/Befehle. Energie: elektrische Versorgung. Stoff: bewegte Luft.",
+      "objectiveIds": [
+        "common-lf7-signals-flows"
+      ],
+      "blockIds": [
+        "common-lf7-signals-flows"
+      ]
+    },
+    {
+      "id": "common-lf7-signals-card-04",
+      "front": "Wofür stehen 5 V und 3,3 V im Sensor-A-Auszug?",
+      "back": "5 V ist die Modulversorgung, 3,3 V der UART-Datenpegel. Die Angaben sind nicht austauschbar.",
+      "objectiveIds": [
+        "common-lf7-signals-flows",
+        "common-lf7-signals-communication"
+      ],
+      "blockIds": [
+        "common-lf7-signals-flows",
+        "common-lf7-signals-communication"
+      ]
+    },
+    {
+      "id": "common-lf7-signals-card-05",
+      "front": "Was legt 9600/8N1 fest?",
+      "back": "UART-Übertragungsparameter: 9600 Baud, 8 Datenbits, keine Parität und 1 Stoppbit. Die Nachrichtensemantik kommt gesondert hinzu.",
+      "objectiveIds": [
+        "common-lf7-signals-communication"
+      ],
+      "blockIds": [
+        "common-lf7-signals-communication"
+      ]
+    },
+    {
+      "id": "common-lf7-signals-card-06",
+      "front": "Was prüft der Modelladapter an temp=28.0 degC?",
+      "back": "Feldname, Zahlenformat und Celsius-Einheit gemäß Vertrag. Er liefert die Zahl 28; Verbindung und zulässiger Bereich bleiben ebenfalls zu prüfen.",
+      "objectiveIds": [
+        "common-lf7-signals-communication",
+        "common-lf7-signals-signal"
+      ],
+      "blockIds": [
+        "common-lf7-signals-interpret"
+      ]
+    }
+  ],
+  "review": {
+    "status": "reviewed",
+    "checkedAt": "2026-11-16"
+  }
+}

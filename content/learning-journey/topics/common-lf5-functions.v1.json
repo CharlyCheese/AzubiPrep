@@ -1,0 +1,482 @@
+{
+  "schemaVersion": 1,
+  "id": "common-lf5-functions",
+  "version": "1.0.0",
+  "title": "Algorithmen in Funktionen zerlegen",
+  "fieldId": "LF5",
+  "scope": "common",
+  "prerequisites": [
+    "common-lf5-control"
+  ],
+  "sourceIds": [
+    "lf5-mdn-integer",
+    "lf5-mdn-operators",
+    "lf5-mdn-control",
+    "lf5-mdn-functions"
+  ],
+  "sources": [
+    {
+      "id": "lf5-mdn-integer",
+      "title": "MDN: Number.isInteger()",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/isInteger",
+      "note": "Ganzzahlprüfung einschließlich Ablehnung von Zahlentexten und Nachkommawerten geprüft; Grenze 0 bis 1000 ist eine eigene Modellvorgabe.",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "lf5-mdn-operators",
+      "title": "MDN: Expressions and operators",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Expressions_and_operators",
+      "note": "Zuweisung, Rechenoperatoren, Vergleiche und logische Verknüpfungen geprüft.",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "lf5-mdn-control",
+      "title": "MDN: Control flow and error handling",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Control_flow_and_error_handling",
+      "note": "if/else, Bedingungen und Anweisungsblöcke geprüft. Der eigene Funktionsvertrag nutzt null als vereinbartes Fehlerergebnis.",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "lf5-mdn-functions",
+      "title": "MDN: Functions",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Functions",
+      "note": "Funktionsdefinition, Parameter, Argumente und Rückgabewerte geprüft.",
+      "checkedAt": "2026-11-16"
+    }
+  ],
+  "objectives": [
+    {
+      "id": "common-lf5-functions-model",
+      "text": "Einen kurzen Algorithmus als Ablaufdiagramm oder Pseudocode nachvollziehbar darstellen."
+    },
+    {
+      "id": "common-lf5-functions-function",
+      "text": "Eine wiederkehrende Teilaufgabe als Funktion mit Parametern und Rückgabewert umsetzen."
+    }
+  ],
+  "caseStudy": {
+    "title": "Mira zerlegt die Mengenprüfung",
+    "text": "Die fiktive Bestandsprüfung wird als kleine Funktion beschrieben. Mira legt Eingaben und Ergebnisse zuerst in Alltagssprache und Pseudocode fest. Die Umsetzung verwendet dasselbe JavaScript wie die vorherigen Abschnitte."
+  },
+  "blocks": [
+    {
+      "id": "common-lf5-functions-algorithm",
+      "title": "1. Vom Auftrag zum Pseudocode",
+      "objectiveIds": [
+        "common-lf5-functions-model"
+      ],
+      "sourceIds": [
+        "lf5-mdn-control",
+        "lf5-mdn-functions"
+      ],
+      "paragraphs": [
+        "Ein Algorithmus ist eine geordnete Folge eindeutiger Schritte für eine Aufgabe. Pseudocode beschreibt den Ablauf ohne alle Syntaxregeln einer Programmiersprache. Für unsere Mengenprüfung lautet er: Eingaben Bestand und Anforderung erhalten; beide prüfen; bei ungültiger Eingabe Fehlerwert liefern; sonst Anforderung mit Bestand vergleichen; Ergebnis liefern.",
+        "Formuliere Entscheidungen mit ihren beiden Folgen. Der Ablauf muss auch für Menge 0, ausgeschöpften Bestand und ungültige Werte klar sein. Der Fehlerweg endet vor dem fachlichen Vergleich, damit beispielsweise ein Zahlentext nicht als freigegebene Stückzahl gilt.",
+        "Ein Ablaufdiagramm könnte Start, Eingabe, Entscheidung Gültig?, Entscheidung Anforderung höchstens Bestand? und die Ergebnisse null, true oder false mit Pfeilen verbinden. Hier genügt der schriftliche Pseudocode. Er ist eine Verständigung über die Logik, noch kein ausführbares JavaScript."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Übungsfall",
+        "text": "Für Bestand 2 und Anforderung 5 folgt der Ablauf dem gültigen Weg und liefert false. Bei Text '2' endet er im Fehlerweg."
+      },
+      "misconception": {
+        "claim": "Pseudocode muss dieselben Sonderzeichen enthalten wie JavaScript.",
+        "correction": "Pseudocode erklärt den Ablauf; die konkrete Sprachsyntax wird anschließend ergänzt."
+      },
+      "takeaway": "Prüfe die Logik zuerst mit klaren Schritten und Beispielen."
+    },
+    {
+      "id": "common-lf5-functions-function",
+      "title": "2. Parameter und Rückgabewert verstehen",
+      "objectiveIds": [
+        "common-lf5-functions-function"
+      ],
+      "sourceIds": [
+        "lf5-mdn-functions"
+      ],
+      "paragraphs": [
+        "Eine Funktion bündelt eine wiederkehrende Teilaufgabe. function remaining(quantity, requested) { return quantity - requested; } definiert den Namen remaining, zwei Parameter in runden Klammern und einen Rumpf in geschweiften Klammern. Für dieses erste Beispiel werden gültige Zahlen und requested <= quantity vorausgesetzt.",
+        "Beim Aufruf remaining(8, 3) werden die Argumente 8 und 3 an quantity und requested übergeben. return liefert hier 5 an die aufrufende Stelle zurück und beendet den Funktionsaufruf. const rest = remaining(8, 3); speichert das Ergebnis in rest.",
+        "Parameter sind benannte Eingaben; Argumente sind die konkreten Werte eines Aufrufs. Ein return ist keine Ausgabe auf einem Bildschirm. Die aufrufende Anwendung entscheidet, wie sie den erhaltenen Wert verwendet oder anzeigt."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Übungsfall",
+        "text": "remaining(7, 2) ergibt 5, remaining(7, 7) ergibt 0. Jeder Aufruf erhält eigene Eingabewerte."
+      },
+      "misconception": {
+        "claim": "Eine Funktion mit return zeigt ihren Wert bereits automatisch im Bedienfenster an.",
+        "correction": "return liefert einen Wert an den Aufrufer. Anzeige ist eine separate Aufgabe."
+      },
+      "takeaway": "Halte Eingaben, Berechnung und zurückgegebenes Ergebnis auseinander."
+    },
+    {
+      "id": "common-lf5-functions-contract",
+      "title": "3. Den Vertrag für available festlegen",
+      "objectiveIds": [
+        "common-lf5-functions-function",
+        "common-lf5-functions-model"
+      ],
+      "sourceIds": [
+        "lf5-mdn-functions",
+        "lf5-mdn-integer",
+        "lf5-mdn-operators"
+      ],
+      "paragraphs": [
+        "Die spätere Übung erwartet eine Funktion mit genau diesem Namen und diesen Parametern: function available(quantity, requested) { ... }. Beide Eingaben müssen ganze Zahlen von 0 bis 1000 sein. Wenn eine Eingabe dagegen verstößt, gibt die Funktion null zurück. Bei gültigen Eingaben liefert sie requested <= quantity als boolean.",
+        "Beispiele des Vertrags: available(8, 3) ergibt true, available(2, 5) ergibt false, available(4, 4) und available(0, 0) ergeben true. available(-1, 1), available(3, 1.5), available('3', 1) und available(1001, 1) ergeben null. Die Gültigkeitsprüfung gilt symmetrisch für beide Parameter.",
+        "Die benötigten Bausteine sind bekannt: Number.isInteger prüft Ganzzahligkeit; ! verneint; || verbindet Fehlerbedingungen; < und > prüfen die Grenzen; if wählt den Fehlerweg; return null; beendet ihn. Im gültigen Weg liefert return requested <= quantity; den Vergleich. Eine Lösung darf die Prüfungen auch auf mehrere if-Blöcke verteilen."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Übungsfall",
+        "text": "if (!Number.isInteger(quantity)) { return null; } ist ein möglicher Baustein. Alle weiteren Regeln für beide Eingaben müssen zusätzlich erfüllt werden."
+      },
+      "misconception": {
+        "claim": "available darf nur für die abgebildeten Beispielwerte funktionieren.",
+        "correction": "Der Vertrag gilt für alle erlaubten Eingaben und alle beschriebenen Fehlerarten. Die Beispiele machen ihn prüfbar."
+      },
+      "takeaway": "Ein Funktionsvertrag benennt gültige Eingaben, Bedeutung aller Ergebnisse und Fehlerreaktionen."
+    },
+    {
+      "id": "common-lf5-functions-reuse",
+      "title": "4. Kleine Zuständigkeiten gezielt wiederverwenden",
+      "objectiveIds": [
+        "common-lf5-functions-function",
+        "common-lf5-functions-model"
+      ],
+      "sourceIds": [
+        "lf5-mdn-functions"
+      ],
+      "paragraphs": [
+        "available entscheidet über Verfügbarkeit, verändert aber keine Lagerzeile. Die Datenverwaltung wählt Datensätze aus und ändert sie in einer getrennten Aufgabe. Dadurch kann dieselbe Fachprüfung an verschiedenen Stellen mit denselben Regeln aufgerufen werden.",
+        "Eine kleine reine Funktion verwendet für ihr Ergebnis die übergebenen Werte und verändert keinen äußeren Bestand. Wiederholte Aufrufe mit denselben Eingaben liefern dasselbe Ergebnis. Das macht Fälle wie available(6, 6) leicht nachvollziehbar und testbar.",
+        "Beschreibe Zuständigkeiten im Pseudocode: Datensatz auswählen; Eingaben bestimmen; Fachfunktion aufrufen; Ergebnis passend anzeigen. Das Beispiel remaining dient der Rückgabesyntax, available entscheidet dagegen nur Ja, Nein oder ungültig. Namen und Dokumentation verhindern, dass eine Entscheidung mit einer tatsächlichen Buchung verwechselt wird."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Übungsfall",
+        "text": "Zwei Anzeigen können available(8, 3) nutzen. Die Funktion liefert zweimal true; daraus folgt noch keine Verringerung der Menge 8."
+      },
+      "misconception": {
+        "claim": "Ein positives Verfügbarkeitsergebnis bucht die Anforderung schon aus dem Bestand aus.",
+        "correction": "Der Vertrag enthält keine Datenänderung. Eine Buchung wäre eine eigene Operation."
+      },
+      "takeaway": "Gib einer Funktion eine klare Aufgabe und teste ihr Ergebnis unabhängig von der Anzeige."
+    }
+  ],
+  "questionFile": "questions/common-lf5-functions.v1.csv",
+  "quiz": {
+    "questionIds": [
+      "LJ-LF5-FUNCTIONS-Q01",
+      "LJ-LF5-FUNCTIONS-Q02",
+      "LJ-LF5-FUNCTIONS-Q03",
+      "LJ-LF5-FUNCTIONS-Q04",
+      "LJ-LF5-FUNCTIONS-Q05",
+      "LJ-LF5-FUNCTIONS-Q06"
+    ]
+  },
+  "exam": {
+    "questionIds": [
+      "LJ-LF5-FUNCTIONS-E01",
+      "LJ-LF5-FUNCTIONS-E02",
+      "LJ-LF5-FUNCTIONS-E03",
+      "LJ-LF5-FUNCTIONS-E04",
+      "LJ-LF5-FUNCTIONS-E05",
+      "LJ-LF5-FUNCTIONS-E06",
+      "LJ-LF5-FUNCTIONS-E07",
+      "LJ-LF5-FUNCTIONS-E08"
+    ],
+    "passPercent": 80,
+    "scoring": "all-or-nothing-per-question",
+    "timed": false
+  },
+  "questionLinks": [
+    {
+      "questionId": "LJ-LF5-FUNCTIONS-Q01",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf5-functions-model"
+      ],
+      "blockIds": [
+        "common-lf5-functions-algorithm"
+      ]
+    },
+    {
+      "questionId": "LJ-LF5-FUNCTIONS-Q02",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf5-functions-model"
+      ],
+      "blockIds": [
+        "common-lf5-functions-algorithm"
+      ]
+    },
+    {
+      "questionId": "LJ-LF5-FUNCTIONS-Q03",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf5-functions-function"
+      ],
+      "blockIds": [
+        "common-lf5-functions-function"
+      ]
+    },
+    {
+      "questionId": "LJ-LF5-FUNCTIONS-Q04",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf5-functions-function"
+      ],
+      "blockIds": [
+        "common-lf5-functions-function"
+      ]
+    },
+    {
+      "questionId": "LJ-LF5-FUNCTIONS-Q05",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf5-functions-function"
+      ],
+      "blockIds": [
+        "common-lf5-functions-contract"
+      ]
+    },
+    {
+      "questionId": "LJ-LF5-FUNCTIONS-Q06",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf5-functions-function",
+        "common-lf5-functions-model"
+      ],
+      "blockIds": [
+        "common-lf5-functions-contract"
+      ]
+    },
+    {
+      "questionId": "LJ-LF5-FUNCTIONS-E01",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf5-functions-model"
+      ],
+      "blockIds": [
+        "common-lf5-functions-algorithm"
+      ]
+    },
+    {
+      "questionId": "LJ-LF5-FUNCTIONS-E02",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf5-functions-function"
+      ],
+      "blockIds": [
+        "common-lf5-functions-function"
+      ]
+    },
+    {
+      "questionId": "LJ-LF5-FUNCTIONS-E03",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf5-functions-function"
+      ],
+      "blockIds": [
+        "common-lf5-functions-function"
+      ]
+    },
+    {
+      "questionId": "LJ-LF5-FUNCTIONS-E04",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf5-functions-function"
+      ],
+      "blockIds": [
+        "common-lf5-functions-contract"
+      ]
+    },
+    {
+      "questionId": "LJ-LF5-FUNCTIONS-E05",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf5-functions-function"
+      ],
+      "blockIds": [
+        "common-lf5-functions-contract"
+      ]
+    },
+    {
+      "questionId": "LJ-LF5-FUNCTIONS-E06",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf5-functions-function"
+      ],
+      "blockIds": [
+        "common-lf5-functions-reuse"
+      ]
+    },
+    {
+      "questionId": "LJ-LF5-FUNCTIONS-E07",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf5-functions-model",
+        "common-lf5-functions-function"
+      ],
+      "blockIds": [
+        "common-lf5-functions-reuse"
+      ]
+    },
+    {
+      "questionId": "LJ-LF5-FUNCTIONS-E08",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf5-functions-function"
+      ],
+      "blockIds": [
+        "common-lf5-functions-contract"
+      ]
+    }
+  ],
+  "interview": [
+    {
+      "id": "common-lf5-functions-talk-1",
+      "prompt": "Formuliere den Ablauf von available als Pseudocode ohne vollständige JavaScript-Syntax.",
+      "objectiveIds": [
+        "common-lf5-functions-model"
+      ],
+      "blockIds": [
+        "common-lf5-functions-algorithm"
+      ],
+      "keyPoints": [
+        "Eingaben nennen.",
+        "Fehlerweg zuerst klären.",
+        "Gültigen Vergleich einschließlich Gleichheit angeben."
+      ],
+      "acceptableAlternatives": [
+        "Eine fachlich gleichwertige Erklärung mit passenden eigenen Beispielen."
+      ],
+      "misconceptions": [
+        "Pseudocode muss dieselben Sonderzeichen enthalten wie JavaScript."
+      ],
+      "sampleAnswer": "Erhalte Bestand und Anforderung. Prüfe beide auf ganze Zahlen von 0 bis 1000. Bei einem Verstoß liefere ungültig als null. Sonst liefere, ob die Anforderung höchstens dem Bestand entspricht.",
+      "followUp": "Wie verläuft der Algorithmus für Bestand 4 und Anforderung 4?"
+    },
+    {
+      "id": "common-lf5-functions-talk-2",
+      "prompt": "Erkläre Parameter, Argumente und Rückgabewert an available(8, 3).",
+      "objectiveIds": [
+        "common-lf5-functions-function"
+      ],
+      "blockIds": [
+        "common-lf5-functions-function",
+        "common-lf5-functions-contract"
+      ],
+      "keyPoints": [
+        "Parameter quantity und requested nennen.",
+        "Argumente 8 und 3 zuordnen.",
+        "true als zurückgegebenen Wert ohne Buchung erklären."
+      ],
+      "acceptableAlternatives": [
+        "Eine fachlich gleichwertige Erklärung mit passenden eigenen Beispielen."
+      ],
+      "misconceptions": [
+        "Eine Funktion mit return zeigt ihren Wert bereits automatisch im Bedienfenster an."
+      ],
+      "sampleAnswer": "quantity und requested sind die Namen der Eingaben. Beim Aufruf werden 8 und 3 übergeben. Beide sind gültig und 3 ist höchstens 8, deshalb erhält der Aufrufer true. Es wird keine Menge geändert.",
+      "followUp": "Welche zusätzliche Aufgabe wäre für eine Lagerbuchung erforderlich?"
+    },
+    {
+      "id": "common-lf5-functions-talk-3",
+      "prompt": "Begründe die Trennung zwischen Fachentscheidung und Bestandsänderung.",
+      "objectiveIds": [
+        "common-lf5-functions-model",
+        "common-lf5-functions-function"
+      ],
+      "blockIds": [
+        "common-lf5-functions-contract",
+        "common-lf5-functions-reuse"
+      ],
+      "keyPoints": [
+        "Klare Zuständigkeit der reinen Funktion.",
+        "Wiederverwendung mit denselben Regeln.",
+        "Fehlerwert und gültiges Nein unterscheiden."
+      ],
+      "acceptableAlternatives": [
+        "Eine fachlich gleichwertige Erklärung mit passenden eigenen Beispielen."
+      ],
+      "misconceptions": [
+        "available darf nur für die abgebildeten Beispielwerte funktionieren."
+      ],
+      "sampleAnswer": "available beantwortet nur eine Frage zu zwei Werten. Dadurch kann ich dieselbe Regel in mehreren Anzeigen verwenden und ohne Datenänderung testen. null bedeutet eine ungültige Eingabe, false eine gültige Anforderung oberhalb des Bestands. Die Auswahl und Änderung einer Zeile bleiben eigene Schritte.",
+      "followUp": "Woran prüfst du eine anders geschriebene, aber fachlich gleichwertige Lösung?"
+    }
+  ],
+  "cards": [
+    {
+      "id": "common-lf5-functions-card-1",
+      "front": "Wozu dient Pseudocode?",
+      "back": "Er stellt Eingaben, Schritte, Entscheidungen und Ergebnisse verständlich dar, ohne vollständige Sprachsyntax zu verlangen.",
+      "objectiveIds": [
+        "common-lf5-functions-model"
+      ],
+      "blockIds": [
+        "common-lf5-functions-algorithm"
+      ]
+    },
+    {
+      "id": "common-lf5-functions-card-2",
+      "front": "Was unterscheidet Parameter und Argument?",
+      "back": "Der Parameter ist der Eingabename in der Definition; das Argument ist der konkrete Wert beim Aufruf.",
+      "objectiveIds": [
+        "common-lf5-functions-function"
+      ],
+      "blockIds": [
+        "common-lf5-functions-function"
+      ]
+    },
+    {
+      "id": "common-lf5-functions-card-3",
+      "front": "Was tut return?",
+      "back": "Es gibt einen Wert an den Aufrufer zurück und beendet den aktuellen Funktionsaufruf.",
+      "objectiveIds": [
+        "common-lf5-functions-function"
+      ],
+      "blockIds": [
+        "common-lf5-functions-function"
+      ]
+    },
+    {
+      "id": "common-lf5-functions-card-4",
+      "front": "Welche Ergebnisse kennt available?",
+      "back": "true für ausreichenden Bestand, false für gültige Anforderung über dem Bestand, null für ungültige Eingaben.",
+      "objectiveIds": [
+        "common-lf5-functions-function"
+      ],
+      "blockIds": [
+        "common-lf5-functions-contract"
+      ]
+    },
+    {
+      "id": "common-lf5-functions-card-5",
+      "front": "Welche Mengen akzeptiert available?",
+      "back": "Beide Parameter müssen Zahlen sein, ganzzahlig und zwischen 0 und 1000 einschließlich.",
+      "objectiveIds": [
+        "common-lf5-functions-function"
+      ],
+      "blockIds": [
+        "common-lf5-functions-contract"
+      ]
+    },
+    {
+      "id": "common-lf5-functions-card-6",
+      "front": "Verändert available den Bestand?",
+      "back": "Nein. Sie berechnet eine Entscheidung aus zwei Werten. Datenänderung und Darstellung sind getrennte Aufgaben.",
+      "objectiveIds": [
+        "common-lf5-functions-model",
+        "common-lf5-functions-function"
+      ],
+      "blockIds": [
+        "common-lf5-functions-reuse"
+      ]
+    }
+  ],
+  "review": {
+    "status": "reviewed",
+    "checkedAt": "2026-11-16"
+  }
+}
+

@@ -53,7 +53,7 @@ test('DOM: echte Initialisierung, erster Ereignishalt, einzelne Mutation, Closur
 });
 
 test('HTML/Snapshot: geschlossene Tags, Attribute, IDs und Größen vor der VM prüfen',()=>{
- for(const html of ['<script>alert(1)</script>','<img src="https://example.org/x">','<style>body{display:none}</style>','<a href="/">x</a>','<form></form>','<input>','<button onclick="x()">x</button>','<p style="color:red">x</p>','<button type="submit">x</button>','<svg></svg>','<iframe></iframe>'])expect(()=>parseDebugHTML(html),html).toThrow();
+ for(const html of ['<script>alert(1)</script>','<img src="https://example.org/x">','<style>body{display:none}</style>','<a href="/">x</a>','<form action="/"></form>','<input type="file">','<button onclick="x()">x</button>','<p style="color:red">x</p>','<button type="reset">x</button>','<svg></svg>','<iframe></iframe>'])expect(()=>parseDebugHTML(html),html).toThrow();
  expect(()=>checkDebugHTML('a'.repeat(16385))).toThrow();expect(()=>parseDebugHTML('<div>'.repeat(17)+'x'+'</div>'.repeat(17))).toThrow();expect(()=>parseDebugHTML('<span>x</span>'.repeat(65))).toThrow();expect(()=>parseDebugHTML('a'.repeat(2049))).toThrow();
  const tree=parseDebugHTML('<p id="a">Text</p>');expect(validDOMTree(tree)).toBe(true);
  for(const mutate of [t=>{t.extra=1;},t=>{t.attrs.style='x';},t=>{t.children[0].id=t.id;},t=>{t.children[0].tag='script';},t=>{t.children[0].children[0].text='x'.repeat(2049);},t=>{t.children[0].disabled=true;}]){const t=structuredClone(tree);mutate(t);expect(validDOMTree(t)).toBe(false);}
@@ -127,9 +127,9 @@ test('Controller: Klickgates, genau ein Ereignis, Ereigniswartefrist und ungült
    const send=data=>worker.onmessage({data:{...data,...base,seq:++seq}});
    send({type:'dom',tree:a.dom.tree});send({type:'running',remaining:1000});expect(run.click(3)).toBe(false);
    const point=a.points.find(x=>x.end),scopes=point.scopes.map(s=>({id:s.id,values:s.names.map(name=>({name,type:'uninitialized',display:'noch nicht initialisiert'}))})),snapshot={point:point.id,truncated:false,scopes,frames:[{id:0,functionId:0,point:point.id,scopes}]};
-   send({type:'final',snapshot});send({type:'idle',remaining:900});expect(run.click(3)).toBe(true);expect(run.click(3)).toBe(false);const command=worker.messages.at(-1);expect(command.event).toEqual({id:3});send({type:'ack',commandId:command.commandId});send({type:'running',remaining:900});
+   send({type:'final',snapshot});send({type:'idle',remaining:900,timers:{pending:0,nextDelay:null}});expect(run.click(3)).toBe(true);expect(run.click(3)).toBe(false);const command=worker.messages.at(-1);expect(command.event).toEqual({id:3});send({type:'ack',commandId:command.commandId});send({type:'running',remaining:900});
    if(badTree){send({type:'dom',tree:{...a.dom.tree,attrs:{style:'bad'}}});expect(events.at(-1).type).toBe('error');}
-   else {send({type:'idle',remaining:850});await new Promise(resolve=>setTimeout(resolve,60));expect(events.at(-1).text).toContain('Ereigniswartezeit');}
+   else {send({type:'idle',remaining:850,timers:{pending:0,nextDelay:null}});await new Promise(resolve=>setTimeout(resolve,60));expect(events.at(-1).text).toContain('Ereigniswartezeit');}
    expect(worker.terminated).toBe(true);expect(run.click(3)).toBe(false);run.dispose();
   }
  }finally{globalThis.Worker=original;}

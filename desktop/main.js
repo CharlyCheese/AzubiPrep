@@ -19,6 +19,7 @@ protocol.registerSchemesAsPrivileged([
   { scheme: 'azubi-js-pilot', privileges: { standard: true, secure: true } },
 ]);
 const { createStore, createAiPreferences, readProject, validSender } = require('./pilot-runtime.cjs');
+const { createJourneyStore } = require('./journey-storage.cjs');
 const { createInspector } = require('./pilot-inspector.cjs');
 const { createJsPilot } = require('./js-pilot.cjs');
 const profileOverride = app.commandLine.getSwitchValue('user-data-dir');
@@ -33,6 +34,7 @@ let jsPilot = null;
 function registerPilot() {
   const store = createStore(app.getPath('userData'));
   const aiPreferences = createAiPreferences(app.getPath('userData'));
+  const journey = createJourneyStore(app.getPath('userData'));
   const guard = (event) => { if (!validSender(event, hauptfenster, appOrigin)) throw Error('Nicht freigegebener Anwendungsaufruf.'); };
   const javascriptPilot = () => {
     if (!jsPilot) jsPilot = createJsPilot(hauptfenster, appOrigin, value => { if (hauptfenster && !hauptfenster.isDestroyed()) hauptfenster.webContents.send('js-pilot:event', value); });
@@ -45,6 +47,8 @@ function registerPilot() {
   ipcMain.handle('pilot:save', (event, value) => { guard(event); return store.save(value); });
   ipcMain.handle('ai:preferences-load', (event) => { guard(event); return aiPreferences.load(); });
   ipcMain.handle('ai:preferences-save', (event, value) => { guard(event); return aiPreferences.save(value); });
+  ipcMain.handle('journey:load', (event, topicId) => { guard(event); return journey.load(topicId); });
+  ipcMain.handle('journey:save', (event, value) => { guard(event); return journey.save(value); });
   ipcMain.handle('rag:open-folder', async (event) => {
     guard(event);
     const { createRagService } = await import(pathToFileURL(path.join(projektwurzel(), 'backend/src/rag.js')).href);
@@ -103,6 +107,33 @@ async function backendStarten() {
   return { url, server };
 }
 
+function openExternalTarget({ url: target }) {
+  try {
+    const parsed = new URL(target);
+    const sourceHosts = [
+      'developer.mozilla.org', 'wiki.selfhtml.org', 'www.w3schools.com', 'auth.openai.com', 'chatgpt.com',
+      'www.kmk.org', 'www.gesetze-im-internet.de', 'www.existenzgruendungsportal.de', 'www.bibb.de',
+      'eur-lex.europa.eu', 'publikationen.bundesbank.de', 'www.arbeitsagentur.de', 'www.bpb.de',
+      'www.bundesarbeitsgericht.de', 'www.bundeswirtschaftsministerium.de', 'www.umweltbundesamt.de',
+      'www.verbraucherzentrale-berlin.de', 'www.deutsche-rentenversicherung.de',
+      'europa.eu', 'erasmus-plus.ec.europa.eu', 'policy.trade.ec.europa.eu',
+      'pm2.europa.eu', 'hzd-zpm.hessen.de', 'www.gov.uk', 'support.microsoft.com',
+      'scrumguides.org', 'www.scrum.org', 'resources.scrumalliance.org', 'www.nasa.gov',
+      'www.ihk-muenchen.de', 'www.ihk.de', 'www.ihk-niederbayern.de',
+      'www.stmelf.bayern.de', 'www.umweltpakt.bayern.de',
+      'bildungsportal-niedersachsen.de', 'opensource.org', 'verbraucherzentrale-energieberatung.de',
+      'www.bgbau.de', 'www.bghm.de', 'www.gesetze-bayern.de', 'www.gesetze-im-internet.juris.de',
+      'www.ibm.com', 'www.msi.com',
+      'cheatsheetseries.owasp.org', 'docs.arduino.cc', 'pages.nist.gov', 'www.analog.com', 'www.nist.gov', 'www.pubs.ext.vt.edu', 'www.w3.org',
+      'csrc.nist.gov', 'www.sqlite.org', 'www.postgresql.org', 'www.atlassian.com', 'support.atlassian.com',
+      'commission.europa.eu', 'docs.python.org', 'www.omg.org', 'git-scm.com',
+      'learn.microsoft.com', 'physics.nist.gov', 'support.apple.com', 'www.cisco.com', 'www.rfc-editor.org',
+    ];
+    if (parsed.protocol === 'https:' && !parsed.username && !parsed.password && sourceHosts.includes(parsed.hostname)) shell.openExternal(parsed.href).catch(() => {});
+  } catch { /* Alle anderen Fenster bleiben gesperrt. */ }
+  return { action: 'deny' };
+}
+
 async function fensterErstellen() {
   try {
     const { url, server } = await backendStarten();
@@ -125,13 +156,7 @@ async function fensterErstellen() {
       },
     });
 
-    hauptfenster.webContents.setWindowOpenHandler(({ url: target }) => {
-      try {
-        const parsed = new URL(target);
-        if (parsed.protocol === 'https:' && !parsed.username && !parsed.password && ['developer.mozilla.org', 'wiki.selfhtml.org', 'www.w3schools.com', 'auth.openai.com', 'chatgpt.com'].includes(parsed.hostname)) shell.openExternal(parsed.href).catch(() => {});
-      } catch { /* Alle anderen Fenster bleiben gesperrt. */ }
-      return { action: 'deny' };
-    });
+    hauptfenster.webContents.setWindowOpenHandler(openExternalTarget);
     const stopForeign = (event, target = event.url) => { try { if (new URL(target).origin !== appOrigin) event.preventDefault(); } catch { event.preventDefault(); } };
     hauptfenster.webContents.on('will-navigate', stopForeign);
     hauptfenster.webContents.on('will-redirect', stopForeign);
@@ -176,23 +201,38 @@ function berechtigungenEinrichten() {
   }
 }
 
-app.whenReady().then(() => {
-  registerPilot();
-  berechtigungenEinrichten();
-  Menu.setApplicationMenu(Menu.buildFromTemplate([
-    { label: 'Datei', submenu: [{ role: 'quit', label: 'Beenden' }] },
-    { label: 'Bearbeiten', submenu: [{ role: 'undo', label: 'Rückgängig' }, { role: 'redo', label: 'Wiederholen' }, { type: 'separator' }, { role: 'cut', label: 'Ausschneiden' }, { role: 'copy', label: 'Kopieren' }, { role: 'paste', label: 'Einfügen' }, { role: 'selectAll', label: 'Alles auswählen' }] },
-    { label: 'Ansicht', submenu: [{ role: 'reload', label: 'Neu laden' }, { role: 'resetZoom', label: 'Originalgröße' }, { role: 'zoomIn', label: 'Vergrößern' }, { role: 'zoomOut', label: 'Verkleinern' }, { role: 'togglefullscreen', label: 'Vollbild' }] },
-  ]));
-  return fensterErstellen();
-});
+// Electron bindet seine Prozesssperre an userData. Erst nach der oben gesetzten
+// Profilwahl anfordern: getrennte Profile bleiben parallel verwendbar, ein
+// zweiter Prozess desselben Profils startet weder Backend noch Schreibbrücken.
+if (!app.requestSingleInstanceLock()) {
+  app.quit();
+} else {
+  app.on('second-instance', () => {
+    if (hauptfenster && !hauptfenster.isDestroyed()) {
+      if (hauptfenster.isMinimized()) hauptfenster.restore();
+      hauptfenster.show();
+      hauptfenster.focus();
+    }
+  });
 
-app.on('window-all-closed', () => {
-  if (backendServer) backendServer.close();
-  if (process.platform !== 'darwin') app.quit();
-});
-app.on('before-quit', () => { if (jsPilot) jsPilot.dispose(); });
+  app.whenReady().then(() => {
+    registerPilot();
+    berechtigungenEinrichten();
+    Menu.setApplicationMenu(Menu.buildFromTemplate([
+      { label: 'Datei', submenu: [{ role: 'quit', label: 'Beenden' }] },
+      { label: 'Bearbeiten', submenu: [{ role: 'undo', label: 'Rückgängig' }, { role: 'redo', label: 'Wiederholen' }, { type: 'separator' }, { role: 'cut', label: 'Ausschneiden' }, { role: 'copy', label: 'Kopieren' }, { role: 'paste', label: 'Einfügen' }, { role: 'selectAll', label: 'Alles auswählen' }] },
+      { label: 'Ansicht', submenu: [{ role: 'reload', label: 'Neu laden' }, { role: 'resetZoom', label: 'Originalgröße' }, { role: 'zoomIn', label: 'Vergrößern' }, { role: 'zoomOut', label: 'Verkleinern' }, { role: 'togglefullscreen', label: 'Vollbild' }] },
+    ]));
+    return fensterErstellen();
+  });
 
-app.on('activate', () => {
-  if (BrowserWindow.getAllWindows().length === 0) fensterErstellen();
-});
+  app.on('window-all-closed', () => {
+    if (backendServer) backendServer.close();
+    if (process.platform !== 'darwin') app.quit();
+  });
+  app.on('before-quit', () => { if (jsPilot) jsPilot.dispose(); });
+
+  app.on('activate', () => {
+    if (BrowserWindow.getAllWindows().length === 0) fensterErstellen();
+  });
+}

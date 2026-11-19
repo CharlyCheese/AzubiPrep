@@ -1,0 +1,572 @@
+{
+  "schemaVersion": 1,
+  "id": "common-lf6-closure",
+  "version": "1.0.0",
+  "title": "Lösung prüfen und Service abschließen",
+  "fieldId": "LF6",
+  "scope": "common",
+  "prerequisites": [
+    "common-lf6-solution"
+  ],
+  "sourceIds": [
+    "lf6-atlassian-response",
+    "lf6-atlassian-priority",
+    "lf6-atlassian-sla",
+    "lf6-atlassian-communication",
+    "lf6-ms-deployment",
+    "lf6-atlassian-postmortem"
+  ],
+  "sources": [
+    {
+      "id": "lf6-atlassian-response",
+      "title": "Atlassian: How we respond to an incident",
+      "url": "https://www.atlassian.com/incident-management/handbook/incident-response",
+      "checkedAt": "2026-11-16",
+      "note": "Öffentliche Herstellerbeschreibung zu Aufnahme, Auswirkung, Eskalation, Diagnose, Wiederherstellung und Kommunikation geprüft. Eigene Rollen und Fallwerte sind fiktiv, keine verbindliche ITIL-Vorgabe."
+    },
+    {
+      "id": "lf6-atlassian-priority",
+      "title": "Atlassian: How impact and urgency are used to calculate priority",
+      "url": "https://support.atlassian.com/jira-service-management-cloud/docs/how-impact-and-urgency-are-used-to-calculate-priority/",
+      "checkedAt": "2026-11-16",
+      "note": "Herstellerdefinitionen von Auswirkung, Dringlichkeit und Priorität geprüft. Die zweistufigen Kriterien und P1/P2/P3-Zeiten im Lernfall sind selbst erfundene Modellvorgaben."
+    },
+    {
+      "id": "lf6-atlassian-sla",
+      "title": "Atlassian: Create service level agreements (SLAs)",
+      "url": "https://support.atlassian.com/jira-service-management-cloud/docs/create-service-level-agreements-slas/",
+      "checkedAt": "2026-11-16",
+      "note": "Öffentliche Dokumentation zu SLA-Messung, Zielen und Kalendern geprüft. Leistungsumfang, qualifizierte Erstreaktion und Zeitwerte im Lernfall werden ausdrücklich als eigene Vereinbarung vorgegeben."
+    },
+    {
+      "id": "lf6-atlassian-communication",
+      "title": "Atlassian: Incident communication templates and examples",
+      "url": "https://www.atlassian.com/incident-management/incident-communication/templates",
+      "checkedAt": "2026-11-16",
+      "note": "Öffentliche englische Herstellerbeispiele für Untersuchungsstand, betroffene Dienste und nächste Meldung geprüft. Englische Kurzmeldungen und Rückfragen im Inhalt sind eigene didaktische Formulierungen."
+    },
+    {
+      "id": "lf6-ms-deployment",
+      "title": "Microsoft: Recommendations for safe deployment practices",
+      "url": "https://learn.microsoft.com/en-us/azure/well-architected/operational-excellence/safe-deployments",
+      "checkedAt": "2026-11-16",
+      "note": "Herstellerempfehlungen zu kleinen freigegebenen Änderungen, Prüfung und vorbereiteter Wiederherstellung geprüft. Der lokale Versionswechsel und Rückfallplan sind ein synthetisches Übungsmodell."
+    },
+    {
+      "id": "lf6-atlassian-postmortem",
+      "title": "Atlassian: Incident postmortem process and best practices",
+      "url": "https://www.atlassian.com/incident-management/postmortem",
+      "checkedAt": "2026-11-16",
+      "note": "Öffentliche Herstellerbeschreibung zu dokumentiertem Verlauf, Ursache und konkreten Folgeaktionen geprüft. Lernfall trennt behobene Störung von offener Prozessverbesserung."
+    }
+  ],
+  "objectives": [
+    {
+      "id": "common-lf6-closure-verify",
+      "text": "Mit der betroffenen Person prüfen, ob das ursprüngliche Problem behoben ist."
+    },
+    {
+      "id": "common-lf6-closure-record",
+      "text": "Ursache, Lösung, Ergebnis und offene Punkte für Ticketabschluss und Wissensweitergabe festhalten."
+    },
+    {
+      "id": "common-lf6-closure-improve",
+      "text": "Aus einem Servicefall eine konkrete Verbesserung des Bearbeitungsprozesses ableiten."
+    }
+  ],
+  "caseStudy": {
+    "title": "Mira begleitet Radblick durch einen Servicefall",
+    "text": "Eigener fiktiver Abschlussfall: R-106 verbindet alle fünf LF6-Themen. Vier Personen bei Radblick können seit 09:05 nicht absenden, Lesen geht. Mira nimmt um 09:10 auf; Abholung ist 10:00 ohne Ersatzweg. Die Simulation führt durch Priorität, Diagnose, freigegebenen Wechsel 6 → 7, gemeinsame Funktionskontrolle und nachvollziehbaren Abschluss. Das Protokoll bleibt sichtbar; alle Ausgaben und Aufträge sind synthetisch."
+  },
+  "blocks": [
+    {
+      "id": "common-lf6-closure-verify",
+      "title": "1. Die ursprüngliche Aufgabe gemeinsam nachprüfen",
+      "objectiveIds": [
+        "common-lf6-closure-verify"
+      ],
+      "sourceIds": [
+        "lf6-atlassian-response",
+        "lf6-ms-deployment"
+      ],
+      "paragraphs": [
+        "Eine ausgeführte Änderung ist noch kein Beleg für eine gelöste Serviceanfrage. Leite den Abschlusstest aus dem ursprünglichen Problem ab: Welche Handlung scheiterte, welches Ergebnis war erwartet und wer war betroffen? Vereinbare mit der betroffenen Person einen sicheren, geeigneten Test. Vermeide echte Doppelaufträge, indem du eine freigegebene Testumgebung oder klar gekennzeichnete Übungsdaten verwendest.",
+        "Im Modell sendet Eda nach dem Wechsel auf 7 einen synthetischen Versandauftrag. Der Modellempfänger bestätigt den Eingang; der Auftrag ist am Ziel auffindbar. Damit wird mehr geprüft als eine Erfolgsmeldung am sendenden Client. Zusätzlich bleibt das Lesen vorhandener Aufträge möglich, damit eine wichtige bisher funktionierende Aufgabe nicht unbemerkt beeinträchtigt wird.",
+        "Halte Testbedingungen, erwartetes Ergebnis, tatsächlichen Befund und Rückmeldung fest. Frage Eda, ob sie den ursprünglichen Arbeitsschritt wieder erledigen kann. Für den Abschluss der betroffenen Gruppe muss der vereinbarte Prüfumfang abgedeckt sein; ein einzelner erfolgreicher Kontrollclient belegt nicht beliebige ungeprüfte Arbeitsplätze. In der begrenzten Simulation repräsentiert die gemeinsame Probe den vorgegebenen Gruppenfall.",
+        "Wenn der Test fehlschlägt oder die nötige Bestätigung noch aussteht, bleibt die Bearbeitung offen. Beschreibe den erreichten Zwischenstand und nächsten Schritt. Eine neue Versionsnummer, das Ausbleiben einer Beschwerde oder eine abgelaufene Frist ersetzt keine passende Funktionskontrolle."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Lernfall",
+        "text": "Die gemeinsame Modellprobe bestätigt Absenden, Eingang und weiterhin funktionierendes Lesen. Das Ergebnis wird mit Eda abgeglichen."
+      },
+      "misconception": {
+        "claim": "Wenn die neue Version angezeigt wird, ist das ursprüngliche Problem bereits nachweislich gelöst.",
+        "correction": "Die Versionsanzeige bestätigt einen Stand; erst die passende Funktionsprobe prüft den Arbeitsbedarf."
+      },
+      "takeaway": "Prüfe das ursprüngliche Arbeitsergebnis und wichtige Nebenwirkungen mit der betroffenen Person."
+    },
+    {
+      "id": "common-lf6-closure-record",
+      "title": "2. Abschluss und Wissensweitergabe nachvollziehbar festhalten",
+      "objectiveIds": [
+        "common-lf6-closure-record",
+        "common-lf6-closure-verify"
+      ],
+      "sourceIds": [
+        "lf6-atlassian-response",
+        "lf6-atlassian-postmortem"
+      ],
+      "paragraphs": [
+        "Der Abschluss verbindet den Verlauf mit dem Ergebnis: Ausgangssymptom und betroffene Arbeit, belegte Ursache, freigegebene Änderung, durchführende Rolle, Testbedingungen, Ergebnis und Rückmeldung. Ein Eintrag erledigt spart zwar Platz, hilft aber bei Rückfragen oder wiederkehrenden Störungen kaum. Verweise auf relevante Belege, statt unnötige private Daten oder Zugangsdaten zu übernehmen.",
+        "Für R-106 lautet die unmittelbare technische Erklärung: Die betroffene Gruppe nutzte den alten Absendezielpfad aus Konfiguration 6. Sam übernahm nach Freigabe 7; der gemeinsame synthetische Versand mit Eingangskontrolle und Lesen gelang. Die Belegkette verbindet Ist-/Sollvergleich, Kontrollfall und Nachprüfung. Warum die Verteilung 6 zurückließ, ist weiterhin eine offene Prozessfrage.",
+        "Eine wiederhergestellte Funktion kann abgeschlossen werden, während klar getrennte Folgeaufgaben weiterlaufen. Die Prüfung weiterer Clients erhält eine eigene Zuständigkeit und einen vereinbarten Termin mit Verweis auf R-106. Falls noch betroffene Personen nicht arbeiten können, ist das keine bloße vorbeugende Folgeaufgabe; dann ist der vereinbarte Störungsumfang noch nicht erledigt.",
+        "Für einen Wissenseintrag beschreibst du Erkennungsmerkmale, nötige Voraussetzungen, bewährte Prüfung, befugte Maßnahme und Erfolgskontrolle. Entferne unnötige personenbezogene Angaben und kennzeichne die Gültigkeitsgrenze, etwa Konfiguration 6 gegen Soll 7. Andere sollen den Denkweg prüfen können und nicht blind denselben Wert auf eine andere Umgebung übertragen."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Lernfall",
+        "text": "Abschlussnotiz: alter Zielpfad belegt; Sam: freigegeben 6 → 7; Eda: Testsendung mit Eingang bestätigt, Lesen intakt; Sam prüft weitere Clients als terminierte Folgeaufgabe."
+      },
+      "misconception": {
+        "claim": "Ein abgeschlossenes Störungsticket bedeutet, dass keine Folgeaufgabe mehr offen sein darf.",
+        "correction": "Getrennte Verbesserungs- oder Vorsorgeaufgaben dürfen offen bleiben, sofern der vereinbarte Störungsumfang behoben und die Verantwortung sichtbar ist."
+      },
+      "takeaway": "Ursache, Änderung, Nachweis und verbleibende Aufgaben machen den Abschluss belastbar."
+    },
+    {
+      "id": "common-lf6-closure-practice",
+      "title": "3. Den Servicefall durchführen und daraus lernen",
+      "objectiveIds": [
+        "common-lf6-closure-verify",
+        "common-lf6-closure-record",
+        "common-lf6-closure-improve"
+      ],
+      "sourceIds": [
+        "lf6-atlassian-response",
+        "lf6-atlassian-postmortem",
+        "lf6-ms-deployment"
+      ],
+      "paragraphs": [
+        "Eine Prozessverbesserung setzt an einem erkennbaren Mangel an und beschreibt eine überprüfbare Änderung des Vorgehens. Für R-106 passt: Sam ergänzt beim nächsten Konfigurationsrollout eine Kontrolle der Zielversion je betroffener Gruppe und einen synthetischen Sendetest mit Eingangskontrolle. Als Erfolgskriterium wird im Rolloutprotokoll festgehalten, dass jede vorgesehene Gruppe geprüft wurde und keine unerkannte Versionsabweichung blieb.",
+        "Das ist zunächst ein konkreter Verbesserungsvorschlag, kein Beweis für die organisatorische Ursache des alten Fehlers. Eine verantwortliche Person und ein Termin machen ihn bearbeitbar. Mehr Sorgfalt oder künftig schneller sein benennt dagegen weder Handlung noch Prüfung. Eine sachliche Nachbesprechung betrachtet Ablauf und Bedingungen, nicht eine unbelegte Schuldfrage.",
+        "Die praktische Abschlussübung steht in der zweiten Reflexion nach der ersten abgeschlossenen Reflexion bereit. Du bearbeitest sechs aufeinanderfolgende Modellschritte: Aufnahme; Priorität und SLA; Diagnose und Zuständigkeit; abgestimmte Lösung mit englischer Rückmeldung; Funktionskontrolle; Abschluss und Verbesserung. Die Antwortauswahl bildet fachliche Entscheidungen in einem begrenzten Fall ab.",
+        "Prüfe den jeweiligen Schritt und lies die konkrete Rückmeldung. Änderungen erfordern eine erneute Prüfung. Nach erfolgreichem Verlauf bleibt das Protokoll sichtbar. Notiere eine eigene Beobachtung, begründe deine Entscheidung und bestätige die Durchführung bewusst. Der abgeschlossene Fall wird als Nachweis erhalten; er ist keine echte Ticketbearbeitung und versendet keine Nachrichten oder Aufträge."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Lernfall",
+        "text": "Mira ergänzt nicht bloß Rollout verbessern, sondern eine Versionskontrolle mit Sendetest, Sam als Verantwortlichen und die Auswertung beim nächsten Rollout."
+      },
+      "misconception": {
+        "claim": "Eine erfolgreiche Einzelreparatur macht eine Verbesserung des Bearbeitungsprozesses überflüssig.",
+        "correction": "Der Fall kann Hinweise auf vermeidbare Lücken liefern; eine konkrete Folgeaktion prüft, ob sich Wiederholungen verhindern lassen."
+      },
+      "takeaway": "Verbesserung bedeutet eine konkrete Handlung mit Zuständigkeit und überprüfbarem Ergebnis."
+    },
+    {
+      "id": "common-lf6-closure-review",
+      "title": "4. Rückblick auf alle fünf Themen von LF6",
+      "objectiveIds": [
+        "common-lf6-closure-verify",
+        "common-lf6-closure-record",
+        "common-lf6-closure-improve"
+      ],
+      "sourceIds": [
+        "lf6-atlassian-response",
+        "lf6-atlassian-priority",
+        "lf6-atlassian-sla",
+        "lf6-atlassian-communication",
+        "lf6-ms-deployment",
+        "lf6-atlassian-postmortem"
+      ],
+      "paragraphs": [
+        "Serviceanfragen verständlich aufnehmen: Mira fragt nach erwarteter Aktion und beobachtetem Fehler, Beginn, Betroffenen und bisherigen Schritten. Das Musterticket nennt vier Betroffene seit 09:05, 404 beim Absenden, möglichen Lesezugriff, Aufnahme 09:10, Abholung 10:00 und keine freigegebene Ersatzlösung. Es trennt Fakten, Vermutungen und offene Fragen und enthält einen nächsten Statuskontakt.",
+        "Vereinbarungen, Priorität und Zuständigkeit: Im erfundenen Modell ist Auswirkung ab drei blockierten Personen hoch. Dringlichkeit ist bei einer Frist in höchstens 60 Minuten ohne Ersatz hoch. Beide hoch ergeben P1, ein hoher Wert P2, sonst P3. SLA: Portal und verwaltete Clients, Montag–Freitag 08–17, erste qualifizierte Reaktion binnen 15/60/240 Serviceminuten ab Aufnahme. R-106 ist P1 mit Reaktion bis 09:25, ohne zugesagte Lösungszeit. Mira nimmt im ersten Level auf; Sam bearbeitet befugte Konfigurationsänderungen im zweiten. Fehlende Expertise oder drohende Zusageverletzungen werden begründet eskaliert.",
+        "Ursachen schrittweise eingrenzen: Beobachtung sind 6, /orders/v1 und 404; die alte Adresse ist zunächst Hypothese. Soll 7 mit /orders/v2, ein vergleichbarer erfolgreicher Kontrollclient und die gezielte Nachprüfung bilden die Belegkette. Der Grund einer unvollständigen Konfigurationsverteilung bleibt davon getrennt. Tests und Änderungen erhalten Zeit, Bedingungen und Ergebnis.",
+        "Lösung abstimmen und sicher umsetzen: Die gezielte freigegebene Korrektur auf 7 wird nach Wirkung, Aufwand, Rechten und Rückfall beurteilt. Sam sichert 6 und stimmt die Unterbrechung mit Eda ab. Rückfall auf 6 begrenzt neue Nebenwirkungen, löst aber nicht das ursprüngliche Versandproblem. Eine einfache englische Statusmeldung kann lauten: We found a configuration mismatch. We will apply the approved update and test sending with you. Sie erklärt den Befund und die bevorstehende Prüfung ohne voreiligen Abschluss.",
+        "Lösung prüfen und Service abschließen: Eda prüft synthetisches Absenden, bestätigten Eingang und Lesen. Das Abschlussprotokoll nennt belegte Ursache, Freigabe, 6 → 7, Ergebnis und offene Folgeaufgabe. Die Prüfung weiterer Clients erhält eine zuständige Person; der nächste Rollout bekommt Versionskontrolle und Sendetest mit dokumentiertem Erfolgskriterium. So greifen Aufnahme, Priorisierung, Diagnose, abgestimmte Änderung und Abschluss ineinander."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Lernfall",
+        "text": "Miras Übergabe verfolgt R-106 vom Arbeitsausfall über P1 und Belegkette bis zur gemeinsamen Funktionsprobe und konkreten Rolloutverbesserung."
+      },
+      "misconception": {
+        "claim": "LF6 endet mit dem technischen Eingriff; Kommunikation und Nachweis sind Zusatzarbeit.",
+        "correction": "Erst die überprüfte Wirkung, verständliche Rückmeldung und nachvollziehbare Dokumentation schließen den Servicefall ab."
+      },
+      "takeaway": "Der vollständige Serviceweg verbindet Arbeitsbedarf, belegte Entscheidung und bestätigtes Ergebnis."
+    }
+  ],
+  "questionFile": "questions/common-lf6-closure.v1.csv",
+  "quiz": {
+    "questionIds": [
+      "LJ-LF6-CLOSURE-Q01",
+      "LJ-LF6-CLOSURE-Q02",
+      "LJ-LF6-CLOSURE-Q03",
+      "LJ-LF6-CLOSURE-Q04",
+      "LJ-LF6-CLOSURE-Q05",
+      "LJ-LF6-CLOSURE-Q06"
+    ]
+  },
+  "exam": {
+    "questionIds": [
+      "LJ-LF6-CLOSURE-E01",
+      "LJ-LF6-CLOSURE-E02",
+      "LJ-LF6-CLOSURE-E03",
+      "LJ-LF6-CLOSURE-E04",
+      "LJ-LF6-CLOSURE-E05",
+      "LJ-LF6-CLOSURE-E06",
+      "LJ-LF6-CLOSURE-E07",
+      "LJ-LF6-CLOSURE-E08"
+    ],
+    "passPercent": 80,
+    "scoring": "all-or-nothing-per-question",
+    "timed": false
+  },
+  "questionLinks": [
+    {
+      "questionId": "LJ-LF6-CLOSURE-Q01",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf6-closure-verify"
+      ],
+      "blockIds": [
+        "common-lf6-closure-verify"
+      ]
+    },
+    {
+      "questionId": "LJ-LF6-CLOSURE-Q02",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf6-closure-verify"
+      ],
+      "blockIds": [
+        "common-lf6-closure-verify"
+      ]
+    },
+    {
+      "questionId": "LJ-LF6-CLOSURE-Q03",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf6-closure-record",
+        "common-lf6-closure-verify"
+      ],
+      "blockIds": [
+        "common-lf6-closure-record"
+      ]
+    },
+    {
+      "questionId": "LJ-LF6-CLOSURE-Q04",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf6-closure-record"
+      ],
+      "blockIds": [
+        "common-lf6-closure-record"
+      ]
+    },
+    {
+      "questionId": "LJ-LF6-CLOSURE-Q05",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf6-closure-improve"
+      ],
+      "blockIds": [
+        "common-lf6-closure-practice"
+      ]
+    },
+    {
+      "questionId": "LJ-LF6-CLOSURE-Q06",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf6-closure-improve"
+      ],
+      "blockIds": [
+        "common-lf6-closure-practice"
+      ]
+    },
+    {
+      "questionId": "LJ-LF6-CLOSURE-E01",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf6-closure-record",
+        "common-lf6-closure-verify"
+      ],
+      "blockIds": [
+        "common-lf6-closure-review"
+      ]
+    },
+    {
+      "questionId": "LJ-LF6-CLOSURE-E02",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf6-closure-record"
+      ],
+      "blockIds": [
+        "common-lf6-closure-review"
+      ]
+    },
+    {
+      "questionId": "LJ-LF6-CLOSURE-E03",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf6-closure-record",
+        "common-lf6-closure-verify"
+      ],
+      "blockIds": [
+        "common-lf6-closure-review"
+      ]
+    },
+    {
+      "questionId": "LJ-LF6-CLOSURE-E04",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf6-closure-verify",
+        "common-lf6-closure-record"
+      ],
+      "blockIds": [
+        "common-lf6-closure-review"
+      ]
+    },
+    {
+      "questionId": "LJ-LF6-CLOSURE-E05",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf6-closure-verify",
+        "common-lf6-closure-record"
+      ],
+      "blockIds": [
+        "common-lf6-closure-review"
+      ]
+    },
+    {
+      "questionId": "LJ-LF6-CLOSURE-E06",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf6-closure-verify",
+        "common-lf6-closure-record"
+      ],
+      "blockIds": [
+        "common-lf6-closure-verify",
+        "common-lf6-closure-review"
+      ]
+    },
+    {
+      "questionId": "LJ-LF6-CLOSURE-E07",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf6-closure-record"
+      ],
+      "blockIds": [
+        "common-lf6-closure-record",
+        "common-lf6-closure-review"
+      ]
+    },
+    {
+      "questionId": "LJ-LF6-CLOSURE-E08",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf6-closure-improve",
+        "common-lf6-closure-record"
+      ],
+      "blockIds": [
+        "common-lf6-closure-practice",
+        "common-lf6-closure-review"
+      ]
+    }
+  ],
+  "interview": [
+    {
+      "id": "common-lf6-closure-talk-verify",
+      "prompt": "Plane die gemeinsame Abschlussprüfung für Eda und formuliere, was im Ticket als Nachweis stehen soll.",
+      "objectiveIds": [
+        "common-lf6-closure-verify",
+        "common-lf6-closure-record"
+      ],
+      "blockIds": [
+        "common-lf6-closure-verify",
+        "common-lf6-closure-record"
+      ],
+      "keyPoints": [
+        "Ursprüngliche Sendefunktion mit synthetischem Auftrag prüfen.",
+        "Empfängereingang und Lesen kontrollieren, Rückmeldung von Eda festhalten.",
+        "Testbedingungen, Ergebnis und offene Punkte dokumentieren."
+      ],
+      "acceptableAlternatives": [
+        "Eine fachlich gleichwertige Erklärung mit passenden Befunden und nachvollziehbarer Begründung."
+      ],
+      "misconceptions": [
+        "Die neue Versionsanzeige als ausreichenden Funktionsnachweis behandeln."
+      ],
+      "sampleAnswer": "Ich teste mit Eda den ursprünglichen Arbeitsschritt mit einem synthetischen Auftrag. Wir prüfen den Modelleingang und weiter funktionierendes Lesen. Im Ticket stehen Bedingungen, Ergebnis und Edas Rückmeldung; fehlende Bestätigung bleibt offen.",
+      "followUp": "Welche Aussage darfst du über einen Arbeitsplatz machen, der außerhalb des geprüften Umfangs liegt?"
+    },
+    {
+      "id": "common-lf6-closure-talk-practice",
+      "prompt": "Bearbeite die lokale Servicesimulation bis zum geprüften Abschluss. Erkläre danach eine tatsächlich gewählte Entscheidung, ihren Beleg und deine konkrete Prozessverbesserung.",
+      "objectiveIds": [
+        "common-lf6-closure-verify",
+        "common-lf6-closure-record",
+        "common-lf6-closure-improve"
+      ],
+      "blockIds": [
+        "common-lf6-closure-verify",
+        "common-lf6-closure-record",
+        "common-lf6-closure-practice"
+      ],
+      "keyPoints": [
+        "Alle sechs Schritte mit Rückmeldungen bearbeiten.",
+        "Aufnahme, P1/SLA, Diagnose, Sam/Freigabe/Rückfall und englische Antwort verbinden.",
+        "Gemeinsame Sendung mit Eingang und Lesen als Ergebnis prüfen.",
+        "Protokoll lesen; offene Folgeaufgabe und konkrete Rolloutverbesserung nachvollziehen.",
+        "Eigene Beobachtung ergänzen und Durchführung bewusst bestätigen."
+      ],
+      "acceptableAlternatives": [
+        "Eine fachlich gleichwertige Erklärung mit passenden Befunden und nachvollziehbarer Begründung."
+      ],
+      "misconceptions": [
+        "Eine Musterantwort ohne eigene Bearbeitung als Durchführungsnachweis ausgeben."
+      ],
+      "sampleAnswer": "Vorlage für meine eigene Notiz nach der Bearbeitung: Ich ergänze hier, welche Entscheidung ich tatsächlich getroffen habe und welcher Modellbefund sie begründet. Ich beschreibe das Prüfergebnis aus dem sichtbaren Protokoll und eine konkrete Verbesserung samt Verantwortung. Diese Vorlage bestätigt noch keine Durchführung.",
+      "followUp": "Welche Rückmeldung hat dir geholfen, eine unbelegte Annahme von einem nachgewiesenen Ergebnis zu trennen?",
+      "practice": {
+        "task": "Bearbeite den fiktiven Servicefall R-106 schrittweise in der lokalen Simulation. Erfasse vier Betroffene, Beginn 09:05, gestörtes Absenden, funktionierendes Lesen, Abholung 10:00 und fehlenden Ersatzweg. Nutze die sichtbare erfundene Matrix und SLA zur Priorität und Erstreaktion. Vergleiche die synthetischen Versions-/Zielpfadbefunde und wähle die passende Übergabe an Sam. Stimme den freigegebenen Wechsel 6 → 7 mit gesichertem Ausgangsstand und Rückfallgrenze ab; wähle eine verständliche englische Rückmeldung. Prüfe die ursprüngliche Sendefunktion mit Eda, den bestätigten Modelleingang und den weiter möglichen Lesezugriff. Dokumentiere Ursache, Änderung, Freigabe, Prüfergebnis und Folgeaufgabe zur Prüfung weiterer Clients. Leite eine passende Prozessverbesserung ab. Prüfe jeden Schritt, korrigiere Fehler anhand der Rückmeldung und lies am Ende das gespeicherte Protokoll. Ergänze eine eigene Beobachtung und Begründung in deiner Reflexion und bestätige die Durchführung erst nach erfolgreicher Prüfung bewusst. Alle Angaben und Antworten sind synthetisch; es werden keine echten Tickets, Aufträge, Nachrichten oder Systemänderungen ausgelöst.",
+        "checklist": [
+          "Ich habe Symptom, Umfang, Beginn, Frist und fehlenden Ersatzweg erfasst.",
+          "Ich habe die erfundene Prioritätsmatrix und die qualifizierte Erstreaktion bis 09:25 korrekt angewendet.",
+          "Ich habe Beobachtung, Hypothese und Beleg getrennt und Sam als zuständiges zweites Level einbezogen.",
+          "Ich habe die freigegebene Änderung mit Ausgangssicherung, begrenzter Rückfallwirkung und englischer Rückmeldung abgestimmt.",
+          "Ich habe den ursprünglichen Arbeitsschritt mit Eda, den Modelleingang und den Lesezugriff geprüft.",
+          "Ich habe das Abschlussprotokoll mit offener Folgeaufgabe gelesen und eine konkrete Verbesserung begründet."
+        ],
+        "confirmation": "Ich bestätige, dass ich den fiktiven Servicefall selbst schrittweise bearbeitet, die Rückmeldungen geprüft und das gespeicherte Protokoll gelesen habe. Meine Reflexion nennt eigene Beobachtungen und eine begründete Verbesserung. Dies ist meine Selbstbestätigung einer lokalen Simulation und kein Nachweis echter Servicearbeit."
+      }
+    },
+    {
+      "id": "common-lf6-closure-talk-review",
+      "prompt": "Verbinde alle fünf LF6-Themen in einer Übergabe zu R-106: Aufnahme, Priorität/SLA/Zuständigkeit, Diagnose, abgestimmte Lösung einschließlich Englisch sowie Prüfung/Abschluss/Verbesserung.",
+      "objectiveIds": [
+        "common-lf6-closure-verify",
+        "common-lf6-closure-record",
+        "common-lf6-closure-improve"
+      ],
+      "blockIds": [
+        "common-lf6-closure-review"
+      ],
+      "keyPoints": [
+        "Ausgangsfakten und bisherige Schritte statt voreiliger Ursache nennen.",
+        "Erfundene Kriterien erklären: 4 Betroffene, 50 Minuten, kein Ersatz → P1; Erstreaktion 09:25.",
+        "Befunde 6/v1/404 gegenüber Soll 7/v2 und kontrollierte Nachprüfung unterscheiden.",
+        "Sam als befugtes zweites Level, Freigabe, Sicherung 6 und Rückfallgrenze nennen.",
+        "Eine einfache englische Meldung zum bevorstehenden Test formulieren.",
+        "Gemeinsamen Sendetest mit Eingang/Lesen, Abschlussnotiz und konkrete Folgeaktion verbinden."
+      ],
+      "acceptableAlternatives": [
+        "Eine fachlich gleichwertige Erklärung mit passenden Befunden und nachvollziehbarer Begründung."
+      ],
+      "misconceptions": [
+        "Technischen Eingriff oder Statusantwort als Ersatz für bestätigte Wirkung behandeln."
+      ],
+      "sampleAnswer": "Mira nimmt vier blockierte Personen seit 09:05 auf. Um 09:10 ergeben Frist 10:00 und fehlender Ersatz P1 mit Erstreaktion 09:25. Vergleich und Nachtest stützen den alten Zielpfad. Sam setzt freigegeben 6 → 7 um, mit Rückfallplan. We will apply the approved update and test sending with you. Eda prüft Sendung, Eingang und Lesen. Das Ticket nennt Ursache, Änderung und Ergebnis; Sam prüft weitere Clients und ergänzt Versions-/Sendetests beim nächsten Rollout.",
+      "followUp": "Wo endet der Nachweis dieses Falls, und welcher offene Punkt benötigt einen eigenen Prüfauftrag?"
+    }
+  ],
+  "cards": [
+    {
+      "id": "common-lf6-closure-card-01",
+      "front": "Wann ist eine Änderung als wirksam geprüft?",
+      "back": "Wenn der ursprünglich gescheiterte Arbeitsschritt unter dokumentierten Bedingungen das erwartete Ergebnis liefert und die betroffene Person dies nachvollziehen kann.",
+      "objectiveIds": [
+        "common-lf6-closure-verify"
+      ],
+      "blockIds": [
+        "common-lf6-closure-verify"
+      ]
+    },
+    {
+      "id": "common-lf6-closure-card-02",
+      "front": "Warum Empfängereingang und Lesen mitprüfen?",
+      "back": "Der Eingang bestätigt den vollständigen Modellversand; Lesen prüft, ob eine zuvor funktionierende Aufgabe durch die Änderung beeinträchtigt wurde.",
+      "objectiveIds": [
+        "common-lf6-closure-verify"
+      ],
+      "blockIds": [
+        "common-lf6-closure-verify"
+      ]
+    },
+    {
+      "id": "common-lf6-closure-card-03",
+      "front": "Was gehört in den Ticketabschluss?",
+      "back": "Ausgangssymptom, belegte Ursache, freigegebene Änderung und Rolle, Prüfergebnis/Rückmeldung sowie offene Folgeaufgaben mit Zuständigkeit.",
+      "objectiveIds": [
+        "common-lf6-closure-record"
+      ],
+      "blockIds": [
+        "common-lf6-closure-record"
+      ]
+    },
+    {
+      "id": "common-lf6-closure-card-04",
+      "front": "Was unterscheidet offene Störung und Folgeaufgabe?",
+      "back": "Ein weiter blockierter Teil des vereinbarten Umfangs bleibt Störungsbearbeitung. Vorbeugende Prüfung weiterer Clients kann als verantwortete Folgeaufgabe geführt werden.",
+      "objectiveIds": [
+        "common-lf6-closure-record"
+      ],
+      "blockIds": [
+        "common-lf6-closure-record"
+      ]
+    },
+    {
+      "id": "common-lf6-closure-card-05",
+      "front": "Was macht eine Prozessverbesserung konkret?",
+      "back": "Handlung, Verantwortlicher, Termin oder nächster fester Anlass und überprüfbares Erfolgskriterium, abgeleitet aus dem dokumentierten Fall.",
+      "objectiveIds": [
+        "common-lf6-closure-improve"
+      ],
+      "blockIds": [
+        "common-lf6-closure-practice"
+      ]
+    },
+    {
+      "id": "common-lf6-closure-card-06",
+      "front": "Welche Verbesserung passt zur alten Konfiguration in R-106?",
+      "back": "Zielversion und synthetischen Sendetest mit Eingangskontrolle je Rolloutgruppe in die Abnahme aufnehmen; Durchführung und Ergebnis dokumentieren.",
+      "objectiveIds": [
+        "common-lf6-closure-improve",
+        "common-lf6-closure-record"
+      ],
+      "blockIds": [
+        "common-lf6-closure-practice",
+        "common-lf6-closure-review"
+      ]
+    }
+  ],
+  "review": {
+    "status": "reviewed",
+    "checkedAt": "2026-11-16"
+  },
+  "fieldReview": {
+    "fieldId": "LF6",
+    "topicIds": [
+      "common-lf6-intake",
+      "common-lf6-priority",
+      "common-lf6-diagnosis",
+      "common-lf6-solution",
+      "common-lf6-closure"
+    ],
+    "blockIds": [
+      "common-lf6-closure-review"
+    ],
+    "interviewIds": [
+      "common-lf6-closure-talk-review"
+    ],
+    "questionIds": [
+      "LJ-LF6-CLOSURE-E01",
+      "LJ-LF6-CLOSURE-E02",
+      "LJ-LF6-CLOSURE-E03",
+      "LJ-LF6-CLOSURE-E04",
+      "LJ-LF6-CLOSURE-E05",
+      "LJ-LF6-CLOSURE-E06",
+      "LJ-LF6-CLOSURE-E07",
+      "LJ-LF6-CLOSURE-E08"
+    ]
+  }
+}

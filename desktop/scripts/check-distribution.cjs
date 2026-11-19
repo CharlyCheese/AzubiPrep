@@ -8,7 +8,7 @@ const ROOTS = new Map([
   ['../backend', 'backend'], ['../backend/node_modules', 'backend/node_modules'],
   ['../content', 'content'], ['../frontend/dist', 'frontend/dist'],
 ]);
-const FILES = new Set(['main.js', 'preload.cjs', 'pilot-runtime.cjs', 'pilot-inspector.cjs', 'js-pilot.cjs', 'js-pilot-fixtures.cjs', 'package.json', 'web-main.cjs', 'web-runtime.cjs']);
+const FILES = new Set(['main.js', 'preload.cjs', 'pilot-runtime.cjs', 'journey-storage.cjs', 'pilot-inspector.cjs', 'js-pilot.cjs', 'js-pilot-fixtures.cjs', 'package.json', 'web-main.cjs', 'web-runtime.cjs']);
 const NEGATIVE_FILTERS = new Set([...PRIVATE_FILTERS, '!**/*.log', '!**/.cache/**/*', '!**/.vite/**/*', '!**/.vite-temp/**/*']);
 function assertDistribution(config) {
   assert.ok(Array.isArray(config.files) && config.files.length && config.files.every(file => FILES.has(file)), 'Paketdateien müssen ausdrücklich freigegeben sein.');

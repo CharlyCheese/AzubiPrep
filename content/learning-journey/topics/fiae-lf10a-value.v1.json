@@ -1,0 +1,588 @@
+{
+  "schemaVersion": 1,
+  "version": "1.0.0",
+  "id": "fiae-lf10a-value",
+  "title": "Prozessverbesserung wirtschaftlich beurteilen",
+  "fieldId": "LF10a",
+  "scope": "specialization",
+  "prerequisites": [
+    "fiae-lf10a-usability",
+    "common-lf2-procurement"
+  ],
+  "objectives": [
+    {
+      "id": "fiae-lf10a-value-costs",
+      "text": "Mit vorgegebenen Zeit- und Kostendaten den Aufwand eines bisherigen und eines verbesserten Ablaufs vergleichen."
+    },
+    {
+      "id": "fiae-lf10a-value-balance",
+      "text": "Eine berechnete Einsparung den Entwicklungskosten gegenüberstellen und die zugrunde liegenden Annahmen benennen."
+    }
+  ],
+  "sourceIds": [
+    "kmk-fachinformatiker-2019",
+    "lf10a-gds-cost",
+    "lf10a-wai-forms",
+    "lf10a-wai-focus",
+    "lf10a-gds-testing",
+    "lf10a-gds-map",
+    "lf10a-gds-prototypes",
+    "lf10a-wai-structure",
+    "lf10a-wai-reflow",
+    "lf10a-ec-privacy"
+  ],
+  "sources": [
+    {
+      "id": "kmk-fachinformatiker-2019",
+      "title": "KMK-Rahmenlehrplan Fachinformatiker/Fachinformatikerin vom 13.12.2019",
+      "url": "https://www.kmk.org/fileadmin/Dateien/pdf/Bildung/BeruflicheBildung/rlp/Fachinformatiker_19-12-13_EL.pdf",
+      "checkedAt": "2026-11-19",
+      "note": "Lernfeld 10a, Seite 21 des Rahmenlehrplans, verbindet Prozessmodellierung, Oberflächengestaltung, Tests und Wirtschaftlichkeit."
+    },
+    {
+      "id": "lf10a-gds-cost",
+      "title": "Government Digital Service: Measuring cost per transaction",
+      "url": "https://www.gov.uk/service-manual/measuring-success/measuring-cost-per-transaction",
+      "note": "Vergleichbarer Bezugszeitraum und definierter Kostenumfang. Das Zeit- und Amortisationsmodell nutzt eigene, fiktive Annahmen.",
+      "checkedAt": "2026-11-19"
+    },
+    {
+      "id": "lf10a-wai-forms",
+      "title": "W3C WAI: Forms Tutorial",
+      "url": "https://www.w3.org/WAI/tutorials/forms/",
+      "note": "Beschriftung, Eingabehilfen, Validierung und Rückmeldungen zu Formularen.",
+      "checkedAt": "2026-11-19"
+    },
+    {
+      "id": "lf10a-wai-focus",
+      "title": "W3C WAI: Understanding SC 2.4.7 Focus Visible",
+      "url": "https://www.w3.org/WAI/WCAG22/Understanding/focus-visible.html",
+      "note": "Erkennbare Fokusposition beim Bedienen mit der Tastatur.",
+      "checkedAt": "2026-11-19"
+    },
+    {
+      "id": "lf10a-gds-testing",
+      "title": "Government Digital Service: Using moderated usability testing",
+      "url": "https://www.gov.uk/service-manual/user-research/using-moderated-usability-testing",
+      "note": "Aufgaben mit offenem Lösungsweg stellen und Verhalten bei der Durchführung beobachten.",
+      "checkedAt": "2026-11-19"
+    },
+    {
+      "id": "lf10a-gds-map",
+      "title": "Government Digital Service: Creating an experience map",
+      "url": "https://www.gov.uk/service-manual/user-research/creating-an-experience-map",
+      "note": "Abläufe aus Sicht der beteiligten Rollen und Übergaben untersuchen.",
+      "checkedAt": "2026-11-19"
+    },
+    {
+      "id": "lf10a-gds-prototypes",
+      "title": "Government Digital Service: Making prototypes",
+      "url": "https://www.gov.uk/service-manual/design/making-prototypes",
+      "note": "Prototyptiefe nach Fragestellung wählen und Entwürfe im Team erproben.",
+      "checkedAt": "2026-11-19"
+    },
+    {
+      "id": "lf10a-wai-structure",
+      "title": "W3C WAI: Page Structure Tutorial",
+      "url": "https://www.w3.org/WAI/tutorials/page-structure/",
+      "note": "Semantische Regionen, Überschriften und nachvollziehbare Inhaltsstruktur.",
+      "checkedAt": "2026-11-19"
+    },
+    {
+      "id": "lf10a-wai-reflow",
+      "title": "W3C WAI: Understanding SC 1.4.10 Reflow",
+      "url": "https://www.w3.org/WAI/WCAG22/Understanding/reflow.html",
+      "note": "Reflow und Erhalt von Inhalt und Funktion beim Verengen des Ansichtsbereichs.",
+      "checkedAt": "2026-11-19"
+    },
+    {
+      "id": "lf10a-ec-privacy",
+      "title": "Europäische Kommission: Principles of personal data processing under the GDPR",
+      "url": "https://commission.europa.eu/law/law-topic/data-protection/information-business-and-organisations/principles-gdpr_en",
+      "note": "Datenminimierung nach Artikel 5 Absatz 1 Buchstabe c und Zweckbindung bei der Gestaltung der Reparaturmeldung.",
+      "checkedAt": "2026-11-19"
+    }
+  ],
+  "caseStudy": {
+    "title": "Was spart die neue Reparaturmaske?",
+    "text": "Der fiktive Werkstattbetrieb wägt ab, ob sich die einmalige Entwicklung lohnt. Verglichen wird derselbe Arbeitsabschnitt vom Eingang der Meldung bis zur bestätigten Übergabe. Du erprobst die Maske selbst und rechnest mit ausdrücklich angenommenen Fallzahlen und Zeiten."
+  },
+  "blocks": [
+    {
+      "id": "fiae-lf10a-value-costs",
+      "title": "1. Zeiten auf denselben Zeitraum beziehen",
+      "objectiveIds": [
+        "fiae-lf10a-value-costs"
+      ],
+      "sourceIds": [
+        "kmk-fachinformatiker-2019",
+        "lf10a-gds-cost"
+      ],
+      "paragraphs": [
+        "Zeichne die Grenzen beider Abläufe gleich. Es wäre irreführend, beim alten Verfahren die Prüfung in der Werkstatt mitzuzählen und sie beim neuen wegzulassen. Verwende vergleichbare Aufträge und dieselben Erfolgskriterien. Erfasse Abbrüche getrennt von erfolgreichen Versuchen. Bei der Rechnung pro abgeschlossenem Auftrag zählt der Arbeitsaufwand aller Versuche, auch für Abbrüche und Nacharbeit. Die angenommenen Minuten im Modell beziehen diesen Aufwand bereits ein. Rechne Minuten je Auftrag mal Aufträge je Monat und teile durch 60, um Stunden je Monat zu erhalten.",
+        "Im Modell sind es 120 erfolgreiche Aufträge monatlich. Die Bearbeitung braucht bisher acht Minuten, künftig fünf. Für beide Rollen gilt ein einheitlicher kalkulatorischer Satz von 30 Euro je Stunde. Alte Monatszeit: 120 × 8 ÷ 60 = 16 Stunden. Neu: 120 × 5 ÷ 60 = 10 Stunden. Bewerteter Arbeitsaufwand: 480 gegenüber 300 Euro im Monat. Die Differenz beträgt sechs Stunden oder 180 Euro monatlich."
+      ],
+      "example": {
+        "title": "Zuerst für einen Auftrag rechnen",
+        "text": "Acht Minuten sind 8/60 Stunden. Zu 30 Euro pro Stunde kostet die Bearbeitung vier Euro je Fall. Bei fünf Minuten sind es 2,50 Euro. Die Differenz von 1,50 Euro je erfolgreichem Fall ergibt für 120 Fälle ebenfalls 180 Euro."
+      },
+      "misconception": {
+        "claim": "Drei eingesparte Minuten je Fall sind schon drei eingesparte Stunden pro Monat.",
+        "correction": "Multipliziere mit der Fallzahl und wandle anschließend die Einheit um."
+      },
+      "takeaway": "Benenne bei jedem Zwischenergebnis Einheit, Zeitraum und betrachtete Arbeitsschritte."
+    },
+    {
+      "id": "fiae-lf10a-value-balance",
+      "title": "2. Einmaligen Aufwand und laufenden Nutzen vergleichen",
+      "objectiveIds": [
+        "fiae-lf10a-value-balance"
+      ],
+      "sourceIds": [
+        "kmk-fachinformatiker-2019",
+        "lf10a-gds-cost"
+      ],
+      "paragraphs": [
+        "Für den Entwurf und die Umsetzung werden einmalig 900 Euro angesetzt. Weitere Kostenunterschiede zwischen alt und neu werden im Basismodell mit null angesetzt. Bei monatlich 180 Euro bewertetem Zeitgewinn deckt die Summe nach fünf Monaten genau 900 Euro. Ein positiver Überschuss entsteht ab dem sechsten vollen Monat. Nach zwölf Monaten ergibt sich im Modell 12 × 180 − 900 = 1.260 Euro.",
+        "Bewerte die Annahmen mit. Halbiert sich bei gleichen Zeiten die Fallzahl auf 60 je Monat, sinkt der monatliche Vorteil auf 90 Euro und die Deckung tritt nach zehn Monaten ein. Kämen bei 120 Fällen zusätzlich 30 Euro Betreuung im Monat hinzu, blieben 150 Euro je Monat und die Deckung läge bei sechs Monaten. Bei einem laufenden Vorteil von null oder weniger wird die Einmalausgabe im einfachen Modell nicht gedeckt."
+      ],
+      "example": {
+        "title": "Welche Entscheidung verträgt eine Schätzung?",
+        "text": "Notiere zuerst Horizont und Fallzahl. Kostet die Umsetzung nur einmal 900 Euro, fehlen bei vier Monaten und 120 Fällen noch 180 Euro zur Deckung. Im fünften Monat ist Gleichstand erreicht. Ob die sechs gewonnenen Arbeitsstunden zu geringeren Auszahlungen führen, hängt von ihrer tatsächlichen Nutzung ab."
+      },
+      "misconception": {
+        "claim": "Bewertete Zeitersparnis landet in gleicher Höhe als Geld auf dem Konto.",
+        "correction": "Die Rechnung bewertet frei werdende Arbeitszeit. Eine direkte Zahlungsersparnis erfordert eine entsprechende reale Veränderung der Ausgaben."
+      },
+      "takeaway": "Trenne laufenden Vorteil, einmalige Investition und Annahmen der Rechnung."
+    },
+    {
+      "id": "fiae-lf10a-value-practice",
+      "title": "3. Einen Versuch mit der Rechnung verbinden",
+      "objectiveIds": [
+        "fiae-lf10a-value-costs",
+        "fiae-lf10a-value-balance"
+      ],
+      "sourceIds": [
+        "lf10a-wai-forms",
+        "lf10a-wai-focus",
+        "lf10a-gds-testing",
+        "lf10a-gds-cost"
+      ],
+      "paragraphs": [
+        "Baue außerhalb der Lernreise eine kleine bedienbare Reparaturmaske, etwa als lokale HTML-Datei oder in einem geeigneten lokalen Formularwerkzeug. Gerät und Symptom brauchen dauerhafte Beschriftungen. Die Gerätekennung muss das Format G-17 haben, wobei die beiden Ziffern variieren dürfen. Die Meldung braucht eine klar benannte Schaltfläche, sichtbaren Tastaturfokus, einen Korrekturweg und nach gültigem Absenden eine im Prototyp ausdrücklich simulierte Ticketbestätigung. Private Kontaktdaten werden nicht erfragt.",
+        "Prüfe zunächst die alte und die neue Abfolge am selben Auftrag vom Schalter bis zur Werkstatt. Bediene die neue Maske ohne Maus, einmal mit leerem oder falsch geschriebenem Gerät, danach korrigiert mit G-17 und erfundenem Symptom. Prüfe Erhalt der richtigen Eingabe und die angezeigte Rückmeldung bei schmalem Fenster. Dokumentiere Beobachtung und gegebenenfalls eine Korrektur mit Nachtest. Eine selbst gestoppte Zeit in einem einzelnen Probelauf ersetzt noch keinen mittleren Betriebswert."
+      ],
+      "example": {
+        "title": "Vom Befund zur belastbaren Annahme",
+        "text": "Angenommen, ein Formular verliert nach einem Fehler das Symptom. Zähle das erneute Eingeben als Arbeit im neuen Ablauf. Erhalte die Eingabe im nächsten Entwurf und teste die Korrektur erneut. Rechne danach getrennt mit den vorgegebenen acht und fünf Minuten. Begründe, welche Messung im Betrieb die Fünf-Minuten-Annahme prüfen könnte."
+      },
+      "misconception": {
+        "claim": "Wer das Rechenergebnis kennt, hat damit die Oberfläche bereits erprobt.",
+        "correction": "Eine Rechnung bewertet angenommenen Aufwand. Den Korrekturweg, Fokus und Erfolg musst du an einer bedienbaren Fassung beobachten."
+      },
+      "takeaway": "Halte eigenes Prüfergebnis und wirtschaftliche Modellannahme getrennt fest."
+    },
+    {
+      "id": "fiae-lf10a-value-review",
+      "title": "4. Vom Geschäftsprozess zur begründeten Entscheidung",
+      "objectiveIds": [
+        "fiae-lf10a-value-costs",
+        "fiae-lf10a-value-balance"
+      ],
+      "sourceIds": [
+        "kmk-fachinformatiker-2019",
+        "lf10a-gds-map",
+        "lf10a-gds-prototypes",
+        "lf10a-wai-structure",
+        "lf10a-wai-reflow",
+        "lf10a-wai-forms",
+        "lf10a-wai-focus",
+        "lf10a-ec-privacy",
+        "lf10a-gds-testing",
+        "lf10a-gds-cost"
+      ],
+      "paragraphs": [
+        "Nutzeraufgaben und Geschäftsprozesse verstehen: Die Annahme gibt Gerät und Symptom einmal ein. Die Werkstatt öffnet denselben Stand und prüft das Geräteschild. Die Kennung geht an die Annahme zurück. Im alten Ablauf entstanden beim Abschreiben zusätzliche Minuten. Eine Zeitmessung für den Vergleich umfasst bei beiden Varianten dieselben Übergaben und fachlichen Prüfungen.",
+        "Bedienabläufe gemeinsam entwerfen: Zeichne Eingabe, Fehler mit Rückweg, Speichervorgang und bestätigtes Ergebnis. Spiele die Korrektur auf Papier durch. Für belastbare Bedienzeiten, Fokus und Fensterbreite brauchst du anschließend eine bedienbare Fassung. Bei ausstehender Bestätigung ist der Erfolg offen. Eine voreilige Bestätigung kann beim Zeitvergleich scheinbar Minuten sparen, obwohl die Aufgabe noch nicht abgeschlossen ist.",
+        "Oberflächen für verschiedene Endgeräte: Verwende eine Navigation zur Ticketliste und im Hauptinhalt beschriftete Formularfelder und eine native Absendeaktion. In der schmalen Ansicht stapelst du Formular und Hinweise. Prüfe bei 320 CSS-Pixeln und mit Tastatur, ob die gesamte Aufgabe erreichbar bleibt. Ein Abbruch ist kein erfolgreicher Fall. Bei den Prozesskosten zählt seine Bearbeitungszeit zum Gesamtaufwand, den du auf die Zahl der abgeschlossenen Aufträge beziehst.",
+        "Zugängliche Eingaben und klare Rückmeldungen: Ordne sichtbare Labels den Feldern zu. Bei G17 statt G-17 nennt die Maske das Format und erhält das richtige Symptom. Private Telefonnummern sind bei Rückfragen über den Schalter entbehrlich. Das Entfernen unnötiger Angaben kann Aufwand senken. Entsteht nach einem Fehler zusätzliche Eingabearbeit, muss sie in der angenommenen mittleren Bearbeitungszeit berücksichtigt werden.",
+        "Bedienbarkeit und Funktion testen: Stelle das Ziel ohne Klickfolge, etwa „Melde den Defekt und nenne die Kennung“. Prüfe den passenden Auftrag sowie Hilfebedarf und notiere Suchzeit oder Abbruch getrennt. Ist Speichern nachweisbar erfolgreich, aber schwer zu finden, untersuche die Bedienung. Fehlt das Ticket im ungefilterten Prüfbestand trotz bestätigter Anlage, fehlt das erwartete Funktionsergebnis. Für einen fairen Zeitvergleich müssen beide Varianten tatsächlich erfolgreiche, vergleichbare Aufgaben abbilden.",
+        "Prozessverbesserung wirtschaftlich beurteilen: Verrechne 120 erfolgreiche Aufträge zu acht bzw. fünf Minuten mit 30 Euro pro Stunde. Alt ergeben sich 16 Stunden oder 480 Euro, neu 10 Stunden oder 300 Euro. 180 Euro monatlicher Zeitvorteil decken 900 Euro Entwicklung in fünf Monaten, sofern die angesetzte Menge und die Zeiten gelten und keine weiteren Differenzkosten entstehen. Bei 60 Fällen sind es zehn Monate. Eine neu entdeckte Barriere kann Nacharbeit oder Teilabbrüche verursachen. Prüfe deshalb Zeitannahmen und Qualität vor der Entscheidung zusammen."
+      ],
+      "example": {
+        "title": "Was für die Freigabe noch fehlt",
+        "text": "Die Skizze sieht schneller aus, der Teststand zeigt nach einem Fehlversuch aber kein erhaltenes Symptom. Protokolliere die zusätzliche Eingabe. Verbessere den Entwurf und wiederhole die Aufgabe bei beiden Breiten. Stelle anschließend die angenommene Amortisation den noch offenen Zeitmessungen gegenüber."
+      },
+      "misconception": {
+        "claim": "Die kürzeste Klickfolge garantiert den größten wirtschaftlichen Nutzen.",
+        "correction": "Eine gültige Meldung muss für die Werkstatt vollständig ankommen und bedienbar sein. Die Kostenrechnung berücksichtigt den tatsächlichen Aufwand bis zu diesem Ergebnis."
+      },
+      "takeaway": "Begründe den Wert der Gestaltung mit überprüften Aufgaben und einer nachvollziehbaren Modellrechnung."
+    }
+  ],
+  "questionFile": "questions/fiae-lf10a-value.v1.csv",
+  "quiz": {
+    "questionIds": [
+      "LJ-LF10A-VALUE-Q01",
+      "LJ-LF10A-VALUE-Q02",
+      "LJ-LF10A-VALUE-Q03",
+      "LJ-LF10A-VALUE-Q04",
+      "LJ-LF10A-VALUE-Q05",
+      "LJ-LF10A-VALUE-Q06"
+    ]
+  },
+  "exam": {
+    "questionIds": [
+      "LJ-LF10A-VALUE-E01",
+      "LJ-LF10A-VALUE-E02",
+      "LJ-LF10A-VALUE-E03",
+      "LJ-LF10A-VALUE-E04",
+      "LJ-LF10A-VALUE-E05",
+      "LJ-LF10A-VALUE-E06",
+      "LJ-LF10A-VALUE-E07",
+      "LJ-LF10A-VALUE-E08"
+    ],
+    "passPercent": 80,
+    "scoring": "all-or-nothing-per-question",
+    "timed": false
+  },
+  "questionLinks": [
+    {
+      "questionId": "LJ-LF10A-VALUE-Q01",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf10a-value-costs"
+      ],
+      "blockIds": [
+        "fiae-lf10a-value-costs"
+      ]
+    },
+    {
+      "questionId": "LJ-LF10A-VALUE-Q02",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf10a-value-costs"
+      ],
+      "blockIds": [
+        "fiae-lf10a-value-costs"
+      ]
+    },
+    {
+      "questionId": "LJ-LF10A-VALUE-Q03",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf10a-value-costs"
+      ],
+      "blockIds": [
+        "fiae-lf10a-value-costs"
+      ]
+    },
+    {
+      "questionId": "LJ-LF10A-VALUE-Q04",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf10a-value-balance"
+      ],
+      "blockIds": [
+        "fiae-lf10a-value-balance"
+      ]
+    },
+    {
+      "questionId": "LJ-LF10A-VALUE-Q05",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf10a-value-balance"
+      ],
+      "blockIds": [
+        "fiae-lf10a-value-balance"
+      ]
+    },
+    {
+      "questionId": "LJ-LF10A-VALUE-Q06",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf10a-value-balance"
+      ],
+      "blockIds": [
+        "fiae-lf10a-value-balance"
+      ]
+    },
+    {
+      "questionId": "LJ-LF10A-VALUE-E01",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf10a-value-costs"
+      ],
+      "blockIds": [
+        "fiae-lf10a-value-review"
+      ]
+    },
+    {
+      "questionId": "LJ-LF10A-VALUE-E02",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf10a-value-balance"
+      ],
+      "blockIds": [
+        "fiae-lf10a-value-review"
+      ]
+    },
+    {
+      "questionId": "LJ-LF10A-VALUE-E03",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf10a-value-costs"
+      ],
+      "blockIds": [
+        "fiae-lf10a-value-review"
+      ]
+    },
+    {
+      "questionId": "LJ-LF10A-VALUE-E04",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf10a-value-costs"
+      ],
+      "blockIds": [
+        "fiae-lf10a-value-review"
+      ]
+    },
+    {
+      "questionId": "LJ-LF10A-VALUE-E05",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf10a-value-balance"
+      ],
+      "blockIds": [
+        "fiae-lf10a-value-review"
+      ]
+    },
+    {
+      "questionId": "LJ-LF10A-VALUE-E06",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf10a-value-costs"
+      ],
+      "blockIds": [
+        "fiae-lf10a-value-costs",
+        "fiae-lf10a-value-review"
+      ]
+    },
+    {
+      "questionId": "LJ-LF10A-VALUE-E07",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf10a-value-balance"
+      ],
+      "blockIds": [
+        "fiae-lf10a-value-balance",
+        "fiae-lf10a-value-review"
+      ]
+    },
+    {
+      "questionId": "LJ-LF10A-VALUE-E08",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf10a-value-balance"
+      ],
+      "blockIds": [
+        "fiae-lf10a-value-balance",
+        "fiae-lf10a-value-review"
+      ]
+    }
+  ],
+  "interview": [
+    {
+      "id": "fiae-lf10a-value-talk-1",
+      "prompt": "Wie erläuterst du der Werkstattleitung den Nutzen über zwölf Monate und seine Grenzen?",
+      "objectiveIds": [
+        "fiae-lf10a-value-costs",
+        "fiae-lf10a-value-balance"
+      ],
+      "blockIds": [
+        "fiae-lf10a-value-costs",
+        "fiae-lf10a-value-balance"
+      ],
+      "keyPoints": [
+        "Beide Monatsaufwände mit gleichem Umfang vergleichen.",
+        "Einmalaufwand abziehen.",
+        "Fallzahl, Zeitannahme und mögliche Nutzung der frei werdenden Zeit benennen."
+      ],
+      "acceptableAlternatives": [
+        "Eine Rechnung über 1,50 Euro je Auftrag führt beim selben Mengengerüst zum gleichen Ergebnis."
+      ],
+      "misconceptions": [
+        "Den monatlichen Zeitwert als garantierten Geldzufluss ausgeben."
+      ],
+      "sampleAnswer": "Alt kostet die betrachtete Arbeit 480, neu 300 Euro monatlich. In zwölf Monaten ergeben sich 2.160 Euro Zeitwert. Abzüglich 900 Euro Entwicklung bleiben rechnerisch 1.260 Euro. Das setzt 120 vergleichbare erfolgreiche Meldungen monatlich und die angenommenen Zeiten voraus.",
+      "followUp": "Welche Annahme würdest du bei schwankender Werkstattauslastung zuerst prüfen?"
+    },
+    {
+      "id": "fiae-lf10a-value-talk-2",
+      "prompt": "Erstelle und teste die Reparaturmaske selbst außerhalb der Lernreise. Erläutere danach einen eigenen Befund sowie deinen Vergleich der beiden Abläufe.",
+      "objectiveIds": [
+        "fiae-lf10a-value-costs",
+        "fiae-lf10a-value-balance"
+      ],
+      "blockIds": [
+        "fiae-lf10a-value-costs",
+        "fiae-lf10a-value-balance",
+        "fiae-lf10a-value-practice"
+      ],
+      "keyPoints": [
+        "Bedienbaren Prototyp mit erfundenen Daten selbst erstellen.",
+        "Per Tastatur und im schmalen Fenster einen Fehler und den Erfolg erproben.",
+        "Einen tatsächlichen Befund und seine Nachprüfung beschreiben.",
+        "Beide Monatswerte und die Deckung der Entwicklungskosten begründen."
+      ],
+      "acceptableAlternatives": [
+        "Ein anderes lokales Formularwerkzeug eignet sich, wenn es die geforderten Zustände und die Tastaturprobe erlaubt."
+      ],
+      "misconceptions": [
+        "Das Lesen der Musterrechnung gilt nicht als durchgeführter Bedienversuch."
+      ],
+      "sampleAnswer": "Für meine Reflexion notiere ich nach der Durchführung die benutzte Fassung, meine tatsächliche Fehler- und Erfolgsanzeige und das Ergebnis meines Nachtests. Daneben stelle ich meine Rechnung mit Zeit je Fall, Fallzahl, Stundensatz und einmaliger Entwicklung. Die konkreten Beobachtungen trage ich aus meinem eigenen Versuch ein.",
+      "followUp": "Welche beobachtete Stelle könnte die angenommene Zeitersparnis verringern?",
+      "practice": {
+        "task": "Erstelle außerhalb der Lernreise einen selbst bedienbaren lokalen Prototyp für die interne Reparaturmeldung. Zeichne zuerst den bisherigen Weg vom Zettel zur Werkstatt und den neuen mit einmaliger Eingabe. Verwende ausschließlich erfundene Daten wie G-17 und „Einzug klemmt“. Baue in einer lokalen HTML-Datei oder einem geeigneten Formularwerkzeug dauerhafte, zugeordnete Labels für Gerätekennung und Symptom, sichtbaren Fokus, eine native oder gleichwertig bedienbare Sendeaktion, eine verständliche Fehlermeldung sowie eine klar als simuliert erkennbare Erfolgsbestätigung mit Ticketkennung. Gerätekennungen bestehen im Modell aus G, Bindestrich und zwei Ziffern. Private Kontaktdaten gehören nicht in den Entwurf. Teste nur mit der Tastatur zunächst G17 mit gültigem Symptom, korrigiere die Kennung und sende erneut. Prüfe den Fehlertext, das erhaltene Symptom, den Fokusweg und die simulierte Kennung. Wiederhole den Ablauf bei schmalem und breitem Fenster. Halte eine eigene Beobachtung, eine begründete Anpassung oder Beibehaltung und das tatsächliche Ergebnis der Nachprobe fest. Vergleiche anschließend die beiden Monatsaufwände für 120 Aufträge, acht bzw. fünf Minuten und 30 Euro je Stunde. Nenne die Amortisation für einmalig 900 Euro und eine Annahme, die das Ergebnis verändert. Eigene Arbeitsnotizen kannst du lokal behalten. Vergleiche dein Ergebnis mit den einzelnen Prüfpunkten und bestätige anschließend deine Durchführung.",
+        "checklist": [
+          "Ich habe Ist- und Sollablauf mit Annahme, Werkstatt und Rückgabe der Ticketkennung erfasst.",
+          "Ich habe selbst einen bedienbaren Prototyp mit beschrifteten Feldern, sichtbarem Fokus und erfundenen Angaben erstellt.",
+          "Ich habe die fehlerhafte und die korrigierte Meldung per Tastatur bis zur simulierten Rückmeldung durchgespielt.",
+          "Ich habe den Ablauf bei schmaler und breiter Ansicht geprüft und meinen Befund mit Nachprobe festgehalten.",
+          "Ich habe beide Monatsaufwände, die Differenz und die Deckung der Entwicklungskosten gerechnet und eine Annahme benannt."
+        ],
+        "confirmation": "Ich bestätige, dass ich den Prototyp außerhalb der Lernreise selbst erstellt und bedient, die Fälle und Ansichten geprüft und den Kostenvergleich selbst gerechnet habe. Die Bestätigung dokumentiert meine eigene Durchführung dieser Übung."
+      }
+    },
+    {
+      "id": "fiae-lf10a-value-talk-3",
+      "prompt": "Führe die sechs LF10a-Themen vom Auftrag am Schalter bis zur Entscheidung über die neue Maske zusammen.",
+      "objectiveIds": [
+        "fiae-lf10a-value-costs",
+        "fiae-lf10a-value-balance"
+      ],
+      "blockIds": [
+        "fiae-lf10a-value-review"
+      ],
+      "keyPoints": [
+        "Rollen und doppelte Erfassung benennen.",
+        "Bedienablauf mit erfolgreicher und fehlerhafter Meldung entwerfen.",
+        "Breiten und passende Komponenten prüfen.",
+        "Beschriftung, Fokus, Korrektur und Datenumfang erklären.",
+        "Beobachtung vom vermuteten Fehler trennen.",
+        "Monatlichen Zeitvorteil bewerten und die Amortisation unter den Modellannahmen bestimmen."
+      ],
+      "acceptableAlternatives": [
+        "Die Darstellung kann als Prozessskizze mit Prüftabelle und danebenstehender Vergleichsrechnung erfolgen."
+      ],
+      "misconceptions": [
+        "Ein kürzerer Weg zur Erfolgsmeldung reicht ohne Nachweis des Auftrags nicht als Verbesserung."
+      ],
+      "sampleAnswer": "Ich verfolge Gerät und Symptom durch Annahme und Werkstatt. Der Entwurf erhält die Eingabe bei Fehlern, lässt sich bei beiden Breiten bedienen und fragt keine private Nummer ab. Ein offener Testauftrag zeigt mir, ob eine Person das richtige Ticket tatsächlich erzeugt. Erst dann ist der Zeitvergleich sinnvoll. Unter den Modellannahmen decken 180 Euro monatlicher Vorteil die 900 Euro nach fünf Monaten.",
+      "followUp": "Welcher Befund aus einem früheren Schritt würde dich zu einer neuen Rechnung veranlassen?"
+    }
+  ],
+  "cards": [
+    {
+      "id": "fiae-lf10a-value-card-01",
+      "front": "Wie berechnest du monatliche Bearbeitungsstunden?",
+      "back": "Minuten je erfolgreichem Auftrag mal Aufträge im Monat geteilt durch 60.",
+      "objectiveIds": [
+        "fiae-lf10a-value-costs"
+      ],
+      "blockIds": [
+        "fiae-lf10a-value-costs"
+      ]
+    },
+    {
+      "id": "fiae-lf10a-value-card-02",
+      "front": "Was kostet die fiktive Bearbeitung je Fall vor und nach der Änderung?",
+      "back": "Bei 30 Euro je Stunde kosten acht Minuten vier Euro und fünf Minuten 2,50 Euro.",
+      "objectiveIds": [
+        "fiae-lf10a-value-costs"
+      ],
+      "blockIds": [
+        "fiae-lf10a-value-costs"
+      ]
+    },
+    {
+      "id": "fiae-lf10a-value-card-03",
+      "front": "Was macht die Zeitwerte aus beiden Abläufen vergleichbar?",
+      "back": "Dieselben Prozessgrenzen, vergleichbare Fälle, gleiche Ergebnisqualität und ein gemeinsamer Bezugszeitraum.",
+      "objectiveIds": [
+        "fiae-lf10a-value-costs"
+      ],
+      "blockIds": [
+        "fiae-lf10a-value-costs",
+        "fiae-lf10a-value-review"
+      ]
+    },
+    {
+      "id": "fiae-lf10a-value-card-04",
+      "front": "Wann deckt der monatliche Zeitwert die Einmalentwicklung von 900 Euro?",
+      "back": "Unter den Basisannahmen nach fünf Monaten mit je 180 Euro Vorteil. Ab dem sechsten vollen Monat ist der Saldo positiv.",
+      "objectiveIds": [
+        "fiae-lf10a-value-balance"
+      ],
+      "blockIds": [
+        "fiae-lf10a-value-balance"
+      ]
+    },
+    {
+      "id": "fiae-lf10a-value-card-05",
+      "front": "Wie verändert ein zusätzlicher Aufwand von 30 Euro monatlich die statische Amortisation?",
+      "back": "Bei 120 Fällen bleiben 150 Euro monatlicher Vorteil. 900 geteilt durch 150 ergibt sechs Monate.",
+      "objectiveIds": [
+        "fiae-lf10a-value-balance"
+      ],
+      "blockIds": [
+        "fiae-lf10a-value-balance"
+      ]
+    },
+    {
+      "id": "fiae-lf10a-value-card-06",
+      "front": "Warum reicht ein erfolgreicher Prototypdurchlauf nicht zur wirtschaftlichen Freigabe?",
+      "back": "Er belegt einen konkreten Bedienweg. Fallzahl, mittlere Zeiten, weitere Kosten und die Nutzbarkeit der gewonnenen Zeit müssen gesondert bewertet werden.",
+      "objectiveIds": [
+        "fiae-lf10a-value-balance"
+      ],
+      "blockIds": [
+        "fiae-lf10a-value-practice",
+        "fiae-lf10a-value-review"
+      ]
+    }
+  ],
+  "review": {
+    "status": "reviewed",
+    "checkedAt": "2026-11-19"
+  },
+  "fieldReview": {
+    "fieldId": "LF10a",
+    "topicIds": [
+      "fiae-lf10a-process",
+      "fiae-lf10a-prototype",
+      "fiae-lf10a-layout",
+      "fiae-lf10a-forms",
+      "fiae-lf10a-usability",
+      "fiae-lf10a-value"
+    ],
+    "blockIds": [
+      "fiae-lf10a-value-review"
+    ],
+    "interviewIds": [
+      "fiae-lf10a-value-talk-3"
+    ],
+    "questionIds": [
+      "LJ-LF10A-VALUE-E01",
+      "LJ-LF10A-VALUE-E02",
+      "LJ-LF10A-VALUE-E03",
+      "LJ-LF10A-VALUE-E04",
+      "LJ-LF10A-VALUE-E05",
+      "LJ-LF10A-VALUE-E06",
+      "LJ-LF10A-VALUE-E07",
+      "LJ-LF10A-VALUE-E08"
+    ]
+  }
+}

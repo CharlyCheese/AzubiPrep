@@ -1,0 +1,474 @@
+{
+  "schemaVersion": 1,
+  "version": "1.0.0",
+  "id": "common-lf9-requirements",
+  "title": "Bedarf für Netzwerke und Dienste ermitteln",
+  "fieldId": "LF9",
+  "scope": "common",
+  "prerequisites": [
+    "common-lf3-diagnosis",
+    "common-lf2-requirements"
+  ],
+  "objectives": [
+    {
+      "id": "common-lf9-requirements-collect",
+      "text": "Nutzerzahl, Anwendungen, Datenverkehr und Verfügbarkeitsbedarf eines kleinen Netzes ermitteln."
+    },
+    {
+      "id": "common-lf9-requirements-criteria",
+      "text": "Aus dem Bedarf überprüfbare Anforderungen an Leistung, Sicherheit und Erweiterbarkeit ableiten."
+    }
+  ],
+  "sourceIds": [
+    "lf9-ms-capacity",
+    "lf9-ms-network",
+    "lf9-ms-monitoring"
+  ],
+  "sources": [
+    {
+      "id": "lf9-ms-capacity",
+      "title": "Microsoft: Architecture strategies for capacity planning",
+      "url": "https://learn.microsoft.com/en-us/azure/well-architected/performance-efficiency/capacity-planning",
+      "note": "Öffentliche Herstellergrundlagen zu Arbeitslast, Spitzenlast, Leistungszielen und Kapazitätsplanung geprüft. Nutzerzahlen, Anforderungen und Rechenwerte sind selbst erstellte Fallannahmen.",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "lf9-ms-network",
+      "title": "Microsoft: Architecture strategies for networking and connectivity",
+      "url": "https://learn.microsoft.com/en-us/azure/well-architected/security/networking",
+      "note": "Öffentliche Herstellergrundlagen zu Segmentierung, Verkehrsbeziehungen und Filtern geprüft. Der begrenzte Netzplan und seine Freigaben sind fiktive Modellvorgaben.",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "lf9-ms-monitoring",
+      "title": "Microsoft: Architecture strategies for designing a monitoring system",
+      "url": "https://learn.microsoft.com/en-us/azure/well-architected/operational-excellence/observability",
+      "note": "Messwerte, strukturierte Protokolle, Kontext und Vermeidung sensibler Protokolldaten geprüft. Messreihen, Alarmgrenze und Protokollbeispiele sind synthetisch.",
+      "checkedAt": "2026-11-16"
+    }
+  ],
+  "caseStudy": {
+    "title": "Mira plant das Lernportal für Radblick",
+    "text": "Radblick plant ein internes Lernportal für 20 Beschäftigte. Zu Spitzenzeiten arbeiten zwölf gleichzeitig; in einem Jahr werden 30 Beschäftigte erwartet. Gäste brauchen keinen Portalzugriff. Alle Zahlen, Ziele und Preise sind erfundene Vorgaben für diesen Lernfall."
+  },
+  "blocks": [
+    {
+      "id": "common-lf9-requirements-collect",
+      "title": "1. Vom Arbeitsbedarf zu belastbaren Angaben",
+      "objectiveIds": [
+        "common-lf9-requirements-collect"
+      ],
+      "sourceIds": [
+        "lf9-ms-capacity",
+        "lf9-ms-network",
+        "lf9-ms-monitoring"
+      ],
+      "paragraphs": [
+        "Beginne mit der Arbeit: Wer nutzt welche Anwendung, von wo und zu welchen Zeiten? Frage nach Beschäftigten, gleichzeitig aktiven Nutzenden, Endgeräten, Datenmengen und Wachstum. Zwanzig Personen bedeuten nicht automatisch zwanzig gleichzeitige Übertragungen. Halte Auskunft, Messung und eigene Schätzung getrennt fest.",
+        "Bei Radblick sind 20 Beschäftigte angemeldet, zwölf arbeiten gleichzeitig im Portal. Jede aktive Sitzung benötigt laut fiktivem Lastprofil 2 Mbit/s. Für diese gleichzeitige Spitzenlast ergeben sich 12 × 2 = 24 Mbit/s. Weitere Anwendungen, Protokollaufwand und Reserven kommen in einer echten Planung hinzu; 24 Mbit/s ist hier der definierte Nutzdatenbedarf.",
+        "Frage auch nach Ausfallfolgen: Können Aufgaben warten, gibt es einen freigegebenen Ersatzweg, und wie lange darf eine Unterbrechung dauern? Für Radblick wird als eigenes Betriebsziel die Wiederherstellung binnen 60 Minuten vereinbart. Das Ziel muss später durch einen geeigneten Wiederherstellungstest geprüft werden."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Lernfall",
+        "text": "Mira notiert 20 Beschäftigte, zwölf gleichzeitige Sitzungen, 24 Mbit/s Nutzdatenbedarf und Wiederherstellung binnen 60 Minuten."
+      },
+      "misconception": {
+        "claim": "Die Zahl der Benutzerkonten ist bereits die Zahl gleichzeitiger Datenströme.",
+        "correction": "Die Gleichzeitigkeit wird gesondert ermittelt und mit dem Lastprofil verbunden."
+      },
+      "takeaway": "Erfrage Nutzung, Gleichzeitigkeit, Datenverkehr, Wachstum und Ausfallfolgen."
+    },
+    {
+      "id": "common-lf9-requirements-measure",
+      "title": "2. Messwerte und Annahmen auseinanderhalten",
+      "objectiveIds": [
+        "common-lf9-requirements-collect"
+      ],
+      "sourceIds": [
+        "lf9-ms-capacity",
+        "lf9-ms-network",
+        "lf9-ms-monitoring"
+      ],
+      "paragraphs": [
+        "Betrachte typische Zeiten und Spitzenzeiten. Ein ruhiger Vormittag kann eine gemeinsame Schulung mit vielen Anmeldungen nicht abbilden. Dokumentiere für eine Messung Zeitraum, Messpunkt, Tätigkeit und Einheit. Mbit/s ist eine Datenrate, MB eine Datenmenge; bei dezimalen Einheiten entsprechen 8 Mbit einem MB.",
+        "Eine Datei mit 30 MB enthält 240 Mbit. Bei konstant 20 Mbit/s nutzbarer Datenrate dauert ihre Übertragung rechnerisch 12 Sekunden. Das ist eine vereinfachte Rechnung ohne zusätzliche Wartezeiten. Sie ist kein Nachweis, dass jede Seite in zwölf Sekunden lädt.",
+        "Fehlende Daten werden als offene Frage erfasst: beispielsweise die Größe künftiger Kursvideos oder der Bedarf weiterer Anwendungen. Nenne einen Verantwortlichen für die Klärung. So bleibt sichtbar, weshalb eine vorläufige Kapazitätsannahme später geändert werden kann."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Lernfall",
+        "text": "30 MB × 8 / 20 Mbit/s = 12 s unter den ausdrücklich vorgegebenen Idealbedingungen."
+      },
+      "misconception": {
+        "claim": "Ein Durchschnittswert aus einer ruhigen Stunde beschreibt bereits die Spitzenlast.",
+        "correction": "Spitzenlast braucht passende Messzeiten oder eine ausdrücklich begründete Lastannahme."
+      },
+      "takeaway": "Ein Messwert ist erst mit Zeitpunkt, Messpunkt, Tätigkeit und Einheit brauchbar."
+    },
+    {
+      "id": "common-lf9-requirements-criteria",
+      "title": "3. Wünsche in prüfbare Anforderungen übersetzen",
+      "objectiveIds": [
+        "common-lf9-requirements-criteria"
+      ],
+      "sourceIds": [
+        "lf9-ms-capacity",
+        "lf9-ms-network",
+        "lf9-ms-monitoring"
+      ],
+      "paragraphs": [
+        "Formuliere für jede Anforderung ein erwartetes Verhalten mit Bedingungen und Prüfweg. Schnell ist zu ungenau. Radblick vereinbart für einen gesonderten Lasttest: zwölf gleichzeitige Sitzungen, 30 festgelegte Seitenaufrufe je Sitzung, jeder dieser Aufrufe in höchstens zwei Sekunden. Das ist eine fiktive Abnahmebedingung, keine allgemeine Norm.",
+        "Zur Sicherheit gehört ein positiver und ein negativer Fall: Ein Beschäftigtenclient darf das Portal über HTTPS erreichen; ein Gästeclient darf es nicht. Zur Erweiterbarkeit wird Platz für 30 Beschäftigtenclients plus ein Gateway eingeplant. Freie Adressen allein beweisen noch keine ausreichende Leistung von Server oder Verbindung.",
+        "Ordne jeder Anforderung einen Nachweis zu: Lasttest für die Antwortzeit, Zugriffsprobe für erlaubte und gesperrte Nutzung, Adressplan für die Anschlussreserve. Die spätere lokale Netzsimulation prüft Funktionsabhängigkeiten und Zugriffsregeln. Sie misst keine echte Antwortzeit und belegt keine reale Verfügbarkeit."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Lernfall",
+        "text": "Anforderung: Gästezugriff gesperrt. Nachweis: Probe vom vorgegebenen Gästeclient gegen genau den Portaldienst wird abgewiesen."
+      },
+      "misconception": {
+        "claim": "Ein erfolgreicher Aufruf vom Beschäftigtenclient beweist auch die Trennung des Gästenetzes.",
+        "correction": "Die unzulässige Verbindung benötigt eine eigene negative Zugriffsprobe."
+      },
+      "takeaway": "Zu jeder Anforderung gehören Bedingungen, erwartetes Ergebnis und ein passender Test."
+    },
+    {
+      "id": "common-lf9-requirements-agree",
+      "title": "4. Priorisieren und den Prüfumfang vereinbaren",
+      "objectiveIds": [
+        "common-lf9-requirements-collect",
+        "common-lf9-requirements-criteria"
+      ],
+      "sourceIds": [
+        "lf9-ms-capacity",
+        "lf9-ms-network",
+        "lf9-ms-monitoring"
+      ],
+      "paragraphs": [
+        "Stimme widersprüchliche Wünsche ab. Hohe Verfügbarkeit, niedrige Kosten und geringe Leistungsaufnahme können unterschiedliche Lösungen nahelegen. Unverzichtbare Anforderungen werden vor der Auswahl festgelegt; wünschenswerte Verbesserungen bleiben erkennbar. Eine günstige Lösung erfüllt eine verbindliche Sicherheitsanforderung nicht schon durch ihren Preis.",
+        "Radblick verlangt Portalzugriff für Beschäftigte, Sperre für Gäste und dokumentierte Wiederherstellung. Ein zweiter Server wird als spätere Option geprüft. Mira hält fest, wer die Betriebsverantwortung trägt und welche Nachweise zur Übergabe vorliegen müssen.",
+        "Prüfe Änderungen am Bedarf gegen den bisherigen Plan. Steigt die erwartete Gleichzeitigkeit von zwölf auf 18 Sitzungen, wächst der modellierte Nutzdatenbedarf von 24 auf 36 Mbit/s. Danach sind Leistungsreserve und Lasttest erneut zu beurteilen. Die bloße Gesamtzahl von Konten ersetzt diese Rechnung nicht."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Lernfall",
+        "text": "18 gleichzeitige Sitzungen zu je 2 Mbit/s ergeben 36 Mbit/s Nutzdatenbedarf; Mira passt die Lastannahme an."
+      },
+      "misconception": {
+        "claim": "Ein einmal vereinbarter Bedarf muss bei geänderter Nutzung nicht erneut betrachtet werden.",
+        "correction": "Neue Nutzungsdaten können Kapazität, Kosten und Prüfumfang verändern."
+      },
+      "takeaway": "Vereinbare verbindliche Ziele und ändere den Plan nachvollziehbar, wenn sich der Bedarf ändert."
+    }
+  ],
+  "questionFile": "questions/common-lf9-requirements.v1.csv",
+  "quiz": {
+    "questionIds": [
+      "LJ-LF9-REQUIREMENTS-Q01",
+      "LJ-LF9-REQUIREMENTS-Q02",
+      "LJ-LF9-REQUIREMENTS-Q03",
+      "LJ-LF9-REQUIREMENTS-Q04",
+      "LJ-LF9-REQUIREMENTS-Q05",
+      "LJ-LF9-REQUIREMENTS-Q06"
+    ]
+  },
+  "exam": {
+    "questionIds": [
+      "LJ-LF9-REQUIREMENTS-E01",
+      "LJ-LF9-REQUIREMENTS-E02",
+      "LJ-LF9-REQUIREMENTS-E03",
+      "LJ-LF9-REQUIREMENTS-E04",
+      "LJ-LF9-REQUIREMENTS-E05",
+      "LJ-LF9-REQUIREMENTS-E06",
+      "LJ-LF9-REQUIREMENTS-E07",
+      "LJ-LF9-REQUIREMENTS-E08"
+    ],
+    "passPercent": 80,
+    "scoring": "all-or-nothing-per-question",
+    "timed": false
+  },
+  "questionLinks": [
+    {
+      "questionId": "LJ-LF9-REQUIREMENTS-Q01",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf9-requirements-collect"
+      ],
+      "blockIds": [
+        "common-lf9-requirements-collect"
+      ]
+    },
+    {
+      "questionId": "LJ-LF9-REQUIREMENTS-Q02",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf9-requirements-collect"
+      ],
+      "blockIds": [
+        "common-lf9-requirements-collect"
+      ]
+    },
+    {
+      "questionId": "LJ-LF9-REQUIREMENTS-Q03",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf9-requirements-collect"
+      ],
+      "blockIds": [
+        "common-lf9-requirements-measure"
+      ]
+    },
+    {
+      "questionId": "LJ-LF9-REQUIREMENTS-Q04",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf9-requirements-criteria"
+      ],
+      "blockIds": [
+        "common-lf9-requirements-criteria"
+      ]
+    },
+    {
+      "questionId": "LJ-LF9-REQUIREMENTS-Q05",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf9-requirements-criteria"
+      ],
+      "blockIds": [
+        "common-lf9-requirements-criteria"
+      ]
+    },
+    {
+      "questionId": "LJ-LF9-REQUIREMENTS-Q06",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf9-requirements-criteria"
+      ],
+      "blockIds": [
+        "common-lf9-requirements-agree"
+      ]
+    },
+    {
+      "questionId": "LJ-LF9-REQUIREMENTS-E01",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf9-requirements-collect"
+      ],
+      "blockIds": [
+        "common-lf9-requirements-collect"
+      ]
+    },
+    {
+      "questionId": "LJ-LF9-REQUIREMENTS-E02",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf9-requirements-collect"
+      ],
+      "blockIds": [
+        "common-lf9-requirements-measure"
+      ]
+    },
+    {
+      "questionId": "LJ-LF9-REQUIREMENTS-E03",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf9-requirements-collect"
+      ],
+      "blockIds": [
+        "common-lf9-requirements-measure"
+      ]
+    },
+    {
+      "questionId": "LJ-LF9-REQUIREMENTS-E04",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf9-requirements-collect"
+      ],
+      "blockIds": [
+        "common-lf9-requirements-agree"
+      ]
+    },
+    {
+      "questionId": "LJ-LF9-REQUIREMENTS-E05",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf9-requirements-criteria"
+      ],
+      "blockIds": [
+        "common-lf9-requirements-criteria"
+      ]
+    },
+    {
+      "questionId": "LJ-LF9-REQUIREMENTS-E06",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf9-requirements-criteria"
+      ],
+      "blockIds": [
+        "common-lf9-requirements-criteria"
+      ]
+    },
+    {
+      "questionId": "LJ-LF9-REQUIREMENTS-E07",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf9-requirements-criteria"
+      ],
+      "blockIds": [
+        "common-lf9-requirements-criteria"
+      ]
+    },
+    {
+      "questionId": "LJ-LF9-REQUIREMENTS-E08",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf9-requirements-criteria"
+      ],
+      "blockIds": [
+        "common-lf9-requirements-agree"
+      ]
+    }
+  ],
+  "interview": [
+    {
+      "id": "common-lf9-requirements-talk-collect",
+      "prompt": "Erkläre, welche Angaben du für Radblick noch vor der Geräteauswahl erhebst.",
+      "objectiveIds": [
+        "common-lf9-requirements-collect"
+      ],
+      "blockIds": [
+        "common-lf9-requirements-collect",
+        "common-lf9-requirements-measure"
+      ],
+      "keyPoints": [
+        "Nutzerzahl und Gleichzeitigkeit unterscheiden.",
+        "Anwendungen, Datenverkehr, Spitzenzeiten und Wachstum erfassen.",
+        "Ausfallfolgen, Ersatzweg und zulässige Unterbrechung klären."
+      ],
+      "acceptableAlternatives": [
+        "Eine fachlich gleichwertige Begründung mit passenden Modellannahmen und überprüfbaren Belegen."
+      ],
+      "misconceptions": [
+        "Kontenzahl als vollständige Lastbeschreibung behandeln."
+      ],
+      "sampleAnswer": "Ich frage nach gleichzeitigen Sitzungen und Aufgaben. Zwölf Sitzungen zu 2 Mbit/s bedeuten im Modell 24 Mbit/s. Ich kennzeichne offene Werte und kläre die Folgen eines Ausfalls.",
+      "followUp": "Wie würdest du einen geschätzten Wert von einer Messung unterscheiden?"
+    },
+    {
+      "id": "common-lf9-requirements-talk-criteria",
+      "prompt": "Formuliere je eine prüfbare Leistungs-, Sicherheits- und Erweiterungsanforderung für das Portal.",
+      "objectiveIds": [
+        "common-lf9-requirements-criteria"
+      ],
+      "blockIds": [
+        "common-lf9-requirements-criteria"
+      ],
+      "keyPoints": [
+        "Leistung mit Last, Tätigkeit und Zeitgrenze verbinden.",
+        "Beschäftigtenzugriff erlauben und Gästezugriff negativ prüfen.",
+        "30 Clients plus Gateway einplanen, Leistungsreserve separat prüfen."
+      ],
+      "acceptableAlternatives": [
+        "Eine fachlich gleichwertige Begründung mit passenden Modellannahmen und überprüfbaren Belegen."
+      ],
+      "misconceptions": [
+        "Eine einzelne erfolgreiche Verbindung als Nachweis aller Anforderungen ausgeben."
+      ],
+      "sampleAnswer": "Für den Lasttest vereinbare ich zwölf Sitzungen und die vorgegebenen Aufrufe binnen zwei Sekunden. Beschäftigte müssen den Dienst erreichen, Gäste nicht. Die Planung muss 30 Clients plus Gateway und passende Leistungsreserven berücksichtigen.",
+      "followUp": "Welche dieser Anforderungen kann das lokale Netzmodell tatsächlich prüfen?"
+    },
+    {
+      "id": "common-lf9-requirements-talk-change",
+      "prompt": "Die geplante Gleichzeitigkeit steigt auf 18. Begründe deine Anpassung und den nächsten Prüfschritt.",
+      "objectiveIds": [
+        "common-lf9-requirements-collect",
+        "common-lf9-requirements-criteria"
+      ],
+      "blockIds": [
+        "common-lf9-requirements-agree"
+      ],
+      "keyPoints": [
+        "36 Mbit/s als neuen Modellbedarf berechnen.",
+        "Reserve und Lasttest neu beurteilen.",
+        "Verbindliche Sicherheitsanforderungen weiter einhalten."
+      ],
+      "acceptableAlternatives": [
+        "Eine fachlich gleichwertige Begründung mit passenden Modellannahmen und überprüfbaren Belegen."
+      ],
+      "misconceptions": [
+        "Wachstum anhand der Kontenzahl ohne Lastprofil beurteilen."
+      ],
+      "sampleAnswer": "18 × 2 ergibt 36 Mbit/s Nutzdatenbedarf. Ich aktualisiere die Annahme und beurteile Kapazität und Lasttest erneut; die Gästesperre bleibt Teil der Abnahme.",
+      "followUp": "Welche zusätzliche Anwendung könnte die Rechnung verändern?"
+    }
+  ],
+  "cards": [
+    {
+      "id": "common-lf9-requirements-card-01",
+      "front": "Nutzerzahl oder Gleichzeitigkeit: Was unterscheidest du?",
+      "back": "Nutzerzahl beschreibt die potenziellen Nutzenden; Gleichzeitigkeit die parallel aktiven Sitzungen für ein Lastprofil.",
+      "objectiveIds": [
+        "common-lf9-requirements-collect"
+      ],
+      "blockIds": [
+        "common-lf9-requirements-collect"
+      ]
+    },
+    {
+      "id": "common-lf9-requirements-card-02",
+      "front": "Welche Angaben gehören zu einer Messung?",
+      "back": "Zeitraum, Messpunkt, Tätigkeit, Wert und Einheit; Schätzungen und offene Angaben bleiben gekennzeichnet.",
+      "objectiveIds": [
+        "common-lf9-requirements-collect"
+      ],
+      "blockIds": [
+        "common-lf9-requirements-measure"
+      ]
+    },
+    {
+      "id": "common-lf9-requirements-card-03",
+      "front": "Wie lange dauern 30 MB bei nutzbaren 20 Mbit/s im Idealmodell?",
+      "back": "30 × 8 = 240 Mbit; 240 / 20 = 12 Sekunden, ohne zusätzliche Wartezeiten.",
+      "objectiveIds": [
+        "common-lf9-requirements-collect"
+      ],
+      "blockIds": [
+        "common-lf9-requirements-measure"
+      ]
+    },
+    {
+      "id": "common-lf9-requirements-card-04",
+      "front": "Wie wird aus schnell eine prüfbare Forderung?",
+      "back": "Tätigkeit, Last und Zeitgrenze nennen, etwa festgelegte Seitenaufrufe bei zwölf gleichzeitigen Sitzungen in höchstens zwei Sekunden.",
+      "objectiveIds": [
+        "common-lf9-requirements-criteria"
+      ],
+      "blockIds": [
+        "common-lf9-requirements-criteria"
+      ]
+    },
+    {
+      "id": "common-lf9-requirements-card-05",
+      "front": "Warum benötigt eine Gästesperre eine negative Probe?",
+      "back": "Erlaubter Beschäftigtenzugriff zeigt nicht, ob ein unzulässiger Gästezugriff zuverlässig abgewehrt wird.",
+      "objectiveIds": [
+        "common-lf9-requirements-criteria"
+      ],
+      "blockIds": [
+        "common-lf9-requirements-criteria"
+      ]
+    },
+    {
+      "id": "common-lf9-requirements-card-06",
+      "front": "Was prüfst du bei Wachstum erneut?",
+      "back": "Adressreserve, Leistungsbedarf, Betriebsaufwand und passende Lasttests; verbindliche Anforderungen bleiben Teil der Bewertung.",
+      "objectiveIds": [
+        "common-lf9-requirements-criteria"
+      ],
+      "blockIds": [
+        "common-lf9-requirements-agree"
+      ]
+    }
+  ],
+  "review": {
+    "status": "reviewed",
+    "checkedAt": "2026-11-16"
+  }
+}

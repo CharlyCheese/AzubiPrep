@@ -1,0 +1,479 @@
+{
+  "schemaVersion": 1,
+  "id": "common-pm-planning",
+  "version": "1.0.0",
+  "title": "Arbeitspakete und Aufwand schätzen",
+  "fieldId": "PM",
+  "scope": "common",
+  "prerequisites": [
+    "common-pm-methods"
+  ],
+  "sourceIds": [
+    "ec-pm2-artefacts",
+    "pm-nasa-planning",
+    "pm-ms-schedule"
+  ],
+  "sources": [
+    {
+      "id": "ec-pm2-artefacts",
+      "title": "Europäische Kommission: PM²-Artefakte",
+      "url": "https://pm2.europa.eu/pm2-artefacts_en",
+      "checkedAt": "2026-11-11",
+      "note": "Öffentliches Verzeichnis nennt Projektauftrag, Stakeholder-Matrix, Arbeitsplan, Kommunikations- und Abnahmeplanung sowie Entscheidungsprotokoll. Eigene kleine Beispiele übertragen diese Hilfsmittel ohne Vorlagenkopie."
+    },
+    {
+      "id": "pm-nasa-planning",
+      "title": "NASA: Technical Planning",
+      "url": "https://www.nasa.gov/reference/6-1-technical-planning/",
+      "checkedAt": "2026-11-11",
+      "note": "Öffentliche HTML-Fassung zur Zerlegung von Arbeit, realistischen Ressourcen, Schätzannahmen und aufeinander abgestimmter Planung geprüft. Alle Zahlen und Arbeitspakete sind eigene vereinfachte Übungsfälle."
+    },
+    {
+      "id": "pm-ms-schedule",
+      "title": "Microsoft: How Project schedules tasks",
+      "url": "https://support.microsoft.com/en-us/project/how-project-schedules-tasks-behind-the-scenes",
+      "checkedAt": "2026-11-11",
+      "note": "Zusammenhang von Arbeit, Dauer, zugeordneten Ressourcen, Verfügbarkeiten und Abhängigkeiten geprüft. Produktunabhängige Handrechnung mit ausdrücklich genannten Vereinfachungen."
+    }
+  ],
+  "objectives": [
+    {
+      "id": "common-pm-planning-structure",
+      "text": "Einen Auftrag in prüfbare Arbeitspakete mit Ergebnissen zerlegen."
+    },
+    {
+      "id": "common-pm-planning-estimate",
+      "text": "Aufwand mit begründeten Annahmen schätzen und von Dauer unterscheiden."
+    },
+    {
+      "id": "common-pm-planning-uncertainty",
+      "text": "Unsicherheiten und Reserven transparent dokumentieren."
+    }
+  ],
+  "caseStudy": {
+    "title": "Nordlicht IT plant ein Serviceticket-Portal",
+    "text": "Nordlicht IT zerlegt den Portalauftrag in überschaubare Arbeit. Für die Übung werden Klärung mit 12 Stunden, Einrichtung mit 24 Stunden, Oberfläche mit 20 Stunden sowie Test und Übergabe mit 24 Stunden geschätzt. Diese 80 Personenstunden sind eine erste Basisschätzung unter benannten Annahmen; eine Reserve wird bei Bedarf gesondert ausgewiesen."
+  },
+  "blocks": [
+    {
+      "id": "common-pm-planning-structure",
+      "title": "1. Aus dem Auftrag prüfbare Arbeitspakete machen",
+      "objectiveIds": [
+        "common-pm-planning-structure"
+      ],
+      "sourceIds": [
+        "ec-pm2-artefacts",
+        "pm-nasa-planning"
+      ],
+      "paragraphs": [
+        "Ein Projektstrukturplan zerlegt den vereinbarten Umfang in Teilbereiche und Arbeitspakete. Er beantwortet zunächst, welche Arbeit zum Ergebnis gehört. Die zeitliche Reihenfolge und die verfügbare Kapazität werden anschließend abgestimmt; eine gegliederte Liste allein ist noch kein Terminplan.",
+        "Ein Arbeitspaket ist eine sinnvoll abgrenzbare Einheit, die sich planen, zuordnen und prüfen lässt. Beschreibe Ergebnis, nötige Arbeit, verantwortliche Person, Voraussetzungen, Aufwand und Fertigkriterium. Eine unbestimmte Überschrift wie 'Technik' reicht dafür nicht.",
+        "Beispiel 'Portalgrundsystem eingerichtet': Die Software ist im Testsystem konfiguriert; eine verantwortliche Fachkraft bearbeitet das Paket. Voraussetzungen sind bereitgestellter Server und Zugang. Fertig ist das Paket, wenn die vereinbarte Testanmeldung gelingt und die Einstellungen dokumentiert sind.",
+        "Prüfe die Zerlegung auf Lücken und Doppelzählungen. Tests, Koordination, Dokumentation und Übergabe brauchen ebenfalls Arbeit. Ordne diese Arbeit entweder einem passenden Paket oder einem eigenen Paket zu, ohne dieselbe Tätigkeit zweimal zu schätzen. Unterpakete müssen gemeinsam den zugehörigen Umfang abdecken."
+      ],
+      "example": {
+        "title": "Eigener Übungsfall",
+        "text": "'Oberfläche erstellen' wird in prüfbare Ergebnisse konkretisiert: Eingabeformular und Statusansicht mit abgestimmten Kriterien. Die Gesamtplanung muss außerdem Test und Übergabe enthalten."
+      },
+      "misconception": {
+        "claim": "Ein Projektstrukturplan zeigt schon durch seine Gliederung, welche Aufgaben parallel stattfinden können.",
+        "correction": "Die Gliederung zeigt die Arbeit. Abhängigkeiten und Ressourceneinsatz müssen zusätzlich geplant werden."
+      },
+      "takeaway": "Beschreibe Pakete über Ergebnis, Verantwortung, Voraussetzungen und Fertigkriterium."
+    },
+    {
+      "id": "common-pm-planning-estimate",
+      "title": "2. Aufwand begründen und zusammenrechnen",
+      "objectiveIds": [
+        "common-pm-planning-estimate",
+        "common-pm-planning-structure"
+      ],
+      "sourceIds": [
+        "pm-nasa-planning"
+      ],
+      "paragraphs": [
+        "Aufwand ist die insgesamt benötigte Arbeitsmenge, hier in Personenstunden. Zwei Personen mit je drei Stunden leisten zusammen sechs Personenstunden. Dauer beschreibt die verstrichene Arbeits- oder Kalenderzeit zwischen Anfang und Ende. Ohne Kapazität und Abhängigkeiten lässt sich aus Aufwand kein genauer Termin ableiten.",
+        "Bei einer Schätzung von unten nach oben schätzt das Team einzelne Pakete und addiert sie. Im Portalmodell: 12 h Klärung + 24 h Einrichtung + 20 h Oberfläche + 24 h Test/Übergabe = 80 h. Die Summe ist nachvollziehbar, wenn die Pakete klar abgegrenzt und nicht doppelt enthalten sind.",
+        "Erfahrungen aus ähnlicher Arbeit helfen als Vergleich. Prüfe aber Unterschiede bei Umfang, Technik, Daten, Erfahrung und Qualitätsanforderungen. Ein früheres kleines Formular mit drei Feldern ist keine sichere Schätzgrundlage für eine Oberfläche mit unbekannter Schnittstelle.",
+        "Notiere Annahmen direkt neben dem Wert: Die Standardsoftware wird verwendet, Zugänge sind bereit, ein definierter Testumfang ist enthalten. Besprechungen und Dokumentation sind im Modell den Paketen zugeordnet. Ändert sich eine Annahme, schätzt das Team die betroffenen Pakete neu; eine gewünschte Zahl ist kein Nachweis des benötigten Aufwands."
+      ],
+      "example": {
+        "title": "Eigener Übungsfall",
+        "text": "Ergibt eine genauere Prüfung 28 statt 20 Stunden für die Oberfläche, steigt die Basissumme bei unveränderten übrigen Paketen auf 88 Stunden: 12 + 24 + 28 + 24."
+      },
+      "misconception": {
+        "claim": "Ein früheres Projekt mit demselben Namen beweist, dass der Aufwand diesmal gleich sein muss.",
+        "correction": "Vergleichswerte müssen an Unterschiede und aktuelle Annahmen angepasst werden."
+      },
+      "takeaway": "Schätze abgegrenzte Arbeit, notiere die Grundlage und summiere in gleichen Einheiten."
+    },
+    {
+      "id": "common-pm-planning-duration",
+      "title": "3. Arbeitsmenge und verstrichene Zeit unterscheiden",
+      "objectiveIds": [
+        "common-pm-planning-estimate"
+      ],
+      "sourceIds": [
+        "pm-ms-schedule"
+      ],
+      "paragraphs": [
+        "Für eine einfache Dauerrechnung brauchst du nutzbare Kapazität. Eine Person, die sechs Projektstunden pro Arbeitstag leisten kann, benötigt für 24 Personenstunden rechnerisch 24 h ÷ 6 h pro Tag = 4 Arbeitstage. Ein achtstündiger Arbeitstag bedeutet nicht automatisch acht Stunden für dieses Projekt; andere Aufgaben verringern die verfügbare Zeit.",
+        "Bei teilbarer Arbeit können Kapazitäten addiert werden. Zwei geeignete Personen mit je vier Projektstunden täglich haben zusammen acht Stunden pro Arbeitstag. 80 Personenstunden ÷ 8 Stunden pro Arbeitstag ergeben zehn Arbeitstage. Das ist ein vereinfachtes Kapazitätsmodell mit parallelisierbarer Arbeit, ohne zusätzliche Wartezeit oder Engpässe.",
+        "Ein Paket, das eine Person schrittweise bearbeiten muss, lässt sich durch weitere Personen möglicherweise kaum beschleunigen. Übergaben und Abstimmung können zusätzlichen Aufwand verursachen. Eine Antwort auf eine externe Anfrage kann außerdem Zeit kosten, ohne dass während des Wartens Arbeitsstunden anfallen.",
+        "Unterscheide Arbeitstage von Kalendertagen. Wochenenden, Feiertage und unterschiedliche Anwesenheit können den tatsächlichen Endtermin verschieben. Deshalb werden für einen belastbaren Ablauf im nächsten Thema Dauer, Abhängigkeiten und Verfügbarkeit gemeinsam geprüft."
+      ],
+      "example": {
+        "title": "Eigener Übungsfall",
+        "text": "Eine Testperson benötigt acht Stunden aktive Arbeit und wartet danach einen Arbeitstag auf Rückmeldung. Die Wartezeit verlängert den Ablauf, ist aber nicht ohne Weiteres eine weitere achtstündige Arbeitsleistung."
+      },
+      "misconception": {
+        "claim": "80 Personenstunden bedeuten unabhängig von Team und Verfügbarkeit immer zehn Kalendertage.",
+        "correction": "Dauer hängt von Kapazität, Teilbarkeit, Abhängigkeiten und Kalender ab; Stunden allein legen keinen Termin fest."
+      },
+      "takeaway": "Teile Aufwand durch tatsächlich nutzbare Kapazität und prüfe die Modellgrenzen."
+    },
+    {
+      "id": "common-pm-planning-uncertainty",
+      "title": "4. Unsicherheit und Reserve offen ausweisen",
+      "objectiveIds": [
+        "common-pm-planning-uncertainty",
+        "common-pm-planning-estimate"
+      ],
+      "sourceIds": [
+        "pm-nasa-planning"
+      ],
+      "paragraphs": [
+        "Eine Schätzung ist eine begründete Vorhersage, keine Zusicherung. Benenne Unsicherheiten, etwa eine ungeprüfte Schnittstelle oder unklare Qualität von Testdaten. Eine Bandbreite kann ehrlicher sein als scheinbar genaue Dezimalstellen: Für eine unbekannte Anpassung werden beispielsweise 8 bis 14 Stunden mit Erklärung der Annahmen notiert.",
+        "Eine Reserve soll begründete Unsicherheit abdecken und wird von der Basisschätzung getrennt. Im eigenen Beispiel werden auf 80 Stunden Basis ausdrücklich 10 Prozent Reserve vereinbart: 80 × 10 ÷ 100 = 8 Stunden Reserve; Planansatz einschließlich Reserve = 88 Stunden. Die 10 Prozent sind eine Übungsannahme, keine allgemeine Norm.",
+        "Dokumentiere Grund, Höhe, Bezugsgröße und Umgang mit der Reserve. Bereits im Basispaket berücksichtigte Arbeit darf nicht noch einmal als dieselbe Reserve hinzukommen. Eine Reserve ersetzt auch keine fehlende Aufgabe. Wird die Oberfläche sicher acht Stunden umfangreicher, erhöht das die Basisschätzung; es ist dann kein bloß ungewisses Ereignis mehr.",
+        "Prüfe die größte Unsicherheit früh durch eine begrenzte Untersuchung, etwa einen Schnittstellentest. Aktualisiere Schätzung und verbleibende Reserve anhand neuer Erkenntnisse. Vergleiche am Ende geschätzten und tatsächlichen Aufwand, damit spätere Schätzungen auf besseren Erfahrungen beruhen."
+      ],
+      "example": {
+        "title": "Eigener Übungsfall",
+        "text": "Basis 80 h und gesonderte Reserve 8 h ergeben 88 h Planung. Nach einem frühen Schnittstellentest kann das Team besser begründen, ob diese Reserve angemessen ist."
+      },
+      "misconception": {
+        "claim": "Eine pauschale Reserve macht jede Basisschätzung realistisch und deckt vergessene Arbeitspakete ab.",
+        "correction": "Zuerst müssen Umfang und Basis stimmen. Eine Reserve macht verbleibende Unsicherheit sichtbar und benötigt eine begründete Bezugsgröße."
+      },
+      "takeaway": "Trenne Basis, erkennbare Mehrarbeit und begründete Reserve."
+    }
+  ],
+  "questionFile": "questions/common-pm-planning.v1.csv",
+  "quiz": {
+    "questionIds": [
+      "LJ-PM-PLANNING-Q01",
+      "LJ-PM-PLANNING-Q02",
+      "LJ-PM-PLANNING-Q03",
+      "LJ-PM-PLANNING-Q04",
+      "LJ-PM-PLANNING-Q05",
+      "LJ-PM-PLANNING-Q06"
+    ]
+  },
+  "exam": {
+    "questionIds": [
+      "LJ-PM-PLANNING-E01",
+      "LJ-PM-PLANNING-E02",
+      "LJ-PM-PLANNING-E03",
+      "LJ-PM-PLANNING-E04",
+      "LJ-PM-PLANNING-E05",
+      "LJ-PM-PLANNING-E06",
+      "LJ-PM-PLANNING-E07",
+      "LJ-PM-PLANNING-E08"
+    ],
+    "passPercent": 80,
+    "scoring": "all-or-nothing-per-question",
+    "timed": false
+  },
+  "questionLinks": [
+    {
+      "questionId": "LJ-PM-PLANNING-Q01",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-pm-planning-structure"
+      ],
+      "blockIds": [
+        "common-pm-planning-structure"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-PLANNING-Q02",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-pm-planning-structure"
+      ],
+      "blockIds": [
+        "common-pm-planning-structure"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-PLANNING-Q03",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-pm-planning-estimate"
+      ],
+      "blockIds": [
+        "common-pm-planning-estimate"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-PLANNING-Q04",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-pm-planning-estimate"
+      ],
+      "blockIds": [
+        "common-pm-planning-duration"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-PLANNING-Q05",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-pm-planning-uncertainty"
+      ],
+      "blockIds": [
+        "common-pm-planning-uncertainty"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-PLANNING-Q06",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-pm-planning-uncertainty"
+      ],
+      "blockIds": [
+        "common-pm-planning-uncertainty"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-PLANNING-E01",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-pm-planning-structure"
+      ],
+      "blockIds": [
+        "common-pm-planning-structure"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-PLANNING-E02",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-pm-planning-structure"
+      ],
+      "blockIds": [
+        "common-pm-planning-structure",
+        "common-pm-planning-estimate"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-PLANNING-E03",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-pm-planning-estimate"
+      ],
+      "blockIds": [
+        "common-pm-planning-estimate"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-PLANNING-E04",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-pm-planning-estimate"
+      ],
+      "blockIds": [
+        "common-pm-planning-duration"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-PLANNING-E05",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-pm-planning-estimate"
+      ],
+      "blockIds": [
+        "common-pm-planning-estimate",
+        "common-pm-planning-duration"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-PLANNING-E06",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-pm-planning-uncertainty"
+      ],
+      "blockIds": [
+        "common-pm-planning-uncertainty"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-PLANNING-E07",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-pm-planning-uncertainty"
+      ],
+      "blockIds": [
+        "common-pm-planning-uncertainty"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-PLANNING-E08",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-pm-planning-uncertainty",
+        "common-pm-planning-estimate"
+      ],
+      "blockIds": [
+        "common-pm-planning-estimate",
+        "common-pm-planning-uncertainty"
+      ]
+    }
+  ],
+  "interview": [
+    {
+      "id": "common-pm-planning-talk-structure",
+      "prompt": "Beschreibe ein Arbeitspaket 'Grundsystem eingerichtet' mit Ergebnis, Verantwortung, Voraussetzungen und Fertigkriterium. Erkläre, wie du Test und Dokumentation ohne Lücken oder Doppelzählung berücksichtigst.",
+      "objectiveIds": [
+        "common-pm-planning-structure"
+      ],
+      "blockIds": [
+        "common-pm-planning-structure"
+      ],
+      "keyPoints": [
+        "Konkretes Ergebnis und Verantwortlichkeit nennen.",
+        "Server/Zugang und erfolgreiche Testanmeldung als Voraussetzung beziehungsweise Kriterium trennen.",
+        "Test und Dokumentation eindeutig zuordnen."
+      ],
+      "acceptableAlternatives": [
+        "Ein anderes Portalpaket mit denselben prüfbaren Bestandteilen."
+      ],
+      "misconceptions": [
+        "Eine bloße Überschrift als fertige Paketbeschreibung behandeln."
+      ],
+      "sampleAnswer": "Eine benannte Fachkraft richtet das Grundsystem im Testsystem ein. Server und Zugang müssen vorher bereitstehen. Fertig ist das Paket nach erfolgreicher Testanmeldung und dokumentierten Einstellungen. Diese Tests und Notizen sind in seinem Aufwand enthalten; dieselben Tätigkeiten werden nicht erneut in einem anderen Paket gezählt.",
+      "followUp": "Welche weitere Information brauchst du, bevor du das Paket terminieren kannst?"
+    },
+    {
+      "id": "common-pm-planning-talk-estimate",
+      "prompt": "Addiere die vier Basispakete 12, 24, 20 und 24 Stunden. Berechne die vereinfachte Dauer bei zwei Personen mit je vier Projektstunden pro Arbeitstag und nenne zwei Bedingungen der Rechnung.",
+      "objectiveIds": [
+        "common-pm-planning-estimate"
+      ],
+      "blockIds": [
+        "common-pm-planning-estimate",
+        "common-pm-planning-duration"
+      ],
+      "keyPoints": [
+        "80 Personenstunden Basis ermitteln.",
+        "8 Stunden Tageskapazität und 10 Arbeitstage berechnen.",
+        "Teilbarkeit, geeignete Personen und fehlende Zusatzengpässe berücksichtigen."
+      ],
+      "acceptableAlternatives": [
+        "Hinweis, dass ein realer Termin zusätzlich Kalender und Abhängigkeiten benötigt."
+      ],
+      "misconceptions": [
+        "80 Stunden ohne Kapazitätsangabe als zehn Kalendertage bezeichnen."
+      ],
+      "sampleAnswer": "Die Pakete ergeben 80 Personenstunden. Zwei Personen mit je vier Stunden haben zusammen acht Stunden tägliche Kapazität; 80 geteilt durch 8 ergibt zehn Arbeitstage. Das setzt teilbare Arbeit und passende Fähigkeiten voraus. Wartezeiten, Abhängigkeiten und der Kalender können den tatsächlichen Termin verlängern.",
+      "followUp": "Wie ändert sich die Modellrechnung, wenn eine Person nur zwei statt vier Stunden verfügbar ist?"
+    },
+    {
+      "id": "common-pm-planning-talk-uncertainty",
+      "prompt": "Plane auf die 80 Stunden Basis eine im Beispiel vereinbarte Reserve von 10 Prozent. Benenne Grund und Bezugsgröße sowie eine frühe Prüfung einer unsicheren Schnittstelle. Unterscheide davon sicher bekannte Zusatzarbeit.",
+      "objectiveIds": [
+        "common-pm-planning-uncertainty"
+      ],
+      "blockIds": [
+        "common-pm-planning-uncertainty"
+      ],
+      "keyPoints": [
+        "8 Stunden Reserve und 88 Stunden Planansatz rechnen.",
+        "Reserve auf 80 Basisstunden beziehen und begründen.",
+        "Frühen Test nutzen; bekannte Mehrarbeit in Basis aufnehmen."
+      ],
+      "acceptableAlternatives": [
+        "Andere ausdrücklich begründete Reserve bei bewusst geänderter Annahme."
+      ],
+      "misconceptions": [
+        "Die Übungsreserve von 10 Prozent als allgemein vorgeschriebene Norm behandeln."
+      ],
+      "sampleAnswer": "Zehn Prozent von 80 Stunden sind 8 Stunden; mit Reserve plane ich 88 Stunden. Die Reserve betrifft die benannte Schnittstellenunsicherheit und bleibt gesondert sichtbar. Ein begrenzter Test verbessert die Schätzung. Werden acht zusätzliche Stunden sicher nötig, gehören sie zur Basis und dürfen nicht als dieselbe Arbeit nochmals reserviert werden.",
+      "followUp": "Welche Erkenntnis könnte eine kleinere oder größere Reserve rechtfertigen?"
+    }
+  ],
+  "cards": [
+    {
+      "id": "common-pm-planning-card-package",
+      "front": "Welche Angaben machen ein Arbeitspaket planbar?",
+      "back": "Ergebnis, nötige Arbeit, verantwortliche Person, Voraussetzungen, Aufwand und Fertigkriterium.",
+      "objectiveIds": [
+        "common-pm-planning-structure"
+      ],
+      "blockIds": [
+        "common-pm-planning-structure"
+      ]
+    },
+    {
+      "id": "common-pm-planning-card-structure",
+      "front": "Ist der Projektstrukturplan bereits ein Terminplan?",
+      "back": "Nein. Er gliedert den Umfang in Arbeitspakete. Abhängigkeiten, Kapazitäten und zeitliche Reihenfolge müssen zusätzlich geplant werden.",
+      "objectiveIds": [
+        "common-pm-planning-structure"
+      ],
+      "blockIds": [
+        "common-pm-planning-structure"
+      ]
+    },
+    {
+      "id": "common-pm-planning-card-effort",
+      "front": "Was unterscheidet Aufwand und Dauer?",
+      "back": "Aufwand ist Arbeitsmenge, etwa Personenstunden. Dauer ist verstrichene Arbeits- oder Kalenderzeit und hängt von Kapazität, Abhängigkeiten und Wartezeiten ab.",
+      "objectiveIds": [
+        "common-pm-planning-estimate"
+      ],
+      "blockIds": [
+        "common-pm-planning-estimate",
+        "common-pm-planning-duration"
+      ]
+    },
+    {
+      "id": "common-pm-planning-card-duration",
+      "front": "Wie lautet die einfache Dauerrechnung?",
+      "back": "Dauer = Aufwand ÷ nutzbare Kapazität pro Zeiteinheit. Für 24 h und 6 h pro Arbeitstag sind es 4 Arbeitstage, wenn keine weiteren Engpässe vorliegen.",
+      "objectiveIds": [
+        "common-pm-planning-estimate"
+      ],
+      "blockIds": [
+        "common-pm-planning-duration"
+      ]
+    },
+    {
+      "id": "common-pm-planning-card-reserve",
+      "front": "Was ergeben 80 Basisstunden plus 10 Prozent Reserve?",
+      "back": "8 Stunden Reserve und 88 Stunden Planansatz. Die 10 Prozent sind eine ausdrückliche Übungsannahme und benötigen eine passende Begründung.",
+      "objectiveIds": [
+        "common-pm-planning-uncertainty"
+      ],
+      "blockIds": [
+        "common-pm-planning-uncertainty"
+      ]
+    },
+    {
+      "id": "common-pm-planning-card-known",
+      "front": "Wohin gehört sicher bekannte Zusatzarbeit?",
+      "back": "In die Basisschätzung. Eine Reserve deckt verbleibende begründete Unsicherheit ab und darf fehlende oder doppelt gezählte Arbeit nicht verdecken.",
+      "objectiveIds": [
+        "common-pm-planning-uncertainty"
+      ],
+      "blockIds": [
+        "common-pm-planning-uncertainty"
+      ]
+    }
+  ],
+  "review": {
+    "status": "reviewed",
+    "checkedAt": "2026-11-11"
+  }
+}

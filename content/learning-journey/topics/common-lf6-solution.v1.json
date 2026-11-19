@@ -1,0 +1,486 @@
+{
+  "schemaVersion": 1,
+  "id": "common-lf6-solution",
+  "version": "1.0.0",
+  "title": "Lösung abstimmen und sicher umsetzen",
+  "fieldId": "LF6",
+  "scope": "common",
+  "prerequisites": [
+    "common-lf6-diagnosis",
+    "common-lf4-measures"
+  ],
+  "sourceIds": [
+    "lf6-atlassian-response",
+    "lf6-atlassian-communication",
+    "lf6-ms-deployment"
+  ],
+  "sources": [
+    {
+      "id": "lf6-atlassian-response",
+      "title": "Atlassian: How we respond to an incident",
+      "url": "https://www.atlassian.com/incident-management/handbook/incident-response",
+      "checkedAt": "2026-11-16",
+      "note": "Öffentliche Herstellerbeschreibung zu Aufnahme, Auswirkung, Eskalation, Diagnose, Wiederherstellung und Kommunikation geprüft. Eigene Rollen und Fallwerte sind fiktiv, keine verbindliche ITIL-Vorgabe."
+    },
+    {
+      "id": "lf6-atlassian-communication",
+      "title": "Atlassian: Incident communication templates and examples",
+      "url": "https://www.atlassian.com/incident-management/incident-communication/templates",
+      "checkedAt": "2026-11-16",
+      "note": "Öffentliche englische Herstellerbeispiele für Untersuchungsstand, betroffene Dienste und nächste Meldung geprüft. Englische Kurzmeldungen und Rückfragen im Inhalt sind eigene didaktische Formulierungen."
+    },
+    {
+      "id": "lf6-ms-deployment",
+      "title": "Microsoft: Recommendations for safe deployment practices",
+      "url": "https://learn.microsoft.com/en-us/azure/well-architected/operational-excellence/safe-deployments",
+      "checkedAt": "2026-11-16",
+      "note": "Herstellerempfehlungen zu kleinen freigegebenen Änderungen, Prüfung und vorbereiteter Wiederherstellung geprüft. Der lokale Versionswechsel und Rückfallplan sind ein synthetisches Übungsmodell."
+    }
+  ],
+  "objectives": [
+    {
+      "id": "common-lf6-solution-select",
+      "text": "Lösungswege nach Wirkung, Aufwand, Berechtigungen und Rückfallmöglichkeit vergleichen."
+    },
+    {
+      "id": "common-lf6-solution-explain",
+      "text": "Ein Vorgehen verständlich mit einer betroffenen Person abstimmen und bei angespannten Gesprächen sachlich bleiben."
+    },
+    {
+      "id": "common-lf6-solution-english",
+      "text": "Eine kurze englische Servicemeldung verstehen und eine passende einfache Rückmeldung formulieren."
+    }
+  ],
+  "caseStudy": {
+    "title": "Mira begleitet Radblick durch einen Servicefall",
+    "text": "Eigener fiktiver Lernfall: Mira hat die veraltete Absendeadresse eingegrenzt. Sam ist im Modell für freigegebene Konfigurationsänderungen zuständig. Sie vergleichen die gezielte Änderung von 6 auf 7 mit aufwendigeren Alternativen, stimmen den Eingriff mit Eda ab und geben auch eine kurze englische Statusmeldung. Alle Meldungen sind Übungen und werden niemandem gesendet."
+  },
+  "blocks": [
+    {
+      "id": "common-lf6-solution-compare",
+      "title": "1. Lösungswege nach Wirkung und Risiko vergleichen",
+      "objectiveIds": [
+        "common-lf6-solution-select"
+      ],
+      "sourceIds": [
+        "lf6-atlassian-response",
+        "lf6-ms-deployment"
+      ],
+      "paragraphs": [
+        "Eine Lösung soll die betroffene Aufgabe wieder ermöglichen. Vergleiche deshalb zuerst die erwartete Wirkung auf den belegten Fehler. Ergänze Aufwand, mögliche Nebenwirkungen, erforderliche Rechte und Rückfallmöglichkeit. Ein geringer Aufwand allein macht eine Maßnahme nicht passend, wenn sie den ermittelten Fehler gar nicht adressiert.",
+        "Im Radblick-Fall zeigt der Befund eine alte Absendeadresse in Konfiguration 6. Die gezielte Übernahme der freigegebenen Konfiguration 7 korrigiert diesen Unterschied bei überschaubarem Aufwand. Eine komplette Neuinstallation könnte den Wert ebenfalls ersetzen, verändert aber mehr und bindet mehr Zeit. Ein Kennwortwechsel adressiert den belegten Zielpfadfehler nicht. Die Auswahl richtet sich nach diesen Fallbefunden, nicht nach einer allgemeinen Regel, immer nur kleine Änderungen zu erlauben.",
+        "Ein vorläufiger Umweg ist als Ersatzlösung oder Workaround zu kennzeichnen. Er kann den Arbeitsausfall verringern, ohne die technische Ursache zu beseitigen. Im Ausgangsfall ist kein freigegebener Umweg vorhanden. Eine später vorgeschlagene Alternative müsste auf Berechtigung, Datenrichtigkeit und praktische Nutzbarkeit geprüft werden, bevor sie Edas Frist absichert."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Lernfall",
+        "text": "Mira empfiehlt 7, weil der freigegebene Zielpfad den belegten Unterschied korrigiert. Die größere Neuinstallation ist ohne zusätzlichen Befund unnötiger Aufwand."
+      },
+      "misconception": {
+        "claim": "Die schnellste anklickbare Aktion ist automatisch der beste Lösungsweg.",
+        "correction": "Wirkung auf den Befund, Eingriffsrisiko, Rechte und Rückfall müssen gemeinsam passen."
+      },
+      "takeaway": "Die Maßnahme muss den belegten Fehler mit vertretbarem Aufwand adressieren."
+    },
+    {
+      "id": "common-lf6-solution-safety",
+      "title": "2. Freigabe, Ausgangssicherung und Rückfall vorbereiten",
+      "objectiveIds": [
+        "common-lf6-solution-select"
+      ],
+      "sourceIds": [
+        "lf6-ms-deployment",
+        "lf6-atlassian-response"
+      ],
+      "paragraphs": [
+        "Vor einer Änderung klärst du, wer sie ausführen darf und welche Freigabe vorliegt. Miras lesender Zugriff erlaubt keine Konfigurationsänderung. Sam darf im Modell den abgestimmten Wechsel 6 → 7 durchführen. Halte alten und neuen Stand, betroffene Clients, erwartete Wirkung, Prüfschritte und Abbruchbedingung fest, bevor der Eingriff beginnt.",
+        "Sichere die Ausgangskonfiguration so, dass sie nachvollziehbar wiederhergestellt werden kann. Im Modell wird Version 6 als Ausgangsstand behalten. Die vereinbarte Rückfallbedingung lautet: Wenn durch 7 eine neue Störung wie ausfallender Lesezugriff entsteht, wird die Ausweitung gestoppt und Sam setzt nach dem Rückfallplan auf den gespeicherten Ausgangsstand zurück. Ein bloßes Versprechen, irgendwie zurückzugehen, reicht nicht.",
+        "Der Ausgangsstand 6 war bereits beim Absenden fehlerhaft. Ein Rückfall auf 6 kann daher eine neue Verschlechterung zurücknehmen, repariert aber nicht den ursprünglichen Versandfehler. Das Ticket bleibt dann offen; weitere Diagnose oder Eskalation ist nötig. Nach einem Rückfall werden der wiederhergestellte Zustand und verbleibende Fehler ebenfalls geprüft.",
+        "Nach dem freigegebenen Wechsel auf 7 folgt eine neue Funktionsprobe. Das frühere Ergebnis des Kontrollclients reicht dafür nicht: Es belegt keinen Erfolg am gerade geänderten Arbeitsplatz. Die Prüfung muss den ursprünglichen Arbeitsschritt und relevante bisher funktionierende Funktionen einschließen."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Lernfall",
+        "text": "Sam behält 6, übernimmt freigegeben 7 und prüft Absenden sowie Lesen. Bei einer neuen Lesestörung stoppt er die Ausweitung; ein Rückfall würde den Versandfall noch nicht lösen."
+      },
+      "misconception": {
+        "claim": "Eine gespeicherte alte Konfiguration garantiert eine funktionierende Lösung nach Rückfall.",
+        "correction": "Sie ermöglicht die Rücknahme der Änderung; bereits vorhandene Fehler können im Ausgangsstand weiterbestehen."
+      },
+      "takeaway": "Freigabe und Rückfall sind vorbereitet, bevor ein begrenzter Eingriff beginnt."
+    },
+    {
+      "id": "common-lf6-solution-conversation",
+      "title": "3. Das Vorgehen verständlich und sachlich abstimmen",
+      "objectiveIds": [
+        "common-lf6-solution-explain",
+        "common-lf6-solution-select"
+      ],
+      "sourceIds": [
+        "lf6-atlassian-response",
+        "lf6-atlassian-communication"
+      ],
+      "paragraphs": [
+        "Erkläre der betroffenen Person in Alltagssprache, welche Aufgabe gestört ist, was als Nächstes geschieht und welche Unterbrechung sie erwarten muss. Technische Detailausgaben sind für Sam wichtig; Eda braucht vor allem eine Entscheidungshilfe für ihre Arbeit. Trenne gesicherte Erkenntnisse von Vermutungen und nenne einen erreichbaren nächsten Statuszeitpunkt.",
+        "Bei einer angespannten Reaktion bestätigst du den konkreten Arbeitsdruck: Ich sehe, dass die Abholung um 10:00 davon abhängt. Danach schlägst du einen nächsten Schritt vor: Sam übernimmt die freigegebene Einstellung; bitte sichern Sie offene Eingaben, danach prüfen wir gemeinsam das Absenden. Frage nach einem passenden Unterbrechungszeitpunkt. Zustimmung zur Arbeitsunterbrechung ersetzt dabei keine technische Änderungsfreigabe.",
+        "Bleibe bei beobachtbaren Fakten und konkreten Vereinbarungen. Vermeide Schuldzuweisungen, Abwertung und ungeprüfte Reparaturversprechen. Wenn der gewünschte Termin nicht sicher zugesagt werden kann, sage das klar und nenne trotzdem die nächste Rückmeldung. Wiederhole den vereinbarten Ablauf und dokumentiere die Abstimmung im Fall.",
+        "Eine verständliche Abstimmung lässt Rückfragen zu: Welche offenen Aufträge müssen vorher gesichert werden? Woran erkennen wir anschließend einen erfolgreichen Versand? So wird aus einer einseitigen technischen Ankündigung ein gemeinsamer Prüfschritt."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Lernfall",
+        "text": "Mira sagt: Ihre Versandfrist ist knapp. Sam übernimmt die freigegebene Einstellung. Sichern Sie bitte offene Eingaben; anschließend prüfen wir gemeinsam einen Testauftrag."
+      },
+      "misconception": {
+        "claim": "Sachlich bleiben bedeutet, die Auswirkungen auf die betroffene Person zu ignorieren.",
+        "correction": "Du kannst Arbeitsdruck anerkennen und gleichzeitig präzise bei Fakten, nächsten Schritten und Grenzen bleiben."
+      },
+      "takeaway": "Verständliche Abstimmung verbindet Arbeitsbedarf, Eingriff und anschließende Prüfung."
+    },
+    {
+      "id": "common-lf6-solution-english",
+      "title": "4. Einfache englische Servicemeldungen verstehen und beantworten",
+      "objectiveIds": [
+        "common-lf6-solution-english",
+        "common-lf6-solution-explain"
+      ],
+      "sourceIds": [
+        "lf6-atlassian-communication"
+      ],
+      "paragraphs": [
+        "Lies eine englische Servicemeldung in vier Teilen: betroffene Funktion, aktueller Stand, verlangte Handlung und nächste Rückmeldung. Beispiel als eigene Übungsformulierung: Order submission is unavailable. We are checking the configuration. Please save your draft. Next update at 09:30. Gemeint sind gestörtes Absenden, laufende Prüfung, Entwurf sichern und eine Statusmeldung um 09:30; eine Reparatur bis 09:30 ist nicht zugesagt.",
+        "Nützliche Wörter sind affected für betroffen, issue für Problem, investigating für wird untersucht, workaround für vorläufige Ersatzlösung und resolved für behoben. Request kann Anfrage bedeuten, confirmation Bestätigung. Entscheidend ist der Satzkontext: We are testing a fix bedeutet, dass eine mögliche Korrektur geprüft wird, nicht dass der Erfolg bereits bestätigt ist.",
+        "Eine passende einfache Antwort bestätigt einen tatsächlich erledigten Schritt und benennt die nächste Handlung: I have saved the draft. Please continue with the approved change. I will test order submission with you afterwards. Wenn du etwas nicht verstehst, frage konkret: Should I keep the draft open? Fordere keine Kennwörter an und bestätige keine Durchführung, die noch nicht stattgefunden hat.",
+        "Für eine Statusantwort reicht verständliches Englisch mit präzisem Inhalt. Du brauchst keine komplizierten Formulierungen. Nach einem erfolgreichen Test wäre zum Beispiel möglich: The test order was received. Reading existing orders also works. Den noch offenen Prüfauftrag zur Verteilung nennst du getrennt, falls er für die Empfänger relevant ist."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Lernfall",
+        "text": "Auf Please save your draft antwortet Eda nach dem Sichern: I have saved the draft. Please continue with the approved change."
+      },
+      "misconception": {
+        "claim": "Next update at 09:30 bedeutet, dass der Fehler spätestens um 09:30 behoben ist.",
+        "correction": "Update bezeichnet hier die nächste Information zum Stand, keine garantierte Wiederherstellung."
+      },
+      "takeaway": "Englische Rückmeldungen nennen den tatsächlichen Stand und den nächsten konkreten Schritt."
+    }
+  ],
+  "questionFile": "questions/common-lf6-solution.v1.csv",
+  "quiz": {
+    "questionIds": [
+      "LJ-LF6-SOLUTION-Q01",
+      "LJ-LF6-SOLUTION-Q02",
+      "LJ-LF6-SOLUTION-Q03",
+      "LJ-LF6-SOLUTION-Q04",
+      "LJ-LF6-SOLUTION-Q05",
+      "LJ-LF6-SOLUTION-Q06"
+    ]
+  },
+  "exam": {
+    "questionIds": [
+      "LJ-LF6-SOLUTION-E01",
+      "LJ-LF6-SOLUTION-E02",
+      "LJ-LF6-SOLUTION-E03",
+      "LJ-LF6-SOLUTION-E04",
+      "LJ-LF6-SOLUTION-E05",
+      "LJ-LF6-SOLUTION-E06",
+      "LJ-LF6-SOLUTION-E07",
+      "LJ-LF6-SOLUTION-E08"
+    ],
+    "passPercent": 80,
+    "scoring": "all-or-nothing-per-question",
+    "timed": false
+  },
+  "questionLinks": [
+    {
+      "questionId": "LJ-LF6-SOLUTION-Q01",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf6-solution-select"
+      ],
+      "blockIds": [
+        "common-lf6-solution-compare",
+        "common-lf6-solution-safety"
+      ]
+    },
+    {
+      "questionId": "LJ-LF6-SOLUTION-Q02",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf6-solution-select"
+      ],
+      "blockIds": [
+        "common-lf6-solution-compare"
+      ]
+    },
+    {
+      "questionId": "LJ-LF6-SOLUTION-Q03",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf6-solution-select"
+      ],
+      "blockIds": [
+        "common-lf6-solution-safety"
+      ]
+    },
+    {
+      "questionId": "LJ-LF6-SOLUTION-Q04",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf6-solution-explain"
+      ],
+      "blockIds": [
+        "common-lf6-solution-conversation"
+      ]
+    },
+    {
+      "questionId": "LJ-LF6-SOLUTION-Q05",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf6-solution-english"
+      ],
+      "blockIds": [
+        "common-lf6-solution-english"
+      ]
+    },
+    {
+      "questionId": "LJ-LF6-SOLUTION-Q06",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf6-solution-english",
+        "common-lf6-solution-explain"
+      ],
+      "blockIds": [
+        "common-lf6-solution-english"
+      ]
+    },
+    {
+      "questionId": "LJ-LF6-SOLUTION-E01",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf6-solution-select"
+      ],
+      "blockIds": [
+        "common-lf6-solution-compare"
+      ]
+    },
+    {
+      "questionId": "LJ-LF6-SOLUTION-E02",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf6-solution-select",
+        "common-lf6-solution-explain"
+      ],
+      "blockIds": [
+        "common-lf6-solution-safety",
+        "common-lf6-solution-conversation"
+      ]
+    },
+    {
+      "questionId": "LJ-LF6-SOLUTION-E03",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf6-solution-select"
+      ],
+      "blockIds": [
+        "common-lf6-solution-safety"
+      ]
+    },
+    {
+      "questionId": "LJ-LF6-SOLUTION-E04",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf6-solution-explain"
+      ],
+      "blockIds": [
+        "common-lf6-solution-conversation"
+      ]
+    },
+    {
+      "questionId": "LJ-LF6-SOLUTION-E05",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf6-solution-explain"
+      ],
+      "blockIds": [
+        "common-lf6-solution-conversation"
+      ]
+    },
+    {
+      "questionId": "LJ-LF6-SOLUTION-E06",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf6-solution-english"
+      ],
+      "blockIds": [
+        "common-lf6-solution-english"
+      ]
+    },
+    {
+      "questionId": "LJ-LF6-SOLUTION-E07",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf6-solution-english"
+      ],
+      "blockIds": [
+        "common-lf6-solution-english"
+      ]
+    },
+    {
+      "questionId": "LJ-LF6-SOLUTION-E08",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf6-solution-select",
+        "common-lf6-solution-explain"
+      ],
+      "blockIds": [
+        "common-lf6-solution-compare",
+        "common-lf6-solution-conversation"
+      ]
+    }
+  ],
+  "interview": [
+    {
+      "id": "common-lf6-solution-talk-compare",
+      "prompt": "Vergleiche Konfiguration 7, Neuinstallation und Kennwortwechsel für den belegten Zielpfadfehler.",
+      "objectiveIds": [
+        "common-lf6-solution-select"
+      ],
+      "blockIds": [
+        "common-lf6-solution-compare",
+        "common-lf6-solution-safety"
+      ],
+      "keyPoints": [
+        "Gezielte Korrektur adressiert Soll-Ist-Abweichung.",
+        "Neuinstallation verändert mehr und hat höheren Aufwand; Kennwortwechsel adressiert den Befund nicht.",
+        "Sams Befugnis, Freigabe, Ausgangssicherung und Rückfallgrenze nennen."
+      ],
+      "acceptableAlternatives": [
+        "Eine fachlich gleichwertige Erklärung mit passenden Befunden und nachvollziehbarer Begründung."
+      ],
+      "misconceptions": [
+        "Den einfachsten Klick unabhängig vom Befund als Lösung wählen."
+      ],
+      "sampleAnswer": "7 korrigiert den belegten Pfad mit begrenztem Aufwand. Eine Neuinstallation ist dafür größer als nötig; ein neues Kennwort ändert den Pfad nicht. Sam führt den freigegebenen Wechsel aus und hält 6 als Rückfall bereit, der den ursprünglichen Versandfehler aber nicht behebt.",
+      "followUp": "Welche neue Beobachtung würde den Rückfallplan auslösen?"
+    },
+    {
+      "id": "common-lf6-solution-talk-conversation",
+      "prompt": "Formuliere die Abstimmung mit der angespannten Eda vor der Unterbrechung.",
+      "objectiveIds": [
+        "common-lf6-solution-explain",
+        "common-lf6-solution-select"
+      ],
+      "blockIds": [
+        "common-lf6-solution-conversation",
+        "common-lf6-solution-safety"
+      ],
+      "keyPoints": [
+        "Knappes Zeitfenster sachlich anerkennen.",
+        "Offene Eingaben sichern und passenden Eingriffszeitpunkt abstimmen.",
+        "Freigegebene Änderung durch Sam, anschließenden Test und Statuskontakt erklären."
+      ],
+      "acceptableAlternatives": [
+        "Eine fachlich gleichwertige Erklärung mit passenden Befunden und nachvollziehbarer Begründung."
+      ],
+      "misconceptions": [
+        "Eine unbelegte Lösungszusage als Beruhigung geben."
+      ],
+      "sampleAnswer": "Ich sehe, dass die Abholung um 10:00 drängt. Sam übernimmt die freigegebene Einstellung. Bitte sichern Sie offene Eingaben; können wir dann kurz unterbrechen? Danach testen wir gemeinsam das Absenden und ich melde den erreichten Stand.",
+      "followUp": "Was sagst du, falls Eda keine Unterbrechung zulassen kann?"
+    },
+    {
+      "id": "common-lf6-solution-talk-english",
+      "prompt": "Übersetze den Sinn von We are checking the configuration. Please save your draft. und antworte nach erfolgter Sicherung auf Englisch.",
+      "objectiveIds": [
+        "common-lf6-solution-english",
+        "common-lf6-solution-explain"
+      ],
+      "blockIds": [
+        "common-lf6-solution-english"
+      ],
+      "keyPoints": [
+        "Prüfung läuft, Erfolg noch offen.",
+        "Entwurf sichern als verlangte Handlung verstehen.",
+        "Tatsächliche Sicherung und nächsten abgestimmten Schritt einfach bestätigen."
+      ],
+      "acceptableAlternatives": [
+        "Eine fachlich gleichwertige Erklärung mit passenden Befunden und nachvollziehbarer Begründung."
+      ],
+      "misconceptions": [
+        "Testing oder checking als bereits bestätigte Lösung übersetzen."
+      ],
+      "sampleAnswer": "Die Konfiguration wird gerade geprüft; ich soll den Entwurf sichern. Nach der Sicherung antworte ich: I have saved the draft. Please continue with the approved change. I will test order submission with you afterwards.",
+      "followUp": "Wie fragst du auf Englisch nach, ob der Entwurf geöffnet bleiben soll?"
+    }
+  ],
+  "cards": [
+    {
+      "id": "common-lf6-solution-card-01",
+      "front": "Nach welchen Kriterien vergleichst du Lösungen?",
+      "back": "Wirkung auf den belegten Fehler, Aufwand, Nebenwirkungen, erforderliche Berechtigung und Rückfallmöglichkeit.",
+      "objectiveIds": [
+        "common-lf6-solution-select"
+      ],
+      "blockIds": [
+        "common-lf6-solution-compare"
+      ]
+    },
+    {
+      "id": "common-lf6-solution-card-02",
+      "front": "Was muss vor einer Änderung geklärt sein?",
+      "back": "Freigabe und Zuständigkeit, alter und neuer Stand, Ausgangssicherung, Prüfschritte sowie konkrete Abbruch- und Rückfallbedingungen.",
+      "objectiveIds": [
+        "common-lf6-solution-select"
+      ],
+      "blockIds": [
+        "common-lf6-solution-safety"
+      ]
+    },
+    {
+      "id": "common-lf6-solution-card-03",
+      "front": "Warum löst Rückfall auf 6 nicht das ursprüngliche Versandproblem?",
+      "back": "6 war bereits beim Absenden fehlerhaft. Der Rückfall kann eine neue Verschlechterung zurücknehmen; die ursprüngliche Störung bleibt zu bearbeiten.",
+      "objectiveIds": [
+        "common-lf6-solution-select"
+      ],
+      "blockIds": [
+        "common-lf6-solution-safety"
+      ]
+    },
+    {
+      "id": "common-lf6-solution-card-04",
+      "front": "Wie bleibst du in einem angespannten Servicegespräch sachlich?",
+      "back": "Arbeitsdruck anerkennen, Fakten und Unsicherheit benennen, nächsten Schritt abstimmen und einen verlässlichen Statuskontakt vereinbaren.",
+      "objectiveIds": [
+        "common-lf6-solution-explain"
+      ],
+      "blockIds": [
+        "common-lf6-solution-conversation"
+      ]
+    },
+    {
+      "id": "common-lf6-solution-card-05",
+      "front": "Was bedeutet We are testing a fix?",
+      "back": "Eine mögliche Korrektur wird geprüft; die Behebung ist damit noch nicht bestätigt.",
+      "objectiveIds": [
+        "common-lf6-solution-english"
+      ],
+      "blockIds": [
+        "common-lf6-solution-english"
+      ]
+    },
+    {
+      "id": "common-lf6-solution-card-06",
+      "front": "Wie bestätigst du einen gesicherten Entwurf auf Englisch?",
+      "back": "I have saved the draft. Please continue with the approved change. Die Aussage wird erst nach tatsächlich erfolgter Sicherung verwendet.",
+      "objectiveIds": [
+        "common-lf6-solution-english",
+        "common-lf6-solution-explain"
+      ],
+      "blockIds": [
+        "common-lf6-solution-english"
+      ]
+    }
+  ],
+  "review": {
+    "status": "reviewed",
+    "checkedAt": "2026-11-16"
+  }
+}

@@ -1,0 +1,485 @@
+{
+  "schemaVersion": 1,
+  "id": "common-lf6-priority",
+  "version": "1.0.0",
+  "title": "Vereinbarungen, Priorität und Zuständigkeit",
+  "fieldId": "LF6",
+  "scope": "common",
+  "prerequisites": [
+    "common-lf6-intake"
+  ],
+  "sourceIds": [
+    "lf6-atlassian-response",
+    "lf6-atlassian-priority",
+    "lf6-atlassian-sla"
+  ],
+  "sources": [
+    {
+      "id": "lf6-atlassian-response",
+      "title": "Atlassian: How we respond to an incident",
+      "url": "https://www.atlassian.com/incident-management/handbook/incident-response",
+      "checkedAt": "2026-11-16",
+      "note": "Öffentliche Herstellerbeschreibung zu Aufnahme, Auswirkung, Eskalation, Diagnose, Wiederherstellung und Kommunikation geprüft. Eigene Rollen und Fallwerte sind fiktiv, keine verbindliche ITIL-Vorgabe."
+    },
+    {
+      "id": "lf6-atlassian-priority",
+      "title": "Atlassian: How impact and urgency are used to calculate priority",
+      "url": "https://support.atlassian.com/jira-service-management-cloud/docs/how-impact-and-urgency-are-used-to-calculate-priority/",
+      "checkedAt": "2026-11-16",
+      "note": "Herstellerdefinitionen von Auswirkung, Dringlichkeit und Priorität geprüft. Die zweistufigen Kriterien und P1/P2/P3-Zeiten im Lernfall sind selbst erfundene Modellvorgaben."
+    },
+    {
+      "id": "lf6-atlassian-sla",
+      "title": "Atlassian: Create service level agreements (SLAs)",
+      "url": "https://support.atlassian.com/jira-service-management-cloud/docs/create-service-level-agreements-slas/",
+      "checkedAt": "2026-11-16",
+      "note": "Öffentliche Dokumentation zu SLA-Messung, Zielen und Kalendern geprüft. Leistungsumfang, qualifizierte Erstreaktion und Zeitwerte im Lernfall werden ausdrücklich als eigene Vereinbarung vorgegeben."
+    }
+  ],
+  "objectives": [
+    {
+      "id": "common-lf6-priority-agreement",
+      "text": "Aus einer vorgegebenen Servicevereinbarung Leistungsumfang und zugesagte Reaktionszeit ablesen."
+    },
+    {
+      "id": "common-lf6-priority-priority",
+      "text": "Zwei Anfragen nach Auswirkung und Dringlichkeit einordnen und die Bearbeitungsreihenfolge begründen."
+    },
+    {
+      "id": "common-lf6-priority-level",
+      "text": "Eine Anfrage dem passenden Support-Level zuordnen und einen Eskalationsgrund benennen."
+    }
+  ],
+  "caseStudy": {
+    "title": "Mira begleitet Radblick durch einen Servicefall",
+    "text": "Eigener fiktiver Lernfall: Radblick vereinbart Portal- und Clientunterstützung mit Knotenpunkt. Mira ordnet R-106 einer frei erfundenen Prioritätsmatrix zu und liest eine ausdrücklich für diese Übung erfundene Servicevereinbarung. Die Zahlen, Supportrollen und Eskalationswege sind keine allgemeingültige Norm."
+  },
+  "blocks": [
+    {
+      "id": "common-lf6-priority-agreement",
+      "title": "1. Leistungsumfang und Zeitversprechen lesen",
+      "objectiveIds": [
+        "common-lf6-priority-agreement"
+      ],
+      "sourceIds": [
+        "lf6-atlassian-sla"
+      ],
+      "paragraphs": [
+        "Eine Servicevereinbarung beschreibt, welche Leistung für wen und unter welchen Bedingungen erbracht wird. Lies vor einer Zusage den betroffenen Dienst, eingeschlossene Leistungen, Servicezeiten und das gemessene Ereignis. Erstreaktion und Lösung sind unterschiedliche Ziele. Eine rechtzeitige sachliche Antwort beweist noch keine Wiederherstellung.",
+        "Für diese Übung gilt ausdrücklich eine erfundene SLA: Unterstützt werden Radblick-Portal und verwaltete Clients, keine privaten Geräte. Servicezeit ist Montag bis Freitag von 08:00 bis 17:00; Feiertage werden im Modell nicht betrachtet. Die Uhr zählt ab Ticketaufnahme innerhalb dieser Servicezeit. Außerhalb läuft sie beim nächsten Servicebeginn weiter. Es gibt hier keine Pausen innerhalb des Servicefensters.",
+        "Zugesagt ist die erste qualifizierte Reaktion: Eine zuständige Person bestätigt den Sachverhalt und nennt das weitere Vorgehen. Eine rein technische Eingangsquittung erfüllt diese Modellzusage nicht. Das Ziel beträgt für P1 höchstens 15, für P2 höchstens 60 und für P3 höchstens 240 Serviceminuten. Eine garantierte Lösungszeit ist nicht vereinbart.",
+        "Bei Aufnahme eines P1-Falls am Montag um 09:10 ergibt sich 09:25 als späteste Erstreaktion. Bei P2 am Freitag um 16:30 laufen noch 30 Minuten am Freitag und die restlichen 30 am Montag ab 08:00: Ziel ist Montag 08:30. In anderen Betrieben können Kalender, Pausen und Definitionen anders vereinbart sein."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Lernfall",
+        "text": "R-106 wird um 09:10 aufgenommen. Für den später begründeten P1-Fall endet die Reaktionsfrist um 09:25; eine Reparatur bis 09:25 ist damit nicht versprochen."
+      },
+      "misconception": {
+        "claim": "Eine Reaktionszeit von 15 Minuten bedeutet, dass die Störung in 15 Minuten behoben sein muss.",
+        "correction": "Das gemessene Ereignis ist hier eine qualifizierte Erstreaktion; die Behebung hat keine zugesagte Frist."
+      },
+      "takeaway": "Leistungsumfang, Kalender und gemessenes Ereignis vor jeder Zusage prüfen."
+    },
+    {
+      "id": "common-lf6-priority-matrix",
+      "title": "2. Auswirkung und Dringlichkeit getrennt einordnen",
+      "objectiveIds": [
+        "common-lf6-priority-priority"
+      ],
+      "sourceIds": [
+        "lf6-atlassian-priority"
+      ],
+      "paragraphs": [
+        "Auswirkung beschreibt, wie stark betriebliche Arbeit beeinträchtigt ist. Dringlichkeit beschreibt, wie schnell gehandelt werden muss, um Folgen zu begrenzen. Eine weitreichende Störung kann eine spätere Frist haben; eine einzelne blockierte Person kann eine nahe wichtige Frist haben. Beides wird getrennt erhoben, bevor die vereinbarte Matrix eine Priorität zuweist.",
+        "Die vereinfachte Übungsmatrix kennt je zwei Stufen: Auswirkung hoch bedeutet mindestens drei beim notwendigen Arbeitsschritt blockierte Personen, sonst niedrig. Dringlichkeit hoch bedeutet eine betroffene Arbeitsfrist in höchstens 60 Minuten ohne nutzbare freigegebene Ersatzlösung, sonst niedrig. Bewertet wird zum Aufnahmezeitpunkt. Diese Kriterien sind bewusst begrenzt und keine Vorlage für sicherheitskritische reale Fälle.",
+        "Beide Werte hoch ergeben P1; genau ein hoher Wert ergibt P2; beide niedrig ergeben P3. R-106 betrifft vier Personen; um 09:10 sind es 50 Minuten bis 10:00 und eine Ersatzlösung fehlt. Daher hoch/hoch und P1. Ein gleichzeitiger Fall mit einer blockierten Person, Frist am nächsten Tag und verfügbarer Ersatzlösung ist niedrig/niedrig und P3.",
+        "Vergleiche zwei Fälle anhand derselben Kriterien und begründe die Bearbeitungsreihenfolge mit dem geschäftlichen Bedarf. Lautstärke, Hierarchie und die Anzahl der Ausrufezeichen ersetzen keine Auswirkungsanalyse. Ändern sich bestätigte Betroffenheit oder Ersatzmöglichkeiten, wird die Einstufung mit Begründung aktualisiert."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Lernfall",
+        "text": "Vier blockierte Personen und 50 Minuten ohne Ersatz ergeben P1; eine Person mit Frist morgen und Ersatz ergibt P3. R-106 wird vorrangig bearbeitet."
+      },
+      "misconception": {
+        "claim": "Viele Betroffene bedeuten unabhängig von der Zeitlage immer die höchste Priorität.",
+        "correction": "In der Übung erfordert P1 hohe Auswirkung und hohe Dringlichkeit; ein hoher Wert allein ergibt P2."
+      },
+      "takeaway": "Priorität folgt aus gemeinsam betrachteter Auswirkung und Dringlichkeit."
+    },
+    {
+      "id": "common-lf6-priority-levels",
+      "title": "3. Das passende Supportteam finden",
+      "objectiveIds": [
+        "common-lf6-priority-level"
+      ],
+      "sourceIds": [
+        "lf6-atlassian-response"
+      ],
+      "paragraphs": [
+        "Support-Level ordnen Tätigkeiten nach vorhandenen Kenntnissen, Werkzeugen und Befugnissen. Eine verbreitete Einteilung ist erster Kontakt und Standardfälle im ersten Level, vertiefte Fachbearbeitung im zweiten und Hersteller- oder Entwicklungsexpertise im dritten. Namen und Grenzen werden betrieblich festgelegt; eine höhere Zahl ist keine höhere Kundenpriorität.",
+        "Im Radblick-Modell nimmt Mira im ersten Level auf, prüft bekannte Anleitungen und sammelt lesende Befunde. Sam im zweiten Level darf die verwaltete Portalkonfiguration nach Freigabe ändern. Ein nachvollziehbarer Produktfehler jenseits der internen Eingriffsmöglichkeiten wird mit Belegen an den Hersteller als drittes Level gegeben. Diese Rollen sind Modellvorgaben.",
+        "Fachliche Eskalation ist angezeigt, wenn Wissen, Berechtigung oder ein nötiges Werkzeug fehlt. Gib Befund, bisherigen Verlauf, Priorität, Frist und konkrete offene Aufgabe mit. Im Modell bleibt Mira Ansprechpartnerin für Eda und kontrolliert die Übernahme durch Sam. Weiterleiten ohne Annahmebestätigung schafft sonst eine Lücke in der Verantwortung."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Lernfall",
+        "text": "Mira erkennt einen benötigten Konfigurationsvergleich und übergibt Befunde an Sam. Sie meldet Eda weiter den Status; Sam übernimmt die fachliche Bearbeitung."
+      },
+      "misconception": {
+        "claim": "P1 muss immer direkt an den Hersteller gehen.",
+        "correction": "Priorität steuert die zeitliche Behandlung; das zuständige Level richtet sich nach Aufgabe und Befugnis."
+      },
+      "takeaway": "Fachliche Zuständigkeit und zeitliche Priorität sind zwei verschiedene Entscheidungen."
+    },
+    {
+      "id": "common-lf6-priority-escalation",
+      "title": "4. Rechtzeitig eskalieren und Fristen weiterführen",
+      "objectiveIds": [
+        "common-lf6-priority-agreement",
+        "common-lf6-priority-priority",
+        "common-lf6-priority-level"
+      ],
+      "sourceIds": [
+        "lf6-atlassian-sla",
+        "lf6-atlassian-priority",
+        "lf6-atlassian-response"
+      ],
+      "paragraphs": [
+        "Neben fachlicher Eskalation gibt es organisatorische oder hierarchische Eskalation: Eine verantwortliche Leitung muss Ressourcen, Konflikte oder drohende Zielverletzungen klären. Im Modell informiert Mira die Serviceleitung, wenn die zugesagte Erstreaktion gefährdet ist und das zuständige Team nicht rechtzeitig verfügbar wird. Man wartet nicht bewusst bis zum Fristablauf.",
+        "Eine Übergabe startet die vereinbarte Uhr nicht neu. Zu R-106 nennt Mira Aufnahme 09:10, P1, Ziel 09:25, bisherige Befunde und die fehlende Änderungserlaubnis. Sam bestätigt die Übernahme. Braucht Sam Herstellerwissen, dokumentiert er den Grund und die nächste Kontaktzeit, während die Kundenkommunikation weiterläuft.",
+        "Hat Mira bereits eine qualifizierte Reaktion gegeben, betrifft die weitere Eskalation nicht mehr ein noch unerfülltes Erstreaktionsziel. Die Störung kann dennoch dringend bleiben. Halte deshalb Reaktionsziel, aktuellen Bearbeitungsstand und Wiederherstellungsbedarf auseinander. Dadurch wird aus einer erfüllten Teilzusage kein unbegründeter Abschluss."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Lernfall",
+        "text": "Um 09:20 fehlt noch ein Bearbeiter für die qualifizierte Reaktion. Mira zieht die Serviceleitung hinzu, weil das P1-Ziel 09:25 gefährdet ist."
+      },
+      "misconception": {
+        "claim": "Ein Teamwechsel gibt dem neuen Team die volle Reaktionszeit ab Übergabe.",
+        "correction": "Die fiktive Vereinbarung misst ab Aufnahme; Übergaben ändern diesen Startpunkt nicht."
+      },
+      "takeaway": "Eskalation löst fehlende Fähigkeiten oder Ressourcen; sie löscht keine Zusage."
+    }
+  ],
+  "questionFile": "questions/common-lf6-priority.v1.csv",
+  "quiz": {
+    "questionIds": [
+      "LJ-LF6-PRIORITY-Q01",
+      "LJ-LF6-PRIORITY-Q02",
+      "LJ-LF6-PRIORITY-Q03",
+      "LJ-LF6-PRIORITY-Q04",
+      "LJ-LF6-PRIORITY-Q05",
+      "LJ-LF6-PRIORITY-Q06"
+    ]
+  },
+  "exam": {
+    "questionIds": [
+      "LJ-LF6-PRIORITY-E01",
+      "LJ-LF6-PRIORITY-E02",
+      "LJ-LF6-PRIORITY-E03",
+      "LJ-LF6-PRIORITY-E04",
+      "LJ-LF6-PRIORITY-E05",
+      "LJ-LF6-PRIORITY-E06",
+      "LJ-LF6-PRIORITY-E07",
+      "LJ-LF6-PRIORITY-E08"
+    ],
+    "passPercent": 80,
+    "scoring": "all-or-nothing-per-question",
+    "timed": false
+  },
+  "questionLinks": [
+    {
+      "questionId": "LJ-LF6-PRIORITY-Q01",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf6-priority-agreement"
+      ],
+      "blockIds": [
+        "common-lf6-priority-agreement"
+      ]
+    },
+    {
+      "questionId": "LJ-LF6-PRIORITY-Q02",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf6-priority-agreement"
+      ],
+      "blockIds": [
+        "common-lf6-priority-agreement"
+      ]
+    },
+    {
+      "questionId": "LJ-LF6-PRIORITY-Q03",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf6-priority-priority"
+      ],
+      "blockIds": [
+        "common-lf6-priority-matrix"
+      ]
+    },
+    {
+      "questionId": "LJ-LF6-PRIORITY-Q04",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf6-priority-priority"
+      ],
+      "blockIds": [
+        "common-lf6-priority-matrix"
+      ]
+    },
+    {
+      "questionId": "LJ-LF6-PRIORITY-Q05",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf6-priority-level"
+      ],
+      "blockIds": [
+        "common-lf6-priority-levels"
+      ]
+    },
+    {
+      "questionId": "LJ-LF6-PRIORITY-Q06",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf6-priority-level",
+        "common-lf6-priority-agreement"
+      ],
+      "blockIds": [
+        "common-lf6-priority-escalation"
+      ]
+    },
+    {
+      "questionId": "LJ-LF6-PRIORITY-E01",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf6-priority-agreement"
+      ],
+      "blockIds": [
+        "common-lf6-priority-agreement"
+      ]
+    },
+    {
+      "questionId": "LJ-LF6-PRIORITY-E02",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf6-priority-agreement"
+      ],
+      "blockIds": [
+        "common-lf6-priority-agreement"
+      ]
+    },
+    {
+      "questionId": "LJ-LF6-PRIORITY-E03",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf6-priority-priority"
+      ],
+      "blockIds": [
+        "common-lf6-priority-matrix"
+      ]
+    },
+    {
+      "questionId": "LJ-LF6-PRIORITY-E04",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf6-priority-priority"
+      ],
+      "blockIds": [
+        "common-lf6-priority-matrix"
+      ]
+    },
+    {
+      "questionId": "LJ-LF6-PRIORITY-E05",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf6-priority-level"
+      ],
+      "blockIds": [
+        "common-lf6-priority-levels",
+        "common-lf6-priority-escalation"
+      ]
+    },
+    {
+      "questionId": "LJ-LF6-PRIORITY-E06",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf6-priority-agreement",
+        "common-lf6-priority-level"
+      ],
+      "blockIds": [
+        "common-lf6-priority-escalation"
+      ]
+    },
+    {
+      "questionId": "LJ-LF6-PRIORITY-E07",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf6-priority-level",
+        "common-lf6-priority-priority"
+      ],
+      "blockIds": [
+        "common-lf6-priority-levels",
+        "common-lf6-priority-matrix"
+      ]
+    },
+    {
+      "questionId": "LJ-LF6-PRIORITY-E08",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf6-priority-agreement",
+        "common-lf6-priority-priority",
+        "common-lf6-priority-level"
+      ],
+      "blockIds": [
+        "common-lf6-priority-escalation"
+      ]
+    }
+  ],
+  "interview": [
+    {
+      "id": "common-lf6-priority-talk-sla",
+      "prompt": "Lies die Modellvereinbarung für R-106 vor: Was ist abgedeckt, wann läuft die Uhr und was ist bis 09:25 zugesagt?",
+      "objectiveIds": [
+        "common-lf6-priority-agreement"
+      ],
+      "blockIds": [
+        "common-lf6-priority-agreement"
+      ],
+      "keyPoints": [
+        "Portal und verwaltete Clients nennen.",
+        "Mo–Fr 08–17, Beginn bei Aufnahme 09:10 und 15 Serviceminuten für P1 erklären.",
+        "Qualifizierte Erstreaktion von Lösung unterscheiden."
+      ],
+      "acceptableAlternatives": [
+        "Eine fachlich gleichwertige Erklärung mit passenden Befunden und nachvollziehbarer Begründung."
+      ],
+      "misconceptions": [
+        "Die Erstreaktionsfrist als garantierte Reparaturzeit ausgeben."
+      ],
+      "sampleAnswer": "Der Portalfehler liegt im Leistungsumfang. Montag 09:10 läuft die Uhr innerhalb 08–17. P1 verlangt eine qualifizierte Erstreaktion bis 09:25; die Vereinbarung garantiert keine Lösung bis dahin.",
+      "followUp": "Wie verändert eine Aufnahme außerhalb der Servicezeit die Berechnung?"
+    },
+    {
+      "id": "common-lf6-priority-talk-order",
+      "prompt": "Vergleiche R-106 mit einer einzelnen blockierten Person, deren Frist morgen liegt und die Ersatz nutzen kann.",
+      "objectiveIds": [
+        "common-lf6-priority-priority",
+        "common-lf6-priority-agreement"
+      ],
+      "blockIds": [
+        "common-lf6-priority-matrix",
+        "common-lf6-priority-agreement"
+      ],
+      "keyPoints": [
+        "R-106: 4 Betroffene, 50 Minuten, kein Ersatz → hoch/hoch.",
+        "Vergleichsfall: 1 Person, Frist morgen, Ersatz → niedrig/niedrig.",
+        "P1 vor P3 und zugehörige Reaktionsziele nennen."
+      ],
+      "acceptableAlternatives": [
+        "Eine fachlich gleichwertige Erklärung mit passenden Befunden und nachvollziehbarer Begründung."
+      ],
+      "misconceptions": [
+        "Priorität aus Lautstärke oder Rang ableiten."
+      ],
+      "sampleAnswer": "R-106 ist nach den erfundenen Kriterien P1 mit 15 Serviceminuten. Der Vergleichsfall ist P3 mit 240 Serviceminuten. Ich begründe den Vorrang mit Arbeitsausfall und knapper Frist, nicht mit der Wortwahl der Meldung.",
+      "followUp": "Was prüfst du neu, wenn inzwischen eine freigegebene Ersatzlösung verfügbar ist?"
+    },
+    {
+      "id": "common-lf6-priority-talk-team",
+      "prompt": "Begründe die Übergabe an Sam und eine mögliche Eskalation bei fehlender rechtzeitiger Bearbeitung.",
+      "objectiveIds": [
+        "common-lf6-priority-level",
+        "common-lf6-priority-agreement",
+        "common-lf6-priority-priority"
+      ],
+      "blockIds": [
+        "common-lf6-priority-levels",
+        "common-lf6-priority-escalation"
+      ],
+      "keyPoints": [
+        "Sam besitzt im Modell die nötige Änderungsbefugnis.",
+        "Befund, Priorität, Frist und konkrete Aufgabe mitgeben.",
+        "Bei Ressourcenengpass Serviceleitung einschalten; Uhr nicht neu starten."
+      ],
+      "acceptableAlternatives": [
+        "Eine fachlich gleichwertige Erklärung mit passenden Befunden und nachvollziehbarer Begründung."
+      ],
+      "misconceptions": [
+        "Priorität und Support-Level gleichsetzen."
+      ],
+      "sampleAnswer": "Mira gibt Sam Befunde und R-106 mit Ziel 09:25. Sam übernimmt als befugtes zweites Level. Fehlt rechtzeitig ein Bearbeiter für die Erstreaktion, klärt die Serviceleitung Ressourcen; die ursprüngliche Aufnahmezeit bleibt bestehen.",
+      "followUp": "Welche Information zeigt Eda, dass trotz fachlicher Übergabe weiterhin jemand ansprechbar ist?"
+    }
+  ],
+  "cards": [
+    {
+      "id": "common-lf6-priority-card-01",
+      "front": "Was unterscheidet Reaktions- und Lösungszeit?",
+      "back": "Reaktionszeit begrenzt ein definiertes erstes Bearbeitungsereignis; Lösungszeit begrenzt die Wiederherstellung. Beides muss getrennt vereinbart sein.",
+      "objectiveIds": [
+        "common-lf6-priority-agreement"
+      ],
+      "blockIds": [
+        "common-lf6-priority-agreement"
+      ]
+    },
+    {
+      "id": "common-lf6-priority-card-02",
+      "front": "Welche drei Angaben braucht eine SLA-Zeitrechnung?",
+      "back": "Startpunkt, Zielwert und gültiger Servicekalender einschließlich vereinbarter Pausen oder Ausnahmen.",
+      "objectiveIds": [
+        "common-lf6-priority-agreement"
+      ],
+      "blockIds": [
+        "common-lf6-priority-agreement"
+      ]
+    },
+    {
+      "id": "common-lf6-priority-card-03",
+      "front": "Was bedeuten Auswirkung und Dringlichkeit?",
+      "back": "Auswirkung: Stärke der betrieblichen Beeinträchtigung. Dringlichkeit: wie schnell gehandelt werden muss, um Folgen zu begrenzen.",
+      "objectiveIds": [
+        "common-lf6-priority-priority"
+      ],
+      "blockIds": [
+        "common-lf6-priority-matrix"
+      ]
+    },
+    {
+      "id": "common-lf6-priority-card-04",
+      "front": "Wie funktioniert die erfundene Zweistufenmatrix?",
+      "back": "Ab 3 blockierten Personen: Auswirkung hoch. Frist ≤ 60 Minuten ohne Ersatz: Dringlichkeit hoch. Zwei hohe Werte = P1, einer = P2, keiner = P3.",
+      "objectiveIds": [
+        "common-lf6-priority-priority"
+      ],
+      "blockIds": [
+        "common-lf6-priority-matrix"
+      ]
+    },
+    {
+      "id": "common-lf6-priority-card-05",
+      "front": "Woran orientiert sich das passende Support-Level?",
+      "back": "An benötigten Kenntnissen, Werkzeugen und Berechtigungen; die organisatorische Einteilung ist betrieblich festgelegt.",
+      "objectiveIds": [
+        "common-lf6-priority-level"
+      ],
+      "blockIds": [
+        "common-lf6-priority-levels"
+      ]
+    },
+    {
+      "id": "common-lf6-priority-card-06",
+      "front": "Wann fachlich, wann organisatorisch eskalieren?",
+      "back": "Fehlende Expertise oder Befugnis: passendes Fachteam. Gefährdete Zusage oder Ressourcenentscheidung: verantwortliche Leitung; Verlauf und Frist mitgeben.",
+      "objectiveIds": [
+        "common-lf6-priority-level",
+        "common-lf6-priority-agreement"
+      ],
+      "blockIds": [
+        "common-lf6-priority-escalation"
+      ]
+    }
+  ],
+  "review": {
+    "status": "reviewed",
+    "checkedAt": "2026-11-16"
+  }
+}

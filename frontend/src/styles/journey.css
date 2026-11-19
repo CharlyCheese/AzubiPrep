@@ -1,0 +1,82 @@
+.journey-page { max-width: 1020px; min-width: 0; overflow-wrap: anywhere; }
+.journey-workplace { margin-block: 1.5rem; }
+.journey-network { margin-block: 1.5rem; overflow-wrap: anywhere; }
+.journey-network-fields { min-width: 0; border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 1rem; }
+.journey-network-fields label { display: block; margin-top: .8rem; }
+.journey-network-fields input, .journey-network-fields select { display: block; box-sizing: border-box; width: 100%; max-width: 100%; padding: .65rem; margin-top: .35rem; border: 1px solid var(--border-strong); border-radius: var(--radius-sm); color: var(--text); background: var(--bg-soft); }
+.journey-workplace-fields { border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 1rem; min-width: 0; }
+.journey-workplace-fields > label { display: block; margin-block: .75rem; }
+.journey-workplace-fields > .journey-practice-check { display: flex; }
+.journey-workplace-fields select { display: block; width: 100%; max-width: 100%; margin-top: .35rem; padding: .65rem; border-radius: var(--radius-sm); border: 1px solid var(--border-strong); color: var(--text); background: var(--bg-soft); }
+.journey-calculation { margin-block: 1rem; }
+.journey-calculation-scroll { overflow-x: auto; max-width: 100%; margin-block: 1rem; }
+.journey-calculation-table { width: 100%; border-collapse: collapse; min-width: 580px; }
+.journey-calculation-table caption { text-align: left; margin-bottom: .75rem; }
+.journey-calculation-table th, .journey-calculation-table td { border-bottom: 1px solid var(--border); padding: .65rem; text-align: left; vertical-align: top; }
+.journey-calculation-table th[scope="row"] { width: 36%; }
+.journey-calculation-table th span { display: block; font-weight: 400; }
+.journey-calculation-table input { width: 100%; min-width: 155px; font-family: monospace; }
+.journey-calculation-table td:last-child { width: 25%; }
+.journey-calculation input { padding: .65rem; border: 1px solid var(--border-strong); border-radius: var(--radius-sm); color: var(--text); background: var(--bg-soft); }
+.journey-calculation .journey-detail > input { display: block; width: 100%; margin-block: .65rem; }
+.journey-calculation-scroll:focus-visible { outline: 2px solid var(--primary); }
+.journey-stages { margin-block: 1.25rem; }
+.journey-stage { border: 1px solid var(--border); border-radius: var(--radius-sm); margin-block: .75rem; padding: .85rem; overflow-wrap: anywhere; }
+.journey-stage > summary { cursor: pointer; font-weight: 700; min-height: 2.75rem; }
+.journey-stage > summary span { display: block; font-weight: 400; margin-top: .35rem; }
+.journey-stage > summary:focus-visible { outline: 2px solid var(--primary); outline-offset: 4px; }
+.journey-topic-list { padding-left: 1.6rem; margin-block: 1.5rem; }
+.journey-topic-list li { padding: .65rem 0 1rem .4rem; border-bottom: 1px solid var(--border); overflow-wrap: anywhere; }
+.journey-topic-list h3 { margin-block: .3rem; }
+.journey-topic-list .btn { white-space: normal; max-width: 100%; }
+.journey-practice-check { display: flex; gap: .65rem; align-items: flex-start; margin-block: 1rem; }
+.journey-practice-check input { flex: 0 0 auto; margin-top: .4rem; width: 1.15rem; height: 1.15rem; accent-color: var(--primary); }
+.journey-page h1 { font-size: clamp(1.35rem, 3vw, 2rem); }
+.journey-status { font-weight: 700; }
+.journey-progress { display: grid; gap: .5rem; margin-block: 1rem; }
+.journey-progress progress { width: 100%; height: .65rem; accent-color: var(--primary); }
+.journey-work { margin-block: 1rem; line-height: 1.75; }
+.journey-work > h2 { margin-top: 0; }
+.journey-work h2:focus { outline: 2px solid var(--primary); outline-offset: 5px; }
+.journey-example { padding: 1rem 1.25rem; border-left: 4px solid var(--primary); background: var(--bg-soft); border-radius: var(--radius-sm); }
+.journey-example h3 { margin-top: 0; }
+.journey-example p:last-child { margin-bottom: 0; }
+.journey-detail { margin-block: 1rem; padding: .75rem; border: 1px solid var(--border); border-radius: var(--radius-sm); }
+.journey-detail summary, .journey-tools > summary { cursor: pointer; font-weight: 700; }
+.journey-question { border: 0; padding: 0; margin: 0 0 1rem; min-width: 0; }
+.journey-question legend { font-size: 1.05rem; font-weight: 700; margin-bottom: 1rem; }
+.journey-option { display: flex; align-items: flex-start; gap: .8rem; padding: .85rem; border: 1px solid var(--border-strong); border-radius: var(--radius-sm); margin-block: .6rem; cursor: pointer; background: var(--bg-soft); }
+.journey-option.selected { border-color: var(--primary); outline: 1px solid var(--primary); }
+.journey-option input { flex: 0 0 auto; margin-top: .4rem; width: 1.1rem; height: 1.1rem; accent-color: var(--primary); }
+.journey-question:disabled .journey-option { cursor: default; }
+.journey-actions { display: flex; flex-wrap: wrap; gap: .65rem; margin-block: 1rem; }
+.journey-actions .btn { white-space: normal; text-align: left; max-width: 100%; }
+.journey-page textarea { width: 100%; resize: vertical; min-height: 8rem; margin-block: .5rem 1rem; }
+.journey-card-front { font-size: 1.2rem; font-weight: 700; }
+.journey-tools { margin-block: 1rem; }
+.journey-upload { position: relative; overflow: hidden; }
+.journey-upload input { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
+.journey-upload:focus-within { outline: 2px solid var(--primary); outline-offset: 3px; }
+.journey-tutor select { width: 100%; margin-block: .4rem 1rem; }
+.journey-tutor .btn { margin: .35rem .4rem .35rem 0; white-space: normal; max-width: 100%; }
+.journey-tutor-check { display: flex; gap: .6rem; align-items: flex-start; margin-block: 1rem; }
+.journey-tutor-check input { flex: 0 0 auto; margin-top: .45rem; }
+.journey-tutor-turn { border-block-start: 1px solid var(--border); margin-block: 1rem; }
+.journey-tutor-text { white-space: pre-wrap; overflow-wrap: anywhere; }
+@media (max-width: 480px) {
+  .journey-work, .journey-tools { padding: 1rem; }
+  .journey-actions { flex-direction: column; }
+  .journey-actions .btn { width: 100%; }
+}
+
+/* LF4–LF6: begrenzte Praxis mit schmaler Ansicht und sichtbarer Tastaturführung. */
+.journey-model { border: 1px solid var(--border); border-radius: 12px; padding: 1rem; margin: 1rem 0; min-width: 0; }
+.journey-model-field { display: grid; gap: .4rem; margin: 1rem 0; min-width: 0; }
+.journey-model-field select, .journey-code-input { width: 100%; min-width: 0; max-width: 100%; }
+.journey-code-input { font-family: monospace; tab-size: 2; }
+.journey-code { white-space: pre-wrap; overflow-wrap: anywhere; }
+.journey-model .btn { margin: .4rem .5rem .4rem 0; }
+.journey-table-scroll { overflow-x: auto; }
+.journey-stock { border-collapse: collapse; width: 100%; }
+.journey-stock th, .journey-stock td { padding: .5rem; border: 1px solid var(--border); text-align: left; }
+.journey-stock caption { text-align: left; font-weight: 600; margin: .5rem 0; }

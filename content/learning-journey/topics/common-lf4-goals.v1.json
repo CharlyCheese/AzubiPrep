@@ -1,0 +1,492 @@
+{
+  "schemaVersion": 1,
+  "id": "common-lf4-goals",
+  "title": "Vertraulichkeit, Integrität und Verfügbarkeit",
+  "fieldId": "LF4",
+  "scope": "common",
+  "prerequisites": [
+    "common-lf1-value-chain"
+  ],
+  "objectives": [
+    {
+      "id": "common-lf4-goals-distinguish",
+      "text": "Eine Beeinträchtigung von Vertraulichkeit, Integrität oder Verfügbarkeit an einem Arbeitsvorgang zuordnen."
+    },
+    {
+      "id": "common-lf4-goals-guideline",
+      "text": "Aus einer vorgegebenen Sicherheitsleitlinie relevante Regeln für den eigenen Arbeitsbereich ableiten."
+    }
+  ],
+  "version": "1.0.0",
+  "sourceIds": [
+    "lf4-nist-confidentiality",
+    "lf4-nist-integrity",
+    "lf4-nist-availability",
+    "lf4-nist-security-policy"
+  ],
+  "sources": [
+    {
+      "id": "lf4-nist-confidentiality",
+      "title": "NIST CSRC Glossar: Vertraulichkeit",
+      "url": "https://csrc.nist.gov/glossary/term/confidentiality",
+      "checkedAt": "2026-11-16",
+      "note": "Begriff der Beschränkung unbefugter Offenlegung geprüft."
+    },
+    {
+      "id": "lf4-nist-integrity",
+      "title": "NIST CSRC Glossar: Integrität",
+      "url": "https://csrc.nist.gov/glossary/term/integrity",
+      "checkedAt": "2026-11-16",
+      "note": "Begriff des Schutzes gegen unzulässige Veränderung geprüft."
+    },
+    {
+      "id": "lf4-nist-availability",
+      "title": "NIST CSRC Glossar: Verfügbarkeit",
+      "url": "https://csrc.nist.gov/glossary/term/availability",
+      "checkedAt": "2026-11-16",
+      "note": "Rechtzeitige und verlässliche Nutzbarkeit geprüft."
+    },
+    {
+      "id": "lf4-nist-security-policy",
+      "title": "NIST CSRC Glossar: Sicherheitsregeln",
+      "url": "https://csrc.nist.gov/glossary/term/security_policy",
+      "checkedAt": "2026-11-16",
+      "note": "Organisatorische Regeln zum Umgang mit schützenswerten Informationen geprüft. Die Radblick-Leitlinie ist erfunden."
+    }
+  ],
+  "caseStudy": {
+    "title": "Mira schützt den Servicearbeitsplatz bei Radblick",
+    "text": "Eigener fiktiver Lernfall: Radblick bearbeitet Serviceanfragen. Mira lernt unter Anleitung von Sam aus der IT und Eda als Serviceverantwortlicher. Alle Personen, Daten, Regeln und Schadensannahmen sind erfunden. Mira betrachtet, was beim Lesen, Ändern und Bearbeiten eines Tickets geschützt werden muss."
+  },
+  "blocks": [
+    {
+      "id": "common-lf4-goals-distinguish",
+      "title": "1. Drei Fragen an einen Arbeitsvorgang",
+      "objectiveIds": [
+        "common-lf4-goals-distinguish"
+      ],
+      "sourceIds": [
+        "lf4-nist-confidentiality",
+        "lf4-nist-integrity",
+        "lf4-nist-availability"
+      ],
+      "paragraphs": [
+        "Informationssicherheit beginnt beim Arbeitsvorgang: Eda öffnet ein Ticket, prüft den Auftrag und plant die Bearbeitung. Vertraulichkeit fragt, wer die Informationen sehen darf. Integrität fragt, ob Inhalt und Zustand korrekt und vor unzulässigen Änderungen geschützt sind. Verfügbarkeit fragt, ob Befugte die benötigte Funktion rechtzeitig nutzen können.",
+        "Ordne eine Beobachtung zunächst dem unmittelbar betroffenen Ziel zu. Liest eine unbeteiligte Besucherin Kundendaten auf dem Bildschirm, ist die Vertraulichkeit betroffen. Wird eine Freigabe im Ticket verfälscht, betrifft das die Integrität. Lässt sich die Ticketanwendung wegen eines Ausfalls nicht öffnen, betrifft das die Verfügbarkeit.",
+        "Die Ziele können gemeinsam betroffen sein. Eine entwendete und veränderte Ticketdatei kann sowohl offengelegt als auch verfälscht sein. Nenne dann beide beobachteten Beeinträchtigungen. Aus einer Offenlegung folgt aber nicht ohne weiteren Befund, dass die Daten geändert wurden."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Lernfall",
+        "text": "Eine falsche Rückrufnummer im bearbeiteten Ticket gefährdet zuerst die Integrität; eine fremde Person liest die richtige Nummer: Vertraulichkeit."
+      },
+      "misconception": {
+        "claim": "Sobald Informationen richtig sind, sind sie auch sicher.",
+        "correction": "Richtige Informationen können unbefugt gelesen werden oder für die Bearbeitung nicht erreichbar sein."
+      },
+      "takeaway": "Wer darf lesen, was muss stimmen, wann muss es nutzbar sein?"
+    },
+    {
+      "id": "common-lf4-goals-work",
+      "title": "2. Auswirkungen und Belege beschreiben",
+      "objectiveIds": [
+        "common-lf4-goals-distinguish"
+      ],
+      "sourceIds": [
+        "lf4-nist-confidentiality",
+        "lf4-nist-integrity",
+        "lf4-nist-availability"
+      ],
+      "paragraphs": [
+        "Gehe in drei Schritten vor: Nenne den Arbeitsvorgang, beschreibe den beobachteten Zustand und erkläre die Folge. Beispiel: Bei der Terminplanung ist der zugesagte Termin ohne Freigabe geändert worden. Das verfälscht den Auftrag und kann zu einem falschen Einsatz führen. Damit begründest du Integrität statt nur ein Schlagwort anzukreuzen.",
+        "Verfügbarkeit meint die vorgesehene Nutzung, nicht bloß einen eingeschalteten Rechner. Ist der PC an, aber das Ticket für die zuständige Bearbeiterin nicht abrufbar, ist ihre Aufgabe trotzdem blockiert. Umgekehrt kann ein verweigerter Zugriff für eine unberechtigte Person die vorgesehene Schutzwirkung sein.",
+        "Trenne Beobachtung und Vermutung. Bildschirmfoto mit Ticketinhalt, angezeigte Versionsänderung oder Fehlermeldung sind unterschiedliche Hinweise. Dokumentiere keine echten vertraulichen Inhalte in einer Lernnotiz. Beschreibe im Betrieb die nötigen Befunde über den vorgesehenen Meldeweg."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Lernfall",
+        "text": "Der Gastzugang erhält eine Ablehnung, die zuständige Servicerolle öffnet das Ticket: Das ist im Fall erwartete Zugriffskontrolle."
+      },
+      "misconception": {
+        "claim": "Jede Zugriffsverweigerung ist eine Verfügbarkeitsstörung.",
+        "correction": "Ein Zugriff kann absichtlich verboten sein; maßgeblich sind Rolle und vorgesehene Aufgabe."
+      },
+      "takeaway": "Die betroffene Aufgabe und ein konkreter Befund tragen die Zuordnung."
+    },
+    {
+      "id": "common-lf4-goals-guideline",
+      "title": "3. Eine Leitlinie in Arbeitsregeln übersetzen",
+      "objectiveIds": [
+        "common-lf4-goals-guideline"
+      ],
+      "sourceIds": [
+        "lf4-nist-security-policy"
+      ],
+      "paragraphs": [
+        "Eine Sicherheitsleitlinie gibt Ziele und Verantwortung vor. Damit sie im Alltag hilft, leitest du aus ihr eine konkrete Handlung für deinen Arbeitsplatz ab. Die folgende Leitlinie ist eine fiktive Radblick-Vorgabe: Kundentickets sind dem zuständigen Serviceteam zugänglich; Änderungen müssen zugeordnet werden können; die Bearbeitung soll auch bei kurzen Ausfällen geordnet fortgesetzt werden.",
+        "Daraus folgen für Mira greifbare Regeln: Sie benutzt ihr freigegebenes persönliches Konto, sperrt den Bildschirm beim Verlassen und gibt keine Tickets an unbeteiligte Personen weiter. Sie erfasst sachliche Änderungen mit ihrem Konto. Für Ausfälle benutzt sie den freigegebenen Papierablauf und meldet die Störung an Sam.",
+        "Eine Leitlinie ist nicht mit einem einzelnen Einstellwert gleichzusetzen. Welche Rechte eine Rolle erhält und wie lange Unterlagen aufbewahrt werden, wird im zuständigen Verfahren festgelegt. Mira prüft zuerst die geltende Arbeitsanweisung. Fehlt eine Entscheidung, nennt sie den offenen Punkt, statt eine eigene Ausnahme einzurichten."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Lernfall",
+        "text": "Aus dem Ziel nachvollziehbarer Änderungen folgt: persönliches Konto verwenden und die Änderung im vorgesehenen Verlauf erfassen."
+      },
+      "misconception": {
+        "claim": "Eine allgemeine Leitlinie liefert alle technischen Einstellungen.",
+        "correction": "Sie setzt den Rahmen; konkrete Regeln und Freigaben ergänzen ihn für den Arbeitsbereich."
+      },
+      "takeaway": "Verbinde ein Leitlinienziel mit einer umsetzbaren Arbeitsregel."
+    },
+    {
+      "id": "common-lf4-goals-apply",
+      "title": "4. Regeln im Servicefall anwenden",
+      "objectiveIds": [
+        "common-lf4-goals-distinguish",
+        "common-lf4-goals-guideline"
+      ],
+      "sourceIds": [
+        "lf4-nist-confidentiality",
+        "lf4-nist-integrity",
+        "lf4-nist-availability",
+        "lf4-nist-security-policy"
+      ],
+      "paragraphs": [
+        "Mira möchte kurz einen Raum verlassen, während ein Kundenticket offen ist. Sie sperrt den Bildschirm: Das schützt vor dem Mitlesen durch Personen ohne Berechtigung. Sie beendet nicht den gesamten Servicebetrieb, sondern setzt eine Regel passend zur Situation um.",
+        "Eine Kollegin bittet um Miras Konto, weil ihr eigener Zugriff fehlt. Mira benennt die Arbeitsaufgabe und lässt den vorgesehenen Zugriff über Sam prüfen. Ein geteiltes Konto würde die Zuordnung späterer Änderungen erschweren. Eine dringende Aufgabe wird dadurch nicht zur Erlaubnis, die Freigabe zu umgehen.",
+        "Bei einem Ausfall hält Mira Zeitpunkt, betroffene Funktion und Auswirkungen fest. Nach dem freigegebenen Papierablauf können Vorgänge vorübergehend aufgenommen werden. Ob dieser Ersatz ausreicht, hängt von der Aufgabe und den festgelegten Zeitgrenzen ab. Die spätere Schutzbedarfsanalyse untersucht genau diese Schäden und Annahmen."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Lernfall",
+        "text": "Mira verbindet Sperren mit Vertraulichkeit, persönlichen Änderungsverlauf mit Integrität und geregelten Ersatzablauf mit Verfügbarkeit."
+      },
+      "misconception": {
+        "claim": "Dringlichkeit ersetzt die festgelegte Zugriffsberechtigung.",
+        "correction": "Dringlichkeit begründet eine schnelle Klärung über den zuständigen Weg, keine eigenmächtige Rechtevergabe."
+      },
+      "takeaway": "Regeln werden mit Ziel, Situation und Zuständigkeit begründet."
+    }
+  ],
+  "questionFile": "questions/common-lf4-goals.v1.csv",
+  "quiz": {
+    "questionIds": [
+      "LJ-LF4-GOALS-Q01",
+      "LJ-LF4-GOALS-Q02",
+      "LJ-LF4-GOALS-Q03",
+      "LJ-LF4-GOALS-Q04",
+      "LJ-LF4-GOALS-Q05",
+      "LJ-LF4-GOALS-Q06"
+    ]
+  },
+  "exam": {
+    "questionIds": [
+      "LJ-LF4-GOALS-E01",
+      "LJ-LF4-GOALS-E02",
+      "LJ-LF4-GOALS-E03",
+      "LJ-LF4-GOALS-E04",
+      "LJ-LF4-GOALS-E05",
+      "LJ-LF4-GOALS-E06",
+      "LJ-LF4-GOALS-E07",
+      "LJ-LF4-GOALS-E08"
+    ],
+    "passPercent": 80,
+    "scoring": "all-or-nothing-per-question",
+    "timed": false
+  },
+  "questionLinks": [
+    {
+      "questionId": "LJ-LF4-GOALS-Q01",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf4-goals-distinguish"
+      ],
+      "blockIds": [
+        "common-lf4-goals-distinguish"
+      ]
+    },
+    {
+      "questionId": "LJ-LF4-GOALS-Q02",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf4-goals-distinguish"
+      ],
+      "blockIds": [
+        "common-lf4-goals-distinguish",
+        "common-lf4-goals-work"
+      ]
+    },
+    {
+      "questionId": "LJ-LF4-GOALS-Q03",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf4-goals-distinguish"
+      ],
+      "blockIds": [
+        "common-lf4-goals-work"
+      ]
+    },
+    {
+      "questionId": "LJ-LF4-GOALS-Q04",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf4-goals-guideline"
+      ],
+      "blockIds": [
+        "common-lf4-goals-guideline"
+      ]
+    },
+    {
+      "questionId": "LJ-LF4-GOALS-Q05",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf4-goals-guideline"
+      ],
+      "blockIds": [
+        "common-lf4-goals-guideline",
+        "common-lf4-goals-apply"
+      ]
+    },
+    {
+      "questionId": "LJ-LF4-GOALS-Q06",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf4-goals-distinguish",
+        "common-lf4-goals-guideline"
+      ],
+      "blockIds": [
+        "common-lf4-goals-work",
+        "common-lf4-goals-apply"
+      ]
+    },
+    {
+      "questionId": "LJ-LF4-GOALS-E01",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf4-goals-distinguish"
+      ],
+      "blockIds": [
+        "common-lf4-goals-distinguish"
+      ]
+    },
+    {
+      "questionId": "LJ-LF4-GOALS-E02",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf4-goals-distinguish"
+      ],
+      "blockIds": [
+        "common-lf4-goals-distinguish",
+        "common-lf4-goals-work"
+      ]
+    },
+    {
+      "questionId": "LJ-LF4-GOALS-E03",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf4-goals-distinguish"
+      ],
+      "blockIds": [
+        "common-lf4-goals-distinguish",
+        "common-lf4-goals-work"
+      ]
+    },
+    {
+      "questionId": "LJ-LF4-GOALS-E04",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf4-goals-guideline"
+      ],
+      "blockIds": [
+        "common-lf4-goals-guideline"
+      ]
+    },
+    {
+      "questionId": "LJ-LF4-GOALS-E05",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf4-goals-guideline"
+      ],
+      "blockIds": [
+        "common-lf4-goals-guideline",
+        "common-lf4-goals-apply"
+      ]
+    },
+    {
+      "questionId": "LJ-LF4-GOALS-E06",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf4-goals-distinguish",
+        "common-lf4-goals-guideline"
+      ],
+      "blockIds": [
+        "common-lf4-goals-distinguish",
+        "common-lf4-goals-apply"
+      ]
+    },
+    {
+      "questionId": "LJ-LF4-GOALS-E07",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf4-goals-guideline"
+      ],
+      "blockIds": [
+        "common-lf4-goals-guideline"
+      ]
+    },
+    {
+      "questionId": "LJ-LF4-GOALS-E08",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf4-goals-distinguish",
+        "common-lf4-goals-guideline"
+      ],
+      "blockIds": [
+        "common-lf4-goals-work",
+        "common-lf4-goals-apply"
+      ]
+    }
+  ],
+  "interview": [
+    {
+      "id": "common-lf4-goals-talk-goals",
+      "prompt": "Erkläre die drei Schutzziele an Lesen, Ändern und Öffnen eines Tickets.",
+      "objectiveIds": [
+        "common-lf4-goals-distinguish"
+      ],
+      "blockIds": [
+        "common-lf4-goals-distinguish",
+        "common-lf4-goals-work"
+      ],
+      "keyPoints": [
+        "Unbefugtes Lesen der Vertraulichkeit zuordnen.",
+        "Unzulässige Veränderung der Integrität zuordnen.",
+        "Blockierte vorgesehene Nutzung der Verfügbarkeit zuordnen."
+      ],
+      "acceptableAlternatives": [
+        "Eine fachlich gleichwertige, anhand der Fallvorgaben begründete Erklärung."
+      ],
+      "misconceptions": [
+        "Aus einem einzelnen Befund ohne Beleg alle drei Verletzungen ableiten."
+      ],
+      "sampleAnswer": "Ich frage, wer lesen darf, welche Inhalte korrekt bleiben müssen und wann die zuständige Person die Anwendung nutzen muss. Ein Ereignis kann mehrere Ziele berühren, wenn mehrere passende Befunde vorliegen.",
+      "followUp": "Welche zusätzliche Beobachtung wäre nötig, um neben Offenlegung eine Veränderung zu behaupten?"
+    },
+    {
+      "id": "common-lf4-goals-talk-guideline",
+      "prompt": "Leite aus der Radblick-Leitlinie zwei Regeln für einen unbeaufsichtigten Arbeitsplatz und persönliche Änderungen ab.",
+      "objectiveIds": [
+        "common-lf4-goals-guideline"
+      ],
+      "blockIds": [
+        "common-lf4-goals-guideline",
+        "common-lf4-goals-apply"
+      ],
+      "keyPoints": [
+        "Bildschirm sperren mit Schutz vor Mitlesen verbinden.",
+        "Persönliches Konto und Verlauf für Zuordnung nutzen.",
+        "Unklare Freigaben zuständig klären."
+      ],
+      "acceptableAlternatives": [
+        "Eine fachlich gleichwertige, anhand der Fallvorgaben begründete Erklärung."
+      ],
+      "misconceptions": [
+        "Ein Leitlinienziel mit einer pauschalen Berechtigung verwechseln."
+      ],
+      "sampleAnswer": "Ich sperre beim Weggehen den Bildschirm. Ich ändere Tickets über mein freigegebenes Konto im vorgesehenen Verlauf. Fehlt einer Vertretung eine Rolle, kläre ich diese über Sam.",
+      "followUp": "Welche Entscheidung darfst du nicht aus dem allgemeinen Leitlinienziel selbst erfinden?"
+    },
+    {
+      "id": "common-lf4-goals-talk-case",
+      "prompt": "Ein Gast wird abgewiesen, Eda arbeitet weiter; später fällt das Portal aus. Erkläre die unterschiedlichen Situationen.",
+      "objectiveIds": [
+        "common-lf4-goals-distinguish",
+        "common-lf4-goals-guideline"
+      ],
+      "blockIds": [
+        "common-lf4-goals-apply"
+      ],
+      "keyPoints": [
+        "Erwartete Ablehnung vom Nutzungsfehler trennen.",
+        "Ausfall an vorgesehener Aufgabe festmachen.",
+        "Freigegebenen Ersatzablauf und Meldung nennen."
+      ],
+      "acceptableAlternatives": [
+        "Eine fachlich gleichwertige, anhand der Fallvorgaben begründete Erklärung."
+      ],
+      "misconceptions": [
+        "Betriebsbereitschaft des PCs mit Nutzbarkeit der Anwendung gleichsetzen."
+      ],
+      "sampleAnswer": "Die Gastablehnung setzt die Rollenregel um. Der spätere Ausfall verhindert Edas vorgesehene Aufgabe und betrifft Verfügbarkeit. Ich melde Funktion, Zeitpunkt und Auswirkung und nutze den freigegebenen Ersatzablauf.",
+      "followUp": "Warum reicht die Information PC ist an zur Bewertung nicht aus?"
+    }
+  ],
+  "cards": [
+    {
+      "id": "common-lf4-goals-card-confidentiality",
+      "front": "Welche Frage beschreibt Vertraulichkeit?",
+      "back": "Wer darf welche Informationen erhalten? Unbefugtes Lesen oder Weitergeben verletzt dieses Ziel.",
+      "objectiveIds": [
+        "common-lf4-goals-distinguish"
+      ],
+      "blockIds": [
+        "common-lf4-goals-distinguish"
+      ]
+    },
+    {
+      "id": "common-lf4-goals-card-integrity",
+      "front": "Was schützt Integrität im Ticket?",
+      "back": "Korrekte Inhalte und Zustände gegen unzulässige Änderungen, etwa verfälschte Termine oder Freigaben.",
+      "objectiveIds": [
+        "common-lf4-goals-distinguish"
+      ],
+      "blockIds": [
+        "common-lf4-goals-distinguish"
+      ]
+    },
+    {
+      "id": "common-lf4-goals-card-availability",
+      "front": "Wann ist die Ticketbearbeitung verfügbar?",
+      "back": "Wenn Befugte die benötigte Funktion zum vorgesehenen Zeitpunkt nutzen können; ein laufender PC reicht als Beleg nicht.",
+      "objectiveIds": [
+        "common-lf4-goals-distinguish"
+      ],
+      "blockIds": [
+        "common-lf4-goals-work"
+      ]
+    },
+    {
+      "id": "common-lf4-goals-card-multiple",
+      "front": "Kann ein Ereignis mehrere Ziele verletzen?",
+      "back": "Ja: Ein fremd gelesenes und verfälschtes Ticket betrifft Vertraulichkeit und Integrität. Die Befunde werden getrennt benannt.",
+      "objectiveIds": [
+        "common-lf4-goals-distinguish"
+      ],
+      "blockIds": [
+        "common-lf4-goals-distinguish"
+      ]
+    },
+    {
+      "id": "common-lf4-goals-card-guideline",
+      "front": "Wie wird eine Leitlinie praktisch?",
+      "back": "Ziel lesen, betroffene Aufgabe bestimmen, konkrete Arbeitsregel ableiten und fehlende Freigaben zuständig klären.",
+      "objectiveIds": [
+        "common-lf4-goals-guideline"
+      ],
+      "blockIds": [
+        "common-lf4-goals-guideline"
+      ]
+    },
+    {
+      "id": "common-lf4-goals-card-rule",
+      "front": "Wie setzt Mira nachvollziehbare Änderungen um?",
+      "back": "Eigenes freigegebenes Konto und vorgesehenen Verlauf verwenden; fehlende Rollen über den Freigabeweg klären.",
+      "objectiveIds": [
+        "common-lf4-goals-guideline"
+      ],
+      "blockIds": [
+        "common-lf4-goals-apply"
+      ]
+    }
+  ],
+  "review": {
+    "status": "reviewed",
+    "checkedAt": "2026-11-16"
+  }
+}

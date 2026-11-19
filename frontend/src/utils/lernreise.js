@@ -2,9 +2,8 @@
 // Landkarte des Lernwegs. Reine Funktionen (testbar) - die Seite
 // Lernreise.jsx rendert nur.
 // Aufbau: Stationen der gewaehlten Fachrichtung + gemeinsame Module (ALLE),
-// gruppiert und sortiert nach der offiziellen KMK-Lernfeldstruktur
-// (CONTENT-007) statt nach einer festen "gemeinsam vs. eigene"-Trennung –
-// so folgt die Reise dem tatsächlichen chronologischen Ausbildungsverlauf.
+// Lernfelder behalten ihre offizielle Zuordnung. Für den Lernweg stehen
+// WISO und Projektmanagement als eigene Etappen direkt hinter LF1.
 import { modulStufe, statusAnzeige, abdeckungProzent } from './modulStatus.js';
 import { gruppiereNachLernfeld } from './lernfeldOrdnung.js';
 
@@ -58,15 +57,21 @@ export function fortschritt(module = [], statusMap = {}) {
 
 /**
  * Lernreise einer Fachrichtung: eigene Module + gemeinsame Module (ALLE),
- * in Lernfeld-Gruppen gegliedert (LF1…LF9, dann LF10-12 – eigene
- * Fachrichtung zuerst –, "Sonstige Prüfungsbereiche" am Ende). Die
+ * in Etappen gegliedert (LF1, WISO, PM, LF2…LF9, dann LF10-12). Die
  * Stationsnummerierung läuft durchgehend über alle Gruppen hinweg, damit
  * sie den chronologischen Ausbildungsverlauf abbildet.
  */
 export function baueLernreise(module = [], fachrichtung = 'FIAE', statusMap = {}) {
   const alle = module || [];
   const relevante = alle.filter((m) => m.fachrichtung === fachrichtung || m.fachrichtung === 'ALLE');
-  const lernfeldGruppen = gruppiereNachLernfeld(relevante, fachrichtung);
+  const extraStages = [
+    { lernfeld: 'WISO', titel: 'Sonstige Prüfungsbereiche · Wirtschafts- und Sozialkunde' },
+    { lernfeld: 'PM', titel: 'Projektmanagement' },
+  ].map(stage => ({ ...stage, module: relevante.filter(m => m.modul_id === stage.lernfeld) }))
+    .filter(stage => stage.module.length);
+  const lernfeldGruppen = gruppiereNachLernfeld(relevante.filter(m => !['WISO', 'PM'].includes(m.modul_id)), fachrichtung);
+  const afterLF1 = lernfeldGruppen.findIndex(group => group.lernfeld.split('/')[0] === 'LF1') + 1;
+  lernfeldGruppen.splice(afterLF1, 0, ...extraStages);
 
   let laufendeNummer = 0;
   const gruppen = lernfeldGruppen.map((g) => ({
@@ -74,7 +79,8 @@ export function baueLernreise(module = [], fachrichtung = 'FIAE', statusMap = {}
     titel: g.titel,
     stationen: g.module.map((m) => {
       laufendeNummer += 1;
-      return baueStation(m, laufendeNummer, statusMap);
+      // Gruppenschlüssel für Aufklappen/Fortsetzen; die Modulmetadaten bleiben unverändert.
+      return { ...baueStation(m, laufendeNummer, statusMap), lernfeld: g.lernfeld };
     }),
   }));
 

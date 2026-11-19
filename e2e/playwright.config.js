@@ -26,6 +26,9 @@ export default defineConfig({
     trace: 'retain-on-failure',
   },
   webServer: {
+    // Viele Lernreiseabschnitte laden ihre eigenen Inhalte parallel. Die
+    // Browsermatrix prüft Lernabläufe; das normale Betriebslimit bleibt unverändert.
+    env: { RATEN_LIMIT_MAX: '20000' },
     // Baut das Frontend einmal (dist/) und startet das Backend, das dist/
     // im Produktionsmodus mit ausliefert (siehe backend/src/app.js,
     // "Statische Auslieferung des Produktions-Builds"). Setzt voraus, dass

@@ -22,6 +22,7 @@ import Einstellungen from './pages/Einstellungen.jsx';
 import Profil from './pages/Profil.jsx';
 import Benachrichtigungen from './pages/Benachrichtigungen.jsx';
 import Lernreise from './pages/Lernreise.jsx';
+import LernreiseAbschnitt from './pages/LernreiseAbschnitt.jsx';
 import Autoren from './pages/Autoren.jsx';
 import Nutzerverwaltung from './pages/Nutzerverwaltung.jsx';
 import PasswortZuruecksetzen from './pages/PasswortZuruecksetzen.jsx';
@@ -67,6 +68,7 @@ export default function App() {
         <Route path="autoren" element={<Autoren />} />
         <Route path="nutzerverwaltung" element={<Nutzerverwaltung />} />
         <Route path="lernreise" element={<Lernreise />} />
+        <Route path="lernreise/fiae/:topicId" element={<LernreiseAbschnitt />} />
         <Route path="*" element={<Dashboard />} />
       </Route>
     </Routes>

@@ -1,0 +1,481 @@
+{
+  "schemaVersion": 1,
+  "id": "common-lf5-control",
+  "version": "1.0.0",
+  "title": "Bedingungen und Schleifen",
+  "fieldId": "LF5",
+  "scope": "common",
+  "prerequisites": [
+    "common-lf5-types"
+  ],
+  "sourceIds": [
+    "lf5-mdn-integer",
+    "lf5-mdn-operators",
+    "lf5-mdn-control",
+    "lf5-mdn-loops"
+  ],
+  "sources": [
+    {
+      "id": "lf5-mdn-integer",
+      "title": "MDN: Number.isInteger()",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/isInteger",
+      "note": "Ganzzahlprüfung einschließlich Ablehnung von Zahlentexten und Nachkommawerten geprüft; Grenze 0 bis 1000 ist eine eigene Modellvorgabe.",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "lf5-mdn-operators",
+      "title": "MDN: Expressions and operators",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Expressions_and_operators",
+      "note": "Zuweisung, Rechenoperatoren, Vergleiche und logische Verknüpfungen geprüft.",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "lf5-mdn-control",
+      "title": "MDN: Control flow and error handling",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Control_flow_and_error_handling",
+      "note": "if/else, Bedingungen und Anweisungsblöcke geprüft. Der eigene Funktionsvertrag nutzt null als vereinbartes Fehlerergebnis.",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "lf5-mdn-loops",
+      "title": "MDN: Loops and iteration",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Loops_and_iteration",
+      "note": "Reihenfolge von Initialisierung, Bedingung, Schleifenrumpf und Fortschaltung geprüft.",
+      "checkedAt": "2026-11-16"
+    }
+  ],
+  "objectives": [
+    {
+      "id": "common-lf5-control-branch",
+      "text": "Eine fachliche Fallunterscheidung in Bedingungen und passende Programmzweige übersetzen."
+    },
+    {
+      "id": "common-lf5-control-loop",
+      "text": "Eine wiederholte Verarbeitung als Schleife formulieren und ihre Abbruchbedingung prüfen."
+    }
+  ],
+  "caseStudy": {
+    "title": "Mira entscheidet über Ausgaben und Wiederholungen",
+    "text": "Im fiktiven Materiallager soll eine gültige Anforderung bis zur vorhandenen Menge erlaubt sein. Mira übersetzt diese Regel in JavaScript und verfolgt kurze Schleifen von Hand, bevor später eigener Code läuft."
+  },
+  "blocks": [
+    {
+      "id": "common-lf5-control-branch",
+      "title": "1. Eine fachliche Regel als if und else",
+      "objectiveIds": [
+        "common-lf5-control-branch"
+      ],
+      "sourceIds": [
+        "lf5-mdn-control",
+        "lf5-mdn-operators"
+      ],
+      "paragraphs": [
+        "Die fachliche Regel lautet: Bei gültigen ganzen Mengen darf die angeforderte Stückzahl höchstens dem Bestand entsprechen. Der Ausdruck requested <= quantity bildet diese Entscheidung ab. Gleichheit gehört zum erlaubten Fall.",
+        "JavaScript schreibt eine Verzweigung so: if (requested <= quantity) { result = true; } else { result = false; }. Die runden Klammern enthalten die Bedingung, die geschweiften Klammern den jeweiligen Anweisungsblock. result muss vorher beispielsweise mit let result; deklariert sein.",
+        "Bei quantity = 4 und requested = 4 wird der erste Block ausgeführt. Bei quantity = 2 und requested = 5 wird der else-Block ausgeführt. Eine Verzweigung führt für einen solchen Aufruf einen der beiden Wege aus; sie wiederholt den Weg nicht."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Übungsfall",
+        "text": "let result; if (3 <= 8) { result = true; } else { result = false; } setzt result auf true."
+      },
+      "misconception": {
+        "claim": "Für eine Freigabe muss requested kleiner als quantity sein, Gleichheit zählt nicht.",
+        "correction": "Die Regel erlaubt die letzte vorhandene Einheit. Deshalb wird <= statt < verwendet."
+      },
+      "takeaway": "Übersetze auch die Grenze einer fachlichen Regel ausdrücklich."
+    },
+    {
+      "id": "common-lf5-control-guard",
+      "title": "2. Gültigkeit vor der Fachentscheidung prüfen",
+      "objectiveIds": [
+        "common-lf5-control-branch"
+      ],
+      "sourceIds": [
+        "lf5-mdn-control",
+        "lf5-mdn-integer",
+        "lf5-mdn-operators"
+      ],
+      "paragraphs": [
+        "Bevor wir Mengen vergleichen, müssen beide Werte den Vertrag erfüllen: ganze Zahlen zwischen 0 und 1000 einschließlich. !Number.isInteger(quantity) erkennt einen nicht ganzzahligen Zahlenwert oder einen anderen Typ. quantity < 0 und quantity > 1000 prüfen die Grenzen.",
+        "Die Fehlerbedingungen werden mit || verbunden. Sobald mindestens eine wahr ist, liegt eine ungültige Eingabe vor. Für requested ist dieselbe Prüfung nötig. Bei gültigen Mengen folgt erst danach die Entscheidung requested <= quantity.",
+        "Im vollständigen Algorithmus wird ungültige Eingabe als null gemeldet. Dadurch bleibt sie von false für gültige Mengen mit zu großem Wunsch getrennt. Für quantity = 0 und requested = 0 ist das Ergebnis true: Eine Anforderung von null Stück überschreitet den Bestand nicht."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Übungsfall",
+        "text": "Der Zahlentext '3' darf nicht allein durch einen passenden Größenvergleich als gültige Stückzahl gelten."
+      },
+      "misconception": {
+        "claim": "Eine negative Menge ist einfach ein gültiger Fall mit zu wenig Bestand.",
+        "correction": "Sie verletzt den Eingabevertrag und erhält die vereinbarte Fehlerreaktion."
+      },
+      "takeaway": "Erst Eingaben prüfen, dann die fachliche Entscheidung treffen."
+    },
+    {
+      "id": "common-lf5-control-loop",
+      "title": "3. Eine for-Schleife Schritt für Schritt",
+      "objectiveIds": [
+        "common-lf5-control-loop"
+      ],
+      "sourceIds": [
+        "lf5-mdn-loops"
+      ],
+      "paragraphs": [
+        "Für eine bekannte Anzahl Wiederholungen eignet sich for. Das Beispiel lautet: let total = 0; for (let i = 0; i < 3; i = i + 1) { total = total + 2; }. Es verarbeitet drei gleiche Pakete mit je zwei Teilen.",
+        "Der Ablauf ist fest: i mit 0 initialisieren; i < 3 prüfen; bei true den Rumpf ausführen; i um 1 erhöhen; wieder die Bedingung prüfen. Der Rumpf läuft mit i = 0, 1 und 2. Die Werte von total sind nach den Durchläufen 2, 4 und 6.",
+        "Wenn i den Wert 3 erreicht, ist i < 3 false und die Schleife endet. Eine Bedingung i <= 3 würde den Rumpf auch bei 3 ausführen, also viermal. Prüfe Startwert, Vergleich und Fortschaltung gemeinsam."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Übungsfall",
+        "text": "Bei for (let i = 0; i < 2; i = i + 1) entstehen genau die Durchläufe i = 0 und i = 1."
+      },
+      "misconception": {
+        "claim": "Eine Schleife von 0 bis kleiner 3 hat vier Durchläufe.",
+        "correction": "Der Wert 3 erfüllt die Bedingung nicht. Es bleiben 0, 1 und 2."
+      },
+      "takeaway": "Notiere pro Durchlauf Zähler und Ergebnis, bis die Bedingung false wird."
+    },
+    {
+      "id": "common-lf5-control-termination",
+      "title": "4. Abbruch und leere Wiederholung prüfen",
+      "objectiveIds": [
+        "common-lf5-control-loop",
+        "common-lf5-control-branch"
+      ],
+      "sourceIds": [
+        "lf5-mdn-loops",
+        "lf5-mdn-control"
+      ],
+      "paragraphs": [
+        "Eine Schleife muss einen Weg zum Ende haben. Bei while (remaining > 0) { remaining = remaining - 1; } mit Startwert 3 nähert sich remaining der Abbruchgrenze und wird 0. Fehlt die Verringerung bei positivem Start, bleibt die Bedingung wahr.",
+        "Die Bedingung einer for- oder while-Schleife wird vor dem Rumpf geprüft. Wenn eine for-Schleife mit i = 0 die Bedingung i < count verwendet und count = 0 ist, gibt es keinen Durchlauf. Das ist für einen leeren Bestand oft die richtige Reaktion.",
+        "Teste eine Wiederholung mit null, einem und mehreren Durchläufen. Begrenze Beispiele auf kleine Werte und betrachte den Verlauf vor der Ausführung. Im späteren begrenzten Codebereich wird eine zu lange Ausführung abgebrochen; ein solcher Abbruch ist ein Fehlerhinweis und kein bestandener Fachtest."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Übungsfall",
+        "text": "Start remaining = 2: nach dem ersten Durchlauf 1, nach dem zweiten 0; danach endet die while-Schleife."
+      },
+      "misconception": {
+        "claim": "Ein Programm, das durch eine Zeitgrenze angehalten wird, hat seine fachliche Abbruchbedingung bewiesen.",
+        "correction": "Die Laufzeitbegrenzung schützt die Übung. Der Algorithmus braucht selbst einen passenden endlichen Ablauf."
+      },
+      "takeaway": "Prüfe den leeren Fall und zeige, wie der Zähler die Abbruchgrenze erreicht."
+    }
+  ],
+  "questionFile": "questions/common-lf5-control.v1.csv",
+  "quiz": {
+    "questionIds": [
+      "LJ-LF5-CONTROL-Q01",
+      "LJ-LF5-CONTROL-Q02",
+      "LJ-LF5-CONTROL-Q03",
+      "LJ-LF5-CONTROL-Q04",
+      "LJ-LF5-CONTROL-Q05",
+      "LJ-LF5-CONTROL-Q06"
+    ]
+  },
+  "exam": {
+    "questionIds": [
+      "LJ-LF5-CONTROL-E01",
+      "LJ-LF5-CONTROL-E02",
+      "LJ-LF5-CONTROL-E03",
+      "LJ-LF5-CONTROL-E04",
+      "LJ-LF5-CONTROL-E05",
+      "LJ-LF5-CONTROL-E06",
+      "LJ-LF5-CONTROL-E07",
+      "LJ-LF5-CONTROL-E08"
+    ],
+    "passPercent": 80,
+    "scoring": "all-or-nothing-per-question",
+    "timed": false
+  },
+  "questionLinks": [
+    {
+      "questionId": "LJ-LF5-CONTROL-Q01",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf5-control-branch"
+      ],
+      "blockIds": [
+        "common-lf5-control-branch"
+      ]
+    },
+    {
+      "questionId": "LJ-LF5-CONTROL-Q02",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf5-control-branch"
+      ],
+      "blockIds": [
+        "common-lf5-control-branch"
+      ]
+    },
+    {
+      "questionId": "LJ-LF5-CONTROL-Q03",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf5-control-branch"
+      ],
+      "blockIds": [
+        "common-lf5-control-guard"
+      ]
+    },
+    {
+      "questionId": "LJ-LF5-CONTROL-Q04",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf5-control-loop"
+      ],
+      "blockIds": [
+        "common-lf5-control-loop"
+      ]
+    },
+    {
+      "questionId": "LJ-LF5-CONTROL-Q05",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf5-control-loop"
+      ],
+      "blockIds": [
+        "common-lf5-control-loop"
+      ]
+    },
+    {
+      "questionId": "LJ-LF5-CONTROL-Q06",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf5-control-loop"
+      ],
+      "blockIds": [
+        "common-lf5-control-termination"
+      ]
+    },
+    {
+      "questionId": "LJ-LF5-CONTROL-E01",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf5-control-branch"
+      ],
+      "blockIds": [
+        "common-lf5-control-branch"
+      ]
+    },
+    {
+      "questionId": "LJ-LF5-CONTROL-E02",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf5-control-branch"
+      ],
+      "blockIds": [
+        "common-lf5-control-guard"
+      ]
+    },
+    {
+      "questionId": "LJ-LF5-CONTROL-E03",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf5-control-loop"
+      ],
+      "blockIds": [
+        "common-lf5-control-loop"
+      ]
+    },
+    {
+      "questionId": "LJ-LF5-CONTROL-E04",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf5-control-loop"
+      ],
+      "blockIds": [
+        "common-lf5-control-termination"
+      ]
+    },
+    {
+      "questionId": "LJ-LF5-CONTROL-E05",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf5-control-loop"
+      ],
+      "blockIds": [
+        "common-lf5-control-termination"
+      ]
+    },
+    {
+      "questionId": "LJ-LF5-CONTROL-E06",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf5-control-branch"
+      ],
+      "blockIds": [
+        "common-lf5-control-guard"
+      ]
+    },
+    {
+      "questionId": "LJ-LF5-CONTROL-E07",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf5-control-loop"
+      ],
+      "blockIds": [
+        "common-lf5-control-loop"
+      ]
+    },
+    {
+      "questionId": "LJ-LF5-CONTROL-E08",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf5-control-branch",
+        "common-lf5-control-loop"
+      ],
+      "blockIds": [
+        "common-lf5-control-branch",
+        "common-lf5-control-termination"
+      ]
+    }
+  ],
+  "interview": [
+    {
+      "id": "common-lf5-control-talk-1",
+      "prompt": "Übersetze die Bestandsregel einschließlich ungültiger Eingaben in eine Fallunterscheidung.",
+      "objectiveIds": [
+        "common-lf5-control-branch"
+      ],
+      "blockIds": [
+        "common-lf5-control-branch",
+        "common-lf5-control-guard"
+      ],
+      "keyPoints": [
+        "Beide Werte auf Ganzzahligkeit und 0 bis 1000 prüfen.",
+        "Ungültig mit null von gültigem false trennen.",
+        "Für gültige Mengen requested <= quantity verwenden."
+      ],
+      "acceptableAlternatives": [
+        "Eine fachlich gleichwertige Erklärung mit passenden eigenen Beispielen."
+      ],
+      "misconceptions": [
+        "Für eine Freigabe muss requested kleiner als quantity sein, Gleichheit zählt nicht."
+      ],
+      "sampleAnswer": "Zuerst prüfe ich beide Eingaben. Bei einem ungültigen Wert folgt null. Sonst ist das Ergebnis true, wenn die Anforderung kleiner oder gleich dem Bestand ist, und false, wenn sie darüber liegt.",
+      "followUp": "Welcher Zweig gilt bei 4 und 4?"
+    },
+    {
+      "id": "common-lf5-control-talk-2",
+      "prompt": "Verfolge eine Schleife mit i = 0, i < 3, Erhöhung um 1 und Addition von 2 auf total = 0.",
+      "objectiveIds": [
+        "common-lf5-control-loop"
+      ],
+      "blockIds": [
+        "common-lf5-control-loop"
+      ],
+      "keyPoints": [
+        "Initialisierung, Prüfung, Rumpf und Erhöhung ordnen.",
+        "Drei Zählerstände nennen.",
+        "Endwert und Abbruchbedingung begründen."
+      ],
+      "acceptableAlternatives": [
+        "Eine fachlich gleichwertige Erklärung mit passenden eigenen Beispielen."
+      ],
+      "misconceptions": [
+        "Eine Schleife von 0 bis kleiner 3 hat vier Durchläufe."
+      ],
+      "sampleAnswer": "Die Rümpfe laufen für 0, 1 und 2. total wird 2, dann 4, dann 6. Nach der Erhöhung auf 3 ist die Bedingung false und es gibt keinen weiteren Durchlauf.",
+      "followUp": "Was ändert i <= 3 an der Anzahl?"
+    },
+    {
+      "id": "common-lf5-control-talk-3",
+      "prompt": "Erkläre die Prüfung eines leeren Ablaufs und einer fehlenden Fortschaltung.",
+      "objectiveIds": [
+        "common-lf5-control-loop",
+        "common-lf5-control-branch"
+      ],
+      "blockIds": [
+        "common-lf5-control-termination",
+        "common-lf5-control-branch"
+      ],
+      "keyPoints": [
+        "Vorprüfung bei null Wiederholungen erkennen.",
+        "Fehlenden Weg zur Abbruchgrenze beschreiben.",
+        "Schutzabbruch von fachlichem Erfolg unterscheiden."
+      ],
+      "acceptableAlternatives": [
+        "Eine fachlich gleichwertige Erklärung mit passenden eigenen Beispielen."
+      ],
+      "misconceptions": [
+        "Ein Programm, das durch eine Zeitgrenze angehalten wird, hat seine fachliche Abbruchbedingung bewiesen."
+      ],
+      "sampleAnswer": "Bei count = 0 ist i < count schon am Anfang false. Bei remaining = 3 und unverändertem Wert bleibt remaining > 0 dagegen wahr. Ein Laufzeitabbruch meldet dann ein Problem; er ersetzt keine richtige Abbruchbedingung.",
+      "followUp": "Welche kleinen Testwerte würdest du vor dem Ausführen von Hand verfolgen?"
+    }
+  ],
+  "cards": [
+    {
+      "id": "common-lf5-control-card-1",
+      "front": "Was macht if/else?",
+      "back": "Es führt je nach wahrer oder falscher Bedingung den passenden Anweisungsblock aus.",
+      "objectiveIds": [
+        "common-lf5-control-branch"
+      ],
+      "blockIds": [
+        "common-lf5-control-branch"
+      ]
+    },
+    {
+      "id": "common-lf5-control-card-2",
+      "front": "Wann braucht die Bestandsregel <=?",
+      "back": "Wenn die Anforderung den vorhandenen Bestand genau ausschöpfen darf.",
+      "objectiveIds": [
+        "common-lf5-control-branch"
+      ],
+      "blockIds": [
+        "common-lf5-control-branch"
+      ]
+    },
+    {
+      "id": "common-lf5-control-card-3",
+      "front": "Welche Prüfung kommt vor dem Mengenvergleich?",
+      "back": "Beide Werte müssen ganze Zahlen im vereinbarten Bereich 0 bis 1000 sein.",
+      "objectiveIds": [
+        "common-lf5-control-branch"
+      ],
+      "blockIds": [
+        "common-lf5-control-guard"
+      ]
+    },
+    {
+      "id": "common-lf5-control-card-4",
+      "front": "Welche Schritte hat eine for-Schleife?",
+      "back": "Initialisierung, Bedingung, bei true Rumpf, Fortschaltung, erneute Bedingung.",
+      "objectiveIds": [
+        "common-lf5-control-loop"
+      ],
+      "blockIds": [
+        "common-lf5-control-loop"
+      ]
+    },
+    {
+      "id": "common-lf5-control-card-5",
+      "front": "Wie viele Rümpfe erzeugt i = 0; i < 3; i = i + 1?",
+      "back": "Drei: für i = 0, 1 und 2. Bei 3 endet die Schleife.",
+      "objectiveIds": [
+        "common-lf5-control-loop"
+      ],
+      "blockIds": [
+        "common-lf5-control-loop"
+      ]
+    },
+    {
+      "id": "common-lf5-control-card-6",
+      "front": "Woran erkennst du einen möglichen endlosen Ablauf?",
+      "back": "Die Bedingung bleibt wahr und der relevante Zustand bewegt sich nicht zur Abbruchgrenze.",
+      "objectiveIds": [
+        "common-lf5-control-loop"
+      ],
+      "blockIds": [
+        "common-lf5-control-termination"
+      ]
+    }
+  ],
+  "review": {
+    "status": "reviewed",
+    "checkedAt": "2026-11-16"
+  }
+}
+

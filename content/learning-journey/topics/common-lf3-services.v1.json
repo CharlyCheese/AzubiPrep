@@ -1,0 +1,503 @@
+{
+  "schemaVersion": 1,
+  "id": "common-lf3-services",
+  "version": "1.0.0",
+  "title": "Clientkonfiguration mit DHCP und DNS",
+  "fieldId": "LF3",
+  "scope": "common",
+  "prerequisites": [
+    "common-lf3-addressing"
+  ],
+  "sourceIds": [
+    "lf3-rfc2131",
+    "lf3-rfc2132",
+    "lf3-rfc1034",
+    "lf3-ms-ping",
+    "lf3-rfc3596-dns-ipv6"
+  ],
+  "sources": [
+    {
+      "id": "lf3-rfc2131",
+      "title": "IETF: RFC 2131 – Dynamic Host Configuration Protocol",
+      "url": "https://www.rfc-editor.org/rfc/rfc2131.html",
+      "checkedAt": "2026-11-11",
+      "note": "Öffentliche Primärquelle zu DHCPv4, erstmaligem Nachrichtenaustausch und zeitlicher Adresszuweisung geprüft. DORA wird als vereinfachter Erstbezug erklärt, nicht als Ablauf jeder Erneuerung."
+    },
+    {
+      "id": "lf3-rfc2132",
+      "title": "IETF: RFC 2132 – DHCP Options and BOOTP Vendor Extensions",
+      "url": "https://www.rfc-editor.org/rfc/rfc2132.html",
+      "checkedAt": "2026-11-11",
+      "note": "Optionen für Subnetzmaske, Router und DNS geprüft. Die konkreten Adressen und Reservierungen sind eigene fiktive Lernvorgaben."
+    },
+    {
+      "id": "lf3-rfc1034",
+      "title": "IETF: RFC 1034 – Domain Names: Concepts and Facilities",
+      "url": "https://www.rfc-editor.org/rfc/rfc1034.html",
+      "checkedAt": "2026-11-11",
+      "note": "DNS als verteilte Namensdatenbank mit Resolvern, typisierten Einträgen und Cache geprüft. Das Portal und die beschriebene Namensantwort sind synthetisch."
+    },
+    {
+      "id": "lf3-ms-ping",
+      "title": "Microsoft: ping – IP-Konnektivität prüfen",
+      "url": "https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/ping",
+      "checkedAt": "2026-11-11",
+      "note": "ICMP-Echo als begrenzte Erreichbarkeitsprobe und Trennung zwischen IP-Ziel und Namensauflösung geprüft. Keine realen Befehle werden durch die Lerninhalte ausgeführt."
+    },
+    {
+      "id": "lf3-rfc3596-dns-ipv6",
+      "title": "IETF: RFC 3596 – DNS Extensions to Support IP Version 6",
+      "url": "https://www.rfc-editor.org/rfc/rfc3596.html",
+      "checkedAt": "2026-11-11",
+      "note": "Öffentliche HTML-Spezifikation des AAAA-Eintrags für IPv6-Adressen geprüft. DNS-Transport und gespeicherter Adresstyp werden nicht gleichgesetzt."
+    }
+  ],
+  "objectives": [
+    {
+      "id": "common-lf3-services-configure",
+      "text": "IP-Adresse, Präfix, Gateway und DNS-Einstellung eines Clients passend zum Netzplan setzen."
+    },
+    {
+      "id": "common-lf3-services-explain",
+      "text": "Adressvergabe durch DHCP und Namensauflösung durch DNS an einer Clientanfrage unterscheiden."
+    }
+  ],
+  "caseStudy": {
+    "title": "Mira verbindet Radblicks Büroclient",
+    "text": "Eigener fiktiver Lernfall: Knotenpunkt betreut Radblick. Mira richtet unter Sams Anleitung einen Client für ein Portal ein, Eda hält die Vorgaben fest. Adressen, Namen, freie Plätze und Ausgaben sind Dokumentations- und Übungsdaten; es werden keine echten Netzwerkeinstellungen geändert."
+  },
+  "blocks": [
+    {
+      "id": "common-lf3-services-settings",
+      "title": "1. Vier Einstellungen aus dem Netzplan ableiten",
+      "objectiveIds": [
+        "common-lf3-services-configure"
+      ],
+      "sourceIds": [
+        "lf3-rfc2132"
+      ],
+      "paragraphs": [
+        "Eine Clientkonfiguration beschreibt die eigene Schnittstelle und ihre Wege nach außen. Die IP-Adresse kennzeichnet die Schnittstelle im Netz. Das Präfix legt fest, welche Adressen zum direkt angeschlossenen Netz gehören. Das Standardgateway ist der nächste Router für Ziele außerhalb dieses Netzes, wenn keine speziellere Route gilt. Der DNS-Server beantwortet Namensanfragen. Diese vier Aufgaben bleiben getrennt, auch wenn ein Gerät mehrere Dienste anbietet.",
+        "Radblicks fiktiver Plan lautet: Clientnetz 192.0.2.0/24, Routerinterface und Standardgateway 192.0.2.1, DNS-Server 192.0.2.53. Ein anderer Client verwendet bereits 192.0.2.10. Für Miras Übungsclient ist zunächst 192.0.2.20 vorgesehen. /24 entspricht 255.255.255.0. Die Adressen stammen aus einem Dokumentationsnetz und sind hier keine Anleitung, den eigenen Rechner umzubauen.",
+        "Im Übungsplan sind 192.0.2.0 die Netzadresse und 192.0.2.255 die Broadcastadresse. Als Clientadresse eignet sich eine freie Hostadresse von .2 bis .254, ausgenommen .10 und .53; .1 gehört dem Router. Sam hat diese freien Adressen für die Übung freigegeben. In einem echten Betrieb wird die Vergabe mit dem Adressplan und gegebenenfalls DHCP-Bereich abgestimmt, damit keine Doppelbelegung entsteht.",
+        "Ein passender vollständiger Satz ist 192.0.2.20, /24, Gateway 192.0.2.1 und DNS 192.0.2.53. Auch die im Modell freie .30 passt. Eine Adresse 198.51.100.20/24 gehört dagegen zu einem anderen Netz. Gateway und DNS darfst du nicht vertauschen: Eine korrekt formatierte Zahl beweist noch keine passende Funktion."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Lernfall",
+        "text": "Mira trägt .20 mit /24 ein und vergleicht Gateway .1 sowie DNS .53 einzeln mit Sams Plan."
+      },
+      "misconception": {
+        "claim": "Die DNS-Adresse und die Gateway-Adresse sind austauschbar.",
+        "correction": "DNS löst Namen auf; das Gateway vermittelt IP-Pakete in andere Netze. Der Plan bestimmt die zugehörigen Adressen."
+      },
+      "takeaway": "Adresse, Präfix, Gateway und DNS jeweils mit ihrer Aufgabe prüfen."
+    },
+    {
+      "id": "common-lf3-services-dhcp",
+      "title": "2. DHCPv4 vergibt eine Konfiguration auf Zeit",
+      "objectiveIds": [
+        "common-lf3-services-configure",
+        "common-lf3-services-explain"
+      ],
+      "sourceIds": [
+        "lf3-rfc2131",
+        "lf3-rfc2132"
+      ],
+      "paragraphs": [
+        "Bei manueller Konfiguration werden die freigegebenen Werte am Client gesetzt. Bei DHCP fordert der Client Konfigurationsdaten an. Ein zuständiger DHCP-Server kann neben einer Adresse auch Subnetzmaske, Router und DNS-Server übermitteln. Mira kontrolliert anschließend die tatsächlich erhaltenen Werte: Eine erfolgreiche Zuweisung beweist nicht, dass der Server richtig konfiguriert wurde.",
+        "Den typischen erstmaligen Bezug einer dynamischen IPv4-Adresse merkst du dir als DORA: Discover sucht einen DHCP-Server, Offer bietet eine Konfiguration an, Request fordert das ausgewählte Angebot an, Acknowledge (DHCPACK) bestätigt die Zuweisung. Eine Anfrage ist noch keine abschließende Bestätigung. Mehrere Server und Fehlerfälle sind möglich; hier betrachten wir einen freigegebenen Server mit einem passenden Angebot.",
+        "Die Lease bezeichnet die zeitlich begrenzte Nutzungszusage für die zugewiesene Adresse. Der Client versucht vor Ablauf, sie zu erneuern. Eine erfolgreiche Erneuerung kann die bisherige Adresse beibehalten. Die Erneuerung muss nicht den vollständigen DORA-Erstbezug wiederholen. Ohne gültige Verlängerung darf die abgelaufene Zuweisung nicht beliebig weiterverwendet werden.",
+        "DHCP und DNS können zusammenwirken, erfüllen aber verschiedene Aufgaben. DHCP kann dem Client mitteilen, welchen DNS-Server er fragen soll. Es beantwortet dadurch noch nicht jede spätere Anfrage nach einem Portalnamen. Bei manueller Adresse kann DNS weiterhin genutzt werden; bei DHCP-Bezug kann eine fehlerhafte DNS-Einstellung die Namensauflösung stören."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Lernfall",
+        "text": "Sam zeigt eine neue Lease: Adresse .20, Maske 255.255.255.0, Router .1, DNS .53. Mira prüft den Satz gegen den Plan."
+      },
+      "misconception": {
+        "claim": "Nach jeder Lease-Erneuerung muss der Client eine andere IP-Adresse haben.",
+        "correction": "Die Adresse kann bei erfolgreicher Erneuerung gleich bleiben; erneuert wird die Nutzungszusage."
+      },
+      "takeaway": "DHCP liefert Konfiguration, DORA erklärt den Erstbezug, die Lease begrenzt die Nutzungsdauer."
+    },
+    {
+      "id": "common-lf3-services-dns",
+      "title": "3. DNS übersetzt eine Namensanfrage",
+      "objectiveIds": [
+        "common-lf3-services-explain"
+      ],
+      "sourceIds": [
+        "lf3-rfc1034",
+        "lf3-rfc3596-dns-ipv6"
+      ],
+      "paragraphs": [
+        "Menschen verwenden Namen, die IP-Kommunikation benötigt Zieladressen. Der Client fragt seinen konfigurierten DNS-Resolver beispielsweise nach portal.example.test. In unserem eigenen Lernfall liefert die IPv4-Anfrage den A-Eintrag 198.51.100.20. Für IPv6-Adressen gibt es AAAA-Einträge. DNS verwaltet noch weitere Datentypen; es ist kein Verfahren, dem fragenden Client seine eigene IP-Adresse zuzuteilen.",
+        "Ein Resolver kann eine noch gültige Antwort aus seinem Cache liefern oder weitere DNS-Server befragen. Die Gültigkeitsdauer eines DNS-Cacheeintrags wird durch dessen TTL begrenzt. Das ist nicht die DHCP-Lease des Clients: Ein Cacheeintrag betrifft eine Namensinformation, eine Lease eine Adresszuweisung. Deshalb können Namensänderungen zeitweise noch mit älteren, gültig gespeicherten Antworten beobachtet werden.",
+        "Nachdem der Client die Zieladresse kennt, vergleicht er das Ziel mit seinem eigenen Netz. 198.51.100.20 gehört nicht zu 192.0.2.0/24. Im vereinfachten Plan läuft der Weg zum Portal daher über das Gateway 192.0.2.1. Der DNS-Server .53 hat die Adresse geliefert; er wird damit nicht zum Transportweg für die Portalverbindung.",
+        "Ein beantworteter DNS-Aufruf belegt eine Namensantwort, nicht die Funktionsfähigkeit der Website. Danach müssen Verbindung und passende Anwendung funktionieren. Bei HTTPS gehören auch eine passende sichere Verbindung, der angefragte Name und die vorgesehenen Anwendungsrechte zum Erfolg. Eine Eingabe der nackten IP-Adresse im Browser ist daher kein gleichwertiger Ersatz für jeden Test des Portalnamens."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Lernfall",
+        "text": "portal.example.test liefert im Modell 198.51.100.20. Mira dokumentiert die Antwort und prüft danach gesondert die Portalfunktion."
+      },
+      "misconception": {
+        "claim": "Eine DNS-Antwort zeigt, dass die Webanwendung erfolgreich arbeitet.",
+        "correction": "Die Antwort liefert eine Namensinformation. Die tatsächliche Anwendung benötigt einen eigenen Funktionstest."
+      },
+      "takeaway": "Erst Name zur Zieladresse auflösen, dann den Datenweg und die Anwendung prüfen."
+    },
+    {
+      "id": "common-lf3-services-check",
+      "title": "4. Konfiguration prüfen und Abweichungen erklären",
+      "objectiveIds": [
+        "common-lf3-services-configure",
+        "common-lf3-services-explain"
+      ],
+      "sourceIds": [
+        "lf3-rfc2131",
+        "lf3-rfc2132",
+        "lf3-rfc1034",
+        "lf3-ms-ping"
+      ],
+      "paragraphs": [
+        "Mira arbeitet in einer festen Reihenfolge: Sollplan lesen, Verbindung prüfen, empfangene oder manuell gesetzte IP-Daten vergleichen, Erreichbarkeit passend prüfen, Namensantwort ansehen und zuletzt die benötigte Portalaktion testen. Sie notiert Ausgangswerte und Befunde, bevor sie eine freigegebene Einstellung ändert. Nach der Änderung prüft sie den betroffenen Weg erneut.",
+        "Beispiel A: Der Client zeigt 192.0.2.20/24, Gateway .53 und DNS .1. Im Plan stehen die Rollen umgekehrt. Mira korrigiert Gateway auf 192.0.2.1 und DNS auf 192.0.2.53. Beispiel B: Adresse, Präfix und Gateway stimmen, die numerische Portal-IP ist erreichbar, die Namensanfrage scheitert. Das lenkt die Prüfung auf den konfigurierten DNS-Server und die Namensantwort; es beweist für ein echtes Netz noch nicht allein eine bestimmte Ursache.",
+        "Eine erfolgreiche ping-Probe zu einer numerischen Adresse zeigt empfangene ICMP-Echo-Antworten. Sie belegt keine erfolgreiche Anmeldung und keinen funktionierenden Webdienst. Eine ausbleibende Antwort kann auch durch Filterung entstehen. Deshalb werden Ergebnisse benannt statt überdehnt: IP-Probe beantwortet, DNS-Antwort vorhanden, gewünschte Portalaktion erfolgreich sind verschiedene Befunde.",
+        "Für Radblick hält Mira Konfigurationsart, Adresse und Präfix, Gateway, DNS, Prüfschritt, beobachtetes Ergebnis sowie jede Änderung mit Nachprüfung fest. Zugangsdaten werden nicht in dieses Protokoll geschrieben. Die hier beschriebenen Ausgaben sind Lernbeispiele; das spätere Netzwerklabor erzeugt sie lokal als Modell und verändert keine echten Netzwerkeinstellungen."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Lernfall",
+        "text": "Im Protokoll steht: Gateway von .53 auf .1 und DNS von .1 auf .53 nach Plan berichtigt; danach IP-Probe, Namensantwort und Portalaktion erneut geprüft."
+      },
+      "misconception": {
+        "claim": "Eine erfolgreiche IP-Probe bestätigt die gesamte Clientkonfiguration einschließlich DNS und Portalrechten.",
+        "correction": "Jede Probe belegt ihren begrenzten Gegenstand. DNS und Anwendung werden getrennt geprüft."
+      },
+      "takeaway": "Soll, Ist, Korrektur und erneute Prüfung machen die Konfiguration nachvollziehbar."
+    }
+  ],
+  "questionFile": "questions/common-lf3-services.v1.csv",
+  "quiz": {
+    "questionIds": [
+      "LJ-LF3-SERVICES-Q01",
+      "LJ-LF3-SERVICES-Q02",
+      "LJ-LF3-SERVICES-Q03",
+      "LJ-LF3-SERVICES-Q04",
+      "LJ-LF3-SERVICES-Q05",
+      "LJ-LF3-SERVICES-Q06"
+    ]
+  },
+  "exam": {
+    "questionIds": [
+      "LJ-LF3-SERVICES-E01",
+      "LJ-LF3-SERVICES-E02",
+      "LJ-LF3-SERVICES-E03",
+      "LJ-LF3-SERVICES-E04",
+      "LJ-LF3-SERVICES-E05",
+      "LJ-LF3-SERVICES-E06",
+      "LJ-LF3-SERVICES-E07",
+      "LJ-LF3-SERVICES-E08"
+    ],
+    "passPercent": 80,
+    "scoring": "all-or-nothing-per-question",
+    "timed": false
+  },
+  "questionLinks": [
+    {
+      "questionId": "LJ-LF3-SERVICES-Q01",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf3-services-configure"
+      ],
+      "blockIds": [
+        "common-lf3-services-settings"
+      ]
+    },
+    {
+      "questionId": "LJ-LF3-SERVICES-Q02",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf3-services-configure"
+      ],
+      "blockIds": [
+        "common-lf3-services-settings",
+        "common-lf3-services-dns"
+      ]
+    },
+    {
+      "questionId": "LJ-LF3-SERVICES-Q03",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf3-services-explain"
+      ],
+      "blockIds": [
+        "common-lf3-services-dhcp"
+      ]
+    },
+    {
+      "questionId": "LJ-LF3-SERVICES-Q04",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf3-services-explain"
+      ],
+      "blockIds": [
+        "common-lf3-services-dhcp"
+      ]
+    },
+    {
+      "questionId": "LJ-LF3-SERVICES-Q05",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf3-services-explain"
+      ],
+      "blockIds": [
+        "common-lf3-services-dns"
+      ]
+    },
+    {
+      "questionId": "LJ-LF3-SERVICES-Q06",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf3-services-configure",
+        "common-lf3-services-explain"
+      ],
+      "blockIds": [
+        "common-lf3-services-check"
+      ]
+    },
+    {
+      "questionId": "LJ-LF3-SERVICES-E01",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf3-services-configure"
+      ],
+      "blockIds": [
+        "common-lf3-services-settings"
+      ]
+    },
+    {
+      "questionId": "LJ-LF3-SERVICES-E02",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf3-services-configure"
+      ],
+      "blockIds": [
+        "common-lf3-services-settings",
+        "common-lf3-services-check"
+      ]
+    },
+    {
+      "questionId": "LJ-LF3-SERVICES-E03",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf3-services-explain"
+      ],
+      "blockIds": [
+        "common-lf3-services-dhcp"
+      ]
+    },
+    {
+      "questionId": "LJ-LF3-SERVICES-E04",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf3-services-explain"
+      ],
+      "blockIds": [
+        "common-lf3-services-dhcp"
+      ]
+    },
+    {
+      "questionId": "LJ-LF3-SERVICES-E05",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf3-services-explain"
+      ],
+      "blockIds": [
+        "common-lf3-services-dhcp",
+        "common-lf3-services-dns"
+      ]
+    },
+    {
+      "questionId": "LJ-LF3-SERVICES-E06",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf3-services-explain"
+      ],
+      "blockIds": [
+        "common-lf3-services-dhcp",
+        "common-lf3-services-dns"
+      ]
+    },
+    {
+      "questionId": "LJ-LF3-SERVICES-E07",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf3-services-configure",
+        "common-lf3-services-explain"
+      ],
+      "blockIds": [
+        "common-lf3-services-settings",
+        "common-lf3-services-dns"
+      ]
+    },
+    {
+      "questionId": "LJ-LF3-SERVICES-E08",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf3-services-configure",
+        "common-lf3-services-explain"
+      ],
+      "blockIds": [
+        "common-lf3-services-check"
+      ]
+    }
+  ],
+  "interview": [
+    {
+      "id": "common-lf3-services-talk-plan",
+      "prompt": "Erkläre Eda den vollständigen Konfigurationssatz für Miras Client und begründe jede der vier Angaben.",
+      "objectiveIds": [
+        "common-lf3-services-configure"
+      ],
+      "blockIds": [
+        "common-lf3-services-settings"
+      ],
+      "keyPoints": [
+        "Freie Adresse im Netz 192.0.2.0/24 auswählen.",
+        "Präfix /24 als Grenze des eigenen Netzes erklären.",
+        "Gateway .1 für fremde Netze und DNS .53 für Namen unterscheiden."
+      ],
+      "acceptableAlternatives": [
+        "Eine fachlich gleichwertige Erklärung mit den vorgegebenen Rollen und dokumentierten Prüfergebnissen."
+      ],
+      "misconceptions": [
+        "Adressvergabe, Namensauflösung und Weiterleitung als denselben Dienst behandeln."
+      ],
+      "sampleAnswer": "Ich wähle die freie 192.0.2.20 mit /24. Das Präfix ordnet sie dem Clientnetz zu. 192.0.2.1 ist laut Plan der Router zu anderen Netzen, 192.0.2.53 der DNS-Server. Vor einer echten Vergabe würde ich die Freigabe und Doppelbelegung prüfen.",
+      "followUp": "Warum wäre .30 im Modell ebenfalls möglich, .10 dagegen nicht?"
+    },
+    {
+      "id": "common-lf3-services-talk-request",
+      "prompt": "Beschreibe den Weg vom ersten DHCPv4-Bezug bis zur Anfrage an portal.example.test.",
+      "objectiveIds": [
+        "common-lf3-services-explain"
+      ],
+      "blockIds": [
+        "common-lf3-services-dhcp",
+        "common-lf3-services-dns"
+      ],
+      "keyPoints": [
+        "DORA in Reihenfolge erklären.",
+        "Lease und mögliche Erneuerung nennen.",
+        "DNS-Antwort und anschließende Portalverbindung trennen."
+      ],
+      "acceptableAlternatives": [
+        "Eine fachlich gleichwertige Erklärung mit den vorgegebenen Rollen und dokumentierten Prüfergebnissen."
+      ],
+      "misconceptions": [
+        "Adressvergabe, Namensauflösung und Weiterleitung als denselben Dienst behandeln."
+      ],
+      "sampleAnswer": "Discover sucht, Offer bietet an, Request fordert an, Acknowledge bestätigt. Die Adresse gilt für eine Lease und kann erneuert werden. Der Client nutzt den übermittelten DNS-Server für die Namensanfrage. Dessen Antwort nennt 198.51.100.20; zur anschließenden Portalverbindung dient im Plan das Gateway .1.",
+      "followUp": "Welcher Teil bliebe bei einer manuell eingetragenen Clientadresse weiterhin nötig?"
+    },
+    {
+      "id": "common-lf3-services-talk-evidence",
+      "prompt": "Mira kann die Portal-IP erreichen, aber der Name wird nicht aufgelöst. Beschreibe sinnvolle nächste Prüfungen und einen sachlichen Protokolleintrag.",
+      "objectiveIds": [
+        "common-lf3-services-configure",
+        "common-lf3-services-explain"
+      ],
+      "blockIds": [
+        "common-lf3-services-dns",
+        "common-lf3-services-check"
+      ],
+      "keyPoints": [
+        "Numerische IP-Probe und DNS-Probe getrennt bewerten.",
+        "DNS-Einstellung .53 und Namensantwort mit dem Soll vergleichen.",
+        "Änderung sowie erneute DNS- und Anwendungsprüfung dokumentieren."
+      ],
+      "acceptableAlternatives": [
+        "Eine fachlich gleichwertige Erklärung mit den vorgegebenen Rollen und dokumentierten Prüfergebnissen."
+      ],
+      "misconceptions": [
+        "Adressvergabe, Namensauflösung und Weiterleitung als denselben Dienst behandeln."
+      ],
+      "sampleAnswer": "Ich halte die beantwortete IP-Probe und die fehlende Namensantwort getrennt fest. Ich vergleiche die eingetragene DNS-Adresse mit .53 und prüfe die Antwort für portal.example.test. Eine freigegebene Korrektur wird mit altem und neuem Wert notiert. Danach prüfe ich DNS und die gewünschte Portalaktion erneut.",
+      "followUp": "Was belegt eine erfolgreiche ping-Probe gerade noch nicht?"
+    }
+  ],
+  "cards": [
+    {
+      "id": "common-lf3-services-card-settings",
+      "front": "Welche vier Einstellungen prüfst du am IPv4-Client?",
+      "back": "Eigene IP-Adresse, Präfix beziehungsweise Maske, Standardgateway und DNS-Server. Jede Angabe wird mit dem Netzplan und ihrer eigenen Aufgabe verglichen.",
+      "objectiveIds": [
+        "common-lf3-services-configure"
+      ],
+      "blockIds": [
+        "common-lf3-services-settings"
+      ]
+    },
+    {
+      "id": "common-lf3-services-card-gateway",
+      "front": "Welche Aufgabe hat das Standardgateway?",
+      "back": "Es ist im vereinfachten Plan der nächste Router für Ziele außerhalb des eigenen Netzes. Bei Radblick ist das 192.0.2.1, unabhängig vom DNS-Server .53.",
+      "objectiveIds": [
+        "common-lf3-services-configure"
+      ],
+      "blockIds": [
+        "common-lf3-services-settings",
+        "common-lf3-services-dns"
+      ]
+    },
+    {
+      "id": "common-lf3-services-card-dora",
+      "front": "Wofür steht DORA beim DHCPv4-Erstbezug?",
+      "back": "Discover: suchen. Offer: anbieten. Request: ausgewähltes Angebot anfordern. Acknowledge: Zuweisung bestätigen. Erneuerungen können anders ablaufen.",
+      "objectiveIds": [
+        "common-lf3-services-explain"
+      ],
+      "blockIds": [
+        "common-lf3-services-dhcp"
+      ]
+    },
+    {
+      "id": "common-lf3-services-card-lease",
+      "front": "Was wird mit einer DHCP-Lease zugesagt?",
+      "back": "Eine zeitlich begrenzte Nutzung der zugewiesenen Adresse. Erfolgreiches Erneuern kann dieselbe Adresse erhalten. DNS-Cachegültigkeit ist eine andere Zeitangabe.",
+      "objectiveIds": [
+        "common-lf3-services-explain"
+      ],
+      "blockIds": [
+        "common-lf3-services-dhcp",
+        "common-lf3-services-dns"
+      ]
+    },
+    {
+      "id": "common-lf3-services-card-dns",
+      "front": "Was geschieht mit portal.example.test im DNS-Beispiel?",
+      "back": "Der Resolver liefert für die IPv4-Anfrage den A-Eintrag 198.51.100.20. AAAA bezeichnet IPv6-Adressen. Die Namensantwort ersetzt keinen Anwendungstest.",
+      "objectiveIds": [
+        "common-lf3-services-explain"
+      ],
+      "blockIds": [
+        "common-lf3-services-dns"
+      ]
+    },
+    {
+      "id": "common-lf3-services-card-verify",
+      "front": "Welche Nachweise trennst du bei der Clientprüfung?",
+      "back": "Konfigurationsvergleich, IP-Erreichbarkeit, DNS-Antwort und gewünschte Anwendungsfunktion. Nach einer Änderung wird der betroffene Ablauf erneut geprüft und protokolliert.",
+      "objectiveIds": [
+        "common-lf3-services-configure",
+        "common-lf3-services-explain"
+      ],
+      "blockIds": [
+        "common-lf3-services-check"
+      ]
+    }
+  ],
+  "review": {
+    "status": "reviewed",
+    "checkedAt": "2026-11-11"
+  }
+}

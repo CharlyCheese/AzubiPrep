@@ -1,0 +1,492 @@
+{
+  "schemaVersion": 1,
+  "id": "common-wiso-economy",
+  "version": "1.0.0",
+  "title": "Markt, Wirtschaftskreislauf und soziale Marktwirtschaft",
+  "fieldId": "WISO",
+  "scope": "common",
+  "prerequisites": [
+    "common-lf1-market",
+    "common-wiso-consumer"
+  ],
+  "sourceIds": [
+    "wiso-bundesbank-cycle",
+    "wiso-bundesbank-price",
+    "wiso-bmwe-market",
+    "wiso-bmwe-competition"
+  ],
+  "sources": [
+    {
+      "id": "wiso-bundesbank-cycle",
+      "title": "Deutsche Bundesbank – Geld- und Güterkreislauf",
+      "url": "https://publikationen.bundesbank.de/publikationen-de/schule-bildung/geld-und-geldpolitik-921580?article=1-funktionen-und-formen-des-geldes-921582",
+      "checkedAt": "2026-11-11",
+      "note": "Abschnitt Geld- und Güterkreislauf: Gegenrichtung von Arbeitsleistung/Einkommen und Konsumgut/Konsumausgabe. Eigene vereinfachte Fälle; keine gesamtwirtschaftliche Prognose."
+    },
+    {
+      "id": "wiso-bundesbank-price",
+      "title": "Deutsche Bundesbank – Preisbildung durch Angebot und Nachfrage",
+      "url": "https://publikationen.bundesbank.de/publikationen-de/schule-bildung/geld-und-geldpolitik-921580?article=5-der-wert-stabilen-geldes-922608",
+      "checkedAt": "2026-11-11",
+      "note": "Abschnitt Preisbildung: Angebot, Nachfrage und Preisbewegung im vereinfachten Modell. Ceteris-paribus-Annahme ausdrücklich benannt; keine deterministische Prognose realer Preise."
+    },
+    {
+      "id": "wiso-bmwe-market",
+      "title": "Bundeswirtschaftsministerium – Wirtschaftspolitik und soziale Marktwirtschaft",
+      "url": "https://www.bundeswirtschaftsministerium.de/Navigation/DE/Ministerium/Wirtschaftspolitik-1949-bis-heute/wirtschaftspolitik-1949-bis-heute.html",
+      "checkedAt": "2026-11-11",
+      "note": "Grundgedanke Wettbewerb, Privateigentum und Gewinnorientierung verbunden mit sozialem Ausgleich. Eigene Anwendungsbeispiele ohne Behauptung bestimmter Förderansprüche."
+    },
+    {
+      "id": "wiso-bmwe-competition",
+      "title": "Bundeswirtschaftsministerium – Fairen Wettbewerb schützen",
+      "url": "https://www.bundeswirtschaftsministerium.de/Redaktion/DE/Dossier/wettbewerbspolitik.html",
+      "checkedAt": "2026-11-11",
+      "note": "Wettbewerbspolitik als Rahmen für offene Märkte und fairen Wettbewerb; eigener Fall zur Trennung von Wettbewerbsordnung und sozialer Absicherung."
+    }
+  ],
+  "objectives": [
+    {
+      "id": "common-wiso-economy-cycle",
+      "text": "Geld- und Leistungsströme zwischen Haushalten, Unternehmen und Staat in einem einfachen Modell zuordnen."
+    },
+    {
+      "id": "common-wiso-economy-price",
+      "text": "Eine Preisänderung mit einem veränderten Angebot oder einer veränderten Nachfrage erklären."
+    },
+    {
+      "id": "common-wiso-economy-policy",
+      "text": "An einem Beispiel erläutern, wie Wettbewerb und soziale Absicherung in der sozialen Marktwirtschaft zusammenwirken."
+    }
+  ],
+  "caseStudy": {
+    "title": "Warum werden Ersatzteile teurer?",
+    "text": "Der fiktive IT-Dienstleister Knotenpunkt repariert Geräte für Haushalte und eine kommunale Bibliothek. Mira zeichnet Geld- und Leistungsströme auf. Gleichzeitig fallen Lieferungen von Ersatzteilen aus. Sie erklärt die mögliche Preiswirkung mit einem bewusst vereinfachten Marktmodell und prüft, wie Wettbewerb und sozialer Ausgleich zusammenpassen."
+  },
+  "blocks": [
+    {
+      "id": "common-wiso-economy-cycle",
+      "title": "1. Geld und Leistung im Kreislauf zuordnen",
+      "objectiveIds": [
+        "common-wiso-economy-cycle"
+      ],
+      "sourceIds": [
+        "wiso-bundesbank-cycle",
+        "wiso-bmwe-market"
+      ],
+      "paragraphs": [
+        "Ein Wirtschaftskreislauf ist ein vereinfachtes Modell wirtschaftlicher Beziehungen. Haushalte bieten Unternehmen Arbeitsleistung an; Unternehmen zahlen dafür Arbeitseinkommen. Unternehmen liefern Güter oder Dienstleistungen an Haushalte; Haushalte zahlen dafür Konsumausgaben. Bei diesen Tauschbeziehungen verlaufen Geld und Leistung in entgegengesetzte Richtungen.",
+        "Der Staat erweitert das Modell: Haushalte und Unternehmen zahlen Steuern. Der Staat kauft Leistungen, bezahlt Beschäftigte und kann Transferleistungen an Haushalte zahlen. Eine Transferzahlung wie ein Unterstützungsbetrag ist nicht die Bezahlung einer unmittelbar gleichzeitig gelieferten Arbeitsleistung des Empfängers. Eine öffentliche Bestellung dagegen tauscht Leistung gegen Zahlung.",
+        "Beschrifte bei jedem Pfeil Absender, Empfänger und Inhalt. Eine Notebook-Reparatur fließt von Knotenpunkt zum Haushalt; die Reparaturzahlung vom Haushalt zum Unternehmen. Repariert Knotenpunkt Geräte der kommunalen Bibliothek, fließt die Leistung zum Staat und dessen Auftragszahlung zurück zum Unternehmen.",
+        "Das Modell mit Haushalten, Unternehmen und Staat lässt Banken und Ausland zunächst weg. Es erklärt ausgewählte Beziehungen und ist keine vollständige Abbildung der Volkswirtschaft. Wirtschaftskreislauf ist außerdem nicht dasselbe wie stoffliche Kreislaufwirtschaft mit Wiederverwendung und Recycling."
+      ],
+      "example": {
+        "title": "Eigener Übungsfall",
+        "text": "Mira zeichnet Arbeitsleistung von Haushalt zu Unternehmen und Lohnzahlung in Gegenrichtung. Sie bezeichnet eine Steuerzahlung als Geldstrom zum Staat, nicht als Warenlieferung."
+      },
+      "misconception": {
+        "claim": "Geld- und Leistungsströme fließen bei einem bezahlten Tausch in dieselbe Richtung.",
+        "correction": "Bei den gezeigten Tauschbeziehungen fließen Leistung und Bezahlung zwischen den Beteiligten entgegengesetzt."
+      },
+      "takeaway": "Beschrifte zuerst wer an wen was leistet oder zahlt."
+    },
+    {
+      "id": "common-wiso-economy-price",
+      "title": "2. Angebot, Nachfrage und Preisbewegung",
+      "objectiveIds": [
+        "common-wiso-economy-price"
+      ],
+      "sourceIds": [
+        "wiso-bundesbank-price"
+      ],
+      "paragraphs": [
+        "Angebot beschreibt, welche Menge Anbieter zu einem Preis verkaufen wollen; Nachfrage, welche Menge Käufer zu einem Preis kaufen wollen. Eine Marktpreisbildung lässt sich unter vereinfachten Annahmen als Zusammenspiel beider Seiten erklären.",
+        "Wenn bei gleicher Nachfrage weniger Ersatzteile angeboten werden, entsteht im Modell Aufwärtsdruck auf den Preis. Wenn bei unverändertem Angebot mehr Personen das Teil kaufen wollen, wirkt ebenfalls Aufwärtsdruck. Mehr Angebot bei gleicher Nachfrage oder geringere Nachfrage bei gleichem Angebot wirkt im Modell in Richtung niedrigerer Preise.",
+        "Diese Aussagen setzen voraus, dass die anderen maßgeblichen Bedingungen unverändert bleiben: ceteris paribus. Sie beschreiben eine Richtung, keine bestimmte Prozentzahl. Lagerbestände, Verträge, Marktmacht, Kosten oder die Reaktion der Käufer können in der Wirklichkeit anders wirken.",
+        "Unterscheide Nachfrageänderung von einer Bewegung entlang der Nachfrage: Hier verändern sich etwa Bedarf oder Zahl interessierter Käufer bei ansonsten gleichen Bedingungen. Die Fragen nennen die Veränderung ausdrücklich, damit du kein unbekanntes Marktgeschehen erraten musst."
+      ],
+      "example": {
+        "title": "Eigener Übungsfall",
+        "text": "Ein Werk fällt aus; die angebotene Teilemenge sinkt, die Nachfrage bleibt gleich. Im Modell steigt der Preisdruck. Wie stark der reale Preis reagiert, ist ohne weitere Informationen offen."
+      },
+      "misconception": {
+        "claim": "Ein um 20 Prozent geringeres Angebot beweist einen um 20 Prozent höheren Preis.",
+        "correction": "Das Modell erlaubt bei den genannten Annahmen eine Richtung; die genaue Höhe ist nicht vorgegeben."
+      },
+      "takeaway": "Nenne veränderte Marktseite, gleichbleibende Bedingungen und erwartete Richtung."
+    },
+    {
+      "id": "common-wiso-economy-policy",
+      "title": "3. Wettbewerb und sozialer Ausgleich",
+      "objectiveIds": [
+        "common-wiso-economy-policy"
+      ],
+      "sourceIds": [
+        "wiso-bmwe-market",
+        "wiso-bmwe-competition"
+      ],
+      "paragraphs": [
+        "Die soziale Marktwirtschaft verbindet Wettbewerb und private wirtschaftliche Entscheidungen mit einem staatlichen Ordnungsrahmen und sozialem Ausgleich. Unternehmen sollen um Kunden konkurrieren; soziale Sicherung soll Risiken wie Krankheit oder Arbeitslosigkeit unter den jeweiligen Voraussetzungen abfedern.",
+        "Wettbewerbsregeln schützen den Wettbewerb, etwa indem rechtswidrige Preisabsprachen verfolgt werden. Sozialversicherung und weitere gesetzliche Hilfen betreffen dagegen soziale Risiken. Die beiden Aufgaben ergänzen sich, weil ein funktionierender Markt allein nicht jedes soziale Risiko absichert.",
+        "Eine soziale Leistung setzt die Prüfung ihrer gesetzlichen Voraussetzungen voraus. Wettbewerb bedeutet ebenfalls keine Garantie für einen bestimmten Preis oder die Existenz eines einzelnen Unternehmens. Im Lernfall vergleicht Mira die Funktion einer Maßnahme, nicht einen individuellen Leistungsanspruch.",
+        "Unterscheide Ziel und Instrument: Preis- und Qualitätswettbewerb kann Auswahl und Verbesserungen fördern. Soziale Absicherung kann eine Einkommenslücke abfedern. Beides braucht Finanzierung und Regeln; mögliche Zielkonflikte dürfen benannt werden."
+      ],
+      "example": {
+        "title": "Eigener Übungsfall",
+        "text": "Ein Haushalt wählt zwischen verschiedenen Reparaturangeboten. Nach einem versicherten sozialen Risiko kann eine gesetzliche Unterstützung hinzukommen, sofern die Bedingungen erfüllt sind. Angebotsvergleich und Absicherung erfüllen verschiedene Funktionen."
+      },
+      "misconception": {
+        "claim": "Soziale Marktwirtschaft bedeutet, dass der Staat alle Verkaufspreise festlegt.",
+        "correction": "Wettbewerb bleibt ein wesentliches Prinzip; staatlicher Rahmen und sozialer Ausgleich ergänzen ihn."
+      },
+      "takeaway": "Ordne eine Maßnahme nach ihrer Funktion: Wettbewerb ordnen oder soziale Risiken absichern."
+    },
+    {
+      "id": "common-wiso-economy-analysis",
+      "title": "4. Eine wirtschaftliche Veränderung sauber erklären",
+      "objectiveIds": [
+        "common-wiso-economy-cycle",
+        "common-wiso-economy-price",
+        "common-wiso-economy-policy"
+      ],
+      "sourceIds": [
+        "wiso-bundesbank-cycle",
+        "wiso-bundesbank-price",
+        "wiso-bmwe-market",
+        "wiso-bmwe-competition"
+      ],
+      "paragraphs": [
+        "Verbinde die drei Blickrichtungen: Der Kreislauf erklärt beteiligte Haushalte, Unternehmen und Staat. Das Marktmodell erklärt unter genannten Annahmen eine Preisrichtung. Die soziale Marktwirtschaft ordnet Wettbewerbsregeln und soziale Absicherung ein.",
+        "Im fiktiven Engpass zahlt die Bibliothek Knotenpunkt für Reparaturen. Das ist eine Zahlung vom Staat an ein Unternehmen; die Reparatur ist der entgegengesetzte Leistungsstrom. Werden passende Teile bei gleicher Nachfrage knapper, entsteht im Modell Aufwärtsdruck auf deren Preis.",
+        "Eine Erklärung muss Unsicherheit kenntlich machen: Aus dem Ausfall eines Lieferanten folgt noch kein bestimmter Endpreis und kein Anspruch auf staatlichen Ausgleich. Zusatzinformationen wie Lagerbestand, vorhandene Verträge und alternative Anbieter helfen, einen tatsächlichen Fall besser einzuschätzen."
+      ],
+      "example": {
+        "title": "Eigener Übungsfall",
+        "text": "Mira erklärt den Engpass mit weniger Angebot, nennt unveränderte Nachfrage als Annahme und vermeidet eine erfundene Preisprognose. Unterstützungsleistungen ordnet sie getrennt von der Reparaturzahlung ein."
+      },
+      "misconception": {
+        "claim": "Ein einfaches Modell sagt die gesamte Wirklichkeit ohne weitere Annahmen vorher.",
+        "correction": "Es isoliert ausgewählte Zusammenhänge; seine Grenzen müssen bei der Anwendung sichtbar bleiben."
+      },
+      "takeaway": "Trenne beobachtete Fakten, Modellannahmen und noch offene Folgen."
+    }
+  ],
+  "questionFile": "questions/common-wiso-economy.v1.csv",
+  "quiz": {
+    "questionIds": [
+      "LJ-WISO-ECONOMY-Q01",
+      "LJ-WISO-ECONOMY-Q02",
+      "LJ-WISO-ECONOMY-Q03",
+      "LJ-WISO-ECONOMY-Q04",
+      "LJ-WISO-ECONOMY-Q05",
+      "LJ-WISO-ECONOMY-Q06"
+    ]
+  },
+  "exam": {
+    "questionIds": [
+      "LJ-WISO-ECONOMY-E01",
+      "LJ-WISO-ECONOMY-E02",
+      "LJ-WISO-ECONOMY-E03",
+      "LJ-WISO-ECONOMY-E04",
+      "LJ-WISO-ECONOMY-E05",
+      "LJ-WISO-ECONOMY-E06",
+      "LJ-WISO-ECONOMY-E07",
+      "LJ-WISO-ECONOMY-E08"
+    ],
+    "passPercent": 80,
+    "scoring": "all-or-nothing-per-question",
+    "timed": false
+  },
+  "questionLinks": [
+    {
+      "questionId": "LJ-WISO-ECONOMY-Q01",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-wiso-economy-cycle"
+      ],
+      "blockIds": [
+        "common-wiso-economy-cycle"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-ECONOMY-Q02",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-wiso-economy-cycle"
+      ],
+      "blockIds": [
+        "common-wiso-economy-cycle"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-ECONOMY-Q03",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-wiso-economy-price"
+      ],
+      "blockIds": [
+        "common-wiso-economy-price"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-ECONOMY-Q04",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-wiso-economy-price"
+      ],
+      "blockIds": [
+        "common-wiso-economy-price"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-ECONOMY-Q05",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-wiso-economy-policy"
+      ],
+      "blockIds": [
+        "common-wiso-economy-policy"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-ECONOMY-Q06",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-wiso-economy-policy"
+      ],
+      "blockIds": [
+        "common-wiso-economy-policy"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-ECONOMY-E01",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-wiso-economy-cycle"
+      ],
+      "blockIds": [
+        "common-wiso-economy-cycle"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-ECONOMY-E02",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-wiso-economy-cycle"
+      ],
+      "blockIds": [
+        "common-wiso-economy-cycle"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-ECONOMY-E03",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-wiso-economy-cycle"
+      ],
+      "blockIds": [
+        "common-wiso-economy-cycle",
+        "common-wiso-economy-analysis"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-ECONOMY-E04",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-wiso-economy-price"
+      ],
+      "blockIds": [
+        "common-wiso-economy-price"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-ECONOMY-E05",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-wiso-economy-price"
+      ],
+      "blockIds": [
+        "common-wiso-economy-price",
+        "common-wiso-economy-analysis"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-ECONOMY-E06",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-wiso-economy-price"
+      ],
+      "blockIds": [
+        "common-wiso-economy-price",
+        "common-wiso-economy-analysis"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-ECONOMY-E07",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-wiso-economy-policy"
+      ],
+      "blockIds": [
+        "common-wiso-economy-policy"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-ECONOMY-E08",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-wiso-economy-policy"
+      ],
+      "blockIds": [
+        "common-wiso-economy-policy",
+        "common-wiso-economy-analysis"
+      ]
+    }
+  ],
+  "interview": [
+    {
+      "id": "common-wiso-economy-talk-cycle",
+      "prompt": "Zeichne oder beschreibe vier Pfeile: Haushalt arbeitet bei Knotenpunkt, Knotenpunkt zahlt Lohn, Bibliothek erhält Wartung, Stadt bezahlt sie. Ergänze eine Steuerzahlung und unterscheide sie vom Wartungsauftrag.",
+      "objectiveIds": [
+        "common-wiso-economy-cycle"
+      ],
+      "blockIds": [
+        "common-wiso-economy-cycle"
+      ],
+      "keyPoints": [
+        "Arbeit Haushalt → Unternehmen, Lohn zurück.",
+        "Wartung Unternehmen → Staat, Auftragszahlung zurück.",
+        "Steuer Unternehmen bzw. Haushalt → Staat ohne Zuordnung als Kaufpreis derselben Wartung."
+      ],
+      "acceptableAlternatives": [
+        "Andere klare Beschriftung eines gleichartigen eigenen Beispiels."
+      ],
+      "misconceptions": [
+        "Leistung und Zahlung in dieselbe Richtung einzeichnen."
+      ],
+      "sampleAnswer": "Die Arbeit fließt von Haushalt zu Unternehmen, der Lohn zurück. Die Wartung geht zur Stadt, ihre Auftragszahlung an Knotenpunkt. Eine Steuer fließt getrennt an den Staat und ist nicht die Bezahlung dieser Wartung.",
+      "followUp": "Wo würdest du eine Unterstützungszahlung ohne unmittelbare Arbeitsgegenleistung einzeichnen?"
+    },
+    {
+      "id": "common-wiso-economy-talk-price",
+      "prompt": "Ein Werk fällt aus, das Teileangebot sinkt, die Nachfrage bleibt unverändert. Erkläre die modellhafte Preisrichtung. Nenne anschließend zwei Informationen, die du für die Beurteilung eines realen Preises zusätzlich bräuchtest.",
+      "objectiveIds": [
+        "common-wiso-economy-price"
+      ],
+      "blockIds": [
+        "common-wiso-economy-price",
+        "common-wiso-economy-analysis"
+      ],
+      "keyPoints": [
+        "Weniger Angebot bei gleicher Nachfrage führt zu Aufwärtsdruck.",
+        "Keine bestimmte prozentuale Preisänderung ableitbar.",
+        "Etwa Lagerbestände, Vertragsbindung oder alternative Lieferanten."
+      ],
+      "acceptableAlternatives": [
+        "Weitere nachvollziehbare Marktbedingungen mit Erklärung."
+      ],
+      "misconceptions": [
+        "Eine Mengenänderung direkt in denselben Prozentsatz Preisänderung umrechnen."
+      ],
+      "sampleAnswer": "Im Modell entsteht Aufwärtsdruck. Ich kenne aber weder Lagerbestand noch bestehende Preisverträge; deshalb kann ich keinen bestimmten tatsächlichen Preisanstieg nennen.",
+      "followUp": "Was verändert sich bei mehr Angebot und gleicher Nachfrage?"
+    },
+    {
+      "id": "common-wiso-economy-talk-policy",
+      "prompt": "Erkläre am Reparaturmarkt, wie Wettbewerb und sozialer Ausgleich zusammenpassen. Ordne das Verfolgen rechtswidriger Preisabsprachen und die Absicherung eines versicherten Einkommensrisikos jeweils zu.",
+      "objectiveIds": [
+        "common-wiso-economy-policy"
+      ],
+      "blockIds": [
+        "common-wiso-economy-policy",
+        "common-wiso-economy-analysis"
+      ],
+      "keyPoints": [
+        "Anbieter konkurrieren um Kunden.",
+        "Preisabsprachen verfolgen schützt Wettbewerb.",
+        "Soziale Sicherung federt bestimmte Risiken unter Voraussetzungen ab."
+      ],
+      "acceptableAlternatives": [
+        "Anderes richtig begründetes Beispiel für sozialen Ausgleich."
+      ],
+      "misconceptions": [
+        "Soziale Marktwirtschaft mit allgemeiner staatlicher Preisfestsetzung gleichsetzen."
+      ],
+      "sampleAnswer": "Kunden vergleichen Reparaturangebote. Gegen rechtswidrige Preisabsprachen schützt die Wettbewerbsordnung. Eine Sozialleistung kann bei erfüllten Voraussetzungen ein Einkommensrisiko abfedern; sie erfüllt eine andere Aufgabe als der Marktvergleich.",
+      "followUp": "Warum beweist ein höherer Marktpreis noch keinen individuellen Leistungsanspruch?"
+    }
+  ],
+  "cards": [
+    {
+      "id": "common-wiso-economy-card-flows",
+      "front": "Wie hängen Geld- und Leistungsstrom beim bezahlten Tausch zusammen?",
+      "back": "Sie laufen zwischen den Beteiligten entgegengesetzt: Reparatur zum Haushalt, Bezahlung zum Unternehmen; Arbeit zum Unternehmen, Lohn zum Haushalt.",
+      "objectiveIds": [
+        "common-wiso-economy-cycle"
+      ],
+      "blockIds": [
+        "common-wiso-economy-cycle"
+      ]
+    },
+    {
+      "id": "common-wiso-economy-card-state",
+      "front": "Wie unterscheiden sich Staatsauftrag und Transfer?",
+      "back": "Beim Staatsauftrag wird eine bestellte Leistung bezahlt. Ein Transfer an einen Haushalt vergütet keine unmittelbar dafür erbrachte Leistung des Empfängers.",
+      "objectiveIds": [
+        "common-wiso-economy-cycle"
+      ],
+      "blockIds": [
+        "common-wiso-economy-cycle"
+      ]
+    },
+    {
+      "id": "common-wiso-economy-card-supply",
+      "front": "Was bedeutet weniger Angebot bei gleicher Nachfrage im Modell?",
+      "back": "Es entsteht Druck in Richtung höherer Preise. Die Aussage setzt andere unveränderte Bedingungen voraus und bestimmt keine genaue Preisänderung.",
+      "objectiveIds": [
+        "common-wiso-economy-price"
+      ],
+      "blockIds": [
+        "common-wiso-economy-price"
+      ]
+    },
+    {
+      "id": "common-wiso-economy-card-demand",
+      "front": "Was bedeutet geringere Nachfrage bei gleichem Angebot im Modell?",
+      "back": "Es entsteht Druck in Richtung niedrigerer Preise. Reale Preise können zusätzlich von Verträgen, Beständen und weiteren Bedingungen abhängen.",
+      "objectiveIds": [
+        "common-wiso-economy-price"
+      ],
+      "blockIds": [
+        "common-wiso-economy-price"
+      ]
+    },
+    {
+      "id": "common-wiso-economy-card-market",
+      "front": "Welche Grundgedanken verbindet die soziale Marktwirtschaft?",
+      "back": "Wettbewerb und private wirtschaftliche Entscheidungen mit staatlichem Ordnungsrahmen und sozialem Ausgleich. Daraus folgt keine pauschale Garantie eines Einzelpreises oder Leistungsanspruchs.",
+      "objectiveIds": [
+        "common-wiso-economy-policy"
+      ],
+      "blockIds": [
+        "common-wiso-economy-policy"
+      ]
+    },
+    {
+      "id": "common-wiso-economy-card-instruments",
+      "front": "Welche unterschiedliche Funktion haben Wettbewerbsregeln und soziale Sicherung?",
+      "back": "Wettbewerbsregeln schützen funktionsfähige Märkte. Soziale Sicherung federt bestimmte Lebensrisiken nach den jeweiligen gesetzlichen Voraussetzungen ab.",
+      "objectiveIds": [
+        "common-wiso-economy-policy"
+      ],
+      "blockIds": [
+        "common-wiso-economy-policy",
+        "common-wiso-economy-analysis"
+      ]
+    }
+  ],
+  "review": {
+    "status": "reviewed",
+    "checkedAt": "2026-11-11"
+  }
+}

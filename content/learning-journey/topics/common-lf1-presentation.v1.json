@@ -1,0 +1,578 @@
+{
+  "schemaVersion": 1,
+  "id": "common-lf1-presentation",
+  "version": "1.0.0",
+  "title": "Ein Unternehmen verständlich vorstellen",
+  "fieldId": "LF1",
+  "scope": "common",
+  "prerequisites": [
+    "common-lf1-goals",
+    "common-lf1-organization"
+  ],
+  "sourceIds": [
+    "kmk-fachinformatiker-2019",
+    "fiausbv-annex",
+    "bmwe-einzelunternehmen",
+    "gmbhg-organization",
+    "bgb-164"
+  ],
+  "sources": [
+    {
+      "id": "kmk-fachinformatiker-2019",
+      "title": "KMK-Rahmenlehrplan Fachinformatiker/Fachinformatikerin vom 13.12.2019",
+      "url": "https://www.kmk.org/fileadmin/Dateien/pdf/Bildung/BeruflicheBildung/rlp/Fachinformatiker_19-12-13_EL.pdf",
+      "checkedAt": "2026-11-11",
+      "note": "Lernfeld 1, gedruckte Seite 12: Organisationsstruktur, Rechtsform, Entscheidungsspielraum sowie adressatengerechte Darstellung, Vortrag und kriteriengeleitete Verbesserung. Die Beispiele und Aufgaben sind eigenständige didaktische Ausarbeitungen."
+    },
+    {
+      "id": "fiausbv-annex",
+      "title": "Fachinformatikerausbildungsverordnung – Ausbildungsrahmenplan",
+      "url": "https://www.gesetze-im-internet.de/fiausbv/anlage.html",
+      "checkedAt": "2026-11-11",
+      "note": "Abschnitt A Nr. 1: Aufgaben und betriebliche Vorgaben abstimmen. Nr. 2: Zielgruppen unterscheiden, Sachverhalte verständlich und multimedial präsentieren. Abschnitt F Nr. 2: Aufbau und Organisation des Ausbildungsbetriebs. Grundlage des Berufsbezugs, keine Quelle für erfundene Personen oder Betriebsregeln."
+    },
+    {
+      "id": "bmwe-einzelunternehmen",
+      "title": "Bundeswirtschaftsministerium – Einzelunternehmen: Unternehmensführung und Haftung",
+      "url": "https://www.existenzgruendungsportal.de/SharedDocs/Expertenforum_Unterseiten/Rechtsformen/Einzelunternehmen/Einzelunternehmen?nn=ab2aecfd-f411-4b5f-8eb3-15182e2c27bd",
+      "checkedAt": "2026-11-11",
+      "note": "Abschnitte Unternehmensführung und Haftung geprüft: Inhaberin oder Inhaber leitet und haftet mit Geschäfts- und Privatvermögen im gesetzlichen Rahmen. Weitere Aussagen der Seite zu Gründung, Wohnsitz, Steuern oder Buchführung werden hier nicht verwendet."
+    },
+    {
+      "id": "gmbhg-organization",
+      "title": "GmbH-Gesetz – Rechtsstellung, Vertretung und Verantwortung",
+      "url": "https://www.gesetze-im-internet.de/gmbhg/BJNR004770892.html",
+      "checkedAt": "2026-11-11",
+      "note": "§ 13: eigene Rechtspersönlichkeit und Gesellschaftsvermögen als Haftungsmasse. §§ 35 und 37: Vertretung durch Geschäftsführung und Unterschied zwischen internen Grenzen und Außenwirkung. § 43: mögliche Haftung der Geschäftsführung bei Pflichtverletzung. Beschränkte Grundlagendarstellung, keine pauschale Haftungsgarantie."
+    },
+    {
+      "id": "bgb-164",
+      "title": "Bürgerliches Gesetzbuch § 164 – Wirkung der Erklärung des Vertreters",
+      "url": "https://www.gesetze-im-internet.de/bgb/__164.html",
+      "checkedAt": "2026-11-11",
+      "note": "Absatz 1 geprüft: Erklärung im Namen des Vertretenen innerhalb der Vertretungsmacht wirkt für und gegen ihn. Die Befugnisse im Übungsfall sind ausdrücklich erfundene Vorgaben, keine gesetzlichen Betragsgrenzen."
+    }
+  ],
+  "objectives": [
+    {
+      "id": "common-lf1-presentation-prepare",
+      "text": "Für eine kurze Unternehmensvorstellung Zielgruppe, Kerninformationen und Aufgaben im Team festlegen."
+    },
+    {
+      "id": "common-lf1-presentation-present",
+      "text": "Eine kurze, adressatengerechte multimediale Unternehmensdarstellung erstellen und präsentieren."
+    },
+    {
+      "id": "common-lf1-presentation-improve",
+      "text": "Eine Darstellung anhand vereinbarter Kriterien beurteilen und eine konkrete Verbesserung ableiten."
+    }
+  ],
+  "caseStudy": {
+    "title": "Knotenpunkt in drei Minuten vorstellen",
+    "text": "Mira bereitet für neue Auszubildende eine kurze Vorstellung des erfundenen IT-Dienstleisters Knotenpunkt vor. Am Auftrag für den Fahrradladen Radblick soll verständlich werden, was der Betrieb leistet, wie er arbeitet und welchen Beitrag Mira übernimmt. Sam hilft bei der Abstimmung. Du erstellst später selbst eine kurze Darstellung und trägst sie tatsächlich vor. Dafür reichen Text mit Skizze oder wenige Folien, auch außerhalb dieser App und ohne Publikum."
+  },
+  "blocks": [
+    {
+      "id": "common-lf1-presentation-planning",
+      "title": "1. Zielgruppe und Kerninformationen festlegen",
+      "objectiveIds": [
+        "common-lf1-presentation-prepare"
+      ],
+      "sourceIds": [
+        "kmk-fachinformatiker-2019",
+        "fiausbv-annex"
+      ],
+      "paragraphs": [
+        "Eine kurze Unternehmensvorstellung beantwortet eine Frage für bestimmte Zuhörende. Für neue Auszubildende lautet sie hier: Was macht Knotenpunkt und wie arbeiten wir dort zusammen? Kundinnen interessieren sich stärker für den Nutzen einer Leistung und ihre Ansprechpersonen. Wähle zuerst Zielgruppe, Zweck und Zeitrahmen; danach entscheidest du über Inhalte und Medien.",
+        "Für drei Minuten braucht Mira eine Auswahl statt eines vollständigen Firmenhandbuchs. Sie notiert eine Kernbotschaft: Knotenpunkt macht Arbeitsinformationen nutzbar, indem das Team Bedarf klärt und eine passende Lösung gemeinsam prüft. Dazu wählt sie wenige Belege aus dem Auftrag Radblick. Erkläre Fachwörter beim ersten Gebrauch und nutze einen konkreten Fall, den die Zielgruppe nachvollziehen kann.",
+        "Eine mögliche Gliederung ist: Wer sind wir und für wen arbeiten wir? Wie entsteht die Leistung? Wer trägt was bei und was lernen wir daraus? Im LF1-Rückblick werden diese Fragen mit den sechs Themen verbunden. Das Organigramm erklärt Zuständigkeiten, eine Ablaufskizze die Reihenfolge der Arbeit. Wähle die Darstellung passend zur Aussage.",
+        "Wenn mehrere Personen vorbereiten, legt ihr Aufgaben, einen gemeinsamen Stand und einen Zeitpunkt zur Abstimmung fest. Sam kann Fakten und Zuständigkeiten prüfen, Mira Text und Skizze erstellen und den Vortrag übernehmen. In einem Zweierteam könnte eine Person den Einstieg und die andere Ablauf und Schluss sprechen. Übergänge und Zeit übt ihr gemeinsam. Arbeitest du allein, übernimmst du die Rollen nacheinander und prüfst deinen Entwurf selbst.",
+        "Nutze für diese Übung den erfundenen Fall oder unbedenkliche, freigegebene Angaben. Firmenfakten, Übungsannahmen und Vermutungen müssen erkennbar auseinanderbleiben. Quellen helfen bei fachlichen Aussagen; eine erfundene Kostenersparnis darf nicht als gemessenes Betriebsergebnis erscheinen."
+      ],
+      "example": {
+        "title": "Ein passender Einstieg",
+        "text": "Mira beginnt für die neuen Auszubildenden: Bei Radblick lagen Reparaturinformationen auf verschiedenen Zetteln. Knotenpunkt hilft dem Team, den aktuellen Stand an einer Stelle zu erkennen. Danach zeigt sie, wie Sam und sie daran mitarbeiten."
+      },
+      "misconception": {
+        "claim": "Eine Unternehmensvorstellung ist gut vorbereitet, wenn möglichst viele interne Einzelheiten gesammelt wurden.",
+        "correction": "Entscheidend sind passende und überprüfte Kerninformationen für Zielgruppe, Zweck und Zeitrahmen."
+      },
+      "takeaway": "Lege Zielgruppe, Zweck, Kernbotschaft, Zeit und Aufgabenverteilung fest, bevor du Folien gestaltest."
+    },
+    {
+      "id": "common-lf1-presentation-delivery",
+      "title": "2. Eine Darstellung erstellen und wirklich vortragen",
+      "objectiveIds": [
+        "common-lf1-presentation-prepare",
+        "common-lf1-presentation-present"
+      ],
+      "sourceIds": [
+        "kmk-fachinformatiker-2019",
+        "fiausbv-annex"
+      ],
+      "paragraphs": [
+        "Erstelle aus der Gliederung eine kleine Darstellung, zum Beispiel drei Folien oder ein Blatt mit kurzen Texten und einer Skizze. Verbinde sichtbare Informationen mit deinem mündlichen Vortrag. So können Sprache, Text und Bild einander ergänzen. Eine passende Skizze ist hilfreicher als ein Bild ohne Bezug zur Aussage; Animationen sind für diese Aufgabe nicht erforderlich.",
+        "Eine Folie erhält eine klare Aussage als Überschrift, wenige Stichpunkte und gegebenenfalls eine beschriftete Skizze. In der Ablaufskizze zeigen Pfeile von der Bedarfsklärung bis zur Betreuung. Beim Organigramm muss die Bedeutung der Linien deutlich sein. Sorge für lesbare Schrift und deutlichen Kontrast. Erkläre die wichtige Bildaussage auch mündlich, damit das Publikum ihr folgen kann.",
+        "Sprich anhand von Stichworten in eigenen Sätzen. Benenne beim Wechsel zur Skizze, was sie zeigt und warum es für die Zielgruppe wichtig ist. Mache kurze Pausen. Wenn eine Zahl oder ein Fachbegriff vorkommt, liefere die nötige Einordnung. Eine Folie mit Fachkürzeln wird für neue Auszubildende nicht durch schnelleres Vorlesen verständlich.",
+        "Führe einen echten Probedurchlauf von ungefähr drei Minuten durch. Zeige dabei deine Skizze oder Folien und sprich den Vortrag laut, auch wenn du allein bist. Miss die Zeit und notiere danach eine konkrete Beobachtung. Eine freiwillige Aufnahme oder Rückmeldung einer anderen Person kann helfen; sie ist nicht nötig. Du musst keine Datei hochladen.",
+        "Eine Auswahlfrage kann prüfen, ob du ein passendes Vorgehen erkennst. Ob du deine Darstellung erstellt und vorgetragen hast, zeigt sie nicht. Im Praxisschritt bestätigst du deshalb bewusst deine eigene Durchführung. Das ist deine Selbstprüfung und keine automatische Bewertung der Vortragsqualität."
+      ],
+      "example": {
+        "title": "Vom Textblock zur Erklärung",
+        "text": "Mira ersetzt einen langen Absatz durch eine Skizze mit Bedarf, Umsetzung, Prüfung und Übergabe. Beim Vortrag erklärt sie am Reparaturstatus, was die Schritte leisten. Die Zuhörenden sehen die Orientierung und hören die Zusammenhänge."
+      },
+      "misconception": {
+        "claim": "Ein richtig beantworteter Präsentationstest beweist, dass eine Person einen verständlichen Vortrag gehalten hat.",
+        "correction": "Der Test beurteilt fachliche Entscheidungen. Das tatsächliche Erstellen und Vortragen gehört zur gesonderten praktischen Aufgabe."
+      },
+      "takeaway": "Erstelle ein sichtbares Hilfsmittel und übe den Vortrag laut; sichtbare und gesprochene Information sollen zusammenpassen."
+    },
+    {
+      "id": "common-lf1-presentation-feedback",
+      "title": "3. Nach Kriterien prüfen und gezielt verbessern",
+      "objectiveIds": [
+        "common-lf1-presentation-present",
+        "common-lf1-presentation-improve"
+      ],
+      "sourceIds": [
+        "kmk-fachinformatiker-2019",
+        "fiausbv-annex"
+      ],
+      "paragraphs": [
+        "Lege vor dem Üben Kriterien fest. Für diese Aufgabe eignen sich fachliche Richtigkeit, erkennbarer Nutzen für die Zielgruppe, verständliche Reihenfolge, lesbare Skizze oder Folien und ein Vortrag von ungefähr drei Minuten. Prüfe außerdem, ob fremde Begriffe erklärt sind und welche eigene Rolle du beschreibst. Beim LF1-Rückblick müssen die sechs Themen erkennbar vorkommen.",
+        "Eine hilfreiche Rückmeldung nennt eine Beobachtung, das betroffene Kriterium und einen nächsten Schritt. Beispiel: Die Skizze zeigt sechs Stationen, ihre Beschriftung ist im Vortragsabstand aber nicht lesbar. Vergrößere die Schrift und kürze die Stationsnamen. Das ist genauer als „Die Folie ist schlecht“ und lässt sich beim nächsten Durchlauf überprüfen.",
+        "Unterscheide eine fachliche Korrektur von einer Geschmacksfrage. Wenn Radblick als Lieferant von Knotenpunkt bezeichnet wird, muss die Kundenrolle im beschriebenen Auftrag korrigiert werden. Ob ein Rahmen blau oder grün ist, ist ohne Bezug zu Lesbarkeit oder Vorgaben zunächst eine Gestaltungspräferenz. Eine Kritik wird nicht allein durch eine entschiedene Formulierung zu einem Kriterium.",
+        "Wähle eine konkrete Verbesserung und setze sie um. Prüfe anschließend die betroffene Stelle erneut. Ist der Vortrag zu lang, kannst du Wiederholungen kürzen und Kerninformationen behalten. Höheres Sprechtempo kann die Verständlichkeit verschlechtern. Bei einer unklaren Rollenbeschreibung ergänzt du einen Satz zu Miras Beitrag und ihrer Grenze bei Zusagen.",
+        "Du kannst die Kriterien allein anwenden: Lies deinen Text aus Sicht einer neu einsteigenden Person, betrachte deine Skizze aus etwas Abstand und führe einen weiteren kurzen Durchlauf durch. Halte vorher und nachher fest, etwa „Vorher vier unerklärte Abkürzungen; nachher Alltagssprache und ein erklärter Fachbegriff“. Eine ehrliche Selbstprüfung nennt auch, was noch offen bleibt."
+      ],
+      "example": {
+        "title": "Eine überprüfbare Verbesserung",
+        "text": "Beim ersten Durchlauf dauert Miras Vortrag vier Minuten. Sie streicht zwei wiederholte Beispiele, erhält den erklärten Ablauf und übt erneut mit Zeitmessung. So prüft sie, ob die Änderung den Zeitrahmen verbessert, ohne die Kernbotschaft zu verlieren."
+      },
+      "misconception": {
+        "claim": "Eine gute Rückmeldung besteht darin, den allgemeinen Eindruck mit möglichst vielen Adjektiven zu beschreiben.",
+        "correction": "Eine konkrete Beobachtung mit passendem Kriterium und umsetzbarer Änderung hilft beim Verbessern."
+      },
+      "takeaway": "Beobachtung → Kriterium → Änderung → erneute Prüfung: So wird Rückmeldung handlungsfähig."
+    },
+    {
+      "id": "common-lf1-presentation-review",
+      "title": "4. LF1-Rückblick: Knotenpunkt als zusammenhängenden Fall erklären",
+      "objectiveIds": [
+        "common-lf1-presentation-prepare",
+        "common-lf1-presentation-present",
+        "common-lf1-presentation-improve"
+      ],
+      "sourceIds": [
+        "kmk-fachinformatiker-2019",
+        "fiausbv-annex",
+        "bmwe-einzelunternehmen",
+        "gmbhg-organization",
+        "bgb-164"
+      ],
+      "paragraphs": [
+        "Der gemeinsame Rückblick verbindet alle sechs LF1-Themen. Bereite für neue Auszubildende eine kurze Vorstellung vor und nutze die folgenden Kerninformationen als fachliche Grundlage. Jede Information soll erklären, wie Knotenpunkt beim Auftrag Radblick arbeitet. Die Angaben sind ein Lernfall, keine Aussagen über reale Unternehmen.",
+        "1. Unternehmen und eigene Rolle: Knotenpunkt ist ein IT-Dienstleister. Radblick braucht eine verständliche, aktuelle Übersicht über Reparaturen statt verteilter Zettel. Mira sammelt Anforderungen, bearbeitet eine begrenzte Übungsaufgabe und meldet offene Punkte an Sam. Eine prüfbare Beschreibung nennt ihren Beitrag und dessen Grenze; sie behauptet nicht, Mira habe den gesamten Auftrag allein entschieden.",
+        "2. Unternehmensziele: Knotenpunkt möchte Einführungskosten begrenzen, geeignete Geräte weiterverwenden und kurzfristige Zusatzbelastung im Team verringern. Diese Wirkungen sind wirtschaftlich, ökologisch und sozial. Eine Einweisung ist eine Maßnahme. Sie kann Unsicherheit verringern, kostet aber zunächst Arbeitszeit: ein möglicher Konflikt zwischen sozialer Unterstützung und niedrigen kurzfristigen Kosten. Eine vermutete spätere Ersparnis wird als Annahme benannt, bis sie geprüft ist.",
+        "3. Kunden, Lieferanten und Wettbewerb: Radblick erhält die Leistung und ist in diesem Auftrag Kunde von Knotenpunkt. Netzhafen liefert Knotenpunkt einen benötigten Betriebsdienst und ist dafür Lieferant. Systemufer bietet Radblick eine vergleichbare Reparaturübersicht an und ist damit Wettbewerber. Die Rolle folgt der konkreten Geschäftsbeziehung. Für einen Angebotsvergleich sind derselbe Bedarf, Zeitraum und Leistungsumfang wichtig; ein niedriger Preis allein belegt keine passende Leistung.",
+        "4. Wertschöpfung: Aus Kenntnissen, Arbeitszeit und bezogenen Vorleistungen entsteht eine für Radblick nutzbare Leistung. Die Lernskizze lautet: Bedarf klären → planen und abstimmen → umsetzen → prüfen und verbessern → übergeben und einweisen → betreuen und rückmelden. Beschrifte die Pfeile als Arbeitsfolge. Die Prüfung vergleicht die Übersicht mit dem vereinbarten Bedarf; eine bloße Fertigmeldung belegt noch keinen Nutzen. Übergabe und Einweisung machen die Lösung im Alltag verwendbar. Wertschöpfung beschreibt den geschaffenen Wert und ist nicht mit Umsatz oder Gewinn gleichzusetzen.",
+        "5. Organisation und Entscheidungsspielraum: Noor führt die Knotenpunkt GmbH. Unter ihr koordiniert Sam das Projektteam mit Mira; Eda betreut parallel den kaufmännischen Bereich. Sam und Eda stimmen sich fachlich ab. Lea führt Radblick als Einzelunternehmen und haftet dafür mit Geschäfts- und Privatvermögen im gesetzlichen Rahmen. Bei der eingetragenen GmbH haftet für Gesellschaftsschulden das Gesellschaftsvermögen; eigene Pflichtverletzungen können persönliche Haftung auslösen. Mira hat keine Befugnis für Preis-, Bestell- oder verbindliche Lieferterminzusagen. Sie gibt eine Erweiterung an Sam, der sie mit Noor klärt. Ein Organigramm ersetzt diese Befugnisregel nicht.",
+        "6. Unternehmensdarstellung: Wähle die Kerninformationen für neue Auszubildende und ungefähr drei Minuten aus. Vereinbare, wer Fakten prüft, Text und Skizze erstellt und spricht; allein übernimmst du diese Aufgaben nacheinander. Zeige eine kurze Text- und Bilddarstellung, erkläre etwa die Ablaufpfeile mündlich und vermeide unerklärte Fachkürzel. Trage tatsächlich laut vor. Prüfe danach fachliche Richtigkeit, Zielgruppenbezug, Reihenfolge, Lesbarkeit und Dauer. Verbessere eine beobachtete Schwäche und prüfe die Änderung erneut.",
+        "Der abschließende Themencheck beurteilt fachlich passende Entscheidungen für eine Darstellung zu diesen sechs Bereichen. Für praktische Vortragserfahrung bearbeitest du zusätzlich die Präsentationsaufgabe und bestätigst ihre Durchführung selbst. Weder richtige Auswahlantworten noch diese Bestätigung ersetzen eine unabhängige Beurteilung deiner Vortragsqualität."
+      ],
+      "example": {
+        "title": "Ein roter Faden für drei Minuten",
+        "text": "Beginne mit Radblicks Bedarf und Miras Rolle. Erkläre an einer Skizze Kundenbeziehung, Vorleistungen und Arbeitsfolge. Ergänze die Ziele und den Abstimmungsweg für neue Wünsche. Schließe mit einem Beispiel für die Prüfung und Verbesserung deiner Darstellung. So bleiben die sechs Themen an einem gemeinsamen Auftrag verbunden."
+      },
+      "misconception": {
+        "claim": "Der LF1-Abschluss verlangt ein neues Spezialthema, das erst im letzten Test auftaucht.",
+        "correction": "Die Aufgaben verwenden die hier ausdrücklich wiederholten sechs Bereiche. Sie prüfen passende Darstellungsentscheidungen; der tatsächliche Vortrag wird im eigenen Praxisschritt durchgeführt."
+      },
+      "takeaway": "Verbinde Rolle, Ziele, Marktbeziehungen, Wertschöpfung, Organisation und Darstellung an demselben Fall."
+    }
+  ],
+  "questionFile": "questions/common-lf1-presentation.v1.csv",
+  "quiz": {
+    "questionIds": [
+      "LJ-LF1-PRESENTATION-Q01",
+      "LJ-LF1-PRESENTATION-Q02",
+      "LJ-LF1-PRESENTATION-Q03",
+      "LJ-LF1-PRESENTATION-Q04",
+      "LJ-LF1-PRESENTATION-Q05",
+      "LJ-LF1-PRESENTATION-Q06"
+    ]
+  },
+  "exam": {
+    "questionIds": [
+      "LJ-LF1-PRESENTATION-E01",
+      "LJ-LF1-PRESENTATION-E02",
+      "LJ-LF1-PRESENTATION-E03",
+      "LJ-LF1-PRESENTATION-E04",
+      "LJ-LF1-PRESENTATION-E05",
+      "LJ-LF1-PRESENTATION-E06",
+      "LJ-LF1-PRESENTATION-E07",
+      "LJ-LF1-PRESENTATION-E08"
+    ],
+    "passPercent": 80,
+    "scoring": "all-or-nothing-per-question",
+    "timed": false
+  },
+  "questionLinks": [
+    {
+      "questionId": "LJ-LF1-PRESENTATION-Q01",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf1-presentation-prepare"
+      ],
+      "blockIds": [
+        "common-lf1-presentation-planning"
+      ]
+    },
+    {
+      "questionId": "LJ-LF1-PRESENTATION-Q02",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf1-presentation-prepare"
+      ],
+      "blockIds": [
+        "common-lf1-presentation-planning"
+      ]
+    },
+    {
+      "questionId": "LJ-LF1-PRESENTATION-Q03",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf1-presentation-present"
+      ],
+      "blockIds": [
+        "common-lf1-presentation-delivery"
+      ]
+    },
+    {
+      "questionId": "LJ-LF1-PRESENTATION-Q04",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf1-presentation-present"
+      ],
+      "blockIds": [
+        "common-lf1-presentation-delivery"
+      ]
+    },
+    {
+      "questionId": "LJ-LF1-PRESENTATION-Q05",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf1-presentation-improve"
+      ],
+      "blockIds": [
+        "common-lf1-presentation-feedback"
+      ]
+    },
+    {
+      "questionId": "LJ-LF1-PRESENTATION-Q06",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf1-presentation-present",
+        "common-lf1-presentation-improve"
+      ],
+      "blockIds": [
+        "common-lf1-presentation-delivery",
+        "common-lf1-presentation-feedback"
+      ]
+    },
+    {
+      "questionId": "LJ-LF1-PRESENTATION-E01",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf1-presentation-prepare"
+      ],
+      "blockIds": [
+        "common-lf1-presentation-review",
+        "common-lf1-presentation-planning"
+      ]
+    },
+    {
+      "questionId": "LJ-LF1-PRESENTATION-E02",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf1-presentation-prepare",
+        "common-lf1-presentation-improve"
+      ],
+      "blockIds": [
+        "common-lf1-presentation-review",
+        "common-lf1-presentation-feedback"
+      ]
+    },
+    {
+      "questionId": "LJ-LF1-PRESENTATION-E03",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf1-presentation-prepare"
+      ],
+      "blockIds": [
+        "common-lf1-presentation-review"
+      ]
+    },
+    {
+      "questionId": "LJ-LF1-PRESENTATION-E04",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf1-presentation-present"
+      ],
+      "blockIds": [
+        "common-lf1-presentation-review",
+        "common-lf1-presentation-delivery"
+      ]
+    },
+    {
+      "questionId": "LJ-LF1-PRESENTATION-E05",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf1-presentation-prepare",
+        "common-lf1-presentation-improve"
+      ],
+      "blockIds": [
+        "common-lf1-presentation-review"
+      ]
+    },
+    {
+      "questionId": "LJ-LF1-PRESENTATION-E06",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf1-presentation-present",
+        "common-lf1-presentation-improve"
+      ],
+      "blockIds": [
+        "common-lf1-presentation-review",
+        "common-lf1-presentation-delivery"
+      ]
+    },
+    {
+      "questionId": "LJ-LF1-PRESENTATION-E07",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf1-presentation-prepare",
+        "common-lf1-presentation-present"
+      ],
+      "blockIds": [
+        "common-lf1-presentation-review",
+        "common-lf1-presentation-planning",
+        "common-lf1-presentation-delivery"
+      ]
+    },
+    {
+      "questionId": "LJ-LF1-PRESENTATION-E08",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf1-presentation-improve"
+      ],
+      "blockIds": [
+        "common-lf1-presentation-review",
+        "common-lf1-presentation-feedback"
+      ]
+    }
+  ],
+  "interview": [
+    {
+      "id": "common-lf1-presentation-talk-plan",
+      "prompt": "Du stellst Knotenpunkt neuen Auszubildenden vor. Lege Zweck, Kernbotschaft und eine kurze Gliederung fest. Verteile die Vorbereitung auf Mira und Sam und erkläre, was du bei Einzelarbeit übernehmen würdest.",
+      "objectiveIds": [
+        "common-lf1-presentation-prepare"
+      ],
+      "blockIds": [
+        "common-lf1-presentation-planning",
+        "common-lf1-presentation-review"
+      ],
+      "keyPoints": [
+        "Zielgruppe neue Auszubildende, Orientierung zu Leistung und Zusammenarbeit, ungefähr drei Minuten.",
+        "Kernbotschaft am Bedarf von Radblick und an Miras eigener Rolle erklären.",
+        "Text und Skizze, Faktenprüfung, Vortrag und gemeinsame Abstimmung mit Zeitpunkt zuordnen."
+      ],
+      "acceptableAlternatives": [
+        "Andere klare Gliederung mit erkennbarem Bezug zur Zielgruppe.",
+        "Einzelarbeit mit nacheinander übernommenen Rollen statt erfundener Mitarbeit anderer Personen."
+      ],
+      "misconceptions": [
+        "Ohne Auswahl sämtliche Unternehmensangaben auf Folien sammeln.",
+        "Eine technische Detailbeschreibung ohne Erklärung des Kundennutzens als Zielgruppenbezug behandeln."
+      ],
+      "sampleAnswer": "Ich erkläre neuen Auszubildenden, wie Knotenpunkt Arbeitsinformationen nutzbar macht. Zuerst zeige ich Radblicks Bedarf, dann den Weg zur nutzbaren Übersicht und zum Schluss Miras Beitrag und Abstimmung. Mira erstellt Text und Skizze, Sam prüft Fakten; vor dem Vortrag stimmen beide den Stand ab. Allein würde ich die Schritte nacheinander durchführen.",
+      "followUp": "Welche Information würdest du für Kundinnen stärker betonen als für neue Auszubildende?"
+    },
+    {
+      "id": "common-lf1-presentation-talk-practice",
+      "prompt": "Erstelle und halte jetzt deine eigene ungefähr dreiminütige Unternehmensvorstellung. Nutze den Fall Knotenpunkt oder freigegebene Angaben eines eigenen Betriebs. Beschreibe danach dein Hilfsmittel, eine Beobachtung aus dem echten Vortrag und die umgesetzte Verbesserung.",
+      "objectiveIds": [
+        "common-lf1-presentation-prepare",
+        "common-lf1-presentation-present",
+        "common-lf1-presentation-improve"
+      ],
+      "blockIds": [
+        "common-lf1-presentation-planning",
+        "common-lf1-presentation-delivery",
+        "common-lf1-presentation-feedback",
+        "common-lf1-presentation-review"
+      ],
+      "keyPoints": [
+        "Eigene kurze Text- und Bilddarstellung erstellen und für die gewählte Zielgruppe gliedern.",
+        "Die Darstellung tatsächlich mit Skizze oder Folien laut vortragen, auch allein möglich.",
+        "Kriterien anwenden, mindestens eine konkrete Verbesserung umsetzen und die betroffene Stelle erneut prüfen.",
+        "Die Durchführung erst nach eigener Bearbeitung bewusst bestätigen; keine automatische Qualitätsbewertung behaupten."
+      ],
+      "acceptableAlternatives": [
+        "Papier mit Text und Skizze, wenige Folien oder ein anderes geeignetes sichtbares Hilfsmittel verwenden.",
+        "Allein vortragen und selbst prüfen; freiwillig kann eine weitere Person Rückmeldung geben."
+      ],
+      "misconceptions": [
+        "Die Beispielantwort als Ersatz für den eigenen Vortrag übernehmen.",
+        "Eine Dateiübertragung oder fremde Bewertung als Voraussetzung für diese Übung ansehen."
+      ],
+      "sampleAnswer": "Beispiel für eine Notiz nach eigener Durchführung: Ich habe drei Folien mit einer Ablaufskizze erstellt und laut vorgetragen. Mein erster Durchlauf war zu lang und enthielt zwei unerklärte Kürzel. Ich habe eine Wiederholung gestrichen, die Kürzel erklärt und den betroffenen Teil erneut gesprochen. Schreibe hier deine tatsächlichen Beobachtungen; diese Beispielnotiz bestätigt keine Durchführung.",
+      "followUp": "Welche Änderung hast du tatsächlich umgesetzt, und woran erkennst du beim erneuten Prüfen ihre Wirkung?",
+      "practice": {
+        "task": "Erstelle selbst eine ungefähr dreiminütige Vorstellung von Knotenpunkt für neue Auszubildende oder eines eigenen Betriebs mit freigegebenen Angaben. Verwende Text mit einer beschrifteten Skizze oder wenige Folien und berücksichtige die sechs Bereiche aus dem LF1-Rückblick. Trage deine Darstellung mit dem sichtbaren Hilfsmittel tatsächlich laut vor, auch allein und außerhalb dieser App. Prüfe sie an den folgenden Kriterien, setze mindestens eine konkrete Verbesserung um und prüfe die betroffene Stelle erneut. Eine Dateiübertragung oder Aufnahme ist nicht erforderlich.",
+        "checklist": [
+          "Ich habe Zielgruppe, Zweck, Kernbotschaft und die Vorbereitungsschritte festgelegt.",
+          "Ich habe eine eigene Darstellung mit Text und Skizze oder Folien erstellt; Rolle, Ziele, Marktbeziehungen, Wertschöpfung, Organisation und verständliche Darstellung kommen vor.",
+          "Ich habe meinen ungefähr dreiminütigen Vortrag tatsächlich laut mit meinem Hilfsmittel gehalten und die Dauer geprüft.",
+          "Ich habe fachliche Richtigkeit, Verständlichkeit für die Zielgruppe, Reihenfolge, Lesbarkeit und Dauer anhand konkreter Beobachtungen geprüft.",
+          "Ich habe mindestens eine konkrete Verbesserung umgesetzt und die geänderte Stelle erneut geprüft."
+        ],
+        "confirmation": "Ich bestätige, dass ich meine eigene Darstellung erstellt, tatsächlich vorgetragen, anhand der Kriterien geprüft und eine Verbesserung umgesetzt und erneut geprüft habe. Das ist meine Selbstbestätigung, keine automatische Bewertung meiner Vortragsqualität."
+      }
+    },
+    {
+      "id": "common-lf1-presentation-talk-review",
+      "prompt": "Blicke am Fall Knotenpunkt auf alle sechs LF1-Themen zurück: 1. Nenne Leistung, Radblicks Bedarf und Miras Beitrag mit Grenze. 2. Ordne die drei Ziele zu und erläutere einen Konflikt. 3. Ordne Radblick, Netzhafen und Systemufer ihren Marktrollen zu. 4. Skizziere den Weg vom Bedarf bis zur Betreuung und erkläre den Nutzen der Prüfung. 5. Beschreibe Organigramm, Rechtsformen und den Weg einer nicht freigegebenen Preiszusage. 6. Erläutere Zielgruppe, Aufgabenverteilung, Text und Bild, tatsächlichen Vortrag sowie deine konkrete Verbesserung anhand eines Kriteriums.",
+      "objectiveIds": [
+        "common-lf1-presentation-prepare",
+        "common-lf1-presentation-present",
+        "common-lf1-presentation-improve"
+      ],
+      "blockIds": [
+        "common-lf1-presentation-review",
+        "common-lf1-presentation-feedback"
+      ],
+      "keyPoints": [
+        "Rolle: IT-Dienstleistung und verständlicher Reparaturstatus; Mira bearbeitet eine begrenzte Aufgabe und klärt offene Entscheidungen mit Sam.",
+        "Ziele: Kosten wirtschaftlich, Weiterverwendung ökologisch, geringere Zusatzbelastung sozial; betreute Lernzeit kann soziale Entlastung und kurzfristige Mehrkosten verbinden.",
+        "Markt: Radblick Kunde, Netzhafen Lieferant eines Betriebsdienstes, Systemufer Wettbewerber für vergleichbare Leistung.",
+        "Wertschöpfung: Bedarf, Planung, Umsetzung, Prüfung, Übergabe mit Einweisung, Betreuung; Prüfung am vereinbarten Bedarf statt Gleichsetzung von Fertigmeldung und Nutzen.",
+        "Organisation: Noor führt die GmbH, Sam koordiniert Mira, Eda betreut Kaufmännisches; Lea führt das Einzelunternehmen mit persönlicher Haftung, GmbH haftet mit Gesellschaftsvermögen ohne pauschale Haftungsfreiheit. Mira gibt Preiswünsche über Sam an Noor.",
+        "Darstellung: Zielgruppe und Aufgaben klären, eigene Text- und Bilddarstellung wirklich vortragen, Beobachtung mit Kriterium verbinden, Änderung umsetzen und erneut prüfen."
+      ],
+      "acceptableAlternatives": [
+        "Sinngleiche Bezeichnungen wie ökonomisch statt wirtschaftlich oder eine korrekt erklärte Ablaufskizze.",
+        "Beim gewählten eigenen Betrieb passende, freigegebene Beispiele mit denselben sechs Bezügen."
+      ],
+      "misconceptions": [
+        "Marktrollen vertauschen oder Wertschöpfung mit Gewinn gleichsetzen.",
+        "Die GmbH als Befreiung von persönlicher Verantwortung oder das Organigramm als Preisvollmacht darstellen.",
+        "Das Bestehen des Auswahltests als Beweis eines tatsächlich gehaltenen Vortrags ausgeben."
+      ],
+      "sampleAnswer": "Knotenpunkt hilft Radblick beim Reparaturstatus. Mira prüft einen begrenzten Teil und fragt Sam bei offenen Entscheidungen. Kostenbegrenzung, Weiterverwendung und Entlastung sind wirtschaftliche, ökologische und soziale Ziele; zusätzliche Lernzeit kann zunächst mehr kosten. Radblick ist Kunde, Netzhafen liefert eine Vorleistung, Systemufer steht im Wettbewerb. Aus Bedarfsklärung, Planung, Umsetzung, Prüfung, Einweisung und Betreuung entsteht eine nutzbare Leistung. Noor führt die GmbH; Sam koordiniert Mira, Eda das Kaufmännische. Lea haftet als Einzelunternehmerin persönlich, für GmbH-Schulden haftet das Gesellschaftsvermögen. Mira darf keine Preise zusagen. Für den Vortrag wähle ich passende Kerninformationen und eine Skizze, übe laut und verbessere eine beobachtete Schwäche. Meine konkrete Durchführung und Änderung ergänze ich aus der eigenen Übung.",
+      "followUp": "Bei welchem der sechs Bereiche fällt dir eine Erklärung noch schwer, und welche konkrete Stelle deines Vortrags würdest du dafür überarbeiten?"
+    }
+  ],
+  "cards": [
+    {
+      "id": "common-lf1-presentation-card-audience",
+      "front": "Was legst du vor der Gestaltung einer kurzen Unternehmensvorstellung fest?",
+      "back": "Zielgruppe, Zweck, Kernbotschaft, Zeitrahmen und Kerninformationen. Weise bei Teamarbeit Faktenprüfung, Text und Bild, Vortrag und Abstimmung zu. Allein übernimmst du diese Aufgaben nacheinander.",
+      "objectiveIds": [
+        "common-lf1-presentation-prepare"
+      ],
+      "blockIds": [
+        "common-lf1-presentation-planning"
+      ]
+    },
+    {
+      "id": "common-lf1-presentation-card-media",
+      "front": "Wie ergänzen sich Text, Bild und Vortrag?",
+      "back": "Kurze Texte geben Orientierung, eine beschriftete Skizze zeigt Zusammenhänge, der mündliche Vortrag erklärt ihre Bedeutung. Wähle lesbare Darstellung und verständliche Sprache passend zur Zielgruppe.",
+      "objectiveIds": [
+        "common-lf1-presentation-present"
+      ],
+      "blockIds": [
+        "common-lf1-presentation-delivery"
+      ]
+    },
+    {
+      "id": "common-lf1-presentation-card-practice",
+      "front": "Was gehört zur praktischen Präsentationsaufgabe?",
+      "back": "Eine eigene Darstellung erstellen, mit Skizze oder Folien tatsächlich laut vortragen, Kriterien anwenden und eine Verbesserung umsetzen und erneut prüfen. Das geht allein und ohne Upload. Die Bestätigung ist eine Selbstprüfung, kein objektiver Qualitätsnachweis.",
+      "objectiveIds": [
+        "common-lf1-presentation-present",
+        "common-lf1-presentation-improve"
+      ],
+      "blockIds": [
+        "common-lf1-presentation-delivery",
+        "common-lf1-presentation-feedback"
+      ]
+    },
+    {
+      "id": "common-lf1-presentation-card-feedback",
+      "front": "Wie wird eine Rückmeldung konkret nutzbar?",
+      "back": "Nenne eine Beobachtung, das betroffene Kriterium und eine Änderung. Beispiel: Beschriftung aus Vortragsabstand unlesbar → Kriterium Lesbarkeit → Schrift vergrößern und erneut prüfen.",
+      "objectiveIds": [
+        "common-lf1-presentation-improve"
+      ],
+      "blockIds": [
+        "common-lf1-presentation-feedback"
+      ]
+    },
+    {
+      "id": "common-lf1-presentation-card-six",
+      "front": "Welche sechs Bereiche verbindet der LF1-Rückblick am Fall Knotenpunkt?",
+      "back": "Leistung und eigene Rolle; wirtschaftliche, ökologische und soziale Ziele; Kunden, Lieferanten und Wettbewerb; Wertschöpfung vom Bedarf bis zur Betreuung; Organisation, Rechtsform und Befugnis; adressatengerechte Darstellung mit echtem Vortrag und Verbesserung.",
+      "objectiveIds": [
+        "common-lf1-presentation-prepare"
+      ],
+      "blockIds": [
+        "common-lf1-presentation-review"
+      ]
+    },
+    {
+      "id": "common-lf1-presentation-card-review",
+      "front": "Wie korrigierst du fachliche Fehler in einer Unternehmensdarstellung?",
+      "back": "Prüfe die Aussage am Fall: Radblick ist Kunde, Netzhafen Lieferant und Systemufer Wettbewerber. Eine fertige Übersicht muss am Bedarf geprüft werden. Ein Organigramm verleiht Mira keine Preisbefugnis. Korrigiere die falsche Aussage konkret und prüfe den geänderten Vortrag.",
+      "objectiveIds": [
+        "common-lf1-presentation-improve"
+      ],
+      "blockIds": [
+        "common-lf1-presentation-review"
+      ]
+    }
+  ],
+  "review": {
+    "status": "reviewed",
+    "checkedAt": "2026-11-11"
+  },
+  "fieldReview": {
+    "fieldId": "LF1",
+    "topicIds": [
+      "common-lf1-role",
+      "common-lf1-goals",
+      "common-lf1-market",
+      "common-lf1-value-chain",
+      "common-lf1-organization",
+      "common-lf1-presentation"
+    ],
+    "blockIds": [
+      "common-lf1-presentation-review"
+    ],
+    "interviewIds": [
+      "common-lf1-presentation-talk-review"
+    ],
+    "questionIds": [
+      "LJ-LF1-PRESENTATION-E01",
+      "LJ-LF1-PRESENTATION-E02",
+      "LJ-LF1-PRESENTATION-E03",
+      "LJ-LF1-PRESENTATION-E04",
+      "LJ-LF1-PRESENTATION-E05",
+      "LJ-LF1-PRESENTATION-E06",
+      "LJ-LF1-PRESENTATION-E07",
+      "LJ-LF1-PRESENTATION-E08"
+    ]
+  }
+}

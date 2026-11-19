@@ -1,0 +1,631 @@
+{
+  "schemaVersion": 1,
+  "id": "common-lf4-measures",
+  "title": "Schutzmaßnahmen auswählen und beurteilen",
+  "fieldId": "LF4",
+  "scope": "common",
+  "prerequisites": [
+    "common-lf4-assessment",
+    "common-lf3-access"
+  ],
+  "objectives": [
+    {
+      "id": "common-lf4-measures-select",
+      "text": "Für einen festgestellten Schutzbedarf eine passende organisatorische oder technische Maßnahme vorschlagen."
+    },
+    {
+      "id": "common-lf4-measures-check",
+      "text": "Mit einer einfachen Prüffrage oder einem Test die beabsichtigte Wirkung einer Maßnahme kontrollieren."
+    },
+    {
+      "id": "common-lf4-measures-responsibility",
+      "text": "Eigene Umsetzungsmöglichkeiten und Entscheidungen anderer Zuständiger im Sicherheitsprozess trennen."
+    }
+  ],
+  "version": "1.0.0",
+  "sourceIds": [
+    "lf4-nist-confidentiality",
+    "lf4-nist-integrity",
+    "lf4-nist-availability",
+    "lf4-nist-asset",
+    "lf4-nist-threat",
+    "lf4-nist-vulnerability",
+    "lf4-nist-impact",
+    "lf4-nist-risk",
+    "lf4-nist-security-policy",
+    "lf4-nist-security-control-assessment",
+    "lf4-eu-gdpr"
+  ],
+  "sources": [
+    {
+      "id": "lf4-nist-confidentiality",
+      "title": "NIST CSRC Glossar: Vertraulichkeit",
+      "url": "https://csrc.nist.gov/glossary/term/confidentiality",
+      "checkedAt": "2026-11-16",
+      "note": "Begriff der Beschränkung unbefugter Offenlegung geprüft."
+    },
+    {
+      "id": "lf4-nist-integrity",
+      "title": "NIST CSRC Glossar: Integrität",
+      "url": "https://csrc.nist.gov/glossary/term/integrity",
+      "checkedAt": "2026-11-16",
+      "note": "Begriff des Schutzes gegen unzulässige Veränderung geprüft."
+    },
+    {
+      "id": "lf4-nist-availability",
+      "title": "NIST CSRC Glossar: Verfügbarkeit",
+      "url": "https://csrc.nist.gov/glossary/term/availability",
+      "checkedAt": "2026-11-16",
+      "note": "Rechtzeitige und verlässliche Nutzbarkeit geprüft."
+    },
+    {
+      "id": "lf4-nist-asset",
+      "title": "NIST CSRC Glossar: Schutzobjekt",
+      "url": "https://csrc.nist.gov/glossary/term/asset",
+      "checkedAt": "2026-11-16",
+      "note": "Materielle und immaterielle Werte und Bezug zu Geschäftsaufgaben geprüft."
+    },
+    {
+      "id": "lf4-nist-threat",
+      "title": "NIST CSRC Glossar: Bedrohung",
+      "url": "https://csrc.nist.gov/glossary/term/threat",
+      "checkedAt": "2026-11-16",
+      "note": "Schadensfähige Ereignisse und Umstände geprüft."
+    },
+    {
+      "id": "lf4-nist-vulnerability",
+      "title": "NIST CSRC Glossar: Schwachstelle",
+      "url": "https://csrc.nist.gov/glossary/term/vulnerability",
+      "checkedAt": "2026-11-16",
+      "note": "Ausnutzbare oder auslösbare Schwächen in Systemen und Verfahren geprüft."
+    },
+    {
+      "id": "lf4-nist-impact",
+      "title": "NIST CSRC Glossar: Schadensauswirkung",
+      "url": "https://csrc.nist.gov/glossary/term/impact",
+      "checkedAt": "2026-11-16",
+      "note": "Mögliche Auswirkungen auf Betrieb, Werte und Menschen geprüft. Die konkreten Kategorien und Schwellen sind eigene fiktive Lernvorgaben."
+    },
+    {
+      "id": "lf4-nist-risk",
+      "title": "NIST CSRC Glossar: Risiko",
+      "url": "https://csrc.nist.gov/glossary/term/risk",
+      "checkedAt": "2026-11-16",
+      "note": "Zusammenhang von möglicher Auswirkung und Eintrittswahrscheinlichkeit geprüft."
+    },
+    {
+      "id": "lf4-nist-security-policy",
+      "title": "NIST CSRC Glossar: Sicherheitsregeln",
+      "url": "https://csrc.nist.gov/glossary/term/security_policy",
+      "checkedAt": "2026-11-16",
+      "note": "Organisatorische Regeln zum Umgang mit schützenswerten Informationen geprüft. Die Radblick-Leitlinie ist erfunden."
+    },
+    {
+      "id": "lf4-nist-security-control-assessment",
+      "title": "NIST CSRC Glossar: Wirksamkeitsprüfung",
+      "url": "https://csrc.nist.gov/glossary/term/security_control_assessment",
+      "checkedAt": "2026-11-16",
+      "note": "Prüfung der vorgesehenen Funktion und Wirkung einer Maßnahme geprüft. Konkrete Modelltests sind eigene Beispiele."
+    },
+    {
+      "id": "lf4-eu-gdpr",
+      "title": "EUR-Lex: Datenschutz-Grundverordnung, konsolidierte geltende Fassung",
+      "url": "https://eur-lex.europa.eu/legal-content/DE/TXT/?uri=CELEX:02016R0679-20160504",
+      "checkedAt": "2026-11-16",
+      "note": "Öffentliche HTML-Fassung mit Status In Kraft und Verweis auf aktuelle Fassung geprüft: Art. 4, 5, 6, 29, 32 und 39. Keine konkrete Rechtsgrundlage für reale Fälle wird behauptet. Namen, Regeln und Daten des Lernfalls sind synthetisch."
+    }
+  ],
+  "caseStudy": {
+    "title": "Mira schützt den Servicearbeitsplatz bei Radblick",
+    "text": "Eigener fiktiver Lernfall: Radblick bearbeitet Serviceanfragen. Mira lernt unter Anleitung von Sam aus der IT und Eda als Serviceverantwortlicher. Alle Personen, Daten, Regeln und Schadensannahmen sind erfunden. Mira verbindet die fünf LF4-Themen zu einer geführten Schutzbedarfsanalyse. In der lokalen Modellübung werden Entscheidungen ausgewählt und ausgewertet; es werden keine echten Sicherheitseinstellungen verändert."
+  },
+  "blocks": [
+    {
+      "id": "common-lf4-measures-select",
+      "title": "1. Maßnahmen aus dem begründeten Bedarf ableiten",
+      "objectiveIds": [
+        "common-lf4-measures-select",
+        "common-lf4-measures-responsibility"
+      ],
+      "sourceIds": [
+        "lf4-nist-impact",
+        "lf4-nist-security-policy",
+        "lf4-eu-gdpr"
+      ],
+      "paragraphs": [
+        "Beginne mit dem Schaden, den eine Maßnahme verhindern oder begrenzen soll. Bei hohem Vertraulichkeitsbedarf passen beispielsweise freigegebene Rollenrechte und ein gesperrter unbeaufsichtigter Bildschirm. Für korrekte Freigaben sind passende Änderungsrechte, eine vorgeschriebene Gegenprüfung und ein geschützter zuordenbarer Verlauf sinnvoll. Für Ausfälle werden ein geübter Ersatzablauf und eine überprüfte Wiederherstellung benötigt.",
+        "Technische und organisatorische Maßnahmen ergänzen sich. Eine Rollenfunktion setzt Rechte technisch um; die organisatorische Rollenfreigabe legt fest, wer sie aus welchem Grund erhält. Eine Sicherungskopie benötigt ein geregeltes Verfahren, Zuständigkeit und eine Prüfung der Wiederherstellung. Ein vorhandenes Produkt allein ist noch kein Nachweis der gewünschten Wirkung.",
+        "Im fiktiven Radblick-Verfahren dokumentiert Mira Bedarf und Vorschlag. Eda bestätigt Aufgabe, Rollenbedarf und zumutbare Unterbrechung; Sam setzt technisch freigegebene Änderungen um. Die Datenschutz-Ansprechperson unterstützt die Klärung unklarer Verarbeitungszwecke. Mira führt keine eigenmächtigen Rechteänderungen aus."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Lernfall",
+        "text": "Hohe Vertraulichkeit wird mit rollenbezogenen Rechten adressiert. Ein zusätzlicher Bildschirm löst diese Zugriffsforderung nicht."
+      },
+      "misconception": {
+        "claim": "Die teuerste technische Lösung ist unabhängig vom Fall die beste Maßnahme.",
+        "correction": "Eine geeignete Maßnahme muss den benannten Schaden adressieren und zum Betrieb sowie zur Zuständigkeit passen."
+      },
+      "takeaway": "Schaden, Maßnahme und verantwortliche Rolle werden gemeinsam festgelegt."
+    },
+    {
+      "id": "common-lf4-measures-check",
+      "title": "2. Die Wirkung mit einem passenden Test prüfen",
+      "objectiveIds": [
+        "common-lf4-measures-check",
+        "common-lf4-measures-responsibility"
+      ],
+      "sourceIds": [
+        "lf4-nist-security-control-assessment",
+        "lf4-eu-gdpr"
+      ],
+      "paragraphs": [
+        "Formuliere vor der Prüfung ein erwartetes Ergebnis. Für die Zugriffsregel lautet es: Ein freigegebenes Service-Testkonto darf das synthetische Ticket öffnen, ein unberechtigtes Testkonto wird abgewiesen. Beide Richtungen sind nötig. Wenn niemand zugreifen kann, ist der Schutz vor Mitlesen zwar streng, die Serviceaufgabe aber blockiert.",
+        "Für Integrität wird eine freigegebene synthetische Änderung ausgeführt und geprüft, ob der erwartete Inhalt stimmt, die Änderung zugeordnet wird und unberechtigte Änderungen abgewiesen werden. Ein Änderungsprotokoll hilft beim Nachvollziehen; es ersetzt nicht die Berechtigungsprüfung oder die inhaltliche Kontrolle.",
+        "Für Verfügbarkeit wird ein synthetischer Stand in der freigegebenen Testumgebung wiederhergestellt und die benötigte Ticketfunktion geprüft. Der Papierablauf wird im vorgegebenen Umfang erprobt. Eine Meldung Sicherung erfolgreich zeigt nicht allein, dass Daten und Anwendung rechtzeitig wieder nutzbar sind. Notiere Soll, Versuch, Ist, Abweichung, Zeitpunkt und prüfende Rolle.",
+        "Eine misslungene Prüfung führt zur Korrektur oder Klärung mit der zuständigen Rolle und zu einer erneuten Prüfung. Auch nach einer Änderung an der gewählten Maßnahme passt ein altes positives Prüfergebnis nicht mehr. Die Lernübung bildet diese Logik vereinfacht ab; ihr Ergebnis bestätigt keine reale Installation."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Lernfall",
+        "text": "Der Service-Testzugang öffnet den Musterfall, der Gast-Testzugang erhält Ablehnung. Das prüft die gewünschte Trennung statt bloß eine vorhandene Rollenliste."
+      },
+      "misconception": {
+        "claim": "Eine eingerichtete Maßnahme wirkt bereits nachweislich.",
+        "correction": "Einrichtung und Wirksamkeit sind getrennte Aussagen; der passende Test liefert den Beleg für den betrachteten Fall."
+      },
+      "takeaway": "Vorher Soll nennen, passend prüfen, Abweichungen und Zuständigkeit festhalten."
+    },
+    {
+      "id": "common-lf4-measures-practice",
+      "title": "3. Modellvorgaben für deine Schutzbedarfsanalyse",
+      "objectiveIds": [
+        "common-lf4-measures-select",
+        "common-lf4-measures-check",
+        "common-lf4-measures-responsibility"
+      ],
+      "sourceIds": [
+        "lf4-nist-confidentiality",
+        "lf4-nist-integrity",
+        "lf4-nist-availability",
+        "lf4-nist-asset",
+        "lf4-nist-threat",
+        "lf4-nist-vulnerability",
+        "lf4-nist-impact",
+        "lf4-nist-risk",
+        "lf4-nist-security-policy",
+        "lf4-nist-security-control-assessment",
+        "lf4-eu-gdpr"
+      ],
+      "paragraphs": [
+        "Die Aufgabe betrachtet ausdrücklich das Ticketsystem am fiktiven Servicearbeitsplatz. Der Ablauf lautet Serviceanfragen bearbeiten. Die Abhängigkeit verläuft über Ticketanwendung, Server, Netz, Client und Stromversorgung. Name, dienstlicher Rückrufkontakt, Gerät und sachliche Fehlerbeschreibung dienen der Servicebearbeitung; zusätzliche private Angaben und ein ungeklärter Marketingexport gehören nicht dazu.",
+        "Wähle in der Modellübung die vorgegebenen Schäden und die passenden Kategorien je Schutzziel. Der eigene Übungsmaßstab lautet normal bei begrenzten, überschaubar behebbaren Folgen; hoch bei erheblichen Kunden- oder Betriebsfolgen; sehr hoch bei Existenzbedrohung oder Lebensgefahr. Vertraulichkeit ist hoch, weil offengelegte Kundenvorgänge erhebliche Vertrags- und Vertrauensfolgen auslösen. Integrität ist hoch, weil verfälschte Freigaben falsche Einsätze und erhebliche Nacharbeit verursachen.",
+        "Verfügbarkeit ist für das vorgegebene Szenario normal: Ein zweistündiger Ausfall lässt sich mit dem freigegebenen, für vier Stunden ausreichenden Papierablauf überbrücken; es bleibt eine begrenzte Verzögerung. Lebensgefahr und Existenzbedrohung sind in diesem Fall ausgeschlossen. Ohne diesen Ersatz oder bei einer längeren Unterbrechung muss die Einstufung neu geprüft werden. Wahrscheinlichkeit wird getrennt betrachtet und ist keine Begründung, einen erheblichen möglichen Schaden niedrig einzustufen.",
+        "Das passende Maßnahmenpaket verbindet freigegebene Rollenrechte, abgesicherte nachvollziehbare Änderungen und getestete Wiederherstellung mit dem Papierersatz. Der passende Prüfansatz verbindet erlaubtes und abgewiesenes Testkonto, eine kontrollierte synthetische Änderung sowie Wiederherstellungs- und Ersatzablaufprüfung. Die Zuständigkeit verbindet Edas betriebliche Freigabe mit Sams freigegebener technischer Umsetzung. Mira erfasst die Analyse und begründet den Vorschlag.",
+        "Lies zuerst die Vorgaben und wähle Objekt, Abhängigkeit, drei Einstufungen samt Schadensgründen, den Umgang mit Wahrscheinlichkeit, Maßnahmen, Prüfung und Zuständigkeit. Lass die Auswahl lokal prüfen. Bei Rückmeldung korrigierst du und prüfst erneut. Nach Änderungen ist eine erneute Prüfung nötig. Erst ein erfolgreiches Ergebnis und deine bewusste Bestätigung schließen die Praxis ab. Lies danach das gespeicherte Ergebnis und notiere eine eigene Beobachtung. Die Modellantworten sind begrenzt; reale Daten oder Konfigurationen werden nicht verwendet."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Lernfall",
+        "text": "Die Modellanalyse verbindet hoch / hoch / normal mit drei konkreten Schadensgründen, dem begrenzten Ersatzablauf und einem prüfbaren Maßnahmenpaket."
+      },
+      "misconception": {
+        "claim": "Eine richtige Kategorienfolge beweist bereits eine abgeschlossene Schutzbedarfsanalyse.",
+        "correction": "Objekt, Abhängigkeit, Begründung, Maßnahmen, Prüfweg und Zuständigkeit fehlen dann noch."
+      },
+      "takeaway": "Führe die Begründung bis zur prüfbaren Wirkung und klaren Verantwortung fort."
+    },
+    {
+      "id": "common-lf4-measures-review",
+      "title": "4. Alle fünf LF4-Themen im Servicefall verbinden",
+      "objectiveIds": [
+        "common-lf4-measures-select",
+        "common-lf4-measures-check",
+        "common-lf4-measures-responsibility"
+      ],
+      "sourceIds": [
+        "lf4-nist-confidentiality",
+        "lf4-nist-integrity",
+        "lf4-nist-availability",
+        "lf4-nist-asset",
+        "lf4-nist-threat",
+        "lf4-nist-vulnerability",
+        "lf4-nist-impact",
+        "lf4-nist-risk",
+        "lf4-nist-security-policy",
+        "lf4-nist-security-control-assessment",
+        "lf4-eu-gdpr"
+      ],
+      "paragraphs": [
+        "1. Vertraulichkeit, Integrität und Verfügbarkeit: Frage, wer Ticketdaten sehen darf, welche Freigaben korrekt bleiben müssen und wann Befugte arbeiten können. Gastablehnung kann eine richtige Schutzwirkung sein. Die fiktive Leitlinie verlangt Zugriff für zuständige Rollen, zuordenbare Änderungen und geordnete Arbeit bei kurzen Ausfällen. Daraus folgen Sperren, persönliches Konto und freigegebener Ersatzablauf.",
+        "2. Schutzobjekte, Bedrohungen und Schäden: Erfasse Ticketdaten, Anwendung, Client/Server/Netz und Servicebüro. Verbinde Servicebearbeitung → Ticketanwendung → Server, Netz und Client → Versorgung. Ein möglicher unbefugter Blick ist eine Bedrohung, der entsperrte unbeaufsichtigte Bildschirm eine Schwäche und der bekannt gewordene Kundenvorgang eine Schadensfolge. Ein zweiter Client beseitigt keinen gemeinsamen Serverausfall.",
+        "3. Personenbezogene Daten: Kontaktkennung und dienstlicher Rückrufkontakt können Personenbezug haben. Im Fall werden notwendige Angaben für Service und Rückmeldung genutzt. Datenumfang und Empfänger müssen zu dieser freigegebenen Aufgabe passen. Bei einem neuen Marketingexport hält Mira Zweck, Daten, Empfänger und offene Befugnis fest und bezieht Eda sowie die Datenschutz-Ansprechperson ein. Technischer Zugriff ersetzt keine Rechtsgrundlage.",
+        "4. Schutzbedarf: Die Fallkriterien lauten normal für begrenzte Folgen, hoch für erhebliche Kunden-/Betriebsfolgen, sehr hoch für Existenzbedrohung oder Lebensgefahr. Die konkrete Bewertung ist Vertraulichkeit hoch wegen erheblicher Vertrags-/Vertrauensfolgen; Integrität hoch wegen verfälschter Freigaben mit erheblicher Nacharbeit; Verfügbarkeit normal für zwei Stunden Ausfall mit funktionierendem vierstündigem Papierersatz. Die Wahrscheinlichkeit eines Ereignisses bleibt eine getrennte Größe. Annahmen und Abhängigkeiten werden dokumentiert und bei Änderungen überprüft.",
+        "5. Maßnahmen und Nachweis: Rollenrechte begrenzen Offenlegung; abgesicherte Änderungen mit Verlauf unterstützen Integrität; geprüfte Wiederherstellung und Papierersatz begrenzen Ausfallfolgen. Prüfe mit berechtigtem und unberechtigtem synthetischem Testkonto, einer kontrollierten Änderung sowie Wiederherstellung und Ersatzablauf. Vorhandene Einstellungen oder eine grüne Sicherungsmeldung genügen nicht als Wirkungsbeleg. Eda gibt den betrieblichen Rahmen frei, Sam setzt genehmigte Technik um, Mira dokumentiert und klärt Abweichungen.",
+        "Eine vollständige Übergabe nennt Schutzobjekt, Zweck, relevante Daten, Abhängigkeit, Schäden, Kriterien, drei Kategorien, Annahmen, Maßnahmen, Soll-/Ist-Test und Zuständigkeit. Die lokale Modellübung übt diese Verbindung durch begrenzte Auswahlentscheidungen. Ein fehlerhafter oder nachträglich geänderter Stand wird erneut geprüft. Ein positives Ergebnis wird erst nach eigener Durchsicht bewusst bestätigt; es ist kein Nachweis einer echten Sicherheitskonfiguration."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Lernfall",
+        "text": "Miras Übergabe erklärt nicht nur hoch / hoch / normal, sondern warum die Kategorien gelten und wie Sam und Eda die vorgeschlagenen Maßnahmen kontrollieren."
+      },
+      "misconception": {
+        "claim": "Ein Maßnahmenname ersetzt den Rückblick auf Bedarf, Personenbezug und Abhängigkeiten.",
+        "correction": "Ohne diese Zusammenhänge ist weder Eignung noch Wirkung oder Befugnis nachvollziehbar."
+      },
+      "takeaway": "Eine gute Analyse verbindet alle fünf Themen zu einer begründeten, überprüfbaren Entscheidung."
+    }
+  ],
+  "questionFile": "questions/common-lf4-measures.v1.csv",
+  "quiz": {
+    "questionIds": [
+      "LJ-LF4-MEASURES-Q01",
+      "LJ-LF4-MEASURES-Q02",
+      "LJ-LF4-MEASURES-Q03",
+      "LJ-LF4-MEASURES-Q04",
+      "LJ-LF4-MEASURES-Q05",
+      "LJ-LF4-MEASURES-Q06"
+    ]
+  },
+  "exam": {
+    "questionIds": [
+      "LJ-LF4-MEASURES-E01",
+      "LJ-LF4-MEASURES-E02",
+      "LJ-LF4-MEASURES-E03",
+      "LJ-LF4-MEASURES-E04",
+      "LJ-LF4-MEASURES-E05",
+      "LJ-LF4-MEASURES-E06",
+      "LJ-LF4-MEASURES-E07",
+      "LJ-LF4-MEASURES-E08"
+    ],
+    "passPercent": 80,
+    "scoring": "all-or-nothing-per-question",
+    "timed": false
+  },
+  "questionLinks": [
+    {
+      "questionId": "LJ-LF4-MEASURES-Q01",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf4-measures-select"
+      ],
+      "blockIds": [
+        "common-lf4-measures-select"
+      ]
+    },
+    {
+      "questionId": "LJ-LF4-MEASURES-Q02",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf4-measures-select"
+      ],
+      "blockIds": [
+        "common-lf4-measures-select"
+      ]
+    },
+    {
+      "questionId": "LJ-LF4-MEASURES-Q03",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf4-measures-check"
+      ],
+      "blockIds": [
+        "common-lf4-measures-check"
+      ]
+    },
+    {
+      "questionId": "LJ-LF4-MEASURES-Q04",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf4-measures-check"
+      ],
+      "blockIds": [
+        "common-lf4-measures-check"
+      ]
+    },
+    {
+      "questionId": "LJ-LF4-MEASURES-Q05",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf4-measures-responsibility"
+      ],
+      "blockIds": [
+        "common-lf4-measures-select",
+        "common-lf4-measures-check"
+      ]
+    },
+    {
+      "questionId": "LJ-LF4-MEASURES-Q06",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf4-measures-select",
+        "common-lf4-measures-check",
+        "common-lf4-measures-responsibility"
+      ],
+      "blockIds": [
+        "common-lf4-measures-practice"
+      ]
+    },
+    {
+      "questionId": "LJ-LF4-MEASURES-E01",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf4-measures-select"
+      ],
+      "blockIds": [
+        "common-lf4-measures-select",
+        "common-lf4-measures-review"
+      ]
+    },
+    {
+      "questionId": "LJ-LF4-MEASURES-E02",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf4-measures-select"
+      ],
+      "blockIds": [
+        "common-lf4-measures-select",
+        "common-lf4-measures-review"
+      ]
+    },
+    {
+      "questionId": "LJ-LF4-MEASURES-E03",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf4-measures-responsibility"
+      ],
+      "blockIds": [
+        "common-lf4-measures-select",
+        "common-lf4-measures-review"
+      ]
+    },
+    {
+      "questionId": "LJ-LF4-MEASURES-E04",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf4-measures-select"
+      ],
+      "blockIds": [
+        "common-lf4-measures-practice",
+        "common-lf4-measures-review"
+      ]
+    },
+    {
+      "questionId": "LJ-LF4-MEASURES-E05",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf4-measures-select"
+      ],
+      "blockIds": [
+        "common-lf4-measures-check",
+        "common-lf4-measures-review"
+      ]
+    },
+    {
+      "questionId": "LJ-LF4-MEASURES-E06",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf4-measures-check"
+      ],
+      "blockIds": [
+        "common-lf4-measures-check",
+        "common-lf4-measures-review"
+      ]
+    },
+    {
+      "questionId": "LJ-LF4-MEASURES-E07",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf4-measures-check"
+      ],
+      "blockIds": [
+        "common-lf4-measures-check",
+        "common-lf4-measures-review"
+      ]
+    },
+    {
+      "questionId": "LJ-LF4-MEASURES-E08",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf4-measures-responsibility"
+      ],
+      "blockIds": [
+        "common-lf4-measures-practice",
+        "common-lf4-measures-review"
+      ]
+    }
+  ],
+  "interview": [
+    {
+      "id": "common-lf4-measures-talk-measures",
+      "prompt": "Wähle für hohen Vertraulichkeitsbedarf eine Maßnahme und einen passenden Wirkungstest. Trenne deinen Vorschlag von Freigabe und Umsetzung.",
+      "objectiveIds": [
+        "common-lf4-measures-select",
+        "common-lf4-measures-check",
+        "common-lf4-measures-responsibility"
+      ],
+      "blockIds": [
+        "common-lf4-measures-select",
+        "common-lf4-measures-check"
+      ],
+      "keyPoints": [
+        "Rollenrechte aus Schutzbedarf und Aufgabe ableiten.",
+        "Berechtigten und unberechtigten synthetischen Zugang testen.",
+        "Eda für Rollenbedarf und Sam für freigegebene Umsetzung nennen."
+      ],
+      "acceptableAlternatives": [
+        "Eine fachlich gleichwertige, anhand der Fallvorgaben begründete Erklärung."
+      ],
+      "misconceptions": [
+        "Eine vorhandene Einstellung mit einem Wirksamkeitsnachweis gleichsetzen."
+      ],
+      "sampleAnswer": "Ich schlage Rollenrechte vor, damit zuständige Personen die benötigten Tickets öffnen können und fremde Rollen abgewiesen werden. Eda bestätigt den Rollenbedarf und Sam setzt die Freigabe um. Der Test umfasst beide Rollen und vergleicht Soll und Ist.",
+      "followUp": "Warum genügt die bloße Anzeige einer Rollenliste nicht?"
+    },
+    {
+      "id": "common-lf4-measures-talk-practice",
+      "prompt": "Bearbeite die lokale Schutzbedarfsanalyse anhand der sichtbaren Vorgaben. Erkläre anschließend eine Auswahl, eine Rückmeldung und die zugehörige Verbesserung.",
+      "objectiveIds": [
+        "common-lf4-measures-select",
+        "common-lf4-measures-check",
+        "common-lf4-measures-responsibility"
+      ],
+      "blockIds": [
+        "common-lf4-measures-select",
+        "common-lf4-measures-check",
+        "common-lf4-measures-practice"
+      ],
+      "keyPoints": [
+        "Ticketsystem und Abhängigkeit auswählen.",
+        "Drei Kategorien mit jeweiligen Schadensgründen und Ersatzannahme verbinden.",
+        "Wahrscheinlichkeit von Schadensausmaß trennen.",
+        "Maßnahmenpaket, passenden Test und Zuständigkeit auswählen.",
+        "Prüfen, gegebenenfalls verbessern, erneut prüfen und bewusst bestätigen."
+      ],
+      "acceptableAlternatives": [
+        "Eine fachlich gleichwertige, anhand der Fallvorgaben begründete Erklärung."
+      ],
+      "misconceptions": [
+        "Die Kategorienfolge ohne Gründe, Prüfnachweis und Zuständigkeit als vollständige Analyse ausgeben."
+      ],
+      "sampleAnswer": "Notizvorlage nach eigener Bearbeitung: Ich habe das Ticketsystem und seinen Abhängigkeitsweg gewählt. Ich ergänze hier meine tatsächlich gewählte Einstufung samt Schadensgrund, eine erhaltene Rückmeldung und eine daraus abgeleitete Verbesserung. Ich habe Maßnahmen, Prüfung und Zuständigkeit verbunden und das Ergebnis durchgesehen. Diese Vorlage bestätigt keine Durchführung.",
+      "followUp": "Welche Annahme begrenzt deine Verfügbarkeitseinstufung, und wann würdest du sie neu prüfen?",
+      "practice": {
+        "task": "Bearbeite die geführte lokale Schutzbedarfsanalyse für das fiktive Ticketsystem am Servicearbeitsplatz. Lies die sichtbaren Kriterien und Annahmen: Servicebearbeitung benötigt Anwendung, Server, Netz, Client und Stromversorgung; erhebliche Offenlegungsfolgen begründen Vertraulichkeit hoch, verfälschte Freigaben mit erheblicher Nacharbeit Integrität hoch. Für den vorgegebenen zweistündigen Ausfall begrenzt der freigegebene vierstündige Papierablauf den Schaden auf normal. Wähle je Ziel auch den passenden Schadensgrund und trenne Wahrscheinlichkeit von Schadensausmaß. Ergänze das Paket aus Rollenrechten, abgesicherten nachvollziehbaren Änderungen und getesteter Wiederherstellung samt Papierersatz. Ordne den passenden Prüfansatz mit erlaubtem und abgewiesenem Testkonto, kontrollierter synthetischer Änderung, Wiederherstellung und Ersatzablauf sowie Edas Freigabe und Sams technischer Umsetzung zu. Prüfe die Auswahl, nutze die Rückmeldung und prüfe nach jeder Änderung erneut. Bestätige erst nach Erfolg und eigener Durchsicht. Lies das gespeicherte Ergebnis und notiere eine eigene Beobachtung mit Verbesserung. Die Auswahl und Auswertung erfolgen im begrenzten Modell; echte Sicherheitskonfigurationen und personenbezogene Daten werden nicht verwendet.",
+        "checklist": [
+          "Ich habe Objekt und Abhängigkeit anhand der Modellvorgaben ausgewählt.",
+          "Ich habe alle drei Einstufungen mit passenden Schadensgründen und der begrenzten Ersatzannahme verbunden.",
+          "Ich habe Schadensausmaß und Eintrittswahrscheinlichkeit getrennt.",
+          "Ich habe Maßnahmenpaket, Wirksamkeitsprüfung und zuständige Rollen passend zugeordnet.",
+          "Ich habe die aktuelle Auswahl erfolgreich geprüft, das Ergebnis gelesen und eine eigene Beobachtung mit Verbesserung notiert."
+        ],
+        "confirmation": "Ich bestätige, dass ich die Modellanalyse selbst bearbeitet, die Rückmeldungen nachvollzogen und den aktuellen Stand erfolgreich geprüft habe. Ich habe das Ergebnis gelesen und meine Beobachtung ergänzt. Das ist meine Selbstbestätigung einer Simulation, kein Nachweis einer echten Sicherheitskonfiguration."
+      }
+    },
+    {
+      "id": "common-lf4-measures-talk-review",
+      "prompt": "Verbinde alle fünf LF4-Themen in einer Übergabe der Serviceanalyse: Ziele, Schutzobjekte/Szenario, Personenbezug, begründeter Bedarf und Maßnahmen mit Prüfung/Zuständigkeit.",
+      "objectiveIds": [
+        "common-lf4-measures-select",
+        "common-lf4-measures-check",
+        "common-lf4-measures-responsibility"
+      ],
+      "blockIds": [
+        "common-lf4-measures-review"
+      ],
+      "keyPoints": [
+        "CIA und konkrete Leitlinienregeln erklären.",
+        "Daten, Anwendung, Geräte, Raum sowie Bedrohung/Schwäche/Folge unterscheiden.",
+        "Servicezweck und nötigen Datenumfang nennen, neue Befugnis zuständig klären.",
+        "Hoch/hoch/normal mit Schadenskriterien, Ersatzannahme und getrennter Wahrscheinlichkeit begründen.",
+        "Maßnahmen, Soll-/Ist-Prüfung und Rollen verbinden."
+      ],
+      "acceptableAlternatives": [
+        "Eine fachlich gleichwertige, anhand der Fallvorgaben begründete Erklärung."
+      ],
+      "misconceptions": [
+        "Maßnahmen ohne Zweck, Schadensbegründung und Zuständigkeit auflisten."
+      ],
+      "sampleAnswer": "Der Service benötigt vertrauliche, richtige und rechtzeitig nutzbare Tickets. Ich erfasse Daten, Anwendung, Geräte und Raum samt Server-/Netzabhängigkeit. Der offene Bildschirm begünstigt unbefugte Einsicht. Kontaktangaben dienen dem Service; andere Zwecke klären Eda und Datenschutz-Ansprechperson. Nach Fallkriterien begründe ich hoch/hoch/normal mit Offenlegungsfolgen, falschen Freigaben und begrenztem Papierersatz. Rollenrechte, abgesicherte Änderungen und Wiederherstellung werden passend getestet; Eda gibt fachlich frei, Sam setzt um und ich dokumentiere.",
+      "followUp": "Welcher geänderte Befund würde deine Analyse neu öffnen, obwohl sie heute erfolgreich geprüft wurde?"
+    }
+  ],
+  "cards": [
+    {
+      "id": "common-lf4-measures-card-select",
+      "front": "Wie leitest du eine Maßnahme ab?",
+      "back": "Benannten Schaden und Schutzziel betrachten, passende Wirkung wählen und betriebliche Freigabe sowie Umsetzung klären.",
+      "objectiveIds": [
+        "common-lf4-measures-select"
+      ],
+      "blockIds": [
+        "common-lf4-measures-select"
+      ]
+    },
+    {
+      "id": "common-lf4-measures-card-combine",
+      "front": "Welche Maßnahmen verbindet das Modellpaket?",
+      "back": "Rollenrechte, abgesicherte nachvollziehbare Änderungen und getestete Wiederherstellung mit freigegebenem Papierersatz.",
+      "objectiveIds": [
+        "common-lf4-measures-select"
+      ],
+      "blockIds": [
+        "common-lf4-measures-select",
+        "common-lf4-measures-practice"
+      ]
+    },
+    {
+      "id": "common-lf4-measures-card-access-test",
+      "front": "Welche zwei Ergebnisse braucht der Zugriffstest?",
+      "back": "Berechtigtes Service-Testkonto kann die vorgesehene Funktion nutzen; unberechtigtes Testkonto wird abgewiesen.",
+      "objectiveIds": [
+        "common-lf4-measures-check"
+      ],
+      "blockIds": [
+        "common-lf4-measures-check"
+      ]
+    },
+    {
+      "id": "common-lf4-measures-card-restore-test",
+      "front": "Wie wird Wiederherstellung sinnvoll geprüft?",
+      "back": "Synthetischen Stand in freigegebener Testumgebung zurückspielen und benötigte Funktion sowie Ersatzablauf mit dem Soll vergleichen.",
+      "objectiveIds": [
+        "common-lf4-measures-check"
+      ],
+      "blockIds": [
+        "common-lf4-measures-check"
+      ]
+    },
+    {
+      "id": "common-lf4-measures-card-owner",
+      "front": "Wer ist im Fall wofür zuständig?",
+      "back": "Mira dokumentiert und schlägt vor, Eda bestätigt betrieblichen Bedarf, Sam setzt freigegebene Technik um; Datenschutzfragen gehen an die zuständige Ansprechperson.",
+      "objectiveIds": [
+        "common-lf4-measures-responsibility"
+      ],
+      "blockIds": [
+        "common-lf4-measures-select",
+        "common-lf4-measures-practice"
+      ]
+    },
+    {
+      "id": "common-lf4-measures-card-review",
+      "front": "Was verbindet die vollständige LF4-Analyse?",
+      "back": "Schutzziele, Objekt und Abhängigkeit, Personenbezug/Zweck, getrennt begründete Kategorien, Annahmen, Maßnahmen, Wirkungstest und Verantwortung.",
+      "objectiveIds": [
+        "common-lf4-measures-select",
+        "common-lf4-measures-check",
+        "common-lf4-measures-responsibility"
+      ],
+      "blockIds": [
+        "common-lf4-measures-review"
+      ]
+    }
+  ],
+  "review": {
+    "status": "reviewed",
+    "checkedAt": "2026-11-16"
+  },
+  "fieldReview": {
+    "fieldId": "LF4",
+    "topicIds": [
+      "common-lf4-goals",
+      "common-lf4-assets",
+      "common-lf4-privacy",
+      "common-lf4-assessment",
+      "common-lf4-measures"
+    ],
+    "blockIds": [
+      "common-lf4-measures-review"
+    ],
+    "interviewIds": [
+      "common-lf4-measures-talk-review"
+    ],
+    "questionIds": [
+      "LJ-LF4-MEASURES-E01",
+      "LJ-LF4-MEASURES-E02",
+      "LJ-LF4-MEASURES-E03",
+      "LJ-LF4-MEASURES-E04",
+      "LJ-LF4-MEASURES-E05",
+      "LJ-LF4-MEASURES-E06",
+      "LJ-LF4-MEASURES-E07",
+      "LJ-LF4-MEASURES-E08"
+    ]
+  }
+}

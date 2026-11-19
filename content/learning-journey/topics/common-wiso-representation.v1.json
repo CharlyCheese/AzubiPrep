@@ -1,0 +1,496 @@
+{
+  "schemaVersion": 1,
+  "id": "common-wiso-representation",
+  "version": "1.0.0",
+  "title": "Tarifverträge und betriebliche Mitbestimmung",
+  "fieldId": "WISO",
+  "scope": "common",
+  "prerequisites": [
+    "common-wiso-employment",
+    "common-lf1-organization"
+  ],
+  "sourceIds": [
+    "kmk-wiso-2021",
+    "tvg-wiso",
+    "betrvg-wiso",
+    "bag-strike-peace",
+    "bpb-strike-faq"
+  ],
+  "sources": [
+    {
+      "id": "kmk-wiso-2021",
+      "title": "KMK-Qualifikationsprofil Wirtschafts- und Sozialkunde vom 17.06.2021",
+      "url": "https://www.kmk.org/fileadmin/Dateien/veroeffentlichungen_beschluesse/2021/2021_06_17-Berufsschule-Unterricht-Wirtschafts-Sozialkunde.pdf",
+      "checkedAt": "2026-11-11",
+      "note": "Öffentliches KMK-Qualifikationsprofil: curricularer Bezug. Erklärungen, Fälle und Aufgaben eigenständig formuliert."
+    },
+    {
+      "id": "tvg-wiso",
+      "title": "Tarifvertragsgesetz – Tarifparteien, Bindung und Wirkung",
+      "url": "https://www.gesetze-im-internet.de/tvg/BJNR700550949.html",
+      "checkedAt": "2026-11-11",
+      "note": "§§ 1–5: Tarifvertragsparteien, beiderseitige Bindung und Geltungsbereich, günstigere Abreden, Allgemeinverbindlichkeit."
+    },
+    {
+      "id": "betrvg-wiso",
+      "title": "Betriebsverfassungsgesetz – Interessenvertretung und Beteiligung",
+      "url": "https://www.gesetze-im-internet.de/betrvg/BJNR000130972.html",
+      "checkedAt": "2026-11-11",
+      "note": "Insbesondere §§ 60, 70, 74, 77 und 87. Fälle betreffen einen privaten Betrieb im Anwendungsbereich des BetrVG mit bestehendem Betriebsrat und bestehender JAV."
+    },
+    {
+      "id": "bag-strike-peace",
+      "title": "Bundesarbeitsgericht, Urteil 26.07.2016 – 1 AZR 160/14",
+      "url": "https://www.bundesarbeitsgericht.de/entscheidung/1-azr-160-14/",
+      "checkedAt": "2026-11-11",
+      "note": "Tariflich regelbare Ziele und Friedenspflicht; keine pauschale Rechtmäßigkeitsgarantie für einen konkreten Streik."
+    },
+    {
+      "id": "bpb-strike-faq",
+      "title": "Bundeszentrale für politische Bildung – FAQ: Was ist ein Streik?",
+      "url": "https://www.bpb.de/kurz-knapp/hintergrund-aktuell/547428/faq-was-ist-ein-streik/",
+      "checkedAt": "2026-11-11",
+      "note": "Eigene öffentliche Erläuterung der Bundeszentrale zu gewerkschaftlicher Organisation, Verhältnismäßigkeit und innergewerkschaftlichen Urabstimmungen; aktuelle Abrufprüfung am angegebenen Datum."
+    }
+  ],
+  "objectives": [
+    {
+      "id": "common-wiso-representation-roles",
+      "text": "Aufgaben von Gewerkschaft, Arbeitgeberverband, Betriebsrat und Jugend- und Auszubildendenvertretung unterscheiden."
+    },
+    {
+      "id": "common-wiso-representation-scope",
+      "text": "An einem vorgegebenen Fall tarifliche Regelungen und betriebliche Beteiligungsrechte auseinanderhalten."
+    },
+    {
+      "id": "common-wiso-representation-conflict",
+      "text": "Den Weg einer tariflichen Auseinandersetzung mit ihren rechtlichen Grenzen beschreiben."
+    }
+  ],
+  "caseStudy": {
+    "title": "Arbeitszeiten bei Knotenpunkt",
+    "text": "Im fiktiven privaten IT-Betrieb Knotenpunkt bestehen ein Betriebsrat und eine Jugend- und Auszubildendenvertretung (JAV). Der Arbeitgeber ist im Fall tarifgebunden. Lea möchte die Lage der Arbeitszeit mitgestalten; Mira sammelt Ausbildungsanliegen. Parallel verhandelt eine Gewerkschaft über Entgelte. Die Fälle gelten für Deutschland, geprüft am 11.11.2026; öffentlicher Dienst und kirchliche Sonderordnungen werden nicht behandelt."
+  },
+  "blocks": [
+    {
+      "id": "common-wiso-representation-actors",
+      "title": "1. Vier Rollen auseinanderhalten",
+      "objectiveIds": [
+        "common-wiso-representation-roles"
+      ],
+      "sourceIds": [
+        "tvg-wiso",
+        "betrvg-wiso"
+      ],
+      "paragraphs": [
+        "Gewerkschaften vertreten Arbeitnehmerinteressen und können als Tarifvertragspartei mit einzelnen Arbeitgebern oder Arbeitgeberverbänden Tarifverträge schließen (§ 2 TVG). Ein Arbeitgeberverband bündelt Arbeitgeberinteressen; bei Tarifverhandlungen steht er auf Arbeitgeberseite. Die Tarifparteien handeln beispielsweise Entgelt- und Arbeitszeitregelungen aus.",
+        "Der Betriebsrat ist die gewählte betriebliche Interessenvertretung. Er hat gesetzliche Informations-, Beratungs- und Mitbestimmungsrechte. Er ist nicht als Betriebsrat Partei eines Tarifvertrags. Eine Betriebsvereinbarung wird zwischen Arbeitgeber und Betriebsrat geschlossen und ist vom Tarifvertrag zu unterscheiden.",
+        "Die JAV vertritt im Rahmen des BetrVG besondere Belange jugendlicher Beschäftigter und der zu ihrer Berufsausbildung Beschäftigten. Die Aufgabe ist nicht auf Auszubildende unter 18 begrenzt. Nach § 70 nimmt sie Anregungen auf, beantragt Maßnahmen beim Betriebsrat und wirkt über ihn auf Lösungen hin.",
+        "Im Lernfall bestehen beide Gremien bereits. Ihre Existenz wird nicht für jeden Betrieb vorausgesetzt. Für Errichtung, Wahl und Zuständigkeit gelten gesetzliche Bedingungen; im öffentlichen Dienst ist statt des Betriebsrats regelmäßig Personalvertretungsrecht zu prüfen."
+      ],
+      "example": {
+        "title": "Die passende Vertretung",
+        "text": "Mira trägt ein gemeinsames Ausbildungsproblem an die JAV heran. Die JAV bündelt es und beantragt eine Maßnahme beim Betriebsrat. Eine branchenweite Tariferhöhung wird hingegen von Gewerkschaft und Arbeitgeberseite verhandelt."
+      },
+      "misconception": {
+        "claim": "Betriebsrat und Gewerkschaft sind dieselbe Organisation.",
+        "correction": "Sie können zusammenarbeiten, haben aber unterschiedliche Rechtsstellung und Aufgaben."
+      },
+      "takeaway": "Gewerkschaft und Arbeitgeberseite verhandeln Tarife; Betriebsrat und JAV vertreten betriebliche Anliegen."
+    },
+    {
+      "id": "common-wiso-representation-scope",
+      "title": "2. Wann greift ein Tarifvertrag?",
+      "objectiveIds": [
+        "common-wiso-representation-scope"
+      ],
+      "sourceIds": [
+        "tvg-wiso",
+        "betrvg-wiso"
+      ],
+      "paragraphs": [
+        "Für die unmittelbare und zwingende Wirkung tariflicher Arbeitsbedingungen sind im Grundfall beide Seiten tarifgebunden und vom räumlichen, fachlichen, persönlichen und zeitlichen Geltungsbereich erfasst (§§ 3 und 4 TVG). Beispiel: tarifgebundener Arbeitgeber und Mitglied der tarifschließenden Gewerkschaft im passenden Bereich.",
+        "Tarifliche Regeln können auch durch Bezugnahme im Arbeitsvertrag angewendet werden. Eine Allgemeinverbindlicherklärung ist ein weiterer gesetzlicher Weg. Deshalb beweist fehlende Gewerkschaftsmitgliedschaft allein nicht, dass ein Tarifvertrag bedeutungslos ist. Umgekehrt begründet das bloße Arbeiten in einer Branche nicht schon die behauptete Tarifbindung.",
+        "Nach § 4 Absatz 3 TVG sind günstigere individuelle Abreden möglich; auch tariflich ausdrücklich gestattete Abweichungen sind zu prüfen. Der Günstigkeitsvergleich betrifft zusammenhängende Regelungen und ist kein beliebiges Zusammenpicken aller Vorteile.",
+        "Tarifvertrag und Betriebsvereinbarung sind keine austauschbaren Regelungswege. § 77 Absatz 3 BetrVG setzt betrieblicher Regelung tariflich geregelter oder üblicherweise tariflich geregelter Entgelte und Arbeitsbedingungen Grenzen, sofern keine Öffnung besteht. Eine geplante betriebliche Regelung muss deshalb auf gesetzliche und tarifliche Vorgaben geprüft werden."
+      ],
+      "example": {
+        "title": "Den Geltungsbereich lesen",
+        "text": "Der erfundene Tarifvertrag gilt für bestimmte Betriebe und Tätigkeiten. Lea prüft Tarifbindung und Geltungsbereich, bevor sie eine darin genannte Entgeltgruppe auf ihren Vertrag überträgt."
+      },
+      "misconception": {
+        "claim": "Ein Tarifvertrag gilt für jede Person in derselben Branche gleich.",
+        "correction": "Bindung, Geltungsbereich und gegebenenfalls andere Anwendungswege müssen geklärt werden."
+      },
+      "takeaway": "Tarifwirkung folgt aus Bindung und Geltungsbereich oder einem anderen passenden Anwendungsweg."
+    },
+    {
+      "id": "common-wiso-representation-participation",
+      "title": "3. Betriebliche Mitbestimmung anwenden",
+      "objectiveIds": [
+        "common-wiso-representation-roles",
+        "common-wiso-representation-scope"
+      ],
+      "sourceIds": [
+        "betrvg-wiso"
+      ],
+      "paragraphs": [
+        "§ 87 BetrVG nennt soziale Angelegenheiten, in denen der Betriebsrat mitbestimmt, soweit keine gesetzliche oder tarifliche Regelung besteht. Dazu gehören Beginn und Ende der täglichen Arbeitszeit einschließlich Pausen und die Verteilung auf Wochentage. Gesetzliche Grenzen und anwendbare Tarifregeln bleiben dabei maßgeblich.",
+        "Der Fall unterscheidet die tariflich vorgegebene Wochenstundenzahl von ihrer noch offenen Verteilung im Betrieb. Ist die Lage der Arbeitszeit nicht bereits abschließend geregelt, gestalten Arbeitgeber und Betriebsrat sie im Rahmen des Mitbestimmungsrechts gemeinsam. Der Betriebsrat setzt damit nicht eigenständig eine neue tarifliche Wochenstundenzahl fest.",
+        "Kommt bei einer Angelegenheit nach § 87 keine Einigung zustande, entscheidet die Einigungsstelle. Sie ist ein betriebsverfassungsrechtliches Konfliktverfahren und keine neue Tarifvertragspartei. Der Betriebsrat soll Konflikte nicht durch einen eigenen Streikaufruf als Organ lösen.",
+        "Mira kann Ausbildungsanliegen der JAV schildern. Diese wirkt über den Betriebsrat auf eine Lösung hin. Sachliche Angaben wie betroffene Gruppen, bisherige Abläufe und gewünschte Verbesserungen helfen, das Anliegen zu prüfen."
+      ],
+      "example": {
+        "title": "Eine offene Lagefrage",
+        "text": "Die Wochenstundenzahl ist tariflich festgelegt, die tägliche Verteilung bleibt offen. Der Arbeitgeber möchte den Arbeitsbeginn verschieben. Der vorhandene Betriebsrat ist nach § 87 Absatz 1 Nummer 2 im beschriebenen Regelungsspielraum zu beteiligen."
+      },
+      "misconception": {
+        "claim": "Tarifliche Wochenstundenzahl und tägliche Verteilung sind dieselbe Regelung.",
+        "correction": "Eine Tarifnorm kann die Dauer vorgeben, während bei der Lage noch betrieblicher Gestaltungsspielraum besteht."
+      },
+      "takeaway": "Bestimme die offene Frage und prüfe gesetzliche sowie tarifliche Grenzen des Beteiligungsrechts."
+    },
+    {
+      "id": "common-wiso-representation-conflict",
+      "title": "4. Tarifliche Auseinandersetzungen einordnen",
+      "objectiveIds": [
+        "common-wiso-representation-conflict"
+      ],
+      "sourceIds": [
+        "tvg-wiso",
+        "betrvg-wiso",
+        "bag-strike-peace",
+        "bpb-strike-faq"
+      ],
+      "paragraphs": [
+        "Eine tarifliche Auseinandersetzung beginnt typischerweise mit Forderungen und Verhandlungen der Tarifparteien. Einigung führt zum Tarifabschluss. Bei offenen Konflikten können je nach Vereinbarung Schlichtung und unter rechtlichen Voraussetzungen Arbeitskampf hinzukommen. Es gibt keinen für alle Fälle gesetzlich identischen Ablauf mit vorgeschriebener Urabstimmung.",
+        "Ein Streik zur Durchsetzung von Tarifforderungen muss von einer Gewerkschaft getragen sein und tariflich regelbare Ziele verfolgen. Friedenspflicht und Verhältnismäßigkeit sind zu beachten. Die Friedenspflicht schützt insbesondere bereits tariflich geregelte Gegenstände während der einschlägigen Bindung; der genaue Umfang hängt von den Vereinbarungen ab. Auch ein Warnstreik darf sie nicht verletzen.",
+        "Die Bezeichnung Streik oder eine Abstimmung im Team macht eine Arbeitsniederlegung nicht rechtmäßig. Ob eine konkrete Maßnahme zulässig ist, hängt von Zielen, Trägerschaft, Zeitpunkt und weiteren Umständen ab. Gewerkschaftliche Regeln können Urabstimmungen vorsehen; eine feste gesetzliche Abstimmungsquote wird hier nicht behauptet.",
+        "§ 74 Absatz 2 BetrVG untersagt Arbeitskampfmaßnahmen zwischen Arbeitgeber und Betriebsrat. Das trennt die Rolle des Betriebsrats als Organ vom tariflichen Arbeitskampf. Ein Betriebsratsmitglied kann zugleich Gewerkschaftsmitglied sein; diese persönliche Rolle macht den Betriebsrat selbst nicht zum Streikveranstalter."
+      ],
+      "example": {
+        "title": "Ein Warnstreik ist kein Freibrief",
+        "text": "Über ein noch von Friedenspflicht erfasstes Entgeltthema wird gestritten. Die bloße Bezeichnung als kurzer Warnstreik beseitigt die Friedenspflicht nicht. Die Gewerkschaft muss die Voraussetzungen der Maßnahme prüfen."
+      },
+      "misconception": {
+        "claim": "Nach einer gescheiterten Besprechung darf der Betriebsrat zum Streik aufrufen.",
+        "correction": "Als Organ darf er keinen Arbeitskampf gegen den Arbeitgeber führen. Tariflicher Arbeitskampf ist von betrieblicher Mitbestimmung zu unterscheiden."
+      },
+      "takeaway": "Ordne Parteien und Ziele zu; prüfe Friedenspflicht, Trägerschaft und Verhältnismäßigkeit."
+    }
+  ],
+  "questionFile": "questions/common-wiso-representation.v1.csv",
+  "quiz": {
+    "questionIds": [
+      "LJ-WISO-REPRESENTATION-Q01",
+      "LJ-WISO-REPRESENTATION-Q02",
+      "LJ-WISO-REPRESENTATION-Q03",
+      "LJ-WISO-REPRESENTATION-Q04",
+      "LJ-WISO-REPRESENTATION-Q05",
+      "LJ-WISO-REPRESENTATION-Q06"
+    ]
+  },
+  "exam": {
+    "questionIds": [
+      "LJ-WISO-REPRESENTATION-E01",
+      "LJ-WISO-REPRESENTATION-E02",
+      "LJ-WISO-REPRESENTATION-E03",
+      "LJ-WISO-REPRESENTATION-E04",
+      "LJ-WISO-REPRESENTATION-E05",
+      "LJ-WISO-REPRESENTATION-E06",
+      "LJ-WISO-REPRESENTATION-E07",
+      "LJ-WISO-REPRESENTATION-E08"
+    ],
+    "passPercent": 80,
+    "scoring": "all-or-nothing-per-question",
+    "timed": false
+  },
+  "questionLinks": [
+    {
+      "questionId": "LJ-WISO-REPRESENTATION-Q01",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-wiso-representation-roles"
+      ],
+      "blockIds": [
+        "common-wiso-representation-actors"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-REPRESENTATION-Q02",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-wiso-representation-roles"
+      ],
+      "blockIds": [
+        "common-wiso-representation-actors"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-REPRESENTATION-Q03",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-wiso-representation-scope"
+      ],
+      "blockIds": [
+        "common-wiso-representation-scope"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-REPRESENTATION-Q04",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-wiso-representation-scope"
+      ],
+      "blockIds": [
+        "common-wiso-representation-participation"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-REPRESENTATION-Q05",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-wiso-representation-conflict"
+      ],
+      "blockIds": [
+        "common-wiso-representation-conflict"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-REPRESENTATION-Q06",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-wiso-representation-conflict",
+        "common-wiso-representation-scope"
+      ],
+      "blockIds": [
+        "common-wiso-representation-conflict",
+        "common-wiso-representation-participation"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-REPRESENTATION-E01",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-wiso-representation-roles"
+      ],
+      "blockIds": [
+        "common-wiso-representation-actors"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-REPRESENTATION-E02",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-wiso-representation-roles"
+      ],
+      "blockIds": [
+        "common-wiso-representation-actors"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-REPRESENTATION-E03",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-wiso-representation-scope"
+      ],
+      "blockIds": [
+        "common-wiso-representation-scope"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-REPRESENTATION-E04",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-wiso-representation-scope"
+      ],
+      "blockIds": [
+        "common-wiso-representation-scope"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-REPRESENTATION-E05",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-wiso-representation-scope"
+      ],
+      "blockIds": [
+        "common-wiso-representation-participation"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-REPRESENTATION-E06",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-wiso-representation-conflict"
+      ],
+      "blockIds": [
+        "common-wiso-representation-conflict"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-REPRESENTATION-E07",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-wiso-representation-conflict"
+      ],
+      "blockIds": [
+        "common-wiso-representation-conflict"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-REPRESENTATION-E08",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-wiso-representation-conflict"
+      ],
+      "blockIds": [
+        "common-wiso-representation-conflict"
+      ]
+    }
+  ],
+  "interview": [
+    {
+      "id": "common-wiso-representation-talk-1",
+      "prompt": "Mira, Lea und der Arbeitgeber benötigen verschiedene Vertretungen. Erkläre Gewerkschaft, Arbeitgeberverband, Betriebsrat und JAV anhand je einer Aufgabe.",
+      "objectiveIds": [
+        "common-wiso-representation-roles"
+      ],
+      "blockIds": [
+        "common-wiso-representation-actors"
+      ],
+      "keyPoints": [
+        "Tarifparteien auf Arbeitnehmer- und Arbeitgeberseite unterscheiden.",
+        "Betriebsrat als betriebliche Interessenvertretung erklären.",
+        "JAV bündelt besondere Anliegen und wirkt über Betriebsrat."
+      ],
+      "acceptableAlternatives": [
+        "Eine Gewerkschaft kann auch mit einzelnem Arbeitgeber verhandeln."
+      ],
+      "misconceptions": [
+        "Betriebsrat als Tarifvertragspartei oder JAV als Ersatz der IHK darstellen."
+      ],
+      "sampleAnswer": "Die Gewerkschaft verhandelt auf Arbeitnehmerseite, der Arbeitgeberverband auf Arbeitgeberseite. Der Betriebsrat beteiligt sich im Betrieb nach dem BetrVG. Die JAV bringt Anliegen von Jugendlichen und Auszubildenden über ihn ein.",
+      "followUp": "Warum kann eine erwachsene Auszubildende zur vertretenen Ausbildungsgruppe gehören?"
+    },
+    {
+      "id": "common-wiso-representation-talk-2",
+      "prompt": "Ein Tarifvertrag setzt die Wochenstundenzahl fest, lässt die tägliche Lage aber offen. Ordne die tarifliche Regel und das betriebliche Beteiligungsrecht ein.",
+      "objectiveIds": [
+        "common-wiso-representation-scope"
+      ],
+      "blockIds": [
+        "common-wiso-representation-scope",
+        "common-wiso-representation-participation"
+      ],
+      "keyPoints": [
+        "Tarifbindung und Geltungsbereich klären.",
+        "Dauer der Wochenarbeit von täglicher Lage unterscheiden.",
+        "Betriebsrat im offenen Spielraum nach § 87 beteiligen."
+      ],
+      "acceptableAlternatives": [
+        "Auf weitere Anwendungswege wie Vertragsbezugnahme hinweisen."
+      ],
+      "misconceptions": [
+        "Betriebsrat könne beliebig die tarifliche Wochenstundenzahl ändern."
+      ],
+      "sampleAnswer": "Zuerst prüfe ich, warum der Tarif gilt. Seine Wochenstundenzahl ist der Rahmen. Im noch offenen Spielraum gestalten Arbeitgeber und Betriebsrat Beginn, Ende und Verteilung der Arbeitszeit nach § 87.",
+      "followUp": "Was ist bei fehlender Einigung in dieser Mitbestimmungsfrage vorgesehen?"
+    },
+    {
+      "id": "common-wiso-representation-talk-3",
+      "prompt": "Beschreibe einen möglichen Weg vom Entgeltkonflikt zum Tarifabschluss. Welche Grenzen gelten für einen Streik und welche Rolle hat der Betriebsrat?",
+      "objectiveIds": [
+        "common-wiso-representation-conflict"
+      ],
+      "blockIds": [
+        "common-wiso-representation-conflict"
+      ],
+      "keyPoints": [
+        "Forderungen, Verhandlungen und möglichen Abschluss benennen.",
+        "Arbeitskampf braucht gewerkschaftliche Trägerschaft, tarifliches Ziel, Friedenspflichtprüfung und Verhältnismäßigkeit.",
+        "Betriebsrat als Organ führt keinen Arbeitskampf gegen Arbeitgeber."
+      ],
+      "acceptableAlternatives": [
+        "Schlichtung als vereinbarungsabhängige Möglichkeit nennen."
+      ],
+      "misconceptions": [
+        "Urabstimmung mit fester Quote als allgemeines Gesetz behaupten."
+      ],
+      "sampleAnswer": "Die Tarifparteien formulieren Forderungen und verhandeln. Je nach Vereinbarung kommt Schlichtung infrage. Ein gewerkschaftlich getragener Arbeitskampf muss tarifliche Ziele und rechtliche Grenzen beachten. Der Betriebsrat selbst ist kein Streikveranstalter.",
+      "followUp": "Warum hebt der Begriff Warnstreik die Friedenspflicht nicht auf?"
+    }
+  ],
+  "cards": [
+    {
+      "id": "common-wiso-representation-card-1",
+      "front": "Wer schließt Tarifverträge?",
+      "back": "Gewerkschaften auf Arbeitnehmerseite mit einzelnen Arbeitgebern oder Arbeitgeberverbänden. Betriebsrat und JAV sind in ihrer Organrolle keine Tarifvertragsparteien.",
+      "objectiveIds": [
+        "common-wiso-representation-roles"
+      ],
+      "blockIds": [
+        "common-wiso-representation-actors"
+      ]
+    },
+    {
+      "id": "common-wiso-representation-card-2",
+      "front": "Wie arbeitet die JAV mit dem Betriebsrat zusammen?",
+      "back": "Sie nimmt Anliegen der vertretenen Jugendlichen und zu ihrer Berufsausbildung Beschäftigten auf, beantragt Maßnahmen beim Betriebsrat und wirkt über ihn auf Lösungen hin.",
+      "objectiveIds": [
+        "common-wiso-representation-roles"
+      ],
+      "blockIds": [
+        "common-wiso-representation-actors"
+      ]
+    },
+    {
+      "id": "common-wiso-representation-card-3",
+      "front": "Wann wirken tarifliche Arbeitsbedingungen unmittelbar?",
+      "back": "Im Grundfall bei beiderseitiger Tarifbindung und passendem Geltungsbereich. Weitere Wege sind etwa Arbeitsvertragsbezugnahme und Allgemeinverbindlichkeit.",
+      "objectiveIds": [
+        "common-wiso-representation-scope"
+      ],
+      "blockIds": [
+        "common-wiso-representation-scope"
+      ]
+    },
+    {
+      "id": "common-wiso-representation-card-4",
+      "front": "Welchen Unterschied zeigen Wochenstunden und Arbeitsbeginn?",
+      "back": "Ein Tarif kann die Wochenstundenzahl vorgeben. Bei noch offener Lage der täglichen Arbeitszeit besteht im gesetzlichen und tariflichen Rahmen Mitbestimmung nach § 87 BetrVG.",
+      "objectiveIds": [
+        "common-wiso-representation-scope"
+      ],
+      "blockIds": [
+        "common-wiso-representation-participation"
+      ]
+    },
+    {
+      "id": "common-wiso-representation-card-5",
+      "front": "Welche Grenzen gelten beim tariflichen Streik?",
+      "back": "Gewerkschaftliche Trägerschaft, tariflich regelbares Ziel, Friedenspflicht und Verhältnismäßigkeit beachten. Konkrete Rechtmäßigkeit folgt nicht allein aus dem Namen Streik oder einer Abstimmung.",
+      "objectiveIds": [
+        "common-wiso-representation-conflict"
+      ],
+      "blockIds": [
+        "common-wiso-representation-conflict"
+      ]
+    },
+    {
+      "id": "common-wiso-representation-card-6",
+      "front": "Darf der Betriebsrat als Organ Arbeitskampf führen?",
+      "back": "Arbeitskampf zwischen Arbeitgeber und Betriebsrat ist nach § 74 BetrVG unzulässig. Persönliche Gewerkschaftstätigkeit eines Mitglieds ist von dieser Organrolle zu unterscheiden.",
+      "objectiveIds": [
+        "common-wiso-representation-conflict"
+      ],
+      "blockIds": [
+        "common-wiso-representation-conflict"
+      ]
+    }
+  ],
+  "review": {
+    "status": "reviewed",
+    "checkedAt": "2026-11-11"
+  }
+}

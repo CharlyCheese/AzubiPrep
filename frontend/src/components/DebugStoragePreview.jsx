@@ -1,0 +1,6 @@
+import { STORAGE_LIMITS, validStorageSnapshot } from '../pilot/debugger-storage.js';
+
+export default function DebugStoragePreview({snapshot}){
+  if(!validStorageSnapshot(snapshot))return null;
+  return <section aria-label="Übungsspeicher"><details className="debug-storage-view"><summary>Übungsspeicher · {snapshot.entries.length}/{STORAGE_LIMITS.entries} Einträge · {snapshot.bytes}/{STORAGE_LIMITS.bytes} Bytes</summary><p>Nur in dieser Debug-Sitzung: Speichern, Lesen und Löschen betreffen einen eigenen Arbeitsspeicher in der Übung. Echtes Browser-localStorage bleibt unverändert. Stop, Quellwechsel oder Neustart verwirft diese Werte.</p><p className="small">Im normalen Browser überdauert localStorage das Neuladen. Hier ist es bewusst flüchtig. Die Ansicht zeigt zuletzt gemeldete Daten und führt beim Öffnen keinen Code aus.</p>{snapshot.entries.length?<div className="js-trace-table"><table aria-label="Speicherinhalt"><thead><tr><th>Schlüssel</th><th>Wert</th></tr></thead><tbody>{snapshot.entries.map(item=><tr key={item.key}><th>{item.key||'(leerer Schlüssel)'}</th><td>{item.value||'(leerer Wert)'}</td></tr>)}</tbody></table></div>:<p>Der Übungsspeicher ist leer.</p>}</details></section>;
+}

@@ -358,6 +358,10 @@ erweitert die vorhandenen freiwilligen Codeausschnitte nicht um Debugzustände.
 Private Materialien und abgeleitete Daten bleiben ausschließlich lokal; der
 Debugger erhält keinen Zugriff auf ihre Ablage.
 
+Priorität ab 2026-11-09: Zunächst die [geführte FIAE-Lernreise](61-Lernreise-FIAE-Planung.md)
+planen und schrittweise aufbauen. Die optionale Debugger-Lernhilfe bleibt eine
+spätere Erweiterung; der bereits abgenommene Debuggerumfang bleibt unverändert.
+
 ## Quellen und Einordnung
 
 - Lokal geprüft: Frontendpaket und öffentliche Typen von `quickjs-emscripten-core`
@@ -383,3 +387,69 @@ FE-054 ergänzt in D4 die erste eigene CSS-Gestaltung im skriptlosen Vorschaurah
 VM-/Lerncode-/Klickrechte bleiben unverändert; weitere Stylesheets, Formulare und
 zusätzliche DOM-/CSS-APIs benötigen eigene Stufen.
 → [CSS-Pilot](47-Debugger-CSS.md).
+
+FE-055 erweitert D4 um Textinput/textarea, value/disabled/readOnly und
+input/change/submit mit echten Handlerhalten in derselben VM. Die ausdrücklich
+gekennzeichnete Übernahme fasst getippte Entwürfe für das Debuggen zusammen.
+Echte Formularnavigation und Ressourcenrechte bleiben gesperrt; weitere
+Feldtypen, DOM-Erzeugung, Speicher und Async sind eigene Stufen.
+→ [Texteingaben und Formulare](48-Debugger-Formulare.md).
+
+FE-056 ergänzt D4 um createElement, append/appendChild, replaceChildren und
+remove/removeChild. Sichere Handles behalten Identität/Listener auch abgetrennt;
+die unveränderten Knoten-/Textgrenzen gelten für alle gehaltenen Teilbäume.
+Aufgabenliste und echte Handlerhalten verbinden Formular und Elementaufbau.
+→ [Elemente erzeugen und entfernen](49-Debugger-Elemente.md).
+
+FE-057 ergänzt D4 um einen abgeschirmten, ausschließlich sitzungsgebundenen
+Storage-Pilot für primitive Strings im HTML-/Ereignismodus. Keine tatsächliche
+Browserpersistenz oder Appdatenrechte. Speicheransicht und Aufgabenlisten-
+Beispiel zeigen Speichern/Lesen/Löschen; JSON und dauerhafte Speicherung separat.
+→ [Übungsspeicher](50-Debugger-Uebungsspeicher.md).
+
+FE-058 ergänzt begrenztes JSON.parse/stringify und Array.isArray/Number.isInteger
+für eigene Daten im DOM-Modus. Ein versioniertes Aufgabenbeispiel übernimmt
+Speicherdaten erst nach Syntax- und fachlicher Schema-Prüfung. Keine dauerhafte
+Persistenz, Callback-/Getter-Hooks oder zusätzliche Hostrechte.
+→ [JSON und geprüfte Speicherzustände](51-Debugger-JSON.md).
+
+FE-059 ergänzt direkte setTimeout-/clearTimeout-Aufrufe im HTML-/Ereignismodus.
+Timerzeit friert während echter Debuggerpausen ein; Callbackwerte bleiben in
+derselben VM. Controller und Worker serialisieren Fälligkeit, Klicks und
+Fortsetzen über den bestehenden bestätigten Befehlskanal. Einmalige Timer und
+Abbrechen werden zuerst freigegeben; Intervalle, Promises/async und Datenladen
+bleiben separate Stufen.
+→ [Timer im Debugger](52-Debugger-Timer.md).
+
+FE-060 ergänzt native Promise-Ketten, Executor, resolve/reject und
+then/catch/finally mit einzeln vollständig abgewarteten Engine-Jobs.
+Reaktionen halten in derselben VM; übernommene Ablehnungen und endgültige
+Ressourcenfehler werden getrennt behandelt. Native Jobzustände bleiben im Worker.
+→ [Promises](53-Debugger-Promises.md).
+
+FE-061 ergänzt native async-Funktionen/await mit getrennt sichtbaren wartenden
+Aufrufen, unveränderten Budgets und exakter nativer Jobfolge. Rückgaben und
+Abbrüche in finally werden für die Ablehnungsbeobachtung berücksichtigt.
+→ [Async/await](54-Debugger-Async-Await.md).
+
+FE-062 ergänzt kontrolliertes Datenladen aus eigenen Übungsantworten, native
+fetch-/Body-Promises und gemeinsame pausebewusste Taskplanung ohne Netzrechte.
+→ [Datenladen](55-Debugger-Datenladen.md).
+
+FE-063 ergänzt private AbortController/Signale und aktuelle Anfragenummern für
+Erfolg, catch und finally; abgebrochene oder alte Antworten ändern keine neuen
+Zustände. → [Abbruch und Aktualität](56-Debugger-Abbruch.md).
+
+FE-064 nimmt den JavaScript-Umfang mit einem zweimoduligen Aufgabenprojekt und
+529/529 Browser-/Electron-Prüfungen ab. → [Gesamtprojekt und Abnahme](57-Debugger-JavaScript-Abnahme.md).
+
+FE-065 ergänzt strenge lokale Typprüfung und positionsgleiche Erasure mit
+Originalquellen in Anzeige und Sicherung. → [TypeScript](58-Debugger-TypeScript.md).
+
+FE-066 ergänzt echte React-Komponenten/JSX/TSX mit privaten Fassaden,
+Originalpositionen und Ereignis-/Effekt-/Cleanup-Halten. → [React](59-Debugger-React.md).
+
+FE-067 schließt die acht freigegebenen Restschritte technisch ab: 545/545
+Anwendungsprüfungen, 2/2 finale Paketproben, geprüfte Desktop-/Webpakete0.1.5
+und aktualisierte README. Der dokumentierte begrenzte Umfang bleibt maßgeblich;
+weitere APIs sind spätere Erweiterungen. → [Abschluss und kurze Bedienprobe](60-Debugger-Abschluss.md).

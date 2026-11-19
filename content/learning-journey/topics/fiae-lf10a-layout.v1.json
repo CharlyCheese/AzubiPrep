@@ -1,0 +1,488 @@
+{
+  "schemaVersion": 1,
+  "version": "1.0.0",
+  "id": "fiae-lf10a-layout",
+  "title": "Oberflächen für verschiedene Endgeräte",
+  "fieldId": "LF10a",
+  "scope": "specialization",
+  "prerequisites": [
+    "fiae-lf10a-prototype",
+    "common-lf5-objects"
+  ],
+  "objectives": [
+    {
+      "id": "fiae-lf10a-layout-structure",
+      "text": "Inhalte, Navigation und Aktionen einer kleinen Oberfläche nachvollziehbar strukturieren."
+    },
+    {
+      "id": "fiae-lf10a-layout-implement",
+      "text": "Eine Oberfläche mit geeigneten vorhandenen Komponenten für unterschiedliche Fenstergrößen umsetzen."
+    }
+  ],
+  "sourceIds": [
+    "kmk-fachinformatiker-2019",
+    "lf10a-wai-structure",
+    "lf10a-wai-forms",
+    "lf10a-wai-reflow",
+    "lf10a-wai-focus"
+  ],
+  "sources": [
+    {
+      "id": "kmk-fachinformatiker-2019",
+      "title": "KMK-Rahmenlehrplan Fachinformatiker/Fachinformatikerin vom 13.12.2019",
+      "url": "https://www.kmk.org/fileadmin/Dateien/pdf/Bildung/BeruflicheBildung/rlp/Fachinformatiker_19-12-13_EL.pdf",
+      "checkedAt": "2026-11-19",
+      "note": "Lernfeld 10a, Seite 21 des Rahmenlehrplans, verbindet Prozessmodellierung, Oberflächengestaltung, Tests und Wirtschaftlichkeit."
+    },
+    {
+      "id": "lf10a-wai-structure",
+      "title": "W3C WAI: Page Structure Tutorial",
+      "url": "https://www.w3.org/WAI/tutorials/page-structure/",
+      "note": "Semantische Regionen, Überschriften und nachvollziehbare Inhaltsstruktur.",
+      "checkedAt": "2026-11-19"
+    },
+    {
+      "id": "lf10a-wai-forms",
+      "title": "W3C WAI: Forms Tutorial",
+      "url": "https://www.w3.org/WAI/tutorials/forms/",
+      "note": "Beschriftung, Eingabehilfen, Validierung und Rückmeldungen zu Formularen.",
+      "checkedAt": "2026-11-19"
+    },
+    {
+      "id": "lf10a-wai-reflow",
+      "title": "W3C WAI: Understanding SC 1.4.10 Reflow",
+      "url": "https://www.w3.org/WAI/WCAG22/Understanding/reflow.html",
+      "note": "Reflow und Erhalt von Inhalt und Funktion beim Verengen des Ansichtsbereichs.",
+      "checkedAt": "2026-11-19"
+    },
+    {
+      "id": "lf10a-wai-focus",
+      "title": "W3C WAI: Understanding SC 2.4.7 Focus Visible",
+      "url": "https://www.w3.org/WAI/WCAG22/Understanding/focus-visible.html",
+      "note": "Erkennbare Fokusposition beim Bedienen mit der Tastatur.",
+      "checkedAt": "2026-11-19"
+    }
+  ],
+  "caseStudy": {
+    "title": "Dieselbe Meldung am Schalter und im Werkraum",
+    "text": "Die Annahme meldet den Scanner am großen Bildschirm. In der Werkstatt steht für denselben Dienst ein kleines Display bereit. Auf beiden soll die Person Gerät und Symptom erfassen, Hinweise lesen und das Ticket abschicken können."
+  },
+  "blocks": [
+    {
+      "id": "fiae-lf10a-layout-structure",
+      "title": "1. Den Aufbau nach der Aufgabe ordnen",
+      "objectiveIds": [
+        "fiae-lf10a-layout-structure"
+      ],
+      "sourceIds": [
+        "lf10a-wai-structure"
+      ],
+      "paragraphs": [
+        "Lege zuerst Hauptaufgabe und Bereiche fest. Die Navigation enthält die Ziele „Neue Meldung“ und „Ticketliste“. Im Hauptinhalt steht die Überschrift „Reparatur melden“, gefolgt von Eingaben und Absendeaktion. Zusatzhinweise kommen dort hin, wo die jeweilige Information gebraucht wird.",
+        "Kennzeichne Navigation mit nav und den Hauptinhalt mit main. Eine echte Überschrift verrät ihren Rang auch der assistiven Technik. Für einen Unterabschnitt wie „Gerätedaten“ passt unter der Hauptüberschrift eine Überschrift der nächsten Ebene. Bloße Schriftgröße enthält diese Information nicht."
+      ],
+      "example": {
+        "title": "Aus einer Sammlung wird eine Seite",
+        "text": "Sortiere „Ticketliste“ zur Navigation, „Gerätekennung“ in die Formulargruppe und „Reparatur melden“ als Absendeaktion ans Ende des Formulars. Prüfe danach anhand der Überschriften, ob sich die Aufgabe ohne Kenntnis der Farben erschließt."
+      },
+      "misconception": {
+        "claim": "Ein fett wirkender Absatz hat für die Navigation dieselbe Bedeutung wie eine Überschrift.",
+        "correction": "Eine semantische Überschrift macht den Abschnitt auch beim Springen über die Überschriftenliste auffindbar."
+      },
+      "takeaway": "Ordne nach Aufgabe und Bedeutung, bevor du die Darstellung festlegst."
+    },
+    {
+      "id": "fiae-lf10a-layout-components",
+      "title": "2. Vorhandene Bausteine richtig zusammensetzen",
+      "objectiveIds": [
+        "fiae-lf10a-layout-structure",
+        "fiae-lf10a-layout-implement"
+      ],
+      "sourceIds": [
+        "lf10a-wai-structure",
+        "lf10a-wai-forms"
+      ],
+      "paragraphs": [
+        "Verwende ein vorhandenes, beschriftetes Formularfeld für die Gerätekennung und ein Textfeld mit mehreren Zeilen für das Symptom. Die vorhandene Komponente für Formularaktionen soll einen nativen Submit-Button ausgeben. Für den Wechsel zur Ticketliste eignet sich ein Link mit Zieladresse.",
+        "Prüfe die ausgegebene HTML-Struktur, wenn du eine Komponente einsetzt. Zwei Eingabefelder benötigen eigene IDs und die passende Zuordnung ihrer sichtbaren Labels. Die Komponente darf die eingebaute Tastaturbedienung und den sichtbaren Fokus nicht verlieren."
+      ],
+      "example": {
+        "title": "Ein Formular aus Standardteilen",
+        "text": "Beginne mit einem form-Element. Verbinde ein label über for=\"geraet\" mit input id=\"geraet\". Ergänze ein beschriftetes textarea für das Symptom und einen button type=\"submit\" mit „Reparatur melden“. Setze den Link zur Ticketliste in die Navigation."
+      },
+      "misconception": {
+        "claim": "Eine wie eine Taste gefärbte Fläche unterstützt schon dieselben Aktionen wie eine Schaltfläche.",
+        "correction": "Die native Schaltfläche bringt Tastaturaktivierung und ihre Rolle mit. Eine Farbe legt dieses Verhalten nicht fest."
+      },
+      "takeaway": "Wähle den Baustein nach der Handlung und kontrolliere sein tatsächliches Verhalten."
+    },
+    {
+      "id": "fiae-lf10a-layout-adapt",
+      "title": "3. Breite vom verfügbaren Platz ableiten",
+      "objectiveIds": [
+        "fiae-lf10a-layout-implement"
+      ],
+      "sourceIds": [
+        "lf10a-wai-reflow"
+      ],
+      "paragraphs": [
+        "Baue zuerst einen lesbaren einspaltigen Ablauf. Beschriftungen, Felder und Hinweise dürfen umbrechen. Nutze flexible Breiten für Felder. Ein zweispaltiges Raster kann hinzukommen, sobald neben dem Formular ausreichend Platz für die ergänzenden Hinweise bleibt. Die Entscheidung richtet sich nach dem Platzbedarf der Inhalte.",
+        "Als umsetzbares Beispiel erhält das Formularraster zunächst display: grid und grid-template-columns: minmax(0, 1fr). Ab einer im Entwurf erprobten Mindestbreite, etwa über @media (min-width: 48rem), kann grid-template-columns: 2fr 1fr das Formular und seine Zusatzhinweise nebeneinander stellen. Eingabeelemente passen mit width: 100% und box-sizing: border-box in ihren Container. Die Schwelle ist eine Entwurfsentscheidung für diesen Fall."
+      ],
+      "example": {
+        "title": "Der Hinweis rutscht unter das Formular",
+        "text": "Öffne den zweispaltigen Entwurf mit langem Hilfetext und verkleinere das Fenster. Sobald eine Spalte unlesbar eng wird, lege die Hinweise unter das Formular. Halte die fachlich sinnvolle Reihenfolge bereits im HTML ein, damit Bildschirm- und Tastaturreihenfolge zusammenpassen."
+      },
+      "misconception": {
+        "claim": "Für jedes Gerätemodell ist ein eigenes Formular nötig.",
+        "correction": "Ein flexibles Layout kann dieselben Bereiche und Aktionen bei unterschiedlichen Fensterbreiten anbieten."
+      },
+      "takeaway": "Passe die Anordnung an den verfügbaren Platz an und erhalte den Inhalt."
+    },
+    {
+      "id": "fiae-lf10a-layout-verify",
+      "title": "4. Den Umbruch mit einem echten Auftrag prüfen",
+      "objectiveIds": [
+        "fiae-lf10a-layout-structure",
+        "fiae-lf10a-layout-implement"
+      ],
+      "sourceIds": [
+        "lf10a-wai-reflow",
+        "lf10a-wai-focus"
+      ],
+      "paragraphs": [
+        "Öffne das Formular beispielsweise bei 960 und 320 CSS-Pixeln Breite. Bei einem gewöhnlichen, senkrecht gelesenen Formular sollen Inhalt und Funktion beim Umbruch erhalten bleiben. Ein Bereich wie eine zweidimensionale Karte kann anders zu beurteilen sein. Unsere Eingabemaske benötigt kein solches Sonderlayout.",
+        "Gib ein längeres Symptom ein, provoziere eine Feldmeldung und gehe mit Tab zu allen Bedienelementen. Achte auf abgeschnittene Texte, horizontales Hin- und Herschieben, überdeckte Aktionen und einen nachvollziehbaren Fokusweg. Notiere Fensterbreite, Browser, Betriebssystem, Eingaben und Befund. Wiederhole den Durchlauf nach der Anpassung. Nutzt die Werkstatt ein anderes Betriebssystem als die Annahme, prüfe dort ebenfalls Fokus, Umbruch und Aktivierung."
+      ],
+      "example": {
+        "title": "Wenn die Schaltfläche verschwindet",
+        "text": "Bei 320 CSS-Pixeln verdeckt ein seitlich festgesetzter Hinweis die Aktion. Verschiebe den Hinweis im schmalen Layout in den normalen Seitenfluss. Wiederhole die Probe mit langem Text und löse den Auftrag per Tastatur aus."
+      },
+      "misconception": {
+        "claim": "Ein passender Bildschirmabzug beweist die Bedienbarkeit auf dem kleinen Display.",
+        "correction": "Die Ansicht zeigt keine Aktivierung per Tastatur und kann Fehlerzustände oder lange Texte auslassen."
+      },
+      "takeaway": "Prüfe bei beiden Breiten die gesamte Aufgabe einschließlich Rückmeldung."
+    }
+  ],
+  "questionFile": "questions/fiae-lf10a-layout.v1.csv",
+  "quiz": {
+    "questionIds": [
+      "LJ-LF10A-LAYOUT-Q01",
+      "LJ-LF10A-LAYOUT-Q02",
+      "LJ-LF10A-LAYOUT-Q03",
+      "LJ-LF10A-LAYOUT-Q04",
+      "LJ-LF10A-LAYOUT-Q05",
+      "LJ-LF10A-LAYOUT-Q06"
+    ]
+  },
+  "exam": {
+    "questionIds": [
+      "LJ-LF10A-LAYOUT-E01",
+      "LJ-LF10A-LAYOUT-E02",
+      "LJ-LF10A-LAYOUT-E03",
+      "LJ-LF10A-LAYOUT-E04",
+      "LJ-LF10A-LAYOUT-E05",
+      "LJ-LF10A-LAYOUT-E06",
+      "LJ-LF10A-LAYOUT-E07",
+      "LJ-LF10A-LAYOUT-E08"
+    ],
+    "passPercent": 80,
+    "scoring": "all-or-nothing-per-question",
+    "timed": false
+  },
+  "questionLinks": [
+    {
+      "questionId": "LJ-LF10A-LAYOUT-Q01",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf10a-layout-structure"
+      ],
+      "blockIds": [
+        "fiae-lf10a-layout-structure"
+      ]
+    },
+    {
+      "questionId": "LJ-LF10A-LAYOUT-Q02",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf10a-layout-structure"
+      ],
+      "blockIds": [
+        "fiae-lf10a-layout-structure"
+      ]
+    },
+    {
+      "questionId": "LJ-LF10A-LAYOUT-Q03",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf10a-layout-implement"
+      ],
+      "blockIds": [
+        "fiae-lf10a-layout-components"
+      ]
+    },
+    {
+      "questionId": "LJ-LF10A-LAYOUT-Q04",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf10a-layout-implement"
+      ],
+      "blockIds": [
+        "fiae-lf10a-layout-adapt"
+      ]
+    },
+    {
+      "questionId": "LJ-LF10A-LAYOUT-Q05",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf10a-layout-implement"
+      ],
+      "blockIds": [
+        "fiae-lf10a-layout-adapt"
+      ]
+    },
+    {
+      "questionId": "LJ-LF10A-LAYOUT-Q06",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf10a-layout-structure",
+        "fiae-lf10a-layout-implement"
+      ],
+      "blockIds": [
+        "fiae-lf10a-layout-verify"
+      ]
+    },
+    {
+      "questionId": "LJ-LF10A-LAYOUT-E01",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf10a-layout-structure"
+      ],
+      "blockIds": [
+        "fiae-lf10a-layout-structure"
+      ]
+    },
+    {
+      "questionId": "LJ-LF10A-LAYOUT-E02",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf10a-layout-structure",
+        "fiae-lf10a-layout-implement"
+      ],
+      "blockIds": [
+        "fiae-lf10a-layout-components"
+      ]
+    },
+    {
+      "questionId": "LJ-LF10A-LAYOUT-E03",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf10a-layout-implement"
+      ],
+      "blockIds": [
+        "fiae-lf10a-layout-components"
+      ]
+    },
+    {
+      "questionId": "LJ-LF10A-LAYOUT-E04",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf10a-layout-implement"
+      ],
+      "blockIds": [
+        "fiae-lf10a-layout-adapt"
+      ]
+    },
+    {
+      "questionId": "LJ-LF10A-LAYOUT-E05",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf10a-layout-structure",
+        "fiae-lf10a-layout-implement"
+      ],
+      "blockIds": [
+        "fiae-lf10a-layout-adapt",
+        "fiae-lf10a-layout-verify"
+      ]
+    },
+    {
+      "questionId": "LJ-LF10A-LAYOUT-E06",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf10a-layout-implement"
+      ],
+      "blockIds": [
+        "fiae-lf10a-layout-verify"
+      ]
+    },
+    {
+      "questionId": "LJ-LF10A-LAYOUT-E07",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf10a-layout-implement"
+      ],
+      "blockIds": [
+        "fiae-lf10a-layout-verify"
+      ]
+    },
+    {
+      "questionId": "LJ-LF10A-LAYOUT-E08",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf10a-layout-structure",
+        "fiae-lf10a-layout-implement"
+      ],
+      "blockIds": [
+        "fiae-lf10a-layout-components",
+        "fiae-lf10a-layout-verify"
+      ]
+    }
+  ],
+  "interview": [
+    {
+      "id": "fiae-lf10a-layout-talk-1",
+      "prompt": "Wie trennst du Navigation, Inhalt und Aktion auf der Meldeseite?",
+      "objectiveIds": [
+        "fiae-lf10a-layout-structure"
+      ],
+      "blockIds": [
+        "fiae-lf10a-layout-structure"
+      ],
+      "keyPoints": [
+        "Zielwechsel in der Navigation zusammenfassen.",
+        "Hauptaufgabe mit Überschrift kennzeichnen.",
+        "Sendeaktion beim Formular platzieren."
+      ],
+      "acceptableAlternatives": [
+        "Eine kurze Hauptnavigation über dem Formular ist ebenfalls schlüssig."
+      ],
+      "misconceptions": [
+        "Wenn jede Funktion gleich ausgezeichnet ist, bleibt die Hauptaufgabe schwer erkennbar."
+      ],
+      "sampleAnswer": "Ich setze „Neue Meldung“ und „Ticketliste“ in nav. Im main folgt unter „Reparatur melden“ das Formular mit Gerätefeld, Symptom und Absendeaktion.",
+      "followUp": "Welche Bezeichnung verrät der Annahme den Zweck des Hauptbereichs?"
+    },
+    {
+      "id": "fiae-lf10a-layout-talk-2",
+      "prompt": "Welche vorhandenen Bausteine setzt du für Liste, Gerätekennung und Absenden ein?",
+      "objectiveIds": [
+        "fiae-lf10a-layout-structure",
+        "fiae-lf10a-layout-implement"
+      ],
+      "blockIds": [
+        "fiae-lf10a-layout-components"
+      ],
+      "keyPoints": [
+        "Link für das Ziel Ticketliste wählen.",
+        "Label mit Feld verbinden.",
+        "Native Formularschaltfläche verwenden."
+      ],
+      "acceptableAlternatives": [
+        "Eine Projektkomponente, die korrektes natives HTML rendert, ist gleichwertig."
+      ],
+      "misconceptions": [
+        "Ein farbiger Container hat noch keine Bedientasten oder zugängliche Rolle."
+      ],
+      "sampleAnswer": "Ich nehme einen Link mit Zieladresse für die Liste. Die Gerätefeldkomponente liefert ein Label und eine eindeutige ID. Für die Formularaktion verwende ich den Submit-Button.",
+      "followUp": "Wie kontrollierst du bei der Feldkomponente die Zuordnung der Beschriftung?"
+    },
+    {
+      "id": "fiae-lf10a-layout-talk-3",
+      "prompt": "Plane eine Nachprobe für eine Schaltfläche, die im schmalen Fenster hinter einem Hinweis verschwindet.",
+      "objectiveIds": [
+        "fiae-lf10a-layout-implement"
+      ],
+      "blockIds": [
+        "fiae-lf10a-layout-adapt",
+        "fiae-lf10a-layout-verify"
+      ],
+      "keyPoints": [
+        "Hinweis in den normalen Fluss setzen.",
+        "Kleinen und großen Ansichtsbereich prüfen.",
+        "Fokus, Aktivierung und langen Text kontrollieren."
+      ],
+      "acceptableAlternatives": [
+        "Eine geeignete Änderung am Raster ist möglich, wenn alle Inhalte erreichbar bleiben."
+      ],
+      "misconceptions": [
+        "Das Abschneiden des Hinweises beseitigt das Bedienhindernis nicht verlässlich."
+      ],
+      "sampleAnswer": "Ich stapele Hinweis und Formular, verkleinere auf 320 CSS-Pixel und löse eine fehlerhafte und eine gültige Meldung per Tastatur aus. Danach wiederhole ich die Aufgabe bei 960 Pixeln.",
+      "followUp": "Welcher konkrete Befund gehört neben die Fensterbreite ins Protokoll?"
+    }
+  ],
+  "cards": [
+    {
+      "id": "fiae-lf10a-layout-card-01",
+      "front": "Was unterscheidet Navigation und Aktion beim Reparaturticket?",
+      "back": "„Ticketliste“ wechselt zu einem Ziel. „Reparatur melden“ übermittelt die aktuellen Formulardaten.",
+      "objectiveIds": [
+        "fiae-lf10a-layout-structure"
+      ],
+      "blockIds": [
+        "fiae-lf10a-layout-structure"
+      ]
+    },
+    {
+      "id": "fiae-lf10a-layout-card-02",
+      "front": "Was gewinnt man durch logisch gegliederte Überschriften?",
+      "back": "Abschnitte und Beziehungen sind sichtbar und können auch über die Überschriftennavigation gefunden werden.",
+      "objectiveIds": [
+        "fiae-lf10a-layout-structure"
+      ],
+      "blockIds": [
+        "fiae-lf10a-layout-structure"
+      ]
+    },
+    {
+      "id": "fiae-lf10a-layout-card-03",
+      "front": "Welche bestehende Komponente eignet sich zum Absenden?",
+      "back": "Eine Komponente, die im Formular eine native Schaltfläche mit Submit-Funktion rendert.",
+      "objectiveIds": [
+        "fiae-lf10a-layout-implement"
+      ],
+      "blockIds": [
+        "fiae-lf10a-layout-components"
+      ]
+    },
+    {
+      "id": "fiae-lf10a-layout-card-04",
+      "front": "Wann lohnt sich ein zweispaltiges Raster?",
+      "back": "Wenn Formular und Hinweise nebeneinander lesbar und bedienbar bleiben. Der Platzbedarf gibt die Schwelle vor.",
+      "objectiveIds": [
+        "fiae-lf10a-layout-implement"
+      ],
+      "blockIds": [
+        "fiae-lf10a-layout-adapt"
+      ]
+    },
+    {
+      "id": "fiae-lf10a-layout-card-05",
+      "front": "Wie bleibt das Formular im schmalen Fenster nutzbar?",
+      "back": "Einspaltig anordnen, flexible Feldbreiten und Textumbruch zulassen und alle Aktionen erhalten.",
+      "objectiveIds": [
+        "fiae-lf10a-layout-implement"
+      ],
+      "blockIds": [
+        "fiae-lf10a-layout-adapt"
+      ]
+    },
+    {
+      "id": "fiae-lf10a-layout-card-06",
+      "front": "Was prüfst du beim Durchtabben in der schmalen Ansicht?",
+      "back": "Der sichtbare Fokus folgt der sinnvollen Aufgabenreihenfolge, erreicht die Aktion und bleibt erkennbar.",
+      "objectiveIds": [
+        "fiae-lf10a-layout-structure",
+        "fiae-lf10a-layout-implement"
+      ],
+      "blockIds": [
+        "fiae-lf10a-layout-verify"
+      ]
+    }
+  ],
+  "review": {
+    "status": "reviewed",
+    "checkedAt": "2026-11-19"
+  }
+}

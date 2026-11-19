@@ -1,0 +1,502 @@
+{
+  "schemaVersion": 1,
+  "id": "common-pm-project",
+  "version": "1.0.0",
+  "title": "Projektauftrag und klare Ziele",
+  "fieldId": "PM",
+  "scope": "common",
+  "prerequisites": [
+    "common-wiso-europe"
+  ],
+  "sourceIds": [
+    "ec-pm2-methodology",
+    "ec-pm2-artefacts",
+    "pm-hzd-preparation",
+    "pm-uk-objectives",
+    "pm-ms-triangle"
+  ],
+  "sources": [
+    {
+      "id": "ec-pm2-methodology",
+      "title": "Europäische Kommission: PM²-Projektmanagement",
+      "url": "https://pm2.europa.eu/pm2-methodologies/pm2-project-management_en",
+      "checkedAt": "2026-11-11",
+      "note": "Öffentliche HTML-Übersicht zu Rollen, Phasen, Entscheidungspunkten und abgestimmter Projektarbeit geprüft. Vereinfachter IT-Übungsfall ist selbst verfasst."
+    },
+    {
+      "id": "ec-pm2-artefacts",
+      "title": "Europäische Kommission: PM²-Artefakte",
+      "url": "https://pm2.europa.eu/pm2-artefacts_en",
+      "checkedAt": "2026-11-11",
+      "note": "Öffentliches Verzeichnis nennt Projektauftrag, Stakeholder-Matrix, Arbeitsplan, Kommunikations- und Abnahmeplanung sowie Entscheidungsprotokoll. Eigene kleine Beispiele übertragen diese Hilfsmittel ohne Vorlagenkopie."
+    },
+    {
+      "id": "pm-hzd-preparation",
+      "title": "Hessen ZPM: Projektvorbereitung",
+      "url": "https://hzd-zpm.hessen.de/vorgehensmodell/projektvorbereitung",
+      "checkedAt": "2026-11-11",
+      "note": "Anfrage, Umfeldanalyse, Lösungsansätze und Entscheidung zur Beauftragung eines IT-Projekts geprüft. Abgrenzung und Portalauftrag sind selbst formulierte Lernbeispiele."
+    },
+    {
+      "id": "pm-uk-objectives",
+      "title": "Department for Transport: Transport business case guidance",
+      "url": "https://www.gov.uk/government/publications/transport-business-case-assessment-and-process-procedures/transport-business-case-guidance",
+      "checkedAt": "2026-11-11",
+      "note": "SMART-Zielkriterien und Bezug zwischen Bedarf, Zielen und Lösung geprüft. Keine Übernahme britischer Verfahrensvorschriften; selbst entwickelter kleiner IT-Fall."
+    },
+    {
+      "id": "pm-ms-triangle",
+      "title": "Microsoft: The project triangle",
+      "url": "https://support.microsoft.com/en-au/project/the-project-triangle",
+      "checkedAt": "2026-11-11",
+      "note": "Wechselwirkungen zwischen Umfang, Zeit, Budget und Qualität geprüft. Eigene Zielkonflikte dienen als Lernbeispiele; keine bestimmte Kosten- oder Qualitätswirkung wird garantiert."
+    }
+  ],
+  "objectives": [
+    {
+      "id": "common-pm-project-purpose",
+      "text": "Projekte von laufenden Aufgaben unterscheiden und einen begrenzten Auftrag beschreiben."
+    },
+    {
+      "id": "common-pm-project-goals",
+      "text": "Prüfbare Projektziele einschließlich Erfolgskriterien formulieren."
+    },
+    {
+      "id": "common-pm-project-scope",
+      "text": "Leistungsumfang, Zeit, Kosten und Qualität an einem Fall aufeinander abstimmen."
+    }
+  ],
+  "caseStudy": {
+    "title": "Nordlicht IT plant ein Serviceticket-Portal",
+    "text": "Der fiktive IT-Dienstleister Nordlicht IT führt für einen Betrieb ein internes Serviceticket-Portal ein. Bisher gehen Anfragen in mehreren Postfächern ein. Die erste Version soll Ticketanlage und Statusanzeige enthalten. Alle Fallangaben sind erfunden; echte Betriebsdaten werden nicht benötigt."
+  },
+  "blocks": [
+    {
+      "id": "common-pm-project-purpose",
+      "title": "1. Projekt oder laufende Aufgabe?",
+      "objectiveIds": [
+        "common-pm-project-purpose"
+      ],
+      "sourceIds": [
+        "pm-hzd-preparation",
+        "ec-pm2-methodology"
+      ],
+      "paragraphs": [
+        "Ein Projekt bearbeitet einen abgegrenzten Auftrag mit angestrebtem Ergebnis, Anfang und Ende sowie begrenzten Mitteln. Die Kombination der Bedingungen ist neu oder besonders; nicht jede Tätigkeit muss neu erfunden werden. Bekannte Installationsschritte können Teil eines Projekts sein.",
+        "Im Fall ist die Einführung mit Anpassung, Test und Übergabe das Projekt. Das spätere tägliche Bearbeiten von Tickets gehört zum laufenden Betrieb. Entscheidend sind Auftrag und Ergebnis, nicht allein die Software oder die Zahl beteiligter Personen.",
+        "Beschreibe zuerst das Problem, danach erwarteten Nutzen und Ergebnisse. Ein Projektauftrag hält außerdem Auftraggeber, verantwortliche Leitung, groben Zeit- und Kostenrahmen, Grenzen und Entscheidungsbefugnisse fest. Eine gute Idee ist noch keine abgestimmte Beauftragung.",
+        "Bei Nordlicht IT werden Anfragen in mehreren Postfächern übersehen. Ein Portal soll sie nachvollziehbar erfassen. Die Auftraggeberin bestätigt vor dem Start, welche Ergebnisse finanziert werden und wer Änderungen entscheiden darf."
+      ],
+      "example": {
+        "title": "Eigener Übungsfall",
+        "text": "Die Standardsoftware ist dem Team bekannt. Ihre abgegrenzte Einführung mit kundenspezifischen Tests und Übergabe kann trotzdem ein Projekt sein."
+      },
+      "misconception": {
+        "claim": "Ein Projekt besteht aus Tätigkeiten, die noch nie durchgeführt wurden.",
+        "correction": "Besonders ist die Kombination der Bedingungen; bekannte Arbeitsschritte schließen ein Projekt nicht aus."
+      },
+      "takeaway": "Grenze die befristete Einführung mit ihrem Ergebnis von der späteren Routine ab."
+    },
+    {
+      "id": "common-pm-project-goals",
+      "title": "2. Ziele überprüfbar formulieren",
+      "objectiveIds": [
+        "common-pm-project-goals"
+      ],
+      "sourceIds": [
+        "pm-uk-objectives",
+        "ec-pm2-artefacts"
+      ],
+      "paragraphs": [
+        "Ein Ziel beschreibt einen gewünschten Zustand. 'Portal entwickeln' nennt eine Tätigkeit, aber noch keinen ausreichenden Erfolg. Lege fest, was bis wann erreicht sein soll und woran du es unter vereinbarten Bedingungen erkennst.",
+        "SMART dient als Prüfliste: spezifisch, messbar, erreichbar, relevant und terminiert. Die verständliche Bedeutung ist wichtiger als eine bestimmte deutsche Übersetzung. 'Die Bedienung soll besser werden' lässt Maßstab und Zeitpunkt offen.",
+        "Ein eigenes Ergebnisziel lautet: Bis Ende Woche sechs können zehn Testnutzer je ein Ticket anlegen und dessen Status abrufen; alle zwanzig vereinbarten Prüfschritte bestehen. Ob der Termin erreichbar ist, prüfst du mit Team, Aufwand und verfügbaren Mitteln. Verständlichkeit kann entsprechend durch einen vereinbarten Nutzertest mit Zielwert und Termin geprüft werden.",
+        "Ergebnis und Nutzen sind zu trennen: Ein bestandener Funktionstest belegt die geprüfte Eigenschaft. Weniger übersehene Anfragen oder kürzere Antwortzeiten sind erhoffte betriebliche Wirkungen. Dafür braucht der Betrieb eine eigene Messung mit vergleichbarem Ausgangswert, Zielwert und Zeitraum."
+      ],
+      "example": {
+        "title": "Eigener Übungsfall",
+        "text": "Acht Testpersonen sollen bis Ende Woche vier in einem festgelegten Test die Statuswerte richtig zuordnen. Dieses Kriterium macht die gewünschte Verständlichkeit prüfbar."
+      },
+      "misconception": {
+        "claim": "Mit pünktlicher Fertigstellung ist der betriebliche Nutzen bereits bewiesen.",
+        "correction": "Fertigstellung und spätere Wirkung brauchen unterschiedliche Nachweise."
+      },
+      "takeaway": "Nenne Zustand, Messgröße, Zielwert und Termin; prüfe Machbarkeit und Nutzenbezug."
+    },
+    {
+      "id": "common-pm-project-scope",
+      "title": "3. Umfang und Grenzen sichtbar machen",
+      "objectiveIds": [
+        "common-pm-project-scope",
+        "common-pm-project-purpose"
+      ],
+      "sourceIds": [
+        "ec-pm2-artefacts",
+        "pm-ms-triangle"
+      ],
+      "paragraphs": [
+        "Der Leistungsumfang nennt die vereinbarten Ergebnisse. Die erste Version enthält Ticketanlage, Statusanzeige, Tests, kurze Anleitung und Übergabe. Öffentliche Kunden-App und historische Datenübernahme sind im Beispiel ausgeschlossen.",
+        "Die Abgrenzung verhindert unterschiedliche Erwartungen. Halte auch Annahmen fest, etwa rechtzeitig bereitgestellte Testkonten. Ein Ausschluss erklärt nicht, dass eine Funktion wertlos ist; sie kann als spätere Erweiterung beauftragt werden.",
+        "Umfang, Zeit, Kosten und Qualität beeinflussen sich. Eine zusätzliche Auswertung kann mehr Arbeit erfordern. Bei festem Termin prüfst du etwa eine kleinere erste Version, zusätzliche geeignete Kapazität oder eine andere Umsetzung. Mehr Personal verkürzt nicht jede Arbeit beliebig.",
+        "Qualität wird durch Kriterien wie korrekte Statusanzeige und bestandene Berechtigungsprüfungen greifbar. Vereinbarte Tests stillschweigend zu streichen löst einen Zielkonflikt nicht sauber. Die zuständige Person entscheidet anhand offen beschriebener Folgen über mögliche Anpassungen."
+      ],
+      "example": {
+        "title": "Eigener Übungsfall",
+        "text": "Ein Dashboard wird kurz vor Lieferung gewünscht. Das Team schätzt die Zusatzarbeit und legt Optionen zu Umfang, Budget und Termin vor; der Wunsch ist noch keine Freigabe."
+      },
+      "misconception": {
+        "claim": "Zusatzfunktionen passen ohne Folgen in den Auftrag, wenn die Tests gekürzt werden.",
+        "correction": "Das verändert die vereinbarte Qualität und braucht eine offene Folgenprüfung und Entscheidung."
+      },
+      "takeaway": "Beschreibe enthaltene und ausgeschlossene Ergebnisse; prüfe Änderungen gemeinsam auf Zeit, Kosten und Qualität."
+    },
+    {
+      "id": "common-pm-project-charter",
+      "title": "4. Den Auftrag auf Widersprüche prüfen",
+      "objectiveIds": [
+        "common-pm-project-purpose",
+        "common-pm-project-goals",
+        "common-pm-project-scope"
+      ],
+      "sourceIds": [
+        "ec-pm2-methodology",
+        "ec-pm2-artefacts",
+        "pm-hzd-preparation"
+      ],
+      "paragraphs": [
+        "Verbinde Ausgangsproblem, Nutzen, konkrete Ergebnisse, Erfolgskriterien, Grenzen, Annahmen und Verantwortliche mit einem groben Termin- und Kostenrahmen. So können Team und Auftraggeber dieselbe Erwartung prüfen.",
+        "Ende Woche sechs ist im Fall der angestrebte Liefertermin. Ein Kostenrahmen ist eine Planvorgabe oder Obergrenze; eine Aufwandszahl in Stunden ist noch kein Geldbetrag. Spätere Themen zeigen die Rechnung von Stunden zu Kosten und angebotenem Preis.",
+        "Wenn erforderliche Testkonten erst in Woche sieben eintreffen, widerspricht das dem Testabschluss bis Woche sechs. Kläre eine frühere Bereitstellung oder eine abgestimmte Terminänderung, statt den Widerspruch zu übergehen.",
+        "Nach Freigabe bleibt der Auftrag eine gemeinsame Bezugsgrundlage. Neue Erkenntnisse können Änderungen nötig machen. Halte fest, was geändert werden soll, weshalb und wer entschieden hat, damit die Beteiligten dieselbe Fassung verwenden."
+      ],
+      "example": {
+        "title": "Eigener Übungsfall",
+        "text": "Der Auftrag nennt die Funktionen bis Woche sechs, zwanzig Prüfschritte sowie Anleitung und Übergabe. Testkonten werden bis Woche zwei zugesagt; Erweiterungen entscheidet die Auftraggeberin nach Folgenprüfung."
+      },
+      "misconception": {
+        "claim": "Die Auftragsfreigabe beweist, dass Voraussetzungen und Kapazität zum Termin passen.",
+        "correction": "Freigabe und realistische Planung ergänzen sich; offene Voraussetzungen sind zu klären."
+      },
+      "takeaway": "Ein Auftrag verbindet klare Ziele mit Grenzen, Voraussetzungen und zuständigen Entscheidungen."
+    }
+  ],
+  "questionFile": "questions/common-pm-project.v1.csv",
+  "quiz": {
+    "questionIds": [
+      "LJ-PM-PROJECT-Q01",
+      "LJ-PM-PROJECT-Q02",
+      "LJ-PM-PROJECT-Q03",
+      "LJ-PM-PROJECT-Q04",
+      "LJ-PM-PROJECT-Q05",
+      "LJ-PM-PROJECT-Q06"
+    ]
+  },
+  "exam": {
+    "questionIds": [
+      "LJ-PM-PROJECT-E01",
+      "LJ-PM-PROJECT-E02",
+      "LJ-PM-PROJECT-E03",
+      "LJ-PM-PROJECT-E04",
+      "LJ-PM-PROJECT-E05",
+      "LJ-PM-PROJECT-E06",
+      "LJ-PM-PROJECT-E07",
+      "LJ-PM-PROJECT-E08"
+    ],
+    "passPercent": 80,
+    "scoring": "all-or-nothing-per-question",
+    "timed": false
+  },
+  "questionLinks": [
+    {
+      "questionId": "LJ-PM-PROJECT-Q01",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-pm-project-purpose"
+      ],
+      "blockIds": [
+        "common-pm-project-purpose"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-PROJECT-Q02",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-pm-project-purpose"
+      ],
+      "blockIds": [
+        "common-pm-project-purpose",
+        "common-pm-project-charter"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-PROJECT-Q03",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-pm-project-goals"
+      ],
+      "blockIds": [
+        "common-pm-project-goals"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-PROJECT-Q04",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-pm-project-goals"
+      ],
+      "blockIds": [
+        "common-pm-project-goals"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-PROJECT-Q05",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-pm-project-scope"
+      ],
+      "blockIds": [
+        "common-pm-project-scope"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-PROJECT-Q06",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-pm-project-scope"
+      ],
+      "blockIds": [
+        "common-pm-project-scope"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-PROJECT-E01",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-pm-project-purpose"
+      ],
+      "blockIds": [
+        "common-pm-project-purpose"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-PROJECT-E02",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-pm-project-purpose"
+      ],
+      "blockIds": [
+        "common-pm-project-purpose",
+        "common-pm-project-charter"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-PROJECT-E03",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-pm-project-goals"
+      ],
+      "blockIds": [
+        "common-pm-project-goals"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-PROJECT-E04",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-pm-project-goals"
+      ],
+      "blockIds": [
+        "common-pm-project-goals"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-PROJECT-E05",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-pm-project-scope"
+      ],
+      "blockIds": [
+        "common-pm-project-scope"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-PROJECT-E06",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-pm-project-scope"
+      ],
+      "blockIds": [
+        "common-pm-project-scope"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-PROJECT-E07",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-pm-project-purpose",
+        "common-pm-project-scope"
+      ],
+      "blockIds": [
+        "common-pm-project-charter"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-PROJECT-E08",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-pm-project-goals",
+        "common-pm-project-scope"
+      ],
+      "blockIds": [
+        "common-pm-project-goals",
+        "common-pm-project-charter"
+      ]
+    }
+  ],
+  "interview": [
+    {
+      "id": "common-pm-project-talk-purpose",
+      "prompt": "Beschreibe den Portalauftrag in vier bis sechs Sätzen: Problem, Ergebnis, Ende und spätere Routineaufgabe. Ergänze, wer Auftrag und Erweiterungen entscheidet.",
+      "objectiveIds": [
+        "common-pm-project-purpose"
+      ],
+      "blockIds": [
+        "common-pm-project-purpose",
+        "common-pm-project-charter"
+      ],
+      "keyPoints": [
+        "Übersehene Anfragen als Problem nennen.",
+        "Einführung mit Tests und Übergabe vom Betrieb trennen.",
+        "Terminrahmen und entscheidungsberechtigte Auftraggeberin festhalten."
+      ],
+      "acceptableAlternatives": [
+        "Ein anderer deutlich fiktiver IT-Auftrag mit denselben Bestandteilen."
+      ],
+      "misconceptions": [
+        "Laufende Ticketbearbeitung mit dem begrenzten Lieferergebnis gleichsetzen."
+      ],
+      "sampleAnswer": "Mehrere Postfächer führen zu übersehenen Anfragen. Nordlicht führt bis Ende Woche sechs Ticketanlage und Statusanzeige mit Tests, Anleitung und Übergabe ein. Die Auftraggeberin bestätigt Rahmen und Erweiterungen. Tägliche Ticketbearbeitung gehört danach zum Betrieb.",
+      "followUp": "Welche Angabe brauchst du zusätzlich für eine ausführbare Planung?"
+    },
+    {
+      "id": "common-pm-project-talk-goals",
+      "prompt": "Verbessere 'Das Portal soll gut funktionieren' mit Woche sechs und zwanzig Prüfschritten. Trenne Funktionsnachweis und betrieblichen Nutzen.",
+      "objectiveIds": [
+        "common-pm-project-goals"
+      ],
+      "blockIds": [
+        "common-pm-project-goals"
+      ],
+      "keyPoints": [
+        "Funktionen, Termin und Maßstab nennen.",
+        "Zwanzig bestandene Prüfschritte als Nachweis verwenden.",
+        "Übersehene Anfragen gesondert messen."
+      ],
+      "acceptableAlternatives": [
+        "Ein anderes im fiktiven Fall vereinbartes Funktionskriterium mit Termin."
+      ],
+      "misconceptions": [
+        "Bestandene Funktionstests als Beweis sinkender Antwortzeiten ausgeben."
+      ],
+      "sampleAnswer": "Bis Ende Woche sechs bestehen die beiden Funktionen alle zwanzig Prüfschritte mit zehn Testnutzern. Das belegt die geprüften Eigenschaften. Weniger übersehene Anfragen prüft der Betrieb mit einer vergleichbaren Vorher- und Nachhermessung.",
+      "followUp": "Welche Ausgangsmessung brauchst du für diesen Nutzenvergleich?"
+    },
+    {
+      "id": "common-pm-project-talk-scope",
+      "prompt": "Kurz vor Lieferung wird ein Dashboard gewünscht. Termin und Budget bleiben gleich, die Tests sind nötig. Nenne zwei prüfbare Handlungsoptionen und den Weg zur Entscheidung.",
+      "objectiveIds": [
+        "common-pm-project-scope"
+      ],
+      "blockIds": [
+        "common-pm-project-scope",
+        "common-pm-project-charter"
+      ],
+      "keyPoints": [
+        "Zusatzarbeit offenlegen.",
+        "Spätere Erweiterung oder kleineren ersten Umfang prüfen.",
+        "Zuständige Entscheidung und Folgen dokumentieren."
+      ],
+      "acceptableAlternatives": [
+        "Andere plausible Option mit ausdrücklich genannten Auswirkungen."
+      ],
+      "misconceptions": [
+        "Den Wunsch ohne Prüfung als bereits zugesagt behandeln."
+      ],
+      "sampleAnswer": "Das Team schätzt die Zusatzarbeit und prüft das Dashboard als spätere Erweiterung oder den Verzicht auf eine weniger wichtige Funktion. Die Auftraggeberin entscheidet anhand der Folgen. Vereinbarte Qualitätskriterien werden nicht stillschweigend gekürzt.",
+      "followUp": "Welche Information fehlt noch für deine Empfehlung?"
+    }
+  ],
+  "cards": [
+    {
+      "id": "common-pm-project-card-project",
+      "front": "Was kennzeichnet hier ein Projekt?",
+      "back": "Abgegrenzter Auftrag mit Ergebnis, Anfang und Ende, begrenzten Mitteln und einer besonderen Kombination von Bedingungen.",
+      "objectiveIds": [
+        "common-pm-project-purpose"
+      ],
+      "blockIds": [
+        "common-pm-project-purpose"
+      ]
+    },
+    {
+      "id": "common-pm-project-card-operation",
+      "front": "Wie unterscheiden sich Portaleinführung und Ticketbearbeitung?",
+      "back": "Die Einführung liefert ein geprüftes und übergebenes Portal. Wiederkehrende Ticketbearbeitung ist danach laufender Betrieb.",
+      "objectiveIds": [
+        "common-pm-project-purpose"
+      ],
+      "blockIds": [
+        "common-pm-project-purpose"
+      ]
+    },
+    {
+      "id": "common-pm-project-card-goal",
+      "front": "Welche Angaben machen ein Ziel prüfbar?",
+      "back": "Zustand, Messgröße mit Zielwert, Termin und Prüfbedingungen; außerdem Machbarkeit und Nutzenbezug prüfen.",
+      "objectiveIds": [
+        "common-pm-project-goals"
+      ],
+      "blockIds": [
+        "common-pm-project-goals"
+      ]
+    },
+    {
+      "id": "common-pm-project-card-benefit",
+      "front": "Belegt ein Funktionstest den betrieblichen Nutzen?",
+      "back": "Er belegt geprüfte Eigenschaften. Weniger übersehene Anfragen oder kürzere Antwortzeiten brauchen eigene vergleichbare Messungen.",
+      "objectiveIds": [
+        "common-pm-project-goals"
+      ],
+      "blockIds": [
+        "common-pm-project-goals"
+      ]
+    },
+    {
+      "id": "common-pm-project-card-scope",
+      "front": "Was gehört in eine Umfangsabgrenzung?",
+      "back": "Enthaltene und ausgeschlossene Ergebnisse sowie wichtige Annahmen. Ausgeschlossene Funktionen können später gesondert beauftragt werden.",
+      "objectiveIds": [
+        "common-pm-project-scope"
+      ],
+      "blockIds": [
+        "common-pm-project-scope"
+      ]
+    },
+    {
+      "id": "common-pm-project-card-conflict",
+      "front": "Was ist bei zusätzlichem Umfang zu prüfen?",
+      "back": "Auswirkungen auf Aufwand, Termin, Kosten und Qualitätskriterien. Optionen begründen, zuständig entscheiden lassen und Änderung dokumentieren.",
+      "objectiveIds": [
+        "common-pm-project-scope"
+      ],
+      "blockIds": [
+        "common-pm-project-scope",
+        "common-pm-project-charter"
+      ]
+    }
+  ],
+  "review": {
+    "status": "reviewed",
+    "checkedAt": "2026-11-11"
+  }
+}

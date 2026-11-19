@@ -1,0 +1,466 @@
+{
+  "schemaVersion": 1,
+  "version": "1.0.0",
+  "id": "fiae-lf12a-implementation",
+  "title": "Umsetzung steuern und Qualität sichern",
+  "fieldId": "LF12a",
+  "scope": "specialization",
+  "prerequisites": [
+    "fiae-lf12a-planning"
+  ],
+  "objectives": [
+    {
+      "id": "fiae-lf12a-implementation-track",
+      "text": "Eine vereinbarte Lösung in nachvollziehbaren Schritten umsetzen und den Arbeitsstand regelmäßig mit dem Plan vergleichen."
+    },
+    {
+      "id": "fiae-lf12a-implementation-change",
+      "text": "Eine neue Anforderung nach Auswirkungen auf Umfang, Termine und Kosten bewerten und abstimmen."
+    },
+    {
+      "id": "fiae-lf12a-implementation-quality",
+      "text": "Tests, technische Dokumentation und Sicherheitsprüfungen während der Umsetzung durchführen und festhalten."
+    }
+  ],
+  "caseStudy": {
+    "title": "Ein Zwischenstand mit zwei offenen Stunden",
+    "text": "Am Ende von Tag zwei verbindet die Entwicklerin Maske und Fachfunktion. Die erwartete Speicherbestätigung erscheint, beim erneuten Öffnen fehlen aber die zuletzt eingegebenen Angaben. Der Zwischenstand zeigt, warum „sechs Stunden gebucht“ noch kein fertiges Paket bedeutet."
+  },
+  "sourceIds": [
+    "ec-pm2-artefacts",
+    "lf12a-ms-testing"
+  ],
+  "sources": [
+    {
+      "id": "ec-pm2-artefacts",
+      "title": "Europäische Kommission: PM²-Artefakte",
+      "url": "https://pm2.europa.eu/pm2-artefacts_en",
+      "checkedAt": "2026-11-19",
+      "note": "Artefakte zu Auftrag, Arbeitsplan, Änderung, Abnahme, Übergang und Projektabschluss geprüft. Die Werkstattunterlagen und Entscheidungen im Beispiel sind selbst erstellt."
+    },
+    {
+      "id": "lf12a-ms-testing",
+      "title": "Microsoft: Architecture strategies for testing",
+      "url": "https://learn.microsoft.com/en-us/azure/well-architected/operational-excellence/testing",
+      "checkedAt": "2026-11-19",
+      "note": "Prüfebenen, Benutzerabläufe, Teststände und Prüfumgebungen geprüft. Fälle und Ergebnisse der Reparaturwerkstatt sind erfunden."
+    }
+  ],
+  "blocks": [
+    {
+      "id": "fiae-lf12a-implementation-block-1",
+      "title": "1. Eine kleine, prüfbare Lieferung herstellen",
+      "objectiveIds": [
+        "fiae-lf12a-implementation-track"
+      ],
+      "sourceIds": [
+        "ec-pm2-artefacts",
+        "lf12a-ms-testing"
+      ],
+      "paragraphs": [
+        "Übernimm zuerst einen schmalen Weg aus der LF10a-Maske zur LF11a-Funktion. Gib ein synthetisches Gerät und eine Störung ein, speichere, öffne die zurückgegebene Kennung und lies die Angaben erneut. So prüfst du die Verbindung zwischen Oberfläche, Fachlogik und Datenhaltung.",
+        "Halte nach jedem Schritt Planaufwand, Istaufwand, fertiges Ergebnis und Restschätzung nebeneinander. Im Beispiel sind für P2 nach sechs Stunden sechs geplant und sechs verbraucht. Der Abruf liefert noch den alten Wert. Für Korrektur und Nachtest werden zwei zusätzliche Stunden erwartet. Die neue Prognose für P2 ist acht Stunden."
+      ],
+      "example": {
+        "title": "Aus dem Werkstattprojekt",
+        "text": "Der Statusbericht am zweiten Tag nennt „Speichern zeigt Kennung, Wiederabruf zeigt alten Wert, Ursache prüfen, noch 2 h“. Eine Prozentanzeige allein lässt die Entscheidung über den nächsten Prüftermin offen."
+      },
+      "misconception": {
+        "claim": "Ein verbrauchtes Stundenbudget beweist, dass das Paket abgeschlossen ist.",
+        "correction": "Die Abschlussbedingung verlangt einen passenden Funktionsbefund am integrierten Stand."
+      },
+      "takeaway": "Berichte Aufwand und nachgewiesenes Ergebnis getrennt und ergänze eine Restschätzung."
+    },
+    {
+      "id": "fiae-lf12a-implementation-block-2",
+      "title": "2. Einen Änderungswunsch entscheidbar machen",
+      "objectiveIds": [
+        "fiae-lf12a-implementation-change"
+      ],
+      "sourceIds": [
+        "ec-pm2-artefacts"
+      ],
+      "paragraphs": [
+        "Unterscheide Abweichung und Zusatzwunsch. Den bereits vereinbarten korrekten Wiederabruf herzustellen, schließt eine Lücke in der gelieferten Leistung. Ein Fotoanhang erweitert den bestätigten Umfang. Erfasse Nutzen, betroffene Teile, zusätzliche Tests und Auswirkungen auf Zeit und Kosten.",
+        "Für den Fotoanhang schätzt die Entwicklerin 3 h Umsetzung und 1 h Prüfung. Beim internen Satz von 50 Euro/h sind das 200 Euro zusätzlich. Ohne freie Kapazität verlängert sich die Arbeit um vier Stunden. Die Leitung kann den Umfang erweitern, eine vereinbarte Leistung streichen oder die Funktion zurückstellen. Die Entscheidung erhält Datum und nächste Schritte."
+      ],
+      "example": {
+        "title": "Aus dem Werkstattprojekt",
+        "text": "Die Leitung verschiebt den Fotoanhang in den Folgeauftrag. Der Bericht führt die vier Stunden als Schätzung für den zurückgestellten Wunsch und die zwei Stunden für den Abruffehler als voraussichtlichen Mehraufwand des Kernauftrags."
+      },
+      "misconception": {
+        "claim": "Jeder Mehraufwand ist eine neue Kundenanforderung.",
+        "correction": "Auch die Erfüllung einer bestehenden Zusage kann mehr Aufwand als geplant verursachen."
+      },
+      "takeaway": "Bewerte neue Wünsche getrennt von Korrekturen und halte den freigegebenen Umfang fest."
+    },
+    {
+      "id": "fiae-lf12a-implementation-block-3",
+      "title": "3. Fehlerbehebung, Rollenprüfung und Dokumentation verbinden",
+      "objectiveIds": [
+        "fiae-lf12a-implementation-quality"
+      ],
+      "sourceIds": [
+        "lf12a-ms-testing"
+      ],
+      "paragraphs": [
+        "Lege vor dem Eingriff Soll, Ausgangsbefund, betroffenen Stand und Testdaten fest. Spiele das Problem mit einem erfundenen Ticket nach. Im Modell sucht die Anzeige versehentlich nach der Gerätekennung. Zwei Aufträge zum selben Gerät sind so nicht eindeutig zu unterscheiden. Übergib die beim Speichern erzeugte Ticketnummer an den Wiederabruf und vergleiche den dazu gelesenen Datensatz. Wiederhole die fehlgeschlagene Probe. Wiederhole außerdem einen bereits funktionierenden Nachbarfall, damit Nebenwirkungen sichtbar werden.",
+        "Prüfe im eigenen Übungsstand auch die Rollenregel. Die lesende Rolle darf einen Auftrag ansehen, eine Änderung muss zurückgewiesen werden. Prüfe anschließend mit berechtigter Rolle, ob der gespeicherte Wert unverändert ist. Notiere Stand, Eingabe, Rolle, erwartetes und beobachtetes Ergebnis. Halte Änderungen an Feldzuordnung und benötigten Einstellungen im technischen Blatt fest."
+      ],
+      "example": {
+        "title": "Aus dem Werkstattprojekt",
+        "text": "In T2 zum Gerät G-17 liegen ein alter und ein neuer Auftrag vor. Beim Öffnen der neuen Ticketnummer erscheint vor der Korrektur die alte Störung. R2 liefert die neue Störung und besteht außerdem T1 mit einem einzelnen gültigen Auftrag. Bei T3 wird die unzulässige Änderung abgewiesen und das Ticket behält seinen Wert. Dieses Protokoll benutzt synthetische Kennungen."
+      },
+      "misconception": {
+        "claim": "Eine Bildschirmmeldung über die Ablehnung beweist bereits den unveränderten Datenbestand.",
+        "correction": "Lies den gespeicherten Zustand nach dem Versuch über einen erlaubten Weg erneut."
+      },
+      "takeaway": "Sichere den Fehlerbefund, den Nachtest und die betroffenen Nachbarfälle am konkreten Stand."
+    },
+    {
+      "id": "fiae-lf12a-implementation-block-4",
+      "title": "4. Den belastbaren Restplan ableiten",
+      "objectiveIds": [
+        "fiae-lf12a-implementation-track",
+        "fiae-lf12a-implementation-change",
+        "fiae-lf12a-implementation-quality"
+      ],
+      "sourceIds": [
+        "ec-pm2-artefacts",
+        "lf12a-ms-testing"
+      ],
+      "paragraphs": [
+        "Addiere zum gemeldeten Istaufwand die noch erwartete Arbeit. Für den gesamten Piloten bleiben nach acht gebuchten Stunden zwei Stunden Korrektur sowie vier Stunden P3 und vier Stunden P4. Voraussichtlicher Gesamtaufwand: 8 + 2 + 4 + 4 = 18 Stunden. Bei vier Stunden je Tag fällt damit Arbeit auf Tag fünf.",
+        "Melde der Leitung die Annahmen. Die einmaligen 40 Euro bleiben bestehen. Bei 50 Euro je Stunde ergibt sich eine Kostenprognose von 940 Euro. Erst tatsächlich geleistete Arbeit wird als Ist gebucht. Beschreibe, welche Probe nach der Korrektur den nächsten Schritt freigibt."
+      ],
+      "example": {
+        "title": "Aus dem Werkstattprojekt",
+        "text": "Die Leitung stimmt dem späteren Abschluss des Kernauftrags zu. Die Entscheidung zum Fotoanhang bleibt separat. R2 wird mit Testprotokoll und technischem Blatt zur formalen Prüfung übergeben."
+      },
+      "misconception": {
+        "claim": "Eine Prognose ist schon der endgültige Istwert.",
+        "correction": "Kennzeichne geplante, bereits angefallene und erwartete Werte, bis der tatsächliche Abschluss vorliegt."
+      },
+      "takeaway": "Ein belastbarer Zwischenstand verbindet Befund, Restaufwand, Entscheidung und nächste Probe."
+    }
+  ],
+  "questionFile": "questions/fiae-lf12a-implementation.v1.csv",
+  "quiz": {
+    "questionIds": [
+      "LJ-LF12A-IMPLEMENTATION-Q01",
+      "LJ-LF12A-IMPLEMENTATION-Q02",
+      "LJ-LF12A-IMPLEMENTATION-Q03",
+      "LJ-LF12A-IMPLEMENTATION-Q04",
+      "LJ-LF12A-IMPLEMENTATION-Q05",
+      "LJ-LF12A-IMPLEMENTATION-Q06"
+    ]
+  },
+  "exam": {
+    "questionIds": [
+      "LJ-LF12A-IMPLEMENTATION-E01",
+      "LJ-LF12A-IMPLEMENTATION-E02",
+      "LJ-LF12A-IMPLEMENTATION-E03",
+      "LJ-LF12A-IMPLEMENTATION-E04",
+      "LJ-LF12A-IMPLEMENTATION-E05",
+      "LJ-LF12A-IMPLEMENTATION-E06",
+      "LJ-LF12A-IMPLEMENTATION-E07",
+      "LJ-LF12A-IMPLEMENTATION-E08"
+    ],
+    "passPercent": 80,
+    "scoring": "all-or-nothing-per-question",
+    "timed": false
+  },
+  "questionLinks": [
+    {
+      "questionId": "LJ-LF12A-IMPLEMENTATION-Q01",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf12a-implementation-track"
+      ],
+      "blockIds": [
+        "fiae-lf12a-implementation-block-1"
+      ]
+    },
+    {
+      "questionId": "LJ-LF12A-IMPLEMENTATION-Q02",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf12a-implementation-track"
+      ],
+      "blockIds": [
+        "fiae-lf12a-implementation-block-1"
+      ]
+    },
+    {
+      "questionId": "LJ-LF12A-IMPLEMENTATION-Q03",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf12a-implementation-change"
+      ],
+      "blockIds": [
+        "fiae-lf12a-implementation-block-2"
+      ]
+    },
+    {
+      "questionId": "LJ-LF12A-IMPLEMENTATION-Q04",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf12a-implementation-change"
+      ],
+      "blockIds": [
+        "fiae-lf12a-implementation-block-2"
+      ]
+    },
+    {
+      "questionId": "LJ-LF12A-IMPLEMENTATION-Q05",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf12a-implementation-quality"
+      ],
+      "blockIds": [
+        "fiae-lf12a-implementation-block-3"
+      ]
+    },
+    {
+      "questionId": "LJ-LF12A-IMPLEMENTATION-Q06",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf12a-implementation-quality"
+      ],
+      "blockIds": [
+        "fiae-lf12a-implementation-block-3"
+      ]
+    },
+    {
+      "questionId": "LJ-LF12A-IMPLEMENTATION-E01",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf12a-implementation-track"
+      ],
+      "blockIds": [
+        "fiae-lf12a-implementation-block-1",
+        "fiae-lf12a-implementation-block-4"
+      ]
+    },
+    {
+      "questionId": "LJ-LF12A-IMPLEMENTATION-E02",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf12a-implementation-change"
+      ],
+      "blockIds": [
+        "fiae-lf12a-implementation-block-2"
+      ]
+    },
+    {
+      "questionId": "LJ-LF12A-IMPLEMENTATION-E03",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf12a-implementation-quality"
+      ],
+      "blockIds": [
+        "fiae-lf12a-implementation-block-3"
+      ]
+    },
+    {
+      "questionId": "LJ-LF12A-IMPLEMENTATION-E04",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf12a-implementation-track"
+      ],
+      "blockIds": [
+        "fiae-lf12a-implementation-block-1",
+        "fiae-lf12a-implementation-block-4"
+      ]
+    },
+    {
+      "questionId": "LJ-LF12A-IMPLEMENTATION-E05",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf12a-implementation-change"
+      ],
+      "blockIds": [
+        "fiae-lf12a-implementation-block-2"
+      ]
+    },
+    {
+      "questionId": "LJ-LF12A-IMPLEMENTATION-E06",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf12a-implementation-quality"
+      ],
+      "blockIds": [
+        "fiae-lf12a-implementation-block-3"
+      ]
+    },
+    {
+      "questionId": "LJ-LF12A-IMPLEMENTATION-E07",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf12a-implementation-track",
+        "fiae-lf12a-implementation-change"
+      ],
+      "blockIds": [
+        "fiae-lf12a-implementation-block-2",
+        "fiae-lf12a-implementation-block-4"
+      ]
+    },
+    {
+      "questionId": "LJ-LF12A-IMPLEMENTATION-E08",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf12a-implementation-quality"
+      ],
+      "blockIds": [
+        "fiae-lf12a-implementation-block-3",
+        "fiae-lf12a-implementation-block-4"
+      ]
+    }
+  ],
+  "interview": [
+    {
+      "id": "fiae-lf12a-implementation-talk-1",
+      "prompt": "Berichte den tatsächlichen Stand nach acht gebuchten Stunden in zwei Sätzen.",
+      "objectiveIds": [
+        "fiae-lf12a-implementation-track"
+      ],
+      "blockIds": [
+        "fiae-lf12a-implementation-block-1",
+        "fiae-lf12a-implementation-block-4"
+      ],
+      "keyPoints": [
+        "Befund von der Zeitbuchung unterscheiden.",
+        "Zehn Stunden verbleibende Arbeit erläutern.",
+        "Prognose von 18 Stunden kennzeichnen."
+      ],
+      "acceptableAlternatives": [
+        "Ein kurzer Status mit Soll, Ist, Rest und Abschlussbedingung ist gleichwertig."
+      ],
+      "misconceptions": [
+        "Die acht Stunden als abgeschlossenen Funktionsumfang melden."
+      ],
+      "sampleAnswer": "Acht Stunden sind gebucht, der Wiederabruf liefert noch einen alten Wert. Mit Korrektur, Prüfung und Übergabe erwarte ich zehn weitere Stunden und damit insgesamt 18 statt 16.",
+      "followUp": "Was wäre der nächste belastbare Nachweis für Fortschritt?"
+    },
+    {
+      "id": "fiae-lf12a-implementation-talk-2",
+      "prompt": "Begründe, warum die zwei Zusatzstunden und der Fotoanhang getrennte Entscheidungen auslösen.",
+      "objectiveIds": [
+        "fiae-lf12a-implementation-change"
+      ],
+      "blockIds": [
+        "fiae-lf12a-implementation-block-2"
+      ],
+      "keyPoints": [
+        "Bestehende Zusage von neuem Nutzen unterscheiden.",
+        "Fotoaufwand samt Test berechnen.",
+        "Entscheidung der Leitung dokumentieren."
+      ],
+      "acceptableAlternatives": [
+        "Ein Eintrag im Fehlerprotokoll und ein separater Änderungsantrag passen ebenfalls."
+      ],
+      "misconceptions": [
+        "Einen korrigierten Mehraufwand als stillschweigende Genehmigung für mehr Funktionsumfang lesen."
+      ],
+      "sampleAnswer": "Wir schulden den korrekten Abruf bereits. Der Fotoanhang würde vier zusätzliche Stunden und 200 Euro für einen neuen Umfang auslösen. Die Leitung verschiebt ihn, die Reparatur des Abrufs verbleibt im Pilot.",
+      "followUp": "Welche Folge hätte eine Genehmigung des Fotoanhangs für den Plan?"
+    },
+    {
+      "id": "fiae-lf12a-implementation-talk-3",
+      "prompt": "Beschreibe deine Belege für eine wirksame Korrektur und wirksame Rollenprüfung.",
+      "objectiveIds": [
+        "fiae-lf12a-implementation-quality"
+      ],
+      "blockIds": [
+        "fiae-lf12a-implementation-block-3"
+      ],
+      "keyPoints": [
+        "Alten Befund sichern.",
+        "Fehler und Nachbarfall am neuen Stand prüfen.",
+        "Abgewiesene Änderung durch erneutes Lesen kontrollieren."
+      ],
+      "acceptableAlternatives": [
+        "Ein reproduzierbares automatisiertes Protokoll mit denselben Erwartungen ist gleichwertig."
+      ],
+      "misconceptions": [
+        "Den grünen Einzeltest mit einer umfassenden Sicherheitsfreigabe verwechseln."
+      ],
+      "sampleAnswer": "Ich dokumentiere T2 am alten Stand und prüfe nach der Korrektur T2 und T1 an R2. Nach dem untersagten Schreibversuch vergleiche ich den neuen Lesezugriff mit dem Ausgangswert. Alle Ergebnisse erhalten Versionsbezug.",
+      "followUp": "Was lässt sich aus diesen drei Proben über hohe Nutzerzahlen ableiten?"
+    }
+  ],
+  "cards": [
+    {
+      "id": "fiae-lf12a-implementation-card-01",
+      "front": "Wann ist die Anbindung der Maske im Modell fertig?",
+      "back": "Ein gültiger Musterauftrag ist gespeichert und über seine Kennung mit den richtigen Angaben erneut abrufbar.",
+      "objectiveIds": [
+        "fiae-lf12a-implementation-track"
+      ],
+      "blockIds": [
+        "fiae-lf12a-implementation-block-1"
+      ]
+    },
+    {
+      "id": "fiae-lf12a-implementation-card-02",
+      "front": "Wie berechnest du eine aktuelle Aufwandsprognose?",
+      "back": "Istaufwand plus geschätzter Restaufwand. Vergleiche die Summe mit dem ursprünglichen Soll.",
+      "objectiveIds": [
+        "fiae-lf12a-implementation-track"
+      ],
+      "blockIds": [
+        "fiae-lf12a-implementation-block-1",
+        "fiae-lf12a-implementation-block-4"
+      ]
+    },
+    {
+      "id": "fiae-lf12a-implementation-card-03",
+      "front": "Warum ist der Fotoanhang eine Änderung?",
+      "back": "Er erweitert die vereinbarte Leistung und benötigt zusätzliche Umsetzung, Prüfung und Zustimmung.",
+      "objectiveIds": [
+        "fiae-lf12a-implementation-change"
+      ],
+      "blockIds": [
+        "fiae-lf12a-implementation-block-2"
+      ]
+    },
+    {
+      "id": "fiae-lf12a-implementation-card-04",
+      "front": "Wie unterscheiden sich Zusatzschätzung und Istbuchung?",
+      "back": "Die Schätzung bewertet künftig erwartete Arbeit. Die Istbuchung erfasst tatsächlich geleistete Stunden.",
+      "objectiveIds": [
+        "fiae-lf12a-implementation-change"
+      ],
+      "blockIds": [
+        "fiae-lf12a-implementation-block-2",
+        "fiae-lf12a-implementation-block-4"
+      ]
+    },
+    {
+      "id": "fiae-lf12a-implementation-card-05",
+      "front": "Welcher Test folgt auf die erfolgreiche Fehlernachprobe?",
+      "back": "Ein bereits bestandener Nachbarfall wird erneut geprüft, um unbeabsichtigte Nebenwirkungen zu entdecken.",
+      "objectiveIds": [
+        "fiae-lf12a-implementation-quality"
+      ],
+      "blockIds": [
+        "fiae-lf12a-implementation-block-3"
+      ]
+    },
+    {
+      "id": "fiae-lf12a-implementation-card-06",
+      "front": "Warum braucht ein Testprotokoll eine Standkennung?",
+      "back": "Sie ordnet Befund und Nachprobe der tatsächlich verwendeten Softwarefassung zu.",
+      "objectiveIds": [
+        "fiae-lf12a-implementation-quality"
+      ],
+      "blockIds": [
+        "fiae-lf12a-implementation-block-3"
+      ]
+    }
+  ],
+  "review": {
+    "status": "reviewed",
+    "checkedAt": "2026-11-19"
+  }
+}

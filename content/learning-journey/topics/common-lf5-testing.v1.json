@@ -1,0 +1,669 @@
+{
+  "schemaVersion": 1,
+  "id": "common-lf5-testing",
+  "version": "1.0.0",
+  "title": "Softwareänderungen testen und erklären",
+  "fieldId": "LF5",
+  "scope": "common",
+  "prerequisites": [
+    "common-lf5-sql"
+  ],
+  "sourceIds": [
+    "lf5-nasa-requirements",
+    "lf5-mdn-types",
+    "lf5-mdn-number",
+    "lf5-mdn-integer",
+    "lf5-mdn-operators",
+    "lf5-mdn-control",
+    "lf5-mdn-loops",
+    "lf5-mdn-functions",
+    "lf5-mdn-objects",
+    "lf5-mdn-classes",
+    "lf5-sqlite-storage",
+    "lf5-pg-keys",
+    "lf5-pg-select",
+    "lf5-pg-insert",
+    "lf5-pg-update",
+    "lf5-pg-delete",
+    "lf5-ms-testing"
+  ],
+  "sources": [
+    {
+      "id": "lf5-nasa-requirements",
+      "title": "NASA: Requirements Management",
+      "url": "https://www.nasa.gov/reference/6-2-requirements-management/",
+      "note": "Öffentliche HTML-Grundsätze zu nachvollziehbaren Anforderungen und Änderungen geprüft. Rollen, Größen und Abnahmekriterien des Lernfalls sind eigene fiktive Vorgaben.",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "lf5-mdn-types",
+      "title": "MDN: Grammar and types",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Grammar_and_types",
+      "note": "JavaScript-Deklarationen, Grundtypen und Literale geprüft. Eigene kleine Beispiele verwenden let und const.",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "lf5-mdn-number",
+      "title": "MDN: Number",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number",
+      "note": "Binäre Zahlendarstellung und Grenzen exakter Ganzzahlen geprüft. Eurobeträge werden im begrenzten Lernfall als ganze Centwerte geführt.",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "lf5-mdn-integer",
+      "title": "MDN: Number.isInteger()",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/isInteger",
+      "note": "Ganzzahlprüfung einschließlich Ablehnung von Zahlentexten und Nachkommawerten geprüft; Grenze 0 bis 1000 ist eine eigene Modellvorgabe.",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "lf5-mdn-operators",
+      "title": "MDN: Expressions and operators",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Expressions_and_operators",
+      "note": "Zuweisung, Rechenoperatoren, Vergleiche und logische Verknüpfungen geprüft.",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "lf5-mdn-control",
+      "title": "MDN: Control flow and error handling",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Control_flow_and_error_handling",
+      "note": "if/else, Bedingungen und Anweisungsblöcke geprüft. Der eigene Funktionsvertrag nutzt null als vereinbartes Fehlerergebnis.",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "lf5-mdn-loops",
+      "title": "MDN: Loops and iteration",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Loops_and_iteration",
+      "note": "Reihenfolge von Initialisierung, Bedingung, Schleifenrumpf und Fortschaltung geprüft.",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "lf5-mdn-functions",
+      "title": "MDN: Functions",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Functions",
+      "note": "Funktionsdefinition, Parameter, Argumente und Rückgabewerte geprüft.",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "lf5-mdn-objects",
+      "title": "MDN: Working with objects",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Working_with_objects",
+      "note": "Eigenschaften, Methoden und Punktzugriff geprüft. Alle Objekte und Beziehungen sind eigene Lehrbeispiele.",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "lf5-mdn-classes",
+      "title": "MDN: Using classes",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_classes",
+      "note": "class, constructor, new, this und Instanzmethoden geprüft; Vererbung wird nicht vorgezogen.",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "lf5-sqlite-storage",
+      "title": "SQLite: Appropriate Uses For SQLite",
+      "url": "https://www.sqlite.org/whentouse.html",
+      "note": "Lokale eingebettete Datenbanken und Abgrenzung von Client/Server-Datenbanken geprüft. Eine Datenbank kann in einer Datei liegen.",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "lf5-pg-keys",
+      "title": "PostgreSQL: Constraints",
+      "url": "https://www.postgresql.org/docs/current/ddl-constraints.html",
+      "note": "Primärschlüssel, Fremdschlüssel und referenzielle Beziehungen geprüft. Weiterführende Normalformen und Transaktionen sind nicht Teil dieser Etappe.",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "lf5-pg-select",
+      "title": "PostgreSQL: Querying a Table",
+      "url": "https://www.postgresql.org/docs/current/tutorial-select.html",
+      "note": "SELECT, WHERE und ORDER BY geprüft. Das Übungsmodell bildet ausgewählte Operationen nach und führt kein freies SQL aus.",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "lf5-pg-insert",
+      "title": "PostgreSQL: Populating a Table With Rows",
+      "url": "https://www.postgresql.org/docs/current/tutorial-populate.html",
+      "note": "INSERT mit expliziter Spaltenliste und zugehörigen Werten geprüft.",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "lf5-pg-update",
+      "title": "PostgreSQL: Updates",
+      "url": "https://www.postgresql.org/docs/current/tutorial-update.html",
+      "note": "UPDATE, SET und gezielte Auswahl mit WHERE geprüft.",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "lf5-pg-delete",
+      "title": "PostgreSQL: Deletions",
+      "url": "https://www.postgresql.org/docs/current/tutorial-delete.html",
+      "note": "DELETE mit und ohne WHERE geprüft; Modelloperationen verwenden begrenzte synthetische Zeilen.",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "lf5-ms-testing",
+      "title": "Microsoft: Best practices for writing unit tests",
+      "url": "https://learn.microsoft.com/en-us/dotnet/core/testing/unit-testing-best-practices",
+      "note": "Grundsätze verständlicher, unabhängiger und wiederholbarer Tests geprüft. Die Sprachbeispiele werden nicht übernommen; JavaScript-Fälle und Erwartungen sind selbst erstellt.",
+      "checkedAt": "2026-11-16"
+    }
+  ],
+  "objectives": [
+    {
+      "id": "common-lf5-testing-cases",
+      "text": "Für eine kleine Änderung Normal-, Grenz- und Fehlerfälle mit erwarteten Ergebnissen festlegen."
+    },
+    {
+      "id": "common-lf5-testing-repair",
+      "text": "Einen Fehler anhand eines reproduzierbaren Testfalls eingrenzen, korrigieren und erneut prüfen."
+    },
+    {
+      "id": "common-lf5-testing-document",
+      "text": "Änderung, Testresultate und Bedienung verständlich dokumentieren und das Vorgehen reflektieren."
+    }
+  ],
+  "caseStudy": {
+    "title": "Mira prüft und übergibt die kleine Datenverwaltung",
+    "text": "Mira führt die acht LF5-Themen zusammen: Anforderungen und Daten, JavaScript-Werte, Bedingungen und Schleifen, Funktionen, Objekte, Speicherung, SQL und Tests. Im Abschluss bearbeitest du einen lokalen synthetischen Bestand und schreibst eine eigene kleine JavaScript-Funktion in der begrenzten Lernlaufzeit."
+  },
+  "blocks": [
+    {
+      "id": "common-lf5-testing-cases",
+      "title": "1. Normal-, Grenz- und Fehlerfälle vorgeben",
+      "objectiveIds": [
+        "common-lf5-testing-cases"
+      ],
+      "sourceIds": [
+        "lf5-ms-testing",
+        "lf5-mdn-integer",
+        "lf5-mdn-functions"
+      ],
+      "paragraphs": [
+        "Ein Testfall nennt Ausgangslage beziehungsweise Eingaben, Handlung und erwartetes Ergebnis. Ein Normalfall prüft einen typischen erlaubten Ablauf. Ein Grenzfall prüft die Kante einer Regel. Ein Fehlerfall prüft eine verbotene Eingabe und die vereinbarte Reaktion. Vergleiche später das tatsächliche Ergebnis mit diesem vorab festgelegten Soll.",
+        "Der Vertrag für available(quantity, requested) lautet: Beide Werte sind ganze Zahlen von 0 bis 1000 einschließlich. Ungültige Eingabe ergibt null. Sonst ergibt requested <= quantity den Wahrheitswert. Normalfälle: (8, 3) → true und (2, 5) → false. Grenzfälle: (4, 4) → true, (0, 0) → true und (1000, 1000) → true.",
+        "Fehlerfälle sind (-1, 1), (3, 1.5), ('3', 1) und (1001, 1), jeweils mit null. Prüfe die gleichen Fehlerarten auch am jeweils anderen Parameter, zum Beispiel (3, -1), (1.5, 1), (3, '1') und (1, 1001). Eine erfolgreiche typische Probe ersetzt keine Prüfung dieser Grenzen und Fehlerwege."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Übungsfall",
+        "text": "Die Anforderung gleich dem Bestand ist ein besonders nützlicher Grenzfall: Sie unterscheidet <= von einem fehlerhaften <."
+      },
+      "misconception": {
+        "claim": "Wenn der Normalfall funktioniert, sind Grenz- und Fehlerfälle damit ebenfalls belegt.",
+        "correction": "Verschiedene Zweige und Grenzen brauchen eigene Erwartungen und Tests."
+      },
+      "takeaway": "Leite Tests aus dem Vertrag ab, bevor du das Ist-Ergebnis ansiehst."
+    },
+    {
+      "id": "common-lf5-testing-repair",
+      "title": "2. Einen Fehler reproduzieren und gezielt korrigieren",
+      "objectiveIds": [
+        "common-lf5-testing-repair"
+      ],
+      "sourceIds": [
+        "lf5-ms-testing",
+        "lf5-mdn-control",
+        "lf5-mdn-operators"
+      ],
+      "paragraphs": [
+        "Ein reproduzierbarer Befund enthält konkrete Eingaben, Soll und Ist. Beispiel: available(4, 4), Soll true, Ist false. Wenn der gültige Weg return requested < quantity; verwendet, ist die strenge Grenze eine passende Ursache. Eine allgemeine Meldung geht nicht liefert diese Eingrenzung nicht.",
+        "Korrigiere die Ursache: Der fachliche Vertrag erlaubt Gleichheit, also passt <=. Prüfe danach erneut den zuvor fehlgeschlagenen Fall. Ergänze nahe Werte, etwa (4, 3) → true und (4, 5) → false, damit die Änderung nicht einfach alle Anforderungen freigibt.",
+        "Führe anschließend auch die übrigen Normal-, Grenz- und Fehlerfälle erneut aus. Ein Fehler bei Text oder Nachkommazahl braucht eine andere Korrektur als der Vergleichsfehler. Der gültige Weg darf erst nach der Prüfung beider Parameter erreicht werden. Notiere, was geändert wurde und welche Ergebnisse danach vorlagen."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Übungsfall",
+        "text": "Ein Testlauf mit (4, 4) ist nach der Änderung neu erforderlich. Ein alter Erfolg beschreibt den früheren Code."
+      },
+      "misconception": {
+        "claim": "Die Korrektur einer einzelnen fehlgeschlagenen Probe beweist alle anderen Fälle mit.",
+        "correction": "Andere Wege können weiterhin falsch sein oder durch die Änderung beeinträchtigt werden."
+      },
+      "takeaway": "Reproduzieren, Ursache begründen, gezielt ändern und erneut gegen den Vertrag prüfen."
+    },
+    {
+      "id": "common-lf5-testing-practice",
+      "title": "3. Datenmodell und eigenen Code ausführen",
+      "objectiveIds": [
+        "common-lf5-testing-cases",
+        "common-lf5-testing-repair",
+        "common-lf5-testing-document"
+      ],
+      "sourceIds": [
+        "lf5-pg-select",
+        "lf5-pg-insert",
+        "lf5-pg-update",
+        "lf5-pg-delete",
+        "lf5-mdn-functions",
+        "lf5-mdn-integer"
+      ],
+      "paragraphs": [
+        "Die Abschlussübung arbeitet mit stocks(id, name, quantity): 1/Kabel/8, 2/Maus/2 und 3/Adapter/0. Wähle zuerst quantity < 3 und aufsteigende Namenssortierung. Erwartet sind Adapter 0 und Maus 2. Die geführten Felder zeigen SELECT, WHERE und ORDER BY in der dazu passenden SQL-Darstellung.",
+        "Ergänze 4/Tastatur/5 mit INSERT. Prüfe die Vorschau für id 2, bevor du dessen quantity mit UPDATE auf 6 setzt. Prüfe ebenso die Vorschau für id 3, bevor du ihn mit DELETE entfernst. Erwarteter Endbestand: 1/Kabel/8, 2/Maus/6, 4/Tastatur/5. Die SQL-Darstellung erläutert fest definierte lokale Modelloperationen; sie ist kein frei ausführbarer SQL-Zugang und keine echte Datenbank.",
+        "Schreibe danach deine Funktion available(quantity, requested) im bearbeitbaren Codefeld. Nutze function, Parameter, if und return; Number.isInteger und ! erkennen ungültige Typen beziehungsweise Nachkommazahlen, || verknüpft Fehlerbedingungen, < 0 und > 1000 prüfen Grenzen. Bei ungültigen Eingaben folgt return null;, sonst return requested <= quantity;. Du kannst die Prüfungen in mehrere if-Blöcke gliedern. Entscheidend sind die Vertragsergebnisse, nicht ein bestimmter Lösungstext.",
+        "Führe den Code in der vorhandenen begrenzten JavaScript-Lernlaufzeit aus und lies Soll/Ist für Normal-, Grenz- und Fehlerfälle. Es gibt keinen Zugriff auf echte Datenbanken, Dateien oder Netzwerk. Eine Änderung am Modell oder Code macht den früheren Prüferfolg unbrauchbar; prüfe den geänderten Stand neu. Nach erfolgreicher Prüfung liest du das Protokoll, beschreibst eine eigene Beobachtung und Verbesserung und bestätigst die Bearbeitung bewusst."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Übungsfall",
+        "text": "Die Datenverwaltung verändert synthetische Zeilen. available gibt dagegen eine reine Entscheidung zurück und bucht keine Menge ab."
+      },
+      "misconception": {
+        "claim": "Die sichtbare SQL-Zeile oder eine Textvorlage bestätigt bereits die erfolgreiche Praxis.",
+        "correction": "Du musst die Modelloperationen selbst durchführen, eigene Funktion ausführen, Ergebnisse prüfen und anschließend bewusst bestätigen."
+      },
+      "takeaway": "Führe aus, vergleiche Soll und Ist und dokumentiere den tatsächlich geprüften Stand."
+    },
+    {
+      "id": "common-lf5-testing-review",
+      "title": "4. LF5-Rückblick: vom Auftrag zum erklärten Ergebnis",
+      "objectiveIds": [
+        "common-lf5-testing-cases",
+        "common-lf5-testing-repair",
+        "common-lf5-testing-document"
+      ],
+      "sourceIds": [
+        "lf5-nasa-requirements",
+        "lf5-mdn-types",
+        "lf5-mdn-number",
+        "lf5-mdn-integer",
+        "lf5-mdn-operators",
+        "lf5-mdn-control",
+        "lf5-mdn-loops",
+        "lf5-mdn-functions",
+        "lf5-mdn-objects",
+        "lf5-mdn-classes",
+        "lf5-sqlite-storage",
+        "lf5-pg-keys",
+        "lf5-pg-select",
+        "lf5-pg-insert",
+        "lf5-pg-update",
+        "lf5-pg-delete",
+        "lf5-ms-testing"
+      ],
+      "paragraphs": [
+        "Anforderungen: Eda benötigt id, name und quantity aus freigegebener Liste und bestätigter Zählung. Die Lagerrolle darf ändern, die Lesefunktion anzeigen. Speicherbedarf ist Datensatzanzahl mal angenommene Größe, etwa 200 × 100 Byte = 20 kB bei 1 kB = 1000 Byte; Zusatzbedarf wird getrennt genannt. Teilaufgaben enden in beobachtbaren Ergebnissen, mit einem Normal- und einem Fehlerkriterium vor der Umsetzung.",
+        "Typen und Ausdrücke: Name ist Text, Menge number mit Ganzzahlbereich, Verfügbarkeit boolean. Geldwerte werden im begrenzten Beispiel in ganzen Cent geführt: 1250 Cent sind 12,50 Euro. let erlaubt Neuzuweisung, = weist zu, === vergleicht strikt. Bedingungen setzen Fachregeln um; <= schließt Gleichheit ein. Eine for-Schleife mit i = 0, i < 3 und Erhöhung um 1 hat drei Durchläufe. Start, Grenze und Fortschaltung erklären, warum sie endet.",
+        "Funktionen: Pseudocode ordnet Eingabeprüfung und Entscheidung. available hat zwei Parameter, liefert true, false oder null und verändert keine Lagerdaten. Objekte bündeln id, name, quantity und Methoden. Material ist eine Klasse, mit new erzeugte Kabel- und Mausobjekte sind Instanzen. Eine Ausleihe kann auf ein Material verweisen; mehrere Ausleihen pro Material ergeben die vorgegebene 1:n-Beziehung.",
+        "Ablage und SQL: Eine strukturierte Datei kann einfachen Austausch leisten, eine Datenbank gezielte Abfragen und Beziehungen unterstützen; eine Datenbank kann selbst in einer Datei liegen. Der Primärschlüssel identifiziert eine Zeile, ein Fremdschlüssel ordnet zum Beispiel eine Ausleihe einem vorhandenen Material zu. SELECT/WHERE/ORDER BY lesen und ordnen, INSERT ergänzt, UPDATE ändert, DELETE entfernt Zeilen. Vor einer Änderung prüfen wir dieselbe Auswahl, danach Zielzustand und unveränderte Zeilen.",
+        "Test und Übergabe: Notiere Vertrag, Eingaben, Soll, Ist, begründete Korrektur und erneutes Ergebnis. Die Bedienbeschreibung erklärt Auswahl, Vorschau, Änderung, Codeausführung und Prüfung. Nenne offene Punkte und die Grenze des synthetischen Modells. Beziehe deine Reflexion auf eine eigene Beobachtung: Was hast du übersehen, welcher Test hat geholfen und was planst du beim nächsten Mal früher?"
+      ],
+      "example": {
+        "title": "Eigener fiktiver Übungsfall",
+        "text": "Miras Übergabe verbindet den richtigen Endbestand mit dem getesteten Funktionsvertrag und einer kurzen Anleitung für dieselbe Modellaufgabe."
+      },
+      "misconception": {
+        "claim": "Ein grüner Testlauf ersetzt Datenmodell, Anforderungen und verständliche Übergabe.",
+        "correction": "Tests prüfen benannte Erwartungen; Modell, Auftrag und Anleitung machen diese Erwartungen nachvollziehbar."
+      },
+      "takeaway": "Ein kleiner Softwarestand ist erst verständlich übergeben, wenn Auftrag, Daten, Verhalten und Prüfnachweise zusammenpassen."
+    }
+  ],
+  "questionFile": "questions/common-lf5-testing.v1.csv",
+  "quiz": {
+    "questionIds": [
+      "LJ-LF5-TESTING-Q01",
+      "LJ-LF5-TESTING-Q02",
+      "LJ-LF5-TESTING-Q03",
+      "LJ-LF5-TESTING-Q04",
+      "LJ-LF5-TESTING-Q05",
+      "LJ-LF5-TESTING-Q06"
+    ]
+  },
+  "exam": {
+    "questionIds": [
+      "LJ-LF5-TESTING-E01",
+      "LJ-LF5-TESTING-E02",
+      "LJ-LF5-TESTING-E03",
+      "LJ-LF5-TESTING-E04",
+      "LJ-LF5-TESTING-E05",
+      "LJ-LF5-TESTING-E06",
+      "LJ-LF5-TESTING-E07",
+      "LJ-LF5-TESTING-E08"
+    ],
+    "passPercent": 80,
+    "scoring": "all-or-nothing-per-question",
+    "timed": false
+  },
+  "questionLinks": [
+    {
+      "questionId": "LJ-LF5-TESTING-Q01",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf5-testing-cases"
+      ],
+      "blockIds": [
+        "common-lf5-testing-cases"
+      ]
+    },
+    {
+      "questionId": "LJ-LF5-TESTING-Q02",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf5-testing-cases"
+      ],
+      "blockIds": [
+        "common-lf5-testing-cases"
+      ]
+    },
+    {
+      "questionId": "LJ-LF5-TESTING-Q03",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf5-testing-repair"
+      ],
+      "blockIds": [
+        "common-lf5-testing-repair"
+      ]
+    },
+    {
+      "questionId": "LJ-LF5-TESTING-Q04",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf5-testing-repair"
+      ],
+      "blockIds": [
+        "common-lf5-testing-repair"
+      ]
+    },
+    {
+      "questionId": "LJ-LF5-TESTING-Q05",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf5-testing-document"
+      ],
+      "blockIds": [
+        "common-lf5-testing-practice",
+        "common-lf5-testing-review"
+      ]
+    },
+    {
+      "questionId": "LJ-LF5-TESTING-Q06",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf5-testing-document"
+      ],
+      "blockIds": [
+        "common-lf5-testing-practice",
+        "common-lf5-testing-review"
+      ]
+    },
+    {
+      "questionId": "LJ-LF5-TESTING-E01",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf5-testing-cases"
+      ],
+      "blockIds": [
+        "common-lf5-testing-review"
+      ]
+    },
+    {
+      "questionId": "LJ-LF5-TESTING-E02",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf5-testing-cases"
+      ],
+      "blockIds": [
+        "common-lf5-testing-review"
+      ]
+    },
+    {
+      "questionId": "LJ-LF5-TESTING-E03",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf5-testing-repair"
+      ],
+      "blockIds": [
+        "common-lf5-testing-review"
+      ]
+    },
+    {
+      "questionId": "LJ-LF5-TESTING-E04",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf5-testing-cases"
+      ],
+      "blockIds": [
+        "common-lf5-testing-review"
+      ]
+    },
+    {
+      "questionId": "LJ-LF5-TESTING-E05",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf5-testing-document"
+      ],
+      "blockIds": [
+        "common-lf5-testing-review"
+      ]
+    },
+    {
+      "questionId": "LJ-LF5-TESTING-E06",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf5-testing-document"
+      ],
+      "blockIds": [
+        "common-lf5-testing-review"
+      ]
+    },
+    {
+      "questionId": "LJ-LF5-TESTING-E07",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf5-testing-repair"
+      ],
+      "blockIds": [
+        "common-lf5-testing-review"
+      ]
+    },
+    {
+      "questionId": "LJ-LF5-TESTING-E08",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf5-testing-cases",
+        "common-lf5-testing-repair",
+        "common-lf5-testing-document"
+      ],
+      "blockIds": [
+        "common-lf5-testing-review"
+      ]
+    }
+  ],
+  "interview": [
+    {
+      "id": "common-lf5-testing-talk-1",
+      "prompt": "Plane Tests für available und erkläre, wie du den Fehler bei gleichen Mengen untersuchst.",
+      "objectiveIds": [
+        "common-lf5-testing-cases",
+        "common-lf5-testing-repair"
+      ],
+      "blockIds": [
+        "common-lf5-testing-cases",
+        "common-lf5-testing-repair"
+      ],
+      "keyPoints": [
+        "Normal-, Grenz- und Fehlerfall mit Soll nennen.",
+        "Beide Parameter prüfen.",
+        "Gleichheitsfehler reproduzieren, < zu <= korrigieren und erneut testen."
+      ],
+      "acceptableAlternatives": [
+        "Eine fachlich gleichwertige Erklärung mit passenden eigenen Beispielen."
+      ],
+      "misconceptions": [
+        "Wenn der Normalfall funktioniert, sind Grenz- und Fehlerfälle damit ebenfalls belegt."
+      ],
+      "sampleAnswer": "Ich prüfe etwa (8, 3) auf true, (4, 4) auf true und (3, '1') auf null. Liefert die Gleichheit false, untersuche ich den Vergleich. Bei einem zu strengen < korrigiere ich auf <= und prüfe den Fehlerfall sowie Werte darunter und darüber erneut. Auch die übrigen Tests laufen wieder.",
+      "followUp": "Warum ist true für alle Eingaben keine geeignete Reparatur?"
+    },
+    {
+      "id": "common-lf5-testing-talk-2",
+      "prompt": "Bearbeite die lokale Datenverwaltung und deine eigene Funktion. Beschreibe danach eine tatsächlich beobachtete Auswahl oder Änderung, einen Funktionsfall mit Soll/Ist und eine Verbesserung deines Vorgehens.",
+      "objectiveIds": [
+        "common-lf5-testing-cases",
+        "common-lf5-testing-repair",
+        "common-lf5-testing-document"
+      ],
+      "blockIds": [
+        "common-lf5-testing-cases",
+        "common-lf5-testing-repair",
+        "common-lf5-testing-practice"
+      ],
+      "keyPoints": [
+        "Ausgangsbestand lesen, quantity < 3 aufsteigend nach Name auswählen.",
+        "Tastatur einfügen; vor Mausänderung und Adapterlöschung die Auswahl prüfen.",
+        "Endbestand kontrollieren und eigene available-Funktion ausführen.",
+        "Normal-, Grenz- und Fehlerfälle für beide Parameter auswerten.",
+        "Nach Änderungen neu prüfen, Protokoll lesen und bewusst bestätigen."
+      ],
+      "acceptableAlternatives": [
+        "Eine fachlich gleichwertige Erklärung mit passenden eigenen Beispielen."
+      ],
+      "misconceptions": [
+        "Wenn der Normalfall funktioniert, sind Grenz- und Fehlerfälle damit ebenfalls belegt."
+      ],
+      "sampleAnswer": "Vorlage nach eigener Bearbeitung: Ich ergänze hier meine beobachtete Auswahl, den Ausgangs- und Zielwert einer Änderung und einen eigenen Funktionsfall mit Soll und Ist. Ich halte eine notwendige Korrektur oder eine erfolgreich geprüfte Grenze fest und beschreibe, welchen Prüfschritt ich künftig früher plane. Diese Vorlage bestätigt keine Durchführung.",
+      "followUp": "Welcher konkrete Befund hat deine Entscheidung oder Korrektur begründet?",
+      "practice": {
+        "task": "Bearbeite die geführte lokale Datenverwaltung mit stocks(id, name, quantity). Der Ausgangsbestand ist 1/Kabel/8, 2/Maus/2 und 3/Adapter/0. Wähle quantity < 3 und die aufsteigende Namenssortierung; lies die sichtbare SQL-Darstellung und erwarte Adapter 0 vor Maus 2. Ergänze id 4, Name Tastatur, Menge 5. Prüfe vor der Mengenänderung die Auswahl id 2 und setze dann quantity auf 6. Prüfe vor dem Löschen die Auswahl id 3 und entferne diese Adapterzeile. Kontrolliere den Endbestand 1/Kabel/8, 2/Maus/6 und 4/Tastatur/5. Schreibe deine eigene Funktion available(quantity, requested): Beide Eingaben müssen ganze Zahlen von 0 bis 1000 sein; bei einem ungültigen Wert folgt null, sonst der Wahrheitswert requested <= quantity. Führe deine Funktion aus und lies Normal-, Grenz- und Fehlerfälle für beide Parameter. Korrigiere Abweichungen und prüfe nach jeder Änderung erneut. Lies anschließend das Protokoll und notiere eine tatsächliche Beobachtung mit Soll/Ist sowie eine Verbesserung. Bestätige erst nach erfolgreicher Prüfung bewusst. Die SQL-Anzeige erklärt begrenzte Modelloperationen; es gibt keinen freien SQL-Zugang. Der JavaScript-Code läuft in der begrenzten Lernlaufzeit ohne Zugriff auf echte Datenbanken, Dateien oder Netzwerk.",
+        "checklist": [
+          "Ich habe Ausgangsbestand, gefilterte und sortierte Auswahl sowie die dazu angezeigte SQL-Darstellung gelesen.",
+          "Ich habe den neuen Datensatz eingefügt und vor UPDATE sowie DELETE die jeweils betroffenen Zeilen geprüft.",
+          "Ich habe den Endbestand einschließlich der unveränderten Kabelzeile kontrolliert.",
+          "Ich habe meine eigene available-Funktion ausgeführt und Normal-, Grenz- und Fehlerfälle für beide Parameter ausgewertet.",
+          "Ich habe nach Änderungen erneut geprüft, das Protokoll gelesen und eine eigene Beobachtung mit Soll/Ist sowie eine Verbesserung ergänzt."
+        ],
+        "confirmation": "Ich bestätige, dass ich die lokalen Datenoperationen selbst durchgeführt, meine Funktion ausgeführt, Ergebnisse geprüft und nach Änderungen erneut getestet habe. Ich habe das Protokoll gelesen und eine eigene Beobachtung sowie Verbesserung ergänzt. Dies bestätigt meine Modellbearbeitung, keine Prüfung einer echten Lagerdatenbank."
+      }
+    },
+    {
+      "id": "common-lf5-testing-talk-3",
+      "prompt": "Erkläre Eda die Datenverwaltung als Rückblick über alle acht LF5-Themen: Auftrag, Werte, Ablauf, Funktionen, Objekte, Ablage, SQL und getestete Übergabe.",
+      "objectiveIds": [
+        "common-lf5-testing-cases",
+        "common-lf5-testing-repair",
+        "common-lf5-testing-document"
+      ],
+      "blockIds": [
+        "common-lf5-testing-review"
+      ],
+      "keyPoints": [
+        "Benötigte Daten, Herkunft, Rechte, Schätzannahmen und Teilaufgaben nennen.",
+        "Typen, Einheiten, Bedingungen und Schleifen mit Grenzen erklären.",
+        "Pseudocode, Funktionsvertrag, Klasse, Instanz und Beziehung unterscheiden.",
+        "Ablagewahl sowie Primär- und Fremdschlüssel begründen.",
+        "SQL-Auswahl und gezielte Änderungen mit Vorschau erläutern.",
+        "Tests, Korrektur, erneute Prüfung, Anleitung und eigene Verbesserung verbinden."
+      ],
+      "acceptableAlternatives": [
+        "Eine fachlich gleichwertige Erklärung mit passenden eigenen Beispielen."
+      ],
+      "misconceptions": [
+        "Ein grüner Testlauf ersetzt Datenmodell, Anforderungen und verständliche Übergabe."
+      ],
+      "sampleAnswer": "Ich starte beim Auftrag mit id, Name und Stückzahl aus festgelegten Quellen und klaren Rechten. JavaScript nutzt Text, Zahlen und Wahrheitswerte; Geld führe ich im Beispiel in Cent. Bedingungen und Schleifen brauchen passende Grenzen. available hat einen klaren Vertrag ohne Buchung. Materialobjekte haben Zustand und Methoden, Ausleihen verweisen auf Materialien. Die Ablage richtet sich nach Zugriff und Struktur; Schlüssel sichern Identität und Zuordnung. SQL liest oder ändert gezielt nach geprüfter Auswahl. Ich übergebe die beobachteten Testergebnisse, die Bedienfolge und eine Verbesserung meines Vorgehens.",
+      "followUp": "Welche Aussage über eine echte Lageranwendung lässt sich aus diesem synthetischen Modell noch nicht ableiten?"
+    }
+  ],
+  "cards": [
+    {
+      "id": "common-lf5-testing-card-1",
+      "front": "Was unterscheidet Normal-, Grenz- und Fehlerfall?",
+      "back": "Typischer gültiger Ablauf, Kante einer gültigen Regel und ungültige Eingabe mit festgelegter Reaktion.",
+      "objectiveIds": [
+        "common-lf5-testing-cases"
+      ],
+      "blockIds": [
+        "common-lf5-testing-cases"
+      ]
+    },
+    {
+      "id": "common-lf5-testing-card-2",
+      "front": "Welche Ergebnisse erwartet available für (4,4), (0,0) und (3,'1')?",
+      "back": "true, true und null. Gleichheit und die Zahl 0 sind erlaubt; der Zahlentext verletzt den Vertrag.",
+      "objectiveIds": [
+        "common-lf5-testing-cases"
+      ],
+      "blockIds": [
+        "common-lf5-testing-cases"
+      ]
+    },
+    {
+      "id": "common-lf5-testing-card-3",
+      "front": "Was brauchst du für einen reproduzierbaren Fehler?",
+      "back": "Konkrete Eingaben, den erwarteten Wert, den tatsächlichen Wert und den betroffenen Programmstand.",
+      "objectiveIds": [
+        "common-lf5-testing-repair"
+      ],
+      "blockIds": [
+        "common-lf5-testing-repair"
+      ]
+    },
+    {
+      "id": "common-lf5-testing-card-4",
+      "front": "Was folgt auf eine Korrektur?",
+      "back": "Fehlgeschlagenen Fall erneut prüfen, benachbarte Grenzen und übrige relevante Fälle wiederholen.",
+      "objectiveIds": [
+        "common-lf5-testing-repair"
+      ],
+      "blockIds": [
+        "common-lf5-testing-repair"
+      ]
+    },
+    {
+      "id": "common-lf5-testing-card-5",
+      "front": "Was gehört zum Nachweis der Datenänderung?",
+      "back": "Auswahlbedingung, vorherige Zielzeilen, Änderung, erwarteter und tatsächlicher Endzustand sowie unveränderte Nachbarzeilen.",
+      "objectiveIds": [
+        "common-lf5-testing-document"
+      ],
+      "blockIds": [
+        "common-lf5-testing-practice",
+        "common-lf5-testing-review"
+      ]
+    },
+    {
+      "id": "common-lf5-testing-card-6",
+      "front": "Was verbindet eine verständliche LF5-Übergabe?",
+      "back": "Auftrag und Datenmodell, Werte und Abläufe, Funktionen und Objekte, Ablage und SQL sowie Tests, Bedienung und offene Grenzen.",
+      "objectiveIds": [
+        "common-lf5-testing-document"
+      ],
+      "blockIds": [
+        "common-lf5-testing-review"
+      ]
+    }
+  ],
+  "review": {
+    "status": "reviewed",
+    "checkedAt": "2026-11-16"
+  },
+  "fieldReview": {
+    "fieldId": "LF5",
+    "topicIds": [
+      "common-lf5-requirements",
+      "common-lf5-types",
+      "common-lf5-control",
+      "common-lf5-functions",
+      "common-lf5-objects",
+      "common-lf5-storage",
+      "common-lf5-sql",
+      "common-lf5-testing"
+    ],
+    "blockIds": [
+      "common-lf5-testing-review"
+    ],
+    "interviewIds": [
+      "common-lf5-testing-talk-3"
+    ],
+    "questionIds": [
+      "LJ-LF5-TESTING-E01",
+      "LJ-LF5-TESTING-E02",
+      "LJ-LF5-TESTING-E03",
+      "LJ-LF5-TESTING-E04",
+      "LJ-LF5-TESTING-E05",
+      "LJ-LF5-TESTING-E06",
+      "LJ-LF5-TESTING-E07",
+      "LJ-LF5-TESTING-E08"
+    ]
+  }
+}
+

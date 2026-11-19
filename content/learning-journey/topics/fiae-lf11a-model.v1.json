@@ -1,0 +1,453 @@
+{
+  "schemaVersion": 1,
+  "version": "1.0.0",
+  "id": "fiae-lf11a-model",
+  "title": "Anforderungen in Softwaremodelle übersetzen",
+  "fieldId": "LF11a",
+  "scope": "specialization",
+  "prerequisites": [
+    "fiae-lf10a-value",
+    "common-lf5-objects"
+  ],
+  "objectives": [
+    {
+      "id": "fiae-lf11a-model-derive",
+      "text": "Aus einer Prozessbeschreibung benötigte Daten, Operationen und überprüfbare Akzeptanzkriterien ableiten."
+    },
+    {
+      "id": "fiae-lf11a-model-model",
+      "text": "Zusammenhänge oder Abläufe mit einem passenden einfachen Diagramm beschreiben."
+    }
+  ],
+  "caseStudy": {
+    "title": "Was muss die Werkstatt bei einer Suche erfahren?",
+    "text": "In LF10a zeigte die Eingabemaske nach der simulierten Reparaturmeldung eine Ticketkennung wie R-41 an. Mit dieser Kennung fragt die Annahme später den Status ab. Für die Fachlogik ist der Zahlenteil die eindeutige Auftragsnummer, bei R-41 also 41. Die Gerätekennung G-17 bezeichnet das betroffene Gerät. Im neuen Übungsbestand steht Auftrag 7 für „offen“ und Auftrag 12 für „in Arbeit“. Du klärst, was die Suche für jeden Eingabefall zurückgeben soll."
+  },
+  "sources": [
+    {
+      "id": "lf5-nasa-requirements",
+      "title": "NASA: Requirements Management",
+      "url": "https://www.nasa.gov/reference/6-2-requirements-management/",
+      "note": "Anforderungen nachvollziehbar zuordnen und Änderungen an ihren Nachweisen verfolgen. Beispiele und Prüfdaten sind erfunden.",
+      "checkedAt": "2026-11-19"
+    },
+    {
+      "id": "lf11a-uml",
+      "title": "OMG: Unified Modeling Language 2.5.1",
+      "url": "https://www.omg.org/spec/UML/2.5.1/About-UML",
+      "note": "Die Standardsammlung unterscheidet Struktur- und Verhaltensmodelle. Die beschrifteten Textskizzen zum Reparaturauftrag sind eigene vereinfachte Darstellungen.",
+      "checkedAt": "2026-11-19"
+    }
+  ],
+  "sourceIds": [
+    "lf5-nasa-requirements",
+    "lf11a-uml"
+  ],
+  "blocks": [
+    {
+      "id": "fiae-lf11a-model-block-01",
+      "title": "1. Wörter aus dem Auftrag in Daten und Operationen übersetzen",
+      "objectiveIds": [
+        "fiae-lf11a-model-derive"
+      ],
+      "sourceIds": [
+        "lf5-nasa-requirements"
+      ],
+      "paragraphs": [
+        "Lies die Aussage „Ich gebe die Nummer ein und sehe den aktuellen Status“. Leite daraus die Operation „Status nachschlagen“ ab und markiere die benötigten Daten Nummer und Status. Auftrag 7 ist eine konkrete Instanz. Die Felder Nummer und Status beschreiben die Struktur aller Aufträge.",
+        "Lege fest, was die Suche liest und was sie ändern darf. Eine eindeutige, stabile Nummer bezeichnet genau einen Auftrag. Ein Status kann bei vielen Aufträgen gleich sein. Die Suche gibt einen Status oder einen vereinbarten Fehlertyp zurück und lässt den Bestand unverändert."
+      ],
+      "example": {
+        "title": "Zwei Aufträge mit gleichem Zustand",
+        "text": "7 → offen, 12 → offen. Aus „offen“ allein lässt sich der gesuchte Auftrag nicht bestimmen. Die Abfrage von 7 liefert „offen“ und beide Datenzeilen bleiben erhalten."
+      },
+      "misconception": {
+        "claim": "Für eine Suche reicht der Status als eindeutiges Merkmal.",
+        "correction": "Viele Aufträge durchlaufen denselben Zustand. Die Nummer unterscheidet sie."
+      },
+      "takeaway": "Halte Eingabe, Ergebnis und zulässige Zustandsänderungen fest."
+    },
+    {
+      "id": "fiae-lf11a-model-block-02",
+      "title": "2. Aus einem Wunsch ein prüfbares Kriterium machen",
+      "objectiveIds": [
+        "fiae-lf11a-model-derive"
+      ],
+      "sourceIds": [
+        "lf5-nasa-requirements"
+      ],
+      "paragraphs": [
+        "Ein Akzeptanzkriterium enthält Ausgangslage, Handlung und beobachtbares Soll. Nenne konkrete Daten. Ein vorhandener Auftrag 7 mit Status „offen“ soll nach Eingabe von 7 genau diesen Status liefern. Die Prüfung kann die erwartete Ausgabe mit der beobachteten vergleichen. Wechselt der Status von 12, prüfe dieselbe Nummer nach dem Wechsel mit dem neuen Sollwert. So würde ein veralteter Treffer auffallen.",
+        "Unterscheide drei Fälle. Eine vorhandene gültige Nummer liefert einen Treffer. Eine zulässige, unbesetzte Nummer ergibt „nicht gefunden“. Ein unzulässiger Wert wie 0 ergibt „ungültige Nummer“ vor der Suche. Was „schnell“ konkret bedeutet, muss mit der Werkstatt unter vereinbarten Messbedingungen geklärt werden. Vereinbare dafür beispielsweise eine maximale Antwortzeit und eine Anzahl gleichzeitiger Suchanfragen."
+      ],
+      "example": {
+        "title": "Vom Wunsch zur Probe",
+        "text": "Bestand {7: offen}, Eingabe 8, erwartetes Ergebnis „nicht gefunden“. Ein Test mit 0 beantwortet eine andere Frage und braucht seine eigene Erwartung."
+      },
+      "misconception": {
+        "claim": "„Die Suche funktioniert gut“ reicht für die Abnahme.",
+        "correction": "Erst konkrete Ausgangsdaten und ein beobachtbares Ergebnis erlauben eine wiederholbare Entscheidung."
+      },
+      "takeaway": "Schreibe pro fachlich verschiedenem Ergebnis eine überprüfbare Erwartung auf."
+    },
+    {
+      "id": "fiae-lf11a-model-block-03",
+      "title": "3. Einen Ablauf mit Entscheidungen skizzieren",
+      "objectiveIds": [
+        "fiae-lf11a-model-model"
+      ],
+      "sourceIds": [
+        "lf11a-uml"
+      ],
+      "paragraphs": [
+        "Wähle die Skizze nach der Frage der Werkstatt. Für die Reihenfolge und die alternativen Wege einer Suche eignet sich ein Ablaufdiagramm. Beschrifte jeden Ausgang einer Entscheidung mit einer eindeutigen Bedingung.",
+        "Beginne bei der Eingabe. Prüfe die Nummer vor der Bestandsabfrage. Führe einen gültigen Wert zum Nachschlagen und trenne Treffer und fehlenden Auftrag. Gehe zum Schluss mit 0, 7 und 8 je einen vollständigen Weg auf Papier ab."
+      ],
+      "example": {
+        "title": "Textskizze mit drei Ausgängen",
+        "text": "Start → Nummer gültig? \n  nein → „ungültige Nummer“ → Ende\n  ja → Auftrag vorhanden?\n      ja → Status ausgeben → Ende\n      nein → „nicht gefunden“ → Ende"
+      },
+      "misconception": {
+        "claim": "Zwei unbeschriftete Pfeile zeigen schon, welcher Weg zum Treffer führt.",
+        "correction": "Die Bedingung am Pfeil entscheidet, welche Ausgabe zu den Eingabedaten gehört."
+      },
+      "takeaway": "Eine Ablaufskizze zeigt Prüfungen, Verzweigungen und Ausgaben in ihrer Reihenfolge."
+    },
+    {
+      "id": "fiae-lf11a-model-block-04",
+      "title": "4. Beziehungen zeichnen und am Fall prüfen",
+      "objectiveIds": [
+        "fiae-lf11a-model-derive",
+        "fiae-lf11a-model-model"
+      ],
+      "sourceIds": [
+        "lf11a-uml",
+        "lf5-nasa-requirements"
+      ],
+      "paragraphs": [
+        "Soll die Werkstatt auch Arbeitsschritte anzeigen, kläre deren Zuordnung. Im Modell gehört jeder Schritt zu genau einem Auftrag. Ein neuer Auftrag darf noch keinen Schritt haben, ein laufender Auftrag kann mehrere haben. Diese Angaben heißen Kardinalitäten.",
+        "Lies die Beziehung in beide Richtungen. Prüfe sie an Auftrag 7 ohne Schritte und Auftrag 12 mit zwei Schritten. Eine Strukturskizze beantwortet die Frage nach der Anzahl. Für die Reihenfolge der Suche bleibt die Ablaufskizze zuständig."
+      ],
+      "example": {
+        "title": "Strukturskizze der Werkstatt",
+        "text": "Auftrag [1] ── umfasst ── [0..*] Arbeitsschritt. Für Schritt S3 ist genau ein Auftrag erforderlich. Auftrag 7 darf unmittelbar nach dem Anlegen ohne Schritt bestehen."
+      },
+      "misconception": {
+        "claim": "Jeder Auftrag muss schon beim Anlegen einen Arbeitsschritt besitzen.",
+        "correction": "Die untere Grenze am Ende „Arbeitsschritt“ ist null. Ein Auftrag ohne Schritte erfüllt das vereinbarte Modell."
+      },
+      "takeaway": "Gleiche die Mengenangaben mit konkreten zulässigen und unzulässigen Zuordnungen ab."
+    }
+  ],
+  "questionFile": "questions/fiae-lf11a-model.v1.csv",
+  "quiz": {
+    "questionIds": [
+      "LJ-LF11A-MODEL-Q01",
+      "LJ-LF11A-MODEL-Q02",
+      "LJ-LF11A-MODEL-Q03",
+      "LJ-LF11A-MODEL-Q04",
+      "LJ-LF11A-MODEL-Q05",
+      "LJ-LF11A-MODEL-Q06"
+    ]
+  },
+  "exam": {
+    "questionIds": [
+      "LJ-LF11A-MODEL-E01",
+      "LJ-LF11A-MODEL-E02",
+      "LJ-LF11A-MODEL-E03",
+      "LJ-LF11A-MODEL-E04",
+      "LJ-LF11A-MODEL-E05",
+      "LJ-LF11A-MODEL-E06",
+      "LJ-LF11A-MODEL-E07",
+      "LJ-LF11A-MODEL-E08"
+    ],
+    "passPercent": 80,
+    "scoring": "all-or-nothing-per-question",
+    "timed": false
+  },
+  "questionLinks": [
+    {
+      "questionId": "LJ-LF11A-MODEL-Q01",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf11a-model-derive"
+      ],
+      "blockIds": [
+        "fiae-lf11a-model-block-01"
+      ]
+    },
+    {
+      "questionId": "LJ-LF11A-MODEL-Q02",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf11a-model-derive"
+      ],
+      "blockIds": [
+        "fiae-lf11a-model-block-01"
+      ]
+    },
+    {
+      "questionId": "LJ-LF11A-MODEL-Q03",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf11a-model-derive"
+      ],
+      "blockIds": [
+        "fiae-lf11a-model-block-02"
+      ]
+    },
+    {
+      "questionId": "LJ-LF11A-MODEL-Q04",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf11a-model-model"
+      ],
+      "blockIds": [
+        "fiae-lf11a-model-block-03"
+      ]
+    },
+    {
+      "questionId": "LJ-LF11A-MODEL-Q05",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf11a-model-model"
+      ],
+      "blockIds": [
+        "fiae-lf11a-model-block-04"
+      ]
+    },
+    {
+      "questionId": "LJ-LF11A-MODEL-Q06",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf11a-model-derive"
+      ],
+      "blockIds": [
+        "fiae-lf11a-model-block-02"
+      ]
+    },
+    {
+      "questionId": "LJ-LF11A-MODEL-E01",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf11a-model-derive"
+      ],
+      "blockIds": [
+        "fiae-lf11a-model-block-02"
+      ]
+    },
+    {
+      "questionId": "LJ-LF11A-MODEL-E02",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf11a-model-model"
+      ],
+      "blockIds": [
+        "fiae-lf11a-model-block-03"
+      ]
+    },
+    {
+      "questionId": "LJ-LF11A-MODEL-E03",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf11a-model-model"
+      ],
+      "blockIds": [
+        "fiae-lf11a-model-block-04"
+      ]
+    },
+    {
+      "questionId": "LJ-LF11A-MODEL-E04",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf11a-model-derive"
+      ],
+      "blockIds": [
+        "fiae-lf11a-model-block-01"
+      ]
+    },
+    {
+      "questionId": "LJ-LF11A-MODEL-E05",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf11a-model-model"
+      ],
+      "blockIds": [
+        "fiae-lf11a-model-block-03"
+      ]
+    },
+    {
+      "questionId": "LJ-LF11A-MODEL-E06",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf11a-model-model"
+      ],
+      "blockIds": [
+        "fiae-lf11a-model-block-04"
+      ]
+    },
+    {
+      "questionId": "LJ-LF11A-MODEL-E07",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf11a-model-derive"
+      ],
+      "blockIds": [
+        "fiae-lf11a-model-block-02"
+      ]
+    },
+    {
+      "questionId": "LJ-LF11A-MODEL-E08",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf11a-model-derive",
+        "fiae-lf11a-model-model"
+      ],
+      "blockIds": [
+        "fiae-lf11a-model-block-04"
+      ]
+    }
+  ],
+  "interview": [
+    {
+      "id": "fiae-lf11a-model-talk-01",
+      "prompt": "Leite aus dem Wunsch der Annahme eine Abnahmeprobe und eine Gegenprobe ab.",
+      "objectiveIds": [
+        "fiae-lf11a-model-derive"
+      ],
+      "blockIds": [
+        "fiae-lf11a-model-block-01",
+        "fiae-lf11a-model-block-02"
+      ],
+      "keyPoints": [
+        "Bestand und Eingabe nennen.",
+        "Zwei unterscheidbare Ausgaben begründen."
+      ],
+      "acceptableAlternatives": [
+        "Ein Fall für ungültige Eingabe ist als Gegenprobe geeignet, wenn die Erwartung passt."
+      ],
+      "misconceptions": [
+        "Ein vorhandenes Suchfeld belegt bereits den fachlichen Erfolg."
+      ],
+      "sampleAnswer": "Ich lege Auftrag 12 mit „in Arbeit“ an. Die Suche 12 muss diesen Status liefern. Für die unbesetzte positive 19 erwarte ich „nicht gefunden“.",
+      "followUp": "Woran erkennst du einen unbeabsichtigten schreibenden Zugriff?"
+    },
+    {
+      "id": "fiae-lf11a-model-talk-02",
+      "prompt": "Führe die Eingaben 0 und 7 durch die Ablaufskizze. Wo trennen sich die Wege?",
+      "objectiveIds": [
+        "fiae-lf11a-model-model"
+      ],
+      "blockIds": [
+        "fiae-lf11a-model-block-03"
+      ],
+      "keyPoints": [
+        "Die erste Entscheidung prüft die Gültigkeit.",
+        "Der Treffer braucht eine zweite Entscheidung."
+      ],
+      "acceptableAlternatives": [
+        "Eine beschriftete Entscheidungstabelle mit denselben Pfaden ist ebenfalls nachvollziehbar."
+      ],
+      "misconceptions": [
+        "Für 0 müsse man zunächst den Bestand durchsuchen."
+      ],
+      "sampleAnswer": "Bei 0 endet der Weg am Nein der Gültigkeitsprüfung. Bei 7 geht er über den gültigen Eingang zur Trefferprüfung. Im vorgegebenen Bestand liefert sie „offen“.",
+      "followUp": "An welcher Stelle nimmt die gültige Nummer 8 einen anderen Weg?"
+    },
+    {
+      "id": "fiae-lf11a-model-talk-03",
+      "prompt": "Erkläre der Werkstatt, wie du die Anforderung „Schritte pro Auftrag“ am Modell prüfst.",
+      "objectiveIds": [
+        "fiae-lf11a-model-derive",
+        "fiae-lf11a-model-model"
+      ],
+      "blockIds": [
+        "fiae-lf11a-model-block-04"
+      ],
+      "keyPoints": [
+        "Beziehung in beide Richtungen lesen.",
+        "Auftrag ohne Schritte und Schritt ohne Auftrag vergleichen."
+      ],
+      "acceptableAlternatives": [
+        "Eine Tabelle mit Auftragsnummer und zugehörigen Schritten kann die Mengen anschaulich belegen."
+      ],
+      "misconceptions": [
+        "Die Null gelte für beide Enden der Beziehung."
+      ],
+      "sampleAnswer": "Ich zeichne die Eins am Auftragsende und 0..* am Schrittende. Ein neuer Auftrag ohne Schritt passt hinein. Einen Schritt ohne Auftrag kann ich keiner Eins zuordnen und melde ihn als Regelverletzung.",
+      "followUp": "Welche Rückfrage stellst du bei gemeinsamer Arbeit an zwei Aufträgen?"
+    }
+  ],
+  "cards": [
+    {
+      "id": "fiae-lf11a-model-card-01",
+      "front": "Welche drei Angaben beschreiben die Suchoperation?",
+      "back": "Eingabe ist die Nummer, Ausgabe ist Status oder vereinbarter Fehler, der Auftragsbestand bleibt unverändert.",
+      "objectiveIds": [
+        "fiae-lf11a-model-derive"
+      ],
+      "blockIds": [
+        "fiae-lf11a-model-block-01"
+      ]
+    },
+    {
+      "id": "fiae-lf11a-model-card-02",
+      "front": "Woraus besteht eine wiederholbare Abnahmeprobe?",
+      "back": "Aus definiertem Ausgangsbestand, konkreter Handlung und beobachtbarem Soll.",
+      "objectiveIds": [
+        "fiae-lf11a-model-derive"
+      ],
+      "blockIds": [
+        "fiae-lf11a-model-block-02"
+      ]
+    },
+    {
+      "id": "fiae-lf11a-model-card-03",
+      "front": "Worin unterscheiden sich 0 und eine freie Nummer 15?",
+      "back": "0 verletzt die Eingaberegel. 15 ist gültig und kann beim Nachschlagen ohne Treffer bleiben.",
+      "objectiveIds": [
+        "fiae-lf11a-model-derive"
+      ],
+      "blockIds": [
+        "fiae-lf11a-model-block-02"
+      ]
+    },
+    {
+      "id": "fiae-lf11a-model-card-04",
+      "front": "Wie liest du einen Entscheidungsausgang?",
+      "back": "Folge dem Pfeil, dessen Bedingung bei dieser Eingabe erfüllt ist, bis zur nächsten Aktion.",
+      "objectiveIds": [
+        "fiae-lf11a-model-model"
+      ],
+      "blockIds": [
+        "fiae-lf11a-model-block-03"
+      ]
+    },
+    {
+      "id": "fiae-lf11a-model-card-05",
+      "front": "Was bedeutet 0..* am Schrittende?",
+      "back": "Ein Auftrag kann ohne Schritt angelegt werden und später mehrere Schritte umfassen.",
+      "objectiveIds": [
+        "fiae-lf11a-model-model"
+      ],
+      "blockIds": [
+        "fiae-lf11a-model-block-04"
+      ]
+    },
+    {
+      "id": "fiae-lf11a-model-card-06",
+      "front": "Welches Modell beantwortet die Frage nach der Reihenfolge?",
+      "back": "Eine Ablaufskizze verbindet Aktionen und Bedingungen. Eine Strukturskizze zeigt Beziehungen und Mengen.",
+      "objectiveIds": [
+        "fiae-lf11a-model-model"
+      ],
+      "blockIds": [
+        "fiae-lf11a-model-block-04"
+      ]
+    }
+  ],
+  "review": {
+    "status": "reviewed",
+    "checkedAt": "2026-11-19"
+  }
+}

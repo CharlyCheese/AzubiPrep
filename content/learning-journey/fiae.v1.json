@@ -1,0 +1,4261 @@
+{
+  "schemaVersion": 1,
+  "id": "fiae-journey",
+  "version": "1.0.0",
+  "title": "FIAE-Lernreise – Themen- und Lernzielplan",
+  "track": "FIAE",
+  "publicationStatus": "content-only",
+  "sourceIds": [
+    "kmk-fachinformatiker-2019",
+    "bibb-fiae-profile",
+    "fiausbv-annex",
+    "kmk-wiso-2021",
+    "bbig-13",
+    "bmwe-einzelunternehmen",
+    "gmbhg-organization",
+    "bgb-164",
+    "bgb-177",
+    "bbig-wiso",
+    "bgb-611a",
+    "bgb-622",
+    "bgb-623",
+    "arbzg-3",
+    "arbzg-4",
+    "burlg-3",
+    "jarbschg-8",
+    "entgfg-3",
+    "entgfg-5",
+    "kschg-4",
+    "betrvg-102",
+    "tvg-wiso",
+    "betrvg-wiso",
+    "bag-strike-peace",
+    "bpb-strike-faq",
+    "sgb1-wiso",
+    "sgb5-solidarity",
+    "sgb5-contribution-base",
+    "sgb11-benefits",
+    "sgb7-accident",
+    "sgb3-unemployment",
+    "sgg-objection",
+    "vz-insurance-advice",
+    "gewo-108",
+    "entgbv-1",
+    "rv-rate-2026",
+    "sgb6-contribution-share",
+    "sgb3-contribution-rate",
+    "sgb3-contribution-share",
+    "estg-39b",
+    "drv-values-2026",
+    "wiso-bgb-consumer",
+    "wiso-bundesbank-cycle",
+    "wiso-bundesbank-price",
+    "wiso-bmwe-market",
+    "wiso-bmwe-competition",
+    "wiso-uba-digital",
+    "wiso-uba-rebound",
+    "wiso-gdpr-principles",
+    "wiso-ba-learning",
+    "wiso-bmwe-finance",
+    "wiso-it-qualification",
+    "wiso-bibb-it-development",
+    "wiso-ba-family",
+    "wiso-eu-work",
+    "wiso-eu-erasmus",
+    "wiso-eu-residence",
+    "wiso-eu-social-cover",
+    "wiso-eu-recognition",
+    "wiso-eu-trade",
+    "ec-pm2-methodology",
+    "ec-pm2-artefacts",
+    "pm-hzd-preparation",
+    "pm-uk-objectives",
+    "pm-ms-triangle",
+    "scrum-guide-2020",
+    "scrum-org-sprint",
+    "scrum-org-team",
+    "scrum-org-artifacts",
+    "scrum-alliance-points",
+    "pm-nasa-planning",
+    "pm-ms-schedule",
+    "pm-ms-critical",
+    "pm-ihk-cost-terms",
+    "pm-ihk-calculation",
+    "pm-ihk-profit-margin",
+    "pm-stmelf-break-even",
+    "pm-lfu-payback",
+    "lf2-bmf-nutzwert",
+    "lf2-ms-accounts",
+    "lf2-ms-update-install",
+    "lf2-ms-displays",
+    "lf2-ibm-hardware",
+    "lf2-bgbau-workstation",
+    "lf2-uba-electronic-waste",
+    "lf2-hgb-377",
+    "lf2-bgb-437",
+    "lf2-bgb-439",
+    "lf2-bgb-286",
+    "lf2-ni-safety",
+    "lf2-vz-energy",
+    "lf2-ms-memory",
+    "lf2-msi-usbc",
+    "lf2-ibm-os",
+    "lf2-osi-faq",
+    "lf2-ms-updates",
+    "lf2-bghm-screen",
+    "lf2-uba-lifetime",
+    "lf2-uba-ewaste",
+    "lf3-ms-nps",
+    "lf3-ms-eap",
+    "lf3-apple-wifi",
+    "lf3-rfc4632-cidr",
+    "lf3-rfc1122-addressing",
+    "lf3-rfc5737-documentation",
+    "lf3-rfc4291-addressing",
+    "lf3-rfc5952-text",
+    "lf3-rfc3849-documentation",
+    "lf3-rfc3596-dns",
+    "lf3-ms-ipconfig",
+    "lf3-ms-nslookup",
+    "lf3-rfc2131",
+    "lf3-rfc2132",
+    "lf3-rfc1034",
+    "lf3-ms-ping",
+    "lf3-cisco-switching",
+    "lf3-cisco-access-point",
+    "lf3-cisco-radio",
+    "lf3-rfc1122-layers",
+    "lf3-rfc9293-tcp",
+    "lf3-rfc768-udp",
+    "lf3-nist-binary",
+    "lf3-cisco-router-path",
+    "lf3-cisco-optical",
+    "lf3-rfc894-ethernet",
+    "lf3-rfc9110-http",
+    "lf3-rfc3596-dns-ipv6",
+    "lf4-nist-confidentiality",
+    "lf4-nist-integrity",
+    "lf4-nist-availability",
+    "lf4-nist-security-policy",
+    "lf4-nist-asset",
+    "lf4-nist-threat",
+    "lf4-nist-vulnerability",
+    "lf4-nist-impact",
+    "lf4-eu-gdpr",
+    "lf4-nist-risk",
+    "lf4-nist-security-control-assessment",
+    "lf5-nasa-requirements",
+    "lf5-sqlite-storage",
+    "lf5-ms-testing",
+    "lf5-mdn-types",
+    "lf5-mdn-number",
+    "lf5-mdn-integer",
+    "lf5-mdn-operators",
+    "lf5-mdn-control",
+    "lf5-mdn-loops",
+    "lf5-mdn-functions",
+    "lf5-mdn-objects",
+    "lf5-mdn-classes",
+    "lf5-pg-keys",
+    "lf5-pg-select",
+    "lf5-pg-insert",
+    "lf5-pg-update",
+    "lf5-pg-delete",
+    "lf6-atlassian-response",
+    "lf6-atlassian-communication",
+    "lf6-atlassian-priority",
+    "lf6-atlassian-sla",
+    "lf6-ms-deployment",
+    "lf6-atlassian-postmortem",
+    "lf7-nist-cps",
+    "lf7-arduino-adc",
+    "lf7-adi-uart",
+    "lf7-vt-energy",
+    "lf7-arduino-library",
+    "lf7-nist-configuration",
+    "lf7-mdn-typeof",
+    "lf7-mdn-finite",
+    "lf7-mdn-return",
+    "lf7-mdn-or",
+    "lf7-mdn-not",
+    "lf7-mdn-inequality",
+    "lf7-mdn-comparison",
+    "lf8-csv",
+    "lf8-json",
+    "lf8-constraints",
+    "lf8-privileges",
+    "lf8-xml",
+    "lf8-join",
+    "lf8-aggregate",
+    "lf8-http",
+    "lf8-rest",
+    "lf8-logging",
+    "lf8-transactions",
+    "lf9-ms-capacity",
+    "lf9-ms-network",
+    "lf9-ms-monitoring",
+    "lf9-rfc4632",
+    "lf9-rfc5737",
+    "lf9-ms-redundancy",
+    "lf9-rfc1034",
+    "lf9-rfc9110",
+    "lf9-rfc2606",
+    "lf9-ms-recovery",
+    "lf9-ms-deployment",
+    "lf10a-gds-map",
+    "lf10a-wai-forms",
+    "lf10a-gds-prototypes",
+    "lf10a-gds-testing",
+    "lf10a-wai-structure",
+    "lf10a-wai-reflow",
+    "lf10a-wai-focus",
+    "lf10a-ec-privacy",
+    "lf10a-gds-cost",
+    "lf11a-uml",
+    "lf11a-layers",
+    "lf11a-python-structures",
+    "lf11a-python-complexity",
+    "lf11a-python-sqlite",
+    "lf11a-python-tests",
+    "lf11a-git",
+    "lf12a-gds-usability",
+    "lf12a-ms-testing",
+    "lf12a-ms-performance"
+  ],
+  "sources": [
+    {
+      "id": "kmk-fachinformatiker-2019",
+      "title": "KMK-Rahmenlehrplan Fachinformatiker/Fachinformatikerin vom 13.12.2019",
+      "url": "https://www.kmk.org/fileadmin/Dateien/pdf/Bildung/BeruflicheBildung/rlp/Fachinformatiker_19-12-13_EL.pdf",
+      "checkedAt": "2026-11-10"
+    },
+    {
+      "id": "bibb-fiae-profile",
+      "title": "BIBB-Berufsprofil Fachinformatiker/Fachinformatikerin – Fachrichtung Anwendungsentwicklung",
+      "url": "https://www.bibb.de/dienst/berufesuche/de/index_berufesuche.php/profile/apprenticeship/80000?page=1",
+      "checkedAt": "2026-11-10"
+    },
+    {
+      "id": "fiausbv-annex",
+      "title": "Fachinformatikerausbildungsverordnung – Ausbildungsrahmenplan",
+      "url": "https://www.gesetze-im-internet.de/fiausbv/anlage.html",
+      "checkedAt": "2026-11-10"
+    },
+    {
+      "id": "kmk-wiso-2021",
+      "title": "KMK-Qualifikationsprofil Wirtschafts- und Sozialkunde vom 17.06.2021",
+      "url": "https://www.kmk.org/fileadmin/Dateien/veroeffentlichungen_beschluesse/2021/2021_06_17-Berufsschule-Unterricht-Wirtschafts-Sozialkunde.pdf",
+      "checkedAt": "2026-11-10"
+    },
+    {
+      "id": "bbig-13",
+      "title": "Berufsbildungsgesetz § 13 – Verhalten während der Berufsausbildung",
+      "url": "https://www.gesetze-im-internet.de/bbig_2005/__13.html",
+      "checkedAt": "2026-11-10"
+    },
+    {
+      "id": "bmwe-einzelunternehmen",
+      "title": "Bundeswirtschaftsministerium – Einzelunternehmen: Unternehmensführung und Haftung",
+      "url": "https://www.existenzgruendungsportal.de/SharedDocs/Expertenforum_Unterseiten/Rechtsformen/Einzelunternehmen/Einzelunternehmen?nn=ab2aecfd-f411-4b5f-8eb3-15182e2c27bd",
+      "checkedAt": "2026-11-11"
+    },
+    {
+      "id": "gmbhg-organization",
+      "title": "GmbH-Gesetz – Rechtsstellung, Vertretung und Verantwortung",
+      "url": "https://www.gesetze-im-internet.de/gmbhg/BJNR004770892.html",
+      "checkedAt": "2026-11-11"
+    },
+    {
+      "id": "bgb-164",
+      "title": "Bürgerliches Gesetzbuch § 164 – Wirkung der Erklärung des Vertreters",
+      "url": "https://www.gesetze-im-internet.de/bgb/__164.html",
+      "checkedAt": "2026-11-11"
+    },
+    {
+      "id": "bgb-177",
+      "title": "Bürgerliches Gesetzbuch § 177 – Vertragsschluss ohne Vertretungsmacht",
+      "url": "https://www.gesetze-im-internet.de/bgb/__177.html",
+      "checkedAt": "2026-11-11"
+    },
+    {
+      "id": "bbig-wiso",
+      "title": "Berufsbildungsgesetz – duale Ausbildung, Vertragsabfassung, Pflichten und Beendigung",
+      "url": "https://www.gesetze-im-internet.de/bbig_2005/BJNR093110005.html",
+      "checkedAt": "2026-11-11"
+    },
+    {
+      "id": "bgb-611a",
+      "title": "BGB § 611a – Arbeitsvertrag",
+      "url": "https://www.gesetze-im-internet.de/bgb/__611a.html",
+      "checkedAt": "2026-11-11"
+    },
+    {
+      "id": "bgb-622",
+      "title": "BGB § 622 – Kündigungsfristen",
+      "url": "https://www.gesetze-im-internet.de/bgb/__622.html",
+      "checkedAt": "2026-11-11"
+    },
+    {
+      "id": "bgb-623",
+      "title": "BGB § 623 – Schriftform der Kündigung",
+      "url": "https://www.gesetze-im-internet.de/bgb/__623.html",
+      "checkedAt": "2026-11-11"
+    },
+    {
+      "id": "arbzg-3",
+      "title": "Arbeitszeitgesetz § 3 – Arbeitszeit",
+      "url": "https://www.gesetze-im-internet.de/arbzg/__3.html",
+      "checkedAt": "2026-11-11"
+    },
+    {
+      "id": "arbzg-4",
+      "title": "Arbeitszeitgesetz § 4 – Ruhepausen",
+      "url": "https://www.gesetze-im-internet.de/arbzg/__4.html",
+      "checkedAt": "2026-11-11"
+    },
+    {
+      "id": "burlg-3",
+      "title": "Bundesurlaubsgesetz § 3 – Dauer des Urlaubs",
+      "url": "https://www.gesetze-im-internet.de/burlg/__3.html",
+      "checkedAt": "2026-11-11"
+    },
+    {
+      "id": "jarbschg-8",
+      "title": "Jugendarbeitsschutzgesetz § 8 – Dauer der Arbeitszeit",
+      "url": "https://www.gesetze-im-internet.de/jarbschg/__8.html",
+      "checkedAt": "2026-11-11"
+    },
+    {
+      "id": "entgfg-3",
+      "title": "Entgeltfortzahlungsgesetz § 3 – Krankheitsfall",
+      "url": "https://www.gesetze-im-internet.de/entgfg/__3.html",
+      "checkedAt": "2026-11-11"
+    },
+    {
+      "id": "entgfg-5",
+      "title": "Entgeltfortzahlungsgesetz § 5 – Anzeige und Nachweis",
+      "url": "https://www.gesetze-im-internet.de/entgfg/__5.html",
+      "checkedAt": "2026-11-11"
+    },
+    {
+      "id": "kschg-4",
+      "title": "Kündigungsschutzgesetz § 4 – Anrufung des Arbeitsgerichts",
+      "url": "https://www.gesetze-im-internet.de/kschg/__4.html",
+      "checkedAt": "2026-11-11"
+    },
+    {
+      "id": "betrvg-102",
+      "title": "Betriebsverfassungsgesetz § 102 – Anhörung bei Kündigung",
+      "url": "https://www.gesetze-im-internet.de/betrvg/__102.html",
+      "checkedAt": "2026-11-11"
+    },
+    {
+      "id": "tvg-wiso",
+      "title": "Tarifvertragsgesetz – Tarifparteien, Bindung und Wirkung",
+      "url": "https://www.gesetze-im-internet.de/tvg/BJNR700550949.html",
+      "checkedAt": "2026-11-11"
+    },
+    {
+      "id": "betrvg-wiso",
+      "title": "Betriebsverfassungsgesetz – Interessenvertretung und Beteiligung",
+      "url": "https://www.gesetze-im-internet.de/betrvg/BJNR000130972.html",
+      "checkedAt": "2026-11-11"
+    },
+    {
+      "id": "bag-strike-peace",
+      "title": "Bundesarbeitsgericht, Urteil 26.07.2016 – 1 AZR 160/14",
+      "url": "https://www.bundesarbeitsgericht.de/entscheidung/1-azr-160-14/",
+      "checkedAt": "2026-11-11"
+    },
+    {
+      "id": "bpb-strike-faq",
+      "title": "Bundeszentrale für politische Bildung – FAQ: Was ist ein Streik?",
+      "url": "https://www.bpb.de/kurz-knapp/hintergrund-aktuell/547428/faq-was-ist-ein-streik/",
+      "checkedAt": "2026-11-11"
+    },
+    {
+      "id": "sgb1-wiso",
+      "title": "SGB I – soziale Rechte, Beratung und Leistungsträger",
+      "url": "https://www.gesetze-im-internet.de/sgb_1/BJNR030150975.html",
+      "checkedAt": "2026-11-11"
+    },
+    {
+      "id": "sgb5-solidarity",
+      "title": "SGB V § 1 – Solidarität und Eigenverantwortung",
+      "url": "https://www.gesetze-im-internet.de/sgb_5/__1.html",
+      "checkedAt": "2026-11-11"
+    },
+    {
+      "id": "sgb5-contribution-base",
+      "title": "SGB V § 223 – Beitragspflicht und beitragspflichtige Einnahmen",
+      "url": "https://www.gesetze-im-internet.de/sgb_5/__223.html",
+      "checkedAt": "2026-11-11"
+    },
+    {
+      "id": "sgb11-benefits",
+      "title": "SGB XI § 4 – Art und Umfang der Leistungen",
+      "url": "https://www.gesetze-im-internet.de/sgb_11/__4.html",
+      "checkedAt": "2026-11-11"
+    },
+    {
+      "id": "sgb7-accident",
+      "title": "SGB VII § 8 – Arbeitsunfall",
+      "url": "https://www.gesetze-im-internet.de/sgb_7/__8.html",
+      "checkedAt": "2026-11-11"
+    },
+    {
+      "id": "sgb3-unemployment",
+      "title": "SGB III § 137 – Anspruchsvoraussetzungen bei Arbeitslosigkeit",
+      "url": "https://www.gesetze-im-internet.de/sgb_3/__137.html",
+      "checkedAt": "2026-11-11"
+    },
+    {
+      "id": "sgg-objection",
+      "title": "Sozialgerichtsgesetz § 84 – Widerspruch",
+      "url": "https://www.gesetze-im-internet.de/sgg/__84.html",
+      "checkedAt": "2026-11-11"
+    },
+    {
+      "id": "vz-insurance-advice",
+      "title": "Verbraucherzentrale Berlin – Versicherungsberatung",
+      "url": "https://www.verbraucherzentrale-berlin.de/beratungsangebote/versicherungsberatung-15474",
+      "checkedAt": "2026-11-11"
+    },
+    {
+      "id": "gewo-108",
+      "title": "Gewerbeordnung § 108 – Abrechnung des Arbeitsentgelts",
+      "url": "https://www.gesetze-im-internet.de/gewo/__108.html",
+      "checkedAt": "2026-11-11"
+    },
+    {
+      "id": "entgbv-1",
+      "title": "Entgeltbescheinigungsverordnung § 1 – Inhalt der Entgeltbescheinigung",
+      "url": "https://www.gesetze-im-internet.de/entgbv/__1.html",
+      "checkedAt": "2026-11-11"
+    },
+    {
+      "id": "rv-rate-2026",
+      "title": "Bekanntmachung der Beitragssätze in der Rentenversicherung für 2026",
+      "url": "https://www.gesetze-im-internet.de/rvbeitrsbek_2026/----.html",
+      "checkedAt": "2026-11-11"
+    },
+    {
+      "id": "sgb6-contribution-share",
+      "title": "SGB VI § 168 – Beitragstragung bei Beschäftigten",
+      "url": "https://www.gesetze-im-internet.de/sgb_6/__168.html",
+      "checkedAt": "2026-11-11"
+    },
+    {
+      "id": "sgb3-contribution-rate",
+      "title": "SGB III § 341 – Beitragssatz und Beitragsbemessung",
+      "url": "https://www.gesetze-im-internet.de/sgb_3/__341.html",
+      "checkedAt": "2026-11-11"
+    },
+    {
+      "id": "sgb3-contribution-share",
+      "title": "SGB III § 346 – Beitragstragung bei Beschäftigten",
+      "url": "https://www.gesetze-im-internet.de/sgb_3/__346.html",
+      "checkedAt": "2026-11-11"
+    },
+    {
+      "id": "estg-39b",
+      "title": "Einkommensteuergesetz § 39b – Einbehaltung der Lohnsteuer",
+      "url": "https://www.gesetze-im-internet.de/estg/__39b.html",
+      "checkedAt": "2026-11-11"
+    },
+    {
+      "id": "drv-values-2026",
+      "title": "Deutsche Rentenversicherung – Werte der Rentenversicherung",
+      "url": "https://www.deutsche-rentenversicherung.de/DRV/DE/Experten/Zahlen-und-Fakten/Werte-der-Rentenversicherung/werte-der-rentenversicherung?nn=6a097d95ca84ce5471c16794",
+      "checkedAt": "2026-11-11"
+    },
+    {
+      "id": "wiso-bgb-consumer",
+      "title": "BGB – Geschäftsfähigkeit, Vertragspflichten und Verbraucherrechte",
+      "url": "https://www.gesetze-im-internet.de/bgb/",
+      "checkedAt": "2026-11-11"
+    },
+    {
+      "id": "wiso-bundesbank-cycle",
+      "title": "Deutsche Bundesbank – Geld- und Güterkreislauf",
+      "url": "https://publikationen.bundesbank.de/publikationen-de/schule-bildung/geld-und-geldpolitik-921580?article=1-funktionen-und-formen-des-geldes-921582",
+      "checkedAt": "2026-11-11"
+    },
+    {
+      "id": "wiso-bundesbank-price",
+      "title": "Deutsche Bundesbank – Preisbildung durch Angebot und Nachfrage",
+      "url": "https://publikationen.bundesbank.de/publikationen-de/schule-bildung/geld-und-geldpolitik-921580?article=5-der-wert-stabilen-geldes-922608",
+      "checkedAt": "2026-11-11"
+    },
+    {
+      "id": "wiso-bmwe-market",
+      "title": "Bundeswirtschaftsministerium – Wirtschaftspolitik und soziale Marktwirtschaft",
+      "url": "https://www.bundeswirtschaftsministerium.de/Navigation/DE/Ministerium/Wirtschaftspolitik-1949-bis-heute/wirtschaftspolitik-1949-bis-heute.html",
+      "checkedAt": "2026-11-11"
+    },
+    {
+      "id": "wiso-bmwe-competition",
+      "title": "Bundeswirtschaftsministerium – Fairen Wettbewerb schützen",
+      "url": "https://www.bundeswirtschaftsministerium.de/Redaktion/DE/Dossier/wettbewerbspolitik.html",
+      "checkedAt": "2026-11-11"
+    },
+    {
+      "id": "wiso-uba-digital",
+      "title": "Umweltbundesamt – Digitalisierung und Klimaschutz",
+      "url": "https://www.umweltbundesamt.de/themen/digitalisierung-klimaschutz-herausforderung-chance",
+      "checkedAt": "2026-11-11"
+    },
+    {
+      "id": "wiso-uba-rebound",
+      "title": "Umweltbundesamt – Rebound-Effekte durch digitale Leistungen und Produkte",
+      "url": "https://www.umweltbundesamt.de/publikationen/rebound-effekte-durch-digitale-leistungen-produkte",
+      "checkedAt": "2026-11-11"
+    },
+    {
+      "id": "wiso-gdpr-principles",
+      "title": "EU-Datenschutz-Grundverordnung – Grundsätze und Rechtmäßigkeit",
+      "url": "https://eur-lex.europa.eu/legal-content/DE-EN/TXT/?uri=CELEX%3A32016R0679",
+      "checkedAt": "2026-11-11"
+    },
+    {
+      "id": "wiso-ba-learning",
+      "title": "Bundesagentur für Arbeit – Karriere und Weiterbildung",
+      "url": "https://www.arbeitsagentur.de/karriere-und-weiterbildung",
+      "checkedAt": "2026-11-11"
+    },
+    {
+      "id": "wiso-bmwe-finance",
+      "title": "Existenzgründungsportal – Finanzplan erstellen",
+      "url": "https://www.existenzgruendungsportal.de/Redaktion/DE/So-gehts/Finanzierung/finanzplan-erstellen",
+      "checkedAt": "2026-11-11"
+    },
+    {
+      "id": "wiso-it-qualification",
+      "title": "Bachelor-Professional-IT-Fortbildungsprüfungsverordnung – Zulassung",
+      "url": "https://www.gesetze-im-internet.de/baproitfprv/__2.html",
+      "checkedAt": "2026-11-11"
+    },
+    {
+      "id": "wiso-bibb-it-development",
+      "title": "BIBB – Neuordnung des IT-Weiterbildungssystems",
+      "url": "https://www.bibb.de/de/189508.php",
+      "checkedAt": "2026-11-11"
+    },
+    {
+      "id": "wiso-ba-family",
+      "title": "Bundesagentur für Arbeit – Familie und Beruf vereinbaren",
+      "url": "https://www.arbeitsagentur.de/familie-und-kinder/familie-und-beruf-vereinbaren",
+      "checkedAt": "2026-11-11"
+    },
+    {
+      "id": "wiso-eu-work",
+      "title": "Your Europe – Arbeitserlaubnis in der EU",
+      "url": "https://europa.eu/youreurope/citizens/work/work-abroad/work-permits/index_de.htm",
+      "checkedAt": "2026-11-11"
+    },
+    {
+      "id": "wiso-eu-erasmus",
+      "title": "Europäische Kommission – Erasmus+ in der beruflichen Bildung",
+      "url": "https://erasmus-plus.ec.europa.eu/de/opportunities/individuals/trainees/vocational-education-learners-apprenticeships-and-recent-graduates",
+      "checkedAt": "2026-11-11"
+    },
+    {
+      "id": "wiso-eu-residence",
+      "title": "Your Europe – Wohnsitzregistrierung in einem anderen EU-Land",
+      "url": "https://europa.eu/youreurope/citizens/residence/documents-formalities/registering-residence/index_de.htm",
+      "checkedAt": "2026-11-11"
+    },
+    {
+      "id": "wiso-eu-social-cover",
+      "title": "Your Europe – Sozialschutz beim Leben oder Arbeiten im EU-Ausland",
+      "url": "https://europa.eu/youreurope/citizens/work/social-security-and-benefits/country-coverage/index_de.htm",
+      "checkedAt": "2026-11-11"
+    },
+    {
+      "id": "wiso-eu-recognition",
+      "title": "Your Europe – Reglementierte Berufe und Anerkennung",
+      "url": "https://europa.eu/youreurope/citizens/work/professional-qualifications/regulated-professions/index_de.htm",
+      "checkedAt": "2026-11-11"
+    },
+    {
+      "id": "wiso-eu-trade",
+      "title": "Europäische Kommission – Economic security und vielfältige Lieferketten",
+      "url": "https://policy.trade.ec.europa.eu/economic-security_en",
+      "checkedAt": "2026-11-11"
+    },
+    {
+      "id": "ec-pm2-methodology",
+      "title": "Europäische Kommission: PM²-Projektmanagement",
+      "url": "https://pm2.europa.eu/pm2-methodologies/pm2-project-management_en",
+      "checkedAt": "2026-11-11"
+    },
+    {
+      "id": "ec-pm2-artefacts",
+      "title": "Europäische Kommission: PM²-Artefakte",
+      "url": "https://pm2.europa.eu/pm2-artefacts_en",
+      "checkedAt": "2026-11-11"
+    },
+    {
+      "id": "pm-hzd-preparation",
+      "title": "Hessen ZPM: Projektvorbereitung",
+      "url": "https://hzd-zpm.hessen.de/vorgehensmodell/projektvorbereitung",
+      "checkedAt": "2026-11-11"
+    },
+    {
+      "id": "pm-uk-objectives",
+      "title": "Department for Transport: Transport business case guidance",
+      "url": "https://www.gov.uk/government/publications/transport-business-case-assessment-and-process-procedures/transport-business-case-guidance",
+      "checkedAt": "2026-11-11"
+    },
+    {
+      "id": "pm-ms-triangle",
+      "title": "Microsoft: The project triangle",
+      "url": "https://support.microsoft.com/en-au/project/the-project-triangle",
+      "checkedAt": "2026-11-11"
+    },
+    {
+      "id": "scrum-guide-2020",
+      "title": "Schwaber und Sutherland: Scrum Guide 2020",
+      "url": "https://scrumguides.org/scrum-guide.html",
+      "checkedAt": "2026-11-11"
+    },
+    {
+      "id": "scrum-org-sprint",
+      "title": "Scrum.org: Introduction to The Sprint",
+      "url": "https://www.scrum.org/resources/introduction-sprint",
+      "checkedAt": "2026-11-11"
+    },
+    {
+      "id": "scrum-org-team",
+      "title": "Scrum.org: The Scrum Team",
+      "url": "https://www.scrum.org/resources/scrum-team",
+      "checkedAt": "2026-11-11"
+    },
+    {
+      "id": "scrum-org-artifacts",
+      "title": "Scrum.org: The Scrum Artifacts",
+      "url": "https://www.scrum.org/resources/scrum-artifacts-0",
+      "checkedAt": "2026-11-11"
+    },
+    {
+      "id": "scrum-alliance-points",
+      "title": "Scrum Alliance: What is story point estimation on an agile team?",
+      "url": "https://resources.scrumalliance.org/Article/story-point-estimation",
+      "checkedAt": "2026-11-11"
+    },
+    {
+      "id": "pm-nasa-planning",
+      "title": "NASA: Technical Planning",
+      "url": "https://www.nasa.gov/reference/6-1-technical-planning/",
+      "checkedAt": "2026-11-11"
+    },
+    {
+      "id": "pm-ms-schedule",
+      "title": "Microsoft: How Project schedules tasks",
+      "url": "https://support.microsoft.com/en-us/project/how-project-schedules-tasks-behind-the-scenes",
+      "checkedAt": "2026-11-11"
+    },
+    {
+      "id": "pm-ms-critical",
+      "title": "Microsoft: Show the critical path of your project",
+      "url": "https://support.microsoft.com/en-us/project/show-the-critical-path-of-your-project-in-project",
+      "checkedAt": "2026-11-11"
+    },
+    {
+      "id": "pm-ihk-cost-terms",
+      "title": "IHK München: Wertbegriffe und Kostenbegriffe",
+      "url": "https://www.ihk-muenchen.de/ratgeber/sachverstaendige/wertbegriffe-und-kostenbegriffe/",
+      "checkedAt": "2026-11-11"
+    },
+    {
+      "id": "pm-ihk-calculation",
+      "title": "IHK Darmstadt: Kalkulieren und mit Kennziffern überwachen",
+      "url": "https://www.ihk.de/darmstadt/produktmarken/beraten-und-informieren/festigung-wachstum/kaufmaennisches/kalkulation-3795552",
+      "checkedAt": "2026-11-11"
+    },
+    {
+      "id": "pm-ihk-profit-margin",
+      "title": "IHK Niederbayern: Früherkennung und Krisenvorbeugung",
+      "url": "https://www.ihk-niederbayern.de/beratung-und-service/fuer-ihr-unternehmen/unternehmen-in-schwierigkeiten/frueherkennung-und-krisenvorbeugung/",
+      "checkedAt": "2026-11-11"
+    },
+    {
+      "id": "pm-stmelf-break-even",
+      "title": "Bayerisches Staatsministerium: Die Gewinnschwelle kennen",
+      "url": "https://www.stmelf.bayern.de/kohw/dienstleistungen/unternehmen-rentabel",
+      "checkedAt": "2026-11-11"
+    },
+    {
+      "id": "pm-lfu-payback",
+      "title": "Bayerisches Landesamt für Umwelt: Wirtschaftlichkeit von Energieeffizienz-Maßnahmen",
+      "url": "https://www.umweltpakt.bayern.de/energie_klima/fachwissen/363/wirtschaftlichkeit-energieeffizienz-massnahmen",
+      "checkedAt": "2026-11-11"
+    },
+    {
+      "id": "lf2-bmf-nutzwert",
+      "title": "BMF: Arbeitsanleitung Wirtschaftlichkeitsuntersuchungen – Nutzwertanalyse",
+      "url": "https://www.gesetze-bayern.de/Content/Document/VVBayHO-NN118?view=Print",
+      "checkedAt": "2026-11-11",
+      "note": "Amtliche Veröffentlichung der Arbeitsanleitung: Kriterien, Gewichtung, einheitlicher Bewertungsmaßstab und Teilnutzen. Übertragen wird die Methode, keine Vergaberechtsregel. Alle Geräte, Punktwerte und Preise sind eigene fiktive Lernannahmen."
+    },
+    {
+      "id": "lf2-ms-accounts",
+      "title": "Microsoft: Manage User Accounts in Windows",
+      "url": "https://support.microsoft.com/en-gb/windows/security/identity-signin/manage-user-accounts-in-windows",
+      "checkedAt": "2026-11-11",
+      "note": "Herstellerdokumentation zur Unterscheidung von Standardkonto und Administration sowie begrenzten Administratorrechten geprüft. Die eigene Modellübung ändert keine echten Konten oder Systeme."
+    },
+    {
+      "id": "lf2-ms-update-install",
+      "title": "Microsoft: Installieren von Windows-Updates",
+      "url": "https://support.microsoft.com/de-de/windows/deployment/updates-lifecycle/install-windows-updates",
+      "checkedAt": "2026-11-11",
+      "note": "Öffentliche Anleitung zu Updates geprüft. Keine aktuelle Betriebssystemversion empfohlen; in der Modellübung ist der Updatestatus ein ausdrücklich vereinfachter Übungsschritt."
+    },
+    {
+      "id": "lf2-ms-displays",
+      "title": "Microsoft: How to use multiple monitors in Windows",
+      "url": "https://support.microsoft.com/en-us/windows/hardware/display-graphics/how-to-use-multiple-monitors-in-windows",
+      "checkedAt": "2026-11-11",
+      "note": "Herstelleranleitung zum Verbinden und Erweitern mehrerer Anzeigen geprüft. Modellübung verändert keine echte Anzeigeeinstellung."
+    },
+    {
+      "id": "lf2-ibm-hardware",
+      "title": "IBM: What is computer hardware?",
+      "url": "https://www.ibm.com/think/topics/hardware",
+      "checkedAt": "2026-11-11",
+      "note": "Öffentliche Hardwareübersicht zu CPU, RAM und Massenspeicher geprüft. Alle Kapazitäten und Anforderungen im Rückblick sind eigene Lernvorgaben."
+    },
+    {
+      "id": "lf2-bgbau-workstation",
+      "title": "BG BAU: Idealer Bildschirmarbeitsplatz",
+      "url": "https://www.bgbau.de/themen/sicherheit-und-gesundheit/ergonomisches-arbeiten/buero-und-bildschirmarbeitsplaetze/idealer-bildschirmarbeitsplatz",
+      "checkedAt": "2026-11-11",
+      "note": "Arbeitsplatzanpassung und blendungsarme Bildschirmausrichtung geprüft. Keine individuellen medizinischen Aussagen oder starren Maße ohne Aufgabenbezug."
+    },
+    {
+      "id": "lf2-uba-electronic-waste",
+      "title": "Umweltbundesamt: Alte Elektrogeräte richtig entsorgen",
+      "url": "https://www.umweltbundesamt.de/umwelttipps-fuer-den-alltag/wohin-dem-elektroschrott-alte-elektrogeraete",
+      "checkedAt": "2026-11-11",
+      "note": "Weiternutzung, Reparierbarkeit und getrennter Entsorgungsweg für Elektroaltgeräte geprüft. Kein pauschaler Austausch allein wegen niedrigerer Leistungsaufnahme."
+    },
+    {
+      "id": "lf2-hgb-377",
+      "title": "Bundesrecht: § 377 HGB – Untersuchung und Mängelanzeige",
+      "url": "https://www.gesetze-im-internet.de/hgb/__377.html",
+      "checkedAt": "2026-11-11",
+      "note": "Beiderseitiges Handelsgeschäft als Voraussetzung, Untersuchung und Anzeige erkennbarer sowie später entdeckter Mängel geprüft. Keine pauschale Stundenfrist oder Übertragung auf private Verbraucherkäufe."
+    },
+    {
+      "id": "lf2-bgb-437",
+      "title": "Bundesrecht: § 437 BGB – Rechte des Käufers bei Mängeln",
+      "url": "https://www.gesetze-im-internet.de/bgb/__437.html",
+      "checkedAt": "2026-11-11",
+      "note": "Rechte bei Mängeln mit ihren jeweiligen gesetzlichen Voraussetzungen geprüft; keine ungeprüfte Sofortzusage von Rücktritt oder Schadensersatz."
+    },
+    {
+      "id": "lf2-bgb-439",
+      "title": "Bundesrecht: § 439 BGB – Nacherfüllung",
+      "url": "https://www.gesetze-im-internet.juris.de/bgb/__439.html",
+      "checkedAt": "2026-11-11",
+      "note": "Amtliche Fassung über juris erreichbar: Beseitigung des Mangels oder mangelfreie Ersatzlieferung sowie mögliche Beschränkungen. Keine gleichzeitige Zusage beider Leistungsarten."
+    },
+    {
+      "id": "lf2-bgb-286",
+      "title": "Bundesrecht: § 286 BGB – Verzug des Schuldners",
+      "url": "https://www.gesetze-im-internet.de/bgb/__286.html",
+      "checkedAt": "2026-11-11",
+      "note": "Fälligkeit, Mahnung und gesetzliche Ausnahmen sowie Vertretenmüssen geprüft. Lieferverzögerung wird im Lernfall dokumentiert und zur rechtlichen Prüfung weitergegeben."
+    },
+    {
+      "id": "lf2-ni-safety",
+      "title": "Bildungsportal Niedersachsen: Prüfpflichtige Anlagen und Einrichtungen",
+      "url": "https://bildungsportal-niedersachsen.de/aug/arbeitsschutz-organisation/pruefpflichtige-anlagen",
+      "checkedAt": "2026-11-11",
+      "note": "Öffentliche Hinweise zur Meldung erkannter Mängel und zum Entzug defekter Geräte aus der Nutzung geprüft. Schulische Zuständigkeiten und Prüfintervalle werden nicht auf den fiktiven Betrieb übertragen."
+    },
+    {
+      "id": "lf2-vz-energy",
+      "title": "Verbraucherzentrale Energieberatung: Stromverbrauch messen und senken",
+      "url": "https://verbraucherzentrale-energieberatung.de/energie-sparen/allgemeines/stromverbrauch-messen/",
+      "checkedAt": "2026-11-11",
+      "note": "Einheiten W/kWh und Rechnung aus Leistung und Zeit geprüft. Die 60/90 Watt und 1.600 Stunden sind fiktive Lernannahmen für komplette Arbeitsplätze."
+    },
+    {
+      "id": "lf2-ms-memory",
+      "title": "Microsoft: All about computer memory",
+      "url": "https://support.microsoft.com/en-US/Windows/experience/compatibility/all-about-computer-memory",
+      "checkedAt": "2026-11-11",
+      "note": "HTML-Erklärung zur flüchtigen Arbeitsspeicherung und Abgrenzung vom Massenspeicher geprüft. Herstellerempfehlungen zu Kapazitäten werden nicht als allgemeine Anforderungen übernommen."
+    },
+    {
+      "id": "lf2-msi-usbc",
+      "title": "MSI: USB Type-C Port",
+      "url": "https://www.msi.com/faq/faq-2125",
+      "checkedAt": "2026-11-11",
+      "note": "Öffentliche Hersteller-FAQ geprüft: Steckerform allein belegt keine Videoausgabe; Gerätespezifikation, Kabel und Adapter müssen die Funktion unterstützen. Keine konkrete Kaufempfehlung."
+    },
+    {
+      "id": "lf2-ibm-os",
+      "title": "IBM: What is an operating system?",
+      "url": "https://www.ibm.com/think/topics/operating-systems",
+      "checkedAt": "2026-11-11",
+      "note": "Öffentliche HTML-Erklärung zu Ressourcen-, Datei-, Geräte- und Rechteverwaltung geprüft. Betriebssystem- und Anwendungsnamen sowie Voraussetzungen des Lernfalls sind erfunden."
+    },
+    {
+      "id": "lf2-osi-faq",
+      "title": "Open Source Initiative: Frequently Answered Questions",
+      "url": "https://opensource.org/faq",
+      "checkedAt": "2026-11-11",
+      "note": "Öffentliche FAQ zu Nutzung, Änderung, Weitergabe und kommerzieller Verwendung unter Open-Source-Lizenzen geprüft. Die im Fall berechneten Produktlizenzen sind eigene ausdrücklich fiktive Bedingungen."
+    },
+    {
+      "id": "lf2-ms-updates",
+      "title": "Microsoft: Windows Update: FAQ",
+      "url": "https://support.microsoft.com/en-us/windows/deployment/updates-lifecycle/windows-update-faq",
+      "checkedAt": "2026-11-11",
+      "note": "Öffentliche HTML-FAQ zu Aktualisierungen und Sicherheitskorrekturen geprüft. Keine Aussage über eine reale Produktlaufzeit und keine echte Installation; Freigabe und Aktualisierung im Fall sind Vorgaben."
+    },
+    {
+      "id": "lf2-bghm-screen",
+      "title": "BGHM: Bildschirmarbeitsplatz",
+      "url": "https://www.bghm.de/arbeitsschuetzer/praxishilfen/arbeitsschutz-kompakt/065-bildschirmarbeit",
+      "checkedAt": "2026-11-11",
+      "note": "Öffentliche HTML-Praxishilfe zu Blendung, Blickrichtung sowie individuell passender Bildschirm-, Stuhl- und Tischeinstellung geprüft. Keine starren Universalmaße oder medizinischen Aussagen abgeleitet."
+    },
+    {
+      "id": "lf2-uba-lifetime",
+      "title": "Umweltbundesamt: Produkte länger nutzen",
+      "url": "https://www.umweltbundesamt.de/umwelttipps-fuer-den-alltag/produkte-laenger-nutzen-sachgerechter-gebrauch",
+      "checkedAt": "2026-11-11",
+      "note": "Öffentliche HTML-Empfehlungen zu längerer Nutzung, Reparierbarkeit und Umweltbelastungen der Herstellung geprüft. Keine konkreten Rechtsfristen oder pauschalen Einsparversprechen übernommen."
+    },
+    {
+      "id": "lf2-uba-ewaste",
+      "title": "Umweltbundesamt: Wohin mit dem Elektroschrott?",
+      "url": "https://www.umweltbundesamt.de/en/alte-elektrogerate-richtig-entsorgen",
+      "checkedAt": "2026-11-11",
+      "note": "Öffentliche HTML-Hinweise zu getrennter Sammlung, Wiederverwendung, fachgerechter Entsorgung und Datenschutz geprüft. Betrieblicher Entsorgungsweg ist im Fall mit der zuständigen Stelle zu klären; keine kostenlosen Rücknahmerechte für jeden Betriebsfall behauptet."
+    },
+    {
+      "id": "lf3-ms-nps",
+      "title": "Microsoft: Network Policy Server overview",
+      "url": "https://learn.microsoft.com/en-us/windows-server/networking/technologies/nps/nps-top",
+      "checkedAt": "2026-11-11",
+      "note": "Öffentliche Herstellerdokumentation zur getrennten Authentifizierung und Autorisierung sowie zentralen Netzwerkzugangsregeln geprüft. Keine Serverinstallation oder reale Kontoabfrage."
+    },
+    {
+      "id": "lf3-ms-eap",
+      "title": "Microsoft: Extensible Authentication Protocol for network access",
+      "url": "https://learn.microsoft.com/en-us/windows-server/networking/technologies/extensible-authentication-protocol/network-access",
+      "checkedAt": "2026-11-11",
+      "note": "802.1X/EAP und gegenseitige zertifikatsgestützte Authentifizierung mit EAP-TLS geprüft. Das eigene Unternehmensprofil ist eine fiktive Organisationsvorgabe, keine universelle WLAN-Checkliste."
+    },
+    {
+      "id": "lf3-apple-wifi",
+      "title": "Apple: Recommended settings for Wi-Fi routers and access points",
+      "url": "https://support.apple.com/en-us/102766",
+      "checkedAt": "2026-11-11",
+      "note": "Herstellerhinweise zu WPA2 mit AES, WPA3, unsicheren Altverfahren, SSID und Grenzen von MAC-Filtern geprüft. Die Quelle behandelt vor allem Personal-Netze; Enterprise-Vorgaben werden getrennt mit der EAP-Dokumentation begründet."
+    },
+    {
+      "id": "lf3-rfc4632-cidr",
+      "title": "IETF: RFC 4632 – Classless Inter-domain Routing (CIDR)",
+      "url": "https://www.rfc-editor.org/rfc/rfc4632.html",
+      "checkedAt": "2026-11-11",
+      "note": "Öffentliche HTML-Fassung zur Präfixnotation und Größe von IPv4-Adressblöcken geprüft. /24- und /26-Rechnungen sind eigene Lernbeispiele."
+    },
+    {
+      "id": "lf3-rfc1122-addressing",
+      "title": "IETF: RFC 1122 – Requirements for Internet Hosts, IPv4-Adressierung",
+      "url": "https://www.rfc-editor.org/rfc/rfc1122.html",
+      "checkedAt": "2026-11-11",
+      "note": "HTML-Abschnitte zu lokalen/entfernten Zielen, Subnetzmaske, Broadcast und Gateway-Auswahl geprüft. Der Lernfall verwendet ein einfaches direkt angeschlossenes IPv4-LAN."
+    },
+    {
+      "id": "lf3-rfc5737-documentation",
+      "title": "IETF: RFC 5737 – IPv4 Address Blocks Reserved for Documentation",
+      "url": "https://www.rfc-editor.org/rfc/rfc5737.html",
+      "checkedAt": "2026-11-11",
+      "note": "Öffentliche HTML-Fassung zum Dokumentationsbereich 192.0.2.0/24 geprüft. Beispiele sind keine Produktionsadressplanung."
+    },
+    {
+      "id": "lf3-rfc4291-addressing",
+      "title": "IETF: RFC 4291 – IP Version 6 Addressing Architecture",
+      "url": "https://www.rfc-editor.org/rfc/rfc4291.html",
+      "checkedAt": "2026-11-11",
+      "note": "Öffentliche HTML-Fassung zu 128-Bit-Adressen, Schreibweise, Präfix und fehlendem IPv6-Broadcast geprüft. Weiterführende Adressarten sind nicht Gegenstand des Lernfalls."
+    },
+    {
+      "id": "lf3-rfc5952-text",
+      "title": "IETF: RFC 5952 – A Recommendation for IPv6 Address Text Representation",
+      "url": "https://www.rfc-editor.org/rfc/rfc5952.html",
+      "checkedAt": "2026-11-11",
+      "note": "HTML-Empfehlungen für führende Nullen, einmalige Kompression der längsten Nullfolge und Kleinschreibung geprüft."
+    },
+    {
+      "id": "lf3-rfc3849-documentation",
+      "title": "IETF: RFC 3849 – IPv6 Address Prefix Reserved for Documentation",
+      "url": "https://www.rfc-editor.org/rfc/rfc3849.html",
+      "checkedAt": "2026-11-11",
+      "note": "HTML-Fassung zum IPv6-Dokumentationspräfix 2001:db8::/32 geprüft."
+    },
+    {
+      "id": "lf3-rfc3596-dns",
+      "title": "IETF: RFC 3596 – DNS Extensions to Support IPv6",
+      "url": "https://www.rfc-editor.org/rfc/rfc3596.html",
+      "checkedAt": "2026-11-11",
+      "note": "HTML-Fassung zu AAAA-Einträgen und Unabhängigkeit von DNS-Transport und abgefragtem Adresstyp geprüft. DNS ist kein exklusives Merkmal einer IP-Version."
+    },
+    {
+      "id": "lf3-ms-ipconfig",
+      "title": "Microsoft: ipconfig – TCP/IP-Konfiguration anzeigen",
+      "url": "https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/ipconfig",
+      "checkedAt": "2026-11-11",
+      "note": "Öffentliche Beschreibung von Konfigurationsausgaben geprüft. Im Inhalt werden synthetische Ausgaben interpretiert; echte Befehle und Änderungen werden nicht ausgeführt."
+    },
+    {
+      "id": "lf3-ms-nslookup",
+      "title": "Microsoft: nslookup – DNS-Informationen prüfen",
+      "url": "https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/nslookup",
+      "checkedAt": "2026-11-11",
+      "note": "Öffentliche Dokumentation zur Prüfung von Namensantworten und Unterschied zwischen Antwort, Zeitüberschreitung und unbekanntem Namen geprüft. Das Labor erzeugt begrenzte synthetische Befunde."
+    },
+    {
+      "id": "lf3-rfc2131",
+      "title": "IETF: RFC 2131 – Dynamic Host Configuration Protocol",
+      "url": "https://www.rfc-editor.org/rfc/rfc2131.html",
+      "checkedAt": "2026-11-11",
+      "note": "Öffentliche Primärquelle zu DHCPv4, erstmaligem Nachrichtenaustausch und zeitlicher Adresszuweisung geprüft. DORA wird als vereinfachter Erstbezug erklärt, nicht als Ablauf jeder Erneuerung."
+    },
+    {
+      "id": "lf3-rfc2132",
+      "title": "IETF: RFC 2132 – DHCP Options and BOOTP Vendor Extensions",
+      "url": "https://www.rfc-editor.org/rfc/rfc2132.html",
+      "checkedAt": "2026-11-11",
+      "note": "Optionen für Subnetzmaske, Router und DNS geprüft. Die konkreten Adressen und Reservierungen sind eigene fiktive Lernvorgaben."
+    },
+    {
+      "id": "lf3-rfc1034",
+      "title": "IETF: RFC 1034 – Domain Names: Concepts and Facilities",
+      "url": "https://www.rfc-editor.org/rfc/rfc1034.html",
+      "checkedAt": "2026-11-11",
+      "note": "DNS als verteilte Namensdatenbank mit Resolvern, typisierten Einträgen und Cache geprüft. Das Portal und die beschriebene Namensantwort sind synthetisch."
+    },
+    {
+      "id": "lf3-ms-ping",
+      "title": "Microsoft: ping – IP-Konnektivität prüfen",
+      "url": "https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/ping",
+      "checkedAt": "2026-11-11",
+      "note": "ICMP-Echo als begrenzte Erreichbarkeitsprobe und Trennung zwischen IP-Ziel und Namensauflösung geprüft. Keine realen Befehle werden durch die Lerninhalte ausgeführt."
+    },
+    {
+      "id": "lf3-cisco-switching",
+      "title": "Cisco: What Is Network Switching?",
+      "url": "https://www.cisco.com/site/us/en/learn/topics/networking/what-is-network-switching.html",
+      "checkedAt": "2026-11-11",
+      "note": "Öffentliche HTML-Seite zu Switch, MAC-basierter Weiterleitung und Abgrenzung vom Routing geprüft. Der Lernfall betrachtet einen einfachen Layer-2-Switch."
+    },
+    {
+      "id": "lf3-cisco-access-point",
+      "title": "Cisco: What is a wireless access point?",
+      "url": "https://www.cisco.com/site/us/en/learn/topics/small-business/what-is-an-access-point.html",
+      "checkedAt": "2026-11-11",
+      "note": "HTML-Grundbeschreibung des Access Points als Anbindung von Funkclients an ein kabelgebundenes LAN geprüft."
+    },
+    {
+      "id": "lf3-cisco-radio",
+      "title": "Cisco: Troubleshooting Problems Affecting Radio Frequency Communication",
+      "url": "https://www.cisco.com/c/en/us/support/docs/wireless-mobility/wireless-lan-wlan/8630-rf-problems.html",
+      "checkedAt": "2026-11-11",
+      "note": "Öffentliche HTML-Erklärung zu Hindernissen und Funkstörungen geprüft. Alte gerätespezifische Reichweitenwerte werden nicht übernommen."
+    },
+    {
+      "id": "lf3-rfc1122-layers",
+      "title": "IETF: RFC 1122 – Requirements for Internet Hosts, Communication Layers",
+      "url": "https://www.rfc-editor.org/rfc/rfc1122.html",
+      "checkedAt": "2026-11-11",
+      "note": "Öffentliche HTML-Fassung zu Link-, Internet- und Transportschicht geprüft. Für TCP wird die neuere Spezifikation RFC 9293 ergänzend verwendet."
+    },
+    {
+      "id": "lf3-rfc9293-tcp",
+      "title": "IETF: RFC 9293 – Transmission Control Protocol (TCP)",
+      "url": "https://www.rfc-editor.org/rfc/rfc9293.html",
+      "checkedAt": "2026-11-11",
+      "note": "Aktuelle zusammengeführte TCP-Grundspezifikation in HTML geprüft: geordneter Bytestrom, Verlusterkennung und erneute Übertragung."
+    },
+    {
+      "id": "lf3-rfc768-udp",
+      "title": "IETF: RFC 768 – User Datagram Protocol",
+      "url": "https://www.rfc-editor.org/rfc/rfc768.html",
+      "checkedAt": "2026-11-11",
+      "note": "Öffentliche HTML-Fassung zu UDP-Nachrichten und fehlender eigener Zustell-/Reihenfolgegarantie geprüft."
+    },
+    {
+      "id": "lf3-nist-binary",
+      "title": "NIST: Prefixes for binary multiples",
+      "url": "https://physics.nist.gov/cuu/Units/binary.html",
+      "checkedAt": "2026-11-11",
+      "note": "Öffentliche HTML-Definitionen zu Bit/Byte sowie SI- und IEC-Präfixen geprüft. Sämtliche Zeitrechnungen sind eigene Idealbeispiele ohne Overhead."
+    },
+    {
+      "id": "lf3-cisco-router-path",
+      "title": "Cisco: How Does a Switch Work?",
+      "url": "https://www.cisco.com/site/us/en/learn/topics/small-business/network-switch-how.html",
+      "checkedAt": "2026-11-11",
+      "note": "HTML-Erklärung zur Verbindung innerhalb eines LAN und zwischen Netzen geprüft. Keine Produkt- oder Kaufempfehlung."
+    },
+    {
+      "id": "lf3-cisco-optical",
+      "title": "Cisco: What is optical networking?",
+      "url": "https://www.cisco.com/site/us/en/learn/topics/networking/optical-networking.html",
+      "checkedAt": "2026-11-11",
+      "note": "HTML-Seite zu Lichtübertragung, passenden optischen Komponenten und Reichweitenabhängigkeit geprüft. Werbliche Pauschalvergleiche sind keine allgemeine Leistungszusage."
+    },
+    {
+      "id": "lf3-rfc894-ethernet",
+      "title": "IETF: RFC 894 – Transmission of IP Datagrams over Ethernet Networks",
+      "url": "https://www.rfc-editor.org/rfc/rfc894.html",
+      "checkedAt": "2026-11-11",
+      "note": "HTML-Fassung zur Einbettung von IP-Datagrammen in Ethernet-Rahmen geprüft. Begrenzter Bezug auf das hier erklärte Grundprinzip."
+    },
+    {
+      "id": "lf3-rfc9110-http",
+      "title": "IETF: RFC 9110 – HTTP Semantics",
+      "url": "https://www.rfc-editor.org/rfc/rfc9110.html",
+      "checkedAt": "2026-11-11",
+      "note": "HTML-Grundspezifikation für HTTP-Anfragen und Antworten sowie HTTPS geprüft. Der Lernfall gibt TCP vor; daraus folgt keine Behauptung, jede HTTP-Version verwende TCP."
+    },
+    {
+      "id": "lf3-rfc3596-dns-ipv6",
+      "title": "IETF: RFC 3596 – DNS Extensions to Support IP Version 6",
+      "url": "https://www.rfc-editor.org/rfc/rfc3596.html",
+      "checkedAt": "2026-11-11",
+      "note": "Öffentliche HTML-Spezifikation des AAAA-Eintrags für IPv6-Adressen geprüft. DNS-Transport und gespeicherter Adresstyp werden nicht gleichgesetzt."
+    },
+    {
+      "id": "lf4-nist-confidentiality",
+      "title": "NIST CSRC Glossar: Vertraulichkeit",
+      "url": "https://csrc.nist.gov/glossary/term/confidentiality",
+      "checkedAt": "2026-11-16",
+      "note": "Begriff der Beschränkung unbefugter Offenlegung geprüft."
+    },
+    {
+      "id": "lf4-nist-integrity",
+      "title": "NIST CSRC Glossar: Integrität",
+      "url": "https://csrc.nist.gov/glossary/term/integrity",
+      "checkedAt": "2026-11-16",
+      "note": "Begriff des Schutzes gegen unzulässige Veränderung geprüft."
+    },
+    {
+      "id": "lf4-nist-availability",
+      "title": "NIST CSRC Glossar: Verfügbarkeit",
+      "url": "https://csrc.nist.gov/glossary/term/availability",
+      "checkedAt": "2026-11-16",
+      "note": "Rechtzeitige und verlässliche Nutzbarkeit geprüft."
+    },
+    {
+      "id": "lf4-nist-security-policy",
+      "title": "NIST CSRC Glossar: Sicherheitsregeln",
+      "url": "https://csrc.nist.gov/glossary/term/security_policy",
+      "checkedAt": "2026-11-16",
+      "note": "Organisatorische Regeln zum Umgang mit schützenswerten Informationen geprüft. Die Radblick-Leitlinie ist erfunden."
+    },
+    {
+      "id": "lf4-nist-asset",
+      "title": "NIST CSRC Glossar: Schutzobjekt",
+      "url": "https://csrc.nist.gov/glossary/term/asset",
+      "checkedAt": "2026-11-16",
+      "note": "Materielle und immaterielle Werte und Bezug zu Geschäftsaufgaben geprüft."
+    },
+    {
+      "id": "lf4-nist-threat",
+      "title": "NIST CSRC Glossar: Bedrohung",
+      "url": "https://csrc.nist.gov/glossary/term/threat",
+      "checkedAt": "2026-11-16",
+      "note": "Schadensfähige Ereignisse und Umstände geprüft."
+    },
+    {
+      "id": "lf4-nist-vulnerability",
+      "title": "NIST CSRC Glossar: Schwachstelle",
+      "url": "https://csrc.nist.gov/glossary/term/vulnerability",
+      "checkedAt": "2026-11-16",
+      "note": "Ausnutzbare oder auslösbare Schwächen in Systemen und Verfahren geprüft."
+    },
+    {
+      "id": "lf4-nist-impact",
+      "title": "NIST CSRC Glossar: Schadensauswirkung",
+      "url": "https://csrc.nist.gov/glossary/term/impact",
+      "checkedAt": "2026-11-16",
+      "note": "Mögliche Auswirkungen auf Betrieb, Werte und Menschen geprüft. Die konkreten Kategorien und Schwellen sind eigene fiktive Lernvorgaben."
+    },
+    {
+      "id": "lf4-eu-gdpr",
+      "title": "EUR-Lex: Datenschutz-Grundverordnung, konsolidierte geltende Fassung",
+      "url": "https://eur-lex.europa.eu/legal-content/DE/TXT/?uri=CELEX:02016R0679-20160504",
+      "checkedAt": "2026-11-16",
+      "note": "Öffentliche HTML-Fassung mit Status In Kraft und Verweis auf aktuelle Fassung geprüft: Art. 4, 5, 6, 29, 32 und 39. Keine konkrete Rechtsgrundlage für reale Fälle wird behauptet. Namen, Regeln und Daten des Lernfalls sind synthetisch."
+    },
+    {
+      "id": "lf4-nist-risk",
+      "title": "NIST CSRC Glossar: Risiko",
+      "url": "https://csrc.nist.gov/glossary/term/risk",
+      "checkedAt": "2026-11-16",
+      "note": "Zusammenhang von möglicher Auswirkung und Eintrittswahrscheinlichkeit geprüft."
+    },
+    {
+      "id": "lf4-nist-security-control-assessment",
+      "title": "NIST CSRC Glossar: Wirksamkeitsprüfung",
+      "url": "https://csrc.nist.gov/glossary/term/security_control_assessment",
+      "checkedAt": "2026-11-16",
+      "note": "Prüfung der vorgesehenen Funktion und Wirkung einer Maßnahme geprüft. Konkrete Modelltests sind eigene Beispiele."
+    },
+    {
+      "id": "lf5-nasa-requirements",
+      "title": "NASA: Requirements Management",
+      "url": "https://www.nasa.gov/reference/6-2-requirements-management/",
+      "note": "Öffentliche HTML-Grundsätze zu nachvollziehbaren Anforderungen und Änderungen geprüft. Rollen, Größen und Abnahmekriterien des Lernfalls sind eigene fiktive Vorgaben.",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "lf5-sqlite-storage",
+      "title": "SQLite: Appropriate Uses For SQLite",
+      "url": "https://www.sqlite.org/whentouse.html",
+      "note": "Lokale eingebettete Datenbanken und Abgrenzung von Client/Server-Datenbanken geprüft. Eine Datenbank kann in einer Datei liegen.",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "lf5-ms-testing",
+      "title": "Microsoft: Best practices for writing unit tests",
+      "url": "https://learn.microsoft.com/en-us/dotnet/core/testing/unit-testing-best-practices",
+      "note": "Grundsätze verständlicher, unabhängiger und wiederholbarer Tests geprüft. Die Sprachbeispiele werden nicht übernommen; JavaScript-Fälle und Erwartungen sind selbst erstellt.",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "lf5-mdn-types",
+      "title": "MDN: Grammar and types",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Grammar_and_types",
+      "note": "JavaScript-Deklarationen, Grundtypen und Literale geprüft. Eigene kleine Beispiele verwenden let und const.",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "lf5-mdn-number",
+      "title": "MDN: Number",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number",
+      "note": "Binäre Zahlendarstellung und Grenzen exakter Ganzzahlen geprüft. Eurobeträge werden im begrenzten Lernfall als ganze Centwerte geführt.",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "lf5-mdn-integer",
+      "title": "MDN: Number.isInteger()",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/isInteger",
+      "note": "Ganzzahlprüfung einschließlich Ablehnung von Zahlentexten und Nachkommawerten geprüft; Grenze 0 bis 1000 ist eine eigene Modellvorgabe.",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "lf5-mdn-operators",
+      "title": "MDN: Expressions and operators",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Expressions_and_operators",
+      "note": "Zuweisung, Rechenoperatoren, Vergleiche und logische Verknüpfungen geprüft.",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "lf5-mdn-control",
+      "title": "MDN: Control flow and error handling",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Control_flow_and_error_handling",
+      "note": "if/else, Bedingungen und Anweisungsblöcke geprüft. Der eigene Funktionsvertrag nutzt null als vereinbartes Fehlerergebnis.",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "lf5-mdn-loops",
+      "title": "MDN: Loops and iteration",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Loops_and_iteration",
+      "note": "Reihenfolge von Initialisierung, Bedingung, Schleifenrumpf und Fortschaltung geprüft.",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "lf5-mdn-functions",
+      "title": "MDN: Functions",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Functions",
+      "note": "Funktionsdefinition, Parameter, Argumente und Rückgabewerte geprüft.",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "lf5-mdn-objects",
+      "title": "MDN: Working with objects",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Working_with_objects",
+      "note": "Eigenschaften, Methoden und Punktzugriff geprüft. Alle Objekte und Beziehungen sind eigene Lehrbeispiele.",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "lf5-mdn-classes",
+      "title": "MDN: Using classes",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_classes",
+      "note": "class, constructor, new, this und Instanzmethoden geprüft; Vererbung wird nicht vorgezogen.",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "lf5-pg-keys",
+      "title": "PostgreSQL: Constraints",
+      "url": "https://www.postgresql.org/docs/current/ddl-constraints.html",
+      "note": "Primärschlüssel, Fremdschlüssel und referenzielle Beziehungen geprüft. Weiterführende Normalformen und Transaktionen sind nicht Teil dieser Etappe.",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "lf5-pg-select",
+      "title": "PostgreSQL: Querying a Table",
+      "url": "https://www.postgresql.org/docs/current/tutorial-select.html",
+      "note": "SELECT, WHERE und ORDER BY geprüft. Das Übungsmodell bildet ausgewählte Operationen nach und führt kein freies SQL aus.",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "lf5-pg-insert",
+      "title": "PostgreSQL: Populating a Table With Rows",
+      "url": "https://www.postgresql.org/docs/current/tutorial-populate.html",
+      "note": "INSERT mit expliziter Spaltenliste und zugehörigen Werten geprüft.",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "lf5-pg-update",
+      "title": "PostgreSQL: Updates",
+      "url": "https://www.postgresql.org/docs/current/tutorial-update.html",
+      "note": "UPDATE, SET und gezielte Auswahl mit WHERE geprüft.",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "lf5-pg-delete",
+      "title": "PostgreSQL: Deletions",
+      "url": "https://www.postgresql.org/docs/current/tutorial-delete.html",
+      "note": "DELETE mit und ohne WHERE geprüft; Modelloperationen verwenden begrenzte synthetische Zeilen.",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "lf6-atlassian-response",
+      "title": "Atlassian: How we respond to an incident",
+      "url": "https://www.atlassian.com/incident-management/handbook/incident-response",
+      "checkedAt": "2026-11-16",
+      "note": "Öffentliche Herstellerbeschreibung zu Aufnahme, Auswirkung, Eskalation, Diagnose, Wiederherstellung und Kommunikation geprüft. Eigene Rollen und Fallwerte sind fiktiv, keine verbindliche ITIL-Vorgabe."
+    },
+    {
+      "id": "lf6-atlassian-communication",
+      "title": "Atlassian: Incident communication templates and examples",
+      "url": "https://www.atlassian.com/incident-management/incident-communication/templates",
+      "checkedAt": "2026-11-16",
+      "note": "Öffentliche englische Herstellerbeispiele für Untersuchungsstand, betroffene Dienste und nächste Meldung geprüft. Englische Kurzmeldungen und Rückfragen im Inhalt sind eigene didaktische Formulierungen."
+    },
+    {
+      "id": "lf6-atlassian-priority",
+      "title": "Atlassian: How impact and urgency are used to calculate priority",
+      "url": "https://support.atlassian.com/jira-service-management-cloud/docs/how-impact-and-urgency-are-used-to-calculate-priority/",
+      "checkedAt": "2026-11-16",
+      "note": "Herstellerdefinitionen von Auswirkung, Dringlichkeit und Priorität geprüft. Die zweistufigen Kriterien und P1/P2/P3-Zeiten im Lernfall sind selbst erfundene Modellvorgaben."
+    },
+    {
+      "id": "lf6-atlassian-sla",
+      "title": "Atlassian: Create service level agreements (SLAs)",
+      "url": "https://support.atlassian.com/jira-service-management-cloud/docs/create-service-level-agreements-slas/",
+      "checkedAt": "2026-11-16",
+      "note": "Öffentliche Dokumentation zu SLA-Messung, Zielen und Kalendern geprüft. Leistungsumfang, qualifizierte Erstreaktion und Zeitwerte im Lernfall werden ausdrücklich als eigene Vereinbarung vorgegeben."
+    },
+    {
+      "id": "lf6-ms-deployment",
+      "title": "Microsoft: Recommendations for safe deployment practices",
+      "url": "https://learn.microsoft.com/en-us/azure/well-architected/operational-excellence/safe-deployments",
+      "checkedAt": "2026-11-16",
+      "note": "Herstellerempfehlungen zu kleinen freigegebenen Änderungen, Prüfung und vorbereiteter Wiederherstellung geprüft. Der lokale Versionswechsel und Rückfallplan sind ein synthetisches Übungsmodell."
+    },
+    {
+      "id": "lf6-atlassian-postmortem",
+      "title": "Atlassian: Incident postmortem process and best practices",
+      "url": "https://www.atlassian.com/incident-management/postmortem",
+      "checkedAt": "2026-11-16",
+      "note": "Öffentliche Herstellerbeschreibung zu dokumentiertem Verlauf, Ursache und konkreten Folgeaktionen geprüft. Lernfall trennt behobene Störung von offener Prozessverbesserung."
+    },
+    {
+      "id": "lf7-nist-cps",
+      "title": "NIST: Cyber-Physical Systems and Internet of Things Foundations",
+      "url": "https://www.nist.gov/programs-projects/cyber-physical-systems-and-internet-things-foundations",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "lf7-arduino-adc",
+      "title": "Arduino: Read Analog Voltage",
+      "url": "https://docs.arduino.cc/built-in-examples/basics/ReadAnalogVoltage",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "lf7-adi-uart",
+      "title": "Analog Devices: UART – A Hardware Communication Protocol",
+      "url": "https://www.analog.com/en/resources/analog-dialogue/articles/uart-a-hardware-communication-protocol.html",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "lf7-vt-energy",
+      "title": "Virginia Tech: Estimating Appliance and Home Electronic Energy Use",
+      "url": "https://www.pubs.ext.vt.edu/2901/2901-9014/2901-9014.html",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "lf7-arduino-library",
+      "title": "Arduino: Library specification",
+      "url": "https://docs.arduino.cc/arduino-cli/library-specification",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "lf7-nist-configuration",
+      "title": "NIST: IoT Device Configuration",
+      "url": "https://pages.nist.gov/IoT-Device-Cybersecurity-Requirement-Catalogs/technical/configuration/",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "lf7-mdn-typeof",
+      "title": "MDN: typeof",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/typeof",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "lf7-mdn-finite",
+      "title": "MDN: Number.isFinite()",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/isFinite",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "lf7-mdn-return",
+      "title": "MDN: return",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/return",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "lf7-mdn-or",
+      "title": "MDN: Logical OR (||)",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Logical_OR",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "lf7-mdn-not",
+      "title": "MDN: Logical NOT (!)",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Logical_NOT",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "lf7-mdn-inequality",
+      "title": "MDN: Strict inequality (!==)",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Strict_inequality",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "lf7-mdn-comparison",
+      "title": "MDN: Greater than or equal (>=)",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Greater_than_or_equal",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "lf8-csv",
+      "title": "RFC 4180: Common Format and MIME Type for CSV Files",
+      "url": "https://www.rfc-editor.org/rfc/rfc4180",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "lf8-json",
+      "title": "RFC 8259: The JavaScript Object Notation (JSON) Data Interchange Format",
+      "url": "https://www.rfc-editor.org/rfc/rfc8259",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "lf8-constraints",
+      "title": "PostgreSQL: Constraints",
+      "url": "https://www.postgresql.org/docs/current/ddl-constraints.html",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "lf8-privileges",
+      "title": "PostgreSQL: Privileges",
+      "url": "https://www.postgresql.org/docs/current/ddl-priv.html",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "lf8-xml",
+      "title": "W3C: Extensible Markup Language (XML) 1.0, Fifth Edition",
+      "url": "https://www.w3.org/TR/xml/",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "lf8-join",
+      "title": "PostgreSQL: Joins Between Tables",
+      "url": "https://www.postgresql.org/docs/current/tutorial-join.html",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "lf8-aggregate",
+      "title": "PostgreSQL: Aggregate Functions",
+      "url": "https://www.postgresql.org/docs/current/tutorial-agg.html",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "lf8-http",
+      "title": "RFC 9110: HTTP Semantics",
+      "url": "https://www.rfc-editor.org/rfc/rfc9110.html",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "lf8-rest",
+      "title": "OWASP: REST Security Cheat Sheet",
+      "url": "https://cheatsheetseries.owasp.org/cheatsheets/REST_Security_Cheat_Sheet.html",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "lf8-logging",
+      "title": "OWASP: Logging Cheat Sheet",
+      "url": "https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "lf8-transactions",
+      "title": "PostgreSQL: Transactions",
+      "url": "https://www.postgresql.org/docs/current/tutorial-transactions.html",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "lf9-ms-capacity",
+      "title": "Microsoft: Architecture strategies for capacity planning",
+      "url": "https://learn.microsoft.com/en-us/azure/well-architected/performance-efficiency/capacity-planning",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "lf9-ms-network",
+      "title": "Microsoft: Architecture strategies for networking and connectivity",
+      "url": "https://learn.microsoft.com/en-us/azure/well-architected/security/networking",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "lf9-ms-monitoring",
+      "title": "Microsoft: Architecture strategies for designing a monitoring system",
+      "url": "https://learn.microsoft.com/en-us/azure/well-architected/operational-excellence/observability",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "lf9-rfc4632",
+      "title": "RFC 4632: Classless Inter-domain Routing (CIDR)",
+      "url": "https://www.rfc-editor.org/rfc/rfc4632.html",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "lf9-rfc5737",
+      "title": "RFC 5737: IPv4 Address Blocks Reserved for Documentation",
+      "url": "https://www.rfc-editor.org/rfc/rfc5737.html",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "lf9-ms-redundancy",
+      "title": "Microsoft: Architecture strategies for designing for redundancy",
+      "url": "https://learn.microsoft.com/en-us/azure/well-architected/reliability/redundancy",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "lf9-rfc1034",
+      "title": "RFC 1034: Domain names – concepts and facilities",
+      "url": "https://www.rfc-editor.org/rfc/rfc1034.html",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "lf9-rfc9110",
+      "title": "RFC 9110: HTTP Semantics",
+      "url": "https://www.rfc-editor.org/rfc/rfc9110.html",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "lf9-rfc2606",
+      "title": "RFC 2606: Reserved Top Level DNS Names",
+      "url": "https://www.rfc-editor.org/rfc/rfc2606.html",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "lf9-ms-recovery",
+      "title": "Microsoft: Architecture strategies for disaster recovery",
+      "url": "https://learn.microsoft.com/en-us/azure/well-architected/reliability/disaster-recovery",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "lf9-ms-deployment",
+      "title": "Microsoft: Architecture strategies for safe deployment practices",
+      "url": "https://learn.microsoft.com/en-us/azure/well-architected/operational-excellence/safe-deployments",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "lf10a-gds-map",
+      "title": "Government Digital Service: Creating an experience map",
+      "url": "https://www.gov.uk/service-manual/user-research/creating-an-experience-map",
+      "checkedAt": "2026-11-19"
+    },
+    {
+      "id": "lf10a-wai-forms",
+      "title": "W3C WAI: Forms Tutorial",
+      "url": "https://www.w3.org/WAI/tutorials/forms/",
+      "checkedAt": "2026-11-19"
+    },
+    {
+      "id": "lf10a-gds-prototypes",
+      "title": "Government Digital Service: Making prototypes",
+      "url": "https://www.gov.uk/service-manual/design/making-prototypes",
+      "checkedAt": "2026-11-19"
+    },
+    {
+      "id": "lf10a-gds-testing",
+      "title": "Government Digital Service: Using moderated usability testing",
+      "url": "https://www.gov.uk/service-manual/user-research/using-moderated-usability-testing",
+      "checkedAt": "2026-11-19"
+    },
+    {
+      "id": "lf10a-wai-structure",
+      "title": "W3C WAI: Page Structure Tutorial",
+      "url": "https://www.w3.org/WAI/tutorials/page-structure/",
+      "checkedAt": "2026-11-19"
+    },
+    {
+      "id": "lf10a-wai-reflow",
+      "title": "W3C WAI: Understanding SC 1.4.10 Reflow",
+      "url": "https://www.w3.org/WAI/WCAG22/Understanding/reflow.html",
+      "checkedAt": "2026-11-19"
+    },
+    {
+      "id": "lf10a-wai-focus",
+      "title": "W3C WAI: Understanding SC 2.4.7 Focus Visible",
+      "url": "https://www.w3.org/WAI/WCAG22/Understanding/focus-visible.html",
+      "checkedAt": "2026-11-19"
+    },
+    {
+      "id": "lf10a-ec-privacy",
+      "title": "Europäische Kommission: Principles of personal data processing under the GDPR",
+      "url": "https://commission.europa.eu/law/law-topic/data-protection/information-business-and-organisations/principles-gdpr_en",
+      "checkedAt": "2026-11-19"
+    },
+    {
+      "id": "lf10a-gds-cost",
+      "title": "Government Digital Service: Measuring cost per transaction",
+      "url": "https://www.gov.uk/service-manual/measuring-success/measuring-cost-per-transaction",
+      "checkedAt": "2026-11-19"
+    },
+    {
+      "id": "lf11a-uml",
+      "title": "OMG: Unified Modeling Language 2.5.1",
+      "url": "https://www.omg.org/spec/UML/2.5.1/About-UML",
+      "checkedAt": "2026-11-19"
+    },
+    {
+      "id": "lf11a-layers",
+      "title": "Microsoft: Common web application architectures",
+      "url": "https://learn.microsoft.com/en-us/dotnet/architecture/modern-web-apps-azure/common-web-application-architectures",
+      "checkedAt": "2026-11-19"
+    },
+    {
+      "id": "lf11a-python-structures",
+      "title": "Python Software Foundation: Data Structures",
+      "url": "https://docs.python.org/3/tutorial/datastructures.html",
+      "checkedAt": "2026-11-19"
+    },
+    {
+      "id": "lf11a-python-complexity",
+      "title": "Python Software Foundation: Time complexity of operations on built-in types",
+      "url": "https://docs.python.org/3.14/builtins/time-complexity.html",
+      "checkedAt": "2026-11-19"
+    },
+    {
+      "id": "lf11a-python-sqlite",
+      "title": "Python Software Foundation: sqlite3",
+      "url": "https://docs.python.org/3/library/sqlite3.html",
+      "checkedAt": "2026-11-19"
+    },
+    {
+      "id": "lf11a-python-tests",
+      "title": "Python Software Foundation: unittest",
+      "url": "https://docs.python.org/3/library/unittest.html",
+      "checkedAt": "2026-11-19"
+    },
+    {
+      "id": "lf11a-git",
+      "title": "Git: Recording Changes to the Repository",
+      "url": "https://git-scm.com/book/en/v2/Git-Basics-Recording-Changes-to-the-Repository",
+      "checkedAt": "2026-11-19"
+    },
+    {
+      "id": "lf12a-gds-usability",
+      "title": "Government Digital Service: Usability benchmarking a website or whole service",
+      "url": "https://www.gov.uk/service-manual/measuring-success/usability-benchmarking-a-website-or-whole-service",
+      "checkedAt": "2026-11-19"
+    },
+    {
+      "id": "lf12a-ms-testing",
+      "title": "Microsoft: Architecture strategies for testing",
+      "url": "https://learn.microsoft.com/en-us/azure/well-architected/operational-excellence/testing",
+      "checkedAt": "2026-11-19"
+    },
+    {
+      "id": "lf12a-ms-performance",
+      "title": "Microsoft: Architecture strategies for performance testing",
+      "url": "https://learn.microsoft.com/en-us/azure/well-architected/performance-efficiency/performance-test",
+      "checkedAt": "2026-11-19"
+    }
+  ],
+  "fields": [
+    {
+      "id": "LF1",
+      "title": "Das Unternehmen und die eigene Rolle im Betrieb beschreiben",
+      "scope": "common",
+      "topicIds": [
+        "common-lf1-role",
+        "common-lf1-goals",
+        "common-lf1-market",
+        "common-lf1-value-chain",
+        "common-lf1-organization",
+        "common-lf1-presentation"
+      ]
+    },
+    {
+      "id": "WISO",
+      "title": "Zusätzliche Wirtschafts- und Sozialkunde",
+      "scope": "common",
+      "topicIds": [
+        "common-wiso-training",
+        "common-wiso-employment",
+        "common-wiso-representation",
+        "common-wiso-social-security",
+        "common-wiso-pay",
+        "common-wiso-consumer",
+        "common-wiso-economy",
+        "common-wiso-change",
+        "common-wiso-career",
+        "common-wiso-europe"
+      ]
+    },
+    {
+      "id": "PM",
+      "title": "Projektmanagement",
+      "scope": "common",
+      "topicIds": [
+        "common-pm-project",
+        "common-pm-stakeholders",
+        "common-pm-methods",
+        "common-pm-planning",
+        "common-pm-schedule",
+        "common-pm-costs",
+        "common-pm-pricing",
+        "common-pm-feasibility",
+        "common-pm-control",
+        "common-pm-closure"
+      ]
+    },
+    {
+      "id": "LF2",
+      "title": "Arbeitsplätze nach Kundenwunsch ausstatten",
+      "scope": "common",
+      "topicIds": [
+        "common-lf2-requirements",
+        "common-lf2-hardware",
+        "common-lf2-software",
+        "common-lf2-workplace",
+        "common-lf2-comparison",
+        "common-lf2-procurement",
+        "common-lf2-handover"
+      ]
+    },
+    {
+      "id": "LF3",
+      "title": "Clients in Netzwerke einbinden",
+      "scope": "common",
+      "topicIds": [
+        "common-lf3-physical",
+        "common-lf3-protocols",
+        "common-lf3-addressing",
+        "common-lf3-services",
+        "common-lf3-access",
+        "common-lf3-diagnosis"
+      ]
+    },
+    {
+      "id": "LF4",
+      "title": "Schutzbedarfsanalyse im eigenen Arbeitsbereich durchführen",
+      "scope": "common",
+      "topicIds": [
+        "common-lf4-goals",
+        "common-lf4-assets",
+        "common-lf4-privacy",
+        "common-lf4-assessment",
+        "common-lf4-measures"
+      ]
+    },
+    {
+      "id": "LF5",
+      "title": "Software zur Verwaltung von Daten anpassen",
+      "scope": "common",
+      "topicIds": [
+        "common-lf5-requirements",
+        "common-lf5-types",
+        "common-lf5-control",
+        "common-lf5-functions",
+        "common-lf5-objects",
+        "common-lf5-storage",
+        "common-lf5-sql",
+        "common-lf5-testing"
+      ]
+    },
+    {
+      "id": "LF6",
+      "title": "Serviceanfragen bearbeiten",
+      "scope": "common",
+      "topicIds": [
+        "common-lf6-intake",
+        "common-lf6-priority",
+        "common-lf6-diagnosis",
+        "common-lf6-solution",
+        "common-lf6-closure"
+      ]
+    },
+    {
+      "id": "LF7",
+      "title": "Cyber-physische Systeme ergänzen",
+      "scope": "common",
+      "topicIds": [
+        "common-lf7-components",
+        "common-lf7-signals",
+        "common-lf7-extension",
+        "common-lf7-logic",
+        "common-lf7-verification"
+      ]
+    },
+    {
+      "id": "LF8",
+      "title": "Daten systemübergreifend bereitstellen",
+      "scope": "common",
+      "topicIds": [
+        "common-lf8-sources",
+        "common-lf8-formats",
+        "common-lf8-queries",
+        "common-lf8-interfaces",
+        "common-lf8-integrity",
+        "common-lf8-delivery"
+      ]
+    },
+    {
+      "id": "LF9",
+      "title": "Netzwerke und Dienste bereitstellen",
+      "scope": "common",
+      "topicIds": [
+        "common-lf9-requirements",
+        "common-lf9-design",
+        "common-lf9-services",
+        "common-lf9-security",
+        "common-lf9-monitoring",
+        "common-lf9-handover"
+      ]
+    },
+    {
+      "id": "LF10a",
+      "title": "Benutzerschnittstellen gestalten und entwickeln",
+      "scope": "specialization",
+      "topicIds": [
+        "fiae-lf10a-process",
+        "fiae-lf10a-prototype",
+        "fiae-lf10a-layout",
+        "fiae-lf10a-forms",
+        "fiae-lf10a-usability",
+        "fiae-lf10a-value"
+      ]
+    },
+    {
+      "id": "LF11a",
+      "title": "Funktionalität in Anwendungen realisieren",
+      "scope": "specialization",
+      "topicIds": [
+        "fiae-lf11a-model",
+        "fiae-lf11a-architecture",
+        "fiae-lf11a-algorithms",
+        "fiae-lf11a-data-access",
+        "fiae-lf11a-security",
+        "fiae-lf11a-testing",
+        "fiae-lf11a-versions"
+      ]
+    },
+    {
+      "id": "LF12a",
+      "title": "Kundenspezifische Anwendungsentwicklung durchführen",
+      "scope": "specialization",
+      "topicIds": [
+        "fiae-lf12a-scope",
+        "fiae-lf12a-alternatives",
+        "fiae-lf12a-planning",
+        "fiae-lf12a-implementation",
+        "fiae-lf12a-acceptance",
+        "fiae-lf12a-training",
+        "fiae-lf12a-review"
+      ]
+    }
+  ],
+  "sequence": [
+    "common-lf1-role",
+    "common-lf1-goals",
+    "common-lf1-market",
+    "common-lf1-value-chain",
+    "common-lf1-organization",
+    "common-lf1-presentation",
+    "common-wiso-training",
+    "common-wiso-employment",
+    "common-wiso-representation",
+    "common-wiso-social-security",
+    "common-wiso-pay",
+    "common-wiso-consumer",
+    "common-wiso-economy",
+    "common-wiso-change",
+    "common-wiso-career",
+    "common-wiso-europe",
+    "common-pm-project",
+    "common-pm-stakeholders",
+    "common-pm-methods",
+    "common-pm-planning",
+    "common-pm-schedule",
+    "common-pm-costs",
+    "common-pm-pricing",
+    "common-pm-feasibility",
+    "common-pm-control",
+    "common-pm-closure",
+    "common-lf2-requirements",
+    "common-lf2-hardware",
+    "common-lf2-software",
+    "common-lf2-workplace",
+    "common-lf2-comparison",
+    "common-lf2-procurement",
+    "common-lf2-handover",
+    "common-lf3-physical",
+    "common-lf3-protocols",
+    "common-lf3-addressing",
+    "common-lf3-services",
+    "common-lf3-access",
+    "common-lf3-diagnosis",
+    "common-lf4-goals",
+    "common-lf4-assets",
+    "common-lf4-privacy",
+    "common-lf4-assessment",
+    "common-lf4-measures",
+    "common-lf5-requirements",
+    "common-lf5-types",
+    "common-lf5-control",
+    "common-lf5-functions",
+    "common-lf5-objects",
+    "common-lf5-storage",
+    "common-lf5-sql",
+    "common-lf5-testing",
+    "common-lf6-intake",
+    "common-lf6-priority",
+    "common-lf6-diagnosis",
+    "common-lf6-solution",
+    "common-lf6-closure",
+    "common-lf7-components",
+    "common-lf7-signals",
+    "common-lf7-extension",
+    "common-lf7-logic",
+    "common-lf7-verification",
+    "common-lf8-sources",
+    "common-lf8-formats",
+    "common-lf8-queries",
+    "common-lf8-interfaces",
+    "common-lf8-integrity",
+    "common-lf8-delivery",
+    "common-lf9-requirements",
+    "common-lf9-design",
+    "common-lf9-services",
+    "common-lf9-security",
+    "common-lf9-monitoring",
+    "common-lf9-handover",
+    "fiae-lf10a-process",
+    "fiae-lf10a-prototype",
+    "fiae-lf10a-layout",
+    "fiae-lf10a-forms",
+    "fiae-lf10a-usability",
+    "fiae-lf10a-value",
+    "fiae-lf11a-model",
+    "fiae-lf11a-architecture",
+    "fiae-lf11a-algorithms",
+    "fiae-lf11a-data-access",
+    "fiae-lf11a-security",
+    "fiae-lf11a-testing",
+    "fiae-lf11a-versions",
+    "fiae-lf12a-scope",
+    "fiae-lf12a-alternatives",
+    "fiae-lf12a-planning",
+    "fiae-lf12a-implementation",
+    "fiae-lf12a-acceptance",
+    "fiae-lf12a-training",
+    "fiae-lf12a-review"
+  ],
+  "topics": [
+    {
+      "id": "common-lf1-role",
+      "title": "Unternehmen, Kunden und die eigene Rolle",
+      "fieldId": "LF1",
+      "scope": "common",
+      "prerequisites": [],
+      "objectives": [
+        {
+          "id": "common-lf1-role-value",
+          "text": "Leistung und Kundennutzen an einem einfachen IT-Auftrag unterscheiden."
+        },
+        {
+          "id": "common-lf1-role-team",
+          "text": "Beteiligte und ihre Rollen in einem einfachen Auftrag erklären."
+        },
+        {
+          "id": "common-lf1-role-responsibility",
+          "text": "Eigene Zuständigkeit beachten und bei unklaren Aufträgen gezielt nachfragen."
+        }
+      ],
+      "status": "content-ready",
+      "contentFile": "topics/common-lf1-role.v1.json",
+      "gaps": []
+    },
+    {
+      "id": "common-lf1-goals",
+      "title": "Unternehmensziele und Zielkonflikte",
+      "fieldId": "LF1",
+      "scope": "common",
+      "prerequisites": [
+        "common-lf1-role"
+      ],
+      "objectives": [
+        {
+          "id": "common-lf1-goals-classify",
+          "text": "Wirtschaftliche, ökologische und soziale Ziele eines IT-Betriebs an Beispielen zuordnen."
+        },
+        {
+          "id": "common-lf1-goals-balance",
+          "text": "Einen Zielkonflikt zwischen Kosten, Umweltwirkung und Arbeitsbedingungen beschreiben."
+        }
+      ],
+      "status": "content-ready",
+      "contentFile": "topics/common-lf1-goals.v1.json",
+      "gaps": []
+    },
+    {
+      "id": "common-lf1-market",
+      "title": "Kunden, Lieferanten und Wettbewerb",
+      "fieldId": "LF1",
+      "scope": "common",
+      "prerequisites": [
+        "common-lf1-role"
+      ],
+      "objectives": [
+        {
+          "id": "common-lf1-market-relations",
+          "text": "Kunden-, Lieferanten- und Wettbewerbsbeziehungen für einen IT-Dienstleister darstellen."
+        },
+        {
+          "id": "common-lf1-market-offer",
+          "text": "Zwei Leistungsangebote anhand eines beschriebenen Kundenbedarfs vergleichen."
+        }
+      ],
+      "status": "content-ready",
+      "contentFile": "topics/common-lf1-market.v1.json",
+      "gaps": []
+    },
+    {
+      "id": "common-lf1-value-chain",
+      "title": "Vom Kundenwunsch zur Wertschöpfung",
+      "fieldId": "LF1",
+      "scope": "common",
+      "prerequisites": [
+        "common-lf1-market"
+      ],
+      "objectives": [
+        {
+          "id": "common-lf1-value-chain-steps",
+          "text": "Die Arbeitsschritte eines einfachen IT-Auftrags als Ablauf darstellen."
+        },
+        {
+          "id": "common-lf1-value-chain-contribution",
+          "text": "Für einen Arbeitsschritt erklären, welchen Beitrag er zur nutzbaren Gesamtleistung leistet."
+        }
+      ],
+      "status": "content-ready",
+      "contentFile": "topics/common-lf1-value-chain.v1.json",
+      "gaps": []
+    },
+    {
+      "id": "common-lf1-organization",
+      "title": "Organisation und Entscheidungsspielräume",
+      "fieldId": "LF1",
+      "scope": "common",
+      "prerequisites": [
+        "common-lf1-value-chain"
+      ],
+      "objectives": [
+        {
+          "id": "common-lf1-organization-structure",
+          "text": "Aus einem Organigramm Zuständigkeiten und einen passenden Abstimmungsweg ablesen."
+        },
+        {
+          "id": "common-lf1-organization-legalform",
+          "text": "Einzelunternehmen und GmbH anhand von Leitung und grundlegender Haftung unterscheiden."
+        },
+        {
+          "id": "common-lf1-organization-authority",
+          "text": "In einem vorgegebenen betrieblichen Fall prüfen, ob eine Entscheidung von der eigenen Befugnis gedeckt ist."
+        }
+      ],
+      "status": "content-ready",
+      "contentFile": "topics/common-lf1-organization.v1.json",
+      "gaps": []
+    },
+    {
+      "id": "common-lf1-presentation",
+      "title": "Ein Unternehmen verständlich vorstellen",
+      "fieldId": "LF1",
+      "scope": "common",
+      "prerequisites": [
+        "common-lf1-goals",
+        "common-lf1-organization"
+      ],
+      "objectives": [
+        {
+          "id": "common-lf1-presentation-prepare",
+          "text": "Für eine kurze Unternehmensvorstellung Zielgruppe, Kerninformationen und Aufgaben im Team festlegen."
+        },
+        {
+          "id": "common-lf1-presentation-present",
+          "text": "Eine kurze, adressatengerechte multimediale Unternehmensdarstellung erstellen und präsentieren."
+        },
+        {
+          "id": "common-lf1-presentation-improve",
+          "text": "Eine Darstellung anhand vereinbarter Kriterien beurteilen und eine konkrete Verbesserung ableiten."
+        }
+      ],
+      "status": "content-ready",
+      "contentFile": "topics/common-lf1-presentation.v1.json",
+      "gaps": []
+    },
+    {
+      "id": "common-wiso-training",
+      "title": "Ausbildung im dualen System",
+      "fieldId": "WISO",
+      "scope": "common",
+      "prerequisites": [
+        "common-lf1-role"
+      ],
+      "objectives": [
+        {
+          "id": "common-wiso-training-roles",
+          "text": "Aufgaben von Betrieb, Berufsschule und zuständiger Stelle am Ausbildungsablauf erläutern."
+        },
+        {
+          "id": "common-wiso-training-contract",
+          "text": "Rechte und Pflichten aus einem vorgegebenen Ausbildungsvertrag einschließlich Beginn und Beendigung einordnen."
+        },
+        {
+          "id": "common-wiso-training-plans",
+          "text": "Den betrieblichen Ausbildungsplan von Ausbildungsordnung und schulischem Rahmenlehrplan unterscheiden."
+        }
+      ],
+      "status": "content-ready",
+      "contentFile": "topics/common-wiso-training.v1.json",
+      "gaps": []
+    },
+    {
+      "id": "common-wiso-employment",
+      "title": "Arbeitsvertrag und Schutz am Arbeitsplatz",
+      "fieldId": "WISO",
+      "scope": "common",
+      "prerequisites": [
+        "common-wiso-training"
+      ],
+      "objectives": [
+        {
+          "id": "common-wiso-employment-contract",
+          "text": "Wesentliche Vereinbarungen eines Arbeitsvertrags benennen und von Ausbildungsregelungen unterscheiden."
+        },
+        {
+          "id": "common-wiso-employment-protection",
+          "text": "Für einen einfachen Fall zu Arbeitszeit, Urlaub oder Krankheit eine einschlägige aktuelle Regelung finden."
+        },
+        {
+          "id": "common-wiso-employment-termination",
+          "text": "Bei einer Kündigung Beteiligte, zu prüfende Fristen und geeignete Beratungsstellen benennen."
+        }
+      ],
+      "status": "content-ready",
+      "contentFile": "topics/common-wiso-employment.v1.json",
+      "gaps": []
+    },
+    {
+      "id": "common-wiso-representation",
+      "title": "Tarifverträge und betriebliche Mitbestimmung",
+      "fieldId": "WISO",
+      "scope": "common",
+      "prerequisites": [
+        "common-wiso-employment",
+        "common-lf1-organization"
+      ],
+      "objectives": [
+        {
+          "id": "common-wiso-representation-roles",
+          "text": "Aufgaben von Gewerkschaft, Arbeitgeberverband, Betriebsrat und Jugend- und Auszubildendenvertretung unterscheiden."
+        },
+        {
+          "id": "common-wiso-representation-scope",
+          "text": "An einem vorgegebenen Fall tarifliche Regelungen und betriebliche Beteiligungsrechte auseinanderhalten."
+        },
+        {
+          "id": "common-wiso-representation-conflict",
+          "text": "Den Weg einer tariflichen Auseinandersetzung mit ihren rechtlichen Grenzen beschreiben."
+        }
+      ],
+      "status": "content-ready",
+      "contentFile": "topics/common-wiso-representation.v1.json",
+      "gaps": []
+    },
+    {
+      "id": "common-wiso-social-security",
+      "title": "Soziale Sicherung und Vorsorge",
+      "fieldId": "WISO",
+      "scope": "common",
+      "prerequisites": [
+        "common-wiso-employment"
+      ],
+      "objectives": [
+        {
+          "id": "common-wiso-social-security-branches",
+          "text": "Lebensrisiken den Zweigen der gesetzlichen Sozialversicherung zuordnen."
+        },
+        {
+          "id": "common-wiso-social-security-principles",
+          "text": "Versicherungsprinzip, Solidarprinzip und Grenzen der Absicherung an einfachen Fällen erklären."
+        },
+        {
+          "id": "common-wiso-social-security-advice",
+          "text": "Für einen Leistungsstreit oder zusätzlichen Vorsorgebedarf eine geeignete Informations- oder Beratungsstelle auswählen."
+        }
+      ],
+      "status": "content-ready",
+      "contentFile": "topics/common-wiso-social-security.v1.json",
+      "gaps": []
+    },
+    {
+      "id": "common-wiso-pay",
+      "title": "Entgeltabrechnung verstehen",
+      "fieldId": "WISO",
+      "scope": "common",
+      "prerequisites": [
+        "common-wiso-social-security"
+      ],
+      "objectives": [
+        {
+          "id": "common-wiso-pay-positions",
+          "text": "Bruttoentgelt, Steuerabzüge, Sozialversicherungsbeiträge und Auszahlung in einer Musterabrechnung zuordnen."
+        },
+        {
+          "id": "common-wiso-pay-calculate",
+          "text": "Mit vorgegebenen gültigen Sätzen eine vereinfachte Auszahlung berechnen und die Grenzen der Rechnung benennen."
+        }
+      ],
+      "status": "content-ready",
+      "contentFile": "topics/common-wiso-pay.v1.json",
+      "gaps": []
+    },
+    {
+      "id": "common-wiso-consumer",
+      "title": "Verträge und das eigene Budget",
+      "fieldId": "WISO",
+      "scope": "common",
+      "prerequisites": [
+        "common-wiso-pay"
+      ],
+      "objectives": [
+        {
+          "id": "common-wiso-consumer-budget",
+          "text": "Einen Kaufwunsch mit verfügbaren Mitteln und laufenden Verpflichtungen abgleichen."
+        },
+        {
+          "id": "common-wiso-consumer-contracts",
+          "text": "Kauf, Miete und Kredit anhand eines einfachen Falls nach Pflichten und finanzieller Belastung vergleichen."
+        },
+        {
+          "id": "common-wiso-consumer-rights",
+          "text": "Bei einem Verbraucherfall die Wirksamkeit des Vertrags und mögliche Schutzrechte anhand bereitgestellter aktueller Regelungen prüfen."
+        }
+      ],
+      "status": "content-ready",
+      "contentFile": "topics/common-wiso-consumer.v1.json",
+      "gaps": []
+    },
+    {
+      "id": "common-wiso-economy",
+      "title": "Markt, Wirtschaftskreislauf und soziale Marktwirtschaft",
+      "fieldId": "WISO",
+      "scope": "common",
+      "prerequisites": [
+        "common-lf1-market",
+        "common-wiso-consumer"
+      ],
+      "objectives": [
+        {
+          "id": "common-wiso-economy-cycle",
+          "text": "Geld- und Leistungsströme zwischen Haushalten, Unternehmen und Staat in einem einfachen Modell zuordnen."
+        },
+        {
+          "id": "common-wiso-economy-price",
+          "text": "Eine Preisänderung mit einem veränderten Angebot oder einer veränderten Nachfrage erklären."
+        },
+        {
+          "id": "common-wiso-economy-policy",
+          "text": "An einem Beispiel erläutern, wie Wettbewerb und soziale Absicherung in der sozialen Marktwirtschaft zusammenwirken."
+        }
+      ],
+      "status": "content-ready",
+      "contentFile": "topics/common-wiso-economy.v1.json",
+      "gaps": []
+    },
+    {
+      "id": "common-wiso-change",
+      "title": "Digitaler und ökologischer Wandel",
+      "fieldId": "WISO",
+      "scope": "common",
+      "prerequisites": [
+        "common-lf1-goals",
+        "common-wiso-employment"
+      ],
+      "objectives": [
+        {
+          "id": "common-wiso-change-impact",
+          "text": "Chancen und Risiken einer digitalen Veränderung für Arbeit, Teilhabe und Umwelt beschreiben."
+        },
+        {
+          "id": "common-wiso-change-conduct",
+          "text": "Für die Zusammenarbeit mit digitalen Medien ein Vorgehen wählen, das betriebliche Regeln und Persönlichkeitsrechte berücksichtigt."
+        },
+        {
+          "id": "common-wiso-change-learning",
+          "text": "Aus einer veränderten Arbeitsaufgabe einen eigenen Weiterbildungsbedarf ableiten."
+        }
+      ],
+      "status": "content-ready",
+      "contentFile": "topics/common-wiso-change.v1.json",
+      "gaps": []
+    },
+    {
+      "id": "common-wiso-career",
+      "title": "Berufliche Entwicklung und Selbstständigkeit",
+      "fieldId": "WISO",
+      "scope": "common",
+      "prerequisites": [
+        "common-wiso-change",
+        "common-wiso-economy"
+      ],
+      "objectives": [
+        {
+          "id": "common-wiso-career-path",
+          "text": "Für ein berufliches Ziel eine passende Fortbildung oder Weiterbildung mit Zugangsvoraussetzungen recherchieren."
+        },
+        {
+          "id": "common-wiso-career-life",
+          "text": "Eine berufliche Entwicklung unter Berücksichtigung persönlicher Stärken, Familienplanung und eigener Rollenvorstellungen abwägen."
+        },
+        {
+          "id": "common-wiso-career-business",
+          "text": "Für eine einfache Gründungsidee Kundennutzen, benötigte Mittel und ein wesentliches Risiko benennen."
+        }
+      ],
+      "status": "content-ready",
+      "contentFile": "topics/common-wiso-career.v1.json",
+      "gaps": []
+    },
+    {
+      "id": "common-wiso-europe",
+      "title": "Europa und weltweite Wirtschaftsbeziehungen",
+      "fieldId": "WISO",
+      "scope": "common",
+      "prerequisites": [
+        "common-wiso-economy",
+        "common-wiso-career"
+      ],
+      "objectives": [
+        {
+          "id": "common-wiso-europe-mobility",
+          "text": "An einem Berufsszenario erklären, welche Möglichkeiten und Anforderungen mit Arbeiten oder Lernen in der EU verbunden sind."
+        },
+        {
+          "id": "common-wiso-europe-trade",
+          "text": "Für eine internationale IT-Lieferkette wirtschaftliche Chancen und Abhängigkeiten benennen."
+        },
+        {
+          "id": "common-wiso-europe-sustainability",
+          "text": "Standortalternativen anhand vorgegebener Lohn-, Arbeits- und Umweltbedingungen vergleichen."
+        }
+      ],
+      "status": "content-ready",
+      "contentFile": "topics/common-wiso-europe.v1.json",
+      "gaps": []
+    },
+    {
+      "id": "common-pm-project",
+      "title": "Projektauftrag und klare Ziele",
+      "fieldId": "PM",
+      "scope": "common",
+      "prerequisites": [
+        "common-wiso-europe"
+      ],
+      "objectives": [
+        {
+          "id": "common-pm-project-purpose",
+          "text": "Projekte von laufenden Aufgaben unterscheiden und einen begrenzten Auftrag beschreiben."
+        },
+        {
+          "id": "common-pm-project-goals",
+          "text": "Prüfbare Projektziele einschließlich Erfolgskriterien formulieren."
+        },
+        {
+          "id": "common-pm-project-scope",
+          "text": "Leistungsumfang, Zeit, Kosten und Qualität an einem Fall aufeinander abstimmen."
+        }
+      ],
+      "status": "content-ready",
+      "contentFile": "topics/common-pm-project.v1.json",
+      "gaps": []
+    },
+    {
+      "id": "common-pm-stakeholders",
+      "title": "Anforderungen und Zusammenarbeit",
+      "fieldId": "PM",
+      "scope": "common",
+      "prerequisites": [
+        "common-pm-project"
+      ],
+      "objectives": [
+        {
+          "id": "common-pm-stakeholders-needs",
+          "text": "Anforderungen und Abnahmekriterien mit Beteiligten klären und priorisieren."
+        },
+        {
+          "id": "common-pm-stakeholders-roles",
+          "text": "Auftraggeber, Projektleitung und Team nach ihren Aufgaben unterscheiden."
+        },
+        {
+          "id": "common-pm-stakeholders-communication",
+          "text": "Einen passenden Kommunikationsweg und dokumentierte Entscheidungen planen."
+        }
+      ],
+      "status": "content-ready",
+      "contentFile": "topics/common-pm-stakeholders.v1.json",
+      "gaps": []
+    },
+    {
+      "id": "common-pm-methods",
+      "title": "Klassisch, agil und passend kombiniert",
+      "fieldId": "PM",
+      "scope": "common",
+      "prerequisites": [
+        "common-pm-stakeholders"
+      ],
+      "objectives": [
+        {
+          "id": "common-pm-methods-compare",
+          "text": "Planorientiertes und iteratives Vorgehen nach Rückmeldung und Planbarkeit vergleichen."
+        },
+        {
+          "id": "common-pm-methods-scrum",
+          "text": "Scrum-Verantwortlichkeiten, Ereignisse und Artefakte in einem einfachen Fall einordnen."
+        },
+        {
+          "id": "common-pm-methods-choose",
+          "text": "Für einen Auftrag ein begründetes Vorgehen wählen, ohne Agilität mit Planungslosigkeit zu verwechseln."
+        }
+      ],
+      "status": "content-ready",
+      "contentFile": "topics/common-pm-methods.v1.json",
+      "gaps": []
+    },
+    {
+      "id": "common-pm-planning",
+      "title": "Arbeitspakete und Aufwand schätzen",
+      "fieldId": "PM",
+      "scope": "common",
+      "prerequisites": [
+        "common-pm-methods"
+      ],
+      "objectives": [
+        {
+          "id": "common-pm-planning-structure",
+          "text": "Einen Auftrag in prüfbare Arbeitspakete mit Ergebnissen zerlegen."
+        },
+        {
+          "id": "common-pm-planning-estimate",
+          "text": "Aufwand mit begründeten Annahmen schätzen und von Dauer unterscheiden."
+        },
+        {
+          "id": "common-pm-planning-uncertainty",
+          "text": "Unsicherheiten und Reserven transparent dokumentieren."
+        }
+      ],
+      "status": "content-ready",
+      "contentFile": "topics/common-pm-planning.v1.json",
+      "gaps": []
+    },
+    {
+      "id": "common-pm-schedule",
+      "title": "Termine, Abhängigkeiten und Kapazität",
+      "fieldId": "PM",
+      "scope": "common",
+      "prerequisites": [
+        "common-pm-planning"
+      ],
+      "objectives": [
+        {
+          "id": "common-pm-schedule-dependencies",
+          "text": "Abhängigkeiten und einen einfachen zeitlichen Ablauf bestimmen."
+        },
+        {
+          "id": "common-pm-schedule-capacity",
+          "text": "Mit vorgegebener Kapazität eine realistische Dauer berechnen."
+        },
+        {
+          "id": "common-pm-schedule-milestones",
+          "text": "Meilensteine und mögliche Terminengpässe erkennen."
+        }
+      ],
+      "status": "content-ready",
+      "contentFile": "topics/common-pm-schedule.v1.json",
+      "gaps": []
+    },
+    {
+      "id": "common-pm-costs",
+      "title": "Projektkosten nachvollziehbar kalkulieren",
+      "fieldId": "PM",
+      "scope": "common",
+      "prerequisites": [
+        "common-pm-schedule"
+      ],
+      "objectives": [
+        {
+          "id": "common-pm-costs-cost-types",
+          "text": "Direkte Kosten, Gemeinkosten und angebotene Preise im Projekt unterscheiden."
+        },
+        {
+          "id": "common-pm-costs-calculate",
+          "text": "Personalkosten, Gemeinkostenzuschlag und Gesamtkosten in einer Tabelle berechnen."
+        },
+        {
+          "id": "common-pm-costs-assumptions",
+          "text": "Einheiten, Bezugsgrößen und Annahmen einer Kostenkalkulation prüfen."
+        }
+      ],
+      "status": "content-ready",
+      "contentFile": "topics/common-pm-costs.v1.json",
+      "gaps": []
+    },
+    {
+      "id": "common-pm-pricing",
+      "title": "Verkaufspreis, Gewinn und Marge",
+      "fieldId": "PM",
+      "scope": "common",
+      "prerequisites": [
+        "common-pm-costs"
+      ],
+      "objectives": [
+        {
+          "id": "common-pm-pricing-markup",
+          "text": "Aus Selbstkosten und Gewinnaufschlag einen Nettoverkaufspreis berechnen."
+        },
+        {
+          "id": "common-pm-pricing-margin",
+          "text": "Gewinnaufschlag und Gewinnmarge anhand ihrer Bezugsgrößen unterscheiden."
+        },
+        {
+          "id": "common-pm-pricing-price",
+          "text": "Umsatzsteuer, Nachlässe und Verkaufspreis in einem vorgegebenen Modell sauber trennen."
+        }
+      ],
+      "status": "content-ready",
+      "contentFile": "topics/common-pm-pricing.v1.json",
+      "gaps": []
+    },
+    {
+      "id": "common-pm-feasibility",
+      "title": "Wirtschaftlichkeit und Gewinnschwelle",
+      "fieldId": "PM",
+      "scope": "common",
+      "prerequisites": [
+        "common-pm-pricing"
+      ],
+      "objectives": [
+        {
+          "id": "common-pm-feasibility-contribution",
+          "text": "Deckungsbeitrag von Gewinn unterscheiden und ein vereinfachtes Ergebnis berechnen."
+        },
+        {
+          "id": "common-pm-feasibility-break-even",
+          "text": "Eine Gewinnschwelle aus Fixkosten, Preis und variablen Stückkosten bestimmen."
+        },
+        {
+          "id": "common-pm-feasibility-payback",
+          "text": "Eine einfache Amortisationszeit berechnen und die Grenzen des Modells erklären."
+        }
+      ],
+      "status": "content-ready",
+      "contentFile": "topics/common-pm-feasibility.v1.json",
+      "gaps": []
+    },
+    {
+      "id": "common-pm-control",
+      "title": "Risiken, Änderungen und Projektsteuerung",
+      "fieldId": "PM",
+      "scope": "common",
+      "prerequisites": [
+        "common-pm-feasibility"
+      ],
+      "objectives": [
+        {
+          "id": "common-pm-control-risks",
+          "text": "Projektrisiken nach Eintrittswahrscheinlichkeit und Auswirkung beurteilen und Maßnahmen planen."
+        },
+        {
+          "id": "common-pm-control-variance",
+          "text": "Soll- und Istwerte vergleichen und Abweichungen begründet untersuchen."
+        },
+        {
+          "id": "common-pm-control-change",
+          "text": "Änderungswünsche auf Umfang, Kosten und Termine prüfen und Entscheidungen festhalten."
+        }
+      ],
+      "status": "content-ready",
+      "contentFile": "topics/common-pm-control.v1.json",
+      "gaps": []
+    },
+    {
+      "id": "common-pm-closure",
+      "title": "Abnahme, Übergabe und Projektrückblick",
+      "fieldId": "PM",
+      "scope": "common",
+      "prerequisites": [
+        "common-pm-control"
+      ],
+      "objectives": [
+        {
+          "id": "common-pm-closure-acceptance",
+          "text": "Ergebnisse anhand vereinbarter Abnahmekriterien prüfen und offene Punkte dokumentieren."
+        },
+        {
+          "id": "common-pm-closure-handover",
+          "text": "Eine nachvollziehbare Übergabe mit Zuständigkeit und nötiger Dokumentation vorbereiten."
+        },
+        {
+          "id": "common-pm-closure-learning",
+          "text": "Projektverlauf und Kalkulation auswerten und konkrete Verbesserungen ableiten."
+        }
+      ],
+      "status": "content-ready",
+      "contentFile": "topics/common-pm-closure.v1.json",
+      "gaps": []
+    },
+    {
+      "id": "common-lf2-requirements",
+      "title": "Kundenwünsche als prüfbare Anforderungen",
+      "fieldId": "LF2",
+      "scope": "common",
+      "prerequisites": [
+        "common-lf1-role"
+      ],
+      "objectives": [
+        {
+          "id": "common-lf2-requirements-clarify",
+          "text": "Aus einem Gespräch offene Fragen und messbare Anforderungen an einen Arbeitsplatz ableiten."
+        },
+        {
+          "id": "common-lf2-requirements-plan",
+          "text": "Für einen kleinen Ausstattungsauftrag Arbeitsschritte, Zuständigkeiten und Termine abstimmen."
+        }
+      ],
+      "status": "content-ready",
+      "contentFile": "topics/common-lf2-requirements.v1.json",
+      "gaps": []
+    },
+    {
+      "id": "common-lf2-hardware",
+      "title": "Hardware nach Einsatzzweck auswählen",
+      "fieldId": "LF2",
+      "scope": "common",
+      "prerequisites": [
+        "common-lf2-requirements"
+      ],
+      "objectives": [
+        {
+          "id": "common-lf2-hardware-parts",
+          "text": "Die Aufgaben von Prozessor, Arbeitsspeicher, Massenspeicher und Peripherie im Arbeitsplatz erklären."
+        },
+        {
+          "id": "common-lf2-hardware-fit",
+          "text": "Anhand vorgegebener Datenblätter die Leistung und Kompatibilität zweier Ausstattungen beurteilen."
+        }
+      ],
+      "status": "content-ready",
+      "contentFile": "topics/common-lf2-hardware.v1.json",
+      "gaps": []
+    },
+    {
+      "id": "common-lf2-software",
+      "title": "Betriebssysteme, Anwendungen und Nutzungsrechte",
+      "fieldId": "LF2",
+      "scope": "common",
+      "prerequisites": [
+        "common-lf2-hardware"
+      ],
+      "objectives": [
+        {
+          "id": "common-lf2-software-fit",
+          "text": "Betriebssystem und Anwendungssoftware anhand von Aufgaben und Systemvoraussetzungen auswählen."
+        },
+        {
+          "id": "common-lf2-software-license",
+          "text": "Aus vorgegebenen Lizenzbedingungen erlaubte Nutzung, Anzahl der Installationen und laufende Kosten ableiten."
+        }
+      ],
+      "status": "content-ready",
+      "contentFile": "topics/common-lf2-software.v1.json",
+      "gaps": []
+    },
+    {
+      "id": "common-lf2-workplace",
+      "title": "Ergonomie, Sicherheit und Energiebedarf",
+      "fieldId": "LF2",
+      "scope": "common",
+      "prerequisites": [
+        "common-lf2-hardware"
+      ],
+      "objectives": [
+        {
+          "id": "common-lf2-workplace-risk",
+          "text": "An einem Arbeitsplatz ergonomische und elektrische Gefährdungen erkennen und geeignete organisatorische Maßnahmen benennen."
+        },
+        {
+          "id": "common-lf2-workplace-energy",
+          "text": "Mit vorgegebener Leistung und Nutzungsdauer den Energiebedarf zweier Arbeitsplatzvarianten vergleichen."
+        },
+        {
+          "id": "common-lf2-workplace-lifecycle",
+          "text": "Reparatur, Weiternutzung und fachgerechte Entsorgung bei einer Beschaffungsentscheidung berücksichtigen."
+        }
+      ],
+      "status": "content-ready",
+      "contentFile": "topics/common-lf2-workplace.v1.json",
+      "gaps": []
+    },
+    {
+      "id": "common-lf2-comparison",
+      "title": "Produkte und Lieferangebote vergleichen",
+      "fieldId": "LF2",
+      "scope": "common",
+      "prerequisites": [
+        "common-lf2-software",
+        "common-lf2-workplace"
+      ],
+      "objectives": [
+        {
+          "id": "common-lf2-comparison-criteria",
+          "text": "Technische Angaben auch aus einem kurzen englischen Datenblatt in eine gewichtete Vergleichsmatrix übertragen."
+        },
+        {
+          "id": "common-lf2-comparison-cost",
+          "text": "Zwei Lieferangebote mit vorgegebenen Rabatten, Bezugskosten und Lieferbedingungen vergleichen."
+        }
+      ],
+      "status": "content-ready",
+      "contentFile": "topics/common-lf2-comparison.v1.json",
+      "gaps": []
+    },
+    {
+      "id": "common-lf2-procurement",
+      "title": "Angebot erstellen und Beschaffung verfolgen",
+      "fieldId": "LF2",
+      "scope": "common",
+      "prerequisites": [
+        "common-lf2-comparison",
+        "common-wiso-consumer"
+      ],
+      "objectives": [
+        {
+          "id": "common-lf2-procurement-offer",
+          "text": "Aus Einkaufskosten und vorgegebenen Zuschlägen ein nachvollziehbares Kundenangebot berechnen."
+        },
+        {
+          "id": "common-lf2-procurement-order",
+          "text": "Bestellung, Wareneingang und Rechnung einem Beschaffungsablauf zuordnen."
+        },
+        {
+          "id": "common-lf2-procurement-deviation",
+          "text": "Bei einer mangelhaften oder verspäteten Lieferung den Sachverhalt dokumentieren und die zuständige Stelle einbeziehen."
+        }
+      ],
+      "status": "content-ready",
+      "contentFile": "topics/common-lf2-procurement.v1.json",
+      "gaps": []
+    },
+    {
+      "id": "common-lf2-handover",
+      "title": "Arbeitsplatz einrichten und übergeben",
+      "fieldId": "LF2",
+      "scope": "common",
+      "prerequisites": [
+        "common-lf2-procurement"
+      ],
+      "objectives": [
+        {
+          "id": "common-lf2-handover-setup",
+          "text": "Eine vorgegebene Einrichtung in nachvollziehbaren Schritten durchführen und die geforderten Funktionen prüfen."
+        },
+        {
+          "id": "common-lf2-handover-handover",
+          "text": "Ergebnisse, Einweisung und offene Punkte in einem Übergabeprotokoll festhalten."
+        },
+        {
+          "id": "common-lf2-handover-review",
+          "text": "Aufwand und Kundenergebnis mit dem Auftrag vergleichen und eine Verbesserung für den nächsten Auftrag ableiten."
+        }
+      ],
+      "status": "content-ready",
+      "contentFile": "topics/common-lf2-handover.v1.json",
+      "gaps": []
+    },
+    {
+      "id": "common-lf3-physical",
+      "title": "Netzwerkkomponenten und Übertragungswege",
+      "fieldId": "LF3",
+      "scope": "common",
+      "prerequisites": [
+        "common-lf2-hardware"
+      ],
+      "objectives": [
+        {
+          "id": "common-lf3-physical-path",
+          "text": "Den Verbindungsweg eines Clients über Netzwerkkomponenten in einem einfachen Netzplan verfolgen."
+        },
+        {
+          "id": "common-lf3-physical-medium",
+          "text": "Kabelgebundene und drahtlose Anbindung nach Reichweite, Störanfälligkeit und Bedarf vergleichen."
+        }
+      ],
+      "status": "content-ready",
+      "contentFile": "topics/common-lf3-physical.v1.json",
+      "gaps": []
+    },
+    {
+      "id": "common-lf3-protocols",
+      "title": "Schichten und Protokolle",
+      "fieldId": "LF3",
+      "scope": "common",
+      "prerequisites": [
+        "common-lf3-physical"
+      ],
+      "objectives": [
+        {
+          "id": "common-lf3-protocols-layers",
+          "text": "Die Aufgaben von Ethernet, IP, TCP beziehungsweise UDP und Anwendungsprotokollen im Datenweg unterscheiden."
+        },
+        {
+          "id": "common-lf3-protocols-units",
+          "text": "Datenmengen und Übertragungsraten korrekt zuordnen und eine ideale Übertragungszeit berechnen."
+        }
+      ],
+      "status": "content-ready",
+      "contentFile": "topics/common-lf3-protocols.v1.json",
+      "gaps": []
+    },
+    {
+      "id": "common-lf3-addressing",
+      "title": "IP-Adressen und Teilnetze",
+      "fieldId": "LF3",
+      "scope": "common",
+      "prerequisites": [
+        "common-lf3-protocols"
+      ],
+      "objectives": [
+        {
+          "id": "common-lf3-addressing-ipv4",
+          "text": "Für ein einfaches IPv4-Netz mit vorgegebenem Präfix Netzzugehörigkeit, Hostbereich und Gateway prüfen."
+        },
+        {
+          "id": "common-lf3-addressing-ipv6",
+          "text": "Eine IPv6-Adresse lesen und grundlegende Unterschiede zur IPv4-Adressierung erläutern."
+        }
+      ],
+      "status": "content-ready",
+      "contentFile": "topics/common-lf3-addressing.v1.json",
+      "gaps": []
+    },
+    {
+      "id": "common-lf3-services",
+      "title": "Clientkonfiguration mit DHCP und DNS",
+      "fieldId": "LF3",
+      "scope": "common",
+      "prerequisites": [
+        "common-lf3-addressing"
+      ],
+      "objectives": [
+        {
+          "id": "common-lf3-services-configure",
+          "text": "IP-Adresse, Präfix, Gateway und DNS-Einstellung eines Clients passend zum Netzplan setzen."
+        },
+        {
+          "id": "common-lf3-services-explain",
+          "text": "Adressvergabe durch DHCP und Namensauflösung durch DNS an einer Clientanfrage unterscheiden."
+        }
+      ],
+      "status": "content-ready",
+      "contentFile": "topics/common-lf3-services.v1.json",
+      "gaps": []
+    },
+    {
+      "id": "common-lf3-access",
+      "title": "Netzwerkzugang sicher einrichten",
+      "fieldId": "LF3",
+      "scope": "common",
+      "prerequisites": [
+        "common-lf3-services"
+      ],
+      "objectives": [
+        {
+          "id": "common-lf3-access-identity",
+          "text": "Authentifizierung und Zugriffsberechtigung bei der Netzanmeldung unterscheiden."
+        },
+        {
+          "id": "common-lf3-access-connection",
+          "text": "Für einen Client passende WLAN-Sicherheits- und Zugangsregeln aus einer Vorgabe anwenden."
+        }
+      ],
+      "status": "content-ready",
+      "contentFile": "topics/common-lf3-access.v1.json",
+      "gaps": []
+    },
+    {
+      "id": "common-lf3-diagnosis",
+      "title": "Eine Clientverbindung systematisch prüfen",
+      "fieldId": "LF3",
+      "scope": "common",
+      "prerequisites": [
+        "common-lf3-access"
+      ],
+      "objectives": [
+        {
+          "id": "common-lf3-diagnosis-isolate",
+          "text": "Mit vorgegebenen Diagnoseausgaben Fehler bei Verbindung, IP-Konfiguration und Namensauflösung unterscheiden."
+        },
+        {
+          "id": "common-lf3-diagnosis-record",
+          "text": "Prüfschritte, Ergebnisse und Änderungen so protokollieren, dass ein anderes Teammitglied sie nachvollziehen kann."
+        }
+      ],
+      "status": "content-ready",
+      "contentFile": "topics/common-lf3-diagnosis.v1.json",
+      "gaps": []
+    },
+    {
+      "id": "common-lf4-goals",
+      "title": "Vertraulichkeit, Integrität und Verfügbarkeit",
+      "fieldId": "LF4",
+      "scope": "common",
+      "prerequisites": [
+        "common-lf1-value-chain"
+      ],
+      "objectives": [
+        {
+          "id": "common-lf4-goals-distinguish",
+          "text": "Eine Beeinträchtigung von Vertraulichkeit, Integrität oder Verfügbarkeit an einem Arbeitsvorgang zuordnen."
+        },
+        {
+          "id": "common-lf4-goals-guideline",
+          "text": "Aus einer vorgegebenen Sicherheitsleitlinie relevante Regeln für den eigenen Arbeitsbereich ableiten."
+        }
+      ],
+      "status": "content-ready",
+      "contentFile": "topics/common-lf4-goals.v1.json",
+      "gaps": []
+    },
+    {
+      "id": "common-lf4-assets",
+      "title": "Schutzobjekte, Bedrohungen und Schäden",
+      "fieldId": "LF4",
+      "scope": "common",
+      "prerequisites": [
+        "common-lf4-goals"
+      ],
+      "objectives": [
+        {
+          "id": "common-lf4-assets-inventory",
+          "text": "Daten, Anwendungen, Geräte und Räume eines kleinen Arbeitsbereichs als Schutzobjekte erfassen."
+        },
+        {
+          "id": "common-lf4-assets-scenario",
+          "text": "Bedrohung, Schwachstelle und mögliche Schadensfolge in einem konkreten Szenario unterscheiden."
+        },
+        {
+          "id": "common-lf4-assets-dependence",
+          "text": "Eine Abhängigkeit zwischen Geschäftsablauf, Anwendung und Infrastruktur darstellen."
+        }
+      ],
+      "status": "content-ready",
+      "contentFile": "topics/common-lf4-assets.v1.json",
+      "gaps": []
+    },
+    {
+      "id": "common-lf4-privacy",
+      "title": "Personenbezogene Daten verantwortungsvoll behandeln",
+      "fieldId": "LF4",
+      "scope": "common",
+      "prerequisites": [
+        "common-lf4-assets"
+      ],
+      "objectives": [
+        {
+          "id": "common-lf4-privacy-identify",
+          "text": "In einem Beispiel personenbezogene Daten und den Zweck ihrer Verarbeitung erkennen."
+        },
+        {
+          "id": "common-lf4-privacy-principles",
+          "text": "Datenminimierung, Zweckbindung und geregelte Zugriffe auf einen einfachen Verarbeitungsvorgang anwenden."
+        },
+        {
+          "id": "common-lf4-privacy-clarify",
+          "text": "Bei unklarer Verarbeitungsbefugnis den offenen Punkt beschreiben und die zuständige betriebliche Stelle einbeziehen."
+        }
+      ],
+      "status": "content-ready",
+      "contentFile": "topics/common-lf4-privacy.v1.json",
+      "gaps": []
+    },
+    {
+      "id": "common-lf4-assessment",
+      "title": "Schutzbedarf nachvollziehbar begründen",
+      "fieldId": "LF4",
+      "scope": "common",
+      "prerequisites": [
+        "common-lf4-privacy"
+      ],
+      "objectives": [
+        {
+          "id": "common-lf4-assessment-classify",
+          "text": "Für ein Schutzobjekt je Schutzziel anhand vorgegebener Schadenskriterien einen Schutzbedarf begründen."
+        },
+        {
+          "id": "common-lf4-assessment-separate",
+          "text": "Schutzbedarf anhand möglicher Schäden von der Eintrittswahrscheinlichkeit einer Bedrohung unterscheiden."
+        },
+        {
+          "id": "common-lf4-assessment-document",
+          "text": "Annahmen und Abhängigkeiten der Schutzbedarfsfeststellung nachvollziehbar dokumentieren."
+        }
+      ],
+      "status": "content-ready",
+      "contentFile": "topics/common-lf4-assessment.v1.json",
+      "gaps": []
+    },
+    {
+      "id": "common-lf4-measures",
+      "title": "Schutzmaßnahmen auswählen und beurteilen",
+      "fieldId": "LF4",
+      "scope": "common",
+      "prerequisites": [
+        "common-lf4-assessment",
+        "common-lf3-access"
+      ],
+      "objectives": [
+        {
+          "id": "common-lf4-measures-select",
+          "text": "Für einen festgestellten Schutzbedarf eine passende organisatorische oder technische Maßnahme vorschlagen."
+        },
+        {
+          "id": "common-lf4-measures-check",
+          "text": "Mit einer einfachen Prüffrage oder einem Test die beabsichtigte Wirkung einer Maßnahme kontrollieren."
+        },
+        {
+          "id": "common-lf4-measures-responsibility",
+          "text": "Eigene Umsetzungsmöglichkeiten und Entscheidungen anderer Zuständiger im Sicherheitsprozess trennen."
+        }
+      ],
+      "status": "content-ready",
+      "contentFile": "topics/common-lf4-measures.v1.json",
+      "gaps": []
+    },
+    {
+      "id": "common-lf5-requirements",
+      "title": "Eine kleine Datenanwendung planen",
+      "fieldId": "LF5",
+      "scope": "common",
+      "prerequisites": [
+        "common-lf2-requirements",
+        "common-lf4-privacy"
+      ],
+      "objectives": [
+        {
+          "id": "common-lf5-requirements-data",
+          "text": "Für eine Verwaltungsaufgabe benötigte Daten, Herkunft, Zugriffsberechtigung und Speicherbedarf bestimmen."
+        },
+        {
+          "id": "common-lf5-requirements-scope",
+          "text": "Eine kleine Softwareänderung in überprüfbare Teilaufgaben mit erwarteten Ergebnissen zerlegen."
+        },
+        {
+          "id": "common-lf5-requirements-tests",
+          "text": "Vor der Umsetzung einen einfachen Normalfall und einen Fehlerfall als Abnahmekriterien formulieren."
+        }
+      ],
+      "status": "content-ready",
+      "contentFile": "topics/common-lf5-requirements.v1.json",
+      "gaps": []
+    },
+    {
+      "id": "common-lf5-types",
+      "title": "Variablen, Datentypen und Ausdrücke",
+      "fieldId": "LF5",
+      "scope": "common",
+      "prerequisites": [
+        "common-lf5-requirements"
+      ],
+      "objectives": [
+        {
+          "id": "common-lf5-types-choose",
+          "text": "Für Text, Zählwerte, Beträge und Wahrheitswerte passende Datentypen in einer vorgegebenen Sprache wählen."
+        },
+        {
+          "id": "common-lf5-types-trace",
+          "text": "Werte einfacher Variablenzuweisungen und Ausdrücke Schritt für Schritt bestimmen."
+        }
+      ],
+      "status": "content-ready",
+      "contentFile": "topics/common-lf5-types.v1.json",
+      "gaps": []
+    },
+    {
+      "id": "common-lf5-control",
+      "title": "Bedingungen und Schleifen",
+      "fieldId": "LF5",
+      "scope": "common",
+      "prerequisites": [
+        "common-lf5-types"
+      ],
+      "objectives": [
+        {
+          "id": "common-lf5-control-branch",
+          "text": "Eine fachliche Fallunterscheidung in Bedingungen und passende Programmzweige übersetzen."
+        },
+        {
+          "id": "common-lf5-control-loop",
+          "text": "Eine wiederholte Verarbeitung als Schleife formulieren und ihre Abbruchbedingung prüfen."
+        }
+      ],
+      "status": "content-ready",
+      "contentFile": "topics/common-lf5-control.v1.json",
+      "gaps": []
+    },
+    {
+      "id": "common-lf5-functions",
+      "title": "Algorithmen in Funktionen zerlegen",
+      "fieldId": "LF5",
+      "scope": "common",
+      "prerequisites": [
+        "common-lf5-control"
+      ],
+      "objectives": [
+        {
+          "id": "common-lf5-functions-model",
+          "text": "Einen kurzen Algorithmus als Ablaufdiagramm oder Pseudocode nachvollziehbar darstellen."
+        },
+        {
+          "id": "common-lf5-functions-function",
+          "text": "Eine wiederkehrende Teilaufgabe als Funktion mit Parametern und Rückgabewert umsetzen."
+        }
+      ],
+      "status": "content-ready",
+      "contentFile": "topics/common-lf5-functions.v1.json",
+      "gaps": []
+    },
+    {
+      "id": "common-lf5-objects",
+      "title": "Objekte und einfache Beziehungen",
+      "fieldId": "LF5",
+      "scope": "common",
+      "prerequisites": [
+        "common-lf5-functions"
+      ],
+      "objectives": [
+        {
+          "id": "common-lf5-objects-model",
+          "text": "Aus einem kleinen Anwendungsfall Objekte mit passenden Attributen und Methoden ableiten."
+        },
+        {
+          "id": "common-lf5-objects-instances",
+          "text": "Eine Klasse von ihren einzelnen Objekten unterscheiden und eine einfache Objektbeziehung erklären."
+        }
+      ],
+      "status": "content-ready",
+      "contentFile": "topics/common-lf5-objects.v1.json",
+      "gaps": []
+    },
+    {
+      "id": "common-lf5-storage",
+      "title": "Daten dauerhaft ablegen",
+      "fieldId": "LF5",
+      "scope": "common",
+      "prerequisites": [
+        "common-lf5-objects"
+      ],
+      "objectives": [
+        {
+          "id": "common-lf5-storage-compare",
+          "text": "Datei und Datenbank für einen kleinen Datenbestand nach Zugriff, Struktur und Änderungsbedarf vergleichen."
+        },
+        {
+          "id": "common-lf5-storage-keys",
+          "text": "Einen kleinen Datenbestand mit Tabellen, Primärschlüsseln und passenden Fremdschlüsseln modellieren."
+        }
+      ],
+      "status": "content-ready",
+      "contentFile": "topics/common-lf5-storage.v1.json",
+      "gaps": []
+    },
+    {
+      "id": "common-lf5-sql",
+      "title": "Einfache Datenbankabfragen und Änderungen",
+      "fieldId": "LF5",
+      "scope": "common",
+      "prerequisites": [
+        "common-lf5-storage"
+      ],
+      "objectives": [
+        {
+          "id": "common-lf5-sql-read",
+          "text": "Mit SELECT, WHERE und ORDER BY die für eine Aufgabe benötigten Datensätze aus einer Tabelle abfragen."
+        },
+        {
+          "id": "common-lf5-sql-change",
+          "text": "Einfügen, Ändern und Löschen von Datensätzen an einem vorbereiteten Übungsbestand gezielt ausführen."
+        },
+        {
+          "id": "common-lf5-sql-protect",
+          "text": "Vor einer Datenänderung anhand ihrer Auswahlbedingung prüfen, welche Datensätze betroffen sind."
+        }
+      ],
+      "status": "content-ready",
+      "contentFile": "topics/common-lf5-sql.v1.json",
+      "gaps": []
+    },
+    {
+      "id": "common-lf5-testing",
+      "title": "Softwareänderungen testen und erklären",
+      "fieldId": "LF5",
+      "scope": "common",
+      "prerequisites": [
+        "common-lf5-sql"
+      ],
+      "objectives": [
+        {
+          "id": "common-lf5-testing-cases",
+          "text": "Für eine kleine Änderung Normal-, Grenz- und Fehlerfälle mit erwarteten Ergebnissen festlegen."
+        },
+        {
+          "id": "common-lf5-testing-repair",
+          "text": "Einen Fehler anhand eines reproduzierbaren Testfalls eingrenzen, korrigieren und erneut prüfen."
+        },
+        {
+          "id": "common-lf5-testing-document",
+          "text": "Änderung, Testresultate und Bedienung verständlich dokumentieren und das Vorgehen reflektieren."
+        }
+      ],
+      "status": "content-ready",
+      "contentFile": "topics/common-lf5-testing.v1.json",
+      "gaps": []
+    },
+    {
+      "id": "common-lf6-intake",
+      "title": "Serviceanfragen verständlich aufnehmen",
+      "fieldId": "LF6",
+      "scope": "common",
+      "prerequisites": [
+        "common-lf1-role",
+        "common-lf3-diagnosis"
+      ],
+      "objectives": [
+        {
+          "id": "common-lf6-intake-questions",
+          "text": "Mit gezielten Rückfragen Symptom, betroffene Personen und bisherige Schritte einer Serviceanfrage erfassen."
+        },
+        {
+          "id": "common-lf6-intake-ticket",
+          "text": "Eine nachvollziehbare Fehlerbeschreibung mit den notwendigen Angaben in einem Musterticket festhalten."
+        }
+      ],
+      "status": "content-ready",
+      "contentFile": "topics/common-lf6-intake.v1.json",
+      "gaps": []
+    },
+    {
+      "id": "common-lf6-priority",
+      "title": "Vereinbarungen, Priorität und Zuständigkeit",
+      "fieldId": "LF6",
+      "scope": "common",
+      "prerequisites": [
+        "common-lf6-intake"
+      ],
+      "objectives": [
+        {
+          "id": "common-lf6-priority-agreement",
+          "text": "Aus einer vorgegebenen Servicevereinbarung Leistungsumfang und zugesagte Reaktionszeit ablesen."
+        },
+        {
+          "id": "common-lf6-priority-priority",
+          "text": "Zwei Anfragen nach Auswirkung und Dringlichkeit einordnen und die Bearbeitungsreihenfolge begründen."
+        },
+        {
+          "id": "common-lf6-priority-level",
+          "text": "Eine Anfrage dem passenden Support-Level zuordnen und einen Eskalationsgrund benennen."
+        }
+      ],
+      "status": "content-ready",
+      "contentFile": "topics/common-lf6-priority.v1.json",
+      "gaps": []
+    },
+    {
+      "id": "common-lf6-diagnosis",
+      "title": "Ursachen schrittweise eingrenzen",
+      "fieldId": "LF6",
+      "scope": "common",
+      "prerequisites": [
+        "common-lf6-priority",
+        "common-lf5-testing"
+      ],
+      "objectives": [
+        {
+          "id": "common-lf6-diagnosis-hypothesis",
+          "text": "Aus einer Fehlerbeschreibung überprüfbare Ursachenvermutungen und einen geeigneten nächsten Test ableiten."
+        },
+        {
+          "id": "common-lf6-diagnosis-evidence",
+          "text": "Beobachtung, Vermutung und nachgewiesene Ursache im Diagnoseprotokoll auseinanderhalten."
+        }
+      ],
+      "status": "content-ready",
+      "contentFile": "topics/common-lf6-diagnosis.v1.json",
+      "gaps": []
+    },
+    {
+      "id": "common-lf6-solution",
+      "title": "Lösung abstimmen und sicher umsetzen",
+      "fieldId": "LF6",
+      "scope": "common",
+      "prerequisites": [
+        "common-lf6-diagnosis",
+        "common-lf4-measures"
+      ],
+      "objectives": [
+        {
+          "id": "common-lf6-solution-select",
+          "text": "Lösungswege nach Wirkung, Aufwand, Berechtigungen und Rückfallmöglichkeit vergleichen."
+        },
+        {
+          "id": "common-lf6-solution-explain",
+          "text": "Ein Vorgehen verständlich mit einer betroffenen Person abstimmen und bei angespannten Gesprächen sachlich bleiben."
+        },
+        {
+          "id": "common-lf6-solution-english",
+          "text": "Eine kurze englische Servicemeldung verstehen und eine passende einfache Rückmeldung formulieren."
+        }
+      ],
+      "status": "content-ready",
+      "contentFile": "topics/common-lf6-solution.v1.json",
+      "gaps": []
+    },
+    {
+      "id": "common-lf6-closure",
+      "title": "Lösung prüfen und Service abschließen",
+      "fieldId": "LF6",
+      "scope": "common",
+      "prerequisites": [
+        "common-lf6-solution"
+      ],
+      "objectives": [
+        {
+          "id": "common-lf6-closure-verify",
+          "text": "Mit der betroffenen Person prüfen, ob das ursprüngliche Problem behoben ist."
+        },
+        {
+          "id": "common-lf6-closure-record",
+          "text": "Ursache, Lösung, Ergebnis und offene Punkte für Ticketabschluss und Wissensweitergabe festhalten."
+        },
+        {
+          "id": "common-lf6-closure-improve",
+          "text": "Aus einem Servicefall eine konkrete Verbesserung des Bearbeitungsprozesses ableiten."
+        }
+      ],
+      "status": "content-ready",
+      "contentFile": "topics/common-lf6-closure.v1.json",
+      "gaps": []
+    },
+    {
+      "id": "common-lf7-components",
+      "title": "Sensoren, Aktoren und Steuerung verstehen",
+      "fieldId": "LF7",
+      "scope": "common",
+      "prerequisites": [
+        "common-lf3-physical",
+        "common-lf5-control"
+      ],
+      "objectives": [
+        {
+          "id": "common-lf7-components-roles",
+          "text": "Sensor, Aktor und Steuerung in einem einfachen cyber-physischen System unterscheiden."
+        },
+        {
+          "id": "common-lf7-components-flow",
+          "text": "Den Weg von einer physikalischen Änderung über einen Messwert zu einer Systemreaktion erklären."
+        }
+      ],
+      "status": "content-ready",
+      "contentFile": "topics/common-lf7-components.v1.json",
+      "gaps": []
+    },
+    {
+      "id": "common-lf7-signals",
+      "title": "Signale, Daten- und Energieflüsse",
+      "fieldId": "LF7",
+      "scope": "common",
+      "prerequisites": [
+        "common-lf7-components",
+        "common-lf3-protocols"
+      ],
+      "objectives": [
+        {
+          "id": "common-lf7-signals-signal",
+          "text": "Analoge Messgrößen und digitale Werte an einem Sensorbeispiel unterscheiden."
+        },
+        {
+          "id": "common-lf7-signals-flows",
+          "text": "Informations-, Energie- und Stoffflüsse eines kleinen Systems in einer Skizze zuordnen."
+        },
+        {
+          "id": "common-lf7-signals-communication",
+          "text": "Aus technischen Unterlagen das Format und den Übertragungsweg eines Sensorsignals ermitteln."
+        }
+      ],
+      "status": "content-ready",
+      "contentFile": "topics/common-lf7-signals.v1.json",
+      "gaps": []
+    },
+    {
+      "id": "common-lf7-extension",
+      "title": "Eine Systemerweiterung planen",
+      "fieldId": "LF7",
+      "scope": "common",
+      "prerequisites": [
+        "common-lf7-signals",
+        "common-lf2-workplace"
+      ],
+      "objectives": [
+        {
+          "id": "common-lf7-extension-requirements",
+          "text": "Aus einem Erweiterungswunsch Anforderungen an Sensor, Schnittstelle und Energieversorgung ableiten."
+        },
+        {
+          "id": "common-lf7-extension-selection",
+          "text": "Komponenten und vorhandene Softwarebibliotheken anhand technischer Unterlagen auf Eignung prüfen."
+        },
+        {
+          "id": "common-lf7-extension-plan",
+          "text": "Einbau, Konfiguration und Prüfschritte mit Zuständigkeiten und Sicherheitsgrenzen planen."
+        }
+      ],
+      "status": "content-ready",
+      "contentFile": "topics/common-lf7-extension.v1.json",
+      "gaps": []
+    },
+    {
+      "id": "common-lf7-logic",
+      "title": "Eine einfache Steuerlogik ergänzen",
+      "fieldId": "LF7",
+      "scope": "common",
+      "prerequisites": [
+        "common-lf7-extension",
+        "common-lf5-functions"
+      ],
+      "objectives": [
+        {
+          "id": "common-lf7-logic-implement",
+          "text": "Eine vorgegebene Sensorabfrage mit einer einfachen Aktorreaktion in einer geeigneten Lernumgebung umsetzen."
+        },
+        {
+          "id": "common-lf7-logic-failure",
+          "text": "Ungültige Messwerte oder einen Verbindungsabbruch erkennen und eine vorgegebene sichere Reaktion auslösen."
+        }
+      ],
+      "status": "content-ready",
+      "contentFile": "topics/common-lf7-logic.v1.json",
+      "gaps": []
+    },
+    {
+      "id": "common-lf7-verification",
+      "title": "Integration und Betriebswerte prüfen",
+      "fieldId": "LF7",
+      "scope": "common",
+      "prerequisites": [
+        "common-lf7-logic",
+        "common-lf4-measures"
+      ],
+      "objectives": [
+        {
+          "id": "common-lf7-verification-test",
+          "text": "Die Erweiterung mit Normal- und Fehlerfällen prüfen und Messwerte mit Sollwerten vergleichen."
+        },
+        {
+          "id": "common-lf7-verification-energy",
+          "text": "Einen ermittelten Energiebedarf mit der geplanten Versorgung vergleichen."
+        },
+        {
+          "id": "common-lf7-verification-record",
+          "text": "Betriebs- und Datensicherheitsaspekte sowie Änderungen und Ergebnisse in der Systemdokumentation festhalten."
+        }
+      ],
+      "status": "content-ready",
+      "contentFile": "topics/common-lf7-verification.v1.json",
+      "gaps": []
+    },
+    {
+      "id": "common-lf8-sources",
+      "title": "Datenquellen und Datenqualität prüfen",
+      "fieldId": "LF8",
+      "scope": "common",
+      "prerequisites": [
+        "common-lf5-storage",
+        "common-lf4-privacy"
+      ],
+      "objectives": [
+        {
+          "id": "common-lf8-sources-inspect",
+          "text": "Zwei Datenquellen nach Struktur, Zugriffsmöglichkeit, Nutzungsbefugnis und Aktualität vergleichen."
+        },
+        {
+          "id": "common-lf8-sources-quality",
+          "text": "Fehlende, doppelte oder unplausible Werte in einem kleinen Datenbestand erkennen und eine begründete Behandlung vorschlagen."
+        }
+      ],
+      "status": "content-ready",
+      "contentFile": "topics/common-lf8-sources.v1.json",
+      "gaps": []
+    },
+    {
+      "id": "common-lf8-formats",
+      "title": "CSV, JSON und XML zuordnen",
+      "fieldId": "LF8",
+      "scope": "common",
+      "prerequisites": [
+        "common-lf8-sources",
+        "common-lf5-types"
+      ],
+      "objectives": [
+        {
+          "id": "common-lf8-formats-read",
+          "text": "Denselben einfachen Datensatz in CSV, JSON und XML lesen und die Strukturunterschiede erklären."
+        },
+        {
+          "id": "common-lf8-formats-mapping",
+          "text": "Eine Feldzuordnung zwischen zwei Austauschformaten einschließlich Datentypen und fehlender Werte festlegen."
+        }
+      ],
+      "status": "content-ready",
+      "contentFile": "topics/common-lf8-formats.v1.json",
+      "gaps": []
+    },
+    {
+      "id": "common-lf8-queries",
+      "title": "Daten verknüpfen und zusammenfassen",
+      "fieldId": "LF8",
+      "scope": "common",
+      "prerequisites": [
+        "common-lf8-formats",
+        "common-lf5-sql"
+      ],
+      "objectives": [
+        {
+          "id": "common-lf8-queries-join",
+          "text": "Zusammengehörige Daten aus zwei Tabellen über geeignete Schlüssel abfragen."
+        },
+        {
+          "id": "common-lf8-queries-aggregate",
+          "text": "Für einen einfachen Bericht Gruppen bilden und Anzahl oder Summe berechnen."
+        },
+        {
+          "id": "common-lf8-queries-check",
+          "text": "Das Abfrageergebnis auf fehlende beziehungsweise durch Verknüpfung vervielfachte Datensätze prüfen."
+        }
+      ],
+      "status": "content-ready",
+      "contentFile": "topics/common-lf8-queries.v1.json",
+      "gaps": []
+    },
+    {
+      "id": "common-lf8-interfaces",
+      "title": "Daten über Schnittstellen austauschen",
+      "fieldId": "LF8",
+      "scope": "common",
+      "prerequisites": [
+        "common-lf8-queries",
+        "common-lf3-services",
+        "common-lf5-functions"
+      ],
+      "objectives": [
+        {
+          "id": "common-lf8-interfaces-contract",
+          "text": "Aus einer einfachen Schnittstellenbeschreibung Anfrage, Antwort, Authentifizierung und mögliche Fehler ableiten."
+        },
+        {
+          "id": "common-lf8-interfaces-transfer",
+          "text": "Einen kleinen Datenaustausch mit einem vorgegebenen Werkzeug umsetzen und den Empfang prüfen."
+        },
+        {
+          "id": "common-lf8-interfaces-team",
+          "text": "Für eine arbeitsteilige Bereitstellung Zuständigkeiten und Schnittstellenänderungen nachvollziehbar abstimmen."
+        }
+      ],
+      "status": "content-ready",
+      "contentFile": "topics/common-lf8-interfaces.v1.json",
+      "gaps": []
+    },
+    {
+      "id": "common-lf8-integrity",
+      "title": "Datenübernahme absichern",
+      "fieldId": "LF8",
+      "scope": "common",
+      "prerequisites": [
+        "common-lf8-interfaces",
+        "common-lf4-measures"
+      ],
+      "objectives": [
+        {
+          "id": "common-lf8-integrity-validate",
+          "text": "Eingehende Daten gegen vorgegebene Typ-, Pflichtfeld- und Wertebereichsregeln prüfen."
+        },
+        {
+          "id": "common-lf8-integrity-transaction",
+          "text": "An einem zusammengehörigen Änderungsvorgang erklären, warum eine Transaktion erforderlich sein kann."
+        },
+        {
+          "id": "common-lf8-integrity-rights",
+          "text": "Zugriff, Transport und Fehlerprotokollierung passend zu einem vorgegebenen Schutzbedarf gestalten."
+        }
+      ],
+      "status": "content-ready",
+      "contentFile": "topics/common-lf8-integrity.v1.json",
+      "gaps": []
+    },
+    {
+      "id": "common-lf8-delivery",
+      "title": "Datenbereitstellung testen und übergeben",
+      "fieldId": "LF8",
+      "scope": "common",
+      "prerequisites": [
+        "common-lf8-integrity"
+      ],
+      "objectives": [
+        {
+          "id": "common-lf8-delivery-test",
+          "text": "Für eine Übertragung erfolgreiche, fehlerhafte und wiederholte Anfragen mit erwarteten Ergebnissen prüfen."
+        },
+        {
+          "id": "common-lf8-delivery-guide",
+          "text": "Eine kurze Nutzungsanleitung für die Bereitstellung erstellen und eine englische Schnittstellenangabe verständlich erläutern."
+        },
+        {
+          "id": "common-lf8-delivery-reflect",
+          "text": "Die gewählten Werkzeuge und die Dokumentation anhand der Zusammenarbeit und Kundenanforderungen beurteilen."
+        }
+      ],
+      "status": "content-ready",
+      "contentFile": "topics/common-lf8-delivery.v1.json",
+      "gaps": []
+    },
+    {
+      "id": "common-lf9-requirements",
+      "title": "Bedarf für Netzwerke und Dienste ermitteln",
+      "fieldId": "LF9",
+      "scope": "common",
+      "prerequisites": [
+        "common-lf3-diagnosis",
+        "common-lf2-requirements"
+      ],
+      "objectives": [
+        {
+          "id": "common-lf9-requirements-collect",
+          "text": "Nutzerzahl, Anwendungen, Datenverkehr und Verfügbarkeitsbedarf eines kleinen Netzes ermitteln."
+        },
+        {
+          "id": "common-lf9-requirements-criteria",
+          "text": "Aus dem Bedarf überprüfbare Anforderungen an Leistung, Sicherheit und Erweiterbarkeit ableiten."
+        }
+      ],
+      "status": "content-ready",
+      "contentFile": "topics/common-lf9-requirements.v1.json",
+      "gaps": []
+    },
+    {
+      "id": "common-lf9-design",
+      "title": "Netzstruktur und Ressourcen planen",
+      "fieldId": "LF9",
+      "scope": "common",
+      "prerequisites": [
+        "common-lf9-requirements",
+        "common-lf3-addressing"
+      ],
+      "objectives": [
+        {
+          "id": "common-lf9-design-structure",
+          "text": "Ein kleines Netz mit passenden Komponenten, Teilnetzen und einem begründeten Segmentierungsvorschlag entwerfen."
+        },
+        {
+          "id": "common-lf9-design-compare",
+          "text": "Interne und externe Betriebsvarianten nach Kosten, Energiebedarf, Zuständigkeiten und Schutzanforderungen vergleichen."
+        }
+      ],
+      "status": "content-ready",
+      "contentFile": "topics/common-lf9-design.v1.json",
+      "gaps": []
+    },
+    {
+      "id": "common-lf9-services",
+      "title": "Netzdienste bereitstellen",
+      "fieldId": "LF9",
+      "scope": "common",
+      "prerequisites": [
+        "common-lf9-design",
+        "common-lf3-services"
+      ],
+      "objectives": [
+        {
+          "id": "common-lf9-services-configure",
+          "text": "Einen vorgegebenen Basisdienst in einer Lernumgebung konfigurieren und aus einem Client erreichen."
+        },
+        {
+          "id": "common-lf9-services-dependencies",
+          "text": "Abhängigkeiten eines Dienstes von Namensauflösung, Adressierung und benötigten Ports dokumentieren."
+        }
+      ],
+      "status": "content-ready",
+      "contentFile": "topics/common-lf9-services.v1.json",
+      "gaps": []
+    },
+    {
+      "id": "common-lf9-security",
+      "title": "Dienste und Betrieb absichern",
+      "fieldId": "LF9",
+      "scope": "common",
+      "prerequisites": [
+        "common-lf9-services",
+        "common-lf4-measures"
+      ],
+      "objectives": [
+        {
+          "id": "common-lf9-security-access",
+          "text": "Einfache Zugriffs- und Firewallregeln aus einem vorgegebenen Nutzungskonzept ableiten."
+        },
+        {
+          "id": "common-lf9-security-continuity",
+          "text": "Datensicherung, Wiederherstellung und Redundanz als unterschiedliche Maßnahmen für einen Dienstausfall erklären."
+        },
+        {
+          "id": "common-lf9-security-updates",
+          "text": "Für eine Aktualisierung Prüfschritte, Zuständigkeit und Rückfallmöglichkeit festlegen."
+        }
+      ],
+      "status": "content-ready",
+      "contentFile": "topics/common-lf9-security.v1.json",
+      "gaps": []
+    },
+    {
+      "id": "common-lf9-monitoring",
+      "title": "Verfügbarkeit überwachen und Störungen eingrenzen",
+      "fieldId": "LF9",
+      "scope": "common",
+      "prerequisites": [
+        "common-lf9-security",
+        "common-lf6-diagnosis"
+      ],
+      "objectives": [
+        {
+          "id": "common-lf9-monitoring-observe",
+          "text": "Aus vorgegebenen Messwerten und Protokollen eine Dienststörung erkennen und ihre Auswirkung beschreiben."
+        },
+        {
+          "id": "common-lf9-monitoring-isolate",
+          "text": "Eine Störung mit gezielten Client-, Netz- und Dienstprüfungen eingrenzen."
+        },
+        {
+          "id": "common-lf9-monitoring-privacy",
+          "text": "Für ein Überwachungsprotokoll benötigte Informationen von unnötigen personenbezogenen Daten unterscheiden."
+        }
+      ],
+      "status": "content-ready",
+      "contentFile": "topics/common-lf9-monitoring.v1.json",
+      "gaps": []
+    },
+    {
+      "id": "common-lf9-handover",
+      "title": "Netzwerk und Dienste nachweisen und übergeben",
+      "fieldId": "LF9",
+      "scope": "common",
+      "prerequisites": [
+        "common-lf9-monitoring",
+        "common-lf6-closure"
+      ],
+      "objectives": [
+        {
+          "id": "common-lf9-handover-evidence",
+          "text": "Anforderungen mit Funktionsprüfungen und Messwerten abgleichen und verbleibende Abweichungen dokumentieren."
+        },
+        {
+          "id": "common-lf9-handover-handover",
+          "text": "Netzplan, Dienstkonfiguration und Betriebsinformationen für die zuständigen Personen aufbereiten."
+        },
+        {
+          "id": "common-lf9-handover-improve",
+          "text": "Die Lösung anhand von Kundennutzen, Kosten, Energiebedarf und Erweiterbarkeit beurteilen."
+        }
+      ],
+      "status": "content-ready",
+      "contentFile": "topics/common-lf9-handover.v1.json",
+      "gaps": []
+    },
+    {
+      "id": "fiae-lf10a-process",
+      "title": "Nutzeraufgaben und Geschäftsprozesse verstehen",
+      "fieldId": "LF10a",
+      "scope": "specialization",
+      "prerequisites": [
+        "common-lf1-value-chain",
+        "common-lf8-delivery",
+        "common-lf9-handover"
+      ],
+      "objectives": [
+        {
+          "id": "fiae-lf10a-process-model",
+          "text": "Einen einfachen Geschäftsprozess mit Beteiligten, Arbeitsschritten und Informationsfluss darstellen."
+        },
+        {
+          "id": "fiae-lf10a-process-needs",
+          "text": "Aus einer Nutzeraufgabe Anforderungen an Oberfläche und Rückmeldung ableiten."
+        },
+        {
+          "id": "fiae-lf10a-process-improve",
+          "text": "Eine unnötige Eingabe oder Medienunterbrechung im Ablauf erkennen und eine Verbesserung vorschlagen."
+        }
+      ],
+      "status": "content-ready",
+      "contentFile": "topics/fiae-lf10a-process.v1.json",
+      "gaps": []
+    },
+    {
+      "id": "fiae-lf10a-prototype",
+      "title": "Bedienabläufe gemeinsam entwerfen",
+      "fieldId": "LF10a",
+      "scope": "specialization",
+      "prerequisites": [
+        "fiae-lf10a-process"
+      ],
+      "objectives": [
+        {
+          "id": "fiae-lf10a-prototype-flow",
+          "text": "Für eine Nutzeraufgabe einen nachvollziehbaren Bedienablauf mit Erfolgs- und Fehlerzustand entwerfen."
+        },
+        {
+          "id": "fiae-lf10a-prototype-prototype",
+          "text": "Den Ablauf als einfachen Prototyp darstellen und Rückmeldungen für eine nächste kurze Entwicklungsrunde priorisieren."
+        }
+      ],
+      "status": "content-ready",
+      "contentFile": "topics/fiae-lf10a-prototype.v1.json",
+      "gaps": []
+    },
+    {
+      "id": "fiae-lf10a-layout",
+      "title": "Oberflächen für verschiedene Endgeräte",
+      "fieldId": "LF10a",
+      "scope": "specialization",
+      "prerequisites": [
+        "fiae-lf10a-prototype",
+        "common-lf5-objects"
+      ],
+      "objectives": [
+        {
+          "id": "fiae-lf10a-layout-structure",
+          "text": "Inhalte, Navigation und Aktionen einer kleinen Oberfläche nachvollziehbar strukturieren."
+        },
+        {
+          "id": "fiae-lf10a-layout-implement",
+          "text": "Eine Oberfläche mit geeigneten vorhandenen Komponenten für unterschiedliche Fenstergrößen umsetzen."
+        }
+      ],
+      "status": "content-ready",
+      "contentFile": "topics/fiae-lf10a-layout.v1.json",
+      "gaps": []
+    },
+    {
+      "id": "fiae-lf10a-forms",
+      "title": "Zugängliche Eingaben und klare Rückmeldungen",
+      "fieldId": "LF10a",
+      "scope": "specialization",
+      "prerequisites": [
+        "fiae-lf10a-layout",
+        "common-lf4-privacy"
+      ],
+      "objectives": [
+        {
+          "id": "fiae-lf10a-forms-access",
+          "text": "Eingabefelder mit verständlichen Beschriftungen, Tastaturbedienung und sichtbarem Fokus gestalten."
+        },
+        {
+          "id": "fiae-lf10a-forms-validation",
+          "text": "Fehlende oder ungültige Eingaben mit konkreten Fehlermeldungen und Korrekturmöglichkeiten behandeln."
+        },
+        {
+          "id": "fiae-lf10a-forms-privacy",
+          "text": "Für einen beschriebenen Zweck unnötige Eingaben erkennen und eine datensparsame Gestaltung vorschlagen."
+        }
+      ],
+      "status": "content-ready",
+      "contentFile": "topics/fiae-lf10a-forms.v1.json",
+      "gaps": []
+    },
+    {
+      "id": "fiae-lf10a-usability",
+      "title": "Bedienbarkeit und Funktion testen",
+      "fieldId": "LF10a",
+      "scope": "specialization",
+      "prerequisites": [
+        "fiae-lf10a-forms",
+        "common-lf5-testing"
+      ],
+      "objectives": [
+        {
+          "id": "fiae-lf10a-usability-tasks",
+          "text": "Einen kurzen Nutzertest mit konkreter Aufgabe und beobachtbaren Erfolgskriterien vorbereiten."
+        },
+        {
+          "id": "fiae-lf10a-usability-evaluate",
+          "text": "Funktionsfehler und Bedienprobleme aus Testergebnissen unterscheiden und Verbesserungen priorisieren."
+        }
+      ],
+      "status": "content-ready",
+      "contentFile": "topics/fiae-lf10a-usability.v1.json",
+      "gaps": []
+    },
+    {
+      "id": "fiae-lf10a-value",
+      "title": "Prozessverbesserung wirtschaftlich beurteilen",
+      "fieldId": "LF10a",
+      "scope": "specialization",
+      "prerequisites": [
+        "fiae-lf10a-usability",
+        "common-lf2-procurement"
+      ],
+      "objectives": [
+        {
+          "id": "fiae-lf10a-value-costs",
+          "text": "Mit vorgegebenen Zeit- und Kostendaten den Aufwand eines bisherigen und eines verbesserten Ablaufs vergleichen."
+        },
+        {
+          "id": "fiae-lf10a-value-balance",
+          "text": "Eine berechnete Einsparung den Entwicklungskosten gegenüberstellen und die zugrunde liegenden Annahmen benennen."
+        }
+      ],
+      "status": "content-ready",
+      "contentFile": "topics/fiae-lf10a-value.v1.json",
+      "gaps": []
+    },
+    {
+      "id": "fiae-lf11a-model",
+      "title": "Anforderungen in Softwaremodelle übersetzen",
+      "fieldId": "LF11a",
+      "scope": "specialization",
+      "prerequisites": [
+        "fiae-lf10a-value",
+        "common-lf5-objects"
+      ],
+      "objectives": [
+        {
+          "id": "fiae-lf11a-model-derive",
+          "text": "Aus einer Prozessbeschreibung benötigte Daten, Operationen und überprüfbare Akzeptanzkriterien ableiten."
+        },
+        {
+          "id": "fiae-lf11a-model-model",
+          "text": "Zusammenhänge oder Abläufe mit einem passenden einfachen Diagramm beschreiben."
+        }
+      ],
+      "status": "content-ready",
+      "contentFile": "topics/fiae-lf11a-model.v1.json",
+      "gaps": []
+    },
+    {
+      "id": "fiae-lf11a-architecture",
+      "title": "Anwendungen in Komponenten gliedern",
+      "fieldId": "LF11a",
+      "scope": "specialization",
+      "prerequisites": [
+        "fiae-lf11a-model"
+      ],
+      "objectives": [
+        {
+          "id": "fiae-lf11a-architecture-responsibilities",
+          "text": "Für eine kleine Anwendung Zuständigkeiten zwischen Oberfläche, Fachlogik und Datenzugriff aufteilen."
+        },
+        {
+          "id": "fiae-lf11a-architecture-interfaces",
+          "text": "Die Zusammenarbeit zweier Komponenten über klar benannte Eingaben, Ergebnisse und Fehlerfälle beschreiben."
+        },
+        {
+          "id": "fiae-lf11a-architecture-method",
+          "text": "Für eine kleine Entwicklung ein Vorgehen mit kurzen Abstimmungs- und Testschritten begründen."
+        }
+      ],
+      "status": "content-ready",
+      "contentFile": "topics/fiae-lf11a-architecture.v1.json",
+      "gaps": []
+    },
+    {
+      "id": "fiae-lf11a-algorithms",
+      "title": "Datenstrukturen und Algorithmen auswählen",
+      "fieldId": "LF11a",
+      "scope": "specialization",
+      "prerequisites": [
+        "fiae-lf11a-architecture",
+        "common-lf5-functions"
+      ],
+      "objectives": [
+        {
+          "id": "fiae-lf11a-algorithms-structure",
+          "text": "Für eine Such-, Zuordnungs- oder Reihenfolgeaufgabe eine passende einfache Datenstruktur wählen."
+        },
+        {
+          "id": "fiae-lf11a-algorithms-algorithm",
+          "text": "Einen Such- oder Sortierablauf an Beispieldaten nachvollziehen und in einer vorgegebenen Sprache umsetzen."
+        },
+        {
+          "id": "fiae-lf11a-algorithms-compare",
+          "text": "Zwei Lösungswege für dieselbe Aufgabe anhand von Korrektheit, Aufwand und Verständlichkeit vergleichen."
+        }
+      ],
+      "status": "content-ready",
+      "contentFile": "topics/fiae-lf11a-algorithms.v1.json",
+      "gaps": []
+    },
+    {
+      "id": "fiae-lf11a-data-access",
+      "title": "Fachlogik und Datenquellen verbinden",
+      "fieldId": "LF11a",
+      "scope": "specialization",
+      "prerequisites": [
+        "fiae-lf11a-algorithms",
+        "common-lf8-integrity"
+      ],
+      "objectives": [
+        {
+          "id": "fiae-lf11a-data-access-implement",
+          "text": "Eine fachliche Operation mit definiertem Datenzugriff in einer modularen Anwendung umsetzen."
+        },
+        {
+          "id": "fiae-lf11a-data-access-interface",
+          "text": "Die Schnittstelle mit Parametern, Rückgabewerten und möglichen Fehlern dokumentieren."
+        },
+        {
+          "id": "fiae-lf11a-data-access-atomic",
+          "text": "Bei zusammengehörigen Datenänderungen Konsistenzregeln und eine passende Transaktionsgrenze festlegen."
+        }
+      ],
+      "status": "content-ready",
+      "contentFile": "topics/fiae-lf11a-data-access.v1.json",
+      "gaps": []
+    },
+    {
+      "id": "fiae-lf11a-security",
+      "title": "Fehler und Sicherheitsrisiken behandeln",
+      "fieldId": "LF11a",
+      "scope": "specialization",
+      "prerequisites": [
+        "fiae-lf11a-data-access",
+        "common-lf9-security"
+      ],
+      "objectives": [
+        {
+          "id": "fiae-lf11a-security-validation",
+          "text": "Eingabeprüfung und parametrisierte Datenbankzugriffe in einer kleinen Anwendung anwenden."
+        },
+        {
+          "id": "fiae-lf11a-security-authorization",
+          "text": "Anmeldung und Berechtigungsprüfung unterscheiden und Zugriffskontrollen an der zuständigen Stelle einbauen."
+        },
+        {
+          "id": "fiae-lf11a-security-errors",
+          "text": "Fehler so behandeln und protokollieren, dass sie untersuchbar bleiben und keine unnötigen vertraulichen Daten offenlegen."
+        }
+      ],
+      "status": "content-ready",
+      "contentFile": "topics/fiae-lf11a-security.v1.json",
+      "gaps": []
+    },
+    {
+      "id": "fiae-lf11a-testing",
+      "title": "Automatisierte Tests für Komponenten",
+      "fieldId": "LF11a",
+      "scope": "specialization",
+      "prerequisites": [
+        "fiae-lf11a-security",
+        "common-lf5-testing"
+      ],
+      "objectives": [
+        {
+          "id": "fiae-lf11a-testing-unit",
+          "text": "Für eine fachliche Funktion automatisierte Tests mit Normal-, Grenz- und Fehlerfällen erstellen."
+        },
+        {
+          "id": "fiae-lf11a-testing-integration",
+          "text": "Einen Integrationstest für das Zusammenwirken von Komponenten von einem isolierten Modultest unterscheiden."
+        },
+        {
+          "id": "fiae-lf11a-testing-evidence",
+          "text": "Testergebnisse mit Akzeptanzkriterien abgleichen und eine notwendige Überarbeitung begründen."
+        }
+      ],
+      "status": "content-ready",
+      "contentFile": "topics/fiae-lf11a-testing.v1.json",
+      "gaps": []
+    },
+    {
+      "id": "fiae-lf11a-versions",
+      "title": "Änderungen im Team nachvollziehbar pflegen",
+      "fieldId": "LF11a",
+      "scope": "specialization",
+      "prerequisites": [
+        "fiae-lf11a-testing",
+        "common-lf8-interfaces"
+      ],
+      "objectives": [
+        {
+          "id": "fiae-lf11a-versions-version",
+          "text": "Eine zusammengehörige Änderung mit verständlicher Beschreibung in einer Versionsverwaltung festhalten."
+        },
+        {
+          "id": "fiae-lf11a-versions-review",
+          "text": "Eine Änderung anhand von Anforderungen, Lesbarkeit, Sicherheitsaspekten und Tests prüfen."
+        },
+        {
+          "id": "fiae-lf11a-versions-iteration",
+          "text": "Kundenrückmeldung in eine priorisierte Überarbeitung mit erneutem Test übersetzen."
+        }
+      ],
+      "status": "content-ready",
+      "contentFile": "topics/fiae-lf11a-versions.v1.json",
+      "gaps": []
+    },
+    {
+      "id": "fiae-lf12a-scope",
+      "title": "Kundenauftrag und Projektziele abgrenzen",
+      "fieldId": "LF12a",
+      "scope": "specialization",
+      "prerequisites": [
+        "fiae-lf11a-versions",
+        "common-lf1-presentation"
+      ],
+      "objectives": [
+        {
+          "id": "fiae-lf12a-scope-clarify",
+          "text": "Mit einem Auftraggeber Ausgangssituation, gewünschtes Ergebnis und Grenzen eines kleinen Softwareprojekts klären."
+        },
+        {
+          "id": "fiae-lf12a-scope-criteria",
+          "text": "Messbare Projektziele und überprüfbare Abnahmekriterien einschließlich Schulungsbedarf formulieren."
+        },
+        {
+          "id": "fiae-lf12a-scope-constraints",
+          "text": "Zeitliche, technische und rechtliche Rahmenbedingungen sowie wichtige Beteiligte erfassen."
+        }
+      ],
+      "status": "content-ready",
+      "contentFile": "topics/fiae-lf12a-scope.v1.json",
+      "gaps": []
+    },
+    {
+      "id": "fiae-lf12a-alternatives",
+      "title": "Lösungsvarianten und Angebot vergleichen",
+      "fieldId": "LF12a",
+      "scope": "specialization",
+      "prerequisites": [
+        "fiae-lf12a-scope",
+        "common-lf2-procurement",
+        "common-lf4-assessment"
+      ],
+      "objectives": [
+        {
+          "id": "fiae-lf12a-alternatives-compare",
+          "text": "Mindestens zwei Lösungsvarianten nach Nutzen, Aufwand, Risiken sowie Datenschutz und Datensicherheit vergleichen."
+        },
+        {
+          "id": "fiae-lf12a-alternatives-cost",
+          "text": "Mit vorgegebenen Aufwandsschätzungen und Kostensätzen eine nachvollziehbare Kalkulation erstellen."
+        },
+        {
+          "id": "fiae-lf12a-alternatives-agreement",
+          "text": "Die ausgewählte Leistung und ihre Abgrenzung für eine Vereinbarung mit dem Kunden festhalten."
+        }
+      ],
+      "status": "content-ready",
+      "contentFile": "topics/fiae-lf12a-alternatives.v1.json",
+      "gaps": []
+    },
+    {
+      "id": "fiae-lf12a-planning",
+      "title": "Arbeitspakete, Termine und Risiken planen",
+      "fieldId": "LF12a",
+      "scope": "specialization",
+      "prerequisites": [
+        "fiae-lf12a-alternatives"
+      ],
+      "objectives": [
+        {
+          "id": "fiae-lf12a-planning-schedule",
+          "text": "Ein Projekt in Arbeitspakete mit Verantwortlichen, Abhängigkeiten und Meilensteinen gliedern."
+        },
+        {
+          "id": "fiae-lf12a-planning-resources",
+          "text": "Aufwand, verfügbare Personen und technische Mittel in einem einfachen Terminplan abstimmen."
+        },
+        {
+          "id": "fiae-lf12a-planning-risk",
+          "text": "Für ein wesentliches Projektrisiko eine Gegenmaßnahme und für Änderungen einen Abstimmungsweg festlegen."
+        }
+      ],
+      "status": "content-ready",
+      "contentFile": "topics/fiae-lf12a-planning.v1.json",
+      "gaps": []
+    },
+    {
+      "id": "fiae-lf12a-implementation",
+      "title": "Umsetzung steuern und Qualität sichern",
+      "fieldId": "LF12a",
+      "scope": "specialization",
+      "prerequisites": [
+        "fiae-lf12a-planning"
+      ],
+      "objectives": [
+        {
+          "id": "fiae-lf12a-implementation-track",
+          "text": "Eine vereinbarte Lösung in nachvollziehbaren Schritten umsetzen und den Arbeitsstand regelmäßig mit dem Plan vergleichen."
+        },
+        {
+          "id": "fiae-lf12a-implementation-change",
+          "text": "Eine neue Anforderung nach Auswirkungen auf Umfang, Termine und Kosten bewerten und abstimmen."
+        },
+        {
+          "id": "fiae-lf12a-implementation-quality",
+          "text": "Tests, technische Dokumentation und Sicherheitsprüfungen während der Umsetzung durchführen und festhalten."
+        }
+      ],
+      "status": "content-ready",
+      "contentFile": "topics/fiae-lf12a-implementation.v1.json",
+      "gaps": []
+    },
+    {
+      "id": "fiae-lf12a-acceptance",
+      "title": "Ergebnisse prüfen und abnehmen lassen",
+      "fieldId": "LF12a",
+      "scope": "specialization",
+      "prerequisites": [
+        "fiae-lf12a-implementation"
+      ],
+      "objectives": [
+        {
+          "id": "fiae-lf12a-acceptance-evidence",
+          "text": "Für die vereinbarten Abnahmekriterien passende Prüfergebnisse und bekannte Abweichungen zusammenstellen."
+        },
+        {
+          "id": "fiae-lf12a-acceptance-present",
+          "text": "Das Projektergebnis zielgruppengerecht vorführen und technische Entscheidungen verständlich begründen."
+        },
+        {
+          "id": "fiae-lf12a-acceptance-protocol",
+          "text": "Ein Abnahmeprotokoll mit Ergebnis, offenen Punkten und Zuständigkeiten erstellen."
+        }
+      ],
+      "status": "content-ready",
+      "contentFile": "topics/fiae-lf12a-acceptance.v1.json",
+      "gaps": []
+    },
+    {
+      "id": "fiae-lf12a-training",
+      "title": "Anwendung übergeben und Nutzer einweisen",
+      "fieldId": "LF12a",
+      "scope": "specialization",
+      "prerequisites": [
+        "fiae-lf12a-acceptance"
+      ],
+      "objectives": [
+        {
+          "id": "fiae-lf12a-training-guide",
+          "text": "Für eine typische Nutzeraufgabe eine verständliche Anleitung und eine kurze praktische Einweisung vorbereiten."
+        },
+        {
+          "id": "fiae-lf12a-training-handover",
+          "text": "Produkt, benötigte Dokumentation und Betriebsinformationen geordnet an die zuständigen Personen übergeben."
+        },
+        {
+          "id": "fiae-lf12a-training-support",
+          "text": "Offene Fragen und den vereinbarten Weg für weitere Unterstützung festhalten."
+        }
+      ],
+      "status": "content-ready",
+      "contentFile": "topics/fiae-lf12a-training.v1.json",
+      "gaps": []
+    },
+    {
+      "id": "fiae-lf12a-review",
+      "title": "Projekt und Ergebnis auswerten",
+      "fieldId": "LF12a",
+      "scope": "specialization",
+      "prerequisites": [
+        "fiae-lf12a-training",
+        "fiae-lf10a-value"
+      ],
+      "objectives": [
+        {
+          "id": "fiae-lf12a-review-compare",
+          "text": "Geplante und tatsächliche Ziele, Termine und Kosten gegenüberstellen und Abweichungen erklären."
+        },
+        {
+          "id": "fiae-lf12a-review-quality",
+          "text": "Die Lösung anhand vereinbarter Anforderungen an Verlässlichkeit, Erweiterbarkeit und Skalierbarkeit bei wachsender Nutzung oder Datenmenge beurteilen."
+        },
+        {
+          "id": "fiae-lf12a-review-learn",
+          "text": "Aus Kundenrückmeldung und Projektverlauf konkrete Verbesserungen für einen nächsten Auftrag ableiten."
+        }
+      ],
+      "status": "content-ready",
+      "contentFile": "topics/fiae-lf12a-review.v1.json",
+      "gaps": []
+    }
+  ],
+  "stageOrder": [
+    "LF1",
+    "WISO",
+    "PM",
+    "LF2",
+    "LF3",
+    "LF4",
+    "LF5",
+    "LF6",
+    "LF7",
+    "LF8",
+    "LF9",
+    "LF10a",
+    "LF11a",
+    "LF12a"
+  ],
+  "plannedStages": []
+}

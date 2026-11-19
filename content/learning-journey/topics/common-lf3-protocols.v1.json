@@ -1,0 +1,509 @@
+{
+  "schemaVersion": 1,
+  "id": "common-lf3-protocols",
+  "version": "1.0.0",
+  "title": "Schichten und Protokolle",
+  "fieldId": "LF3",
+  "scope": "common",
+  "prerequisites": [
+    "common-lf3-physical"
+  ],
+  "sourceIds": [
+    "lf3-rfc1122-layers",
+    "lf3-rfc894-ethernet",
+    "lf3-rfc9293-tcp",
+    "lf3-rfc768-udp",
+    "lf3-rfc9110-http",
+    "lf3-nist-binary"
+  ],
+  "sources": [
+    {
+      "id": "lf3-rfc1122-layers",
+      "title": "IETF: RFC 1122 – Requirements for Internet Hosts, Communication Layers",
+      "url": "https://www.rfc-editor.org/rfc/rfc1122.html",
+      "checkedAt": "2026-11-11",
+      "note": "Öffentliche HTML-Fassung zu Link-, Internet- und Transportschicht geprüft. Für TCP wird die neuere Spezifikation RFC 9293 ergänzend verwendet."
+    },
+    {
+      "id": "lf3-rfc894-ethernet",
+      "title": "IETF: RFC 894 – Transmission of IP Datagrams over Ethernet Networks",
+      "url": "https://www.rfc-editor.org/rfc/rfc894.html",
+      "checkedAt": "2026-11-11",
+      "note": "HTML-Fassung zur Einbettung von IP-Datagrammen in Ethernet-Rahmen geprüft. Begrenzter Bezug auf das hier erklärte Grundprinzip."
+    },
+    {
+      "id": "lf3-rfc9293-tcp",
+      "title": "IETF: RFC 9293 – Transmission Control Protocol (TCP)",
+      "url": "https://www.rfc-editor.org/rfc/rfc9293.html",
+      "checkedAt": "2026-11-11",
+      "note": "Aktuelle zusammengeführte TCP-Grundspezifikation in HTML geprüft: geordneter Bytestrom, Verlusterkennung und erneute Übertragung."
+    },
+    {
+      "id": "lf3-rfc768-udp",
+      "title": "IETF: RFC 768 – User Datagram Protocol",
+      "url": "https://www.rfc-editor.org/rfc/rfc768.html",
+      "checkedAt": "2026-11-11",
+      "note": "Öffentliche HTML-Fassung zu UDP-Nachrichten und fehlender eigener Zustell-/Reihenfolgegarantie geprüft."
+    },
+    {
+      "id": "lf3-rfc9110-http",
+      "title": "IETF: RFC 9110 – HTTP Semantics",
+      "url": "https://www.rfc-editor.org/rfc/rfc9110.html",
+      "checkedAt": "2026-11-11",
+      "note": "HTML-Grundspezifikation für HTTP-Anfragen und Antworten sowie HTTPS geprüft. Der Lernfall gibt TCP vor; daraus folgt keine Behauptung, jede HTTP-Version verwende TCP."
+    },
+    {
+      "id": "lf3-nist-binary",
+      "title": "NIST: Prefixes for binary multiples",
+      "url": "https://physics.nist.gov/cuu/Units/binary.html",
+      "checkedAt": "2026-11-11",
+      "note": "Öffentliche HTML-Definitionen zu Bit/Byte sowie SI- und IEC-Präfixen geprüft. Sämtliche Zeitrechnungen sind eigene Idealbeispiele ohne Overhead."
+    }
+  ],
+  "objectives": [
+    {
+      "id": "common-lf3-protocols-layers",
+      "text": "Die Aufgaben von Ethernet, IP, TCP beziehungsweise UDP und Anwendungsprotokollen im Datenweg unterscheiden."
+    },
+    {
+      "id": "common-lf3-protocols-units",
+      "text": "Datenmengen und Übertragungsraten korrekt zuordnen und eine ideale Übertragungszeit berechnen."
+    }
+  ],
+  "caseStudy": {
+    "title": "Knotenpunkt verbindet Radblick",
+    "text": "Mira erklärt Sam, wie Radblick eine Datei vom Portal abruft. Eda trennt dafür die Aufgaben im Datenweg und prüft eine Zeitrechnung. Der Fall verwendet bewusst eine angenommene HTTPS-Verbindung über TCP sowie erfundene Dateigrößen und konstante Raten. Es werden keine echten Verbindungen oder Messungen ausgeführt."
+  },
+  "blocks": [
+    {
+      "id": "common-lf3-protocols-layers",
+      "title": "1. Eine Übertragung in Aufgaben aufteilen",
+      "objectiveIds": [
+        "common-lf3-protocols-layers"
+      ],
+      "sourceIds": [
+        "lf3-rfc1122-layers",
+        "lf3-rfc894-ethernet",
+        "lf3-rfc9110-http"
+      ],
+      "paragraphs": [
+        "Ein Protokoll legt Regeln für den Austausch zwischen Kommunikationspartnern fest. Schichten teilen die Arbeit auf: Die Anwendung bestimmt die fachliche Anfrage, der Transport verbindet Anwendungsendpunkte, IP ermöglicht die Weiterleitung zwischen Netzen und die lokale Verbindung trägt die Daten über den jeweiligen Abschnitt.",
+        "Für unser vereinfachtes Internetmodell heißt das: Anwendung → Transport mit TCP oder UDP → Internet mit IP → lokaler Zugang, hier Ethernet. Elektrische, optische oder Funksignale übertragen schließlich die Bits. Die Ebenen sind ein Denkmodell für Aufgaben; sie sind keine Liste zusätzlicher Gerätegehäuse.",
+        "Beim Senden erhält der Anwendungsinhalt zusätzliche Steuerinformationen der beteiligten Protokolle. Ein IP-Paket wird auf einem Ethernet-Abschnitt in einem Ethernet-Rahmen transportiert. Beim Empfänger werden die Informationen schrittweise ausgewertet, bis der Inhalt die Anwendung erreicht. Dieses Verpacken nennt man Kapselung.",
+        "Ein Zwischenweg kann verschiedene lokale Übertragungsarten enthalten: Das Tablet beginnt mit WLAN, später folgt ein Ethernet-Abschnitt. An einem Router endet der lokale Rahmen eines Abschnitts; für den nächsten entsteht eine passende neue lokale Verpackung. Die Aufgaben von IP und Anwendung bleiben davon unterscheidbar."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Übungsfall",
+        "text": "Mira trennt beim Portalabruf vier Fragen: Was will die Anwendung? Wie tauschen ihre Endpunkte Daten aus? In welches IP-Netz geht es? Wie wird der nächste lokale Abschnitt überquert?"
+      },
+      "misconception": {
+        "claim": "Ethernet, IP und HTTP sind drei Namen für dieselbe Netzwerkaufgabe.",
+        "correction": "Ethernet beschreibt den lokalen Rahmen, IP die netzübergreifende Adressierung/Weiterleitung und HTTP den Austausch von Anfragen und Antworten der Anwendung."
+      },
+      "takeaway": "Ordne jedes Protokoll seiner Aufgabe im Datenweg zu."
+    },
+    {
+      "id": "common-lf3-protocols-transport",
+      "title": "2. TCP, UDP und Anwendung unterscheiden",
+      "objectiveIds": [
+        "common-lf3-protocols-layers"
+      ],
+      "sourceIds": [
+        "lf3-rfc1122-layers",
+        "lf3-rfc9293-tcp",
+        "lf3-rfc768-udp",
+        "lf3-rfc9110-http"
+      ],
+      "paragraphs": [
+        "IP adressiert Pakete und ermöglicht Routing zwischen Netzen. Es bietet für sich keine Zusage, dass alle Pakete ankommen oder in derselben Reihenfolge eintreffen. TCP baut darauf auf und stellt Anwendungen einen zuverlässigen geordneten Bytestrom bereit. Dazu gehören Erkennen fehlender Daten und erneutes Übertragen; bei einem dauerhaften Ausfall kann die Verbindung dennoch scheitern.",
+        "UDP verschickt einzelne Nachrichten, sogenannte Datagramme. UDP selbst sichert weder Zustellung noch Reihenfolge durch Wiederholung ab. Eine Anwendung kann auf UDP eigene Schutzmechanismen aufbauen. Die Wahl TCP oder UDP beschreibt daher nicht unmittelbar die Bedeutung oder Qualität des Anwendungsinhalts.",
+        "TCP und UDP verwenden Ports, um Kommunikationsendpunkte von Anwendungen auf einem Rechner zu unterscheiden. Ein solcher Port ist eine logische Nummer und keine physische Netzwerkbuchse. IP-Adresse und Transportport beantworten unterschiedliche Fragen: welcher Netzwerkendpunkt und welcher Dienst beziehungsweise welcher Kommunikationsendpunkt dort?",
+        "HTTP ist ein Anwendungsprotokoll für Anfragen und Antworten. HTTPS ergänzt den geschützten Transport über TLS. In unserem Beispiel läuft HTTPS über TCP; andere Varianten wie HTTP/3 verwenden eine andere Transportgrundlage. TCP-Erfolg beweist weder korrekte Berechtigungen noch eine inhaltlich erfolgreiche Portalantwort. Die Anwendung wird zusätzlich geprüft."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Übungsfall",
+        "text": "Sam kann den Server erreichen, erhält aber im Portal eine Ablehnung. Die Verbindung kann funktionieren, obwohl die gewünschte Anwendungsaktion wegen fehlender Berechtigung scheitert."
+      },
+      "misconception": {
+        "claim": "Wenn TCP Daten zuverlässig transportiert, ist die angefragte Portalaktion erfolgreich.",
+        "correction": "TCP schützt die Reihenfolge und Übertragung des Bytestroms. Ob die Anwendung die Anfrage akzeptiert und korrekt bearbeitet, ist eine zusätzliche Frage."
+      },
+      "takeaway": "Trenne Übertragungseigenschaften von der fachlichen Funktion einer Anwendung."
+    },
+    {
+      "id": "common-lf3-protocols-units",
+      "title": "3. Datenmenge und Rate in passende Einheiten bringen",
+      "objectiveIds": [
+        "common-lf3-protocols-units"
+      ],
+      "sourceIds": [
+        "lf3-nist-binary"
+      ],
+      "paragraphs": [
+        "Eine Datenmenge beschreibt, wie viele Daten vorliegen. Eine Datenrate beschreibt Daten pro Zeit, zum Beispiel bit/s oder B/s. Bit und Byte sind verschieden: 1 Byte = 8 bit. Das große B steht für Byte. 100 Mbit/s entsprechen deshalb 12,5 MB/s, wenn auf beiden Seiten dezimale Präfixe verwendet werden.",
+        "Die SI-Präfixe sind dezimal: 1 kbit = 1 000 bit, 1 Mbit = 1 000 000 bit, 1 Gbit = 1 000 000 000 bit. Entsprechend sind 1 MB = 1 000 000 B und 1 GB = 1 000 000 000 B. Großes M bezeichnet mega; die Schreibweise MB/s darf nicht mit Mbit/s gleichgesetzt werden.",
+        "Die IEC-Präfixe sind binär: 1 KiB = 1 024 B, 1 MiB = 1 048 576 B, 1 GiB = 1 073 741 824 B. Ein MiB ist damit größer als ein MB. Schreibe die Einheit in jeder Rechnung mit und ändere MB nicht stillschweigend in MiB.",
+        "Als eigener Übungsschritt: 25 MB sind 25 × 1 000 000 B. Mit 8 multipliziert ergibt das 200 000 000 bit beziehungsweise 200 Mbit. Bei 10 MiB lautet der erste Schritt dagegen 10 × 1 048 576 B; danach ergibt die Multiplikation mit 8 genau 83 886 080 bit."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Übungsfall",
+        "text": "Mira notiert links die Datenmenge 25 MB und rechts die Rate 100 Mbit/s. Erst nach der Umrechnung zu 200 Mbit passen die Einheiten für die Division zusammen."
+      },
+      "misconception": {
+        "claim": "100 Mbit/s bedeutet, dass 100 MB in einer Sekunde übertragen werden.",
+        "correction": "Bei dezimalen Einheiten ist eine Byte-Menge achtmal so groß wie dieselbe Zahl in bit. 100 Mbit/s entsprechen 12,5 MB/s."
+      },
+      "takeaway": "Prüfe zuerst Menge oder Rate, dann Bit oder Byte und schließlich SI oder IEC."
+    },
+    {
+      "id": "common-lf3-protocols-time",
+      "title": "4. Ideale Übertragungszeit Schritt für Schritt berechnen",
+      "objectiveIds": [
+        "common-lf3-protocols-layers",
+        "common-lf3-protocols-units"
+      ],
+      "sourceIds": [
+        "lf3-rfc894-ethernet",
+        "lf3-rfc9293-tcp",
+        "lf3-rfc768-udp",
+        "lf3-rfc9110-http",
+        "lf3-nist-binary"
+      ],
+      "paragraphs": [
+        "Im Idealmodell gilt Zeit = Datenmenge ÷ Datenrate. Voraussetzung ist eine konstante Rate für diese Daten, ohne Protokollzusätze, Wartezeiten, Wiederholungen oder konkurrierende Übertragungen. Die Rechnung ist ein Lehrbeispiel und keine Zusage für einen tatsächlichen Download.",
+        "Rechne das dezimale Beispiel in drei Schritten: 25 MB × 8 = 200 Mbit. Dann 200 Mbit ÷ 100 Mbit/s = 2 s. Die Einheit Mbit kürzt sich heraus, Sekunden bleiben. Alternativ teilst du 25 MB durch 12,5 MB/s und erhältst ebenfalls 2 s.",
+        "Beim binären Beispiel darfst du die Präfixe nicht direkt kürzen: 10 MiB = 83 886 080 bit. 100 Mbit/s = 100 000 000 bit/s. Daraus folgt 83 886 080 ÷ 100 000 000 s = 0,8388608 s, gerundet etwa 0,84 s. 10 MB hätten im gleichen Idealmodell 0,8 s benötigt.",
+        "Reale Übertragungen benötigen zusätzliche Protokolldaten, etwa für Ethernet, IP und TCP oder UDP. Verzögerungen, Wiederholungen, Serverleistung und gemeinsam genutzte Kapazität können die Dauer weiter verändern. Beschreibe beim Vergleich von Rechnung und Messung deshalb die Annahmen und Einheiten, ohne aus der Idealzeit auf den Erfolg der Anwendung zu schließen."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Übungsfall",
+        "text": "Eda schreibt zu 2 s ausdrücklich: 25 MB bei konstanten 100 Mbit/s, dezimale Einheiten, ohne Overhead. Eine reale Messung von mehr als 2 s widerspricht dieser Idealrechnung nicht."
+      },
+      "misconception": {
+        "claim": "Die aus der Anschlussrate errechnete Idealzeit ist eine garantierte maximale Downloadzeit.",
+        "correction": "Die Idealrechnung blendet zusätzliche Daten und Wartezeiten aus. Eine reale Übertragung kann länger dauern."
+      },
+      "takeaway": "Rechne in gleichen Einheiten und kennzeichne die Grenzen des Idealmodells."
+    }
+  ],
+  "questionFile": "questions/common-lf3-protocols.v1.csv",
+  "quiz": {
+    "questionIds": [
+      "LJ-LF3-PROTOCOLS-Q01",
+      "LJ-LF3-PROTOCOLS-Q02",
+      "LJ-LF3-PROTOCOLS-Q03",
+      "LJ-LF3-PROTOCOLS-Q04",
+      "LJ-LF3-PROTOCOLS-Q05",
+      "LJ-LF3-PROTOCOLS-Q06"
+    ]
+  },
+  "exam": {
+    "questionIds": [
+      "LJ-LF3-PROTOCOLS-E01",
+      "LJ-LF3-PROTOCOLS-E02",
+      "LJ-LF3-PROTOCOLS-E03",
+      "LJ-LF3-PROTOCOLS-E04",
+      "LJ-LF3-PROTOCOLS-E05",
+      "LJ-LF3-PROTOCOLS-E06",
+      "LJ-LF3-PROTOCOLS-E07",
+      "LJ-LF3-PROTOCOLS-E08"
+    ],
+    "passPercent": 80,
+    "scoring": "all-or-nothing-per-question",
+    "timed": false
+  },
+  "questionLinks": [
+    {
+      "questionId": "LJ-LF3-PROTOCOLS-Q01",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf3-protocols-layers"
+      ],
+      "blockIds": [
+        "common-lf3-protocols-layers"
+      ]
+    },
+    {
+      "questionId": "LJ-LF3-PROTOCOLS-Q02",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf3-protocols-layers"
+      ],
+      "blockIds": [
+        "common-lf3-protocols-transport"
+      ]
+    },
+    {
+      "questionId": "LJ-LF3-PROTOCOLS-Q03",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf3-protocols-layers"
+      ],
+      "blockIds": [
+        "common-lf3-protocols-transport"
+      ]
+    },
+    {
+      "questionId": "LJ-LF3-PROTOCOLS-Q04",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf3-protocols-units"
+      ],
+      "blockIds": [
+        "common-lf3-protocols-units"
+      ]
+    },
+    {
+      "questionId": "LJ-LF3-PROTOCOLS-Q05",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf3-protocols-units"
+      ],
+      "blockIds": [
+        "common-lf3-protocols-units"
+      ]
+    },
+    {
+      "questionId": "LJ-LF3-PROTOCOLS-Q06",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf3-protocols-units"
+      ],
+      "blockIds": [
+        "common-lf3-protocols-units",
+        "common-lf3-protocols-time"
+      ]
+    },
+    {
+      "questionId": "LJ-LF3-PROTOCOLS-E01",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf3-protocols-layers"
+      ],
+      "blockIds": [
+        "common-lf3-protocols-layers"
+      ]
+    },
+    {
+      "questionId": "LJ-LF3-PROTOCOLS-E02",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf3-protocols-layers"
+      ],
+      "blockIds": [
+        "common-lf3-protocols-transport"
+      ]
+    },
+    {
+      "questionId": "LJ-LF3-PROTOCOLS-E03",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf3-protocols-layers"
+      ],
+      "blockIds": [
+        "common-lf3-protocols-transport"
+      ]
+    },
+    {
+      "questionId": "LJ-LF3-PROTOCOLS-E04",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf3-protocols-layers"
+      ],
+      "blockIds": [
+        "common-lf3-protocols-transport"
+      ]
+    },
+    {
+      "questionId": "LJ-LF3-PROTOCOLS-E05",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf3-protocols-units"
+      ],
+      "blockIds": [
+        "common-lf3-protocols-units"
+      ]
+    },
+    {
+      "questionId": "LJ-LF3-PROTOCOLS-E06",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf3-protocols-units"
+      ],
+      "blockIds": [
+        "common-lf3-protocols-units",
+        "common-lf3-protocols-time"
+      ]
+    },
+    {
+      "questionId": "LJ-LF3-PROTOCOLS-E07",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf3-protocols-units"
+      ],
+      "blockIds": [
+        "common-lf3-protocols-units",
+        "common-lf3-protocols-time"
+      ]
+    },
+    {
+      "questionId": "LJ-LF3-PROTOCOLS-E08",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf3-protocols-layers",
+        "common-lf3-protocols-units"
+      ],
+      "blockIds": [
+        "common-lf3-protocols-time"
+      ]
+    }
+  ],
+  "interview": [
+    {
+      "id": "common-lf3-protocols-talk-layers",
+      "prompt": "Erkläre Eda die Aufgaben von Ethernet, IP, TCP und HTTP beim vorgegebenen Portalabruf.",
+      "objectiveIds": [
+        "common-lf3-protocols-layers"
+      ],
+      "blockIds": [
+        "common-lf3-protocols-layers",
+        "common-lf3-protocols-transport"
+      ],
+      "keyPoints": [
+        "Ethernet für den lokalen Rahmen nennen.",
+        "IP für Adressierung und Routing zwischen Netzen nennen.",
+        "TCP-Bytestrom von HTTP-Anfrage und -Antwort trennen."
+      ],
+      "acceptableAlternatives": [
+        "Die Aufgaben mithilfe einer beschrifteten Verpackungsskizze erklären."
+      ],
+      "misconceptions": [
+        "Eine erfolgreiche Übertragung mit einer erfolgreichen Portalaktion gleichsetzen."
+      ],
+      "sampleAnswer": "Ethernet trägt Daten über einen lokalen Abschnitt. IP ermöglicht die Weiterleitung zum Zielnetz. TCP stellt hier den geordneten Bytestrom bereit. HTTP beschreibt die Anfrage und Antwort der Anwendung; HTTPS schützt den Transport mit TLS. Eine korrekt übertragene Ablehnung bleibt eine abgelehnte Aktion.",
+      "followUp": "Was ändert sich an der Aussage über Zustellung, wenn eine Anwendung UDP verwendet?"
+    },
+    {
+      "id": "common-lf3-protocols-talk-calculate",
+      "prompt": "Rechne 25 MB bei 100 Mbit/s vor und erläutere die Annahmen.",
+      "objectiveIds": [
+        "common-lf3-protocols-units"
+      ],
+      "blockIds": [
+        "common-lf3-protocols-units",
+        "common-lf3-protocols-time"
+      ],
+      "keyPoints": [
+        "1 Byte = 8 bit anwenden.",
+        "25 MB = 200 Mbit und Division durch 100 Mbit/s zeigen.",
+        "Konstante Rate ohne Overhead als Idealannahme nennen."
+      ],
+      "acceptableAlternatives": [
+        "25 MB durch die umgerechneten 12,5 MB/s teilen."
+      ],
+      "misconceptions": [
+        "25 durch 100 teilen, ohne Byte und bit anzugleichen."
+      ],
+      "sampleAnswer": "Ich verwende dezimale Präfixe. 25 MB sind 200 Mbit. 200 Mbit geteilt durch 100 Mbit/s ergeben 2 s. Dabei sind konstante Rate, keine Zusatzdaten und keine Wartezeiten angenommen. Die reale Dauer ist dadurch nicht zugesichert.",
+      "followUp": "Welche Einheit müsste vor der Rechnung anders umgewandelt werden, wenn 25 MiB gegeben wären?"
+    },
+    {
+      "id": "common-lf3-protocols-talk-boundaries",
+      "prompt": "Sam hält 10 MiB für 10 MB und TCP für einen Beweis erfolgreicher Portalnutzung. Korrigiere beide Annahmen.",
+      "objectiveIds": [
+        "common-lf3-protocols-layers",
+        "common-lf3-protocols-units"
+      ],
+      "blockIds": [
+        "common-lf3-protocols-transport",
+        "common-lf3-protocols-units",
+        "common-lf3-protocols-time"
+      ],
+      "keyPoints": [
+        "MiB binär und MB dezimal unterscheiden.",
+        "Einheiten vor einer Zeitrechnung angleichen.",
+        "TCP-Eigenschaft vom Anwendungsergebnis trennen."
+      ],
+      "acceptableAlternatives": [
+        "Die unterschiedlichen Byte-Mengen ausdrücklich ausschreiben."
+      ],
+      "misconceptions": [
+        "Das i in MiB als bedeutungslose Schreibweise behandeln."
+      ],
+      "sampleAnswer": "10 MiB sind 10 485 760 Byte, 10 MB sind 10 000 000 Byte. Bei gleicher Rate ergeben sich deshalb unterschiedliche Idealzeiten. TCP stellt einen geordneten zuverlässigen Bytestrom bereit, aber die Anwendung kann zum Beispiel den Zugriff ablehnen. Ein Portaltest bleibt erforderlich.",
+      "followUp": "Warum kann die beobachtete Zeit trotz korrekter Umrechnung von der Idealzeit abweichen?"
+    }
+  ],
+  "cards": [
+    {
+      "id": "common-lf3-protocols-card-stack",
+      "front": "Welche Aufgaben trennt das vereinfachte Schichtenmodell?",
+      "back": "Anwendung: fachlicher Austausch; Transport: Kommunikation der Anwendungsendpunkte; IP: Vermittlung zwischen Netzen; lokaler Zugang: Übertragung des Abschnitts, etwa mit Ethernet.",
+      "objectiveIds": [
+        "common-lf3-protocols-layers"
+      ],
+      "blockIds": [
+        "common-lf3-protocols-layers"
+      ]
+    },
+    {
+      "id": "common-lf3-protocols-card-tcp-udp",
+      "front": "Was unterscheidet TCP von UDP auf dieser Lernstufe?",
+      "back": "TCP bietet einen zuverlässigen geordneten Bytestrom mit Wiederholung fehlender Daten. UDP versendet Datagramme ohne eigene Zustell- oder Reihenfolgegarantie.",
+      "objectiveIds": [
+        "common-lf3-protocols-layers"
+      ],
+      "blockIds": [
+        "common-lf3-protocols-transport"
+      ]
+    },
+    {
+      "id": "common-lf3-protocols-card-application",
+      "front": "Beweist eine funktionierende TCP-Verbindung einen erfolgreichen Portalauftrag?",
+      "back": "Nein. Die Anwendung kann eine Ablehnung oder einen fachlichen Fehler liefern. Der gewünschte Anwendungsablauf muss zusätzlich geprüft werden.",
+      "objectiveIds": [
+        "common-lf3-protocols-layers"
+      ],
+      "blockIds": [
+        "common-lf3-protocols-transport"
+      ]
+    },
+    {
+      "id": "common-lf3-protocols-card-byte",
+      "front": "Wie hängen Byte, bit und eine Rate zusammen?",
+      "back": "1 B = 8 bit. Eine Rate hat eine Zeiteinheit, etwa bit/s. 100 Mbit/s entsprechen bei dezimalen Präfixen 12,5 MB/s.",
+      "objectiveIds": [
+        "common-lf3-protocols-units"
+      ],
+      "blockIds": [
+        "common-lf3-protocols-units"
+      ]
+    },
+    {
+      "id": "common-lf3-protocols-card-prefixes",
+      "front": "Wie unterscheiden sich MB und MiB?",
+      "back": "1 MB = 1 000 000 B mit dezimalem SI-Präfix. 1 MiB = 1 048 576 B mit binärem IEC-Präfix. Das i verändert die Bedeutung.",
+      "objectiveIds": [
+        "common-lf3-protocols-units"
+      ],
+      "blockIds": [
+        "common-lf3-protocols-units"
+      ]
+    },
+    {
+      "id": "common-lf3-protocols-card-time",
+      "front": "Wie wird die ideale Übertragungszeit berechnet?",
+      "back": "Datenmenge durch Rate in passenden Einheiten teilen. 25 MB = 200 Mbit; bei konstanten 100 Mbit/s sind das ohne Overhead 2 s.",
+      "objectiveIds": [
+        "common-lf3-protocols-units"
+      ],
+      "blockIds": [
+        "common-lf3-protocols-time"
+      ]
+    }
+  ],
+  "review": {
+    "status": "reviewed",
+    "checkedAt": "2026-11-11"
+  }
+}

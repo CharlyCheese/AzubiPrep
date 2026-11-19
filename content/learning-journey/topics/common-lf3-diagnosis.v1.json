@@ -1,0 +1,692 @@
+{
+  "schemaVersion": 1,
+  "id": "common-lf3-diagnosis",
+  "version": "1.0.0",
+  "title": "Eine Clientverbindung systematisch prüfen",
+  "fieldId": "LF3",
+  "scope": "common",
+  "prerequisites": [
+    "common-lf3-access"
+  ],
+  "sourceIds": [
+    "lf3-ms-ipconfig",
+    "lf3-ms-nslookup",
+    "lf3-rfc2131",
+    "lf3-rfc2132",
+    "lf3-rfc1034",
+    "lf3-ms-ping",
+    "lf3-ms-nps",
+    "lf3-ms-eap",
+    "lf3-apple-wifi",
+    "lf3-cisco-switching",
+    "lf3-cisco-access-point",
+    "lf3-cisco-radio",
+    "lf3-rfc1122-layers",
+    "lf3-rfc9293-tcp",
+    "lf3-rfc768-udp",
+    "lf3-nist-binary",
+    "lf3-rfc4632-cidr",
+    "lf3-rfc4291-addressing",
+    "lf3-rfc5952-text"
+  ],
+  "sources": [
+    {
+      "id": "lf3-ms-ipconfig",
+      "title": "Microsoft: ipconfig – TCP/IP-Konfiguration anzeigen",
+      "url": "https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/ipconfig",
+      "checkedAt": "2026-11-11",
+      "note": "Öffentliche Beschreibung von Konfigurationsausgaben geprüft. Im Inhalt werden synthetische Ausgaben interpretiert; echte Befehle und Änderungen werden nicht ausgeführt."
+    },
+    {
+      "id": "lf3-ms-nslookup",
+      "title": "Microsoft: nslookup – DNS-Informationen prüfen",
+      "url": "https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/nslookup",
+      "checkedAt": "2026-11-11",
+      "note": "Öffentliche Dokumentation zur Prüfung von Namensantworten und Unterschied zwischen Antwort, Zeitüberschreitung und unbekanntem Namen geprüft. Das Labor erzeugt begrenzte synthetische Befunde."
+    },
+    {
+      "id": "lf3-rfc2131",
+      "title": "IETF: RFC 2131 – Dynamic Host Configuration Protocol",
+      "url": "https://www.rfc-editor.org/rfc/rfc2131.html",
+      "checkedAt": "2026-11-11",
+      "note": "Öffentliche Primärquelle zu DHCPv4, erstmaligem Nachrichtenaustausch und zeitlicher Adresszuweisung geprüft. DORA wird als vereinfachter Erstbezug erklärt, nicht als Ablauf jeder Erneuerung."
+    },
+    {
+      "id": "lf3-rfc2132",
+      "title": "IETF: RFC 2132 – DHCP Options and BOOTP Vendor Extensions",
+      "url": "https://www.rfc-editor.org/rfc/rfc2132.html",
+      "checkedAt": "2026-11-11",
+      "note": "Optionen für Subnetzmaske, Router und DNS geprüft. Die konkreten Adressen und Reservierungen sind eigene fiktive Lernvorgaben."
+    },
+    {
+      "id": "lf3-rfc1034",
+      "title": "IETF: RFC 1034 – Domain Names: Concepts and Facilities",
+      "url": "https://www.rfc-editor.org/rfc/rfc1034.html",
+      "checkedAt": "2026-11-11",
+      "note": "DNS als verteilte Namensdatenbank mit Resolvern, typisierten Einträgen und Cache geprüft. Das Portal und die beschriebene Namensantwort sind synthetisch."
+    },
+    {
+      "id": "lf3-ms-ping",
+      "title": "Microsoft: ping – IP-Konnektivität prüfen",
+      "url": "https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/ping",
+      "checkedAt": "2026-11-11",
+      "note": "ICMP-Echo als begrenzte Erreichbarkeitsprobe und Trennung zwischen IP-Ziel und Namensauflösung geprüft. Keine realen Befehle werden durch die Lerninhalte ausgeführt."
+    },
+    {
+      "id": "lf3-ms-nps",
+      "title": "Microsoft: Network Policy Server overview",
+      "url": "https://learn.microsoft.com/en-us/windows-server/networking/technologies/nps/nps-top",
+      "checkedAt": "2026-11-11",
+      "note": "Öffentliche Herstellerdokumentation zur getrennten Authentifizierung und Autorisierung sowie zentralen Netzwerkzugangsregeln geprüft. Keine Serverinstallation oder reale Kontoabfrage."
+    },
+    {
+      "id": "lf3-ms-eap",
+      "title": "Microsoft: Extensible Authentication Protocol for network access",
+      "url": "https://learn.microsoft.com/en-us/windows-server/networking/technologies/extensible-authentication-protocol/network-access",
+      "checkedAt": "2026-11-11",
+      "note": "802.1X/EAP und gegenseitige zertifikatsgestützte Authentifizierung mit EAP-TLS geprüft. Das eigene Unternehmensprofil ist eine fiktive Organisationsvorgabe, keine universelle WLAN-Checkliste."
+    },
+    {
+      "id": "lf3-apple-wifi",
+      "title": "Apple: Recommended settings for Wi-Fi routers and access points",
+      "url": "https://support.apple.com/en-us/102766",
+      "checkedAt": "2026-11-11",
+      "note": "Herstellerhinweise zu WPA2 mit AES, WPA3, unsicheren Altverfahren, SSID und Grenzen von MAC-Filtern geprüft. Die Quelle behandelt vor allem Personal-Netze; Enterprise-Vorgaben werden getrennt mit der EAP-Dokumentation begründet."
+    },
+    {
+      "id": "lf3-cisco-switching",
+      "title": "Cisco: What Is Network Switching?",
+      "url": "https://www.cisco.com/site/us/en/learn/topics/networking/what-is-network-switching.html",
+      "checkedAt": "2026-11-11",
+      "note": "Öffentliche HTML-Seite zu Switch, MAC-basierter Weiterleitung und Abgrenzung vom Routing geprüft. Der Lernfall betrachtet einen einfachen Layer-2-Switch."
+    },
+    {
+      "id": "lf3-cisco-access-point",
+      "title": "Cisco: What is a wireless access point?",
+      "url": "https://www.cisco.com/site/us/en/learn/topics/small-business/what-is-an-access-point.html",
+      "checkedAt": "2026-11-11",
+      "note": "HTML-Grundbeschreibung des Access Points als Anbindung von Funkclients an ein kabelgebundenes LAN geprüft."
+    },
+    {
+      "id": "lf3-cisco-radio",
+      "title": "Cisco: Troubleshooting Problems Affecting Radio Frequency Communication",
+      "url": "https://www.cisco.com/c/en/us/support/docs/wireless-mobility/wireless-lan-wlan/8630-rf-problems.html",
+      "checkedAt": "2026-11-11",
+      "note": "Öffentliche HTML-Erklärung zu Hindernissen und Funkstörungen geprüft. Alte gerätespezifische Reichweitenwerte werden nicht übernommen."
+    },
+    {
+      "id": "lf3-rfc1122-layers",
+      "title": "IETF: RFC 1122 – Requirements for Internet Hosts, Communication Layers",
+      "url": "https://www.rfc-editor.org/rfc/rfc1122.html",
+      "checkedAt": "2026-11-11",
+      "note": "Öffentliche HTML-Fassung zu Link-, Internet- und Transportschicht geprüft. Für TCP wird die neuere Spezifikation RFC 9293 ergänzend verwendet."
+    },
+    {
+      "id": "lf3-rfc9293-tcp",
+      "title": "IETF: RFC 9293 – Transmission Control Protocol (TCP)",
+      "url": "https://www.rfc-editor.org/rfc/rfc9293.html",
+      "checkedAt": "2026-11-11",
+      "note": "Aktuelle zusammengeführte TCP-Grundspezifikation in HTML geprüft: geordneter Bytestrom, Verlusterkennung und erneute Übertragung."
+    },
+    {
+      "id": "lf3-rfc768-udp",
+      "title": "IETF: RFC 768 – User Datagram Protocol",
+      "url": "https://www.rfc-editor.org/rfc/rfc768.html",
+      "checkedAt": "2026-11-11",
+      "note": "Öffentliche HTML-Fassung zu UDP-Nachrichten und fehlender eigener Zustell-/Reihenfolgegarantie geprüft."
+    },
+    {
+      "id": "lf3-nist-binary",
+      "title": "NIST: Prefixes for binary multiples",
+      "url": "https://physics.nist.gov/cuu/Units/binary.html",
+      "checkedAt": "2026-11-11",
+      "note": "Öffentliche HTML-Definitionen zu Bit/Byte sowie SI- und IEC-Präfixen geprüft. Sämtliche Zeitrechnungen sind eigene Idealbeispiele ohne Overhead."
+    },
+    {
+      "id": "lf3-rfc4632-cidr",
+      "title": "IETF: RFC 4632 – Classless Inter-domain Routing (CIDR)",
+      "url": "https://www.rfc-editor.org/rfc/rfc4632.html",
+      "checkedAt": "2026-11-11",
+      "note": "Öffentliche HTML-Fassung zur Präfixnotation und Größe von IPv4-Adressblöcken geprüft. /24- und /26-Rechnungen sind eigene Lernbeispiele."
+    },
+    {
+      "id": "lf3-rfc4291-addressing",
+      "title": "IETF: RFC 4291 – IP Version 6 Addressing Architecture",
+      "url": "https://www.rfc-editor.org/rfc/rfc4291.html",
+      "checkedAt": "2026-11-11",
+      "note": "Öffentliche HTML-Fassung zu 128-Bit-Adressen, Schreibweise, Präfix und fehlendem IPv6-Broadcast geprüft. Weiterführende Adressarten sind nicht Gegenstand des Lernfalls."
+    },
+    {
+      "id": "lf3-rfc5952-text",
+      "title": "IETF: RFC 5952 – A Recommendation for IPv6 Address Text Representation",
+      "url": "https://www.rfc-editor.org/rfc/rfc5952.html",
+      "checkedAt": "2026-11-11",
+      "note": "HTML-Empfehlungen für führende Nullen, einmalige Kompression der längsten Nullfolge und Kleinschreibung geprüft."
+    }
+  ],
+  "objectives": [
+    {
+      "id": "common-lf3-diagnosis-isolate",
+      "text": "Mit vorgegebenen Diagnoseausgaben Fehler bei Verbindung, IP-Konfiguration und Namensauflösung unterscheiden."
+    },
+    {
+      "id": "common-lf3-diagnosis-record",
+      "text": "Prüfschritte, Ergebnisse und Änderungen so protokollieren, dass ein anderes Teammitglied sie nachvollziehen kann."
+    }
+  ],
+  "caseStudy": {
+    "title": "Mira untersucht drei Verbindungsstörungen",
+    "text": "Eigener fiktiver Lernfall: Knotenpunkt unterstützt Radblick. Eda meldet Störungen beim Portalzugang, Mira prüft unter Sams Anleitung. Dokumentationsadressen, .test-Name und sämtliche Ausgaben sind synthetisch. Der Rechner der lernenden Person und reale Kundennetze werden nicht verändert."
+  },
+  "blocks": [
+    {
+      "id": "common-lf3-diagnosis-sequence",
+      "title": "1. Vom beobachteten Fehler zur passenden Prüfung",
+      "objectiveIds": [
+        "common-lf3-diagnosis-isolate"
+      ],
+      "sourceIds": [
+        "lf3-ms-ipconfig",
+        "lf3-ms-ping",
+        "lf3-ms-nslookup",
+        "lf3-rfc1034"
+      ],
+      "paragraphs": [
+        "Das Ticket Portal geht nicht enthält zunächst eine Beobachtung, noch keine Ursache. Mira klärt mit Eda, welcher Client, welcher Portalname und welche Aktion betroffen sind. Sie liest Sams Netzplan und hält den Ausgangszustand fest. Danach prüft sie vom Verbindungsweg zur Anwendung: physische Verbindung, IP-Adresse und Präfix, Gateway beziehungsweise IP-Erreichbarkeit, Namensauflösung und benötigte Portalaktion.",
+        "Eine fehlende Ethernet-Verbindung lenkt zuerst auf Anschluss, Kabelweg, Netzwerkkarte und vorgesehenen Switchport. Ein anderer DNS-Wert repariert kein fehlendes Verbindungssignal. Ein vorhandenes Signal bestätigt aber noch keine korrekte IP-Konfiguration. Deshalb vergleicht Mira als Nächstes Adresse und Präfix mit dem vorgesehenen Netz und achtet auf belegte Adressen.",
+        "Im Radblick-Plan gehört der Client zu 192.0.2.0/24, das Gateway ist 192.0.2.1 und der DNS-Server 192.0.2.53. Eine angezeigte 198.51.100.25/24 passt nicht zum vorgesehenen Clientnetz. Der Portalserver 198.51.100.20 liegt absichtlich in einem anderen Netz; der Client benötigt daher den vorgegebenen Router. Eine Abweichung des Gateways wird von einer falschen Clientadresse unterschieden.",
+        "Danach werden IP-Erreichbarkeit und DNS getrennt betrachtet. Eine erfolgreiche Probe zu 198.51.100.20 bei fehlender Antwort auf portal.example.test lenkt auf die Namensauflösung. In einem echten Netz ist das ein Ansatz für weitere Prüfung, kein Beweis für genau einen Defekt. Abschließend muss die angeforderte Anwendung selbst ein erwartetes Ergebnis liefern."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Lernfall",
+        "text": "Ausgangsbefund: Verbindung vorhanden, 198.51.100.25/24 statt des geplanten Netzes. Mira ordnet IP-Konfiguration zu und begründet die Korrektur mit dem Plan."
+      },
+      "misconception": {
+        "claim": "Ein nicht erreichbares Portal ist immer ein DNS-Problem.",
+        "correction": "Verbindung, IP-Daten, Gateway, Namensauflösung und Anwendung können jeweils die Ursache sein. Befunde grenzen sie schrittweise ein."
+      },
+      "takeaway": "Zuerst beobachten, dann einordnen und gezielt prüfen."
+    },
+    {
+      "id": "common-lf3-diagnosis-evidence",
+      "title": "2. Ausgaben richtig begrenzen und ein Protokoll führen",
+      "objectiveIds": [
+        "common-lf3-diagnosis-isolate",
+        "common-lf3-diagnosis-record"
+      ],
+      "sourceIds": [
+        "lf3-ms-ipconfig",
+        "lf3-ms-ping",
+        "lf3-ms-nslookup",
+        "lf3-rfc1034"
+      ],
+      "paragraphs": [
+        "Konfigurationsausgaben nennen Werte, Erreichbarkeitsproben melden Antworten, DNS-Abfragen liefern Namensinformationen. Unter Windows können beispielsweise ipconfig /all und nslookup entsprechende Informationen zeigen. Hier liest du vorgegebene oder synthetische Ausgaben; du führst diese Befehle nicht am eigenen Rechner aus. Ein angezeigter Wert ist zunächst Ist-Zustand und wird gegen den Sollplan geprüft.",
+        "Eine beantwortete ping-Probe belegt empfangene ICMP-Echo-Antworten, keine erfolgreiche Portalanmeldung. Eine ausbleibende Antwort kann an einer Störung oder an Filterung liegen. Eine DNS-Antwort beweist wiederum nicht, dass eine Webanwendung die erwartete Funktion ausführt. Ein brauchbares Protokoll trennt daher IP-Probe, Namensantwort und Anwendungsprobe.",
+        "Notiere Zeitpunkt oder Reihenfolge, betroffenen Übungsfall, Sollwert, Ausgangswert, konkreten Prüfschritt und Ergebnis. Danach folgen die begründete Fehlerzuordnung, freigegebene Änderung mit altem und neuem Wert, erneute Prüfung sowie verbleibende offene Punkte und Zuständigkeit. Zugangsdaten oder private Nutzinhalte gehören nicht in den allgemeinen Nachweis.",
+        "Ändere nach Möglichkeit gezielt die Einstellung, die der Befund und der Plan begründen. Nach jeder Änderung verliert ein älterer Test seine Aussage für den neuen Zustand. Ein Protokolleintrag DNS repariert ist zu ungenau. Besser: Eingetragen war 192.0.2.99, Soll ist 192.0.2.53; nach der Änderung liefert die Modellabfrage 198.51.100.20 und die separate Modellanwendung meldet Auftrag geöffnet."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Lernfall",
+        "text": "Sam kann Ausgangswert .99, Korrektur auf .53 und erneute DNS-/Anwendungsprobe aus Miras Notiz nachvollziehen."
+      },
+      "misconception": {
+        "claim": "Einmal erfolgreich geprüft reicht auch nach späteren Änderungen.",
+        "correction": "Jede Änderung kann das Ergebnis beeinflussen. Ein neuer Zustand braucht einen erneuten passenden Test."
+      },
+      "takeaway": "Befund, Einordnung, Änderung und Nachprüfung werden getrennt festgehalten."
+    },
+    {
+      "id": "common-lf3-diagnosis-practice",
+      "title": "3. Drei Störungen im begrenzten Netzwerklabor bearbeiten",
+      "objectiveIds": [
+        "common-lf3-diagnosis-isolate",
+        "common-lf3-diagnosis-record"
+      ],
+      "sourceIds": [
+        "lf3-ms-ipconfig",
+        "lf3-ms-ping",
+        "lf3-ms-nslookup",
+        "lf3-rfc1034"
+      ],
+      "paragraphs": [
+        "Die Praxis in Reflexion 2 ist ein lokales Lernmodell ohne echte Netzwerk-, Datei-, Shell- oder Systemeinstellungen. Es sendet keine Anfragen. Router, Server und Firewall funktionieren gemäß Modellannahme. Alle Ausgaben sind synthetisch. Das Modell vereinfacht die Ursachen gezielt und bescheinigt keine praktische Netzwerkadministration an echter Hardware.",
+        "Der feste Plan zeigt Client → Switch → Router → Portalserver. Das Clientnetz ist 192.0.2.0/24, Gateway 192.0.2.1 und DNS 192.0.2.53. Der andere Client belegt .10, das Gateway .1, der DNS-Dienst .53. Als Übungsclient sind freie Adressen von .2 bis .254 außer .10 und .53 erlaubt. .0 und .255 sind in diesem /24 keine Hostadressen. Die Ausgangsadresse ist .20; auch beispielsweise .30 ist gültig. portal.example.test verweist auf 198.51.100.20 in einem anderen Netz.",
+        "Du bearbeitest drei Fälle nacheinander: eine unterbrochene Verbindung, einen Client im falschen Netz und einen falschen DNS-Eintrag. Rufe in jedem Fall zuerst Ausgangsprobe abrufen auf und lies den Befund. Erst danach sind Einordnung und Änderungen möglich. Ordne die Ursache des ursprünglichen Befunds als Physische Verbindung, IP-Konfiguration, Standardgateway oder Namensauflösung ein. Nicht jede angebotene Kategorie ist in den drei Ausgangsfällen eine Ursache.",
+        "Korrigiere den betroffenen Wert nach dem Plan und wähle Erneut prüfen. Im Verbindungsfall stellst du die Modellverbindung zum vorgesehenen Switch her. Beim falschen Netz passt du die Clientadresse an; eine freie gültige Adresse ist ausreichend, es muss nicht .20 sein. Beim Namensproblem vergleichst du den DNS-Eintrag mit .53. Präfix /24 und Gateway .1 müssen ebenfalls zum Plan passen. Nach jeder Änderung, auch einer neuen Einordnung, ist eine erneute Probe nötig.",
+        "Eine erfolgreiche Gesamtprobe enthält passende Verbindung, Clientdaten, Gateway und DNS sowie eine gesonderte synthetische Anwendungsantwort. Zum Fallabschluss müssen auch Einordnung und Ausgangsbefund zusammenpassen. Nutze Fall abschließen – weiter und im dritten Fall Labor abschließen. Lies danach das Modellprotokoll mit Ausgangskonfiguration, Befund, Einordnung, abschließendem Stand und erneuter Probe. Abgeschlossene Fälle bleiben unverändert lesbar.",
+        "Erst wenn alle drei Fälle abgeschlossen sind, ergänzt du deine eigene Reflexionsnotiz und bestätigst die Bearbeitung bewusst. Die Beispielantwort ist kein Ersatz für eigene Schritte. Eine passende Notiz erklärt mindestens eine tatsächliche Beobachtung, die begründete Korrektur und das Ergebnis der Nachprüfung. Die Bestätigung beschreibt deine Modellbearbeitung, keine Änderung an einem echten Kundenrechner."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Lernfall",
+        "text": "Im zweiten Fall kann Mira eine freie .30/24 wählen. Nach richtiger Einordnung und erneuter erfolgreicher Probe ist der Fall ebenso lösbar wie mit .20."
+      },
+      "misconception": {
+        "claim": "Das Labor ist gelöst, sobald irgendeine Einstellung verändert wurde.",
+        "correction": "Jeder Fall braucht Ausgangsprobe, passende Einordnung, gültige Konfiguration und erneute erfolgreiche Probe. Alle drei Fälle gehen der Selbstbestätigung voraus."
+      },
+      "takeaway": "Das Modell trainiert Beobachten → Einordnen → Korrigieren → erneut Prüfen."
+    },
+    {
+      "id": "common-lf3-diagnosis-review",
+      "title": "4. Alle sechs LF3-Themen am Clientweg verbinden",
+      "objectiveIds": [
+        "common-lf3-diagnosis-isolate",
+        "common-lf3-diagnosis-record"
+      ],
+      "sourceIds": [
+        "lf3-ms-ipconfig",
+        "lf3-ms-nslookup",
+        "lf3-rfc2131",
+        "lf3-rfc2132",
+        "lf3-rfc1034",
+        "lf3-ms-ping",
+        "lf3-ms-nps",
+        "lf3-ms-eap",
+        "lf3-apple-wifi",
+        "lf3-cisco-switching",
+        "lf3-cisco-access-point",
+        "lf3-cisco-radio",
+        "lf3-rfc1122-layers",
+        "lf3-rfc9293-tcp",
+        "lf3-rfc768-udp",
+        "lf3-nist-binary",
+        "lf3-rfc4632-cidr",
+        "lf3-rfc4291-addressing",
+        "lf3-rfc5952-text"
+      ],
+      "paragraphs": [
+        "1. Netzwerkkomponenten und Übertragungswege: Im einfachen Radblick-Netz läuft ein kabelgebundener Clientweg über den Switch zum Router, wenn der Portalserver in einem anderen IP-Netz liegt. Ein WLAN-Client erreicht das LAN zunächst über einen Access Point. Ein einfacher Layer-2-Switch verbindet Geräte im lokalen Netz, der Router vermittelt zwischen Netzen. Ein Access Point ist nicht allein wegen seiner Funkfunktion ein Router. Für einen festen Büroplatz kann die vorhandene passende Kabelverbindung zweckmäßig sein; WLAN bietet Beweglichkeit, hängt aber von Abdeckung, Hindernissen und Störungen ab. Einen unterbrochenen Kabelweg prüfst du vor DNS-Einstellungen.",
+        "2. Schichten und Protokolle: Ethernet transportiert lokale Rahmen anhand von MAC-Adressen, IP adressiert und vermittelt Pakete über Netzgrenzen. TCP stellt einen geordneten zuverlässigen Bytestrom mit Mechanismen zur erneuten Übertragung bereit; UDP sendet Datagramme ohne eigene Liefer- und Reihenfolgegarantie. Anwendungen nutzen darüber eigene Regeln. Eine erfolgreiche IP- oder TCP-Probe ersetzt keinen Test der Portalaktion. Bei einer Fehlernotiz benennst du die tatsächlich geprüfte Ebene, statt einen IP-Erfolg als Beleg für alle Anwendungen zu melden.",
+        "Zu den Einheiten: 1 Byte = 8 bit, 1 MB = 1 000 000 Byte, 1 Mbit = 1 000 000 bit, 1 MiB = 1 048 576 Byte. Eine ideale Übertragungszeit ist Datenmenge in bit geteilt durch die Rate in bit/s. Für 25 MB bei 100 Mbit/s gilt: 25 × 8 = 200 Mbit, 200 / 100 = 2 Sekunden. Das ist eine Idealrechnung ohne Protokollaufwand, Konkurrenz und sonstige Verzögerungen. Ein Protokoll trennt diesen Rechenwert von einer real gemessenen Zeit.",
+        "3. IP-Adressen und Teilnetze: 192.0.2.0/24 umfasst im hier betrachteten üblichen IPv4-Subnetz die Hostadressen .1 bis .254; .0 ist Netzadresse und .255 Broadcast. Im konkreten Plan sind .1 als Router, .10 als anderer Client und .53 als DNS belegt. Die freie .30/24 passt als Client; 198.51.100.25/24 gehört nicht zum vorgesehenen Netz. Das Gateway ist laut Plan .1, nicht aufgrund einer Regel, dass Router stets die erste Hostadresse nutzen müssen. IP-Adresse und Präfix gehören beim Vergleich zusammen.",
+        "IPv6 hat 128 Bit statt der 32 Bit von IPv4. Acht Gruppen mit jeweils 16 Bit werden hexadezimal geschrieben. Führende Nullen einer Gruppe dürfen entfallen, eine zusammenhängende Folge von Nullgruppen darf einmal durch :: ersetzt werden. 2001:0db8:0000:0000:0000:0000:0000:0020 wird wertgleich zu 2001:db8::20. Ein zweites :: in derselben Adresse wäre mehrdeutig. IPv6 kennt keinen Broadcast und nutzt für Gruppenkommunikation Multicast; DNS ist auch mit IPv6 möglich.",
+        "4. Clientkonfiguration mit DHCP und DNS: Der vollständige Übungssatz besteht aus freier Adresse im Netz 192.0.2.0/24, /24, Gateway .1 und DNS .53. DHCPv4 kann Adresse, Maske, Router und DNS-Einstellung liefern. Der typische Erstbezug lautet Discover → Offer → Request → Acknowledge. Die Lease begrenzt die zugesagte Adressnutzung und kann erneuert werden. DNS löst dagegen im Fall portal.example.test zu 198.51.100.20 auf. Ist die numerische Server-IP im Modell erreichbar, während DNS mit eingetragener .99 scheitert, wird Namensauflösung eingeordnet und die DNS-Einstellung gegen .53 geprüft. DNS und Gateway werden nicht vertauscht.",
+        "5. Netzwerkzugang sicher einrichten: Authentifizierung prüft die behauptete Identität, Autorisierung den erlaubten Zugriff. Die fiktive Teamvorgabe lautet WPA3-Enterprise mit EAP-TLS, verwaltetem Clientzertifikat und erwarteter Serverprüfung. Das getrennte ältere Labor hat ausdrücklich WPA2-Personal mit AES und freigegebenem gemeinsamem Schlüssel vorgegeben. Diese unterschiedlichen Profile sind keine beliebig austauschbare Sicherheitsliste. Eine passende SSID oder MAC-Liste beweist keine vertrauenswürdige Anmeldung. Eine unerwartete Zertifikatswarnung wird mit Sam geklärt. Eine erfolgreiche Anmeldung und eine laut Rolle gesperrte Einkaufsfreigabe können zugleich richtig sein.",
+        "6. Eine Clientverbindung systematisch prüfen: Beobachte und protokolliere zuerst den Ausgangszustand, ordne Verbindung, IP-Konfiguration, Gateway oder Namensauflösung anhand des Befunds ein, korrigiere nach Plan und prüfe erneut. Das Labor erzeugt drei synthetische Fälle mit unterbrochener Verbindung, falschem Clientnetz und falschem DNS; Router, Server und Firewall gelten als funktionsfähig. Ein Fall endet erst nach passender Einordnung und erfolgreicher Probe. Nach allen drei Fällen wird die eigene Bearbeitung bewusst bestätigt. Der gespeicherte Stand bleibt zum Nachlesen erhalten.",
+        "Ein nachvollziehbarer Nachweis nennt Soll, Ausgangswert, Prüfschritt, Ergebnis, Einordnung, Änderung, erneutes Ergebnis und offene Punkte. Beispiel DNS-Fall: Link und IP-Weg passen, DNS ist .99 statt .53; Korrektur auf .53; danach Namensantwort 198.51.100.20 und synthetische Portalaktion Auftrag geöffnet erfolgreich. Das ist mehr als eine beantwortete ping-Probe: ICMP bestätigt weder Benutzerrechte noch die gewünschte Webfunktion. Ohne eigene Anwendungsprüfung wird deren Erfolg nicht behauptet. Zugangsnachweise gehören nicht in das Protokoll."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Lernfall",
+        "text": "Mira verfolgt den Verbindungsweg, vergleicht Adressen und Rollen, trennt IP-/DNS-/Anwendungsbefunde und übergibt Eda einen nachvollziehbaren Nachweis ohne Geheimnisse."
+      },
+      "misconception": {
+        "claim": "Eine einzige erfolgreiche Netzwerkprobe deckt alle sechs LF3-Themen und die komplette Portalnutzung ab.",
+        "correction": "Medien, Protokolle, Adressen, Dienste, Zugangsrechte und Prüfnachweise beantworten unterschiedliche Fragen und müssen passend zusammengeführt werden."
+      },
+      "takeaway": "Ein verständlicher Clientnachweis verbindet den Netzplan mit begrenzten, wiederholbaren Prüfungen."
+    }
+  ],
+  "questionFile": "questions/common-lf3-diagnosis.v1.csv",
+  "quiz": {
+    "questionIds": [
+      "LJ-LF3-DIAGNOSIS-Q01",
+      "LJ-LF3-DIAGNOSIS-Q02",
+      "LJ-LF3-DIAGNOSIS-Q03",
+      "LJ-LF3-DIAGNOSIS-Q04",
+      "LJ-LF3-DIAGNOSIS-Q05",
+      "LJ-LF3-DIAGNOSIS-Q06"
+    ]
+  },
+  "exam": {
+    "questionIds": [
+      "LJ-LF3-DIAGNOSIS-E01",
+      "LJ-LF3-DIAGNOSIS-E02",
+      "LJ-LF3-DIAGNOSIS-E03",
+      "LJ-LF3-DIAGNOSIS-E04",
+      "LJ-LF3-DIAGNOSIS-E05",
+      "LJ-LF3-DIAGNOSIS-E06",
+      "LJ-LF3-DIAGNOSIS-E07",
+      "LJ-LF3-DIAGNOSIS-E08"
+    ],
+    "passPercent": 80,
+    "scoring": "all-or-nothing-per-question",
+    "timed": false
+  },
+  "questionLinks": [
+    {
+      "questionId": "LJ-LF3-DIAGNOSIS-Q01",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf3-diagnosis-isolate"
+      ],
+      "blockIds": [
+        "common-lf3-diagnosis-sequence"
+      ]
+    },
+    {
+      "questionId": "LJ-LF3-DIAGNOSIS-Q02",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf3-diagnosis-isolate"
+      ],
+      "blockIds": [
+        "common-lf3-diagnosis-sequence",
+        "common-lf3-diagnosis-practice"
+      ]
+    },
+    {
+      "questionId": "LJ-LF3-DIAGNOSIS-Q03",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf3-diagnosis-isolate"
+      ],
+      "blockIds": [
+        "common-lf3-diagnosis-sequence",
+        "common-lf3-diagnosis-practice"
+      ]
+    },
+    {
+      "questionId": "LJ-LF3-DIAGNOSIS-Q04",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf3-diagnosis-isolate"
+      ],
+      "blockIds": [
+        "common-lf3-diagnosis-sequence",
+        "common-lf3-diagnosis-evidence",
+        "common-lf3-diagnosis-practice"
+      ]
+    },
+    {
+      "questionId": "LJ-LF3-DIAGNOSIS-Q05",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf3-diagnosis-record"
+      ],
+      "blockIds": [
+        "common-lf3-diagnosis-evidence"
+      ]
+    },
+    {
+      "questionId": "LJ-LF3-DIAGNOSIS-Q06",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf3-diagnosis-isolate",
+        "common-lf3-diagnosis-record"
+      ],
+      "blockIds": [
+        "common-lf3-diagnosis-evidence",
+        "common-lf3-diagnosis-practice"
+      ]
+    },
+    {
+      "questionId": "LJ-LF3-DIAGNOSIS-E01",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf3-diagnosis-isolate"
+      ],
+      "blockIds": [
+        "common-lf3-diagnosis-review"
+      ]
+    },
+    {
+      "questionId": "LJ-LF3-DIAGNOSIS-E02",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf3-diagnosis-isolate"
+      ],
+      "blockIds": [
+        "common-lf3-diagnosis-review"
+      ]
+    },
+    {
+      "questionId": "LJ-LF3-DIAGNOSIS-E03",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf3-diagnosis-record"
+      ],
+      "blockIds": [
+        "common-lf3-diagnosis-review"
+      ]
+    },
+    {
+      "questionId": "LJ-LF3-DIAGNOSIS-E04",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf3-diagnosis-isolate"
+      ],
+      "blockIds": [
+        "common-lf3-diagnosis-review"
+      ]
+    },
+    {
+      "questionId": "LJ-LF3-DIAGNOSIS-E05",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf3-diagnosis-record"
+      ],
+      "blockIds": [
+        "common-lf3-diagnosis-review"
+      ]
+    },
+    {
+      "questionId": "LJ-LF3-DIAGNOSIS-E06",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf3-diagnosis-isolate"
+      ],
+      "blockIds": [
+        "common-lf3-diagnosis-review"
+      ]
+    },
+    {
+      "questionId": "LJ-LF3-DIAGNOSIS-E07",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf3-diagnosis-record"
+      ],
+      "blockIds": [
+        "common-lf3-diagnosis-review"
+      ]
+    },
+    {
+      "questionId": "LJ-LF3-DIAGNOSIS-E08",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf3-diagnosis-isolate",
+        "common-lf3-diagnosis-record"
+      ],
+      "blockIds": [
+        "common-lf3-diagnosis-review"
+      ]
+    }
+  ],
+  "interview": [
+    {
+      "id": "common-lf3-diagnosis-talk-isolate",
+      "prompt": "Eda meldet ein nicht erreichbares Portal. Beschreibe deine Prüfreihenfolge und welche Befunde du getrennt notierst.",
+      "objectiveIds": [
+        "common-lf3-diagnosis-isolate",
+        "common-lf3-diagnosis-record"
+      ],
+      "blockIds": [
+        "common-lf3-diagnosis-sequence",
+        "common-lf3-diagnosis-evidence"
+      ],
+      "keyPoints": [
+        "Aufgabe und Sollplan klären, Ausgangszustand festhalten.",
+        "Verbindung, IP/Präfix, Gateway, DNS und Anwendung unterscheiden.",
+        "Befund nicht als unbelegte Ursache oder weitergehenden Erfolg ausgeben."
+      ],
+      "acceptableAlternatives": [
+        "Eine fachlich gleichwertige, zum dokumentierten Befund passende Erklärung."
+      ],
+      "misconceptions": [
+        "Eine erfolgreiche IP-Probe als Nachweis einer funktionierenden Anwendung darstellen."
+      ],
+      "sampleAnswer": "Ich kläre Client, Portalname und betroffene Aktion und lese den Netzplan. Dann prüfe ich Verbindung, eigene IP-Daten und Gateway. Ich trenne die numerische IP-Probe von der DNS-Antwort und teste zuletzt die gewünschte Portalaktion. Ich notiere jede Beobachtung und leite daraus den nächsten Schritt ab.",
+      "followUp": "Warum ist eine ausbleibende ping-Antwort in einem echten Netz kein eindeutiger Beweis für ein defektes Kabel?"
+    },
+    {
+      "id": "common-lf3-diagnosis-talk-practice",
+      "prompt": "Bearbeite die drei Fälle im Netzwerklabor. Beschreibe anschließend einen tatsächlichen Ausgangsbefund, deine Einordnung, die Änderung und das Ergebnis der erneuten Probe. Lies das Protokoll und ergänze eine Verbesserung deines Vorgehens.",
+      "objectiveIds": [
+        "common-lf3-diagnosis-isolate",
+        "common-lf3-diagnosis-record"
+      ],
+      "blockIds": [
+        "common-lf3-diagnosis-sequence",
+        "common-lf3-diagnosis-evidence",
+        "common-lf3-diagnosis-practice"
+      ],
+      "keyPoints": [
+        "In jedem Fall erst Ausgangsprobe abrufen.",
+        "Ursache des Ausgangsfehlers begründet zuordnen.",
+        "Nach Plan korrigieren und nach jeder Änderung erneut prüfen.",
+        "Alle drei Fälle abschließen und das gespeicherte Modellprotokoll lesen.",
+        "Eigene Beobachtung und Verbesserung notieren und die Modellbearbeitung bewusst bestätigen."
+      ],
+      "acceptableAlternatives": [
+        "Eine fachlich gleichwertige, zum dokumentierten Befund passende Erklärung."
+      ],
+      "misconceptions": [
+        "Eine erfolgreiche IP-Probe als Nachweis einer funktionierenden Anwendung darstellen."
+      ],
+      "sampleAnswer": "Beispiel für eine Notiz nach eigener Bearbeitung: Ich habe den Ausgangsbefund gelesen und die passende Fehlerart zugeordnet. Ich ergänze hier meinen tatsächlich beobachteten Wert, die gewählte Korrektur und das Ergebnis der erneuten IP-, DNS- und Anwendungsprobe. Nach allen drei Fällen habe ich das Protokoll gelesen und eine Verbesserung formuliert. Diese Vorlage bestätigt keine Durchführung.",
+      "followUp": "Welche konkrete Beobachtung begründet deine Änderung, und welchen Prüfschritt würdest du beim nächsten Fall früher beachten?",
+      "practice": {
+        "task": "Löse die drei aufeinanderfolgenden Störungen in der lokalen Simulation: unterbrochene Verbindung, falsches Clientnetz und falscher DNS-Eintrag. Rufe in jedem Fall zuerst Ausgangsprobe abrufen auf. Lies die Modellausgaben, ordne die Ursache des Ausgangsfehlers zu und korrigiere nach dem Plan: freie Clientadresse in 192.0.2.0/24, Gateway 192.0.2.1 und DNS 192.0.2.53. Die .1, .10 und .53 sind belegt; .0 und .255 sind keine Hostadressen. .20 ist ein Ausgangswert, andere freie Hostadressen wie .30 sind ebenfalls möglich. Prüfe nach Änderungen erneut und schließe den jeweiligen Fall ab. Bearbeite alle drei Fälle, lies das gespeicherte Protokoll und notiere eine eigene Beobachtung, die begründete Korrektur sowie eine Verbesserung. Bestätige erst danach bewusst. Router, Server und Firewall funktionieren im Modell; alle Proben und die Portalantwort sind synthetisch. Es werden keine echten Netzwerkanfragen, Befehle, Dateien oder PC-Einstellungen ausgelöst.",
+        "checklist": [
+          "Ich habe in jedem Fall vor einer Änderung die Ausgangsprobe abgerufen und den Befund gelesen.",
+          "Ich habe die Ursache des ursprünglichen Befunds passend eingeordnet und die Konfiguration mit dem Netzplan verglichen.",
+          "Ich habe jeden Fall korrigiert, nach Änderungen erneut geprüft und die synthetische Anwendungsantwort gelesen.",
+          "Ich habe alle drei Fälle abgeschlossen und das gespeicherte Modellprotokoll nachvollzogen.",
+          "Meine eigene Notiz nennt eine Beobachtung, die begründete Änderung, die erneute Probe und eine Verbesserung."
+        ],
+        "confirmation": "Ich bestätige, dass ich die drei Modellfälle selbst beobachtet, eingeordnet, korrigiert, erneut geprüft und abgeschlossen habe. Ich habe das Protokoll gelesen und eigene Beobachtungen ergänzt. Das ist meine Selbstbestätigung einer Simulation, kein Nachweis einer echten Netzwerkinstallation."
+      }
+    },
+    {
+      "id": "common-lf3-diagnosis-talk-review",
+      "prompt": "Verbinde alle sechs LF3-Themen in einer kurzen Übergabe an Eda: Verbindungsweg, Protokolle und Einheiten, Adressen, DHCP/DNS, sicherer Zugang und nachvollziehbare Diagnose.",
+      "objectiveIds": [
+        "common-lf3-diagnosis-isolate",
+        "common-lf3-diagnosis-record"
+      ],
+      "blockIds": [
+        "common-lf3-diagnosis-review"
+      ],
+      "keyPoints": [
+        "Switch, Router und gegebenenfalls Access Point passend einordnen.",
+        "IP, TCP/UDP und Anwendung trennen; 25 MB bei 100 Mbit/s ergeben ideal 2 s.",
+        "Freie /24-Hostadresse und wertgleiche IPv6-Kürzung erklären.",
+        "DHCP-Konfiguration, DNS-Namensantwort und Gateway unterscheiden.",
+        "Identität und Rechte sowie konkrete WLAN-Vorgabe beachten.",
+        "Ausgangsbefund, Einordnung, Korrektur und erneute Anwendungsprobe dokumentieren."
+      ],
+      "acceptableAlternatives": [
+        "Eine fachlich gleichwertige, zum dokumentierten Befund passende Erklärung."
+      ],
+      "misconceptions": [
+        "Eine erfolgreiche IP-Probe als Nachweis einer funktionierenden Anwendung darstellen."
+      ],
+      "sampleAnswer": "Der Kabelclient erreicht über den Switch den Router zum anderen Netz. IP-Erreichbarkeit und Transport sind von der Portalaktion getrennt. 25 MB dauern bei 100 Mbit/s ideal 2 s. Eine freie .30/24 passt; 2001:db8::20 ist eine gültige Kürzung der vorgegebenen IPv6-Adresse. DHCP liefert Konfiguration, DNS die Portaladresse, das Gateway den Weg ins andere Netz. Ich verwende das freigegebene Zugangsprofil und prüfe Rechte nach Rolle. Im Nachweis stehen Ausgangsbefund, Einordnung, Änderung und erneute DNS- und Portalprobe ohne Zugangsdaten.",
+      "followUp": "Welche Grenze der Modellübung und welche Grenze einer erfolgreichen IP-Probe nennst du bei der Übergabe?"
+    }
+  ],
+  "cards": [
+    {
+      "id": "common-lf3-diagnosis-card-order",
+      "front": "Welche Prüfreihenfolge hilft beim nicht erreichbaren Portal?",
+      "back": "Soll und Ausgangsbefund klären; Verbindung, IP-Adresse/Präfix, Gateway/IP-Weg, DNS und benötigte Anwendung schrittweise prüfen.",
+      "objectiveIds": [
+        "common-lf3-diagnosis-isolate"
+      ],
+      "blockIds": [
+        "common-lf3-diagnosis-sequence"
+      ]
+    },
+    {
+      "id": "common-lf3-diagnosis-card-difference",
+      "front": "Was trennt einen IP-Fehler von einem DNS-Hinweis?",
+      "back": "Eine Adresse im falschen Sollnetz betrifft die IP-Konfiguration. Gelingt der numerische IP-Weg, während die Namensabfrage scheitert, wird DNS genauer geprüft.",
+      "objectiveIds": [
+        "common-lf3-diagnosis-isolate"
+      ],
+      "blockIds": [
+        "common-lf3-diagnosis-sequence",
+        "common-lf3-diagnosis-evidence"
+      ]
+    },
+    {
+      "id": "common-lf3-diagnosis-card-limits",
+      "front": "Was belegt eine erfolgreiche ping-Probe?",
+      "back": "Empfangene ICMP-Echo-Antworten zur Zieladresse. Sie bestätigt keine Portalrechte und keine erfolgreiche Webfunktion. Eine ausbleibende Antwort kann auch gefiltert sein.",
+      "objectiveIds": [
+        "common-lf3-diagnosis-isolate"
+      ],
+      "blockIds": [
+        "common-lf3-diagnosis-evidence"
+      ]
+    },
+    {
+      "id": "common-lf3-diagnosis-card-record",
+      "front": "Welche Angaben machen eine Korrektur nachvollziehbar?",
+      "back": "Soll, Ausgangswert, Prüfschritt und Ergebnis, begründete Einordnung, alter/neuer Wert, erneute Prüfung und offene Zuständigkeit. Keine geheimen Zugangsnachweise.",
+      "objectiveIds": [
+        "common-lf3-diagnosis-record"
+      ],
+      "blockIds": [
+        "common-lf3-diagnosis-evidence"
+      ]
+    },
+    {
+      "id": "common-lf3-diagnosis-card-retest",
+      "front": "Warum wird nach jeder Änderung erneut geprüft?",
+      "back": "Ein früherer Erfolg beschreibt den früheren Zustand. Auch eine gültige neue Clientadresse braucht eine neue passende Probe und einen aktualisierten Nachweis.",
+      "objectiveIds": [
+        "common-lf3-diagnosis-isolate",
+        "common-lf3-diagnosis-record"
+      ],
+      "blockIds": [
+        "common-lf3-diagnosis-evidence",
+        "common-lf3-diagnosis-practice"
+      ]
+    },
+    {
+      "id": "common-lf3-diagnosis-card-model",
+      "front": "Wann ist die Laborbearbeitung vollständig?",
+      "back": "Nach Ausgangsprobe, passender Einordnung, Korrektur und erfolgreicher Nachprüfung aller drei Fälle. Anschließend Protokoll lesen, eigene Notiz ergänzen und bewusst bestätigen. Alles bleibt eine lokale Simulation.",
+      "objectiveIds": [
+        "common-lf3-diagnosis-isolate",
+        "common-lf3-diagnosis-record"
+      ],
+      "blockIds": [
+        "common-lf3-diagnosis-practice",
+        "common-lf3-diagnosis-review"
+      ]
+    }
+  ],
+  "fieldReview": {
+    "fieldId": "LF3",
+    "topicIds": [
+      "common-lf3-physical",
+      "common-lf3-protocols",
+      "common-lf3-addressing",
+      "common-lf3-services",
+      "common-lf3-access",
+      "common-lf3-diagnosis"
+    ],
+    "blockIds": [
+      "common-lf3-diagnosis-review"
+    ],
+    "interviewIds": [
+      "common-lf3-diagnosis-talk-review"
+    ],
+    "questionIds": [
+      "LJ-LF3-DIAGNOSIS-E01",
+      "LJ-LF3-DIAGNOSIS-E02",
+      "LJ-LF3-DIAGNOSIS-E03",
+      "LJ-LF3-DIAGNOSIS-E04",
+      "LJ-LF3-DIAGNOSIS-E05",
+      "LJ-LF3-DIAGNOSIS-E06",
+      "LJ-LF3-DIAGNOSIS-E07",
+      "LJ-LF3-DIAGNOSIS-E08"
+    ]
+  },
+  "review": {
+    "status": "reviewed",
+    "checkedAt": "2026-11-11"
+  }
+}

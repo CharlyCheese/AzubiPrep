@@ -1,0 +1,496 @@
+{
+  "schemaVersion": 1,
+  "id": "common-lf3-access",
+  "version": "1.0.0",
+  "title": "Netzwerkzugang sicher einrichten",
+  "fieldId": "LF3",
+  "scope": "common",
+  "prerequisites": [
+    "common-lf3-services"
+  ],
+  "sourceIds": [
+    "lf3-ms-nps",
+    "lf3-ms-eap",
+    "lf3-apple-wifi"
+  ],
+  "sources": [
+    {
+      "id": "lf3-ms-nps",
+      "title": "Microsoft: Network Policy Server overview",
+      "url": "https://learn.microsoft.com/en-us/windows-server/networking/technologies/nps/nps-top",
+      "checkedAt": "2026-11-11",
+      "note": "Öffentliche Herstellerdokumentation zur getrennten Authentifizierung und Autorisierung sowie zentralen Netzwerkzugangsregeln geprüft. Keine Serverinstallation oder reale Kontoabfrage."
+    },
+    {
+      "id": "lf3-ms-eap",
+      "title": "Microsoft: Extensible Authentication Protocol for network access",
+      "url": "https://learn.microsoft.com/en-us/windows-server/networking/technologies/extensible-authentication-protocol/network-access",
+      "checkedAt": "2026-11-11",
+      "note": "802.1X/EAP und gegenseitige zertifikatsgestützte Authentifizierung mit EAP-TLS geprüft. Das eigene Unternehmensprofil ist eine fiktive Organisationsvorgabe, keine universelle WLAN-Checkliste."
+    },
+    {
+      "id": "lf3-apple-wifi",
+      "title": "Apple: Recommended settings for Wi-Fi routers and access points",
+      "url": "https://support.apple.com/en-us/102766",
+      "checkedAt": "2026-11-11",
+      "note": "Herstellerhinweise zu WPA2 mit AES, WPA3, unsicheren Altverfahren, SSID und Grenzen von MAC-Filtern geprüft. Die Quelle behandelt vor allem Personal-Netze; Enterprise-Vorgaben werden getrennt mit der EAP-Dokumentation begründet."
+    }
+  ],
+  "objectives": [
+    {
+      "id": "common-lf3-access-identity",
+      "text": "Authentifizierung und Zugriffsberechtigung bei der Netzanmeldung unterscheiden."
+    },
+    {
+      "id": "common-lf3-access-connection",
+      "text": "Für einen Client passende WLAN-Sicherheits- und Zugangsregeln aus einer Vorgabe anwenden."
+    }
+  ],
+  "caseStudy": {
+    "title": "Zwei Netze, zwei begründete Vorgaben",
+    "text": "Eigener fiktiver Lernfall: Mira von Knotenpunkt benötigt bei Radblick einen freigegebenen Teamzugang. Sam erklärt die verwalteten Profile, Eda die fachlichen Rechte. Ein separates älteres Laborgerät dient dem Vergleich. Es werden keine realen Konten, Schlüssel oder Zertifikate verwendet."
+  },
+  "blocks": [
+    {
+      "id": "common-lf3-access-roles",
+      "title": "1. Identität prüfen und Rechte zuordnen",
+      "objectiveIds": [
+        "common-lf3-access-identity"
+      ],
+      "sourceIds": [
+        "lf3-ms-nps",
+        "lf3-ms-eap"
+      ],
+      "paragraphs": [
+        "Eine Netzanmeldung hat mehrere Fragen. Authentifizierung prüft die behauptete Identität einer Person oder eines Geräts anhand eines vorgesehenen Nachweises. Autorisierung entscheidet danach oder im Rahmen der Zugangsprüfung, welcher Zugriff erlaubt ist. Ein erfolgreicher Identitätsnachweis ist daher keine Freigabe für beliebige Netze, Ordner oder Verwaltungsfunktionen.",
+        "Im fiktiven Betrieb Radblick bekommt Mira ein persönliches, verwaltetes Zugangsprofil für das Beschäftigtennetz. Eda darf mit ihrem freigegebenen Konto ebenfalls ins Netz, erhält im Ticketportal aber andere Fachrechte. Sam betreut die technischen Vorgaben. Dass alle drei erfolgreich angemeldet sind, bedeutet nicht, dass sie dieselben Berechtigungen besitzen.",
+        "Bei einem Enterprise-Zugang können 802.1X und EAP die Anmeldung zwischen Client, Zugangseinrichtung und Authentifizierungsdienst unterstützen. Für den Einstieg genügt die Rollenverteilung: Der Client weist seine Identität nach, Access Point oder Switch vermittelt die Zugangsprüfung, eine zentrale Stelle prüft Nachweise und Regeln. EAP ist ein Rahmen für Verfahren; das konkrete Verfahren legt die Organisation fest.",
+        "Im vorgesehenen EAP-TLS-Profil werden Zertifikate zur gegenseitigen Authentifizierung eingesetzt. Der Client prüft auch den erwarteten Authentifizierungsserver. Das Profil und die Zertifikate werden über den freigegebenen Verwaltungsweg bereitgestellt. Eine erfolgreiche Netzanmeldung wird getrennt von der späteren Anmeldung und Berechtigung in einer Anwendung betrachtet."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Lernfall",
+        "text": "Miras Netzprofil wird akzeptiert. Der Zugriff auf die Einkaufsverwaltung bleibt dennoch gesperrt, weil ihre Rolle ihn nicht vorsieht."
+      },
+      "misconception": {
+        "claim": "Ein akzeptierter Anmeldenachweis erlaubt alle Ressourcen im Firmennetz.",
+        "correction": "Identität und erlaubter Zugriff sind verschiedene Entscheidungen. Anwendungsrechte können zusätzlich beschränkt sein."
+      },
+      "takeaway": "Authentifizierung fragt nach der Identität, Autorisierung nach dem erlaubten Zugriff."
+    },
+    {
+      "id": "common-lf3-access-profiles",
+      "title": "2. Den passenden WLAN-Modus aus der Vorgabe wählen",
+      "objectiveIds": [
+        "common-lf3-access-connection"
+      ],
+      "sourceIds": [
+        "lf3-ms-eap",
+        "lf3-apple-wifi"
+      ],
+      "paragraphs": [
+        "Für eine WLAN-Verbindung müssen Client und Access Point kompatible Einstellungen verwenden. Die SSID ist der Netzname. Hinzu kommen Sicherheitsmodus, Verschlüsselungsverfahren und die vorgesehene Art des Identitätsnachweises. Die Auswahl folgt dem freigegebenen Profil des konkreten Netzes. Eine kurze Liste einzelner akzeptierter Begriffe ist keine allgemeingültige Sicherheitsprüfung für jedes WLAN.",
+        "Für Radblicks Beschäftigtennetz gilt in diesem Lernfall ausdrücklich: SSID Radblick-Team, WPA3-Enterprise, 802.1X mit EAP-TLS, verwaltetes Clientzertifikat und Prüfung des erwarteten Servers nach dem verteilten Profil. Sam hat bestätigt, dass Client und Zugangseinrichtung diese Vorgabe unterstützen. WPA3-Personal wäre ein anderes Verfahren und erfüllt diese Enterprise-Vorgabe nicht.",
+        "Für ein getrenntes älteres Übungsgerät bei Knotenpunkt gilt eine andere ausdrückliche Vorgabe: SSID Knotenpunkt-Labor, WPA2-Personal mit AES und ein über den vorgesehenen Weg bereitgestellter gemeinsamer Schlüssel. Dieses Laborprofil ist eine begrenzte Kompatibilitätsvorgabe für den fiktiven Fall, keine Empfehlung, ein vorhandenes WPA3-Enterprise-Netz herabzustufen. Der Schlüssel wird hier weder angezeigt noch eingegeben.",
+        "WEP, ursprüngliches WPA mit TKIP und offene unverschlüsselte Zugänge erfüllen keines der beiden vorgegebenen Profile. Ein attraktiver Netzname oder guter Empfang ersetzt keine Prüfung des Sicherheitsmodus. Fehlt dem Client die benötigte Unterstützung, klärt Mira die freigegebene Alternative mit Sam, statt die Zugangssicherung selbst abzuschalten."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Lernfall",
+        "text": "Im Beschäftigtennetz wählt Mira das verwaltete Enterprise-Profil; am beschriebenen alten Laborgerät wäre das gesondert freigegebene WPA2-AES-Profil passend."
+      },
+      "misconception": {
+        "claim": "WPA2-AES und WPA3-Enterprise können unabhängig von der Organisationsvorgabe gegeneinander ausgetauscht werden.",
+        "correction": "Die Profile unterscheiden sich unter anderem bei Anmeldung und Verwaltung. Entscheidend sind konkrete Vorgabe, Kompatibilität und Freigabe."
+      },
+      "takeaway": "SSID, Sicherheitsmodus und Nachweis gemeinsam gegen die Vorgabe prüfen."
+    },
+    {
+      "id": "common-lf3-access-trust",
+      "title": "3. Vertrauen und Zugangsdaten sorgfältig behandeln",
+      "objectiveIds": [
+        "common-lf3-access-identity",
+        "common-lf3-access-connection"
+      ],
+      "sourceIds": [
+        "lf3-ms-nps",
+        "lf3-ms-eap",
+        "lf3-apple-wifi"
+      ],
+      "paragraphs": [
+        "Ein bekannter Netzname ist kein Identitätsbeweis für einen Access Point. Ein fremdes Gerät kann denselben Namen ausstrahlen. Mira nutzt deshalb das verwaltete Profil und dessen vorgesehene Serverprüfung. Bei einer unerwarteten Zertifikatswarnung setzt sie die Anmeldung nicht durch Abschalten der Prüfung fort, sondern lässt Profil, Serveridentität und Zertifikatskette durch Sam klären.",
+        "Persönliche Zugangsnachweise bleiben der vorgesehenen Person oder dem vorgesehenen Gerät zugeordnet. Mira übernimmt weder Edas Konto noch exportiert sie fremde Zertifikate als Abkürzung. Kennwörter, private Schlüssel oder gemeinsame WLAN-Schlüssel gehören nicht in Screenshots, Tickets oder das allgemeine Übergabeprotokoll. Für eine Lernnotiz genügen Profilname, Ergebnis und zuständige Stelle.",
+        "Eine MAC-Adressliste kann eine organisatorische Zusatzregel sein, ersetzt aber keine sichere Anmeldung und Verschlüsselung. MAC-Adressen lassen sich nachahmen oder können durch Datenschutzfunktionen wechseln. Auch eine versteckte SSID macht ein WLAN nicht zu einem authentisierten sicheren Netz. Solche Zusatzmaßnahmen werden deshalb nicht als Beweis für einen vertrauenswürdigen Zugang gewertet.",
+        "Das fiktive Gastnetz Radblick-Gast ist laut Vorgabe für Gäste vorgesehen und getrennt von internen Ressourcen. Ein erfolgreich verbundener Gast soll Internetzugang haben, aber keine interne Freigabe erreichen. Diese Beschränkung ist ein beabsichtigtes Zugriffsergebnis. Für Beschäftigtenaufgaben verwendet Mira das freigegebene Teamprofil und prüft ihre dafür vorgesehenen Rechte."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Lernfall",
+        "text": "Ein Netz mit dem Namen Radblick-Team zeigt eine unerwartete Serverwarnung. Mira stoppt den Anmeldeversuch und meldet die Warnung ohne Geheimnisse an Sam."
+      },
+      "misconception": {
+        "claim": "Eine sichtbare passende SSID oder eine eingetragene MAC-Adresse beweist die Vertrauenswürdigkeit des Netzes.",
+        "correction": "Name und MAC-Liste können imitiert werden. Das vorgesehene Sicherheitsprofil und die Identitätsprüfung bleiben notwendig."
+      },
+      "takeaway": "Warnungen klären, persönliche Nachweise schützen und Zusatzregeln nicht mit Authentifizierung verwechseln."
+    },
+    {
+      "id": "common-lf3-access-handover",
+      "title": "4. Einrichtung, Prüfung und Übergabe verbinden",
+      "objectiveIds": [
+        "common-lf3-access-identity",
+        "common-lf3-access-connection"
+      ],
+      "sourceIds": [
+        "lf3-ms-nps",
+        "lf3-ms-eap",
+        "lf3-apple-wifi"
+      ],
+      "paragraphs": [
+        "Vor der Einrichtung liest Mira den Auftrag: Welches Netz ist für ihre Aufgabe bestimmt, welches Gerät ist freigegeben, welches Profil und welche Rechte gelten? Dann vergleicht sie die unterstützten Verfahren mit der Vorgabe und lässt das passende Profil über den vorgesehenen Weg bereitstellen. Der gemeinsame Schlüssel des separaten Labornetzes wird nicht als Ersatz für das Teamzertifikat benutzt.",
+        "Nach der Einrichtung unterscheidet sie mehrere Prüfergebnisse. Verbunden zeigt zunächst eine WLAN-Zuordnung an. Ein erfolgreicher Identitätsnachweis bestätigt die vorgesehene Anmeldung. Nutzbare IP-Daten und Namensauflösung müssen anschließend passen. Abschließend prüft Mira mit geeigneten Testdaten, ob die vereinbarte Portalaktion erlaubt ist und eine nicht vorgesehene Funktion gesperrt bleibt.",
+        "Ein Beispiel: Mira kann das Ticketportal lesen, aber keine Einkaufsbestellung freigeben. Wenn die Rollenbeschreibung genau das vorsieht, sind Authentifizierung und Berechtigungsbegrenzung vereinbar. Scheitert dagegen eine ausdrücklich benötigte Ticketfunktion, dokumentiert sie den Befund und lässt die zuständige Stelle die Berechtigung prüfen. Sie fordert nicht pauschal Administrationsrechte an.",
+        "Das Protokoll nennt Gerät beziehungsweise Übungsfall, Profil und SSID, freigegebenen Modus, Ergebnis der Anmeldung, benötigte und geprüfte Rechte, offene Punkte und Zuständigkeit. Nach einer freigegebenen Korrektur werden die betroffenen Schritte erneut getestet. In dieser Lernreise werden Vorgaben und Beispiele besprochen; reale Konten, Zertifikate und WLAN-Einstellungen werden nicht verändert."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Lernfall",
+        "text": "Miras Notiz lautet: Teamprofil nach Vorgabe, Anmeldung akzeptiert, Ticketleserecht geprüft, Einkaufsfreigabe entsprechend Rolle gesperrt; keine Zugangsdaten im Protokoll."
+      },
+      "misconception": {
+        "claim": "Eine erfolgreiche WLAN-Anmeldung macht einen Test der benötigten Portalrechte überflüssig.",
+        "correction": "Netzverbindung, Identitätsnachweis und Anwendungsberechtigung sind getrennt zu prüfen."
+      },
+      "takeaway": "Freigegebenes Profil anwenden und das tatsächlich benötigte Zugriffsergebnis belegen."
+    }
+  ],
+  "questionFile": "questions/common-lf3-access.v1.csv",
+  "quiz": {
+    "questionIds": [
+      "LJ-LF3-ACCESS-Q01",
+      "LJ-LF3-ACCESS-Q02",
+      "LJ-LF3-ACCESS-Q03",
+      "LJ-LF3-ACCESS-Q04",
+      "LJ-LF3-ACCESS-Q05",
+      "LJ-LF3-ACCESS-Q06"
+    ]
+  },
+  "exam": {
+    "questionIds": [
+      "LJ-LF3-ACCESS-E01",
+      "LJ-LF3-ACCESS-E02",
+      "LJ-LF3-ACCESS-E03",
+      "LJ-LF3-ACCESS-E04",
+      "LJ-LF3-ACCESS-E05",
+      "LJ-LF3-ACCESS-E06",
+      "LJ-LF3-ACCESS-E07",
+      "LJ-LF3-ACCESS-E08"
+    ],
+    "passPercent": 80,
+    "scoring": "all-or-nothing-per-question",
+    "timed": false
+  },
+  "questionLinks": [
+    {
+      "questionId": "LJ-LF3-ACCESS-Q01",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf3-access-identity"
+      ],
+      "blockIds": [
+        "common-lf3-access-roles"
+      ]
+    },
+    {
+      "questionId": "LJ-LF3-ACCESS-Q02",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf3-access-identity"
+      ],
+      "blockIds": [
+        "common-lf3-access-roles",
+        "common-lf3-access-handover"
+      ]
+    },
+    {
+      "questionId": "LJ-LF3-ACCESS-Q03",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf3-access-connection"
+      ],
+      "blockIds": [
+        "common-lf3-access-profiles"
+      ]
+    },
+    {
+      "questionId": "LJ-LF3-ACCESS-Q04",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf3-access-connection"
+      ],
+      "blockIds": [
+        "common-lf3-access-profiles"
+      ]
+    },
+    {
+      "questionId": "LJ-LF3-ACCESS-Q05",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf3-access-identity",
+        "common-lf3-access-connection"
+      ],
+      "blockIds": [
+        "common-lf3-access-trust"
+      ]
+    },
+    {
+      "questionId": "LJ-LF3-ACCESS-Q06",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf3-access-identity",
+        "common-lf3-access-connection"
+      ],
+      "blockIds": [
+        "common-lf3-access-trust"
+      ]
+    },
+    {
+      "questionId": "LJ-LF3-ACCESS-E01",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf3-access-identity"
+      ],
+      "blockIds": [
+        "common-lf3-access-roles",
+        "common-lf3-access-handover"
+      ]
+    },
+    {
+      "questionId": "LJ-LF3-ACCESS-E02",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf3-access-identity"
+      ],
+      "blockIds": [
+        "common-lf3-access-roles"
+      ]
+    },
+    {
+      "questionId": "LJ-LF3-ACCESS-E03",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf3-access-identity"
+      ],
+      "blockIds": [
+        "common-lf3-access-roles"
+      ]
+    },
+    {
+      "questionId": "LJ-LF3-ACCESS-E04",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf3-access-connection"
+      ],
+      "blockIds": [
+        "common-lf3-access-profiles",
+        "common-lf3-access-handover"
+      ]
+    },
+    {
+      "questionId": "LJ-LF3-ACCESS-E05",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf3-access-identity",
+        "common-lf3-access-connection"
+      ],
+      "blockIds": [
+        "common-lf3-access-trust"
+      ]
+    },
+    {
+      "questionId": "LJ-LF3-ACCESS-E06",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf3-access-identity",
+        "common-lf3-access-connection"
+      ],
+      "blockIds": [
+        "common-lf3-access-trust",
+        "common-lf3-access-handover"
+      ]
+    },
+    {
+      "questionId": "LJ-LF3-ACCESS-E07",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf3-access-identity",
+        "common-lf3-access-connection"
+      ],
+      "blockIds": [
+        "common-lf3-access-trust",
+        "common-lf3-access-handover"
+      ]
+    },
+    {
+      "questionId": "LJ-LF3-ACCESS-E08",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf3-access-identity",
+        "common-lf3-access-connection"
+      ],
+      "blockIds": [
+        "common-lf3-access-handover"
+      ]
+    }
+  ],
+  "interview": [
+    {
+      "id": "common-lf3-access-talk-identity",
+      "prompt": "Erkläre Eda, warum eine erfolgreiche Netzanmeldung und eine gesperrte Einkaufsfreigabe gleichzeitig richtig sein können.",
+      "objectiveIds": [
+        "common-lf3-access-identity"
+      ],
+      "blockIds": [
+        "common-lf3-access-roles",
+        "common-lf3-access-handover"
+      ],
+      "keyPoints": [
+        "Authentifizierung prüft Identität.",
+        "Autorisierung begrenzt erlaubten Zugriff.",
+        "Benötigte und nicht vorgesehene Funktionen gegen die Rolle prüfen."
+      ],
+      "acceptableAlternatives": [
+        "Eine gleichwertige Begründung mit den ausdrücklich genannten Organisationsvorgaben."
+      ],
+      "misconceptions": [
+        "Erfolgreiche Identitätsprüfung mit uneingeschränkten Zugriffsrechten gleichsetzen."
+      ],
+      "sampleAnswer": "Der Nachweis bestätigt die Identität. Die Rolle legt zusätzlich fest, welche Funktionen erlaubt sind. Wenn Miras Rolle Ticketarbeit, aber keine Einkaufsfreigabe vorsieht, ist deren Sperre richtig. Ich prüfe die benötigte Ticketaktion gesondert.",
+      "followUp": "Welche Information benötigst du, bevor du eine Sperre als Fehler meldest?"
+    },
+    {
+      "id": "common-lf3-access-talk-profile",
+      "prompt": "Vergleiche Radblick-Team und Knotenpunkt-Labor anhand der konkreten Sicherheits- und Zugangsvorgaben.",
+      "objectiveIds": [
+        "common-lf3-access-identity",
+        "common-lf3-access-connection"
+      ],
+      "blockIds": [
+        "common-lf3-access-roles",
+        "common-lf3-access-profiles",
+        "common-lf3-access-trust"
+      ],
+      "keyPoints": [
+        "Team: WPA3-Enterprise, EAP-TLS, verwaltetes Zertifikat und Serverprüfung.",
+        "Labor: gesondert freigegebenes WPA2-Personal mit AES und gemeinsamem Schlüssel.",
+        "Profile nicht vertauschen, fehlende Unterstützung und Warnungen klären."
+      ],
+      "acceptableAlternatives": [
+        "Eine gleichwertige Begründung mit den ausdrücklich genannten Organisationsvorgaben."
+      ],
+      "misconceptions": [
+        "Erfolgreiche Identitätsprüfung mit uneingeschränkten Zugriffsrechten gleichsetzen."
+      ],
+      "sampleAnswer": "Radblick-Team nutzt das verwaltete Enterprise-Profil mit Zertifikaten und erwarteter Serveridentität. Das separate alte Laborgerät folgt seiner eigenen WPA2-Personal-AES-Vorgabe. Die Profile sind nicht austauschbar. Bei fehlender Unterstützung oder Serverwarnung hole ich eine freigegebene Lösung ein.",
+      "followUp": "Warum wäre WPA3-Personal trotz der Zahl 3 nicht das geforderte Teamprofil?"
+    },
+    {
+      "id": "common-lf3-access-talk-record",
+      "prompt": "Entwirf einen kurzen Übergabevermerk für Miras erfolgreichen Teamzugang mit korrekt beschränkten Rechten.",
+      "objectiveIds": [
+        "common-lf3-access-identity",
+        "common-lf3-access-connection"
+      ],
+      "blockIds": [
+        "common-lf3-access-trust",
+        "common-lf3-access-handover"
+      ],
+      "keyPoints": [
+        "Profil und Ergebnis ohne Geheimnisse nennen.",
+        "Benötigte Rechte und beabsichtigte Sperren prüfen.",
+        "Offene Punkte und zuständige Person festhalten."
+      ],
+      "acceptableAlternatives": [
+        "Eine gleichwertige Begründung mit den ausdrücklich genannten Organisationsvorgaben."
+      ],
+      "misconceptions": [
+        "Erfolgreiche Identitätsprüfung mit uneingeschränkten Zugriffsrechten gleichsetzen."
+      ],
+      "sampleAnswer": "Teamprofil Radblick-Team nach Vorgabe bereitgestellt. Anmeldung erfolgreich, IP- und Namensprüfung passend. Ticketlesen funktioniert; Einkaufsfreigabe ist entsprechend Miras Rolle gesperrt. Einen offenen Klärpunkt benenne ich mit Zuständigkeit. Kennwörter und private Schlüssel werden nicht aufgenommen.",
+      "followUp": "Welche Prüfung wiederholst du nach einer freigegebenen Profiländerung?"
+    }
+  ],
+  "cards": [
+    {
+      "id": "common-lf3-access-card-identity",
+      "front": "Was ist der Unterschied zwischen Authentifizierung und Autorisierung?",
+      "back": "Authentifizierung prüft die behauptete Identität, Autorisierung den erlaubten Zugriff. Eine erfolgreiche Anmeldung gibt nicht alle Ressourcen frei.",
+      "objectiveIds": [
+        "common-lf3-access-identity"
+      ],
+      "blockIds": [
+        "common-lf3-access-roles"
+      ]
+    },
+    {
+      "id": "common-lf3-access-card-enterprise",
+      "front": "Welche Vorgabe gilt im fiktiven Radblick-Team-Netz?",
+      "back": "WPA3-Enterprise mit 802.1X/EAP-TLS, verwaltetem Clientzertifikat und Prüfung des erwarteten Servers nach dem freigegebenen Profil.",
+      "objectiveIds": [
+        "common-lf3-access-identity",
+        "common-lf3-access-connection"
+      ],
+      "blockIds": [
+        "common-lf3-access-roles",
+        "common-lf3-access-profiles"
+      ]
+    },
+    {
+      "id": "common-lf3-access-card-labor",
+      "front": "Wann passt im Lernfall WPA2-Personal mit AES?",
+      "back": "Für das getrennte Knotenpunkt-Laborgerät mit genau dieser freigegebenen Kompatibilitätsvorgabe und vorgesehenem Schlüssel. Es ersetzt kein Enterprise-Profil.",
+      "objectiveIds": [
+        "common-lf3-access-connection"
+      ],
+      "blockIds": [
+        "common-lf3-access-profiles"
+      ]
+    },
+    {
+      "id": "common-lf3-access-card-warning",
+      "front": "Wie gehst du mit einer unerwarteten Serverzertifikatswarnung um?",
+      "back": "Anmeldung stoppen und Profil sowie Serveridentität mit der zuständigen Stelle klären. Die vorgesehene Prüfung nicht abschalten.",
+      "objectiveIds": [
+        "common-lf3-access-identity",
+        "common-lf3-access-connection"
+      ],
+      "blockIds": [
+        "common-lf3-access-trust"
+      ]
+    },
+    {
+      "id": "common-lf3-access-card-mac",
+      "front": "Warum ist eine MAC-Liste kein ausreichender Schutz?",
+      "back": "MAC-Adressen können nachgeahmt oder geändert werden. Eine Liste ersetzt weder sichere Authentifizierung noch Verschlüsselung; eine passende SSID beweist ebenfalls keine Identität.",
+      "objectiveIds": [
+        "common-lf3-access-identity",
+        "common-lf3-access-connection"
+      ],
+      "blockIds": [
+        "common-lf3-access-trust"
+      ]
+    },
+    {
+      "id": "common-lf3-access-card-handover",
+      "front": "Was enthält ein nachvollziehbares Zugangsprotokoll?",
+      "back": "Freigegebenes Profil, Ergebnis der Anmeldung, IP-/DNS-Prüfung, benötigte und geprüfte Rechte, offene Punkte und Zuständigkeit. Keine Kennwörter oder privaten Schlüssel.",
+      "objectiveIds": [
+        "common-lf3-access-identity",
+        "common-lf3-access-connection"
+      ],
+      "blockIds": [
+        "common-lf3-access-handover"
+      ]
+    }
+  ],
+  "review": {
+    "status": "reviewed",
+    "checkedAt": "2026-11-11"
+  }
+}

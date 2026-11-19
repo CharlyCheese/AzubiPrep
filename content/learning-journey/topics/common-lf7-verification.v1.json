@@ -1,0 +1,631 @@
+{
+  "schemaVersion": 1,
+  "id": "common-lf7-verification",
+  "version": "1.0.0",
+  "title": "Integration und Betriebswerte prüfen",
+  "fieldId": "LF7",
+  "scope": "common",
+  "prerequisites": [
+    "common-lf7-logic",
+    "common-lf4-measures"
+  ],
+  "sourceIds": [
+    "lf7-nist-cps",
+    "lf7-arduino-adc",
+    "lf7-adi-uart",
+    "lf7-arduino-library",
+    "lf7-vt-energy",
+    "lf7-nist-configuration",
+    "lf7-mdn-typeof",
+    "lf7-mdn-finite",
+    "lf7-mdn-return",
+    "lf7-mdn-or",
+    "lf7-mdn-not",
+    "lf7-mdn-inequality",
+    "lf7-mdn-comparison"
+  ],
+  "sources": [
+    {
+      "id": "lf7-nist-cps",
+      "title": "NIST: Cyber-Physical Systems and Internet of Things Foundations",
+      "url": "https://www.nist.gov/programs-projects/cyber-physical-systems-and-internet-things-foundations",
+      "checkedAt": "2026-11-16",
+      "note": "Öffentliche HTML-Projektbeschreibung zu physikalischen Komponenten, Sensorik, Aktorik, Logik sowie überprüfbaren Anforderungen gelesen. Tischmodell, Rollen und alle Fallwerte sind eigene Fiktion."
+    },
+    {
+      "id": "lf7-arduino-adc",
+      "title": "Arduino: Read Analog Voltage",
+      "url": "https://docs.arduino.cc/built-in-examples/basics/ReadAnalogVoltage",
+      "checkedAt": "2026-11-16",
+      "note": "Öffentlich indexierter Herstellertext zum ADC und den 1024 Codes 0–1023 bei 10 Bit geprüft. Keine Schaltungsanleitung übernommen; Sensorformat und Modellgenauigkeit sind fiktive Vorgaben."
+    },
+    {
+      "id": "lf7-adi-uart",
+      "title": "Analog Devices: UART – A Hardware Communication Protocol",
+      "url": "https://www.analog.com/en/resources/analog-dialogue/articles/uart-a-hardware-communication-protocol.html",
+      "checkedAt": "2026-11-16",
+      "note": "HTML-Herstellerartikel zu asynchroner serieller Übertragung, Datenrahmen und abgestimmten Parametern gelesen. Das konkrete UART-Format und die elektrischen Eigenschaften der Übung sind erfundene Dokumentauszüge."
+    },
+    {
+      "id": "lf7-arduino-library",
+      "title": "Arduino: Library specification",
+      "url": "https://docs.arduino.cc/arduino-cli/library-specification",
+      "checkedAt": "2026-11-16",
+      "note": "Herstellerspezifikation zu Bibliotheksversion, unterstützten Architekturen und Abhängigkeiten geprüft. Namen und Eigenschaften der Modellbibliotheken sind erfunden; keine Installation oder tatsächliche Bibliotheksfreigabe."
+    },
+    {
+      "id": "lf7-vt-energy",
+      "title": "Virginia Tech: Estimating Appliance and Home Electronic Energy Use",
+      "url": "https://www.pubs.ext.vt.edu/2901/2901-9014/2901-9014.html",
+      "checkedAt": "2026-11-16",
+      "note": "HTML-Lehrtext der Universität zu Leistung aus Spannung/Strom und Energie aus Leistung/Laufzeit geprüft. Verwendet wird ein eigenes idealisiertes Gleichstrommodell; keine Anleitung zum Messen oder Anschließen echter Geräte."
+    },
+    {
+      "id": "lf7-nist-configuration",
+      "title": "NIST: IoT Device Configuration",
+      "url": "https://pages.nist.gov/IoT-Device-Cybersecurity-Requirement-Catalogs/technical/configuration/",
+      "checkedAt": "2026-11-16",
+      "note": "Öffentlicher technischer Katalog zu autorisierten Konfigurationsänderungen, Schnittstellen und Wiederherstellung gelesen. Konkrete Rollen, Nachweise und Grenzen des Lernmodells sind eigenständig festgelegt."
+    },
+    {
+      "id": "lf7-mdn-typeof",
+      "title": "MDN: typeof",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/typeof",
+      "checkedAt": "2026-11-16",
+      "note": "JavaScript-Referenz zu Datentypen, Zahlen, Zeichenketten sowie NaN/Infinity geprüft. Eigene Beispiele bereiten die lokale Steuerfunktion vor."
+    },
+    {
+      "id": "lf7-mdn-finite",
+      "title": "MDN: Number.isFinite()",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/isFinite",
+      "checkedAt": "2026-11-16",
+      "note": "Referenz zu endlichen Zahlen und fehlender impliziter Umwandlung von Zeichenketten gelesen. Der erlaubte Temperaturbereich ist eine eigene Modellvorgabe."
+    },
+    {
+      "id": "lf7-mdn-return",
+      "title": "MDN: return",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/return",
+      "checkedAt": "2026-11-16",
+      "note": "Referenz zum Beenden eines Funktionsaufrufs mit Rückgabewert und zur gemeinsamen Zeile von return und Ausdruck geprüft."
+    },
+    {
+      "id": "lf7-mdn-or",
+      "title": "MDN: Logical OR (||)",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Logical_OR",
+      "checkedAt": "2026-11-16",
+      "note": "Referenz zur Oder-Verknüpfung und Kurzschlussauswertung geprüft. Im Lernbeispiel sind die verknüpften Bedingungen boolesch."
+    },
+    {
+      "id": "lf7-mdn-not",
+      "title": "MDN: Logical NOT (!)",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Logical_NOT",
+      "checkedAt": "2026-11-16",
+      "note": "Referenz zur logischen Verneinung geprüft. Im Inhalt wird sie auf das boolesche Ergebnis von Number.isFinite angewandt."
+    },
+    {
+      "id": "lf7-mdn-inequality",
+      "title": "MDN: Strict inequality (!==)",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Strict_inequality",
+      "checkedAt": "2026-11-16",
+      "note": "Referenz zur strikten Ungleichheit ohne Typumwandlung geprüft. Das Modell verlangt connected genau als boolesches true."
+    },
+    {
+      "id": "lf7-mdn-comparison",
+      "title": "MDN: Greater than or equal (>=)",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Greater_than_or_equal",
+      "checkedAt": "2026-11-16",
+      "note": "Referenz zu Vergleichsoperatoren und eingeschlossener Gleichheit geprüft; Eingabetypen werden im Modell vor dem Grenzwertvergleich validiert."
+    }
+  ],
+  "objectives": [
+    {
+      "id": "common-lf7-verification-test",
+      "text": "Die Erweiterung mit Normal- und Fehlerfällen prüfen und Messwerte mit Sollwerten vergleichen."
+    },
+    {
+      "id": "common-lf7-verification-energy",
+      "text": "Einen ermittelten Energiebedarf mit der geplanten Versorgung vergleichen."
+    },
+    {
+      "id": "common-lf7-verification-record",
+      "text": "Betriebs- und Datensicherheitsaspekte sowie Änderungen und Ergebnisse in der Systemdokumentation festhalten."
+    }
+  ],
+  "caseStudy": {
+    "title": "Nora nimmt die Erweiterung von Luftpunkt im Modell ab",
+    "text": "Der eigene fiktive Abschlussfall verbindet alle fünf LF7-Themen: Sensor-/Aktorrollen, Signale und Flüsse, Auswahl und Planung, eigene Steuerfunktion sowie Nachprüfung. Nora arbeitet am ungefährlichen Tischmodell in der lokalen Lernumgebung. Sie vergleicht Soll und Ist, prüft die idealisierte Versorgung und dokumentiert Grenzen. Es werden keine Geräte angeschlossen, keine elektrischen Arbeiten vorgenommen und keine externen Anfragen ausgelöst."
+  },
+  "blocks": [
+    {
+      "id": "common-lf7-verification-test",
+      "title": "1. Die gesamte Wirkungskette gegen Sollwerte prüfen",
+      "objectiveIds": [
+        "common-lf7-verification-test",
+        "common-lf7-verification-record"
+      ],
+      "sourceIds": [
+        "lf7-nist-cps",
+        "lf7-mdn-finite",
+        "lf7-mdn-comparison"
+      ],
+      "paragraphs": [
+        "Eine funktionierende Einzelkomponente beweist noch keine erfolgreiche Integration. Prüfe die Kette vom vorgegebenen Modelleingang über die eigene Funktion bis zu Lüfter- und Alarmanzeige. Notiere für jeden Versuch Eingabe mit Typ und Einheit, Verbindungszustand, erwarteten Zustand und tatsächlich beobachtetes Ergebnis. So bleibt sichtbar, welche Anforderung der Versuch belegt.",
+        "Normalfälle: 28 °C mit true erwartet off, 35 °C mit true erwartet on. Die Schaltgrenze prüfst du mit 29.9 und 30. Die Messgrenzen −20 und 80 sind eingeschlossen und ergeben off beziehungsweise on; -20.1 und 80.1 müssen fault liefern. Die Dezimalwerte im Code verwenden einen Punkt, im deutschen Erklärungstext darf ein Komma stehen.",
+        "Ergänze unabhängige Fehlerursachen: Zahl 35 mit false, Text '35' mit true, null, undefined, NaN und ±Infinity als Temperatur. Für die Verbindung gilt genau boolesches true; Text 'true' oder 1 ist kein Ersatz. Ein Fehler führt im ungefährlichen Tischmodell zu fault: Lüfter aus und Alarm an. Das ist keine allgemeine Sicherheitsregel für reale Kühlung.",
+        "Vergleiche nach einem Fehler auch wieder einen gültigen Fall, damit die Rückkehr zum Normalbetrieb sichtbar wird. Ein abgebrochener Lauf oder Syntaxfehler ist kein fachlich bestandener Test. Ändere bei Abweichung gezielt die Ursache und wiederhole die betroffenen Prüfungen der aktuellen Fassung. Ein gespeicherter Erfolg aus älterem Code gilt nicht für die Änderung."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Lernfall",
+        "text": "Nora erwartet für 30/true on und für 35/false fault. Erhält sie zweimal on, zeigt der zweite Versuch eine fehlende oder zu spät ausgeführte Verbindungsprüfung."
+      },
+      "misconception": {
+        "claim": "Ein eingeschalteter Lüfter bei einer hohen Temperatur belegt die gesamte Integration.",
+        "correction": "Normal-, Grenz- und verschiedene Fehlerfälle sowie Anzeige und Rückkehr zum Normalbetrieb müssen passend geprüft werden."
+      },
+      "takeaway": "Vergleiche festgelegtes Soll und beobachtetes Ist an mehreren Gliedern und Fällen."
+    },
+    {
+      "id": "common-lf7-verification-energy",
+      "title": "2. Strom, Leistung und Energie mit der Versorgung vergleichen",
+      "objectiveIds": [
+        "common-lf7-verification-energy",
+        "common-lf7-verification-test"
+      ],
+      "sourceIds": [
+        "lf7-vt-energy"
+      ],
+      "paragraphs": [
+        "Für die nachvollziehbare Rechnung gelten vorgegebene ideale Gleichstromwerte bei 5 V: Sensor 0,1 A, Steuerung einschließlich Anzeigen 0,2 A und laufender Lüfter 0,4 A. Alle drei sind im betrachteten Betrieb gleichzeitig aktiv. Der Strom beträgt I = 0,1 + 0,2 + 0,4 = 0,7 A. Die Leistung ist P = U × I = 5 V × 0,7 A = 3,5 W.",
+        "Die geplante Versorgung liefert 5 V bei maximal 1 A. Die Spannung passt zur Modellvorgabe, und 0,7 A liegen um 0,3 A unter der Lieferfähigkeit. Entsprechend stehen 5 W bereit und 3,5 W werden angenommen. Die Nennangabe 1 A beschreibt keine ständig erzwungene Stromaufnahme und keine gespeicherte Energiemenge.",
+        "Für acht Stunden durchgehenden Betrieb mit diesen konstanten Lastwerten gilt E = P × t = 3,5 W × 8 h = 28 Wh = 0,028 kWh. W bezeichnet Leistung; Wh bezeichnet Energie über eine Zeitspanne. Eine Versorgung mit 5 W Leistungsfähigkeit kann daraus nicht automatisch als Akku mit 5 Wh Kapazität interpretiert werden.",
+        "Die Rechnung nimmt den Lüfter acht Stunden lang laufend an. Anlaufspitzen, Leitungs- und Wandlungsverluste sowie zusätzliche Verbraucher werden nicht modelliert. Der Versorgungsabgleich ist daher unter diesen Annahmen bestanden; er belegt weder die nutzbare Kapazität einer Batterie noch die sichere Auslegung realer Hardware. Dokumentiere Rechnung, Einheiten, Betriebsdauer und Grenzen."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Lernfall",
+        "text": "0,7 A bei 5 V ergeben 3,5 W; acht Stunden ergeben 28 Wh. Die 5-V-/1-A-Versorgung reicht für die angenommene Dauerlast, vorbehaltlich der ausgeschlossenen realen Effekte."
+      },
+      "misconception": {
+        "claim": "3,5 W und 28 Wh sind austauschbare Angaben für denselben Betriebswert.",
+        "correction": "Leistung beschreibt den Energieumsatz pro Zeit; die Energie entsteht hier aus 3,5 W mal acht Stunden."
+      },
+      "takeaway": "Trenne A, V, W und Wh und nenne die Annahmen des Versorgungsnachweises."
+    },
+    {
+      "id": "common-lf7-verification-record",
+      "title": "3. Praxis durchführen und mit ihren Grenzen dokumentieren",
+      "objectiveIds": [
+        "common-lf7-verification-record",
+        "common-lf7-verification-test",
+        "common-lf7-verification-energy"
+      ],
+      "sourceIds": [
+        "lf7-nist-cps",
+        "lf7-nist-configuration"
+      ],
+      "paragraphs": [
+        "Eine Systemdokumentation nennt Zweck, Systemgrenze, ausgewählte Sensor-/Parserstände, Schnittstellen und Format, Gültigkeitsbereich, Schaltschwelle, Fehlerreaktion, geänderte Codefassung sowie Test- und Energienachweise. Halte Befund und offene Frage getrennt. Eine Aussage wie läuft enthält weder Eingang noch Soll-Ist-Vergleich und erlaubt keine Wiederholung.",
+        "Betriebssicherheit betrifft hier das kontrollierte Modellverhalten bei ungültigen Werten oder Verbindungsausfall. Datensicherheit betrifft unter anderem den Schutz von Konfiguration und Prüfnachweisen vor unbefugter Änderung sowie die Wiederherstellbarkeit eines bekannten Stands. Dokumentiere, wer Änderungen verantwortet und freigibt. Übernimm keine Zugangsdaten oder privaten Betriebsdaten in die Übung; alle Eingaben sind synthetisch.",
+        "Die praktische Abschlussübung wird in Reflexion 2 nach Abschluss der ersten Reflexion angeboten. Bearbeite die vorgegebenen Modellschritte in Reihenfolge. Vergleiche zuerst Komponenten, Signalweg und fiktive Unterlagen und gleiche Strom, Leistung und Achtstundenenergie mit der Versorgung ab. Ergänze danach die eigene Funktion control(temperature, connected) und prüfe sie mit Normal-, Grenz- und Fehlerfällen. Kontrolliere dabei die Ausgabe fault und die dargestellte Reaktion bei Verbindungsausfall. Halte abschließend Prüfstand, Zuständigkeiten und Grenzen für die Übergabe fest.",
+        "Lies die Rückmeldungen und korrigiere abweichende Entscheidungen. Änderungen verwerfen den bisherigen Prüfstatus; der Codeerfolg gehört zur tatsächlich geprüften Fassung. Erfolgreich abgeschlossene Schritte sind als Nachweis festgehalten. Lies das Protokoll, ergänze eine eigene Beobachtung und begründe das Ergebnis. Bestätige die Durchführung bewusst erst nach bestandener Praxis. Die Selbstbestätigung belegt deine lokale Übung und ist keine Freigabe oder Qualifikationsbescheinigung für echte Anlagen."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Lernfall",
+        "text": "Dokumentierter Befund: 35/false → Soll fault, Ist fault, Lüfter aus/Alarm an; geprüfte Codefassung zugeordnet. Energie: 0,7 A, 3,5 W, 28 Wh unter den genannten Annahmen."
+      },
+      "misconception": {
+        "claim": "Ein kopierter Lösungstext ersetzt die eigene Durchführung und deren Prüfprotokoll.",
+        "correction": "Das Protokoll muss aus der bearbeiteten Simulation stammen; deine Reflexion ordnet eigene Beobachtungen und Grenzen ein."
+      },
+      "takeaway": "Verbinde Änderung, aktuelle Prüfnachweise, Sicherheit und eigene Beobachtung."
+    },
+    {
+      "id": "common-lf7-verification-review",
+      "title": "4. Rückblick auf alle fünf Themen von LF7",
+      "objectiveIds": [
+        "common-lf7-verification-test",
+        "common-lf7-verification-energy",
+        "common-lf7-verification-record"
+      ],
+      "sourceIds": [
+        "lf7-nist-cps",
+        "lf7-arduino-adc",
+        "lf7-adi-uart",
+        "lf7-arduino-library",
+        "lf7-vt-energy",
+        "lf7-nist-configuration",
+        "lf7-mdn-typeof",
+        "lf7-mdn-finite",
+        "lf7-mdn-return",
+        "lf7-mdn-or",
+        "lf7-mdn-not",
+        "lf7-mdn-inequality",
+        "lf7-mdn-comparison"
+      ],
+      "paragraphs": [
+        "Sensoren, Aktoren und Steuerung verstehen: Der Sensor erfasst eine physikalische Größe, die Steuerung verarbeitet Messinformation und der Aktor wirkt auf die Umgebung. In Luftpunkt wird Temperatur als Eingang bereitgestellt, die Steuerfunktion entscheidet und der Lüfter stellt Luftbewegung dar. Prüfe Messwert, Entscheidung und Wirkung getrennt; ein Schaltbefehl ist kein umfassender Wirkungsnachweis.",
+        "Signale, Daten- und Energieflüsse: Temperatur und digitale Darstellung sind verschieden. Ein 10-Bit-ADC kennt 1024 Codes von 0 bis 1023; eine Temperaturzuordnung braucht Umrechnungsangaben. Datenpfeile tragen Messwerte oder Befehle, Energiepfeile die Versorgung, Stoffpfeile Luft. Fiktiver Sensor A: 5-V-Versorgung, UART-Datenpegel 3,3 V, 9600 Baud/8N1, ASCII-Zeile temp=28.0 degC mit LF, Bereich −20…80 °C, Schritt 0,1 °C und Genauigkeit ±0,5 °C. Rahmen und Nutzdatenformat sind getrennte Festlegungen.",
+        "Eine Systemerweiterung planen: Der Bedarf wird in Messbereich, Schnittstelle, Format, Versorgung, Schaltregel und Fehlerreaktion übersetzt. Sensor A passt zum UART-/3,3-V-Bestand. Sensor B mit I²C/5-V-Datenpegel und binären Daten passt ohne nicht geplante Anpassung nicht direkt. Der fiktive vorhandene Parser A 1.2 unterstützt Celsius-ASCII-Format, Fehlererkennung und Modelllaufzeit; Parser B 2.0 erwartet I²C-Register und eine andere Laufzeit. Eignung folgt aus Unterlagen, nicht aus Versionshöhe. Plane Freigabe, Ausgangsstand, Zuständigkeiten, Änderung und Nachtest; echter Einbau liegt außerhalb der Übung.",
+        "Eine einfache Steuerlogik ergänzen: function control(temperature, connected) liefert 'off', 'on' oder 'fault'. Zuerst prüfen: connected !== true, falscher Typ mit typeof, fehlende Endlichkeit mit !Number.isFinite oder Zahlenwert < -20 beziehungsweise > 80. Mit || reicht ein Fehler für return 'fault';. Erst danach folgt bei temperature >= 30 die Rückgabe 'on', sonst 'off'. return beendet den Aufruf. Die Fehlerreaktion lautet für das ungefährliche Tischmodell Lüfter aus/Alarm an; reale Kühlung kann eine andere Reaktion benötigen.",
+        "Integration und Betriebswerte prüfen: Verwende Normalwerte, 29.9/30, erlaubte Grenzen −20/80, Werte außerhalb, falsche Typen, NaN/Unendlich und Verbindungsausfall. Vergleiche Soll, Ausgabe und Anzeige mit der geprüften Codefassung. Für ideale gleichzeitige Last bei 5 V gilt 0,1 + 0,2 + 0,4 = 0,7 A und P = 5 × 0,7 = 3,5 W. Gegenüber 5 V/1 A bleiben 0,3 A Reserve; acht Stunden Dauerlast ergeben 28 Wh. Anlauf- und Wandlungsverluste sind ausgeschlossen. Dokumentiere Konfiguration, Änderungen, Verantwortliche, Fehlerreaktion, Tests, Energieannahmen und Schutz/Wiederherstellung der Nachweise."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Lernfall",
+        "text": "Noras Übergabe folgt der ganzen Kette: Rollen → Signale und Unterlagen → begründete Auswahl → eigene Regel → Soll-Ist-Prüfung und Energieabgleich mit dokumentierten Grenzen."
+      },
+      "misconception": {
+        "claim": "Ein bestandener Programmtest beantwortet bereits Schnittstellen-, Energie- und Sicherheitsfragen einer Erweiterung.",
+        "correction": "LF7 verbindet diese Teilnachweise; die begrenzte Simulation ersetzt keine Prüfung realer Geräte."
+      },
+      "takeaway": "Eine nachvollziehbare Integration verbindet Bedarf, kompatible Teile, geprüfte Logik und dokumentierte Betriebswerte."
+    }
+  ],
+  "questionFile": "questions/common-lf7-verification.v1.csv",
+  "quiz": {
+    "questionIds": [
+      "LJ-LF7-VERIFICATION-Q01",
+      "LJ-LF7-VERIFICATION-Q02",
+      "LJ-LF7-VERIFICATION-Q03",
+      "LJ-LF7-VERIFICATION-Q04",
+      "LJ-LF7-VERIFICATION-Q05",
+      "LJ-LF7-VERIFICATION-Q06"
+    ]
+  },
+  "exam": {
+    "questionIds": [
+      "LJ-LF7-VERIFICATION-E01",
+      "LJ-LF7-VERIFICATION-E02",
+      "LJ-LF7-VERIFICATION-E03",
+      "LJ-LF7-VERIFICATION-E04",
+      "LJ-LF7-VERIFICATION-E05",
+      "LJ-LF7-VERIFICATION-E06",
+      "LJ-LF7-VERIFICATION-E07",
+      "LJ-LF7-VERIFICATION-E08"
+    ],
+    "passPercent": 80,
+    "scoring": "all-or-nothing-per-question",
+    "timed": false
+  },
+  "questionLinks": [
+    {
+      "questionId": "LJ-LF7-VERIFICATION-Q01",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf7-verification-test"
+      ],
+      "blockIds": [
+        "common-lf7-verification-test"
+      ]
+    },
+    {
+      "questionId": "LJ-LF7-VERIFICATION-Q02",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf7-verification-test"
+      ],
+      "blockIds": [
+        "common-lf7-verification-test"
+      ]
+    },
+    {
+      "questionId": "LJ-LF7-VERIFICATION-Q03",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf7-verification-energy"
+      ],
+      "blockIds": [
+        "common-lf7-verification-energy"
+      ]
+    },
+    {
+      "questionId": "LJ-LF7-VERIFICATION-Q04",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf7-verification-energy"
+      ],
+      "blockIds": [
+        "common-lf7-verification-energy"
+      ]
+    },
+    {
+      "questionId": "LJ-LF7-VERIFICATION-Q05",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf7-verification-record"
+      ],
+      "blockIds": [
+        "common-lf7-verification-record"
+      ]
+    },
+    {
+      "questionId": "LJ-LF7-VERIFICATION-Q06",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf7-verification-record"
+      ],
+      "blockIds": [
+        "common-lf7-verification-record"
+      ]
+    },
+    {
+      "questionId": "LJ-LF7-VERIFICATION-E01",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf7-verification-test",
+        "common-lf7-verification-record"
+      ],
+      "blockIds": [
+        "common-lf7-verification-review"
+      ]
+    },
+    {
+      "questionId": "LJ-LF7-VERIFICATION-E02",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf7-verification-test",
+        "common-lf7-verification-record"
+      ],
+      "blockIds": [
+        "common-lf7-verification-review"
+      ]
+    },
+    {
+      "questionId": "LJ-LF7-VERIFICATION-E03",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf7-verification-test",
+        "common-lf7-verification-record"
+      ],
+      "blockIds": [
+        "common-lf7-verification-review"
+      ]
+    },
+    {
+      "questionId": "LJ-LF7-VERIFICATION-E04",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf7-verification-test"
+      ],
+      "blockIds": [
+        "common-lf7-verification-review"
+      ]
+    },
+    {
+      "questionId": "LJ-LF7-VERIFICATION-E05",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf7-verification-test"
+      ],
+      "blockIds": [
+        "common-lf7-verification-review"
+      ]
+    },
+    {
+      "questionId": "LJ-LF7-VERIFICATION-E06",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf7-verification-energy"
+      ],
+      "blockIds": [
+        "common-lf7-verification-review"
+      ]
+    },
+    {
+      "questionId": "LJ-LF7-VERIFICATION-E07",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf7-verification-energy",
+        "common-lf7-verification-record"
+      ],
+      "blockIds": [
+        "common-lf7-verification-review"
+      ]
+    },
+    {
+      "questionId": "LJ-LF7-VERIFICATION-E08",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf7-verification-record",
+        "common-lf7-verification-test"
+      ],
+      "blockIds": [
+        "common-lf7-verification-review"
+      ]
+    }
+  ],
+  "interview": [
+    {
+      "id": "common-lf7-verification-talk-1",
+      "prompt": "Plane die Integrationsprüfung von Luftpunkt mit Sollwerten und benenne, was du im Protokoll festhalten musst.",
+      "objectiveIds": [
+        "common-lf7-verification-test",
+        "common-lf7-verification-record"
+      ],
+      "blockIds": [
+        "common-lf7-verification-test",
+        "common-lf7-verification-record"
+      ],
+      "keyPoints": [
+        "Normal-, Schaltgrenz- und Messbereichsfälle auswählen.",
+        "Typ-/Endlichkeitsfehler und Verbindungsausfall getrennt prüfen.",
+        "Eingabe, Soll, Ist, Anzeige und geprüfte Codefassung dokumentieren."
+      ],
+      "acceptableAlternatives": [
+        "Eine fachlich gleichwertige Erklärung mit passenden Modellbefunden und nachvollziehbarer Begründung."
+      ],
+      "misconceptions": [
+        "Ein on bei hoher Temperatur als ausreichenden Gesamtnachweis behandeln."
+      ],
+      "sampleAnswer": "Ich prüfe etwa 28/true als off, 30/true als on und 35/false als fault. Erlaubte Grenzen und Werte knapp außerhalb kommen hinzu, ebenso Text und NaN. Ich notiere Eingabe, Typ, Verbindung, Soll, Ist und Anzeige zur geprüften Fassung. Nach einem Fehler prüfe ich wieder einen gültigen Fall.",
+      "followUp": "Welcher Versuch zeigt, ob die Verbindungsprüfung vor der normalen Schaltentscheidung greift?"
+    },
+    {
+      "id": "common-lf7-verification-talk-2",
+      "prompt": "Bearbeite die lokale CPS-Simulation einschließlich deiner eigenen Steuerfunktion und Energieprüfung. Begründe danach eine tatsächlich beobachtete Reaktion und die Grenze deines Nachweises.",
+      "objectiveIds": [
+        "common-lf7-verification-test",
+        "common-lf7-verification-energy",
+        "common-lf7-verification-record"
+      ],
+      "blockIds": [
+        "common-lf7-verification-test",
+        "common-lf7-verification-energy",
+        "common-lf7-verification-record"
+      ],
+      "keyPoints": [
+        "Modellschritte und Unterlagenvergleich selbst durchführen.",
+        "Eigene Funktion prüfen, Fehlerbefunde lesen und nötige Korrekturen nachtesten.",
+        "Lüfter-/Alarmreaktion mit Soll vergleichen.",
+        "0,7 A, 3,5 W und 28 Wh mit 5 V/1 A und Annahmen abgleichen.",
+        "Protokoll lesen, eigene Beobachtung ergänzen und bewusst bestätigen."
+      ],
+      "acceptableAlternatives": [
+        "Eine fachlich gleichwertige Erklärung mit passenden Modellbefunden und nachvollziehbarer Begründung."
+      ],
+      "misconceptions": [
+        "Die Musterantwort als Ersatz einer tatsächlich ausgeführten Praxis ausgeben."
+      ],
+      "sampleAnswer": "Vorlage für meine eigene Notiz nach der Bearbeitung: Ich ergänze hier meinen tatsächlich geprüften Eingabefall, Soll und beobachtete Reaktion sowie eine begründete Codeentscheidung. Ich dokumentiere meinen Energieabgleich und die idealisierten Annahmen. Diese Vorlage selbst bestätigt keine Durchführung.",
+      "followUp": "Welche Rückmeldung hat deine Entscheidung verändert, und welchen Nachweis musstest du danach erneut erbringen?",
+      "practice": {
+        "task": "Bearbeite die lokale Simulation des ausdrücklich ungefährlichen Tischmodells Luftpunkt in der vorgegebenen Reihenfolge. Ordne Sensor, Steuerung und Aktor sowie Daten-, Energie- und Luftfluss zu und vergleiche die fiktiven Schnittstellen- und Bibliotheksunterlagen. Verwende den beschriebenen UART-/3,3-V-Datenweg mit 9600 Baud/8N1 und der ASCII-Zeile temp=28.0 degC plus LF; die Modulversorgung beträgt getrennt davon 5 V. Vergleiche in diesem ersten Schritt die idealen gleichzeitigen Lasten 0,1 A + 0,2 A + 0,4 A bei 5 V mit der 5-V-/1-A-Versorgung und berechne die Energie für acht Stunden Dauerbetrieb. Halte 0,7 A, 3,5 W, 28 Wh und die ausgeschlossenen Anlauf-/Wandlungsverluste nachvollziehbar fest. Im zweiten Schritt liefert der vorgegebene Adapter der Funktion einen Temperaturwert und den Verbindungsstatus. Ergänze selbst function control(temperature, connected): genau boolesches true und endliche Zahl einschließlich −20 bis 80 erlauben Normalbetrieb, ab 30 gilt 'on', darunter 'off', jeder Eingabefehler ergibt 'fault'. Prüfe den eigenen Code mit Normal-, Grenz-, Typ- und Verbindungsfehlerfällen. Kontrolliere, dass fault im Tischmodell Lüfter aus und Alarm an bedeutet; behandle das nicht als allgemeine Regel für reale Kühlung. Lies die konkreten Prüfmeldungen, korrigiere Abweichungen und prüfe die neue Fassung erneut. Halte im dritten Schritt Prüfstand, Zuständigkeiten und Grenzen für die Übergabe fest. Lies das erhaltene Protokoll, ergänze eine eigene Beobachtung und Begründung in der Reflexion und bestätige die Durchführung erst nach bestandener Praxis bewusst. Es werden keine echten Geräte, elektrischen Arbeiten oder externen Verbindungen verwendet.",
+        "checklist": [
+          "Ich habe Rollen, Flüsse und passende fiktive Sensor-/Parserunterlagen zugeordnet.",
+          "Ich habe den Unterschied zwischen 5-V-Versorgung, 3,3-V-Datenpegel und Celsius-Nutzdaten erklärt.",
+          "Ich habe 0,7 A, 3,5 W und 28 Wh mit der Versorgung und den idealisierten Annahmen abgeglichen.",
+          "Ich habe die eigene Funktion mit strikter Verbindungs-, Typ-, Endlichkeits- und Bereichsprüfung ergänzt.",
+          "Ich habe Normal-, Grenz- und Fehlerfälle geprüft und fault als Lüfter aus/Alarm an im Tischmodell kontrolliert.",
+          "Ich habe den aktuellen Prüfnachweis gelesen und eine eigene Beobachtung mit der Grenze der Simulation dokumentiert."
+        ],
+        "confirmation": "Ich bestätige, dass ich die lokale CPS-Simulation selbst bearbeitet, meine Steuerfunktion geprüft, den Energieabgleich durchgeführt und das Protokoll gelesen habe. Meine Reflexion beschreibt eigene Beobachtungen. Dies ist eine Selbstbestätigung der begrenzten Modellübung und keine Freigabe oder Qualifikationsbescheinigung für echte Anlagen."
+      }
+    },
+    {
+      "id": "common-lf7-verification-talk-3",
+      "prompt": "Verbinde alle fünf LF7-Themen in einer nachvollziehbaren Übergabe: Rollen, Signale/Flüsse, Auswahl/Plan, eigene Steuerlogik sowie Integration/Energie/Dokumentation.",
+      "objectiveIds": [
+        "common-lf7-verification-test",
+        "common-lf7-verification-energy",
+        "common-lf7-verification-record"
+      ],
+      "blockIds": [
+        "common-lf7-verification-review"
+      ],
+      "keyPoints": [
+        "Sensor, Steuerung und Aktor entlang der Wirkungskette erklären.",
+        "Physikalische Größe, Darstellung und Information/Energie/Stoff trennen.",
+        "UART-/Formatvertrag und Sensor-/Parserauswahl anhand der Unterlagen begründen.",
+        "Fehlerprüfung vor normaler Schwelle mit den passenden JavaScript-Mitteln erklären.",
+        "Normal-, Grenz-, Fehler- und Energieprüfungen mit Soll-Ist-Nachweisen verbinden.",
+        "Konfiguration, Zuständigkeit, Datensicherheit und Grenzen des Modells dokumentieren."
+      ],
+      "acceptableAlternatives": [
+        "Eine fachlich gleichwertige Erklärung mit passenden Modellbefunden und nachvollziehbarer Begründung."
+      ],
+      "misconceptions": [
+        "Den Erfolg einer einzelnen Teilprüfung als Freigabe für die ganze reale Anlage ausgeben."
+      ],
+      "sampleAnswer": "Der Sensor stellt Temperaturdaten bereit, die Steuerung entscheidet und der Lüfter bildet die Wirkung ab. Ich trenne Daten, Versorgung und Luftstrom. Sensor A/Parser A passen zum UART-/Celsiusformat und zur Modelllaufzeit. Meine Funktion prüft Verbindung, Typ, Endlichkeit und Bereich vor der Schwelle 30. Die Nachweise umfassen Normal-, Grenz- und Fehlerfälle sowie 0,7 A, 3,5 W und 28 Wh. Ich dokumentiere Stand, Soll/Ist, Verantwortliche und Grenzen; reale Geräte sind nicht geprüft.",
+      "followUp": "Welche zusätzlichen Nachweise wären nötig, bevor irgendeine Aussage über reale Hardware zulässig wäre?"
+    }
+  ],
+  "cards": [
+    {
+      "id": "common-lf7-verification-card-01",
+      "front": "Welche Fälle gehören zur Integrationsprüfung?",
+      "back": "Normalwerte, Schaltschwelle, erlaubte Messgrenzen, Werte außerhalb, falsche Typen/Endlichkeit, Verbindungsausfall und Rückkehr zum gültigen Fall.",
+      "objectiveIds": [
+        "common-lf7-verification-test"
+      ],
+      "blockIds": [
+        "common-lf7-verification-test"
+      ]
+    },
+    {
+      "id": "common-lf7-verification-card-02",
+      "front": "Welche Größen werden pro Versuch verglichen?",
+      "back": "Eingabe mit Typ/Einheit, Verbindung, erwartete Ausgabe, tatsächliche Ausgabe und Lüfter-/Alarmanzeige zur geprüften Codefassung.",
+      "objectiveIds": [
+        "common-lf7-verification-test",
+        "common-lf7-verification-record"
+      ],
+      "blockIds": [
+        "common-lf7-verification-test"
+      ]
+    },
+    {
+      "id": "common-lf7-verification-card-03",
+      "front": "Wie entstehen 0,7 A und 3,5 W?",
+      "back": "Ideale gleichzeitige Last: 0,1 + 0,2 + 0,4 = 0,7 A. Bei 5 V gilt P = U × I = 3,5 W.",
+      "objectiveIds": [
+        "common-lf7-verification-energy"
+      ],
+      "blockIds": [
+        "common-lf7-verification-energy"
+      ]
+    },
+    {
+      "id": "common-lf7-verification-card-04",
+      "front": "Was bedeuten 28 Wh und 0,3 A Reserve?",
+      "back": "Acht Stunden konstante 3,5 W ergeben 28 Wh. 1 A Lieferfähigkeit minus 0,7 A Last lässt 0,3 A Reserve; reale Zusatzlasten/Verluste sind nicht erfasst.",
+      "objectiveIds": [
+        "common-lf7-verification-energy"
+      ],
+      "blockIds": [
+        "common-lf7-verification-energy"
+      ]
+    },
+    {
+      "id": "common-lf7-verification-card-05",
+      "front": "Was gehört in die Systemdokumentation?",
+      "back": "Zweck/Grenze, Komponenten- und Parserstände, Schnittstelle/Format, Regel/Fehlerreaktion, Codefassung, Soll-Ist-Tests, Energieannahmen und Zuständigkeiten.",
+      "objectiveIds": [
+        "common-lf7-verification-record"
+      ],
+      "blockIds": [
+        "common-lf7-verification-record"
+      ]
+    },
+    {
+      "id": "common-lf7-verification-card-06",
+      "front": "Wie werden Betriebs- und Datensicherheit sichtbar?",
+      "back": "Fehlerreaktion und Nachtests belegen begrenztes Modellverhalten; verantwortete Änderungsrechte und Wiederherstellung schützen Konfiguration und Nachweise.",
+      "objectiveIds": [
+        "common-lf7-verification-record"
+      ],
+      "blockIds": [
+        "common-lf7-verification-record",
+        "common-lf7-verification-review"
+      ]
+    }
+  ],
+  "review": {
+    "status": "reviewed",
+    "checkedAt": "2026-11-16"
+  },
+  "fieldReview": {
+    "fieldId": "LF7",
+    "topicIds": [
+      "common-lf7-components",
+      "common-lf7-signals",
+      "common-lf7-extension",
+      "common-lf7-logic",
+      "common-lf7-verification"
+    ],
+    "blockIds": [
+      "common-lf7-verification-review"
+    ],
+    "interviewIds": [
+      "common-lf7-verification-talk-3"
+    ],
+    "questionIds": [
+      "LJ-LF7-VERIFICATION-E01",
+      "LJ-LF7-VERIFICATION-E02",
+      "LJ-LF7-VERIFICATION-E03",
+      "LJ-LF7-VERIFICATION-E04",
+      "LJ-LF7-VERIFICATION-E05",
+      "LJ-LF7-VERIFICATION-E06",
+      "LJ-LF7-VERIFICATION-E07",
+      "LJ-LF7-VERIFICATION-E08"
+    ]
+  }
+}

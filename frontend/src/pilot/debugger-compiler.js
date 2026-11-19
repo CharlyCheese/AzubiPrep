@@ -1,15 +1,21 @@
 import ts from 'typescript';
 import { checkJsDraft } from './js-draft.js';
 import { debuggerLimits, encodedSize, debugSourceLines } from './debugger-core.js';
-import { checkDebugProject, checkModulePath, resolveDebugImport } from './debugger-project.js';
+import { checkDebugProject, checkModulePath, checkModuleSource, resolveDebugImport } from './debugger-project.js';
+import { DOM_TAGS } from './debugger-dom.js';
+
+const reactExports = new Set(['useState', 'useEffect', 'createElement']);
+const reactAttributes = new Set(['id', 'className', 'title', 'aria-label', 'htmlFor', 'type', 'placeholder', 'value', 'defaultValue', 'disabled', 'readOnly', 'onClick', 'onInput', 'onChange', 'onSubmit', 'key']);
+const reactTags = new Set(DOM_TAGS.filter(tag => tag !== 'body'));
 
 export function compileDebugger(draft, overrides, moduleContext = null) {
   const limits = debuggerLimits(overrides);
-  if (moduleContext) { checkModulePath(draft.name); checkJsDraft({ ...draft, name: draft.name.split('/').at(-1) }); } else checkJsDraft(draft);
+  if (moduleContext) { checkModuleSource(draft.name,draft.source); } else checkJsDraft(draft);
   if (encodedSize(draft.source) > limits.sourceBytes) throw new Error('Quelltextgrenze erreicht.');
   if (debugSourceLines(draft.source).length > limits.sourceLines) throw new Error('Zeilengrenze erreicht.');
-  const file = ts.createSourceFile(draft.name, draft.source, ts.ScriptTarget.Latest, true, ts.ScriptKind.JS);
+  const file = ts.createSourceFile(draft.name, draft.source, ts.ScriptTarget.Latest, true, moduleContext?.react ? ts.ScriptKind.JSX : ts.ScriptKind.JS);
   if (file.parseDiagnostics.length) throw new Error('Syntaxfehler: ' + ts.flattenDiagnosticMessageText(file.parseDiagnostics[0].messageText, ' '));
+  if (moduleContext?.react && ['jsx', 'jsxfrag', 'jsximportsource', 'jsxruntime'].some(name => file.pragmas.has(name))) throw new Error('Eigene JSX-Factory-/Runtime-Kommentare sind im React-Debugger nicht freigegeben.');
   let nodes = 0, maxDepth = 0;
   const stack = [[file, 0]];
   while (stack.length) {
@@ -24,6 +30,8 @@ export function compileDebugger(draft, overrides, moduleContext = null) {
     const pos = file.getLineAndCharacterOfPosition(node.getStart(file));
     throw new Error(`Im Debugger-Technikpilot noch nicht unterstützt (Zeile ${pos.line + 1}): ${ts.SyntaxKind[node.kind]}. Erlaubt sind const/let, Bedingungen, Schleifen, Arrayliterale, benannte Funktionen und console.log.`);
   };
+  const asyncFunction = node => !!node.modifiers?.some(item=>item.kind===ts.SyntaxKind.AsyncKeyword);
+  const functionModifiers = node => node.modifiers?.every(item=>item.kind===ts.SyntaxKind.AsyncKeyword?moduleContext?.dom:!!moduleContext&&[ts.SyntaxKind.ExportKeyword,ts.SyntaxKind.DefaultKeyword].includes(item.kind));
   const reserved = name => name.startsWith('__azubi_dbg') || ['console', 'eval', 'Function', 'globalThis', 'window', 'self', 'undefined', 'NaN', 'Infinity', 'arguments'].includes(name);
   const forbiddenKey = key => key.startsWith('__azubi_dbg') || ['__proto__', 'prototype', 'constructor', 'toString', 'valueOf', 'toJSON', '__defineGetter__', '__defineSetter__', '__lookupGetter__', '__lookupSetter__'].includes(key);
   const fieldName = node => {
@@ -33,6 +41,14 @@ export function compileDebugger(draft, overrides, moduleContext = null) {
   const bindingName = node => {
     if (!ts.isIdentifier(node) || reserved(node.text) || moduleContext && ['implements','interface','let','package','private','protected','public','static','yield','await','enum'].includes(node.text) || node.text.length > limits.identifiers) fail(node);
     return node.text;
+  };
+  const declarationNames = declaration => {
+    if (ts.isIdentifier(declaration.name)) return [declaration.name];
+    if (!moduleContext?.react || !ts.isArrayBindingPattern(declaration.name) || declaration.name.elements.length !== 2) fail(declaration.name);
+    return declaration.name.elements.map(item => {
+      if (!ts.isBindingElement(item) || item.dotDotDotToken || item.propertyName || item.initializer || !ts.isIdentifier(item.name)) fail(item);
+      bindingName(item.name); return item.name;
+    });
   };
   const resolve = (name, scopes) => {
     for (let i = scopes.length - 1; i >= 0; i--) if (scopes[i].bindings.has(name)) return scopes[i].bindings.get(name);
@@ -53,8 +69,78 @@ export function compileDebugger(draft, overrides, moduleContext = null) {
   const callbackMethods = new Set(['map', 'filter', 'forEach', 'some', 'every', 'find', 'reduce']);
   const errorConstructors = new Set(['Error', 'TypeError', 'RangeError', 'ReferenceError', 'SyntaxError', 'URIError', 'EvalError']);
   const unwrapped = node => { while (ts.isParenthesizedExpression(node)) node = node.expression; return node; };
+  const timerCall = (node,scopes) => moduleContext?.dom && ts.isIdentifier(node) && ['setTimeout','clearTimeout'].includes(node.text) && !resolve(node.text,scopes);
+  const fetchCall=(node,scopes)=>moduleContext?.dom&&ts.isIdentifier(node)&&node.text==='fetch'&&!resolve('fetch',scopes);
+  function stateInitializer(node, scopes) {
+    if (!node || !ts.isCallExpression(unwrapped(node)) || unwrapped(node).questionDotToken) return false;
+    const callee = unwrapped(unwrapped(node).expression);
+    if (!ts.isIdentifier(callee)) return false;
+    for (let i = scopes.length - 1; i >= 0; i--) if (scopes[i].bindings.has(callee.text)) {
+      const imported = scopes[i].imports.get(callee.text);
+      return imported?.from === 'react' && imported.imported === 'useState';
+    }
+    return false;
+  }
+  function jsx(node, scopes, emit = null) {
+    if (!moduleContext?.react || !ts.isJsxElement(node) && !ts.isJsxSelfClosingElement(node)) fail(node);
+    const opening = ts.isJsxElement(node) ? node.openingElement : node;
+    if (!ts.isIdentifier(opening.tagName) || opening.typeArguments?.length) fail(opening.tagName);
+    const tag = opening.tagName.text, intrinsic = /^[a-z]/.test(tag);
+    if (intrinsic ? !reactTags.has(tag) : !resolve(tag, scopes)) fail(opening.tagName);
+    const props = [], seen = new Set();
+    for (const attribute of opening.attributes.properties) {
+      if (!ts.isJsxAttribute(attribute) || !ts.isIdentifier(attribute.name)) fail(attribute);
+      const name = fieldName(attribute.name);
+      if (seen.has(name) || ['ref', 'style', 'dangerouslySetInnerHTML', 'children'].includes(name) || intrinsic && !reactAttributes.has(name)) fail(attribute);
+      seen.add(name); let value;
+      if (!attribute.initializer) { if (intrinsic && !['disabled', 'readOnly'].includes(name)) fail(attribute); value = 'true'; }
+      else if (ts.isStringLiteral(attribute.initializer)) value = JSON.stringify(jsxLiteral(attribute.initializer));
+      else {
+        const expressionNode = ts.isJsxExpression(attribute.initializer) ? attribute.initializer.expression : attribute.initializer;
+        if (!expressionNode || attribute.initializer.dotDotDotToken) fail(attribute);
+        expression(expressionNode, scopes); if (emit) value = emit(expressionNode);
+      }
+      if (emit) props.push(JSON.stringify(name) + ':' + value);
+    }
+    const children = [];
+    for (const child of ts.isJsxElement(node) ? node.children : []) {
+      if (ts.isJsxText(child)) { const value = jsxLiteral(child); if (emit && value !== undefined) children.push(JSON.stringify(value)); }
+      else {
+        if (ts.isJsxExpression(child) && child.dotDotDotToken) fail(child);
+        const value = ts.isJsxExpression(child) ? child.expression : child;
+        if (!value) continue;
+        expression(value, scopes); if (emit) children.push(emit(value));
+      }
+    }
+    return emit ? helper + '.createElement(' + (intrinsic ? JSON.stringify(tag) : tag) + ',{' + props.join(',') + '}' + (children.length ? ',' + children.join(',') : '') + ')' : undefined;
+  }
+  function jsxLiteral(node) {
+    const entities = { amp: '&', lt: '<', gt: '>', quot: '"', apos: "'", nbsp: '\u00a0' };
+    const decode = text => text.replace(/&(#(?:\d+|x[\da-fA-F]+)|\w+);/g, (whole, value) => {
+      if (value[0] !== '#') { if (!Object.hasOwn(entities, value)) throw new Error('JSX-Zeichenreferenz &' + value + '; bitte als direktes Zeichen oder JavaScript-Zeichenfolge schreiben.'); return entities[value]; }
+      const code = value[1] === 'x' ? parseInt(value.slice(2), 16) : parseInt(value.slice(1), 10);
+      if (!Number.isInteger(code) || code < 0 || code > 0x10ffff) fail(node);
+      return String.fromCodePoint(code);
+    });
+    if (ts.isStringLiteral(node)) return decode(node.text);
+    // Match TypeScript/React JSX text whitespace rules while emitting directly
+    // from the original JSX node. No transformed position is used for pauses.
+    let result, first = 0, last = -1;
+    const add = text => { result = result === undefined ? decode(text) : result + ' ' + decode(text); };
+    for (let i = 0; i < node.text.length; i++) {
+      const code = node.text.charCodeAt(i);
+      if (ts.isLineBreak(code)) { if (first !== -1 && last !== -1) add(node.text.slice(first, last + 1)); first = -1; }
+      else if (!ts.isWhiteSpaceSingleLine(code)) { last = i; if (first === -1) first = i; }
+    }
+    if (first !== -1) add(node.text.slice(first));
+    return result;
+  }
   function expression(node, scopes) {
+    if (ts.isJsxElement(node) || ts.isJsxSelfClosingElement(node) || ts.isJsxFragment(node)) { jsx(node, scopes); return; }
+    if (ts.isAwaitExpression(node) && moduleContext?.dom) { expression(node.expression,scopes); return; }
     if (ts.isNewExpression(node)) {
+      if(moduleContext?.dom&&ts.isIdentifier(node.expression)&&node.expression.text==='AbortController'&&!resolve('AbortController',scopes)&&!node.typeArguments?.length){for(const arg of node.arguments||[])expression(arg,scopes);return;}
+      if (moduleContext?.dom && ts.isIdentifier(node.expression) && node.expression.text==='Promise' && !resolve('Promise',scopes) && !node.typeArguments?.length) { for(const arg of node.arguments||[]) expression(arg,scopes); return; }
       if (!ts.isIdentifier(node.expression) || !errorConstructors.has(node.expression.text) || resolve(node.expression.text, scopes) || node.typeArguments?.length || (node.arguments?.length || 0) > 1) fail(node);
       for (const arg of node.arguments || []) expression(arg, scopes);
       return;
@@ -70,8 +156,11 @@ export function compileDebugger(draft, overrides, moduleContext = null) {
       return;
     }
     if (ts.isPropertyAccessExpression(node) || ts.isElementAccessExpression(node)) { member(node, scopes); return; }
-    if (ts.isArrowFunction(node) || ts.isFunctionExpression(node)) { if (node.name || node.modifiers?.length || node.asteriskToken || node.type || node.typeParameters?.length) fail(node); return; }
-    if (ts.isIdentifier(node)) { if (!resolve(node.text, scopes) && !['undefined', 'NaN', 'Infinity'].includes(node.text) && !(moduleContext?.dom && node.text==='document')) fail(node); return; }
+    if (ts.isArrowFunction(node) || ts.isFunctionExpression(node)) { if (node.name || node.modifiers?.length && (!moduleContext?.dom || node.modifiers.some(item=>item.kind!==ts.SyntaxKind.AsyncKeyword)) || node.asteriskToken || node.type || node.typeParameters?.length) fail(node); return; }
+    if (ts.isIdentifier(node)) {
+      if (!resolve(node.text, scopes) && ['setTimeout','clearTimeout'].includes(node.text)) throw new Error('Timer sind im Modus „HTML und Ereignisse“ als direkte setTimeout-/clearTimeout-Aufrufe verfügbar. Timerfunktionen als Werte oder Methoden sind noch nicht unterstützt.');
+      if (!resolve(node.text, scopes) && !['undefined', 'NaN', 'Infinity'].includes(node.text) && !(moduleContext?.dom && ['document','localStorage','JSON','Array','Number','Promise'].includes(node.text))) fail(node); return;
+    }
     if (ts.isParenthesizedExpression(node)) { expression(node.expression, scopes); return; }
     if (ts.isBinaryExpression(node)) {
       if (assignment.has(node.operatorToken.kind)) reference(node.left, scopes);
@@ -90,7 +179,7 @@ export function compileDebugger(draft, overrides, moduleContext = null) {
       const callee = unwrapped(node.expression);
       const log = ts.isPropertyAccessExpression(callee) && !callee.questionDotToken && ts.isIdentifier(callee.expression) && callee.expression.text === 'console' && callee.name.text === 'log';
       if (ts.isElementAccessExpression(callee) || callee.questionDotToken || node.arguments.length > 20) fail(node);
-      if (!log) expression(callee, scopes);
+      if (!log && !timerCall(callee,scopes) && !fetchCall(callee,scopes)) expression(callee, scopes);
       for (const arg of node.arguments) expression(arg, scopes); return;
     }
     fail(node);
@@ -114,7 +203,7 @@ export function compileDebugger(draft, overrides, moduleContext = null) {
       }
       if (ts.isVariableStatement(statement)) for (const declaration of statement.declarationList.declarations) {
         if (declaration.type || declaration.exclamationToken) fail(declaration);
-        add(declaration.name, 'variable');
+        for (const name of declarationNames(declaration)) add(name, 'variable');
       }
       if (ts.isFunctionDeclaration(statement)) {
         if (!allowFunctions || !statement.name) fail(statement);
@@ -137,17 +226,23 @@ export function compileDebugger(draft, overrides, moduleContext = null) {
   }
   function point(node, scopes, context, end = false, kind = 'statement', atEnd = false) {
     const data = metadata(node, scopes, context, end, kind, atEnd);
-    return 'var __azubi_dbg_tick=' + helper + '(' + data.id + ',[' + scopes.map(scope => '[' + scope.id + ',' + readers(scope) + ']').join(',') + ']);\n';
+    return (context.async?helper+'.asyncProgress(__azubi_dbg_frame,'+(context.finallyDepth||0)+');':'')+'var __azubi_dbg_tick=' + helper + '(' + data.id + ',[' + scopes.map(scope => '[' + scope.id + ',' + readers(scope) + ']').join(',') + ']);\n';
   }
   function render(node, scopes, context, validate = true) {
     if (validate) expression(node, scopes);
     function rewrite(current) {
+      if (ts.isJsxElement(current) || ts.isJsxSelfClosingElement(current)) return jsx(current, scopes, rewrite);
+      if(moduleContext?.dom&&ts.isShorthandPropertyAssignment(current)&&['JSON','Array','Number','Promise'].includes(current.name.text)&&!resolve(current.name.text,scopes))return JSON.stringify(current.name.text)+':'+helper+'.builtin('+JSON.stringify(current.name.text)+')';
+      if(moduleContext?.dom&&ts.isIdentifier(current)&&['JSON','Array','Number','Promise'].includes(current.text)&&!resolve(current.text,scopes)&&!(ts.isPropertyAssignment(current.parent)&&current.parent.name===current))return helper+'.builtin('+JSON.stringify(current.text)+')';
+      if (ts.isAwaitExpression(current)) { if(!context.async)fail(current);const meta=metadata(current,scopes,context,false,'context');return helper+'.resume(__azubi_dbg_frame,await '+helper+'.suspend(__azubi_dbg_frame,'+meta.id+','+inlineScopes(scopes)+','+rewrite(current.expression)+'))'; }
       if (ts.isArrowFunction(current) || ts.isFunctionExpression(current)) {
         let parent=current.parent, value=current;while(ts.isParenthesizedExpression(parent)){value=parent;parent=parent.parent;}
         const callee=ts.isCallExpression(parent)?unwrapped(parent.expression):null;
         const callback=callee&&ts.isPropertyAccessExpression(callee)&&callbackMethods.has(callee.name.text)&&parent.arguments[0]===value;
-        return '((' + scopes.map(readers).join(',') + ')=>' + helper + '.allowCallback(' + renderFunction(current, scopes, context, callback) + '))(' + scopes.map(capture).join(',') + ')';
+        return '((' + scopes.map(readers).join(',') + ')=>' + helper + '.allowCallback(' + renderFunction(current, scopes, context, callback) + ','+asyncFunction(current)+'))(' + scopes.map(capture).join(',') + ')';
       }
+      if(ts.isNewExpression(current)&&moduleContext?.dom&&current.expression.text==='AbortController'&&!resolve('AbortController',scopes))return helper+'.abortController(['+(current.arguments||[]).map(rewrite).join(',')+'])';
+      if (ts.isNewExpression(current) && moduleContext?.dom && current.expression.text==='Promise' && !resolve('Promise',scopes)) { const meta=metadata(current,scopes,context,false,'context'); return helper+'.promise('+meta.id+','+inlineScopes(scopes)+',['+(current.arguments||[]).map(rewrite).join(',')+'])'; }
       if (ts.isNewExpression(current)) return helper + '.error(' + JSON.stringify(current.expression.text) + ',[' + (current.arguments || []).map(rewrite).join(',') + '])';
       if (ts.isPropertyAccessExpression(current) || ts.isElementAccessExpression(current)) {
         const key = ts.isPropertyAccessExpression(current) ? JSON.stringify(current.name.text) : rewrite(current.argumentExpression);
@@ -157,6 +252,8 @@ export function compileDebugger(draft, overrides, moduleContext = null) {
         const callee = unwrapped(current.expression);
         if (ts.isPropertyAccessExpression(callee) && ts.isIdentifier(callee.expression) && callee.expression.text==='console' && callee.name.text==='log') return 'console.log(' + current.arguments.map(rewrite).join(',') + ')';
         const meta = metadata(current, scopes, context, false, 'context');
+        if (fetchCall(callee,scopes)) return helper+'.fetch('+meta.id+','+inlineScopes(scopes)+',['+current.arguments.map(rewrite).join(',')+'])';
+        if (timerCall(callee,scopes)) return helper+'.timer('+meta.id+','+inlineScopes(scopes)+','+JSON.stringify(callee.text)+',['+current.arguments.map(rewrite).join(',')+'])';
         if (ts.isPropertyAccessExpression(callee)) return helper+'.bound('+meta.id+','+inlineScopes(scopes)+','+rewrite(callee.expression)+','+JSON.stringify(callee.name.text)+')('+current.arguments.map(rewrite).join(',')+')';
         return helper+'.call('+meta.id+','+inlineScopes(scopes)+','+rewrite(callee)+',['+current.arguments.map(rewrite).join(',')+'])';
       }
@@ -170,7 +267,8 @@ export function compileDebugger(draft, overrides, moduleContext = null) {
   function variableList(list, scopes, context, emit = true) {
     if (!(list.flags & (ts.NodeFlags.Const | ts.NodeFlags.Let))) fail(list);
     for (const item of list.declarations) {
-      bindingName(item.name); if (item.type || item.exclamationToken) fail(item);
+      declarationNames(item); if (item.type || item.exclamationToken) fail(item);
+      if (ts.isArrayBindingPattern(item.name) && !stateInitializer(item.initializer, scopes)) throw new Error('Die Zweierbindung ist im React-Debugger nur direkt für useState unterstützt.');
       if (item.initializer) expression(item.initializer, scopes);
       else if (list.flags & ts.NodeFlags.Const) throw new Error('Syntaxfehler: const benötigt einen Startwert.');
     }
@@ -181,10 +279,11 @@ export function compileDebugger(draft, overrides, moduleContext = null) {
     return [...scopes, scope];
   };
   function block(node, scopes, context, iteration = false, handler = null) {
+    if(handler==='Finally')context={...context,finallyDepth:(context.finallyDepth||0)+1};
     const scope = scopeFor(node.statements, (handler || 'Block') + ' ' + (file.getLineAndCharacterOfPosition(node.getStart(file)).line + 1));
     scope.ownerFunctionId = context.functionId;
     const inner = childScopes(scopes, scope);
-    return '{\n' + (handler ? helper + '.guard();\n' : '') + declaration(scope) + (handler ? point(node, inner, context, false, handler === 'Catch' ? 'catch' : 'finally') : iteration ? point(node, inner, context, false, 'iteration') : '') + node.statements.map(child => statement(child, inner, context)).join('\n') + '\n}';
+    return '{\n' + (handler ? (context.async?helper+'.activate(__azubi_dbg_frame);':'')+helper + '.guard();\n' : '') + declaration(scope) + (handler ? point(node, inner, context, false, handler === 'Catch' ? 'catch' : 'finally') : iteration ? point(node, inner, context, false, 'iteration') : '') + node.statements.map(child => statement(child, inner, context)).join('\n') + (handler==='Finally'&&context.async?helper+'.asyncProgress(__azubi_dbg_frame,'+context.finallyDepth+');':'')+'\n}';
   }
   function body(node, scopes, context) {
     if (ts.isVariableStatement(node) || ts.isFunctionDeclaration(node)) throw new Error('Syntaxfehler: Deklarationen benötigen hier einen eigenen Block.');
@@ -196,7 +295,7 @@ export function compileDebugger(draft, overrides, moduleContext = null) {
     return '{\n' + (scope ? declaration(scope) : '') + (ts.isBlock(node) ? block(node, inner, ctx, true) : point(node, inner, ctx, false, 'iteration') + body(node, inner, ctx)) + '\n}';
   }
   function renderFunction(node, scopes, context, callback = false) {
-    if (node.modifiers?.length && !exportModifiers(node) || node.asteriskToken || !node.body || node.type || node.typeParameters?.length) fail(node);
+    if (node.modifiers?.length && !functionModifiers(node) || node.asteriskToken || !node.body || node.type || node.typeParameters?.length) fail(node);
     for (const parameter of node.parameters) if (parameter.dotDotDotToken || parameter.initializer || parameter.type || parameter.questionToken || parameter.modifiers?.length) fail(parameter);
     const parameterNames = new Set();
     for (const parameter of node.parameters) { const name = bindingName(parameter.name); if (parameterNames.has(name)) fail(parameter); parameterNames.add(name); }
@@ -208,20 +307,23 @@ export function compileDebugger(draft, overrides, moduleContext = null) {
     const isBlock = ts.isBlock(node.body);
     const scope = scopeFor(isBlock ? node.body.statements : [], callback ? name : 'Funktion ' + name, node.parameters.map(param => param.name));
     scope.ownerFunctionId = id;
-    const inner = childScopes(scopes, scope), ctx = { functionId: id, loops: 0, strict: context.strict };
+    const inner = childScopes(scopes, scope), ctx = { functionId: id, loops: 0, strict: context.strict, async: asyncFunction(node) };
     const statements = isBlock ? [...node.body.statements] : []; let directives = '';
     while (statements[0] && ts.isExpressionStatement(statements[0]) && ts.isStringLiteral(statements[0].expression)) { const directive = statements.shift(); if (['"use strict"', "'use strict'"].includes(directive.expression.getText(file))) ctx.strict = true; directives += directive.getText(file) + ';\n'; }
     const params = node.parameters.map(param => param.name.getText(file)).join(',');
     const exported = isDeclaration && node.modifiers?.length ? node.modifiers.map(item => item.getText(file)).join(' ') + ' ' : '';
-    const head = isDeclaration ? exported + 'function ' + name + '(' + params + ')' : ts.isArrowFunction(node) ? '(' + params + ')=>' : 'function(' + params + ')';
+    const head = isDeclaration ? exported + 'function ' + name + '(' + params + ')' : ts.isArrowFunction(node) ? (ctx.async?'async ':'')+'(' + params + ')=>' : (ctx.async?'async ':'')+'function(' + params + ')';
     let body;
     if (isBlock) body = point(node.body, inner, ctx, false, 'entry') + statements.map(child => statement(child, inner, ctx)).join('\n') + '\n' + point(node.body, inner, ctx, false, 'return', true);
-    else { expression(node.body, inner); body = point(node, inner, ctx, false, 'entry') + point(node.body, inner, ctx, false, 'return') + 'return (' + render(node.body, inner, ctx, false) + ');'; }
-    return head + '{\n' + directives + 'const __azubi_dbg_frame=' + helper + '.enter(' + id + ');try{\n' + declaration(scope) + body + '\n}finally{' + helper + '.leave(__azubi_dbg_frame);}\n}';
+    else { expression(node.body, inner); body = point(node, inner, ctx, false, 'entry') + point(node.body, inner, ctx, false, 'return') + 'return (' + (ctx.async?helper+'.asyncReturn(__azubi_dbg_frame,0,'+render(node.body,inner,ctx,false)+')':render(node.body, inner, ctx, false)) + ');'; }
+    return head + '{\n' + directives + 'const __azubi_dbg_frame=' + helper + '.enter(' + id + ','+ctx.async+');try{\n' + declaration(scope) + body + (ctx.async?'\n}catch(__azubi_dbg_exception){'+helper+'.activate(__azubi_dbg_frame);'+helper+'.asyncFailure(__azubi_dbg_exception);throw __azubi_dbg_exception;':'') + '\n}finally{' + (ctx.async?helper+'.activate(__azubi_dbg_frame);'+helper+'.finishAsync(__azubi_dbg_frame);':'') + helper + '.leave(__azubi_dbg_frame);}\n}';
   }
   function statement(node, scopes, context) {
     if (moduleContext && scopes.length === 1 && !context.functionId) {
-      if (ts.isImportDeclaration(node)) return node.getText(file) + ';';
+      if (ts.isImportDeclaration(node)) {
+        if (moduleContext.react && node.moduleSpecifier.text === 'react') return node.importClause.namedBindings.elements.map(item => 'const ' + item.name.text + '=' + helper + '.reactBinding(' + JSON.stringify(item.propertyName?.text || item.name.text) + ');').join('\n');
+        return node.getText(file) + ';';
+      }
       if (ts.isExportDeclaration(node)) {
         if (node.exportClause && ts.isNamespaceExport(node.exportClause)) bindingName(node.exportClause.name);
         else for (const item of node.exportClause?.elements || []) { const local = bindingName(item.propertyName || item.name); bindingName(item.name); if (!node.moduleSpecifier && !resolve(local, scopes)) fail(item); }
@@ -240,7 +342,7 @@ export function compileDebugger(draft, overrides, moduleContext = null) {
     }
     if (ts.isBlock(node)) return block(node, scopes, context);
     if (ts.isTryStatement(node)) {
-      const protectedBlock = code => '{try' + code + 'catch(__azubi_dbg_exception){' + helper + '.failure(__azubi_dbg_exception);throw __azubi_dbg_exception;}}';
+      const protectedBlock = code => '{try' + code + 'catch(__azubi_dbg_exception){' + (context.async?helper+'.activate(__azubi_dbg_frame);':'')+helper + '.failure(__azubi_dbg_exception);throw __azubi_dbg_exception;}}';
       let caught = '';
       if (node.catchClause) {
         const variable = node.catchClause.variableDeclaration;
@@ -250,7 +352,7 @@ export function compileDebugger(draft, overrides, moduleContext = null) {
         const inner = childScopes(scopes, scope);
         // Keep the parameter environment outside the original block environment:
         // same-name let in that block is an early error in native JavaScript.
-        if (variable) for (const child of node.catchClause.block.statements) if (ts.isVariableStatement(child)) for (const item of child.declarationList.declarations) if (ts.isIdentifier(item.name) && item.name.text === variable.name.text) throw new Error('Syntaxfehler: doppelte Catchbindung.');
+        if (variable) for (const child of node.catchClause.block.statements) if (ts.isVariableStatement(child)) for (const item of child.declarationList.declarations) if (declarationNames(item).some(name => name.text === variable.name.text)) throw new Error('Syntaxfehler: doppelte Catchbindung.');
         const body = block(node.catchClause.block, inner, context, false, 'Catch');
         caught = 'catch' + (variable ? '(' + variable.name.getText(file) + ')' : '') + protectedBlock('{\n' + helper + '.guard();\n' + declaration(scope) + body + '\n}');
       }
@@ -283,7 +385,7 @@ export function compileDebugger(draft, overrides, moduleContext = null) {
         scope.ownerFunctionId = context.functionId;
         const inner = childScopes(scopes, scope);
         if (isOf) {
-          if (!(node.initializer.flags & (ts.NodeFlags.Const | ts.NodeFlags.Let)) || node.initializer.declarations.length !== 1 || node.initializer.declarations[0].initializer) fail(node);
+          if (!(node.initializer.flags & (ts.NodeFlags.Const | ts.NodeFlags.Let)) || node.initializer.declarations.length !== 1 || node.initializer.declarations[0].initializer || !ts.isIdentifier(node.initializer.declarations[0].name)) fail(node);
           init = node.initializer.getText(file);
         } else init = variableList(node.initializer, inner, context);
       } else if (node.initializer) {
@@ -303,10 +405,10 @@ export function compileDebugger(draft, overrides, moduleContext = null) {
     if (ts.isReturnStatement(node)) {
       if (!context.functionId) throw new Error('Syntaxfehler: return benötigt eine Funktion.');
       if (node.expression) expression(node.expression, scopes);
-      return point(node, scopes, context, false, 'return') + 'return' + (node.expression ? ' (' + render(node.expression, scopes, context, false) + ')' : '') + ';';
+      return point(node, scopes, context, false, 'return') + 'return' + (node.expression ? ' (' + (context.async?helper+'.asyncReturn(__azubi_dbg_frame,'+(context.finallyDepth||0)+','+render(node.expression,scopes,context,false)+')':render(node.expression, scopes, context, false)) + ')' : context.async?' '+helper+'.asyncReturn(__azubi_dbg_frame,'+(context.finallyDepth||0)+',undefined)':'') + ';';
     }
     if (ts.isFunctionDeclaration(node)) {
-      if (context.functionId || scopes.length !== 1 || node.modifiers?.length && !exportModifiers(node) || node.asteriskToken || !node.name || !node.body || node.type || node.typeParameters?.length) fail(node);
+      if (context.functionId || scopes.length !== 1 || node.modifiers?.length && !functionModifiers(node) || node.asteriskToken || !node.name || !node.body || node.type || node.typeParameters?.length) fail(node);
       return renderFunction(node, scopes, context);
     }
     if (ts.isEmptyStatement(node)) return ';';
@@ -315,13 +417,14 @@ export function compileDebugger(draft, overrides, moduleContext = null) {
   const root = scopeFor(file.statements, moduleContext ? 'Modul ' + draft.name : 'Programm', [], true), context = { functionId: 0, loops: 0, strict: !!moduleContext };
   const statements = [...file.statements]; let directives = '';
   while (statements[0] && ts.isExpressionStatement(statements[0]) && ts.isStringLiteral(statements[0].expression)) { const directive = statements.shift(); if (['"use strict"', "'use strict'"].includes(directive.expression.getText(file))) context.strict = true; directives += directive.getText(file) + ';\n'; }
-  const registered = root.names.filter(name => root.bindings.get(name) === 'function').map(name => 'var __azubi_dbg_registered=' + helper + '.allowCallback(' + name + ');\n').join('');
+  const registered = root.names.filter(name => root.bindings.get(name) === 'function').map(name => 'var __azubi_dbg_registered=' + helper + '.allowCallback(' + name + ','+asyncFunction(file.statements.find(node=>ts.isFunctionDeclaration(node)&&node.name?.text===name))+');\n').join('');
   const staticDependency = node => !!moduleContext && (ts.isImportDeclaration(node) || ts.isExportDeclaration(node) && !!node.moduleSpecifier);
   // Preserve original RequestedModules order before any lowered local export
   // can introduce a direct reexport earlier than its original import.
   const dependencies = statements.filter(staticDependency).map(node => statement(node, [root], context)).join('\n');
   const namespaceStars = (moduleContext?.namespaceExports.get(draft.name) || []).map(item => 'export {' + item.key + '} from ' + JSON.stringify(item.from) + ';').join('\n');
-  const code = directives + dependencies + '\n' + namespaceStars + '\n' + declaration(root) + registered + statements.filter(node => !staticDependency(node)).map(node => statement(node, [root], context)).join('\n') + '\n' + (!moduleContext || moduleContext.entry === draft.name ? point(file, [root], context, true) : '');
+  const entry = moduleContext?.react && moduleContext.entry === draft.name ? file.statements.find(node => ts.isFunctionDeclaration(node) && node.modifiers?.some(modifier => modifier.kind === ts.SyntaxKind.DefaultKeyword)) : null;
+  const code = directives + dependencies + '\n' + namespaceStars + '\n' + declaration(root) + registered + statements.filter(node => !staticDependency(node)).map(node => statement(node, [root], context)).join('\n') + '\n' + (entry ? helper + '.setReactEntry(' + entry.name.text + ');\n' : '') + (!moduleContext || moduleContext.entry === draft.name ? point(file, [root], context, true) : '');
   if (encodedSize(code) > limits.generatedBytes) throw new Error('Generierter Debugcode zu groß.');
   if (moduleContext) moduleContext.scopeId = scopeId;
   return { schema: 1, name: draft.name, code, helper, points, functions, stats: { nodes, maxDepth, generatedBytes: encodedSize(code) } };
@@ -329,9 +432,11 @@ export function compileDebugger(draft, overrides, moduleContext = null) {
 
 export function compileDebugProject(input, overrides, options={}) {
   const project = checkDebugProject(input), limits = debuggerLimits(overrides);
+  const react = options.react === true;
+  if (react !== (project.react === true) || react && options.dom) throw new Error('React benötigt den eigenen Debugmodus ohne direkte DOM-/Async-Rechte.');
   if (Object.values(project.files).reduce((sum, source) => sum + encodedSize(source), 0) > limits.sourceBytes || Object.values(project.files).reduce((sum, source) => sum + debugSourceLines(source).length, 0) > limits.sourceLines) throw new Error('Projektweite Quelltext-/Zeilengrenze erreicht.');
   const namespaceExports = checkModuleGraph(project);
-  const shared = { entry: project.entry, points: [], functions: [{ id: 0, name: 'Programm' }], scopeId: 0, namespaceExports, dom:options.dom===true }, modules = {};
+  const shared = { entry: project.entry, points: [], functions: [{ id: 0, name: 'Programm' }], scopeId: 0, namespaceExports, dom:options.dom===true, react }, modules = {};
   let nodes = 0, generatedBytes = 0, maxDepth = 0;
   for (const [name, source] of Object.entries(project.files)) {
     try {
@@ -340,14 +445,14 @@ export function compileDebugProject(input, overrides, options={}) {
     } catch (error) { throw new Error(name + ': ' + error.message); }
   }
   if (nodes > limits.astNodes || generatedBytes > limits.generatedBytes) throw new Error('Projektweite AST-/Codegrenze erreicht.');
-  if(options.dom){if(shared.points.length>=limits.points)throw new Error('Zu viele Debugpositionen.');shared.points.push({id:shared.points.length,file:project.entry,line:1,column:1,end:false,kind:'context',functionId:0,scopes:[],synthetic:true});}
-  return { schema: 1, mode: 'module', name: project.entry, code: modules[project.entry], modules, sources: project.files, helper: '__azubi_dbg_checkpoint', points: shared.points, functions: shared.functions, stats: { nodes, maxDepth, generatedBytes } };
+  if(options.dom || react){if(shared.points.length>=limits.points)throw new Error('Zu viele Debugpositionen.');shared.points.push({id:shared.points.length,file:project.entry,line:1,column:1,end:false,kind:'context',functionId:0,scopes:[],synthetic:true});}
+  return { schema: 1, mode: 'module', name: project.entry, code: modules[project.entry], modules, sources: project.files, ...(react ? { react: true } : {}), helper: '__azubi_dbg_checkpoint', points: shared.points, functions: shared.functions, stats: { nodes, maxDepth, generatedBytes } };
 }
 
 function checkModuleGraph(project) {
   const records = new Map(), requests = [];
   for (const [name, source] of Object.entries(project.files)) {
-    const file = ts.createSourceFile(name, source, ts.ScriptTarget.Latest, true, ts.ScriptKind.JS);
+    const file = ts.createSourceFile(name, source, ts.ScriptTarget.Latest, true, project.react ? ts.ScriptKind.JSX : ts.ScriptKind.JS);
     if (file.parseDiagnostics.length) throw new Error('Syntaxfehler in ' + name + ': ' + ts.flattenDiagnosticMessageText(file.parseDiagnostics[0].messageText, ' '));
     const record = { deps: [], explicit: new Map(), stars: [], imports: new Map() };
     const add = (key, binding) => { if (record.explicit.has(key)) throw new Error('Doppelter Export in ' + name + ': ' + key); record.explicit.set(key, binding); };
@@ -357,6 +462,16 @@ function checkModuleGraph(project) {
     };
     for (const node of file.statements) {
       if (ts.isImportDeclaration(node)) {
+        if (node.moduleSpecifier?.text === 'react') {
+          const clause = node.importClause;
+          if (!project.react || !ts.isStringLiteral(node.moduleSpecifier) || node.attributes || !clause || clause.name || clause.isTypeOnly || !clause.namedBindings || !ts.isNamedImports(clause.namedBindings) || !clause.namedBindings.elements.length) throw new Error('React bitte ausschließlich über benannte useState-/useEffect-/createElement-Imports einbinden.');
+          for (const item of clause.namedBindings.elements) {
+            const key = item.propertyName?.text || item.name.text;
+            if (item.isTypeOnly || !ts.isIdentifier(item.name) || item.propertyName && !ts.isIdentifier(item.propertyName) || !reactExports.has(key)) throw new Error('Dieser React-Import ist nicht freigegeben.');
+            record.imports.set(item.name.text, { react: true, key });
+          }
+          continue;
+        }
         const dep = dependency(node), clause = node.importClause;
         if (clause?.isTypeOnly) throw new Error('Type-Imports sind nicht unterstützt.');
         if (clause?.name) { record.imports.set(clause.name.text, { dep, key: 'default' }); requests.push({ file: name, dep, key: 'default' }); }
@@ -367,6 +482,7 @@ function checkModuleGraph(project) {
           record.imports.set(item.name.text, { dep, key }); requests.push({ file: name, dep, key });
         }
       } else if (ts.isExportDeclaration(node)) {
+        if (node.moduleSpecifier?.text === 'react') throw new Error('React-Bindungen dürfen nicht weiterexportiert werden.');
         if (node.isTypeOnly || node.attributes) throw new Error('Exportsyntax noch nicht unterstützt.');
         const dep = node.moduleSpecifier ? dependency(node) : null;
         if (!node.exportClause) { if (!dep) throw new Error('Sternexport ohne Modul.'); record.stars.push({ dep, from: node.moduleSpecifier.text }); }
@@ -375,7 +491,7 @@ function checkModuleGraph(project) {
           if (item.isTypeOnly || !ts.isIdentifier(item.name) || item.propertyName && !ts.isIdentifier(item.propertyName)) throw new Error('Exportsyntax noch nicht unterstützt.');
           add(item.name.text, dep ? { dep, key: item.propertyName?.text || item.name.text } : { local: item.propertyName?.text || item.name.text });
         }
-      } else if (ts.isExportAssignment(node)) { if (node.isExportEquals) throw new Error('export = ist nicht unterstützt.'); add('default', { local: '*default*' }); }
+      } else if (ts.isExportAssignment(node)) { if (node.isExportEquals) throw new Error('export = ist nicht unterstützt.'); if (ts.isIdentifier(node.expression) && record.imports.get(node.expression.text)?.react) throw new Error('React-Bindungen dürfen nicht weiterexportiert werden.'); add('default', { local: '*default*' }); }
       else if (node.modifiers?.some(item => item.kind === ts.SyntaxKind.ExportKeyword)) {
         if (node.modifiers.some(item => item.kind === ts.SyntaxKind.DefaultKeyword)) add('default', { local: ts.isFunctionDeclaration(node) && node.name ? node.name.text : '*default*' });
         else if (ts.isFunctionDeclaration(node) && node.name) add(node.name.text, { local: node.name.text });
@@ -383,6 +499,12 @@ function checkModuleGraph(project) {
         else throw new Error('Exportsyntax noch nicht unterstützt.');
       }
     }
+    // Imports are hoisted even when written after an export assignment.
+    for (const node of file.statements) if (ts.isExportAssignment(node)) {
+      let value = node.expression; while (ts.isParenthesizedExpression(value)) value = value.expression;
+      if (ts.isIdentifier(value) && record.imports.get(value.text)?.react) throw new Error('React-Bindungen dürfen nicht weiterexportiert werden.');
+    }
+    if (project.react && name === project.entry && !file.statements.some(node => ts.isFunctionDeclaration(node) && node.name && node.body && node.modifiers?.some(modifier => modifier.kind === ts.SyntaxKind.DefaultKeyword) && !node.modifiers.some(modifier => modifier.kind === ts.SyntaxKind.AsyncKeyword))) throw new Error('Die React-Startdatei benötigt export default function App(...) mit eigenem Funktionsnamen.');
     records.set(name, record);
   }
   const visiting = new Set(), visited = new Set(), order = [];
@@ -403,6 +525,7 @@ function checkModuleGraph(project) {
     const record = records.get(name), result = new Map();
     for (const [key, binding] of record.explicit) {
       const reference = binding.local ? record.imports.get(binding.local) || binding : binding;
+      if (reference.react) throw new Error('React-Bindungen dürfen nicht weiterexportiert werden.');
       const origin = reference.namespace ? reference.dep + ':namespace' : reference.dep ? requireExport(reference.dep, reference.key, name) : name + ':binding:' + reference.local;
       result.set(key, origin);
     }

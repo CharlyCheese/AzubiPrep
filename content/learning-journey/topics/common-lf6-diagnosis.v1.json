@@ -1,0 +1,483 @@
+{
+  "schemaVersion": 1,
+  "id": "common-lf6-diagnosis",
+  "version": "1.0.0",
+  "title": "Ursachen schrittweise eingrenzen",
+  "fieldId": "LF6",
+  "scope": "common",
+  "prerequisites": [
+    "common-lf6-priority",
+    "common-lf5-testing"
+  ],
+  "sourceIds": [
+    "lf6-atlassian-response",
+    "lf6-ms-deployment"
+  ],
+  "sources": [
+    {
+      "id": "lf6-atlassian-response",
+      "title": "Atlassian: How we respond to an incident",
+      "url": "https://www.atlassian.com/incident-management/handbook/incident-response",
+      "checkedAt": "2026-11-16",
+      "note": "Öffentliche Herstellerbeschreibung zu Aufnahme, Auswirkung, Eskalation, Diagnose, Wiederherstellung und Kommunikation geprüft. Eigene Rollen und Fallwerte sind fiktiv, keine verbindliche ITIL-Vorgabe."
+    },
+    {
+      "id": "lf6-ms-deployment",
+      "title": "Microsoft: Recommendations for safe deployment practices",
+      "url": "https://learn.microsoft.com/en-us/azure/well-architected/operational-excellence/safe-deployments",
+      "checkedAt": "2026-11-16",
+      "note": "Herstellerempfehlungen zu kleinen freigegebenen Änderungen, Prüfung und vorbereiteter Wiederherstellung geprüft. Der lokale Versionswechsel und Rückfallplan sind ein synthetisches Übungsmodell."
+    }
+  ],
+  "objectives": [
+    {
+      "id": "common-lf6-diagnosis-hypothesis",
+      "text": "Aus einer Fehlerbeschreibung überprüfbare Ursachenvermutungen und einen geeigneten nächsten Test ableiten."
+    },
+    {
+      "id": "common-lf6-diagnosis-evidence",
+      "text": "Beobachtung, Vermutung und nachgewiesene Ursache im Diagnoseprotokoll auseinanderhalten."
+    }
+  ],
+  "caseStudy": {
+    "title": "Mira begleitet Radblick durch einen Servicefall",
+    "text": "Eigener fiktiver Lernfall: Bei R-106 funktioniert Lesen, während vier Versandarbeitsplätze beim Absenden 404 anzeigen. Mira untersucht vorgegebene synthetische Befunde. Der freigegebene Sollstand ist Konfiguration 7 mit Zielpfad /orders/v2; betroffene Clients verwenden 6 mit /orders/v1. Ein Kontrollclient mit 7 kann denselben synthetischen Testauftrag absenden. Es werden keine realen Aufträge oder Netzwerkbefehle ausgeführt."
+  },
+  "blocks": [
+    {
+      "id": "common-lf6-diagnosis-hypothesis",
+      "title": "1. Aus einem Symptom prüfbare Vermutungen bilden",
+      "objectiveIds": [
+        "common-lf6-diagnosis-hypothesis"
+      ],
+      "sourceIds": [
+        "lf6-atlassian-response"
+      ],
+      "paragraphs": [
+        "Eine Hypothese ist eine begründete, überprüfbare Vermutung. Aus Lesen funktioniert, Absenden scheitert ergeben sich mehrere Ansätze: Die Absendeadresse könnte falsch sein, die Berechtigung für diese Aktion fehlen oder der zuständige Dienst gestört sein. Der Befund grenzt den Bereich ein, entscheidet aber noch nicht zwischen diesen Möglichkeiten.",
+        "Formuliere die Vermutung so, dass ein beobachtbarer Test sie stützen oder schwächen kann. Beispiel: Wenn betroffene Clients eine veraltete Absendeadresse verwenden, muss ihre Konfiguration vom freigegebenen Sollstand abweichen. Der nächste Schritt ist dann ein lesender Soll-Ist-Vergleich der Versions- und Zielpfadangaben, nicht der unvorbereitete Austausch mehrerer Komponenten.",
+        "Ordne Tests nach erwarteter Aussage, Eingriffsrisiko und Aufwand. Ein vorhandener Versionsbefund ist meist schneller und risikoärmer zu prüfen als eine Neuinstallation. Eine naheliegende Hypothese bleibt dennoch vorläufig; passe sie an neue Befunde an. Prüfe innerhalb der vorhandenen Befugnisse und eskaliere, wenn ein Test besondere Rechte oder riskante Eingriffe erfordert."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Lernfall",
+        "text": "Miras Hypothese lautet: Eine alte Absendeadresse wird verwendet. Sie plant den Vergleich von Istkonfiguration, Sollversion und Kontrollclient."
+      },
+      "misconception": {
+        "claim": "Eine plausibel klingende Erklärung genügt als nachgewiesene Ursache.",
+        "correction": "Eine Erklärung wird durch passende Befunde und überprüfbare Vorhersagen gestützt, nicht durch ihre Formulierung."
+      },
+      "takeaway": "Eine gute Hypothese sagt voraus, was ein konkreter Test zeigen müsste."
+    },
+    {
+      "id": "common-lf6-diagnosis-test",
+      "title": "2. Einen aussagekräftigen nächsten Test planen",
+      "objectiveIds": [
+        "common-lf6-diagnosis-hypothesis"
+      ],
+      "sourceIds": [
+        "lf6-atlassian-response",
+        "lf6-ms-deployment"
+      ],
+      "paragraphs": [
+        "Schreibe vor dem Test auf, was du vergleichst und welches Ergebnis für oder gegen deine Vermutung spricht. Halte die Bedingungen möglichst gleich: gleiche Aufgabe, geeignete Testdaten und vergleichbare Rolle. Unterschiede im Konto, Datensatz oder Zeitpunkt können sonst die Deutung verfälschen. Ein Kontrollfall zeigt, ob die Aufgabe unter einer bekannten Vergleichsbedingung gelingt.",
+        "Im Übungsfall liest Mira zuerst die vorgegebenen Daten: Sollversion 7 führt Absendeaufrufe an /orders/v2. Die vier betroffenen Clients melden Version 6 und /orders/v1 mit 404. Ein Kontrollclient mit derselben freigegebenen Rolle und demselben synthetischen Testauftrag nutzt 7 und /orders/v2; der Modellversand gelingt. Der Pfad ist die Adresse der angeforderten Portalaktion.",
+        "Die Kombination macht einen Versions- oder Konfigurationsfehler plausibel. Eine 404-Meldung allein beweist ihn nicht; im echten Betrieb kann eine nicht gefundene Ressource mehrere Gründe haben. Hier wird die Hypothese durch den passenden Soll-Ist-Unterschied und den Kontrollfall eingegrenzt. Eine spätere freigegebene Einzeländerung mit erfolgreicher Wiederholungsprobe liefert einen stärkeren Nachweis.",
+        "Ändere nicht gleichzeitig Konto, Zielpfad und Netzwerkprofil. Gelingt es danach, bleibt unklar, welche Änderung wirkte. Für die Modellprobe wird später gezielt die freigegebene Konfiguration angepasst; die Rolle und der synthetische Auftrag bleiben gleich. Der Zweck ist ein nachvollziehbarer Vergleich, kein Angriff auf reale Dienste."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Lernfall",
+        "text": "Mira vergleicht 6 → /orders/v1 → 404 mit 7 → /orders/v2 → Erfolg unter gleichem Testauftrag und gleicher Rolle."
+      },
+      "misconception": {
+        "claim": "Wenn ein anderer Client funktioniert, ist die vermutete Ursache bereits zweifelsfrei bewiesen.",
+        "correction": "Ein Kontrollclient grenzt ein. Unterschiedliche Bedingungen müssen geprüft und die gezielte Korrektur nachgetestet werden."
+      },
+      "takeaway": "Vergleichbare Bedingungen machen Testergebnisse aussagekräftig."
+    },
+    {
+      "id": "common-lf6-diagnosis-evidence",
+      "title": "3. Beobachtung, Vermutung und Beleg sauber trennen",
+      "objectiveIds": [
+        "common-lf6-diagnosis-evidence"
+      ],
+      "sourceIds": [
+        "lf6-atlassian-response"
+      ],
+      "paragraphs": [
+        "Eine Beobachtung beschreibt, was gemeldet oder gemessen wurde: Um 09:18 zeigt der betroffene Client Version 6. Eine Vermutung interpretiert dies: Der alte Zielpfad könnte das Absenden verhindern. Ein Beleg verknüpft überprüfbare Ergebnisse mit der Erklärung: Istpfad weicht vom freigegebenen Sollpfad ab, der Kontrollfall gelingt, und nach gezielter Korrektur gelingt derselbe Test.",
+        "Halte Quelle, Zeitpunkt, Prüfschritt, Bedingungen und Ergebnis fest. Ein Ergebnis wie Fehler erneut aufgetreten ist wertvoll, wenn bekannt ist, bei welcher Aktion und unter welchen Bedingungen. Bezeichne fremde Aussagen als gemeldet und eigene Ausgaben als beobachtet. Das verhindert, dass eine mehrfach weitergereichte Vermutung wie eine Messung wirkt.",
+        "Ein negatives Testergebnis kann eine Hypothese schwächen. Wenn betroffener und Kontrollclient dieselbe freigegebene Version und denselben Pfad besitzen, erklärt der behauptete Versionsunterschied den Fehler nicht. Dann wird eine andere passende Hypothese geprüft, statt den ersten Verdacht trotz Gegenbeleg beizubehalten.",
+        "Auch nach erfolgreicher Korrektur bleibt der Umfang des Nachweises begrenzt. Im Modell kann die falsche Absendeadresse als Ursache des beobachteten Versandfehlers dokumentiert werden. Warum die alte Konfiguration bei vier Clients blieb, ist damit noch nicht nachgewiesen. Diese Prozessfrage bleibt als eigener Prüfauftrag offen."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Lernfall",
+        "text": "Protokoll: Beobachtung 6 und 404; Hypothese alte Absendeadresse; Vergleich zu Soll 7 und Kontrollclient; nach freigegebener Änderung erneuter Modelltest erfolgreich. Grund der unvollständigen Verteilung bleibt offen."
+      },
+      "misconception": {
+        "claim": "Ein funktionierender Test nach der Änderung erklärt auch, warum der Ausgangsfehler entstanden ist.",
+        "correction": "Die unmittelbare technische Ursache und die dahinterliegende Prozessursache brauchen unterschiedliche Nachweise."
+      },
+      "takeaway": "Behaupte nur das, was die dokumentierte Belegkette trägt."
+    },
+    {
+      "id": "common-lf6-diagnosis-protocol",
+      "title": "4. Den Diagnoseverlauf für andere nutzbar machen",
+      "objectiveIds": [
+        "common-lf6-diagnosis-hypothesis",
+        "common-lf6-diagnosis-evidence"
+      ],
+      "sourceIds": [
+        "lf6-atlassian-response"
+      ],
+      "paragraphs": [
+        "Ein lesbares Diagnoseprotokoll führt von der Ausgangsfrage über Vermutung und Test zur Entscheidung. Verwende eine zeitliche Reihenfolge und konkrete Werte. Notiere auch verworfene Ansätze mit Grund, damit das nächste Team nicht dieselbe unbelegte Idee als neu behandelt. Beschränke Auszüge auf die für den Fall notwendigen Angaben.",
+        "Zu R-106 übergibt Mira: Absenden betroffen, Lesen möglich; vier Clients auf 6 mit /orders/v1; Soll 7 mit /orders/v2; Kontrollauftrag unter gleicher Rolle auf 7 erfolgreich. Schluss: Gezielte Konfigurationskorrektur durch befugtes Team prüfen. Das ist noch kein ausgeführter Lösungsnachweis und enthält keine erfundene Freigabe.",
+        "Nach jeder relevanten Änderung wird die passende Probe wiederholt und ein neuer Eintrag ergänzt. Falls das Ergebnis dem Erwarteten widerspricht, wird dies ausdrücklich festgehalten. Eine Fehlersuche ist keine Geschichte, in der der erste Verdacht immer recht behält; sie ist eine nachvollziehbare Reihe von Prüfentscheidungen.",
+        "Für die Übergabe endet das Protokoll mit dem aktuellen Erkenntnisstand, verbleibenden Unsicherheiten und dem nächsten verantwortlichen Schritt. So kann Sam eine Freigabe vorbereiten und die Lösung prüfen, ohne Annahmen als bestätigte Fakten zu übernehmen."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Lernfall",
+        "text": "Mira übergibt die belegte Soll-Ist-Abweichung und empfiehlt die freigegebene Einzelkorrektur mit anschließendem Versandtest; sie behauptet noch keinen abgeschlossenen Versand."
+      },
+      "misconception": {
+        "claim": "Für das Protokoll genügt die letzte erfolgreiche Maßnahme.",
+        "correction": "Ausgangsbefund, Hypothese, Testbedingungen und offene Fragen erklären, warum die Maßnahme gewählt wurde."
+      },
+      "takeaway": "Ein brauchbares Protokoll begründet den nächsten Schritt und begrenzt seine Aussage."
+    }
+  ],
+  "questionFile": "questions/common-lf6-diagnosis.v1.csv",
+  "quiz": {
+    "questionIds": [
+      "LJ-LF6-DIAGNOSIS-Q01",
+      "LJ-LF6-DIAGNOSIS-Q02",
+      "LJ-LF6-DIAGNOSIS-Q03",
+      "LJ-LF6-DIAGNOSIS-Q04",
+      "LJ-LF6-DIAGNOSIS-Q05",
+      "LJ-LF6-DIAGNOSIS-Q06"
+    ]
+  },
+  "exam": {
+    "questionIds": [
+      "LJ-LF6-DIAGNOSIS-E01",
+      "LJ-LF6-DIAGNOSIS-E02",
+      "LJ-LF6-DIAGNOSIS-E03",
+      "LJ-LF6-DIAGNOSIS-E04",
+      "LJ-LF6-DIAGNOSIS-E05",
+      "LJ-LF6-DIAGNOSIS-E06",
+      "LJ-LF6-DIAGNOSIS-E07",
+      "LJ-LF6-DIAGNOSIS-E08"
+    ],
+    "passPercent": 80,
+    "scoring": "all-or-nothing-per-question",
+    "timed": false
+  },
+  "questionLinks": [
+    {
+      "questionId": "LJ-LF6-DIAGNOSIS-Q01",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf6-diagnosis-hypothesis"
+      ],
+      "blockIds": [
+        "common-lf6-diagnosis-hypothesis"
+      ]
+    },
+    {
+      "questionId": "LJ-LF6-DIAGNOSIS-Q02",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf6-diagnosis-hypothesis"
+      ],
+      "blockIds": [
+        "common-lf6-diagnosis-hypothesis",
+        "common-lf6-diagnosis-test"
+      ]
+    },
+    {
+      "questionId": "LJ-LF6-DIAGNOSIS-Q03",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf6-diagnosis-hypothesis"
+      ],
+      "blockIds": [
+        "common-lf6-diagnosis-test"
+      ]
+    },
+    {
+      "questionId": "LJ-LF6-DIAGNOSIS-Q04",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf6-diagnosis-evidence"
+      ],
+      "blockIds": [
+        "common-lf6-diagnosis-evidence"
+      ]
+    },
+    {
+      "questionId": "LJ-LF6-DIAGNOSIS-Q05",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf6-diagnosis-evidence",
+        "common-lf6-diagnosis-hypothesis"
+      ],
+      "blockIds": [
+        "common-lf6-diagnosis-test",
+        "common-lf6-diagnosis-evidence"
+      ]
+    },
+    {
+      "questionId": "LJ-LF6-DIAGNOSIS-Q06",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf6-diagnosis-evidence"
+      ],
+      "blockIds": [
+        "common-lf6-diagnosis-evidence",
+        "common-lf6-diagnosis-protocol"
+      ]
+    },
+    {
+      "questionId": "LJ-LF6-DIAGNOSIS-E01",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf6-diagnosis-hypothesis"
+      ],
+      "blockIds": [
+        "common-lf6-diagnosis-hypothesis"
+      ]
+    },
+    {
+      "questionId": "LJ-LF6-DIAGNOSIS-E02",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf6-diagnosis-hypothesis",
+        "common-lf6-diagnosis-evidence"
+      ],
+      "blockIds": [
+        "common-lf6-diagnosis-test",
+        "common-lf6-diagnosis-evidence"
+      ]
+    },
+    {
+      "questionId": "LJ-LF6-DIAGNOSIS-E03",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf6-diagnosis-hypothesis",
+        "common-lf6-diagnosis-evidence"
+      ],
+      "blockIds": [
+        "common-lf6-diagnosis-evidence",
+        "common-lf6-diagnosis-protocol"
+      ]
+    },
+    {
+      "questionId": "LJ-LF6-DIAGNOSIS-E04",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf6-diagnosis-evidence"
+      ],
+      "blockIds": [
+        "common-lf6-diagnosis-evidence"
+      ]
+    },
+    {
+      "questionId": "LJ-LF6-DIAGNOSIS-E05",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf6-diagnosis-hypothesis",
+        "common-lf6-diagnosis-evidence"
+      ],
+      "blockIds": [
+        "common-lf6-diagnosis-test",
+        "common-lf6-diagnosis-protocol"
+      ]
+    },
+    {
+      "questionId": "LJ-LF6-DIAGNOSIS-E06",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf6-diagnosis-evidence"
+      ],
+      "blockIds": [
+        "common-lf6-diagnosis-evidence",
+        "common-lf6-diagnosis-protocol"
+      ]
+    },
+    {
+      "questionId": "LJ-LF6-DIAGNOSIS-E07",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf6-diagnosis-hypothesis",
+        "common-lf6-diagnosis-evidence"
+      ],
+      "blockIds": [
+        "common-lf6-diagnosis-hypothesis",
+        "common-lf6-diagnosis-protocol"
+      ]
+    },
+    {
+      "questionId": "LJ-LF6-DIAGNOSIS-E08",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf6-diagnosis-evidence"
+      ],
+      "blockIds": [
+        "common-lf6-diagnosis-evidence",
+        "common-lf6-diagnosis-protocol"
+      ]
+    }
+  ],
+  "interview": [
+    {
+      "id": "common-lf6-diagnosis-talk-hypothesis",
+      "prompt": "Bilde aus Lesen geht, Absenden scheitert zwei überprüfbare Vermutungen und wähle einen nächsten Test.",
+      "objectiveIds": [
+        "common-lf6-diagnosis-hypothesis"
+      ],
+      "blockIds": [
+        "common-lf6-diagnosis-hypothesis",
+        "common-lf6-diagnosis-test"
+      ],
+      "keyPoints": [
+        "Etwa falschen Zielpfad und fehlende Aktionsberechtigung als Alternativen formulieren.",
+        "Lesenden Soll-Ist-Vergleich passend zur Zielpfadvermutung planen.",
+        "Erwartete Ergebnisse und Grenzen des Tests nennen."
+      ],
+      "acceptableAlternatives": [
+        "Eine fachlich gleichwertige Erklärung mit passenden Befunden und nachvollziehbarer Begründung."
+      ],
+      "misconceptions": [
+        "Mit einem ungezielten Neustart einen Ursachennachweis behaupten."
+      ],
+      "sampleAnswer": "Ein alter Absendezielpfad oder eine fehlende Berechtigung könnte den Unterschied erklären. Ich prüfe zuerst Version und Pfad gegen den Sollplan, weil ich damit die erste Vermutung ohne Änderung eingrenzen kann. Gleiche Werte würden diese Vermutung schwächen.",
+      "followUp": "Welche zusätzliche Bedingung muss beim Vergleich des Kontrollclients gleich sein?"
+    },
+    {
+      "id": "common-lf6-diagnosis-talk-evidence",
+      "prompt": "Ordne drei Aussagen als Beobachtung, Vermutung oder Beleg ein: Client zeigt 6; alte Adresse könnte stören; nach gezielter Korrektur gelingt derselbe Test.",
+      "objectiveIds": [
+        "common-lf6-diagnosis-evidence",
+        "common-lf6-diagnosis-hypothesis"
+      ],
+      "blockIds": [
+        "common-lf6-diagnosis-test",
+        "common-lf6-diagnosis-evidence"
+      ],
+      "keyPoints": [
+        "Version 6 als Beobachtung benennen.",
+        "Alte Adresse als prüfbare Hypothese kennzeichnen.",
+        "Wiederholungsprobe als Teil der Belegkette mit unveränderten Vergleichsbedingungen erklären."
+      ],
+      "acceptableAlternatives": [
+        "Eine fachlich gleichwertige Erklärung mit passenden Befunden und nachvollziehbarer Begründung."
+      ],
+      "misconceptions": [
+        "Die noch ungeprüfte Verteilursache als erwiesen darstellen."
+      ],
+      "sampleAnswer": "6 ist ein abgelesener Istwert. Die alte Adresse ist zunächst eine Erklärungsidee. Sollabweichung, Kontrolltest und Erfolg nach gezielter Korrektur stützen sie für diesen Versandfehler. Warum der Rollout vier Clients ausließ, bleibt offen.",
+      "followUp": "Was würdest du schreiben, wenn der Test nach der Korrektur weiter fehlschlägt?"
+    },
+    {
+      "id": "common-lf6-diagnosis-talk-handover",
+      "prompt": "Gib Sam den Diagnoseverlauf so weiter, dass er die nächste Maßnahme begründen kann.",
+      "objectiveIds": [
+        "common-lf6-diagnosis-hypothesis",
+        "common-lf6-diagnosis-evidence"
+      ],
+      "blockIds": [
+        "common-lf6-diagnosis-evidence",
+        "common-lf6-diagnosis-protocol"
+      ],
+      "keyPoints": [
+        "Ausgangsaktion, Ist 6/v1/404 und Soll 7/v2 nennen.",
+        "Kontrollfall mit gleicher Rolle und gleichem Auftrag aufführen.",
+        "Geplante Einzelkorrektur, nötige Freigabe und anschließende Probe unterscheiden."
+      ],
+      "acceptableAlternatives": [
+        "Eine fachlich gleichwertige Erklärung mit passenden Befunden und nachvollziehbarer Begründung."
+      ],
+      "misconceptions": [
+        "Eine geplante Maßnahme als bereits durchgeführt protokollieren."
+      ],
+      "sampleAnswer": "R-106 betrifft das Absenden. Die betroffenen Clients zeigen 6 und /orders/v1 mit 404, Soll ist 7 mit /orders/v2. Der Kontrollclient sendet unter gleicher Rolle denselben Testauftrag erfolgreich. Ich empfehle die freigegebene Einzelkorrektur mit anschließender Probe; sie ist noch nicht durchgeführt.",
+      "followUp": "Welcher Teil dieser Übergabe ist eine Empfehlung und welcher eine Beobachtung?"
+    }
+  ],
+  "cards": [
+    {
+      "id": "common-lf6-diagnosis-card-01",
+      "front": "Was macht eine Hypothese überprüfbar?",
+      "back": "Sie benennt eine mögliche Ursache und eine erwartete Beobachtung, die ein geeigneter Test stützen oder schwächen kann.",
+      "objectiveIds": [
+        "common-lf6-diagnosis-hypothesis"
+      ],
+      "blockIds": [
+        "common-lf6-diagnosis-hypothesis"
+      ]
+    },
+    {
+      "id": "common-lf6-diagnosis-card-02",
+      "front": "Wie wählst du den nächsten Diagnosetest?",
+      "back": "Nach Aussage zur Hypothese, Risiko, Aufwand und vorhandener Befugnis; erwartete Ergebnisse vorher festhalten.",
+      "objectiveIds": [
+        "common-lf6-diagnosis-hypothesis"
+      ],
+      "blockIds": [
+        "common-lf6-diagnosis-hypothesis",
+        "common-lf6-diagnosis-test"
+      ]
+    },
+    {
+      "id": "common-lf6-diagnosis-card-03",
+      "front": "Wozu dient ein kontrollierter Vergleich?",
+      "back": "Er prüft dieselbe Aufgabe unter möglichst gleichen Bedingungen und dokumentiert den gezielt untersuchten Unterschied.",
+      "objectiveIds": [
+        "common-lf6-diagnosis-hypothesis"
+      ],
+      "blockIds": [
+        "common-lf6-diagnosis-test"
+      ]
+    },
+    {
+      "id": "common-lf6-diagnosis-card-04",
+      "front": "Beobachtung, Vermutung, Nachweis – wie unterscheiden sie sich?",
+      "back": "Beobachtung beschreibt einen Befund, Vermutung erklärt ihn vorläufig, Nachweis stützt die Erklärung durch passende dokumentierte Tests.",
+      "objectiveIds": [
+        "common-lf6-diagnosis-evidence"
+      ],
+      "blockIds": [
+        "common-lf6-diagnosis-evidence"
+      ]
+    },
+    {
+      "id": "common-lf6-diagnosis-card-05",
+      "front": "Warum auch Gegenbefunde protokollieren?",
+      "back": "Sie schwächen ungeeignete Hypothesen und begründen, warum der nächste Prüfweg geändert wird.",
+      "objectiveIds": [
+        "common-lf6-diagnosis-hypothesis",
+        "common-lf6-diagnosis-evidence"
+      ],
+      "blockIds": [
+        "common-lf6-diagnosis-evidence",
+        "common-lf6-diagnosis-protocol"
+      ]
+    },
+    {
+      "id": "common-lf6-diagnosis-card-06",
+      "front": "Was bleibt nach erfolgreicher Korrektur möglicherweise offen?",
+      "back": "Die Entstehung des ursprünglichen Fehlers und weitere betroffene Systeme. Der Nachweis gilt für die dokumentierten Testbedingungen.",
+      "objectiveIds": [
+        "common-lf6-diagnosis-evidence"
+      ],
+      "blockIds": [
+        "common-lf6-diagnosis-evidence",
+        "common-lf6-diagnosis-protocol"
+      ]
+    }
+  ],
+  "review": {
+    "status": "reviewed",
+    "checkedAt": "2026-11-16"
+  }
+}

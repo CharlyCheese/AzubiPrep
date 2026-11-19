@@ -1,0 +1,476 @@
+{
+  "schemaVersion": 1,
+  "id": "common-wiso-training",
+  "version": "1.0.0",
+  "title": "Ausbildung im dualen System",
+  "fieldId": "WISO",
+  "scope": "common",
+  "prerequisites": [
+    "common-lf1-role"
+  ],
+  "sourceIds": [
+    "kmk-wiso-2021",
+    "bbig-wiso",
+    "fiausbv-annex"
+  ],
+  "sources": [
+    {
+      "id": "kmk-wiso-2021",
+      "title": "KMK-Qualifikationsprofil Wirtschafts- und Sozialkunde vom 17.06.2021",
+      "url": "https://www.kmk.org/fileadmin/Dateien/veroeffentlichungen_beschluesse/2021/2021_06_17-Berufsschule-Unterricht-Wirtschafts-Sozialkunde.pdf",
+      "checkedAt": "2026-11-11",
+      "note": "Öffentliches KMK-Qualifikationsprofil: curricularer Bezug. Erklärungen, Fälle und Aufgaben eigenständig formuliert."
+    },
+    {
+      "id": "bbig-wiso",
+      "title": "Berufsbildungsgesetz – duale Ausbildung, Vertragsabfassung, Pflichten und Beendigung",
+      "url": "https://www.gesetze-im-internet.de/bbig_2005/BJNR093110005.html",
+      "checkedAt": "2026-11-11",
+      "note": "Geprüft: §§ 2, 5, 11, 13–15, 20–22, 39, 71 und 76. Geltungsbereich hier: duale Ausbildung nach BBiG in Deutschland, fiktiver IHK-Ausbildungsbetrieb."
+    },
+    {
+      "id": "fiausbv-annex",
+      "title": "Fachinformatikerausbildungsverordnung – Ausbildungsrahmenplan",
+      "url": "https://www.gesetze-im-internet.de/fiausbv/anlage.html",
+      "checkedAt": "2026-11-11",
+      "note": "Anlage, insbesondere Abschnitt F Nr. 1: Berufsbildung sowie Arbeits- und Tarifrecht. Bundesrechtliche Grundlage für betriebliche Ausbildungsinhalte."
+    }
+  ],
+  "objectives": [
+    {
+      "id": "common-wiso-training-roles",
+      "text": "Aufgaben von Betrieb, Berufsschule und zuständiger Stelle am Ausbildungsablauf erläutern."
+    },
+    {
+      "id": "common-wiso-training-contract",
+      "text": "Rechte und Pflichten aus einem vorgegebenen Ausbildungsvertrag einschließlich Beginn und Beendigung einordnen."
+    },
+    {
+      "id": "common-wiso-training-plans",
+      "text": "Den betrieblichen Ausbildungsplan von Ausbildungsordnung und schulischem Rahmenlehrplan unterscheiden."
+    }
+  ],
+  "caseStudy": {
+    "title": "Miras Ausbildungsstart",
+    "text": "Mira beginnt im erfundenen IT-Unternehmen Knotenpunkt eine duale Ausbildung zur Fachinformatikerin. Der Betrieb gehört im Fall zum Zuständigkeitsbereich der IHK. Ausbilder Sam plant Lernaufgaben, die Berufsschule Unterricht und die IHK begleitet die Ausbildung. Alle Personen, Termine und betrieblichen Abläufe sind erfunden. Die Rechtsregeln beziehen sich auf Deutschland, geprüft am 11.11.2026."
+  },
+  "blocks": [
+    {
+      "id": "common-wiso-training-partners",
+      "title": "1. Wer trägt welche Aufgabe?",
+      "objectiveIds": [
+        "common-wiso-training-roles"
+      ],
+      "sourceIds": [
+        "kmk-wiso-2021",
+        "bbig-wiso"
+      ],
+      "paragraphs": [
+        "Dual bedeutet, dass Betrieb und Berufsschule als Lernorte zusammenwirken. Im Betrieb erwirbt Mira berufliche Handlungsfähigkeit an angeleiteten praktischen Aufgaben. Die Berufsschule vermittelt berufliche und allgemeine Lerninhalte nach den schulrechtlichen Vorgaben des Landes. Beide Lernorte erklären auch Zusammenhänge: Betrieb ist nicht bloß Arbeit, Schule nicht bloß Theorie.",
+        "Der Ausbildungsbetrieb schließt den Vertrag und trägt Verantwortung für eine planmäßige Ausbildung. Er bildet selbst durch geeignete Personen aus oder beauftragt eine Ausbilderin beziehungsweise einen Ausbilder. Sam plant passende Aufgaben, gibt Rückmeldung und gleicht den Fortschritt mit den Ausbildungszielen ab.",
+        "Die zuständige Stelle überwacht die Durchführung und berät Beteiligte nach § 76 BBiG. Im beschriebenen nichthandwerklichen Gewerbebetrieb ist das die IHK. Sie errichtet für die Abschlussprüfung Prüfungsausschüsse. Eine Berufsschulnote ersetzt die Abschlussprüfung nicht. Andere Berufsbereiche können andere zuständige Stellen haben.",
+        "Bei dauerhaft fehlenden Lerninhalten dokumentiert Mira die Lücke und spricht Sam an. Bleibt sie ungelöst, ist die Ausbildungsberatung der zuständigen IHK passend. Eine schulische Unterrichtsfrage klärt sie mit der Berufsschule. Die IHK übernimmt nicht die tägliche Anleitung im Betrieb."
+      ],
+      "example": {
+        "title": "Eine Lücke klären",
+        "text": "Mira vergleicht wiederholte Routineaufgaben mit dem Ausbildungsplan und bespricht fehlende Lerngelegenheiten mit Sam. Die IHK-Ausbildungsberatung kann helfen, wenn der Betrieb keine Lösung findet."
+      },
+      "misconception": {
+        "claim": "Die IHK plant Miras tägliche Ausbildungsaufgaben.",
+        "correction": "Die tägliche Planung liegt beim Ausbildungsbetrieb. Die zuständige Stelle berät und überwacht."
+      },
+      "takeaway": "Ordne Lernort, Ausbildungsbegleitung und Prüfungsorganisation auseinander."
+    },
+    {
+      "id": "common-wiso-training-agreement",
+      "title": "2. Vertrag und gegenseitige Pflichten",
+      "objectiveIds": [
+        "common-wiso-training-contract"
+      ],
+      "sourceIds": [
+        "bbig-wiso"
+      ],
+      "paragraphs": [
+        "Nach § 11 BBiG muss der wesentliche Vertragsinhalt unverzüglich nach Abschluss, spätestens vor Ausbildungsbeginn in Textform abgefasst werden. Dazu gehören Ausbildungsziel und Gliederung, Beginn und Dauer, Ausbildungsstätte, tägliche Ausbildungszeit, Probezeit, Vergütung, Urlaub und Kündigungsvoraussetzungen. Bei elektronischer Übermittlung muss die Abfassung speicher- und druckbar sein und der Empfang nachgewiesen werden.",
+        "Der Betrieb muss die Ausbildung planmäßig durchführen und die erforderlichen Ausbildungsmittel kostenlos bereitstellen. Er darf Aufgaben übertragen, die dem Ausbildungszweck dienen und den körperlichen Kräften angemessen sind. Für den Ausbildungsnachweis muss Gelegenheit am Arbeitsplatz bestehen.",
+        "Mira muss sich um das Ausbildungsziel bemühen, Aufgaben sorgfältig ausführen, an freigestellten Ausbildungsmaßnahmen teilnehmen und ausbildungsbezogene Weisungen berechtigter Personen beachten. Sie behandelt Arbeitsmittel pfleglich, wahrt Betriebs- und Geschäftsgeheimnisse und führt den schriftlichen oder elektronischen Ausbildungsnachweis (§ 13 BBiG).",
+        "Der Betrieb stellt für Berufsschulunterricht und Prüfungen nach § 15 BBiG frei. Für die Anrechnung gelten nähere Regeln, etwa einmal wöchentlich für einen Berufsschultag mit mehr als fünf Unterrichtsstunden von mindestens 45 Minuten. Für unter 18-Jährige ist zusätzlich das Jugendarbeitsschutzgesetz maßgeblich. Ein Kundenauftrag rechtfertigt nicht, vorgeschriebenen Unterricht eigenmächtig ausfallen zu lassen."
+      ],
+      "example": {
+        "title": "Vertrag vor dem Start prüfen",
+        "text": "Mira prüft vor dem ersten Ausbildungstag, ob die Vertragsabfassung Beginn, Dauer, Probezeit und Vergütung nennt. Eine speicher- und druckbare elektronische Abfassung mit nachgewiesenem Empfang kann § 11 entsprechen. Für eine spätere Kündigung gilt eine andere Formregel."
+      },
+      "misconception": {
+        "claim": "Textform des Vertrags erlaubt auch eine Kündigung per Chat.",
+        "correction": "Die Vertragsabfassung und die Kündigung haben unterschiedliche Formanforderungen. § 22 BBiG verlangt Schriftform der Kündigung und schließt elektronische Form aus."
+      },
+      "takeaway": "Lernpflicht und Ausbildungspflicht gehören zusammen; Vertragsabfassung ist nicht Kündigung."
+    },
+    {
+      "id": "common-wiso-training-plans",
+      "title": "3. Drei Pläne richtig zuordnen",
+      "objectiveIds": [
+        "common-wiso-training-plans"
+      ],
+      "sourceIds": [
+        "kmk-wiso-2021",
+        "fiausbv-annex",
+        "bbig-wiso"
+      ],
+      "paragraphs": [
+        "Die bundesweite Ausbildungsordnung legt den anerkannten Ausbildungsberuf mit verbindlichen Vorgaben fest, etwa Ausbildungsdauer, Berufsbild und Prüfungsanforderungen. Ihr Ausbildungsrahmenplan beschreibt die zu vermittelnden Fertigkeiten, Kenntnisse und Fähigkeiten mit sachlicher und zeitlicher Gliederung. Für Fachinformatiker steht er in der Anlage der FIAusbV.",
+        "Der betriebliche Ausbildungsplan übersetzt diese Vorgaben in den konkreten Betrieb: Wann lernt Mira welche Inhalte, in welcher Abteilung, an welchen Aufgaben und mit welcher Betreuung? Er macht die Durchführung vor Ort nachvollziehbar. Eine andere Reihenfolge kann betrieblich sinnvoll sein, darf die vorgeschriebenen Inhalte aber nicht verschwinden lassen.",
+        "Der KMK-Rahmenlehrplan ist die gemeinsame Grundlage für den berufsbezogenen Unterricht der Berufsschule. Die Länder setzen ihn in schulische Vorgaben um. Er ist weder Miras täglicher betrieblicher Einsatzplan noch ein Ersatz für die Ausbildungsordnung.",
+        "Mira fragt bei einer Lernlücke zuerst, welcher vorgeschriebene Inhalt vermittelt werden soll. Danach sucht sie im betrieblichen Ausbildungsplan die vorgesehene Lerngelegenheit. Kann der Betrieb Inhalte nicht selbst vermitteln, muss eine passende Ausbildung organisiert werden, beispielsweise im Verbund. Fehlende Kundenaufträge streichen kein Lernziel."
+      ],
+      "example": {
+        "title": "Vom Rahmen zur Woche",
+        "text": "Sam plant für eine vorgegebene Kompetenz im November eine betreute Aufgabe in einem internen Übungsprojekt. Die konkrete Zuordnung zu Zeitraum und Betreuung gehört in den betrieblichen Ausbildungsplan."
+      },
+      "misconception": {
+        "claim": "Der betriebliche Ausbildungsplan ersetzt die Ausbildungsordnung.",
+        "correction": "Er konkretisiert deren Anforderungen für den Betrieb. Er kann verbindliche Ausbildungsinhalte nicht eigenmächtig aufheben."
+      },
+      "takeaway": "Ausbildungsordnung: verbindlicher Berufsrahmen; Betriebsplan: Umsetzung; Rahmenlehrplan: schulische Grundlage."
+    },
+    {
+      "id": "common-wiso-training-ending",
+      "title": "4. Probezeit, reguläres Ende und Kündigung",
+      "objectiveIds": [
+        "common-wiso-training-contract"
+      ],
+      "sourceIds": [
+        "bbig-wiso"
+      ],
+      "paragraphs": [
+        "Die BBiG-Ausbildung beginnt mit einer Probezeit von mindestens einem und höchstens vier Monaten (§ 20). In dieser Phase können beide Seiten ohne Kündigungsfrist kündigen. Auch dann muss die Kündigung schriftlich erfolgen; eine Nachricht per E-Mail oder Chat erfüllt § 22 nicht.",
+        "Nach der Probezeit kann aus wichtigem Grund ohne Kündigungsfrist gekündigt werden. Ob ein wichtiger Grund vorliegt, braucht eine Einzelfallprüfung. Die Tatsachen dürfen der kündigungsberechtigten Person grundsätzlich nicht länger als zwei Wochen bekannt sein; ein vorgesehenes Güteverfahren kann den Fristlauf hemmen. Die Gründe müssen im Kündigungsschreiben angegeben werden.",
+        "Zusätzlich können Auszubildende nach der Probezeit mit vier Wochen Frist kündigen, wenn sie die Berufsausbildung aufgeben oder sich für eine andere Berufstätigkeit ausbilden lassen wollen. Ein bloßer Wechsel des Betriebs im gleichen Ausbildungsberuf erfüllt diese besondere Voraussetzung nicht. Ein abgestimmter Aufhebungsvertrag kann eine andere Möglichkeit sein; die IHK berät zur Situation.",
+        "Das Ausbildungsverhältnis endet regelmäßig mit Ablauf der Ausbildungsdauer. Besteht Mira vorher die Abschlussprüfung, endet es mit der Bekanntgabe des Ergebnisses durch den Prüfungsausschuss (§ 21). Bei Nichtbestehen verlängert es sich auf ihr Verlangen bis zur nächstmöglichen Wiederholungsprüfung, höchstens um ein Jahr. Eine Weiterbeschäftigung nach dem Ende ist gesondert zu klären."
+      ],
+      "example": {
+        "title": "Früher bestanden",
+        "text": "Miras Vertrag läuft im fiktiven Fall bis 31. August. Der Prüfungsausschuss gibt ihr das bestandene Ergebnis bereits am 18. Juli bekannt. Das Ausbildungsverhältnis endet am 18. Juli. Ein Arbeitsverhältnis danach wird gesondert geklärt."
+      },
+      "misconception": {
+        "claim": "Die Vierwochenfrist erlaubt nach der Probezeit jeden Betriebswechsel.",
+        "correction": "Sie betrifft Ausbildungsaufgabe oder Wechsel der Berufstätigkeit. Beim gleichen Ausbildungsberuf ist die rechtliche Gestaltung gesondert zu klären."
+      },
+      "takeaway": "Prüfe Phase, Grund, Form und Zeitpunkt; Ausbildungsende und Arbeitsvertrag sind verschiedene Fragen."
+    }
+  ],
+  "questionFile": "questions/common-wiso-training.v1.csv",
+  "quiz": {
+    "questionIds": [
+      "LJ-WISO-TRAINING-Q01",
+      "LJ-WISO-TRAINING-Q02",
+      "LJ-WISO-TRAINING-Q03",
+      "LJ-WISO-TRAINING-Q04",
+      "LJ-WISO-TRAINING-Q05",
+      "LJ-WISO-TRAINING-Q06"
+    ]
+  },
+  "exam": {
+    "questionIds": [
+      "LJ-WISO-TRAINING-E01",
+      "LJ-WISO-TRAINING-E02",
+      "LJ-WISO-TRAINING-E03",
+      "LJ-WISO-TRAINING-E04",
+      "LJ-WISO-TRAINING-E05",
+      "LJ-WISO-TRAINING-E06",
+      "LJ-WISO-TRAINING-E07",
+      "LJ-WISO-TRAINING-E08"
+    ],
+    "passPercent": 80,
+    "scoring": "all-or-nothing-per-question",
+    "timed": false
+  },
+  "questionLinks": [
+    {
+      "questionId": "LJ-WISO-TRAINING-Q01",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-wiso-training-roles"
+      ],
+      "blockIds": [
+        "common-wiso-training-partners"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-TRAINING-Q02",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-wiso-training-contract"
+      ],
+      "blockIds": [
+        "common-wiso-training-agreement"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-TRAINING-Q03",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-wiso-training-plans"
+      ],
+      "blockIds": [
+        "common-wiso-training-plans"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-TRAINING-Q04",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-wiso-training-contract"
+      ],
+      "blockIds": [
+        "common-wiso-training-ending"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-TRAINING-Q05",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-wiso-training-contract"
+      ],
+      "blockIds": [
+        "common-wiso-training-agreement",
+        "common-wiso-training-ending"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-TRAINING-Q06",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-wiso-training-plans"
+      ],
+      "blockIds": [
+        "common-wiso-training-plans"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-TRAINING-E01",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-wiso-training-roles"
+      ],
+      "blockIds": [
+        "common-wiso-training-partners"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-TRAINING-E02",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-wiso-training-contract"
+      ],
+      "blockIds": [
+        "common-wiso-training-agreement"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-TRAINING-E03",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-wiso-training-plans"
+      ],
+      "blockIds": [
+        "common-wiso-training-plans"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-TRAINING-E04",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-wiso-training-contract"
+      ],
+      "blockIds": [
+        "common-wiso-training-ending"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-TRAINING-E05",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-wiso-training-contract"
+      ],
+      "blockIds": [
+        "common-wiso-training-ending"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-TRAINING-E06",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-wiso-training-roles"
+      ],
+      "blockIds": [
+        "common-wiso-training-partners"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-TRAINING-E07",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-wiso-training-plans"
+      ],
+      "blockIds": [
+        "common-wiso-training-plans"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-TRAINING-E08",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-wiso-training-contract"
+      ],
+      "blockIds": [
+        "common-wiso-training-ending"
+      ]
+    }
+  ],
+  "interview": [
+    {
+      "id": "common-wiso-training-talk-1",
+      "prompt": "Ordne Betrieb, Berufsschule und IHK je eine Aufgabe zu. Wo erhält Mira Hilfe bei einer ungelösten betrieblichen Lernlücke?",
+      "objectiveIds": [
+        "common-wiso-training-roles"
+      ],
+      "blockIds": [
+        "common-wiso-training-partners"
+      ],
+      "keyPoints": [
+        "Betrieb plant und begleitet die Ausbildung.",
+        "Berufsschule unterrichtet berufliche und allgemeine Inhalte.",
+        "IHK berät und überwacht als zuständige Stelle im Fall."
+      ],
+      "acceptableAlternatives": [
+        "Ausbildungsberatung der zuständigen Stelle statt IHK ist passend."
+      ],
+      "misconceptions": [
+        "IHK als tägliche Ausbilderin darstellen."
+      ],
+      "sampleAnswer": "Sam leitet betriebliche Lernaufgaben an, die Schule unterrichtet und die IHK berät und überwacht. Nach erfolglosem Gespräch mit Sam kann Mira die Ausbildungsberatung der IHK kontaktieren.",
+      "followUp": "Welche Unterlagen zeigen, was Mira bisher gelernt hat?"
+    },
+    {
+      "id": "common-wiso-training-talk-2",
+      "prompt": "Mira erhält eine Vertragsabfassung per E-Mail und möchte später per E-Mail kündigen. Erkläre den Unterschied und nenne eine Pflicht des Betriebs und eine eigene Pflicht.",
+      "objectiveIds": [
+        "common-wiso-training-contract"
+      ],
+      "blockIds": [
+        "common-wiso-training-agreement",
+        "common-wiso-training-ending"
+      ],
+      "keyPoints": [
+        "Textform der Vertragsabfassung mit speicher- und druckbarer Übermittlung sowie Empfangsnachweis unterscheiden.",
+        "Kündigung schriftlich, elektronische Form ausgeschlossen.",
+        "Ausbildungsmittel beziehungsweise Lernpflicht und Nachweis zuordnen."
+      ],
+      "acceptableAlternatives": [
+        "Andere im Block erklärte Pflichten sind gleichwertig."
+      ],
+      "misconceptions": [
+        "Textform pauschal mit Schriftform gleichsetzen."
+      ],
+      "sampleAnswer": "Die elektronische Vertragsabfassung kann die Textform erfüllen, wenn Übermittlung und Empfang den Vorgaben entsprechen. Eine Kündigung per E-Mail genügt nicht. Der Betrieb stellt Ausbildungsmittel kostenlos bereit, Mira führt den Ausbildungsnachweis.",
+      "followUp": "Was prüfst du bei einer Kündigung nach der Probezeit zusätzlich zur Form?"
+    },
+    {
+      "id": "common-wiso-training-talk-3",
+      "prompt": "Ein Pflichtinhalt fehlt in der bisherigen Ausbildung. Erkläre anhand von Ausbildungsordnung, Betriebsplan und Rahmenlehrplan, wie Mira die Lücke prüft.",
+      "objectiveIds": [
+        "common-wiso-training-plans"
+      ],
+      "blockIds": [
+        "common-wiso-training-plans"
+      ],
+      "keyPoints": [
+        "Ausbildungsordnung samt Rahmenplan als verbindliche berufliche Vorgabe.",
+        "Betriebsplan zur konkreten zeitlichen und sachlichen Umsetzung.",
+        "Rahmenlehrplan als Grundlage des schulischen Unterrichts."
+      ],
+      "acceptableAlternatives": [
+        "Ausbildungsrahmenplan ausdrücklich als Anlage nennen."
+      ],
+      "misconceptions": [
+        "Seltene Kundenaufträge als Grund für das Streichen des Lernziels ansehen."
+      ],
+      "sampleAnswer": "Mira sucht den geforderten Inhalt im Ausbildungsrahmenplan und die geplante Lerngelegenheit im Betriebsplan. Mit Sam klärt sie, wann und wie er vermittelt wird. Der schulische Rahmenlehrplan zeigt die Unterrichtsgrundlage, ersetzt die betriebliche Umsetzung aber nicht.",
+      "followUp": "Welche Lerngelegenheit könnte ohne passenden Kundenauftrag organisiert werden?"
+    }
+  ],
+  "cards": [
+    {
+      "id": "common-wiso-training-card-1",
+      "front": "Was bedeutet duale Ausbildung?",
+      "back": "Betrieb und Berufsschule wirken als Lernorte zusammen. Der Betrieb organisiert betriebliche Ausbildung, die Schule beruflichen und allgemeinen Unterricht.",
+      "objectiveIds": [
+        "common-wiso-training-roles"
+      ],
+      "blockIds": [
+        "common-wiso-training-partners"
+      ]
+    },
+    {
+      "id": "common-wiso-training-card-2",
+      "front": "Wozu dient die zuständige Stelle im Ausbildungsfall?",
+      "back": "Die IHK berät und überwacht im beschriebenen Gewerbebetrieb die Ausbildung und errichtet Prüfungsausschüsse. Andere Berufsbereiche können andere zuständige Stellen haben.",
+      "objectiveIds": [
+        "common-wiso-training-roles"
+      ],
+      "blockIds": [
+        "common-wiso-training-partners"
+      ]
+    },
+    {
+      "id": "common-wiso-training-card-3",
+      "front": "Welche Form gilt für Vertragsabfassung und Kündigung nach BBiG?",
+      "back": "Vertragsabfassung: Textform mit Anforderungen an Übermittlung und Empfang. Kündigung: Schriftform; elektronische Form ist ausgeschlossen. Die Regeln dürfen nicht verwechselt werden.",
+      "objectiveIds": [
+        "common-wiso-training-contract"
+      ],
+      "blockIds": [
+        "common-wiso-training-agreement",
+        "common-wiso-training-ending"
+      ]
+    },
+    {
+      "id": "common-wiso-training-card-4",
+      "front": "Welche Regeln gelten für Probezeit und vorzeitiges Prüfungsende?",
+      "back": "BBiG-Probezeit: ein bis vier Monate. Bei vorzeitig bestandener Abschlussprüfung endet die Ausbildung mit Bekanntgabe durch den Prüfungsausschuss.",
+      "objectiveIds": [
+        "common-wiso-training-contract"
+      ],
+      "blockIds": [
+        "common-wiso-training-ending"
+      ]
+    },
+    {
+      "id": "common-wiso-training-card-5",
+      "front": "Worin unterscheiden sich Ausbildungsordnung und Betriebsplan?",
+      "back": "Die Ausbildungsordnung mit Ausbildungsrahmenplan enthält verbindliche berufliche Vorgaben. Der Betriebsplan konkretisiert Inhalte, Zeiträume und Betreuung im Betrieb.",
+      "objectiveIds": [
+        "common-wiso-training-plans"
+      ],
+      "blockIds": [
+        "common-wiso-training-plans"
+      ]
+    },
+    {
+      "id": "common-wiso-training-card-6",
+      "front": "Welche Aufgabe hat der schulische Rahmenlehrplan?",
+      "back": "Der KMK-Rahmenlehrplan bildet die gemeinsame Grundlage für den berufsbezogenen Berufsschulunterricht. Die Länder setzen ihn um; er ersetzt den betrieblichen Ausbildungsplan nicht.",
+      "objectiveIds": [
+        "common-wiso-training-plans"
+      ],
+      "blockIds": [
+        "common-wiso-training-plans"
+      ]
+    }
+  ],
+  "review": {
+    "status": "reviewed",
+    "checkedAt": "2026-11-11"
+  }
+}

@@ -1,0 +1,466 @@
+{
+  "schemaVersion": 1,
+  "version": "1.0.0",
+  "id": "fiae-lf11a-architecture",
+  "title": "Anwendungen in Komponenten gliedern",
+  "fieldId": "LF11a",
+  "scope": "specialization",
+  "prerequisites": [
+    "fiae-lf11a-model"
+  ],
+  "objectives": [
+    {
+      "id": "fiae-lf11a-architecture-responsibilities",
+      "text": "Für eine kleine Anwendung Zuständigkeiten zwischen Oberfläche, Fachlogik und Datenzugriff aufteilen."
+    },
+    {
+      "id": "fiae-lf11a-architecture-interfaces",
+      "text": "Die Zusammenarbeit zweier Komponenten über klar benannte Eingaben, Ergebnisse und Fehlerfälle beschreiben."
+    },
+    {
+      "id": "fiae-lf11a-architecture-method",
+      "text": "Für eine kleine Entwicklung ein Vorgehen mit kurzen Abstimmungs- und Testschritten begründen."
+    }
+  ],
+  "caseStudy": {
+    "title": "Wer entscheidet, was ein Treffer ist?",
+    "text": "Für das fiktive interne Reparatursystem soll dieselbe Suche später am Werkstattterminal und am Empfang laufen. Du zerlegst einen durchgängigen Suchvorgang so, dass fachliche Entscheidungen einmal implementiert und an beiden Oberflächen gleich geprüft werden können."
+  },
+  "sources": [
+    {
+      "id": "lf11a-layers",
+      "title": "Microsoft: Common web application architectures",
+      "url": "https://learn.microsoft.com/en-us/dotnet/architecture/modern-web-apps-azure/common-web-application-architectures",
+      "note": "Die Gliederung von Oberfläche, Anwendungslogik und Infrastruktur sowie die Richtung ihrer Abhängigkeiten wurden am eigenen Fall konkretisiert.",
+      "checkedAt": "2026-11-19"
+    },
+    {
+      "id": "scrum-guide-2020",
+      "title": "Schwaber und Sutherland: Scrum Guide 2020",
+      "url": "https://scrumguides.org/scrum-guide.html",
+      "checkedAt": "2026-11-19",
+      "note": "Überprüfen und Anpassen eines Arbeitsergebnisses auf Grundlage neuer Erkenntnisse. Der kurze Übungsablauf ist eine didaktische Auswahl."
+    },
+    {
+      "id": "lf5-ms-testing",
+      "title": "Microsoft: Best practices for writing unit tests",
+      "url": "https://learn.microsoft.com/en-us/dotnet/core/testing/unit-testing-best-practices",
+      "note": "Isolierte Tests, lesbare Anordnung der Prüfschritte und aussagekräftige Erwartungen wurden am eigenen Auftrag konkretisiert.",
+      "checkedAt": "2026-11-19"
+    }
+  ],
+  "sourceIds": [
+    "lf11a-layers",
+    "scrum-guide-2020",
+    "lf5-ms-testing"
+  ],
+  "blocks": [
+    {
+      "id": "fiae-lf11a-architecture-block-01",
+      "title": "1. Den Weg der Nummer durch drei Komponenten verfolgen",
+      "objectiveIds": [
+        "fiae-lf11a-architecture-responsibilities"
+      ],
+      "sourceIds": [
+        "lf11a-layers"
+      ],
+      "paragraphs": [
+        "Die Oberfläche liest den Feldinhalt und zeigt ein Ergebnis an. Die Fachlogik prüft die fachlich zulässige Nummer und entscheidet, was ein fehlender Auftrag bedeutet. Der Datenzugriff liest die vereinbarten Felder aus dem Speicher und kapselt Tabellen oder Dateiformate.",
+        "Gehe mit dem Team den Weg für Auftrag 7 durch. Aus der Kennung R-7 gewinnt das Formular nach Prüfung des Anzeigeformats die Zahl 7. Bei direkter Nummerneingabe wandelt es den Zahlentext in eine Ganzzahl um. Der Suchdienst validiert die Zahl und ruft den Speicher über eine kleine Schnittstelle auf. Das Ergebnis läuft in Gegenrichtung zur Anzeige zurück."
+      ],
+      "example": {
+        "title": "Eine Änderung einem Ort zuordnen",
+        "text": "Größere Schrift → Oberfläche. Neue zulässige Nummernspanne → Fachlogik. Tabelle wird umbenannt → Datenzugriff. Die fachliche Prüfung gilt auch bei Aufrufen außerhalb des Formulars."
+      },
+      "misconception": {
+        "claim": "Jede logische Komponente braucht einen eigenen Server.",
+        "correction": "Die drei Zuständigkeiten können als Funktionen oder Module in einem Programm zusammenarbeiten."
+      },
+      "takeaway": "Teile nach Aufgaben und Änderungsgründen auf."
+    },
+    {
+      "id": "fiae-lf11a-architecture-block-02",
+      "title": "2. Den Vertrag am Übergang aufschreiben",
+      "objectiveIds": [
+        "fiae-lf11a-architecture-interfaces"
+      ],
+      "sourceIds": [
+        "lf11a-layers"
+      ],
+      "paragraphs": [
+        "Der Datenzugriff read_status(number) erhält eine bereits geprüfte positive Ganzzahl. Bei einem Treffer liefert er einen Statustext, bei einer unbekannten Nummer None. Bei einer technischen Lesestörung meldet er einen gesonderten Fehler. Ein Aufrufer kann diese Ergebnisse unterscheiden.",
+        "Der Suchdienst übernimmt die fachliche Übersetzung. None wird zur Rückmeldung „nicht gefunden“. Ein Lesefehler bedeutet „derzeit nicht verfügbar“. Die Oberfläche darf das Speicherformat nicht kennen müssen. Wer eine Schnittstelle ändert, untersucht auch die aufrufenden Komponenten."
+      ],
+      "example": {
+        "title": "Ein Vertrag in drei Proben",
+        "text": "read_status(7) → „offen“ im Beispielbestand. read_status(19) → None bei funktionierendem Speicher. Eine unterbrochene Verbindung → Lesefehler unabhängig davon, ob ein Datensatz existiert."
+      },
+      "misconception": {
+        "claim": "Ein technischer Ausfall ist ein Beleg für eine freie Nummer.",
+        "correction": "Bei einem Ausfall fehlt die Information, ob der Auftrag existiert."
+      },
+      "takeaway": "Dokumentiere Voraussetzungen, Treffer, fehlenden Treffer und technische Störung."
+    },
+    {
+      "id": "fiae-lf11a-architecture-block-03",
+      "title": "3. Einen kleinen Suchvorgang früh vorführen",
+      "objectiveIds": [
+        "fiae-lf11a-architecture-method"
+      ],
+      "sourceIds": [
+        "scrum-guide-2020",
+        "lf5-ms-testing"
+      ],
+      "paragraphs": [
+        "Wähle einen durchgängigen Ausschnitt, den die Annahme beurteilen kann. Vereinbare zunächst zwei Proben mit erfundenem Bestand. Implementiere ein schlichtes Eingabefeld, den Suchdienst und einen kleinen Ersatzspeicher. Zeige Treffer und fehlenden Auftrag.",
+        "Sammle Rückmeldungen zum Verhalten, formuliere die wichtigste als überprüfbare Änderung und führe die betroffenen Proben erneut aus. Eine frühe Rückmeldung klärt Mehrdeutigkeit, solange die Änderung klein ist. Plane die Anbindung des späteren Speichers samt Integrationstest als eigenen Schritt."
+      ],
+      "example": {
+        "title": "Eine Rückmeldung umsetzen",
+        "text": "Die Werkstatt verwechselt „kein Treffer“ mit einem Ausfall. Zeige beide Situationen separat, vereinbare zwei Ausgaben und teste anschließend beide Pfade erneut."
+      },
+      "misconception": {
+        "claim": "Eine Vorführung der Bildschirmfarben belegt bereits den Ablauf durch alle Komponenten.",
+        "correction": "Erst wenn Eingabe über den Dienst zum Speicher und wieder zur Ausgabe führt, kann der Fachbereich den Ablauf beurteilen."
+      },
+      "takeaway": "Kurze Schritte enden mit einem beobachtbaren Ergebnis und einer konkreten Anschlussentscheidung."
+    },
+    {
+      "id": "fiae-lf11a-architecture-block-04",
+      "title": "4. Eine Komponente auswechseln",
+      "objectiveIds": [
+        "fiae-lf11a-architecture-responsibilities",
+        "fiae-lf11a-architecture-interfaces"
+      ],
+      "sourceIds": [
+        "lf11a-layers",
+        "lf5-ms-testing"
+      ],
+      "paragraphs": [
+        "Der Suchdienst kann read_status als Parameter erhalten. So arbeitet er einmal mit einem kleinen Wörterbuch und später mit einem Datenbankadapter. Beide halten denselben Vertrag ein. Der Domänenkern enthält keine Anweisungen für Bildschirm oder Datenbank.",
+        "Führe mit einem Ersatz die erfolgreichen und fehlenden Rückgaben gezielt herbei. Stelle auf den echten Adapter um und prüfe zusätzlich das Zusammenspiel mit dessen Schema. Ein grüner Test am Ersatz liefert noch keinen Beleg für reale Spaltennamen oder Feldtypen."
+      ],
+      "example": {
+        "title": "Ausführbarer Ausschnitt in Python 3 für gültige Nummern",
+        "text": "def describe(number, read_status):\n    status = read_status(number)\n    return \"nicht gefunden\" if status is None else status\n\nprint(describe(7, {7: \"offen\"}.get))\nprint(describe(8, {7: \"offen\"}.get))"
+      },
+      "misconception": {
+        "claim": "Der Wörterbuchtest entdeckt eine falsch benannte Datenbankspalte.",
+        "correction": "Er ruft den echten Adapter nicht auf. Dessen Verbindung zur Testdatenbank verlangt eine eigene Probe."
+      },
+      "takeaway": "Ein kleiner Vertrag macht Implementierungen austauschbar und ihre Grenzen prüfbar."
+    }
+  ],
+  "questionFile": "questions/fiae-lf11a-architecture.v1.csv",
+  "quiz": {
+    "questionIds": [
+      "LJ-LF11A-ARCHITECTURE-Q01",
+      "LJ-LF11A-ARCHITECTURE-Q02",
+      "LJ-LF11A-ARCHITECTURE-Q03",
+      "LJ-LF11A-ARCHITECTURE-Q04",
+      "LJ-LF11A-ARCHITECTURE-Q05",
+      "LJ-LF11A-ARCHITECTURE-Q06"
+    ]
+  },
+  "exam": {
+    "questionIds": [
+      "LJ-LF11A-ARCHITECTURE-E01",
+      "LJ-LF11A-ARCHITECTURE-E02",
+      "LJ-LF11A-ARCHITECTURE-E03",
+      "LJ-LF11A-ARCHITECTURE-E04",
+      "LJ-LF11A-ARCHITECTURE-E05",
+      "LJ-LF11A-ARCHITECTURE-E06",
+      "LJ-LF11A-ARCHITECTURE-E07",
+      "LJ-LF11A-ARCHITECTURE-E08"
+    ],
+    "passPercent": 80,
+    "scoring": "all-or-nothing-per-question",
+    "timed": false
+  },
+  "questionLinks": [
+    {
+      "questionId": "LJ-LF11A-ARCHITECTURE-Q01",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf11a-architecture-responsibilities"
+      ],
+      "blockIds": [
+        "fiae-lf11a-architecture-block-01"
+      ]
+    },
+    {
+      "questionId": "LJ-LF11A-ARCHITECTURE-Q02",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf11a-architecture-responsibilities"
+      ],
+      "blockIds": [
+        "fiae-lf11a-architecture-block-01"
+      ]
+    },
+    {
+      "questionId": "LJ-LF11A-ARCHITECTURE-Q03",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf11a-architecture-interfaces"
+      ],
+      "blockIds": [
+        "fiae-lf11a-architecture-block-02"
+      ]
+    },
+    {
+      "questionId": "LJ-LF11A-ARCHITECTURE-Q04",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf11a-architecture-interfaces"
+      ],
+      "blockIds": [
+        "fiae-lf11a-architecture-block-02"
+      ]
+    },
+    {
+      "questionId": "LJ-LF11A-ARCHITECTURE-Q05",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf11a-architecture-method"
+      ],
+      "blockIds": [
+        "fiae-lf11a-architecture-block-03"
+      ]
+    },
+    {
+      "questionId": "LJ-LF11A-ARCHITECTURE-Q06",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf11a-architecture-responsibilities",
+        "fiae-lf11a-architecture-interfaces"
+      ],
+      "blockIds": [
+        "fiae-lf11a-architecture-block-04"
+      ]
+    },
+    {
+      "questionId": "LJ-LF11A-ARCHITECTURE-E01",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf11a-architecture-responsibilities"
+      ],
+      "blockIds": [
+        "fiae-lf11a-architecture-block-01"
+      ]
+    },
+    {
+      "questionId": "LJ-LF11A-ARCHITECTURE-E02",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf11a-architecture-interfaces"
+      ],
+      "blockIds": [
+        "fiae-lf11a-architecture-block-02"
+      ]
+    },
+    {
+      "questionId": "LJ-LF11A-ARCHITECTURE-E03",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf11a-architecture-method"
+      ],
+      "blockIds": [
+        "fiae-lf11a-architecture-block-03"
+      ]
+    },
+    {
+      "questionId": "LJ-LF11A-ARCHITECTURE-E04",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf11a-architecture-interfaces"
+      ],
+      "blockIds": [
+        "fiae-lf11a-architecture-block-04"
+      ]
+    },
+    {
+      "questionId": "LJ-LF11A-ARCHITECTURE-E05",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf11a-architecture-method"
+      ],
+      "blockIds": [
+        "fiae-lf11a-architecture-block-03"
+      ]
+    },
+    {
+      "questionId": "LJ-LF11A-ARCHITECTURE-E06",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf11a-architecture-responsibilities"
+      ],
+      "blockIds": [
+        "fiae-lf11a-architecture-block-01"
+      ]
+    },
+    {
+      "questionId": "LJ-LF11A-ARCHITECTURE-E07",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf11a-architecture-responsibilities",
+        "fiae-lf11a-architecture-interfaces"
+      ],
+      "blockIds": [
+        "fiae-lf11a-architecture-block-04"
+      ]
+    },
+    {
+      "questionId": "LJ-LF11A-ARCHITECTURE-E08",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf11a-architecture-method"
+      ],
+      "blockIds": [
+        "fiae-lf11a-architecture-block-03"
+      ]
+    }
+  ],
+  "interview": [
+    {
+      "id": "fiae-lf11a-architecture-talk-01",
+      "prompt": "Verfolge Auftrag 7 vom Terminal bis zur Ausgabe und ordne drei Aufgaben zu.",
+      "objectiveIds": [
+        "fiae-lf11a-architecture-responsibilities"
+      ],
+      "blockIds": [
+        "fiae-lf11a-architecture-block-01"
+      ],
+      "keyPoints": [
+        "Feld lesen und Ergebnis anzeigen.",
+        "Nummer und fachliches Ergebnis im Dienst prüfen.",
+        "Status über den Adapter holen."
+      ],
+      "acceptableAlternatives": [
+        "Ein anderes Modulkonzept passt, wenn derselbe Änderungsgrund eindeutig zugeordnet ist."
+      ],
+      "misconceptions": [
+        "Die Oberfläche müsse zur Ausgabe selbst SQL kennen."
+      ],
+      "sampleAnswer": "Das Terminal liest die Nummer. Der Dienst prüft sie, der Adapter holt den Status. Der Dienst meldet den Treffer zurück und die Oberfläche zeigt „offen“.",
+      "followUp": "Was änderst du bei einer neuen Tabellenbezeichnung?"
+    },
+    {
+      "id": "fiae-lf11a-architecture-talk-02",
+      "prompt": "Beschreibe einen Ersatzspeicher, mit dem sich Treffer und Lesestörung auseinanderhalten lassen.",
+      "objectiveIds": [
+        "fiae-lf11a-architecture-interfaces"
+      ],
+      "blockIds": [
+        "fiae-lf11a-architecture-block-02",
+        "fiae-lf11a-architecture-block-04"
+      ],
+      "keyPoints": [
+        "Für einen Schlüssel einen Text zurückgeben.",
+        "Eine technische Störung separat auslösen oder melden."
+      ],
+      "acceptableAlternatives": [
+        "Eine kleine Testklasse kann dieselben Fälle wie eine Funktion bereitstellen."
+      ],
+      "misconceptions": [
+        "None könne gleichzeitig fachliches Fehlen und technischen Ausfall bezeichnen."
+      ],
+      "sampleAnswer": "Meine Testfunktion liefert für 7 „offen“, für eine freie Nummer None. Für eine gezielt vorgegebene Störung löst sie den vereinbarten Lesefehler aus. Der Dienst kann alle drei Pfade unterscheiden.",
+      "followUp": "Welches Ergebnis kannst du mit diesem Ersatz noch nicht nachweisen?"
+    },
+    {
+      "id": "fiae-lf11a-architecture-talk-03",
+      "prompt": "Plane zwei kurze Schritte von der Suchidee bis zum Lesen aus dem späteren Speicher.",
+      "objectiveIds": [
+        "fiae-lf11a-architecture-method"
+      ],
+      "blockIds": [
+        "fiae-lf11a-architecture-block-03"
+      ],
+      "keyPoints": [
+        "Erste Vorführung mit Treffer und Fehlsuche.",
+        "Rückmeldung umsetzen und realen Adapter integrieren und prüfen."
+      ],
+      "acceptableAlternatives": [
+        "Eine frühe Vorführung mit kleiner temporärer Datenbank ist ebenfalls möglich."
+      ],
+      "misconceptions": [
+        "Mehr erzeugte Dateien seien ein verwertbarer Abnahmenachweis."
+      ],
+      "sampleAnswer": "Ich präsentiere zuerst den durchgängigen Suchvorgang mit Testbestand. Nach der Rückmeldung trenne ich Fehlermeldungen und prüfe die Fälle erneut. Den echten Adapter teste ich am vereinbarten Schema.",
+      "followUp": "Wann kann die Werkstatt erstmals beurteilen, ob eine Meldung verständlich ist?"
+    }
+  ],
+  "cards": [
+    {
+      "id": "fiae-lf11a-architecture-card-01",
+      "front": "Wer kennt das Tabellenformat?",
+      "back": "Der Datenzugriffsadapter. Er übersetzt Speicherzeilen in das vereinbarte Ergebnis.",
+      "objectiveIds": [
+        "fiae-lf11a-architecture-responsibilities"
+      ],
+      "blockIds": [
+        "fiae-lf11a-architecture-block-01"
+      ]
+    },
+    {
+      "id": "fiae-lf11a-architecture-card-02",
+      "front": "Wo gehört eine fachliche Bereichsgrenze hin?",
+      "back": "In den gemeinsam genutzten Dienst. Das Formular kann schon bei der Eingabe Hinweise geben.",
+      "objectiveIds": [
+        "fiae-lf11a-architecture-responsibilities"
+      ],
+      "blockIds": [
+        "fiae-lf11a-architecture-block-01"
+      ]
+    },
+    {
+      "id": "fiae-lf11a-architecture-card-03",
+      "front": "Welche drei Ausgänge hat read_status für gültige Nummern?",
+      "back": "Statustext beim Treffer, None beim fehlenden Datensatz und gesonderte Störung beim Lesefehler.",
+      "objectiveIds": [
+        "fiae-lf11a-architecture-interfaces"
+      ],
+      "blockIds": [
+        "fiae-lf11a-architecture-block-02"
+      ]
+    },
+    {
+      "id": "fiae-lf11a-architecture-card-04",
+      "front": "Weshalb lässt sich der Speicher des Dienstes ersetzen?",
+      "back": "Der Dienst fordert eine Funktion mit festgelegtem Vertrag und kennt deren interne Umsetzung nicht.",
+      "objectiveIds": [
+        "fiae-lf11a-architecture-interfaces"
+      ],
+      "blockIds": [
+        "fiae-lf11a-architecture-block-04"
+      ]
+    },
+    {
+      "id": "fiae-lf11a-architecture-card-05",
+      "front": "Was macht eine erste Vorführung beurteilbar?",
+      "back": "Ein fachlich sichtbarer Ablauf mit vereinbartem Beispielbestand und erwarteten Ergebnissen.",
+      "objectiveIds": [
+        "fiae-lf11a-architecture-method"
+      ],
+      "blockIds": [
+        "fiae-lf11a-architecture-block-03"
+      ]
+    },
+    {
+      "id": "fiae-lf11a-architecture-card-06",
+      "front": "Wie beendest du eine Rückmeldeschleife?",
+      "back": "Änderung priorisieren, Erfolgskriterium vereinbaren, umsetzen und betroffene Fälle erneut vorführen.",
+      "objectiveIds": [
+        "fiae-lf11a-architecture-method"
+      ],
+      "blockIds": [
+        "fiae-lf11a-architecture-block-03"
+      ]
+    }
+  ],
+  "review": {
+    "status": "reviewed",
+    "checkedAt": "2026-11-19"
+  }
+}

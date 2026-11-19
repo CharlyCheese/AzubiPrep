@@ -1,0 +1,503 @@
+{
+  "schemaVersion": 1,
+  "version": "1.0.0",
+  "id": "common-lf9-services",
+  "title": "Netzdienste bereitstellen",
+  "fieldId": "LF9",
+  "scope": "common",
+  "prerequisites": [
+    "common-lf9-design",
+    "common-lf3-services"
+  ],
+  "objectives": [
+    {
+      "id": "common-lf9-services-configure",
+      "text": "Einen vorgegebenen Basisdienst in einer Lernumgebung konfigurieren und aus einem Client erreichen."
+    },
+    {
+      "id": "common-lf9-services-dependencies",
+      "text": "Abhängigkeiten eines Dienstes von Namensauflösung, Adressierung und benötigten Ports dokumentieren."
+    }
+  ],
+  "sourceIds": [
+    "lf9-rfc1034",
+    "lf9-rfc9110",
+    "lf9-rfc5737",
+    "lf9-rfc2606",
+    "lf9-ms-network"
+  ],
+  "sources": [
+    {
+      "id": "lf9-rfc1034",
+      "title": "RFC 1034: Domain names – concepts and facilities",
+      "url": "https://www.rfc-editor.org/rfc/rfc1034.html",
+      "note": "Grundlagen der Namensauflösung und typisierten DNS-Daten geprüft. Der A-Eintrag im Lernfall und die vereinfachte Auflösung sind synthetisch.",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "lf9-rfc9110",
+      "title": "RFC 9110: HTTP Semantics",
+      "url": "https://www.rfc-editor.org/rfc/rfc9110.html",
+      "note": "HTTPS-URI-Schema, Standardport 443 und Identitätsprüfung geprüft. Das Modell nutzt vorgegeben HTTPS über TCP; TLS-Zertifikate, Routing und Rückverkehr sind als funktionsfähig abstrahiert.",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "lf9-rfc5737",
+      "title": "RFC 5737: IPv4 Address Blocks Reserved for Documentation",
+      "url": "https://www.rfc-editor.org/rfc/rfc5737.html",
+      "note": "Dokumentationsbereiche 192.0.2.0/24, 198.51.100.0/24 und 203.0.113.0/24 geprüft; im Lernfall werden keine realen Netze angesprochen.",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "lf9-rfc2606",
+      "title": "RFC 2606: Reserved Top Level DNS Names",
+      "url": "https://www.rfc-editor.org/rfc/rfc2606.html",
+      "note": "Reservierung von .test für Tests geprüft. portal.example.test wird ausschließlich im lokalen Modell verwendet.",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "lf9-ms-network",
+      "title": "Microsoft: Architecture strategies for networking and connectivity",
+      "url": "https://learn.microsoft.com/en-us/azure/well-architected/security/networking",
+      "note": "Öffentliche Herstellergrundlagen zu Segmentierung, Verkehrsbeziehungen und Filtern geprüft. Der begrenzte Netzplan und seine Freigaben sind fiktive Modellvorgaben.",
+      "checkedAt": "2026-11-16"
+    }
+  ],
+  "caseStudy": {
+    "title": "Mira plant das Lernportal für Radblick",
+    "text": "Mira stellt im lokalen Modell den Portaldienst portal.example.test bereit. Beschäftigtenclient 192.0.2.10/26 nutzt Gateway 192.0.2.1, der Server 198.51.100.10/27 Gateway 198.51.100.1. DNS 203.0.113.53 und die übrige Infrastruktur sind funktionsfähig vorgegeben."
+  },
+  "blocks": [
+    {
+      "id": "common-lf9-services-configure",
+      "title": "1. Den Basisdienst anhand des Sollplans einstellen",
+      "objectiveIds": [
+        "common-lf9-services-configure"
+      ],
+      "sourceIds": [
+        "lf9-rfc1034",
+        "lf9-rfc9110",
+        "lf9-rfc5737",
+        "lf9-rfc2606",
+        "lf9-ms-network"
+      ],
+      "paragraphs": [
+        "Ein erreichbarer Dienst braucht passende Einstellungen auf mehreren Ebenen. Notiere zuerst den Sollzustand: Serveradresse 198.51.100.10/27, Gateway 198.51.100.1, Portalname portal.example.test, A-Eintrag auf 198.51.100.10, laufender Dienst und im Modell HTTPS über TCP-Port 443. Der Name .test und alle verwendeten Adressen dienen der lokalen Übung.",
+        "Stelle im späteren Abschlussmodell die dafür angebotenen Konfigurationsfelder ein. Serveradresse und DNS-Ziel müssen zusammenpassen; der Dienst muss gestartet sein und auf dem erwarteten Port lauschen. Lauschen bedeutet, dass ein laufender Dienst an einem bestimmten lokalen Port eingehende Verbindungen annimmt. Ein gespeicherter Portwert startet keinen Dienst.",
+        "Prüfe danach vom Beschäftigtenclient aus den vorgesehenen Portalaufruf. Er muss im Modell eine erfolgreiche Dienstantwort liefern. Der Abschluss speichert den geprüften Konfigurationsstand; nach einer Änderung ist eine neue Probe erforderlich. So hängt der Nachweis am tatsächlich geprüften Stand."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Lernfall",
+        "text": "Soll: Server 198.51.100.10, DNS-A-Ziel 198.51.100.10, Dienst läuft, TCP443, Beschäftigtenzugriff erlaubt."
+      },
+      "misconception": {
+        "claim": "Das Eintragen von Port 443 genügt auch bei gestopptem Dienst.",
+        "correction": "Portkonfiguration und laufender Dienst sind getrennte Voraussetzungen."
+      },
+      "takeaway": "Konfiguriere nach Sollplan und prüfe den Dienst vom vorgesehenen Client."
+    },
+    {
+      "id": "common-lf9-services-dependencies",
+      "title": "2. Name, Adresse, Weg und Port zusammenführen",
+      "objectiveIds": [
+        "common-lf9-services-dependencies"
+      ],
+      "sourceIds": [
+        "lf9-rfc1034",
+        "lf9-rfc9110",
+        "lf9-rfc5737",
+        "lf9-rfc2606",
+        "lf9-ms-network"
+      ],
+      "paragraphs": [
+        "DNS liefert im vereinfachten Fall zu portal.example.test einen A-Eintrag, also eine IPv4-Adresse. Dieser Eintrag ist keine Zusage, dass dort ein Webdienst läuft. Der Client nutzt die erhaltene Adresse als Ziel und benötigt einen funktionierenden Netzweg dorthin.",
+        "Adresse und Präfix legen fest, welches Netz lokal ist. Das Portal liegt für den Beschäftigtenclient in einem anderen Teilnetz; der Weg führt über dessen Gateway. Der Server benötigt für Antworten einen passenden Rückweg. DNS-Erreichbarkeit, Routing, Rückverkehr und gültige TLS-Identität sind in diesem Modell vorgegeben und werden nicht durch echte Netzaufrufe geprüft.",
+        "Für die Dienstverbindung müssen Zieladresse, Transportprotokoll und Zielport zusammenpassen. Der Lernfall nutzt HTTPS über TCP443. HTTPS hat standardmäßig Port 443; ein anderer ausdrücklich angegebener Port ist möglich, muss aber zu Dienst und Freigaben passen. Aus dem Lernfall folgt keine Aussage, dass jede HTTPS-Implementierung denselben Transport nutzt."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Lernfall",
+        "text": "Abhängigkeitskette: Name → A-Ziel → Netzweg → erlaubtes TCP443 → laufender Dienst → erwartete Portalantwort."
+      },
+      "misconception": {
+        "claim": "Eine erfolgreiche Namensauflösung beweist die Nutzbarkeit der Anwendung.",
+        "correction": "DNS, Netzweg und Dienstfunktion sind unterschiedliche Prüfschritte."
+      },
+      "takeaway": "Dokumentiere jede Abhängigkeit und kennzeichne die vorgegebenen Modellannahmen."
+    },
+    {
+      "id": "common-lf9-services-verify",
+      "title": "3. Positive und negative Proben auswerten",
+      "objectiveIds": [
+        "common-lf9-services-configure",
+        "common-lf9-services-dependencies"
+      ],
+      "sourceIds": [
+        "lf9-rfc1034",
+        "lf9-rfc9110",
+        "lf9-rfc5737",
+        "lf9-rfc2606",
+        "lf9-ms-network"
+      ],
+      "paragraphs": [
+        "Die positive Probe prüft einen erlaubten Fall: Beschäftigtenclient 192.0.2.10 erreicht portal.example.test über den vorgesehenen Dienst. Die negative Probe prüft einen verbotenen Fall: Gästeclient 192.0.2.70 darf denselben Portaldienst nicht nutzen. Dass beide Quellen den Namen auflösen können, ist im Modell erlaubt und ersetzt keine Zugriffsregel.",
+        "Ein Ping prüft mit ICMP einen anderen Sachverhalt als eine Portalverbindung. Ein Host kann auf Ping reagieren, während sein Portaldienst gestoppt ist. Umgekehrt kann ICMP gesperrt sein, während HTTPS funktioniert. Verwende eine passende Dienstprobe statt aus ICMP allein auf den Anwendungszustand zu schließen.",
+        "Ein direkter Test einer bekannten Zieladresse kann bei der Eingrenzung helfen. Bei echtem HTTPS sind dabei Name, Zertifikatsprüfung und virtueller Host zu beachten; ein beliebiger IP-Aufruf ist kein gleichwertiger Ersatz für den Namen. Das lokale Modell zeigt getrennte DNS-, Konfigurations- und Dienstbefunde ohne echte TLS-Verbindung."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Lernfall",
+        "text": "Beschäftigtenprobe erfolgreich und Gästeprobe abgewiesen erfüllen unterschiedliche Anforderungen."
+      },
+      "misconception": {
+        "claim": "Wenn Ping antwortet, muss das Portal über HTTPS ebenfalls funktionieren.",
+        "correction": "ICMP-Erreichbarkeit prüft weder laufenden Webdienst noch dessen Zugriffsregeln."
+      },
+      "takeaway": "Wähle die Probe passend zu Dienst und Anforderung."
+    },
+    {
+      "id": "common-lf9-services-record",
+      "title": "4. Eine übergebbare Dienstkonfiguration dokumentieren",
+      "objectiveIds": [
+        "common-lf9-services-configure",
+        "common-lf9-services-dependencies"
+      ],
+      "sourceIds": [
+        "lf9-rfc1034",
+        "lf9-rfc9110",
+        "lf9-rfc5737",
+        "lf9-rfc2606",
+        "lf9-ms-network"
+      ],
+      "paragraphs": [
+        "Ein Dienstblatt nennt Zweck, Namen, Serveradresse mit Präfix, Gateway, DNS-Zuordnung, Protokoll und Port, erlaubte Quellen, Betriebszustand und verantwortliche Rolle. Halte außerdem die Prüfergebnisse mit Zeitpunkt und geprüftem Stand fest. Zugangsdaten und private Kursinhalte gehören nicht in diese Übersicht.",
+        "Im Beispiel meldet DNS versehentlich 198.51.100.11, während der Server auf .10 eingerichtet ist. Das ist ein belegter Soll-Ist-Unterschied. Korrigiere gezielt den A-Eintrag auf .10 und wiederhole die DNS- und Dienstprobe. Eine passende DNS-Antwort allein wäre noch kein vollständiger Erfolg.",
+        "Falls DNS .10 liefert, die Freigabe passt und der Dienst gestoppt ist, starte den Dienst im Modell und prüfe erneut. Ändere nicht gleichzeitig mehrere unbeteiligte Werte, sonst wird unklar, welche Änderung gewirkt hat. Dokumentiere Ausgangsbefund, Korrektur, Ergebnis und verbleibende Grenzen."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Lernfall",
+        "text": "Dienstblatt: portal.example.test → 198.51.100.10/27, Gateway .1, TCP443, Dienst läuft, Beschäftigte erlaubt, Gäste gesperrt."
+      },
+      "misconception": {
+        "claim": "Nach einer Konfigurationskorrektur kann der alte erfolgreiche Prüfstatus weiterverwendet werden.",
+        "correction": "Eine Änderung verändert den geprüften Gegenstand und verlangt einen erneuten Nachweis."
+      },
+      "takeaway": "Übergib Sollstand, Abhängigkeiten und eine Belegkette vom Fehler bis zum Nachtest."
+    }
+  ],
+  "questionFile": "questions/common-lf9-services.v1.csv",
+  "quiz": {
+    "questionIds": [
+      "LJ-LF9-SERVICES-Q01",
+      "LJ-LF9-SERVICES-Q02",
+      "LJ-LF9-SERVICES-Q03",
+      "LJ-LF9-SERVICES-Q04",
+      "LJ-LF9-SERVICES-Q05",
+      "LJ-LF9-SERVICES-Q06"
+    ]
+  },
+  "exam": {
+    "questionIds": [
+      "LJ-LF9-SERVICES-E01",
+      "LJ-LF9-SERVICES-E02",
+      "LJ-LF9-SERVICES-E03",
+      "LJ-LF9-SERVICES-E04",
+      "LJ-LF9-SERVICES-E05",
+      "LJ-LF9-SERVICES-E06",
+      "LJ-LF9-SERVICES-E07",
+      "LJ-LF9-SERVICES-E08"
+    ],
+    "passPercent": 80,
+    "scoring": "all-or-nothing-per-question",
+    "timed": false
+  },
+  "questionLinks": [
+    {
+      "questionId": "LJ-LF9-SERVICES-Q01",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf9-services-configure"
+      ],
+      "blockIds": [
+        "common-lf9-services-configure"
+      ]
+    },
+    {
+      "questionId": "LJ-LF9-SERVICES-Q02",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf9-services-configure"
+      ],
+      "blockIds": [
+        "common-lf9-services-configure"
+      ]
+    },
+    {
+      "questionId": "LJ-LF9-SERVICES-Q03",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf9-services-configure"
+      ],
+      "blockIds": [
+        "common-lf9-services-record"
+      ]
+    },
+    {
+      "questionId": "LJ-LF9-SERVICES-Q04",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf9-services-dependencies"
+      ],
+      "blockIds": [
+        "common-lf9-services-dependencies"
+      ]
+    },
+    {
+      "questionId": "LJ-LF9-SERVICES-Q05",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf9-services-dependencies"
+      ],
+      "blockIds": [
+        "common-lf9-services-verify"
+      ]
+    },
+    {
+      "questionId": "LJ-LF9-SERVICES-Q06",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf9-services-dependencies"
+      ],
+      "blockIds": [
+        "common-lf9-services-dependencies"
+      ]
+    },
+    {
+      "questionId": "LJ-LF9-SERVICES-E01",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf9-services-configure"
+      ],
+      "blockIds": [
+        "common-lf9-services-record"
+      ]
+    },
+    {
+      "questionId": "LJ-LF9-SERVICES-E02",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf9-services-configure"
+      ],
+      "blockIds": [
+        "common-lf9-services-configure"
+      ]
+    },
+    {
+      "questionId": "LJ-LF9-SERVICES-E03",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf9-services-configure"
+      ],
+      "blockIds": [
+        "common-lf9-services-verify"
+      ]
+    },
+    {
+      "questionId": "LJ-LF9-SERVICES-E04",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf9-services-configure"
+      ],
+      "blockIds": [
+        "common-lf9-services-record"
+      ]
+    },
+    {
+      "questionId": "LJ-LF9-SERVICES-E05",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf9-services-dependencies"
+      ],
+      "blockIds": [
+        "common-lf9-services-dependencies"
+      ]
+    },
+    {
+      "questionId": "LJ-LF9-SERVICES-E06",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf9-services-dependencies"
+      ],
+      "blockIds": [
+        "common-lf9-services-verify"
+      ]
+    },
+    {
+      "questionId": "LJ-LF9-SERVICES-E07",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf9-services-dependencies"
+      ],
+      "blockIds": [
+        "common-lf9-services-verify"
+      ]
+    },
+    {
+      "questionId": "LJ-LF9-SERVICES-E08",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf9-services-dependencies"
+      ],
+      "blockIds": [
+        "common-lf9-services-dependencies",
+        "common-lf9-services-record"
+      ]
+    }
+  ],
+  "interview": [
+    {
+      "id": "common-lf9-services-talk-configure",
+      "prompt": "Beschreibe die Sollkonfiguration und den anschließenden Funktionsnachweis für das Portal.",
+      "objectiveIds": [
+        "common-lf9-services-configure"
+      ],
+      "blockIds": [
+        "common-lf9-services-configure",
+        "common-lf9-services-record"
+      ],
+      "keyPoints": [
+        "Server 198.51.100.10/27 und Gateway .1 nennen.",
+        "A-Ziel .10, laufenden Dienst und TCP443 verbinden.",
+        "Vom Beschäftigtenclient prüfen; Änderungen erfordern neue Probe."
+      ],
+      "acceptableAlternatives": [
+        "Eine fachlich gleichwertige Begründung mit passenden Modellannahmen und überprüfbaren Belegen."
+      ],
+      "misconceptions": [
+        "Einen gespeicherten Port als erfolgreichen Dienstbetrieb ausgeben."
+      ],
+      "sampleAnswer": "Ich gleiche Serveradresse, DNS-Ziel und Port mit dem Soll ab und starte den Dienst. Danach prüfe ich den Aufruf vom Beschäftigtenclient. Das Ergebnis gehört zu diesem Stand; nach Änderungen teste ich erneut.",
+      "followUp": "Welche Einstellung allein könnte einen gestoppten Dienst nicht ersetzen?"
+    },
+    {
+      "id": "common-lf9-services-talk-dependencies",
+      "prompt": "Erkläre den Weg von portal.example.test zur Dienstantwort und seine Modellgrenzen.",
+      "objectiveIds": [
+        "common-lf9-services-dependencies"
+      ],
+      "blockIds": [
+        "common-lf9-services-dependencies",
+        "common-lf9-services-verify"
+      ],
+      "keyPoints": [
+        "A-Eintrag liefert IPv4-Ziel, keine Betriebszusage.",
+        "Gateway, Portfreigabe und laufender Dienst sind weitere Abhängigkeiten.",
+        "DNS-Infrastruktur, Routing, Rückverkehr und TLS sind funktionierend vorgegeben."
+      ],
+      "acceptableAlternatives": [
+        "Eine fachlich gleichwertige Begründung mit passenden Modellannahmen und überprüfbaren Belegen."
+      ],
+      "misconceptions": [
+        "DNS-Erfolg oder Ping als vollständigen Portaltest behandeln."
+      ],
+      "sampleAnswer": "DNS liefert im Modell .10. Der Client erreicht das fremde Netz über sein Gateway, die Regel erlaubt TCP443 und der laufende Dienst antwortet. Die Modellprobe ist keine echte Netzwerk- oder Zertifikatsprüfung.",
+      "followUp": "Was wäre durch eine erfolgreiche Namensauflösung noch nicht belegt?"
+    },
+    {
+      "id": "common-lf9-services-talk-record",
+      "prompt": "DNS zeigt .11 statt .10. Erkläre die gezielte Korrektur und die nötigen Nachweise.",
+      "objectiveIds": [
+        "common-lf9-services-configure",
+        "common-lf9-services-dependencies"
+      ],
+      "blockIds": [
+        "common-lf9-services-verify",
+        "common-lf9-services-record"
+      ],
+      "keyPoints": [
+        "Soll-Ist-Abweichung im A-Eintrag festhalten.",
+        "Auf .10 korrigieren und DNS-/Dienstprobe wiederholen.",
+        "Beschäftigtenzugriff und Gästesperre dokumentieren."
+      ],
+      "acceptableAlternatives": [
+        "Eine fachlich gleichwertige Begründung mit passenden Modellannahmen und überprüfbaren Belegen."
+      ],
+      "misconceptions": [
+        "Nach passendem DNS-Wert ohne Dienstprobe abschließen."
+      ],
+      "sampleAnswer": "Ich notiere .11 als falsches Ziel und korrigiere den A-Eintrag auf 198.51.100.10. Danach kontrolliere ich Auflösung und Dienstantwort. Der erlaubte Beschäftigten- und gesperrte Gästezugriff müssen zum Soll passen.",
+      "followUp": "Warum würdest du nicht gleichzeitig das Gateway ändern?"
+    }
+  ],
+  "cards": [
+    {
+      "id": "common-lf9-services-card-01",
+      "front": "Welche Sollwerte braucht der Portaldienst?",
+      "back": "198.51.100.10/27 mit Gateway .1; portal.example.test → .10, laufender Dienst auf TCP443, passende Freigabe.",
+      "objectiveIds": [
+        "common-lf9-services-configure"
+      ],
+      "blockIds": [
+        "common-lf9-services-configure"
+      ]
+    },
+    {
+      "id": "common-lf9-services-card-02",
+      "front": "Was bedeutet lauschen?",
+      "back": "Ein laufender Dienst nimmt an einem bestimmten lokalen Port Verbindungen an; ein gespeicherter Portwert allein reicht nicht.",
+      "objectiveIds": [
+        "common-lf9-services-configure"
+      ],
+      "blockIds": [
+        "common-lf9-services-configure"
+      ]
+    },
+    {
+      "id": "common-lf9-services-card-03",
+      "front": "Wann muss eine Konfiguration erneut geprüft werden?",
+      "back": "Nach einer Änderung; der alte Nachweis gehört zum vorherigen Stand und bestätigt nicht den neuen.",
+      "objectiveIds": [
+        "common-lf9-services-configure"
+      ],
+      "blockIds": [
+        "common-lf9-services-record"
+      ]
+    },
+    {
+      "id": "common-lf9-services-card-04",
+      "front": "Was belegt ein DNS-A-Eintrag?",
+      "back": "Die IPv4-Zuordnung eines Namens im abgefragten Stand; er bestätigt weder Portfreigabe noch laufende Anwendung.",
+      "objectiveIds": [
+        "common-lf9-services-dependencies"
+      ],
+      "blockIds": [
+        "common-lf9-services-dependencies"
+      ]
+    },
+    {
+      "id": "common-lf9-services-card-05",
+      "front": "Was unterscheidet Ping von der Portalprobe?",
+      "back": "Ping prüft ICMP, die Portalprobe den vorgesehenen Anwendungszugriff; ein Erfolg oder Ausfall ist nicht gleichbedeutend.",
+      "objectiveIds": [
+        "common-lf9-services-dependencies"
+      ],
+      "blockIds": [
+        "common-lf9-services-verify"
+      ]
+    },
+    {
+      "id": "common-lf9-services-card-06",
+      "front": "Welche Modellannahmen bleiben vorgegeben?",
+      "back": "DNS-Erreichbarkeit, Routing, Rückverkehr und TLS-Identität funktionieren; die Übung löst keine echten Netzaufrufe aus.",
+      "objectiveIds": [
+        "common-lf9-services-dependencies"
+      ],
+      "blockIds": [
+        "common-lf9-services-dependencies",
+        "common-lf9-services-verify"
+      ]
+    }
+  ],
+  "review": {
+    "status": "reviewed",
+    "checkedAt": "2026-11-16"
+  }
+}

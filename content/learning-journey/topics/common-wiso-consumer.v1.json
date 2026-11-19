@@ -1,0 +1,465 @@
+{
+  "schemaVersion": 1,
+  "id": "common-wiso-consumer",
+  "version": "1.0.0",
+  "title": "Verträge und das eigene Budget",
+  "fieldId": "WISO",
+  "scope": "common",
+  "prerequisites": [
+    "common-wiso-pay"
+  ],
+  "sourceIds": [
+    "wiso-bgb-consumer"
+  ],
+  "sources": [
+    {
+      "id": "wiso-bgb-consumer",
+      "title": "BGB – Geschäftsfähigkeit, Vertragspflichten und Verbraucherrechte",
+      "url": "https://www.gesetze-im-internet.de/bgb/",
+      "checkedAt": "2026-11-11",
+      "note": "Deutschland: §§ 106–110, 312g, 355, 356, 433, 439, 488 und 535 anhand der aktuellen Einzelnormen geprüft. Beschränkte Geschäftsfähigkeit, vollständig bewirkte Leistung aus überlassenen Mitteln, Pflichten bei Kauf/Miete/Darlehen und begrenzte Fälle von Widerruf/Nacherfüllung. Keine pauschale Rückgabe- oder Finanzierungszusage."
+    }
+  ],
+  "objectives": [
+    {
+      "id": "common-wiso-consumer-budget",
+      "text": "Einen Kaufwunsch mit verfügbaren Mitteln und laufenden Verpflichtungen abgleichen."
+    },
+    {
+      "id": "common-wiso-consumer-contracts",
+      "text": "Kauf, Miete und Kredit anhand eines einfachen Falls nach Pflichten und finanzieller Belastung vergleichen."
+    },
+    {
+      "id": "common-wiso-consumer-rights",
+      "text": "Bei einem Verbraucherfall die Wirksamkeit des Vertrags und mögliche Schutzrechte anhand bereitgestellter aktueller Regelungen prüfen."
+    }
+  ],
+  "caseStudy": {
+    "title": "Ein Notebook ohne Budgetlücke",
+    "text": "Mira, 19, prüft privat ein Notebook für ihre Ausbildung. Ihr monatliches verfügbares Einkommen beträgt im erfundenen Fall 1.200 Euro. Nach festen Ausgaben von 650 Euro, eingeplanten variablen Ausgaben von 300 Euro und 100 Euro Rücklage bleiben 150 Euro. Ihr 17-jähriger Bekannter Niko überlegt einen Ratenkauf. Alle Beträge und Angebote sind Lernannahmen; die Rechtsfälle betreffen Deutschland und die ausdrücklich genannten Bedingungen."
+  },
+  "blocks": [
+    {
+      "id": "common-wiso-consumer-budget",
+      "title": "1. Verfügbares Geld und Verpflichtungen",
+      "objectiveIds": [
+        "common-wiso-consumer-budget"
+      ],
+      "sourceIds": [
+        "wiso-bgb-consumer"
+      ],
+      "paragraphs": [
+        "Ein Monatsbudget stellt verfügbares Einkommen den geplanten Ausgaben gegenüber. Feste Verpflichtungen wie Miete und Abonnement fallen regelmäßig an. Variable Ausgaben wie Lebensmittel schwanken. Eine bewusst eingeplante Rücklage hilft, unregelmäßige Rechnungen und unerwartete Ausgaben zu berücksichtigen.",
+        "Rechne für einen Kaufwunsch: verfügbares Einkommen minus feste Ausgaben minus geplante variable Ausgaben minus Rücklage. Im Fall bleiben 1.200 − 650 − 300 − 100 = 150 Euro pro Monat. Die Rücklage wurde schon eingeplant und darf nicht nochmals als freies Geld erscheinen. Ein vorhandenes Guthaben kann zudem für fällige Rechnungen reserviert sein.",
+        "Eine Kreditrate bindet künftige Mittel. Prüfe deshalb auch Laufzeit, Gesamtzahlung und mögliche Einkommensänderungen. Eine kleine Monatsrate beweist weder geringe Gesamtkosten noch langfristige Tragbarkeit. Die Übung gibt keine Empfehlung für einen tatsächlichen Kredit."
+      ],
+      "example": {
+        "title": "Eigener Übungsfall",
+        "text": "Eine zusätzliche Rate von 180 Euro überschreitet Miras eingeplanten Spielraum um 30 Euro. Ein späterer Kauf nach Ansparen passt zum unveränderten Budget."
+      },
+      "misconception": {
+        "claim": "Der Kontostand zeigt bereits, welchen Betrag ich unbesorgt ausgeben kann.",
+        "correction": "Fällige Verpflichtungen und reservierte Mittel müssen vom Guthaben getrennt werden."
+      },
+      "takeaway": "Plane Ausgaben und Rücklagen, bevor du neue laufende Verpflichtungen eingehst."
+    },
+    {
+      "id": "common-wiso-consumer-contracts",
+      "title": "2. Kauf, Miete und Kredit unterscheiden",
+      "objectiveIds": [
+        "common-wiso-consumer-contracts"
+      ],
+      "sourceIds": [
+        "wiso-bgb-consumer"
+      ],
+      "paragraphs": [
+        "Beim Kauf schuldet der Verkäufer Übergabe und Eigentumsverschaffung einer mangelfreien Sache; der Käufer schuldet Kaufpreis und Abnahme (§ 433 BGB). Beim Mieten erhältst du den vereinbarten Gebrauch während der Mietzeit gegen Miete (§ 535 BGB). Das Bezahlen von Miete verschafft für sich genommen kein Eigentum.",
+        "Beim Darlehen stellt der Darlehensgeber Geld bereit. Die Darlehensnehmerin muss es bei Fälligkeit zurückzahlen und vereinbarte geschuldete Zinsen zahlen (§ 488 BGB). Ein durch Kredit finanzierter Kauf enthält deshalb sowohl den Kauf als auch die Finanzierung. Vergleiche die Verpflichtungen getrennt.",
+        "Im vereinfachten Angebot kostet ein Notebook bar 600 Euro. Der Ratenkauf umfasst 12 Raten zu 55 Euro ohne Anzahlung oder weitere Gebühren: 660 Euro Gesamtzahlung, also 60 Euro mehr als der Barkauf. Ein Mietangebot zu 35 Euro monatlich kostet für 12 Monate 420 Euro; danach wird das Gerät zurückgegeben. Die geringere Zahlung ist deshalb keine gleichartige Eigentumserwerbsalternative.",
+        "Vergleiche gleichen Zeitraum, Leistung, Nebenkosten, Rückgabe, Bindung und Ausfallrisiken. Eigentum, Nutzungsrecht und verbleibende Verpflichtungen sind unterschiedliche Ergebnisse. Vertragsdetails können die vereinfachten Angebote verändern."
+      ],
+      "example": {
+        "title": "Eigener Übungsfall",
+        "text": "Mira benötigt ein Gerät dauerhaft. Sie vergleicht nicht allein 35 Euro Miete mit 55 Euro Rate, sondern 12 Monate Zahlung und die jeweilige Rechtsposition danach."
+      },
+      "misconception": {
+        "claim": "Die niedrigste Monatszahlung macht ein Angebot zum günstigsten Kauf.",
+        "correction": "Eine Miete ist Nutzung auf Zeit; erst gleicher Umfang und Gesamtkosten machen Angebote vergleichbar."
+      },
+      "takeaway": "Vergleiche Pflichten, Gesamtzahlung und das Ergebnis am Laufzeitende."
+    },
+    {
+      "id": "common-wiso-consumer-rights",
+      "title": "3. Wirksamkeit und Schutzrechte im konkreten Fall",
+      "objectiveIds": [
+        "common-wiso-consumer-rights"
+      ],
+      "sourceIds": [
+        "wiso-bgb-consumer"
+      ],
+      "paragraphs": [
+        "Für Minderjährige von sieben bis unter 18 Jahren gelten die Regeln der beschränkten Geschäftsfähigkeit (§§ 106–110 BGB). Verpflichtet ein Vertrag etwa zur Zahlung, ist normalerweise die Zustimmung der gesetzlichen Vertretung nötig. Fehlt eine erforderliche Einwilligung, hängt die Wirksamkeit von deren Genehmigung ab. Sonderfälle wie eine besondere Erwerbsermächtigung sind in unseren Fällen ausgeschlossen.",
+        "§ 110 BGB kann einen ohne Zustimmung geschlossenen Vertrag wirksam machen, wenn die vertragsmäßige Leistung vollständig mit Mitteln bewirkt wurde, die von der gesetzlichen Vertretung oder mit deren Zustimmung von Dritten für diesen Zweck oder zur freien Verfügung überlassen wurden. Eine erst begonnene Ratenzahlung ist keine vollständig bewirkte Leistung. Es gibt dafür keinen allgemeinen gesetzlichen Taschengeld-Höchstbetrag.",
+        "Bei einem gewöhnlichen Onlinekauf einer vorgefertigten Ware durch einen Verbraucher von einem Unternehmen besteht regelmäßig ein Widerrufsrecht (§§ 312g, 355 BGB). Bei ordnungsgemäßer Belehrung beträgt die Frist 14 Tage und beginnt im hier behandelten Fall mit Erhalt der Ware (§ 356 BGB). Eine eindeutige Erklärung gegenüber dem Unternehmen ist nötig; eine Begründung nicht. Individuelle Sonderanfertigungen können vom gesetzlichen Widerruf ausgeschlossen sein.",
+        "Beim Kauf im Ladengeschäft gibt es wegen bloßen Nichtgefallens kein allgemeines gesetzliches 14-Tage-Widerrufsrecht. Eine freiwillige Rücknahmevereinbarung kann helfen. Davon zu trennen ist eine mangelhafte Ware: Bei einem bereits bei Übergabe vorhandenen Sachmangel kann die Käuferin nach den gesetzlichen Voraussetzungen Nacherfüllung verlangen, also Reparatur oder Ersatzlieferung (§ 439 BGB). Weitere Rechte benötigen eine eigene Prüfung; ein Mangel bedeutet nicht in jedem Fall sofortige Rückzahlung."
+      ],
+      "example": {
+        "title": "Eigener Übungsfall",
+        "text": "Niko hat mit 17 ohne Zustimmung einen Ratenkauf begonnen und erst eine Rate gezahlt. Da keine besondere Ermächtigung vorliegt, reicht § 110 BGB hier nicht zur Wirksamkeit; die erforderliche Genehmigung ist zu klären."
+      },
+      "misconception": {
+        "claim": "Ein Kauf durch Minderjährige ist bis zu einem festen Eurobetrag immer wirksam.",
+        "correction": "Entscheidend sind Zustimmung, rechtliche Verpflichtung und gegebenenfalls vollständig bewirkte Leistung aus entsprechend überlassenen Mitteln."
+      },
+      "takeaway": "Prüfe Alter, Zustimmung, Vertragssituation und konkretes Schutzrecht getrennt."
+    },
+    {
+      "id": "common-wiso-consumer-decision",
+      "title": "4. Einen Kauf begründet entscheiden",
+      "objectiveIds": [
+        "common-wiso-consumer-budget",
+        "common-wiso-consumer-contracts",
+        "common-wiso-consumer-rights"
+      ],
+      "sourceIds": [
+        "wiso-bgb-consumer"
+      ],
+      "paragraphs": [
+        "Bearbeite Verbraucherfälle in drei Schritten: Zuerst prüfst du das Budget einschließlich Verpflichtungen. Danach ordnest du Kauf, Miete oder Finanzierung zu und vergleichst Gesamtkosten. Schließlich prüfst du Wirksamkeit und Schutzrechte anhand von Alter, Zustimmung, Vertragsort und Warenart.",
+        "Mira kann bei unverändertem Budget 150 Euro monatlich ansparen und nach vier Monaten 600 Euro erreichen, sofern sie bei null beginnt und keine zusätzlichen Ausgaben anfallen. Das ist eine Rechenannahme, keine Aussage über ihre tatsächliche Zahlungsfähigkeit. 12 Raten zu 55 Euro ergeben dagegen 660 Euro, also eine längere Bindung.",
+        "Lege bei einer Reklamation Kaufbeleg, Lieferdatum und genaue Fehlerbeschreibung bereit. Wende dich bei Mängeln an den Verkäufer. Bei Unsicherheit hilft unabhängige Verbraucherberatung. Weder ein Werbeslogan noch das Monatsbudget beantwortet allein eine Rechtsfrage."
+      ],
+      "example": {
+        "title": "Eigener Übungsfall",
+        "text": "Mira lehnt ein Angebot mit 180 Euro Rate für ihr unverändertes Budget ab. Bei einem defekten gekauften Gerät beschreibt sie den Mangel und verlangt zunächst passende Nacherfüllung beim Verkäufer."
+      },
+      "misconception": {
+        "claim": "Wenn eine Rate ins Budget passt, sind Wirksamkeit und Schutzrechte bereits geklärt.",
+        "correction": "Finanzielle Tragbarkeit und rechtliche Prüfung sind getrennte Schritte."
+      },
+      "takeaway": "Begründe eine Entscheidung mit Budget, Verpflichtungen und dem passenden Recht."
+    }
+  ],
+  "questionFile": "questions/common-wiso-consumer.v1.csv",
+  "quiz": {
+    "questionIds": [
+      "LJ-WISO-CONSUMER-Q01",
+      "LJ-WISO-CONSUMER-Q02",
+      "LJ-WISO-CONSUMER-Q03",
+      "LJ-WISO-CONSUMER-Q04",
+      "LJ-WISO-CONSUMER-Q05",
+      "LJ-WISO-CONSUMER-Q06"
+    ]
+  },
+  "exam": {
+    "questionIds": [
+      "LJ-WISO-CONSUMER-E01",
+      "LJ-WISO-CONSUMER-E02",
+      "LJ-WISO-CONSUMER-E03",
+      "LJ-WISO-CONSUMER-E04",
+      "LJ-WISO-CONSUMER-E05",
+      "LJ-WISO-CONSUMER-E06",
+      "LJ-WISO-CONSUMER-E07",
+      "LJ-WISO-CONSUMER-E08"
+    ],
+    "passPercent": 80,
+    "scoring": "all-or-nothing-per-question",
+    "timed": false
+  },
+  "questionLinks": [
+    {
+      "questionId": "LJ-WISO-CONSUMER-Q01",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-wiso-consumer-budget"
+      ],
+      "blockIds": [
+        "common-wiso-consumer-budget"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-CONSUMER-Q02",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-wiso-consumer-budget"
+      ],
+      "blockIds": [
+        "common-wiso-consumer-budget"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-CONSUMER-Q03",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-wiso-consumer-contracts"
+      ],
+      "blockIds": [
+        "common-wiso-consumer-contracts"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-CONSUMER-Q04",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-wiso-consumer-contracts"
+      ],
+      "blockIds": [
+        "common-wiso-consumer-contracts"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-CONSUMER-Q05",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-wiso-consumer-rights"
+      ],
+      "blockIds": [
+        "common-wiso-consumer-rights"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-CONSUMER-Q06",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-wiso-consumer-rights"
+      ],
+      "blockIds": [
+        "common-wiso-consumer-rights"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-CONSUMER-E01",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-wiso-consumer-budget"
+      ],
+      "blockIds": [
+        "common-wiso-consumer-budget",
+        "common-wiso-consumer-decision"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-CONSUMER-E02",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-wiso-consumer-budget"
+      ],
+      "blockIds": [
+        "common-wiso-consumer-budget",
+        "common-wiso-consumer-decision"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-CONSUMER-E03",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-wiso-consumer-contracts"
+      ],
+      "blockIds": [
+        "common-wiso-consumer-contracts"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-CONSUMER-E04",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-wiso-consumer-contracts"
+      ],
+      "blockIds": [
+        "common-wiso-consumer-contracts"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-CONSUMER-E05",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-wiso-consumer-rights"
+      ],
+      "blockIds": [
+        "common-wiso-consumer-rights"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-CONSUMER-E06",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-wiso-consumer-rights"
+      ],
+      "blockIds": [
+        "common-wiso-consumer-rights"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-CONSUMER-E07",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-wiso-consumer-rights"
+      ],
+      "blockIds": [
+        "common-wiso-consumer-rights",
+        "common-wiso-consumer-decision"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-CONSUMER-E08",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-wiso-consumer-rights"
+      ],
+      "blockIds": [
+        "common-wiso-consumer-rights",
+        "common-wiso-consumer-decision"
+      ]
+    }
+  ],
+  "interview": [
+    {
+      "id": "common-wiso-consumer-talk-budget",
+      "prompt": "Berechne Miras Monatsrest aus 1.200 Euro Einkommen, 650 Euro festen und 300 Euro variablen Ausgaben sowie 100 Euro Rücklage. Vergleiche damit 180 Euro Rate. Begründe eine Alternative unter unveränderten Annahmen.",
+      "objectiveIds": [
+        "common-wiso-consumer-budget"
+      ],
+      "blockIds": [
+        "common-wiso-consumer-budget",
+        "common-wiso-consumer-decision"
+      ],
+      "keyPoints": [
+        "150 Euro Rest.",
+        "Die Rate überschreitet ihn um 30 Euro.",
+        "Ansparen, Kauf verschieben oder günstigeren Bedarf prüfen."
+      ],
+      "acceptableAlternatives": [
+        "Eine begründete Änderung einzelner Ausgaben, ausdrücklich als neuer Plan gekennzeichnet."
+      ],
+      "misconceptions": [
+        "Die bereits eingeplante Rücklage nochmals als frei verfügbar rechnen."
+      ],
+      "sampleAnswer": "Es bleiben 150 Euro. Die Rate ist 30 Euro höher. Ich würde bei gleichbleibendem Plan ansparen oder den Kauf verschieben; für 600 Euro wären vier Monate nötig.",
+      "followUp": "Welche unregelmäßige Ausgabe könnte deine Planung verändern?"
+    },
+    {
+      "id": "common-wiso-consumer-talk-contracts",
+      "prompt": "Vergleiche für zwölf Monate: 600 Euro Barkauf, zwölf Raten zu 55 Euro ohne Zusatzkosten und Miete zu 35 Euro mit Rückgabe. Nenne Gesamtzahlung, Pflichten und eine offene Information für die Entscheidung.",
+      "objectiveIds": [
+        "common-wiso-consumer-contracts",
+        "common-wiso-consumer-budget"
+      ],
+      "blockIds": [
+        "common-wiso-consumer-contracts",
+        "common-wiso-consumer-decision"
+      ],
+      "keyPoints": [
+        "600, 660 und 420 Euro.",
+        "Kauf mit Eigentumsverschaffung, Miete als Gebrauch auf Zeit, Kredit mit Rückzahlung.",
+        "Bedarfsdauer, weitere Vertragskosten oder Rückgaberegeln prüfen."
+      ],
+      "acceptableAlternatives": [
+        "Begründete Wahl einer Miete bei zeitlich begrenztem Bedarf."
+      ],
+      "misconceptions": [
+        "Niedrigere Monatszahlung mit günstigstem Eigentumserwerb gleichsetzen."
+      ],
+      "sampleAnswer": "Ich zahle 600 Euro bar oder 660 Euro in Raten. Miete kostet 420 Euro für ein Jahr; danach gebe ich das Gerät zurück. Ich muss wissen, wie lange ich es brauche und welche Nebenkosten und Rückgabebedingungen gelten.",
+      "followUp": "Wie verändert dauerhafter statt zwölfmonatiger Bedarf den Vergleich?"
+    },
+    {
+      "id": "common-wiso-consumer-talk-rights",
+      "prompt": "Prüfe zwei Fälle nach den bereitgestellten Regeln: Niko ist 17, hat ohne Zustimmung einen Ratenkauf begonnen und erst eine Rate gezahlt. Mira ist 19 und erhält nach ordnungsgemäßer Belehrung ein vorgefertigtes online gekauftes Gerät vom Händler. Welche Wirksamkeits- bzw. Widerrufsfrage stellt sich?",
+      "objectiveIds": [
+        "common-wiso-consumer-rights"
+      ],
+      "blockIds": [
+        "common-wiso-consumer-rights"
+      ],
+      "keyPoints": [
+        "Bei Niko fehlt die erforderliche Zustimmung; § 110 trägt die erste Rate nicht.",
+        "Genehmigung der gesetzlichen Vertretung klären; Sonderermächtigungen sind ausgeschlossen.",
+        "Mira kann im beschriebenen Fernabsatzfall innerhalb von 14 Tagen ab Erhalt widerrufen."
+      ],
+      "acceptableAlternatives": [
+        "Sinngleiche Formulierung der noch von Genehmigung abhängigen Wirksamkeit."
+      ],
+      "misconceptions": [
+        "Eine erste Rate als vollständig bewirkte Leistung ansehen.",
+        "Widerruf und Mängelrechte gleichsetzen."
+      ],
+      "sampleAnswer": "Nikos Kauf hängt hier von der Genehmigung ab; die einzelne Rate erfüllt den Vertrag nicht vollständig. Mira hat im genannten Onlinefall ein 14-Tage-Widerrufsrecht ab Erhalt und muss ihren Widerruf eindeutig erklären.",
+      "followUp": "Was wäre bei einem mangelfreien Ladenkauf wegen Nichtgefallens anders?"
+    }
+  ],
+  "cards": [
+    {
+      "id": "common-wiso-consumer-card-budget",
+      "front": "Wie berechnest du den noch nicht verplanten Monatsbetrag?",
+      "back": "Verfügbares Einkommen minus feste und geplante variable Ausgaben minus eingeplante Rücklagen. Reservierte Mittel sind kein zusätzlich freies Geld.",
+      "objectiveIds": [
+        "common-wiso-consumer-budget"
+      ],
+      "blockIds": [
+        "common-wiso-consumer-budget"
+      ]
+    },
+    {
+      "id": "common-wiso-consumer-card-rates",
+      "front": "Warum genügt die Monatsrate nicht für eine Kaufentscheidung?",
+      "back": "Sie zeigt weder die gesamte Zahlung noch die Bindungsdauer. Prüfe Laufzeit, Anzahlungen, weitere Kosten, verbleibende Verpflichtungen und dein Budget.",
+      "objectiveIds": [
+        "common-wiso-consumer-budget",
+        "common-wiso-consumer-contracts"
+      ],
+      "blockIds": [
+        "common-wiso-consumer-budget",
+        "common-wiso-consumer-contracts"
+      ]
+    },
+    {
+      "id": "common-wiso-consumer-card-types",
+      "front": "Was unterscheiden Kauf, Miete und Darlehen?",
+      "back": "Kauf: Sache, Eigentumsverschaffung und Kaufpreis. Miete: Gebrauch auf Zeit gegen Miete. Darlehen: Geldbereitstellung gegen Rückzahlung und gegebenenfalls geschuldete Zinsen.",
+      "objectiveIds": [
+        "common-wiso-consumer-contracts"
+      ],
+      "blockIds": [
+        "common-wiso-consumer-contracts"
+      ]
+    },
+    {
+      "id": "common-wiso-consumer-card-minor",
+      "front": "Wann hilft § 110 BGB bei einem Kauf durch Minderjährige?",
+      "back": "Wenn die vertragsmäßige Leistung vollständig aus Mitteln bewirkt wurde, die von der gesetzlichen Vertretung oder mit deren Zustimmung von Dritten zu diesem Zweck oder zur freien Verfügung überlassen wurden. Eine erst begonnene Ratenzahlung reicht dafür nicht.",
+      "objectiveIds": [
+        "common-wiso-consumer-rights"
+      ],
+      "blockIds": [
+        "common-wiso-consumer-rights"
+      ]
+    },
+    {
+      "id": "common-wiso-consumer-card-withdrawal",
+      "front": "Wann beginnt im erläuterten normalen Online-Warenkauf die 14-Tage-Widerrufsfrist?",
+      "back": "Bei ordnungsgemäßer Belehrung mit Erhalt der Ware. Voraussetzung ist der Verbraucher-Vertrag mit einem Unternehmen ohne einschlägige Ausnahme, etwa bestimmte Sonderanfertigungen.",
+      "objectiveIds": [
+        "common-wiso-consumer-rights"
+      ],
+      "blockIds": [
+        "common-wiso-consumer-rights"
+      ]
+    },
+    {
+      "id": "common-wiso-consumer-card-defect",
+      "front": "Was ist beim Kauf von Nacherfüllung zu unterscheiden?",
+      "back": "Nacherfüllung betrifft mangelhafte Leistung und richtet sich an den Verkäufer, etwa Reparatur oder Ersatz. Widerruf benötigt im passenden Fernabsatzfall keinen Mangel; freiwillige Ladenrücknahme ist nochmals etwas anderes.",
+      "objectiveIds": [
+        "common-wiso-consumer-rights"
+      ],
+      "blockIds": [
+        "common-wiso-consumer-rights",
+        "common-wiso-consumer-decision"
+      ]
+    }
+  ],
+  "review": {
+    "status": "reviewed",
+    "checkedAt": "2026-11-11"
+  }
+}

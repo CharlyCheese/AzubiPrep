@@ -1,0 +1,582 @@
+{
+  "schemaVersion": 1,
+  "id": "common-pm-closure",
+  "version": "1.0.0",
+  "title": "Abnahme, Übergabe und Projektrückblick",
+  "fieldId": "PM",
+  "scope": "common",
+  "prerequisites": [
+    "common-pm-control"
+  ],
+  "sourceIds": [
+    "ec-pm2-methodology",
+    "ec-pm2-artefacts",
+    "scrum-guide-2020",
+    "pm-ihk-cost-terms",
+    "pm-ihk-calculation",
+    "pm-ihk-profit-margin",
+    "pm-stmelf-break-even",
+    "pm-lfu-payback"
+  ],
+  "sources": [
+    {
+      "id": "ec-pm2-methodology",
+      "title": "Europäische Kommission: PM²-Projektmanagement",
+      "url": "https://pm2.europa.eu/pm2-methodologies/pm2-project-management_en",
+      "checkedAt": "2026-11-11",
+      "note": "Öffentliche Methodik zu Governance, Projektlebenszyklus, Aktivitäten und Dokumentation geprüft. Eigene vereinfachte IT-Fälle, keine zwingende Bindung jedes Projekts an eine Methode."
+    },
+    {
+      "id": "ec-pm2-artefacts",
+      "title": "Europäische Kommission: PM²-Artefakte",
+      "url": "https://pm2.europa.eu/pm2-artefacts_en",
+      "checkedAt": "2026-11-11",
+      "note": "Öffentliche HTML-Übersicht: Projektauftrag, Arbeitsplan, Risiken, Änderungen, Entscheidungen, Abnahme, Übergabe und Abschlussbericht. Keine Downloads oder privaten Vorlagen verwendet; Beispiele eigenständig formuliert."
+    },
+    {
+      "id": "scrum-guide-2020",
+      "title": "Schwaber und Sutherland: Scrum Guide 2020",
+      "url": "https://scrumguides.org/scrum-guide.html",
+      "checkedAt": "2026-11-11",
+      "note": "Offizieller HTML-Guide 2020: Verantwortlichkeiten, fünf Ereignisse, drei Artefakte mit Commitments, Transparenz, Überprüfung und Anpassung. Stand am 11.11.2026 geprüft; eigene IT-Anwendungsfälle."
+    },
+    {
+      "id": "pm-ihk-cost-terms",
+      "title": "IHK München: Wertbegriffe und Kostenbegriffe",
+      "url": "https://www.ihk-muenchen.de/ratgeber/sachverstaendige/wertbegriffe-und-kostenbegriffe/",
+      "checkedAt": "2026-11-11",
+      "note": "Einzelkosten direkt zurechenbar, Gemeinkosten indirekt. Übernommen sind allgemeine Begriffe, keine bauspezifischen Rechts- oder Bewertungsregeln; IT-Zahlen und Zuschlagsmodell sind eigene Lernfälle."
+    },
+    {
+      "id": "pm-ihk-calculation",
+      "title": "IHK Darmstadt: Kalkulieren und mit Kennziffern überwachen",
+      "url": "https://www.ihk.de/darmstadt/produktmarken/beraten-und-informieren/festigung-wachstum/kaufmaennisches/kalkulation-3795552",
+      "checkedAt": "2026-11-11",
+      "note": "Stundensatz und Preisbildung mit getrennten Selbstkosten, Gewinn, Nachlässen und Umsatzsteuer geprüft. Verwendete IT-Beträge, 25-Prozent-Zuschlag und 19-Prozent-USt sind ausdrücklich vorgegebene Rechenannahmen; keine allgemeinen Lohnnebenkostensätze oder Verlustgarantie übernommen."
+    },
+    {
+      "id": "pm-ihk-profit-margin",
+      "title": "IHK Niederbayern: Früherkennung und Krisenvorbeugung",
+      "url": "https://www.ihk-niederbayern.de/beratung-und-service/fuer-ihr-unternehmen/unternehmen-in-schwierigkeiten/frueherkennung-und-krisenvorbeugung/",
+      "checkedAt": "2026-11-11",
+      "note": "Kennzahl Umsatzrendite als Gewinn vor Steuern geteilt durch Umsatz geprüft. Hier ausdrücklich auf das vereinfachte Auftragsmodell angewandt; keine branchenspezifischen Sollwerte oder Kreditkennzahlen übernommen."
+    },
+    {
+      "id": "pm-stmelf-break-even",
+      "title": "Bayerisches Staatsministerium: Die Gewinnschwelle kennen",
+      "url": "https://www.stmelf.bayern.de/kohw/dienstleistungen/unternehmen-rentabel",
+      "checkedAt": "2026-11-11",
+      "note": "Seite vom 25.09.2026: fixe/variable Kosten, Deckungsbeitrag und Fixkosten geteilt durch Stückdeckungsbeitrag. Eigene exakte Lernzahlen; nichtganzzahlige Schwellen werden nachvollziehbar auf ganze verkaufbare Einheiten aufgerundet."
+    },
+    {
+      "id": "pm-lfu-payback",
+      "title": "Bayerisches Landesamt für Umwelt: Wirtschaftlichkeit von Energieeffizienz-Maßnahmen",
+      "url": "https://www.umweltpakt.bayern.de/energie_klima/fachwissen/363/wirtschaftlichkeit-energieeffizienz-massnahmen",
+      "checkedAt": "2026-11-11",
+      "note": "Einfache Amortisation als Investition im Verhältnis zu gleichmäßigen jährlichen Rückflüssen und begrenzte Aussagekraft geprüft. Eigener IT-Lernfall ohne Zinsen, Restwert oder Zahlungsprognose; Kapitalrückfluss nicht mit Gewinn gleichgesetzt."
+    }
+  ],
+  "objectives": [
+    {
+      "id": "common-pm-closure-acceptance",
+      "text": "Ergebnisse anhand vereinbarter Abnahmekriterien prüfen und offene Punkte dokumentieren."
+    },
+    {
+      "id": "common-pm-closure-handover",
+      "text": "Eine nachvollziehbare Übergabe mit Zuständigkeit und nötiger Dokumentation vorbereiten."
+    },
+    {
+      "id": "common-pm-closure-learning",
+      "text": "Projektverlauf und Kalkulation auswerten und konkrete Verbesserungen ableiten."
+    }
+  ],
+  "caseStudy": {
+    "title": "Nordlicht IT plant und prüft",
+    "text": "Nordlicht IT schließt das fiktive Serviceticket-Portal ab. Vereinbarte Ergebnisse werden geprüft, der Betrieb übernimmt Verantwortung und das Team vergleicht Planung mit tatsächlichem Verlauf. Der vierte Block verbindet alle zehn PM-Themen. Die Rechnungen bleiben vereinfachte Lernmodelle; Projektmanagement ist hier eine zusätzliche Etappe und kein offizielles Lernfeld."
+  },
+  "blocks": [
+    {
+      "id": "common-pm-closure-acceptance",
+      "title": "1. Ergebnisse anhand vereinbarter Kriterien prüfen",
+      "objectiveIds": [
+        "common-pm-closure-acceptance"
+      ],
+      "sourceIds": [
+        "ec-pm2-artefacts",
+        "ec-pm2-methodology"
+      ],
+      "paragraphs": [
+        "Für den Projektabschluss wird nachvollziehbar geprüft, ob die vereinbarten Ergebnisse die vorher abgestimmten Abnahmekriterien erfüllen. Ein Kriterium beschreibt eine beobachtbare Sollleistung: Zum Beispiel werden zehn definierte Testtickets mit korrektem Status gespeichert und wieder angezeigt. Eine Aussage wie sieht gut aus ist dafür zu unbestimmt.",
+        "Lege Kriterien, Testverfahren und zuständige Entscheidungsperson rechtzeitig fest. Im Lernfall prüft das Team und dokumentiert die Nachweise; die im Auftrag benannte Person auf Auftraggeberseite entscheidet über die fachliche Abnahme. Der hier beschriebene Ablauf ist Projektorganisation, keine pauschale Aussage über Rechtsfolgen eines bestimmten Vertragstyps.",
+        "Ein Abnahmeprotokoll hält geprüfte Ergebnisse, Kriterien, Nachweise, Datum, Beteiligte, Entscheidung und offene Punkte fest. Ein nicht erfülltes Kriterium wird als Abweichung dokumentiert. Der nächste Schritt richtet sich nach der vereinbarten Bedeutung des Kriteriums und der zuständigen Entscheidung; ein Termin allein macht eine mangelhafte Leistung nicht passend.",
+        "Unterscheide einen Mangel gegenüber vereinbartem Umfang von einem neuen Wunsch. Im Fall ist korrektes Speichern vereinbart: Ein verlorenes Ticket ist eine Abweichung. Ein bisher nicht vereinbarter CSV-Export ist ein Änderungswunsch und wird nicht rückwirkend als zugesagte Funktion behandelt.",
+        "Für offene Punkte werden verantwortliche Person, Maßnahme, Frist und Nachprüfung festgehalten. Eine bewusst dokumentierte Entscheidung über einen offenen Punkt ist etwas anderes als ihn aus dem Protokoll verschwinden zu lassen. Status, Umfang und verbleibende Aufgaben bleiben für Auftraggeber und Team sichtbar."
+      ],
+      "example": {
+        "title": "Eigener Lernfall",
+        "text": "Neun von zehn definierten Tickets werden korrekt wieder angezeigt. Das Kriterium lautet zehn von zehn. Das Team dokumentiert die Abweichung und plant Korrektur und erneute Prüfung, statt die Vorgabe nachträglich auf neun zu senken."
+      },
+      "misconception": {
+        "claim": "Die letzte Projektwoche ersetzt die Prüfung der vereinbarten Leistung.",
+        "correction": "Ein Kalendertermin ist kein Nachweis erfüllter Kriterien. Ergebnisse und Entscheidung müssen nachvollziehbar sein."
+      },
+      "takeaway": "Prüfe die Vereinbarung und halte Nachweise, Entscheidung und offene Punkte fest."
+    },
+    {
+      "id": "common-pm-closure-handover",
+      "title": "2. Den Betrieb handlungsfähig übernehmen lassen",
+      "objectiveIds": [
+        "common-pm-closure-handover"
+      ],
+      "sourceIds": [
+        "ec-pm2-artefacts",
+        "ec-pm2-methodology"
+      ],
+      "paragraphs": [
+        "Abnahme und Übergabe beantworten verschiedene Fragen. Die Abnahme prüft die vereinbarte Leistung. Die Übergabe sorgt dafür, dass eine zuständige Stelle das Ergebnis nutzen, betreiben und unterstützen kann. Ein erfolgreich durchgeführter Test ersetzt noch keine geklärte Betriebsverantwortung.",
+        "Zur Übergabe gehören passende Betriebs- und Benutzerdokumentation, bekannte Einschränkungen, Zuständigkeiten, benötigte Zugänge, Sicherungs- und Wiederherstellungsabläufe sowie Kontakt- und Eskalationswege. Welche Unterlagen nötig sind, hängt vom vereinbarten Leistungsumfang und dem tatsächlichen Betrieb ab.",
+        "Im Portalfall erhält die Betriebsverantwortliche eine verständliche Anleitung zum Start, zur Benutzerverwaltung, zur Sicherung und zur Wiederherstellung. Nötige Berechtigungen werden über den dafür vorgesehenen betrieblichen Weg eingerichtet. Ein gemeinsames Klartextpasswort in einer allgemein verteilten Anleitung ist kein geeigneter Ersatz für geregelte Zugänge.",
+        "Eine Einweisung wird durch eine praktische Rückfrage überprüft: Die übernehmende Person zeigt mit freigegebenen Testdaten, wie ein Ticket bearbeitet und eine Wiederherstellung nach Anleitung durchgeführt wird. Dabei sichtbar werdende Lücken werden ergänzt, statt eine Versandbestätigung für Dokumente als Verständlichkeitsbeleg zu behandeln.",
+        "Offene Punkte und spätere Betreuung erhalten eine verantwortliche Stelle und einen Kontaktweg. Halte fest, ab wann der Betrieb übernimmt und welche Restarbeiten beim Projektteam bleiben. Dadurch landen Störungen nach dem Abschluss nicht zwischen unklaren Zuständigkeiten."
+      ],
+      "example": {
+        "title": "Eigener Lernfall",
+        "text": "Lea demonstriert der Betriebsverantwortlichen einen Wiederherstellungstest. Danach führt diese ihn anhand der Anleitung selbst aus. Die dokumentierte Anleitung und eine benannte Kontaktstelle machen die Übergabe überprüfbar."
+      },
+      "misconception": {
+        "claim": "Mit dem Versand der Dokumentation ist die Betriebsfähigkeit bereits bewiesen.",
+        "correction": "Unterlagen müssen zugänglich, verständlich und ausreichend sein; Zuständigkeit und ein praktischer Nachweis bleiben zu klären."
+      },
+      "takeaway": "Eine gute Übergabe macht die nächste verantwortliche Person arbeitsfähig."
+    },
+    {
+      "id": "common-pm-closure-learning",
+      "title": "3. Verlauf und Kalkulation in Verbesserungen übersetzen",
+      "objectiveIds": [
+        "common-pm-closure-learning"
+      ],
+      "sourceIds": [
+        "ec-pm2-artefacts",
+        "pm-ihk-calculation",
+        "pm-ihk-profit-margin"
+      ],
+      "paragraphs": [
+        "Der Projektrückblick vergleicht Ziele, geplanten und erreichten Umfang, Aufwand, Termine, Qualität und Kosten. Nutze dokumentierte Fakten und erläutere Abweichungen. Unterscheide die ursprüngliche Planung, genehmigte Änderungen und tatsächliche Leistungen, damit ein bewusst erweiterter Auftrag nicht wie dieselbe unveränderte Aufgabe bewertet wird.",
+        "Für eine Nachkalkulation werden tatsächliche Stunden und passende Kostenbelege mit den Planannahmen verglichen. Im Beispiel sind statt 80 Stunden tatsächlich 90 Stunden für denselben abgegrenzten Umfang erfasst. Bei unverändert 35 Euro direkten Kosten je Stunde, 20 Prozent Gemeinkosten darauf und 400 Euro Fremdkosten ergeben sich 3.150 + 630 + 400 = 4.180 Euro Istkosten statt 3.760 Euro Plan.",
+        "Bleibt der tatsächliche Nettoerlös bei 4.700 Euro, sinkt das vereinfachte Auftragsergebnis von geplanten 940 auf 520 Euro. Die Marge beträgt 520 ÷ 4.700 × 100 ≈ 11,06 Prozent. Umsatzsteuer gehört nicht zum Ergebnis. Zusätzliche Stunden erhöhen Kosten auch dann, wenn der vereinbarte Verkaufspreis unverändert bleibt.",
+        "Frage nach Ursache und beeinflussbarem Prozess. Wenn späte Rückfragen an Nutzende den Testaufwand erhöhten, kann die nächste Planung einen frühen Prototypentest mit dokumentierten Kriterien vorsehen. Benenne eine verantwortliche Person, einen Zeitpunkt und ein Erfolgskriterium für die Verbesserung.",
+        "Eine brauchbare Erkenntnis ist konkret und überprüfbar: Bei den nächsten zwei Portalaufträgen organisiert Lea vor der Umsetzung je einen Test des Prototyps mit drei Nutzenden und protokolliert offene Anforderungen. Allgemeine Schuldzuweisungen oder wir müssen besser planen liefern keine überprüfbare Veränderung."
+      ],
+      "example": {
+        "title": "Eigener Lernfall",
+        "text": "Der Rückblick zeigt, dass ein frühes Gespräch mit dem Betrieb eine spätere Nacharbeit hätte verringern können. Das Team ergänzt daher einen geplanten Klärungstermin in seinem eigenen Ablauf und überprüft die Wirkung beim nächsten Auftrag."
+      },
+      "misconception": {
+        "claim": "Der kalkulierte Gewinn bleibt erhalten, solange der Kunde den vereinbarten Preis bezahlt.",
+        "correction": "Höhere tatsächliche Kosten verringern bei gleichem Nettoerlös das Ergebnis. Die Nachkalkulation zeigt diese Wirkung."
+      },
+      "takeaway": "Aus Daten, Ursachen und Zuständigkeit wird eine nutzbare Verbesserung."
+    },
+    {
+      "id": "common-pm-closure-review",
+      "title": "4. Die gesamte PM-Etappe am Portal verbinden",
+      "objectiveIds": [
+        "common-pm-closure-acceptance",
+        "common-pm-closure-handover",
+        "common-pm-closure-learning"
+      ],
+      "sourceIds": [
+        "ec-pm2-methodology",
+        "ec-pm2-artefacts",
+        "scrum-guide-2020",
+        "pm-ihk-cost-terms",
+        "pm-ihk-calculation",
+        "pm-ihk-profit-margin",
+        "pm-stmelf-break-even",
+        "pm-lfu-payback"
+      ],
+      "paragraphs": [
+        "1. Projektauftrag und klare Ziele: Die einmalige Einführung des Portals hat einen begrenzten Auftrag mit Beginn, Ende, Ressourcen und prüfbarem Ergebnis. Die laufende Bearbeitung der späteren Tickets ist Routinebetrieb. Ein konkretes Lernfallziel lautet: Bis zum vereinbarten Übergabetermin können zehn definierte Testtickets korrekt angelegt, gespeichert und wieder angezeigt werden. Umfang, Zeit, Kosten und Qualität beeinflussen einander; ein zusätzlicher Export braucht eine bewusste Entscheidung über diese Größen.",
+        "2. Anforderungen und Zusammenarbeit: Kläre mit Nutzenden, Auftraggeber und Betrieb den tatsächlichen Bedarf und priorisiere ihn. Aus dem Bedarf Tickets verlässlich wiederfinden wird das prüfbare Kriterium zehn von zehn Testtickets korrekt wieder anzeigen. Auftraggeber klärt Nutzen und freigegebenen Rahmen; Projektleitung koordiniert Planung und Entscheidungen; das Team erarbeitet und prüft die Lösung. Entscheidungen werden mit Anlass, Ergebnis, zuständiger Person und Datum dokumentiert. Für Rückmeldungen wird ein passender Weg mit Zeitpunkt vereinbart.",
+        "3. Klassisch, agil und passend kombiniert: Planorientiertes Vorgehen passt zu gut geklärten Anforderungen und Abhängigkeiten; iterative Arbeit überprüft Zwischenprodukte und passt die nächste Planung an Rückmeldungen an. Agil heißt nicht planlos. In Scrum verantwortet der Product Owner Wert und geordnetes Product Backlog, die Developers den Sprintplan und das nutzbare Increment, der Scrum Master Scrum-Verständnis und Wirksamkeit. Im höchstens einmonatigen Sprint klärt Planning warum, was und wie; im 15-minütigen Daily prüfen Developers den Fortschritt zum Sprintziel; Review betrachtet das Produkt mit Beteiligten, Retrospektive verbessert die Zusammenarbeit. Product Backlog, Sprint Backlog und Increment haben als Commitments Produktziel, Sprintziel und Definition of Done. Story Points sind keine Stundenangaben.",
+        "4. Arbeitspakete und Aufwand: Ein Arbeitspaket nennt Ergebnis, verantwortliche Person, Abgrenzung und Prüfkriterium. Nordlicht schätzt für Klärung 12, Einrichtung 24, Oberfläche 20 sowie Test und Übergabe 24 Stunden, zusammen 80 Stunden. Schätzungen brauchen Annahmen und passende Vergleichsdaten. Aufwand ist die Summe der Arbeitsstunden, Dauer die verstrichene Arbeitszeit. Unsicherheiten und begründete Reserven werden sichtbar geführt, statt sie als bereits verbrauchten Aufwand zu buchen.",
+        "5. Termine, Abhängigkeiten und Kapazität: Bei zwei Personen mit je vier verfügbaren Projektstunden pro Arbeitstag ergeben 80 Stunden rechnerisch zehn Arbeitstage, wenn die Arbeit ausreichend parallelisierbar ist und keine weiteren Wartezeiten entstehen. Abhängigkeiten begrenzen dies. Im Ablauf A 2 Tage, danach B 3 Tage und C 1 Tag parallel, danach D 2 Tage ergibt sich eine Dauer von 7 Tagen. A–B–D ist der längste Pfad; C hat in diesem einfachen Ablauf 2 Tage Puffer. Benötigen B und C dieselbe einzige Person, laufen sie nacheinander und der Ablauf braucht 8 Tage. Ein Meilenstein bezeichnet einen prüfbaren Zustand wie Testfreigabe, kein zusätzliches mehrtägiges Arbeitspaket.",
+        "6. Projektkosten: Direkte Stunden und auftragsspezifische Fremdleistung sind zurechenbar; gemeinsame Kosten werden mit festgelegtem Schlüssel verteilt. Beim Lernfall sind 80 Stunden × 35 Euro direkte Kosten je Stunde = 2.800 Euro Personalkosten. 20 Prozent auf diese Personalkosten sind 560 Euro Gemeinkosten. Mit 400 Euro Fremdkosten ergeben sich 3.760 Euro Selbstkosten. In der Kostentabelle: B5 =B1*B2, B6 =B5*B4/100, B7 =SUMME(B3;B5:B6). B4 ist Prozent und wird nicht als Eurobetrag summiert. Bei einem Vollkostensatz mit denselben Gemeinkosten wäre deren erneuter Zuschlag eine Doppelzählung. Jede berechnete Geldzeile wird für die Tabellenprüfung vor der Weiterrechnung auf Cent gerundet: B5 =RUNDEN(B1*B2;2), B6 =RUNDEN(B5*B4/100;2), B7 =RUNDEN(SUMME(B3;B5:B6);2). Marge, Gewinnschwelle und Amortisationsdauer bleiben dagegen genaue Verhältnisse.",
+        "7. Verkaufspreis, Gewinn und Marge: 25 Prozent Aufschlag auf 3.760 Euro Selbstkosten sind 940 Euro Gewinn; der Nettoverkaufspreis ist 4.700 Euro. Die Marge bezieht sich auf Nettoerlös: 940/4.700 × 100 = 20 Prozent. Bei vorgegebenen 19 Prozent Umsatzsteuer kommen 893 Euro hinzu; Brutto sind 5.593 Euro. Umsatzsteuer ist im Modell kein Gewinn. Ein getrennter Nachlassfall rechnet 5.000 Euro Nettoliste minus 10 Prozent Rabatt = 4.500, danach minus 2 Prozent Skonto auf 4.500 = 4.410 Euro. Bei 3.760 Euro Selbstkosten bleiben 650 Euro Ergebnis; unterschiedliche Nachlassbasen nicht vermischen.",
+        "8. Wirtschaftlichkeit: Stückdeckungsbeitrag ist Netto-Stückpreis minus variable Stückkosten. Bei 150 − 90 sind das 60 Euro. Bei 250 verkauften Stück und 12.000 Euro Fixkosten entstehen 250 × 60 − 12.000 = 3.000 Euro Periodenergebnis. Die Gewinnschwelle ist 12.000/60 = 200 Stück mit Ergebnis null; eine nichtganzzahlige Schwelle muss für ganze verkaufbare Einheiten aufgerundet werden. Bei positiven Fixkosten und DB ≤ 0 gibt es keine endliche kostendeckende Menge. Eine getrennt vorgegebene Investition von 6.000 Euro mit 3.000 Euro gleichmäßigem jährlichem Nettorückfluss amortisiert sich einfach in 2 Jahren. Nettorückfluss ist eine Zahlungsgröße, nicht automatisch Gewinn. Zinsen, unsichere Verläufe und spätere Überschüsse bleiben außerhalb dieser vereinfachten Dauerrechnung.",
+        "9. Risiken, Änderungen und Steuerung: Eine mögliche Lieferverzögerung ist ein Risiko; ein bereits eingetretener Verzug ein Problem. Wahrscheinlichkeit, Wirkung, Verantwortliche, Maßnahme und Beobachtung werden festgehalten. 30 Prozent von 2.000 Euro sind 600 Euro Erwartungswert, keine sichere Schadenshöhe. Soll und Ist werden für denselben Zeitraum und Leistungsstand verglichen. 25 statt 20 Stunden sind +5 Stunden beziehungsweise +25 Prozent. 50 verbrauchte plus 40 geschätzte Reststunden ergeben 90 Stunden Prognose gegenüber 80 Stunden Plan. Ein Zusatzformular mit 10 Stunden zu 35 Euro plus 20 Prozent Gemeinkosten verursacht 420 Euro weitere Selbstkosten. Nutzen, Termin-, Qualitäts- und Umfangsfolgen werden geprüft; die benannte Stelle entscheidet und die Planänderung wird dokumentiert.",
+        "10. Abnahme, Übergabe und Rückblick: Prüfe vereinbarte Kriterien und dokumentiere Nachweise, Entscheidung und offene Punkte mit Verantwortung und Frist. Ein nicht vereinbarter Export ist ein neuer Wunsch, ein verlorenes vereinbartes Testticket eine Abweichung. Übergabe klärt Betrieb, Dokumentation, geregelte Zugänge, Einweisung, Sicherung, Wiederherstellung und Betreuung. Im Rückblick werden Plan, Änderungen und Ist getrennt. Bei 90 statt 80 Stunden für denselben Umfang ergeben sich 4.180 Euro Istkosten; bei 4.700 Euro Nettoerlös bleiben 520 Euro Ergebnis und etwa 11,06 Prozent Marge. Eine Verbesserung nennt Maßnahme, Verantwortung, Termin und Prüfkriterium, etwa einen frühen Prototypentest vor dem nächsten Auftrag.",
+        "Die Tabellen zu Kosten, Preis und Wirtschaftlichkeit unterstützen das Üben mit Zahlen oder Formeln. Ihre Prüfung ist keine zusätzliche Pflichtphase. Der reguläre Mini-Test prüft die Etappe; du brauchst für PM keine zusätzliche Präsentations-Selbstbestätigung."
+      ],
+      "example": {
+        "title": "Eigener Lernfall",
+        "text": "Erkläre den Portalauftrag zuerst fachlich, dann zeitlich und wirtschaftlich. Prüfe anschließend einen Änderungswunsch und beschreibe, welche Nachweise und Zuständigkeiten den Abschluss tragfähig machen. Jede Rechnung benötigt ihre eigene Einheit und Bezugsgröße."
+      },
+      "misconception": {
+        "claim": "Ein gutes Rechenergebnis allein reicht als Nachweis eines erfolgreichen Projekts.",
+        "correction": "Ziele, Beteiligte, Vorgehen, Arbeitspakete, Termine, Kalkulation, Steuerung und Übergabe müssen zum Auftrag passen."
+      },
+      "takeaway": "Verbinde alle zehn Themen zu einer nachvollziehbaren Projektentscheidung."
+    }
+  ],
+  "questionFile": "questions/common-pm-closure.v1.csv",
+  "quiz": {
+    "questionIds": [
+      "LJ-PM-CLOSURE-Q01",
+      "LJ-PM-CLOSURE-Q02",
+      "LJ-PM-CLOSURE-Q03",
+      "LJ-PM-CLOSURE-Q04",
+      "LJ-PM-CLOSURE-Q05",
+      "LJ-PM-CLOSURE-Q06"
+    ]
+  },
+  "exam": {
+    "questionIds": [
+      "LJ-PM-CLOSURE-E01",
+      "LJ-PM-CLOSURE-E02",
+      "LJ-PM-CLOSURE-E03",
+      "LJ-PM-CLOSURE-E04",
+      "LJ-PM-CLOSURE-E05",
+      "LJ-PM-CLOSURE-E06",
+      "LJ-PM-CLOSURE-E07",
+      "LJ-PM-CLOSURE-E08"
+    ],
+    "passPercent": 80,
+    "scoring": "all-or-nothing-per-question",
+    "timed": false
+  },
+  "questionLinks": [
+    {
+      "questionId": "LJ-PM-CLOSURE-Q01",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-pm-closure-acceptance"
+      ],
+      "blockIds": [
+        "common-pm-closure-acceptance"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-CLOSURE-Q02",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-pm-closure-acceptance"
+      ],
+      "blockIds": [
+        "common-pm-closure-acceptance"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-CLOSURE-Q03",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-pm-closure-handover"
+      ],
+      "blockIds": [
+        "common-pm-closure-handover"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-CLOSURE-Q04",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-pm-closure-handover"
+      ],
+      "blockIds": [
+        "common-pm-closure-handover"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-CLOSURE-Q05",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-pm-closure-learning"
+      ],
+      "blockIds": [
+        "common-pm-closure-learning"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-CLOSURE-Q06",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-pm-closure-learning"
+      ],
+      "blockIds": [
+        "common-pm-closure-learning"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-CLOSURE-E01",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-pm-closure-acceptance",
+        "common-pm-closure-learning"
+      ],
+      "blockIds": [
+        "common-pm-closure-review"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-CLOSURE-E02",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-pm-closure-learning"
+      ],
+      "blockIds": [
+        "common-pm-closure-review"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-CLOSURE-E03",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-pm-closure-learning"
+      ],
+      "blockIds": [
+        "common-pm-closure-review"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-CLOSURE-E04",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-pm-closure-learning"
+      ],
+      "blockIds": [
+        "common-pm-closure-review"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-CLOSURE-E05",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-pm-closure-learning"
+      ],
+      "blockIds": [
+        "common-pm-closure-review"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-CLOSURE-E06",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-pm-closure-learning"
+      ],
+      "blockIds": [
+        "common-pm-closure-review"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-CLOSURE-E07",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-pm-closure-learning"
+      ],
+      "blockIds": [
+        "common-pm-closure-review"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-CLOSURE-E08",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-pm-closure-acceptance",
+        "common-pm-closure-handover",
+        "common-pm-closure-learning"
+      ],
+      "blockIds": [
+        "common-pm-closure-review"
+      ]
+    }
+  ],
+  "interview": [
+    {
+      "id": "common-pm-closure-talk-1",
+      "prompt": "Zehn Testtickets sollten korrekt angezeigt werden, tatsächlich gelingt es bei neun. Zusätzlich wünscht der Auftraggeber erstmals einen Export. Wie trennst du Abweichung und Änderung und wie dokumentierst du den nächsten Schritt?",
+      "objectiveIds": [
+        "common-pm-closure-acceptance"
+      ],
+      "blockIds": [
+        "common-pm-closure-acceptance"
+      ],
+      "keyPoints": [
+        "Nicht erfülltes Ticketkriterium als Abweichung erfassen.",
+        "Neuer Export ist Änderungswunsch.",
+        "Nachweis, Entscheidung, Verantwortung, Frist und Nachprüfung festhalten."
+      ],
+      "acceptableAlternatives": [
+        "Sinngleiche fachliche Begründungen und gleichwertige Rechenwege sind möglich."
+      ],
+      "misconceptions": [
+        "Vereinbarte Leistung und nachträglichen Wunsch vermischen oder Kriterien stillschweigend absenken."
+      ],
+      "sampleAnswer": "Ich dokumentiere das fehlende Testticket als Abweichung vom vereinbarten Kriterium und kläre Korrektur und Nachprüfung. Der neue Export ist ein gesonderter Änderungswunsch. Zuständige Person, Entscheidung und Frist werden nachvollziehbar festgehalten.",
+      "followUp": "Welche Information müsste vorliegen, um eine fachliche Abnahmeentscheidung treffen zu können?"
+    },
+    {
+      "id": "common-pm-closure-talk-2",
+      "prompt": "Bereite die Portalübergabe vor und nenne eine konkrete Verbesserung aus verspätet geklärten Nutzungsanforderungen. Wie prüfst du, ob Anleitung und Verbesserung praktisch helfen?",
+      "objectiveIds": [
+        "common-pm-closure-handover",
+        "common-pm-closure-learning"
+      ],
+      "blockIds": [
+        "common-pm-closure-handover",
+        "common-pm-closure-learning"
+      ],
+      "keyPoints": [
+        "Betriebsverantwortung, Dokumentation, Zugänge, Wiederherstellung und Kontaktwege klären.",
+        "Übernehmende Person führt wesentliche Tätigkeit anhand der Anleitung aus.",
+        "Frühen Prototypentest mit Verantwortlicher, Termin und dokumentiertem Ergebnis planen."
+      ],
+      "acceptableAlternatives": [
+        "Sinngleiche fachliche Begründungen und gleichwertige Rechenwege sind möglich."
+      ],
+      "misconceptions": [
+        "Versand von Unterlagen als Beleg sicheren Betriebs behandeln oder eine vage Absicht als Verbesserung zählen."
+      ],
+      "sampleAnswer": "Ich kläre Betrieb, Zugänge, Sicherung, Wiederherstellung und Betreuung. Die übernehmende Person zeigt anhand der Anleitung einen freigegebenen Testablauf. Für künftige Aufträge plant Lea vor der Umsetzung einen Nutzertest des Prototyps und hält offene Anforderungen fest.",
+      "followUp": "Welche offene Aufgabe bleibt bei wem, wenn die Einweisung eine Lücke zeigt?"
+    },
+    {
+      "id": "common-pm-closure-talk-review",
+      "prompt": "Bearbeite alle zehn Rückblickaufgaben mit Block 4: 1. Unterscheide Portaleinführung und Ticketbetrieb, formuliere ein messbares Ziel und nenne den Zusammenhang von Umfang, Zeit, Kosten und Qualität. 2. Leite ein Abnahmekriterium ab, ordne Auftraggeber, Projektleitung und Team zu und nenne einen dokumentierten Kommunikationsschritt. 3. Vergleiche planorientiertes und iteratives Vorgehen und ordne die Scrum-Verantwortlichkeiten, Ereignisse sowie Artefakte mit Commitments zu. 4. Beschreibe ein prüfbares Arbeitspaket und erkläre die 80-Stunden-Schätzung einschließlich Annahmen und Reserve. 5. Rechne die Kapazitätsdauer und den Ablauf A–B/C–D; erkläre Puffer, Ressourcenkonflikt und Meilenstein. 6. Rechne 80 × 35, den 20-Prozent-Zuschlag und 400 Euro Fremdkosten; erkläre Zellbezug, Summenbereich und Doppelzählungsgefahr. 7. Rechne Aufschlag, Netto, Marge, vorgegebene Umsatzsteuer und Brutto sowie den getrennten Rabatt-/Skontofall. 8. Rechne Stückdeckungsbeitrag, Ergebnis, Schwelle und einfache Amortisation und benenne ihre Grenzen. 9. Unterscheide Risiko, Problem und Änderung; erkläre 600 Euro Risikowert, 25 statt 20 Stunden, die 90-Stunden-Prognose und den Formularwunsch. 10. Beschreibe Abnahme, Übergabe und eine überprüfbare Verbesserung; rechne das Ist-Ergebnis bei 4.180 Euro Kosten und 4.700 Euro Nettoerlös.",
+      "objectiveIds": [
+        "common-pm-closure-acceptance",
+        "common-pm-closure-handover",
+        "common-pm-closure-learning"
+      ],
+      "blockIds": [
+        "common-pm-closure-review"
+      ],
+      "keyPoints": [
+        "1. Begrenzte Einführung ist Projekt, laufender Betrieb Routine. Messbares Ticketziel mit Termin; Umfang, Zeit, Kosten und Qualität zusammen prüfen.",
+        "2. Bedarf mit Nutzenden/Betrieb klären; zehn von zehn Testtickets als Kriterium. Auftraggeber Rahmen/Nutzen, Projektleitung Koordination, Team Lösung/Prüfung. Entscheidung mit Anlass, Person und Datum dokumentieren.",
+        "3. Planorientiert bei gut geklärten Vorgaben; iterativ mit Rückmeldung und Anpassung. PO Wert/Product Backlog, Developers Sprintplan/Increment, SM Wirksamkeit. Sprint, Planning, Daily, Review, Retro unterscheiden; Product Backlog/Produktziel, Sprint Backlog/Sprintziel, Increment/DoD.",
+        "4. Arbeitspaket mit Ergebnis, Verantwortung und Prüfkriterium. 12 + 24 + 20 + 24 = 80 Stunden; Annahmen und Reserve transparent, Aufwand nicht Dauer.",
+        "5. 80/(2 × 4) = 10 Arbeitstage bei passender Parallelisierbarkeit. Ablauf 7 Tage, längster Pfad A–B–D, C hat 2 Tage Puffer; mit gemeinsam benötigter Person 8 Tage. Meilenstein ist Zustand.",
+        "6. 2.800 Euro Personal, 560 Euro Gemeinkosten, 3.760 Euro Selbstkosten. B5=B1*B2 und B7=SUMME(B3;B5:B6); Prozentzahl nicht mitsummieren, enthaltene Gemeinkosten nicht doppelt zählen. Berechnete Geldpositionen vor der Weiterrechnung mit RUNDEN(...;2) auf Cent runden; Verhältnisse nicht vorzeitig runden.",
+        "7. 940 Euro Gewinn, 4.700 Euro Netto, 20 Prozent Marge, 893 Euro USt, 5.593 Euro Brutto. Separat: 5.000 → 4.500 → 4.410 Euro nach Nachlässen, 650 Euro Ergebnis.",
+        "8. 60 Euro Stück-DB, 3.000 Euro Ergebnis bei 250 Stück, Schwelle 200 Stück; ganze Stück ggf. aufrunden, bei DB ≤ 0 keine endliche Deckung positiver Fixkosten. 2 Jahre Amortisation bei eigenständig vorgegebenem positiven Rückfluss; keine Gewinn- oder Zahlungszusage.",
+        "9. Unsicheres Ereignis, eingetretenes Problem und beantragte Erweiterung trennen. Risikowert 600 ist Erwartungswert. +5 Stunden/+25 Prozent; 50 + 40 = 90 Stunden Prognose. Formular 420 Euro Zusatzkosten, Wirkung prüfen und Entscheidung dokumentieren.",
+        "10. Kriterien/Nachweise/Entscheidung/offene Punkte; betriebliche Zuständigkeit und handlungsfähige Übernahme. Ist-Ergebnis 520 Euro, Marge etwa 11,06 Prozent. Verbesserung mit Maßnahme, Person, Termin und Nachweis."
+      ],
+      "acceptableAlternatives": [
+        "Sinngleiche fachliche Begründungen und gleichwertige Rechenwege sind möglich."
+      ],
+      "misconceptions": [
+        "Aufwand und Dauer, Kosten und Preis, Aufschlag und Marge oder Deckungsbeitrag und Gewinn gleichsetzen.",
+        "Unsicheren Rückfluss als Zusage behandeln oder eine Änderung ohne Entscheidung in den Auftrag aufnehmen.",
+        "Abnahme, Versand von Dokumenten und betriebliche Handlungsfähigkeit gleichsetzen."
+      ],
+      "sampleAnswer": "1. Die Einführung ist zeitlich begrenzt, der Betrieb wiederkehrend; mein Ziel nennt zehn korrekt nutzbare Testtickets bis zum Termin und berücksichtigt Mittel und Qualität. 2. Ich kläre Bedarf und Prüfkriterium mit Nutzenden und Betrieb. Auftraggeber verantwortet den Rahmen, Projektleitung koordiniert, das Team erarbeitet die Lösung; Entscheidungen werden dokumentiert. 3. Gut geklärte Vorgaben lassen sich stärker vorausplanen, unsichere Oberflächen iterativ prüfen. In Scrum ordnet der PO das Product Backlog, Developers planen den Sprint und liefern das Increment, der SM unterstützt Wirksamkeit. Planning plant, Daily prüft das Sprintziel, Review das Produkt und Retro die Zusammenarbeit; der Sprint umfasst sie. Produktziel, Sprintziel und DoD gehören zu den drei Artefakten. 4. Ein Paket braucht Ergebnis und Prüfkriterium; die vier Schätzwerte ergeben 80 Stunden, Unsicherheiten und Reserve bleiben sichtbar. 5. Acht verfügbare Stunden pro Tag ergeben rechnerisch zehn Tage. A–B–D bestimmt sieben Tage, C hat zwei Tage Puffer; eine gemeinsame Person für B/C verlängert auf acht Tage. 6. Ich rechne 2.800 + 560 + 400 = 3.760 Euro, mit passenden Zellbezügen und ohne Prozentzeile in der Summe. Jede berechnete Geldzeile runde ich mit RUNDEN(...;2) auf Cent, bevor sie weiterverwendet wird; Verhältnisse bleiben ungerundet. 7. 25 Prozent auf Kosten ergeben 940 Euro Gewinn und 4.700 Euro netto; Marge ist 20 Prozent. Mit 893 Euro USt sind es 5.593 Euro brutto. Im anderen Nachlassfall bleiben 4.410 Euro netto und 650 Euro Ergebnis. 8. 60 Euro DB ergeben bei 250 Stück 3.000 Euro Ergebnis; bei 200 Stück ist es null. Bei DB ≤ 0 fehlt eine endliche Deckung positiver Fixkosten. Die gesonderte Amortisation ergibt zwei Jahre und setzt gleichmäßige positive Zahlungsüberschüsse voraus. 9. Ich ordne Risiko, Problem und Änderung getrennt ein, verstehe 600 Euro als Erwartungswert und die Stundenabweichung als +25 Prozent. Die Prognose sind 90 Stunden; das Formular kostet zusätzlich 420 Euro und braucht eine Wirkungsentscheidung. 10. Ich prüfe Kriterien, dokumentiere offene Punkte und übergebe an einen handlungsfähigen Betrieb. Bei 4.180 Euro Istkosten bleiben 520 Euro Ergebnis, etwa 11,06 Prozent Marge. Ein früher Prototypentest mit benannter Person und Termin ist eine überprüfbare Verbesserung.",
+      "followUp": "Welcher der zehn Schritte ist noch nicht sicher begründet? Ergänze genau dort Rechenweg, Zuständigkeit oder Prüfkriterium."
+    }
+  ],
+  "cards": [
+    {
+      "id": "common-pm-closure-card-1",
+      "front": "Was macht ein Abnahmekriterium brauchbar?",
+      "back": "Es beschreibt eine vorher vereinbarte, beobachtbare Leistung und einen passenden Nachweis, zum Beispiel zehn von zehn korrekt gespeicherte und angezeigte Testtickets.",
+      "objectiveIds": [
+        "common-pm-closure-acceptance"
+      ],
+      "blockIds": [
+        "common-pm-closure-acceptance"
+      ]
+    },
+    {
+      "id": "common-pm-closure-card-2",
+      "front": "Wie gehst du mit Abweichung und neuem Wunsch um?",
+      "back": "Eine nicht erfüllte vereinbarte Leistung wird als Abweichung bearbeitet. Ein neuer Wunsch wird als Änderung geprüft. Entscheidung, Zuständigkeit und Frist bleiben dokumentiert.",
+      "objectiveIds": [
+        "common-pm-closure-acceptance"
+      ],
+      "blockIds": [
+        "common-pm-closure-acceptance"
+      ]
+    },
+    {
+      "id": "common-pm-closure-card-3",
+      "front": "Was gehört zu einer nutzbaren Übergabe?",
+      "back": "Betriebsverantwortung, passende Dokumentation, geregelte Zugänge, Einweisung, Sicherung/Wiederherstellung, bekannte Einschränkungen und Kontaktwege.",
+      "objectiveIds": [
+        "common-pm-closure-handover"
+      ],
+      "blockIds": [
+        "common-pm-closure-handover"
+      ]
+    },
+    {
+      "id": "common-pm-closure-card-4",
+      "front": "Wie prüfst du die Verständlichkeit einer Betriebsanleitung?",
+      "back": "Die übernehmende Person führt einen freigegebenen Ablauf anhand der Anleitung selbst aus. Erkannte Lücken werden ergänzt und erneut geprüft.",
+      "objectiveIds": [
+        "common-pm-closure-handover"
+      ],
+      "blockIds": [
+        "common-pm-closure-handover"
+      ]
+    },
+    {
+      "id": "common-pm-closure-card-5",
+      "front": "Was zeigt die Nachkalkulation bei 4.180 Euro Kosten und 4.700 Euro Nettoerlös?",
+      "back": "520 Euro Ergebnis und etwa 11,06 Prozent Marge. Der geplante Gewinn von 940 Euro bleibt bei gestiegenen Kosten nicht unverändert erhalten.",
+      "objectiveIds": [
+        "common-pm-closure-learning"
+      ],
+      "blockIds": [
+        "common-pm-closure-learning"
+      ]
+    },
+    {
+      "id": "common-pm-closure-card-6",
+      "front": "Was verbindet die zehn PM-Themen zu einem Abschluss?",
+      "back": "Klarer Auftrag und Anforderungen, passendes Vorgehen, begründete Arbeit und Termine, saubere Kosten-/Preis-/Wirtschaftlichkeitsrechnung, dokumentierte Steuerung sowie geprüfte Abnahme, Übergabe und Verbesserung.",
+      "objectiveIds": [
+        "common-pm-closure-acceptance",
+        "common-pm-closure-handover",
+        "common-pm-closure-learning"
+      ],
+      "blockIds": [
+        "common-pm-closure-review"
+      ]
+    }
+  ],
+  "review": {
+    "status": "reviewed",
+    "checkedAt": "2026-11-11"
+  },
+  "fieldReview": {
+    "fieldId": "PM",
+    "topicIds": [
+      "common-pm-project",
+      "common-pm-stakeholders",
+      "common-pm-methods",
+      "common-pm-planning",
+      "common-pm-schedule",
+      "common-pm-costs",
+      "common-pm-pricing",
+      "common-pm-feasibility",
+      "common-pm-control",
+      "common-pm-closure"
+    ],
+    "blockIds": [
+      "common-pm-closure-review"
+    ],
+    "interviewIds": [
+      "common-pm-closure-talk-review"
+    ],
+    "questionIds": [
+      "LJ-PM-CLOSURE-E01",
+      "LJ-PM-CLOSURE-E02",
+      "LJ-PM-CLOSURE-E03",
+      "LJ-PM-CLOSURE-E04",
+      "LJ-PM-CLOSURE-E05",
+      "LJ-PM-CLOSURE-E06",
+      "LJ-PM-CLOSURE-E07",
+      "LJ-PM-CLOSURE-E08"
+    ]
+  }
+}

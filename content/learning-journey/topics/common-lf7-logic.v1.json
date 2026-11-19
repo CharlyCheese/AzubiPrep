@@ -1,0 +1,535 @@
+{
+  "schemaVersion": 1,
+  "id": "common-lf7-logic",
+  "version": "1.0.0",
+  "title": "Eine einfache Steuerlogik ergänzen",
+  "fieldId": "LF7",
+  "scope": "common",
+  "prerequisites": [
+    "common-lf7-extension",
+    "common-lf5-functions"
+  ],
+  "sourceIds": [
+    "lf7-nist-cps",
+    "lf7-mdn-typeof",
+    "lf7-mdn-finite",
+    "lf7-mdn-return",
+    "lf7-mdn-or",
+    "lf7-mdn-not",
+    "lf7-mdn-inequality",
+    "lf7-mdn-comparison"
+  ],
+  "sources": [
+    {
+      "id": "lf7-nist-cps",
+      "title": "NIST: Cyber-Physical Systems and Internet of Things Foundations",
+      "url": "https://www.nist.gov/programs-projects/cyber-physical-systems-and-internet-things-foundations",
+      "checkedAt": "2026-11-16",
+      "note": "Öffentliche HTML-Projektbeschreibung zu physikalischen Komponenten, Sensorik, Aktorik, Logik sowie überprüfbaren Anforderungen gelesen. Tischmodell, Rollen und alle Fallwerte sind eigene Fiktion."
+    },
+    {
+      "id": "lf7-mdn-typeof",
+      "title": "MDN: typeof",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/typeof",
+      "checkedAt": "2026-11-16",
+      "note": "JavaScript-Referenz zu Datentypen, Zahlen, Zeichenketten sowie NaN/Infinity geprüft. Eigene Beispiele bereiten die lokale Steuerfunktion vor."
+    },
+    {
+      "id": "lf7-mdn-finite",
+      "title": "MDN: Number.isFinite()",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/isFinite",
+      "checkedAt": "2026-11-16",
+      "note": "Referenz zu endlichen Zahlen und fehlender impliziter Umwandlung von Zeichenketten gelesen. Der erlaubte Temperaturbereich ist eine eigene Modellvorgabe."
+    },
+    {
+      "id": "lf7-mdn-return",
+      "title": "MDN: return",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/return",
+      "checkedAt": "2026-11-16",
+      "note": "Referenz zum Beenden eines Funktionsaufrufs mit Rückgabewert und zur gemeinsamen Zeile von return und Ausdruck geprüft."
+    },
+    {
+      "id": "lf7-mdn-or",
+      "title": "MDN: Logical OR (||)",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Logical_OR",
+      "checkedAt": "2026-11-16",
+      "note": "Referenz zur Oder-Verknüpfung und Kurzschlussauswertung geprüft. Im Lernbeispiel sind die verknüpften Bedingungen boolesch."
+    },
+    {
+      "id": "lf7-mdn-not",
+      "title": "MDN: Logical NOT (!)",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Logical_NOT",
+      "checkedAt": "2026-11-16",
+      "note": "Referenz zur logischen Verneinung geprüft. Im Inhalt wird sie auf das boolesche Ergebnis von Number.isFinite angewandt."
+    },
+    {
+      "id": "lf7-mdn-inequality",
+      "title": "MDN: Strict inequality (!==)",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Strict_inequality",
+      "checkedAt": "2026-11-16",
+      "note": "Referenz zur strikten Ungleichheit ohne Typumwandlung geprüft. Das Modell verlangt connected genau als boolesches true."
+    },
+    {
+      "id": "lf7-mdn-comparison",
+      "title": "MDN: Greater than or equal (>=)",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Greater_than_or_equal",
+      "checkedAt": "2026-11-16",
+      "note": "Referenz zu Vergleichsoperatoren und eingeschlossener Gleichheit geprüft; Eingabetypen werden im Modell vor dem Grenzwertvergleich validiert."
+    }
+  ],
+  "objectives": [
+    {
+      "id": "common-lf7-logic-implement",
+      "text": "Eine vorgegebene Sensorabfrage mit einer einfachen Aktorreaktion in einer geeigneten Lernumgebung umsetzen."
+    },
+    {
+      "id": "common-lf7-logic-failure",
+      "text": "Ungültige Messwerte oder einen Verbindungsabbruch erkennen und eine vorgegebene sichere Reaktion auslösen."
+    }
+  ],
+  "caseStudy": {
+    "title": "Nora schreibt die lokale Steuerfunktion",
+    "text": "Der vorgegebene Modelladapter stellt die Temperatur als JavaScript-Wert und den Verbindungsstatus bereit. Nora ergänzt function control(temperature, connected) in der lokalen Lernumgebung. Sie steuert damit keine Hardware. Die Funktion liefert genau einen der Texte off, on oder fault; die Umgebung zeigt daraus Lüfter und Alarm an."
+  },
+  "blocks": [
+    {
+      "id": "common-lf7-logic-contract",
+      "title": "1. Eingaben und Rückgaben als Vertrag festlegen",
+      "objectiveIds": [
+        "common-lf7-logic-implement",
+        "common-lf7-logic-failure"
+      ],
+      "sourceIds": [
+        "lf7-nist-cps",
+        "lf7-mdn-return",
+        "lf7-mdn-comparison"
+      ],
+      "paragraphs": [
+        "Die feste Schnittstelle lautet function control(temperature, connected). function leitet die Funktionsdefinition ein, control ist der Name und die Namen in Klammern sind die beiden Eingabeparameter. Geschweifte Klammern umfassen den Funktionskörper. Ein Aufruf wie control(28, true) übergibt die Zahl 28 und den booleschen Wahrheitswert true. Im JavaScript-Code schreibst du Dezimalzahlen mit Punkt, etwa 29.9.",
+        "Der Vertrag verlangt: connected ist genau true; temperature ist eine endliche Zahl und liegt einschließlich der Grenzen zwischen −20 und 80 °C. Ist eine Bedingung verletzt, liefere 'fault'. Sonst liefere ab 30 °C 'on' und unter 30 °C 'off'. Die Anführungszeichen markieren Textwerte. true ohne Anführungszeichen ist dagegen ein boolescher Wert; 'true' wäre Text.",
+        "if (Bedingung) { Anweisung; } führt den Inhalt aus, wenn die Bedingung wahr ist. temperature >= 30 bedeutet größer oder gleich 30; > 30 würde die Gleichheit ausschließen. return 'on'; gibt den Text on zurück und beendet diesen Funktionsaufruf. Schreibe return und den Rückgabewert in dieselbe Zeile. Fehlt auf einem Pfad die Rückgabe, entsteht nicht automatisch 'off'.",
+        "Die Umgebung übersetzt 'on' in Lüfter ein/Alarm aus, 'off' in Lüfter aus/Alarm aus und 'fault' in Lüfter aus/Alarm an. Diese Fehlerreaktion ist für das ungefährliche Tischmodell vorgegeben; sie ist keine allgemeine Sicherheitsregel für reale Kühlung."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Lernfall",
+        "text": "function control(temperature, connected) { /* Hier stehen Prüfungen und Rückgaben. */ } beschreibt die Form; control(28, true) erwartet 'off', control(30, true) erwartet 'on'."
+      },
+      "misconception": {
+        "claim": "Der Rückgabewert on kann ohne Anführungszeichen wie ein fertiger Text benutzt werden.",
+        "correction": "'on' ist ein Textwert. on ohne Anführungszeichen bezeichnet einen Namen, für den hier kein Wert definiert ist."
+      },
+      "takeaway": "Halte Funktionsname, zwei Eingaben und die drei erlaubten Textausgaben ein."
+    },
+    {
+      "id": "common-lf7-logic-validation",
+      "title": "2. Typ, Endlichkeit, Bereich und Verbindung prüfen",
+      "objectiveIds": [
+        "common-lf7-logic-failure",
+        "common-lf7-logic-implement"
+      ],
+      "sourceIds": [
+        "lf7-mdn-typeof",
+        "lf7-mdn-finite",
+        "lf7-mdn-or",
+        "lf7-mdn-not",
+        "lf7-mdn-inequality"
+      ],
+      "paragraphs": [
+        "typeof temperature liefert einen Text für den Datentyp, etwa 'number' für 28 und 'string' für '28'. Mit typeof temperature !== 'number' erkennst du Werte, die keine Zahlen sind. !== bedeutet strikt ungleich, also ohne vorherige Typumwandlung. connected !== true verwirft damit auch 1 oder den Text 'true', obwohl diese in anderen Bedingungen als wahr behandelt werden könnten.",
+        "Number.isFinite(temperature) liefert true für endliche Zahlen. Für NaN, Infinity und -Infinity liefert es false; diese Sonderwerte haben trotzdem den Typ 'number'. Die Funktion wandelt den Text '28' nicht in eine Zahl um. Das vorangestellte ! verneint einen Wahrheitswert: !Number.isFinite(temperature) wird bei einer unbrauchbaren Eingabe wahr.",
+        "Für den erlaubten Bereich prüfst du temperature < -20 und temperature > 80. Die Grenzwerte selbst bleiben gültig. Verbinde die Fehlerbedingungen mit ||, dem logischen Oder: Bei diesen booleschen Teilbedingungen reicht ein wahrer Teil für Fehler. Die Auswertung erfolgt von links nach rechts und stoppt beim ersten wahren Teil. Deshalb stehen Verbindungs-, Typ- und Endlichkeitsprüfung vor den Zahlenvergleichen.",
+        "Die Gesamtbedingung lautet connected !== true || typeof temperature !== 'number' || !Number.isFinite(temperature) || temperature < -20 || temperature > 80. In einem if-Zweig folgt return 'fault';. Ein gültiger Wert außerhalb des Schaltbereichs unter 30 ist kein Fehler, solange er im erlaubten Messbereich liegt."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Lernfall",
+        "text": "temperature = '31' scheitert am Typ; NaN scheitert an der Endlichkeit; 81 scheitert am Bereich; connected = false scheitert an der Verbindung. 25 bei true ist gültig und führt später zu 'off'."
+      },
+      "misconception": {
+        "claim": "typeof temperature === 'number' genügt als Nachweis eines verwendbaren Messwerts.",
+        "correction": "NaN und Unendlich sind ebenfalls vom Typ number; Endlichkeit, Bereich und Verbindung bleiben zu prüfen."
+      },
+      "takeaway": "Ein Fehler genügt für fault; Zahltyp allein bedeutet noch keinen gültigen Messwert."
+    },
+    {
+      "id": "common-lf7-logic-implementation",
+      "title": "3. Erst Fehler abfangen, dann die Schwelle auswerten",
+      "objectiveIds": [
+        "common-lf7-logic-implement",
+        "common-lf7-logic-failure"
+      ],
+      "sourceIds": [
+        "lf7-mdn-return",
+        "lf7-mdn-comparison",
+        "lf7-mdn-or"
+      ],
+      "paragraphs": [
+        "Baue die Funktion in drei gut lesbaren Schritten auf. Zuerst fasst ein if die Fehlerbedingungen zusammen und beendet den Aufruf mit 'fault'. Danach prüft ein zweites if die Schwelle temperature >= 30 und liefert 'on'. Für den verbleibenden gültigen Fall folgt return 'off';. Dadurch erreicht kein verworfener Wert die normale Schaltentscheidung.",
+        "Eine vollständige eigene Musterimplementierung lautet: function control(temperature, connected) { if (connected !== true || typeof temperature !== 'number' || !Number.isFinite(temperature) || temperature < -20 || temperature > 80) { return 'fault'; } if (temperature >= 30) { return 'on'; } return 'off'; }. In der Praxis schreibst oder bearbeitest du die Funktion selbst und prüfst sie mit den vorgegebenen Fällen.",
+        "Der Ablauf zeigt, warum die Reihenfolge zählt: Bei 45 und false muss 'fault' entstehen, auch wenn 45 über der Schaltschwelle liegt. Würde zuerst der hohe Temperaturwert ohne Verbindungsprüfung zurückgegeben, würde die Funktion einen Fehler als Normalbetrieb behandeln. Ein return beendet den Aufruf; spätere Prüfungen holen eine zu frühe Rückgabe nicht nach.",
+        "Es ist eine kleine zustandslose Lernregel: Die Entscheidung hängt von den beiden aktuellen Eingaben ab, nicht vom vorigen Lüfterzustand. Für echte Anlagen könnten weitere Vorgaben wie Zeitverhalten oder Hysterese nötig sein. Diese werden hier nicht stillschweigend hinzugefügt."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Lernfall",
+        "text": "Bei control(45, false) beendet der erste Fehlerzweig den Aufruf mit 'fault'. Der Vergleich >= 30 wird für diesen Aufruf nicht mehr benötigt."
+      },
+      "misconception": {
+        "claim": "Eine Verbindungsprüfung nach return 'on' kann eine frühere Einschaltentscheidung noch korrigieren.",
+        "correction": "Nach dem ausgeführten return ist dieser Funktionsaufruf beendet; die Prüfung muss vorher greifen."
+      },
+      "takeaway": "Fehlerbehandlung hat in diesem Vertrag Vorrang vor der normalen Schaltentscheidung."
+    },
+    {
+      "id": "common-lf7-logic-cases",
+      "title": "4. Mit unterschiedlichen Eingaben gezielt nachprüfen",
+      "objectiveIds": [
+        "common-lf7-logic-implement",
+        "common-lf7-logic-failure"
+      ],
+      "sourceIds": [
+        "lf7-nist-cps",
+        "lf7-mdn-finite",
+        "lf7-mdn-comparison"
+      ],
+      "paragraphs": [
+        "Leite Sollfälle aus dem Vertrag ab. Normalfälle: 28/true → 'off', 35/true → 'on'. An der Schaltschwelle: 29.9/true → 'off', 30/true → 'on'. Erlaubte Messgrenzen: -20/true → 'off', 80/true → 'on'. Werte knapp außerhalb, etwa -20.1 oder 80.1 bei true, müssen 'fault' ergeben.",
+        "Prüfe außerdem verschiedene Fehlerursachen: 35/false testet den Verbindungsabbruch; '35'/true prüft Text statt Zahl; null, undefined und NaN sind keine verwendbaren Temperaturen. Infinity und -Infinity sind ebenfalls ungültig. Ein Verbindungswert wie 'true' oder 1 erfüllt den strikten Vertrag nicht. Solche Fälle decken andere Fehler ab als die Temperaturgrenze.",
+        "Vergleiche erwartete und tatsächlich erhaltene Ausgabe. Ein fehlendes return, eine falsche Schreibweise oder ein nicht beendeter Lauf ist kein bestandener Fachtest. Die begrenzte Lernumgebung meldet auch Ausführungsfehler. Verändere danach gezielt den Code und prüfe erneut; ein früher bestandener Test gehört nicht zu einer später geänderten Fassung.",
+        "Die praktische Eingabe und Prüfung der eigenen Funktion folgt im LF7-Abschluss in der zweiten Reflexion. Dort werden Modellschritte und geprüfter Quelltext miteinander verbunden. Eine Musterlösung lesen ist Vorbereitung, kein Nachweis einer selbst durchgeführten Prüfung."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Lernfall",
+        "text": "Nora entdeckt, dass > 30 bei genau 30 'off' liefert. Sie korrigiert auf >= 30 und prüft auch die Fehlerfälle der geänderten Fassung erneut."
+      },
+      "misconception": {
+        "claim": "Zwei erfolgreiche Normalfälle beweisen die korrekte Fehlerbehandlung.",
+        "correction": "Normal-, Grenz- und unterschiedliche Fehlerfälle prüfen verschiedene Vertragsbestandteile."
+      },
+      "takeaway": "Prüfe Grenzen und Fehler ausdrücklich und binde das Ergebnis an die geprüfte Codefassung."
+    }
+  ],
+  "questionFile": "questions/common-lf7-logic.v1.csv",
+  "quiz": {
+    "questionIds": [
+      "LJ-LF7-LOGIC-Q01",
+      "LJ-LF7-LOGIC-Q02",
+      "LJ-LF7-LOGIC-Q03",
+      "LJ-LF7-LOGIC-Q04",
+      "LJ-LF7-LOGIC-Q05",
+      "LJ-LF7-LOGIC-Q06"
+    ]
+  },
+  "exam": {
+    "questionIds": [
+      "LJ-LF7-LOGIC-E01",
+      "LJ-LF7-LOGIC-E02",
+      "LJ-LF7-LOGIC-E03",
+      "LJ-LF7-LOGIC-E04",
+      "LJ-LF7-LOGIC-E05",
+      "LJ-LF7-LOGIC-E06",
+      "LJ-LF7-LOGIC-E07",
+      "LJ-LF7-LOGIC-E08"
+    ],
+    "passPercent": 80,
+    "scoring": "all-or-nothing-per-question",
+    "timed": false
+  },
+  "questionLinks": [
+    {
+      "questionId": "LJ-LF7-LOGIC-Q01",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf7-logic-implement"
+      ],
+      "blockIds": [
+        "common-lf7-logic-contract"
+      ]
+    },
+    {
+      "questionId": "LJ-LF7-LOGIC-Q02",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf7-logic-failure"
+      ],
+      "blockIds": [
+        "common-lf7-logic-validation"
+      ]
+    },
+    {
+      "questionId": "LJ-LF7-LOGIC-Q03",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf7-logic-failure"
+      ],
+      "blockIds": [
+        "common-lf7-logic-validation"
+      ]
+    },
+    {
+      "questionId": "LJ-LF7-LOGIC-Q04",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf7-logic-implement",
+        "common-lf7-logic-failure"
+      ],
+      "blockIds": [
+        "common-lf7-logic-implementation"
+      ]
+    },
+    {
+      "questionId": "LJ-LF7-LOGIC-Q05",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf7-logic-implement"
+      ],
+      "blockIds": [
+        "common-lf7-logic-contract",
+        "common-lf7-logic-implementation"
+      ]
+    },
+    {
+      "questionId": "LJ-LF7-LOGIC-Q06",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf7-logic-failure"
+      ],
+      "blockIds": [
+        "common-lf7-logic-cases",
+        "common-lf7-logic-validation"
+      ]
+    },
+    {
+      "questionId": "LJ-LF7-LOGIC-E01",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf7-logic-implement"
+      ],
+      "blockIds": [
+        "common-lf7-logic-contract",
+        "common-lf7-logic-cases"
+      ]
+    },
+    {
+      "questionId": "LJ-LF7-LOGIC-E02",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf7-logic-failure"
+      ],
+      "blockIds": [
+        "common-lf7-logic-validation"
+      ]
+    },
+    {
+      "questionId": "LJ-LF7-LOGIC-E03",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf7-logic-failure"
+      ],
+      "blockIds": [
+        "common-lf7-logic-validation"
+      ]
+    },
+    {
+      "questionId": "LJ-LF7-LOGIC-E04",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf7-logic-implement",
+        "common-lf7-logic-failure"
+      ],
+      "blockIds": [
+        "common-lf7-logic-implementation"
+      ]
+    },
+    {
+      "questionId": "LJ-LF7-LOGIC-E05",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf7-logic-failure"
+      ],
+      "blockIds": [
+        "common-lf7-logic-validation",
+        "common-lf7-logic-cases"
+      ]
+    },
+    {
+      "questionId": "LJ-LF7-LOGIC-E06",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf7-logic-failure"
+      ],
+      "blockIds": [
+        "common-lf7-logic-validation"
+      ]
+    },
+    {
+      "questionId": "LJ-LF7-LOGIC-E07",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf7-logic-implement",
+        "common-lf7-logic-failure"
+      ],
+      "blockIds": [
+        "common-lf7-logic-cases"
+      ]
+    },
+    {
+      "questionId": "LJ-LF7-LOGIC-E08",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf7-logic-implement"
+      ],
+      "blockIds": [
+        "common-lf7-logic-cases"
+      ]
+    }
+  ],
+  "interview": [
+    {
+      "id": "common-lf7-logic-talk-1",
+      "prompt": "Erkläre Aufbau und Rückgaben von control(temperature, connected) an 28/true und 30/true.",
+      "objectiveIds": [
+        "common-lf7-logic-implement"
+      ],
+      "blockIds": [
+        "common-lf7-logic-contract",
+        "common-lf7-logic-implementation"
+      ],
+      "keyPoints": [
+        "Parameter und Textausgaben unterscheiden.",
+        "if prüft eine Bedingung; >= schließt Gleichheit ein.",
+        "return liefert einen Wert und beendet den Aufruf."
+      ],
+      "acceptableAlternatives": [
+        "Eine fachlich gleichwertige Erklärung mit passenden Modellbefunden und nachvollziehbarer Begründung."
+      ],
+      "misconceptions": [
+        "Eine ausgelassene Rückgabe als automatisch off behandeln."
+      ],
+      "sampleAnswer": "Die Funktion erhält Temperatur und Verbindung. Nach erfolgreicher Eingabeprüfung liefert sie bei 28 'off' und bei 30 'on'. if prüft die jeweilige Bedingung, >= erfasst auch 30. return mit Textwert beendet den Aufruf. Ein vollständiger Rückgabepfad ist nötig.",
+      "followUp": "Was würde > statt >= genau an der Grenze verändern?"
+    },
+    {
+      "id": "common-lf7-logic-talk-2",
+      "prompt": "Begründe die Fehlerbedingung mit typeof, Number.isFinite, !, || und connected !== true.",
+      "objectiveIds": [
+        "common-lf7-logic-failure",
+        "common-lf7-logic-implement"
+      ],
+      "blockIds": [
+        "common-lf7-logic-validation",
+        "common-lf7-logic-implementation"
+      ],
+      "keyPoints": [
+        "Zahltyp, Endlichkeit und inklusive Bereichsgrenzen getrennt prüfen.",
+        "Striktes true für die Verbindung verlangen.",
+        "! verneint; || lässt jeden einzelnen Fehler genügen; fault kommt zuerst."
+      ],
+      "acceptableAlternatives": [
+        "Eine fachlich gleichwertige Erklärung mit passenden Modellbefunden und nachvollziehbarer Begründung."
+      ],
+      "misconceptions": [
+        "NaN wegen typeof number als gültigen Messwert akzeptieren."
+      ],
+      "sampleAnswer": "typeof trennt Zahlen von Text. Number.isFinite verwirft NaN und Unendlich; ! macht daraus die Fehlerbedingung. < -20 oder > 80 erfasst den Bereichsfehler. connected !== true akzeptiert genau boolesches true. Mit || reicht ein Fehler für die frühe Rückgabe 'fault'.",
+      "followUp": "Warum erhält 45 bei false trotz überschrittener Einschaltschwelle fault?"
+    },
+    {
+      "id": "common-lf7-logic-talk-3",
+      "prompt": "Stelle eine kleine Testauswahl mit Normal-, Grenz-, Typ- und Verbindungsfällen zusammen und beschreibe den Nachweis.",
+      "objectiveIds": [
+        "common-lf7-logic-implement",
+        "common-lf7-logic-failure"
+      ],
+      "blockIds": [
+        "common-lf7-logic-cases",
+        "common-lf7-logic-validation"
+      ],
+      "keyPoints": [
+        "Normalfall und Schaltschwelle unterscheiden.",
+        "Erlaubte Messgrenzen und Werte außerhalb prüfen.",
+        "Text, NaN und Verbindungsfehler einbeziehen; Soll/Ist zur Codefassung festhalten."
+      ],
+      "acceptableAlternatives": [
+        "Eine fachlich gleichwertige Erklärung mit passenden Modellbefunden und nachvollziehbarer Begründung."
+      ],
+      "misconceptions": [
+        "Zwei Normaltests als vollständige Fehlerprüfung behandeln."
+      ],
+      "sampleAnswer": "Ich prüfe 28/true als off, 30/true als on, -20/true als off und 80.1/true als fault. '28'/true, NaN/true und 35/false müssen fault liefern. Ich vergleiche Soll und Ist und prüfe nach Codeänderungen erneut. Das belegt den begrenzten Modellvertrag.",
+      "followUp": "Welcher Fehler bliebe bei ausschließlich hohen gültigen Temperaturen wahrscheinlich unentdeckt?"
+    }
+  ],
+  "cards": [
+    {
+      "id": "common-lf7-logic-card-01",
+      "front": "Wie lautet die feste Funktionsschnittstelle?",
+      "back": "function control(temperature, connected) mit den Textausgaben 'off', 'on' oder 'fault'.",
+      "objectiveIds": [
+        "common-lf7-logic-implement"
+      ],
+      "blockIds": [
+        "common-lf7-logic-contract"
+      ]
+    },
+    {
+      "id": "common-lf7-logic-card-02",
+      "front": "Was bewirken >= und return?",
+      "back": ">= schließt den Grenzwert ein. return liefert den angegebenen Wert und beendet den aktuellen Funktionsaufruf.",
+      "objectiveIds": [
+        "common-lf7-logic-implement"
+      ],
+      "blockIds": [
+        "common-lf7-logic-contract"
+      ]
+    },
+    {
+      "id": "common-lf7-logic-card-03",
+      "front": "Warum typeof und Number.isFinite prüfen?",
+      "back": "typeof trennt Zahl und andere Typen; Number.isFinite verwirft zusätzlich NaN und ±Infinity. Danach gelten Bereich und Verbindung.",
+      "objectiveIds": [
+        "common-lf7-logic-failure"
+      ],
+      "blockIds": [
+        "common-lf7-logic-validation"
+      ]
+    },
+    {
+      "id": "common-lf7-logic-card-04",
+      "front": "Wie wirken ! und || im Fehlerzweig?",
+      "back": "! verneint das boolesche Prüfergebnis. Bei mit || verbundenen Fehlerbedingungen genügt eine wahre Bedingung für fault.",
+      "objectiveIds": [
+        "common-lf7-logic-failure"
+      ],
+      "blockIds": [
+        "common-lf7-logic-validation"
+      ]
+    },
+    {
+      "id": "common-lf7-logic-card-05",
+      "front": "Warum steht die Fehlerprüfung zuerst?",
+      "back": "Eine normale Rückgabe beendet den Aufruf. Ungültige Eingaben müssen daher vor 'on' oder 'off' abgefangen werden.",
+      "objectiveIds": [
+        "common-lf7-logic-implement",
+        "common-lf7-logic-failure"
+      ],
+      "blockIds": [
+        "common-lf7-logic-implementation"
+      ]
+    },
+    {
+      "id": "common-lf7-logic-card-06",
+      "front": "Welche Fälle ergänzen Normaltests?",
+      "back": "Schaltschwelle 29.9/30, Messgrenzen -20/80, Werte außerhalb, Text/NaN/Unendlich und Verbindungsverlust. Geänderter Code wird neu geprüft.",
+      "objectiveIds": [
+        "common-lf7-logic-implement",
+        "common-lf7-logic-failure"
+      ],
+      "blockIds": [
+        "common-lf7-logic-cases"
+      ]
+    }
+  ],
+  "review": {
+    "status": "reviewed",
+    "checkedAt": "2026-11-16"
+  }
+}

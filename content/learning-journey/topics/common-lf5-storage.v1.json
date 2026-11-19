@@ -1,0 +1,458 @@
+{
+  "schemaVersion": 1,
+  "id": "common-lf5-storage",
+  "version": "1.0.0",
+  "title": "Daten dauerhaft ablegen",
+  "fieldId": "LF5",
+  "scope": "common",
+  "prerequisites": [
+    "common-lf5-objects"
+  ],
+  "sourceIds": [
+    "lf5-sqlite-storage",
+    "lf5-pg-keys"
+  ],
+  "sources": [
+    {
+      "id": "lf5-sqlite-storage",
+      "title": "SQLite: Appropriate Uses For SQLite",
+      "url": "https://www.sqlite.org/whentouse.html",
+      "note": "Lokale eingebettete Datenbanken und Abgrenzung von Client/Server-Datenbanken geprüft. Eine Datenbank kann in einer Datei liegen.",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "lf5-pg-keys",
+      "title": "PostgreSQL: Constraints",
+      "url": "https://www.postgresql.org/docs/current/ddl-constraints.html",
+      "note": "Primärschlüssel, Fremdschlüssel und referenzielle Beziehungen geprüft. Weiterführende Normalformen und Transaktionen sind nicht Teil dieser Etappe.",
+      "checkedAt": "2026-11-16"
+    }
+  ],
+  "objectives": [
+    {
+      "id": "common-lf5-storage-compare",
+      "text": "Datei und Datenbank für einen kleinen Datenbestand nach Zugriff, Struktur und Änderungsbedarf vergleichen."
+    },
+    {
+      "id": "common-lf5-storage-keys",
+      "text": "Einen kleinen Datenbestand mit Tabellen, Primärschlüsseln und passenden Fremdschlüsseln modellieren."
+    }
+  ],
+  "caseStudy": {
+    "title": "Mira plant eine dauerhafte Materialablage",
+    "text": "Radblick möchte den kleinen Materialbestand nach dem Beenden wieder lesen. Mira vergleicht eine strukturierte Datei mit einer Datenbank. Für die Modellierung betrachtet sie materials und loans mit künstlichen Kennungen."
+  },
+  "blocks": [
+    {
+      "id": "common-lf5-storage-compare",
+      "title": "1. Datei und Datenbank passend einordnen",
+      "objectiveIds": [
+        "common-lf5-storage-compare"
+      ],
+      "sourceIds": [
+        "lf5-sqlite-storage"
+      ],
+      "paragraphs": [
+        "Eine Variable im laufenden Programm ist noch keine dauerhafte Ablage. Eine strukturierte Datei, etwa CSV, kann eine kleine Liste speichern und austauschen. Die Anwendung muss festlegen, wie sie Zeilen liest, prüft und Änderungen wieder schreibt.",
+        "Eine Datenbank verwaltet strukturierte Daten mit Abfragen und Regeln. Sie erleichtert gezielte Auswahl und Änderung sowie Beziehungen zwischen Datensätzen. Sie ist nicht automatisch ein entfernter Server: SQLite ist beispielsweise eine eingebettete Datenbank, deren Bestand in einer Datei liegen kann.",
+        "Der Vergleich Datei oder Datenbank meint hier eine einfache selbst verwaltete Austauschdatei gegenüber Datenbankfunktionen. Beide benötigen eine passende Speicherplanung. Auch eine Datenbankdatei muss vor unberechtigtem Zugriff und Verlust geschützt werden; das Wort Datenbank allein ist keine Sicherung."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Übungsfall",
+        "text": "Eine selten geänderte Materialliste zum Austausch kann als CSV passen. Wiederholte gezielte Änderungen und Verknüpfungen sprechen für Datenbankfunktionen."
+      },
+      "misconception": {
+        "claim": "Eine Datenbank kann keine Datei auf einem lokalen Gerät sein.",
+        "correction": "Eingebettete Datenbanken können Daten in einer Datei speichern und zugleich Datenbankfunktionen bereitstellen."
+      },
+      "takeaway": "Vergleiche benötigte Funktionen und Zugriffsweise statt nur den Ablageort."
+    },
+    {
+      "id": "common-lf5-storage-choice",
+      "title": "2. Zugriff und Änderungsbedarf abwägen",
+      "objectiveIds": [
+        "common-lf5-storage-compare"
+      ],
+      "sourceIds": [
+        "lf5-sqlite-storage"
+      ],
+      "paragraphs": [
+        "Frage zuerst: Wer greift wie oft zu, welche Auswahl wird benötigt und wie werden Daten geändert? Eine einzelne Person, ein kleiner Bestand und seltener Gesamtexport können für eine strukturierte Datei sprechen. Viele gezielte Änderungen mit Regeln und Beziehungen erhöhen den Nutzen einer Datenbank.",
+        "Lokale und gemeinsame Nutzung unterscheiden sich. SQLite passt häufig zu eingebetteter lokaler Speicherung; bei vielen gleichzeitigen schreibenden Nutzern über ein Netz kann eine Client/Server-Datenbank besser passen. Es gibt keine feste Zeilenzahl, bei der jede CSV ungeeignet oder jede Datenbank erforderlich wäre.",
+        "Dokumentiere die Entscheidung mit Annahmen. Für den Lernfall üben wir Datenbankoperationen an einem begrenzten Modell. Die Entscheidung ersetzt keine reale Berechtigungs-, Sicherungs- oder Betriebsplanung und erzeugt keine echte Verbindung zu einer Datenbank."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Übungsfall",
+        "text": "Sam nennt als Gründe: gezielte Auswahl einzelner Materialien, wiederholte Änderungen und nachvollziehbare Beziehungen zu Ausleihen."
+      },
+      "misconception": {
+        "claim": "Eine kleine Datensatzanzahl schließt den Nutzen einer Datenbank aus.",
+        "correction": "Auch kleine Bestände können von Regeln und gezielten Abfragen profitieren. Die Anforderungen entscheiden."
+      },
+      "takeaway": "Begründe die Ablage mit Zugriff, Struktur und Änderungshäufigkeit."
+    },
+    {
+      "id": "common-lf5-storage-primary",
+      "title": "3. Tabellen und Primärschlüssel modellieren",
+      "objectiveIds": [
+        "common-lf5-storage-keys"
+      ],
+      "sourceIds": [
+        "lf5-pg-keys"
+      ],
+      "paragraphs": [
+        "Eine relationale Tabelle enthält Zeilen und Spalten. In materials(id, name, quantity) beschreibt jede Zeile ein Material, jede Spalte ein Merkmal. Beispielzeilen sind 1/Kabel/8, 2/Maus/2 und 3/Adapter/0.",
+        "Ein Primärschlüssel identifiziert eine Zeile eindeutig und darf keinen fehlenden Schlüsselwert enthalten. Im einfachen Modell übernimmt id diese Aufgabe. Zwei Materialzeilen mit derselben id verletzen die festgelegte Eindeutigkeit, auch wenn ihre Namen verschieden sind.",
+        "Name und aktuelle Zeilennummer einer Anzeige sind ungeeignet, wenn Namen doppelt vorkommen oder eine Sortierung die Reihenfolge ändert. Eine feste Kennung bleibt bei einer reinen Namens- oder Mengenänderung erhalten. Die Wahl von Zahlen als Kennungen ist eine Modellentscheidung, kein Zwang für jeden Primärschlüssel."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Übungsfall",
+        "text": "Die Zeilen 1/Adapter/2 und 2/Adapter/5 dürfen denselben Namen haben, wenn die Kennungen verschieden sind."
+      },
+      "misconception": {
+        "claim": "Ein Primärschlüssel ist vor allem die erste sichtbare Spalte der sortierten Anzeige.",
+        "correction": "Entscheidend sind Eindeutigkeit und der nicht fehlende Schlüsselwert, nicht die Position in der Anzeige."
+      },
+      "takeaway": "Modelliere eine stabile Kennung für jede Zeile."
+    },
+    {
+      "id": "common-lf5-storage-foreign",
+      "title": "4. Beziehungen mit Fremdschlüsseln abbilden",
+      "objectiveIds": [
+        "common-lf5-storage-keys"
+      ],
+      "sourceIds": [
+        "lf5-pg-keys"
+      ],
+      "paragraphs": [
+        "Für Ausleihen ergänzen wir loans(id, material_id, requested). id identifiziert eine Ausleihe. material_id verweist auf materials.id und ist in dieser Beziehung der Fremdschlüssel. So bleibt die Zuordnung unabhängig von der Schreibweise des Materialnamens.",
+        "Im Modell ist material_id verpflichtend und eine passende Fremdschlüsselregel aktiviert. Dann muss jede eingetragene Materialkennung in materials existieren. loans mit 10/2/1 verweist auf das Material mit id 2. Der Wert 99 ist ungültig, wenn kein Material 99 existiert.",
+        "Mehrere Ausleihen können denselben material_id-Wert verwenden, weil ein Material mehrfach ausgeliehen werden kann. Der Primärschlüssel der Ausleihe bleibt dabei verschieden. Vor dem Löschen eines referenzierten Materials muss eine Regel für die betroffenen Ausleihen geklärt sein; eine Beziehung ist nicht einfach eine unverbindliche Notiz."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Übungsfall",
+        "text": "loans 10/1/2 und 11/1/1 dürfen auf dasselbe Material 1 verweisen. Die Ausleihkennungen 10 und 11 unterscheiden die Vorgänge."
+      },
+      "misconception": {
+        "claim": "Ein Fremdschlüssel muss in seiner eigenen Tabelle genauso eindeutig sein wie der Primärschlüssel.",
+        "correction": "Er darf bei einer 1:n-Beziehung mehrfach auf dieselbe Zielzeile verweisen. Die Zielzuordnung muss gültig sein."
+      },
+      "takeaway": "Ein Fremdschlüssel verbindet Zeilen; seine Regel sichert die erlaubte Zuordnung."
+    }
+  ],
+  "questionFile": "questions/common-lf5-storage.v1.csv",
+  "quiz": {
+    "questionIds": [
+      "LJ-LF5-STORAGE-Q01",
+      "LJ-LF5-STORAGE-Q02",
+      "LJ-LF5-STORAGE-Q03",
+      "LJ-LF5-STORAGE-Q04",
+      "LJ-LF5-STORAGE-Q05",
+      "LJ-LF5-STORAGE-Q06"
+    ]
+  },
+  "exam": {
+    "questionIds": [
+      "LJ-LF5-STORAGE-E01",
+      "LJ-LF5-STORAGE-E02",
+      "LJ-LF5-STORAGE-E03",
+      "LJ-LF5-STORAGE-E04",
+      "LJ-LF5-STORAGE-E05",
+      "LJ-LF5-STORAGE-E06",
+      "LJ-LF5-STORAGE-E07",
+      "LJ-LF5-STORAGE-E08"
+    ],
+    "passPercent": 80,
+    "scoring": "all-or-nothing-per-question",
+    "timed": false
+  },
+  "questionLinks": [
+    {
+      "questionId": "LJ-LF5-STORAGE-Q01",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf5-storage-compare"
+      ],
+      "blockIds": [
+        "common-lf5-storage-compare"
+      ]
+    },
+    {
+      "questionId": "LJ-LF5-STORAGE-Q02",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf5-storage-compare"
+      ],
+      "blockIds": [
+        "common-lf5-storage-compare"
+      ]
+    },
+    {
+      "questionId": "LJ-LF5-STORAGE-Q03",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf5-storage-compare"
+      ],
+      "blockIds": [
+        "common-lf5-storage-choice"
+      ]
+    },
+    {
+      "questionId": "LJ-LF5-STORAGE-Q04",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf5-storage-keys"
+      ],
+      "blockIds": [
+        "common-lf5-storage-primary"
+      ]
+    },
+    {
+      "questionId": "LJ-LF5-STORAGE-Q05",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf5-storage-keys"
+      ],
+      "blockIds": [
+        "common-lf5-storage-foreign"
+      ]
+    },
+    {
+      "questionId": "LJ-LF5-STORAGE-Q06",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf5-storage-keys"
+      ],
+      "blockIds": [
+        "common-lf5-storage-foreign"
+      ]
+    },
+    {
+      "questionId": "LJ-LF5-STORAGE-E01",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf5-storage-compare"
+      ],
+      "blockIds": [
+        "common-lf5-storage-compare"
+      ]
+    },
+    {
+      "questionId": "LJ-LF5-STORAGE-E02",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf5-storage-compare"
+      ],
+      "blockIds": [
+        "common-lf5-storage-choice"
+      ]
+    },
+    {
+      "questionId": "LJ-LF5-STORAGE-E03",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf5-storage-compare"
+      ],
+      "blockIds": [
+        "common-lf5-storage-choice"
+      ]
+    },
+    {
+      "questionId": "LJ-LF5-STORAGE-E04",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf5-storage-keys"
+      ],
+      "blockIds": [
+        "common-lf5-storage-primary"
+      ]
+    },
+    {
+      "questionId": "LJ-LF5-STORAGE-E05",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf5-storage-keys"
+      ],
+      "blockIds": [
+        "common-lf5-storage-primary"
+      ]
+    },
+    {
+      "questionId": "LJ-LF5-STORAGE-E06",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf5-storage-keys"
+      ],
+      "blockIds": [
+        "common-lf5-storage-foreign"
+      ]
+    },
+    {
+      "questionId": "LJ-LF5-STORAGE-E07",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf5-storage-keys"
+      ],
+      "blockIds": [
+        "common-lf5-storage-foreign"
+      ]
+    },
+    {
+      "questionId": "LJ-LF5-STORAGE-E08",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf5-storage-compare",
+        "common-lf5-storage-keys"
+      ],
+      "blockIds": [
+        "common-lf5-storage-compare",
+        "common-lf5-storage-foreign"
+      ]
+    }
+  ],
+  "interview": [
+    {
+      "id": "common-lf5-storage-talk-1",
+      "prompt": "Vergleiche eine strukturierte Datei und eine Datenbank für Radblicks kleine Liste.",
+      "objectiveIds": [
+        "common-lf5-storage-compare"
+      ],
+      "blockIds": [
+        "common-lf5-storage-compare",
+        "common-lf5-storage-choice"
+      ],
+      "keyPoints": [
+        "Zugriff, Struktur und Änderungsbedarf nennen.",
+        "Lokale Datenbankdatei als Möglichkeit erkennen.",
+        "Entscheidung mit Annahmen statt starrer Zeilenzahl begründen."
+      ],
+      "acceptableAlternatives": [
+        "Eine fachlich gleichwertige Erklärung mit passenden eigenen Beispielen."
+      ],
+      "misconceptions": [
+        "Eine Datenbank kann keine Datei auf einem lokalen Gerät sein."
+      ],
+      "sampleAnswer": "Für seltenen Gesamtaustausch durch eine Person kann CSV passen. Häufige gezielte Änderungen und Beziehungen sprechen für Datenbankfunktionen. Eine Datenbank kann lokal in einer Datei liegen. Gemeinsames Schreiben über ein Netz ist ein zusätzliches Kriterium.",
+      "followUp": "Welche neue Anforderung könnte die Entscheidung verändern?"
+    },
+    {
+      "id": "common-lf5-storage-talk-2",
+      "prompt": "Modelliere die Materialtabelle und begründe ihren Primärschlüssel.",
+      "objectiveIds": [
+        "common-lf5-storage-keys"
+      ],
+      "blockIds": [
+        "common-lf5-storage-primary"
+      ],
+      "keyPoints": [
+        "Eine Zeile je Material.",
+        "id, name und quantity mit Bedeutung.",
+        "Eindeutigkeit und nicht fehlende id nennen."
+      ],
+      "acceptableAlternatives": [
+        "Eine fachlich gleichwertige Erklärung mit passenden eigenen Beispielen."
+      ],
+      "misconceptions": [
+        "Ein Primärschlüssel ist vor allem die erste sichtbare Spalte der sortierten Anzeige."
+      ],
+      "sampleAnswer": "materials hat id, name und quantity. Jede Zeile ist ein Material. id ist eindeutig und darf nicht fehlen. Namen dürfen sich gleichen und eine Sortierung darf die Kennung nicht ändern.",
+      "followUp": "Warum ist die sichtbare Zeilenposition kein stabiler Schlüssel?"
+    },
+    {
+      "id": "common-lf5-storage-talk-3",
+      "prompt": "Ergänze Ausleihen und erkläre die Beziehung zu Material.",
+      "objectiveIds": [
+        "common-lf5-storage-keys"
+      ],
+      "blockIds": [
+        "common-lf5-storage-foreign"
+      ],
+      "keyPoints": [
+        "loans.id von loans.material_id unterscheiden.",
+        "Verweis auf materials.id erläutern.",
+        "Mehrere Ausleihen pro Material und ungültige Zielkennung erklären."
+      ],
+      "acceptableAlternatives": [
+        "Eine fachlich gleichwertige Erklärung mit passenden eigenen Beispielen."
+      ],
+      "misconceptions": [
+        "Ein Fremdschlüssel muss in seiner eigenen Tabelle genauso eindeutig sein wie der Primärschlüssel."
+      ],
+      "sampleAnswer": "loans besitzt eine eigene id, material_id und requested. material_id verweist auf materials.id. Mehrere Ausleihen können dasselbe Material nennen. Bei verpflichtender aktiver Fremdschlüsselregel darf ich keine Materialkennung verwenden, deren Zielzeile fehlt.",
+      "followUp": "Was muss vor dem Löschen eines noch referenzierten Materials geklärt sein?"
+    }
+  ],
+  "cards": [
+    {
+      "id": "common-lf5-storage-card-1",
+      "front": "Ist eine Datenbank immer ein entfernter Server?",
+      "back": "Nein. Eine eingebettete Datenbank wie SQLite kann ihre Daten in einer lokalen Datei speichern.",
+      "objectiveIds": [
+        "common-lf5-storage-compare"
+      ],
+      "blockIds": [
+        "common-lf5-storage-compare"
+      ]
+    },
+    {
+      "id": "common-lf5-storage-card-2",
+      "front": "Welche Kriterien helfen bei Datei oder Datenbank?",
+      "back": "Zugriffsweise, Gleichzeitigkeit, Struktur, benötigte Abfragen und Häufigkeit gezielter Änderungen.",
+      "objectiveIds": [
+        "common-lf5-storage-compare"
+      ],
+      "blockIds": [
+        "common-lf5-storage-choice"
+      ]
+    },
+    {
+      "id": "common-lf5-storage-card-3",
+      "front": "Was sind Zeile und Spalte der Materialtabelle?",
+      "back": "Eine Zeile beschreibt ein Material; Spalten enthalten Merkmale wie id, name und quantity.",
+      "objectiveIds": [
+        "common-lf5-storage-keys"
+      ],
+      "blockIds": [
+        "common-lf5-storage-primary"
+      ]
+    },
+    {
+      "id": "common-lf5-storage-card-4",
+      "front": "Was leistet ein Primärschlüssel?",
+      "back": "Er identifiziert jede Zeile eindeutig und hat keinen fehlenden Schlüsselwert.",
+      "objectiveIds": [
+        "common-lf5-storage-keys"
+      ],
+      "blockIds": [
+        "common-lf5-storage-primary"
+      ]
+    },
+    {
+      "id": "common-lf5-storage-card-5",
+      "front": "Was leistet loans.material_id?",
+      "back": "Als Fremdschlüssel ordnet er die Ausleihe einem Material über dessen Kennung zu.",
+      "objectiveIds": [
+        "common-lf5-storage-keys"
+      ],
+      "blockIds": [
+        "common-lf5-storage-foreign"
+      ]
+    },
+    {
+      "id": "common-lf5-storage-card-6",
+      "front": "Darf derselbe Fremdschlüssel mehrfach vorkommen?",
+      "back": "Bei der 1:n-Beziehung ja: mehrere Ausleihen können auf dasselbe Material verweisen; ihre eigenen ids bleiben eindeutig.",
+      "objectiveIds": [
+        "common-lf5-storage-keys"
+      ],
+      "blockIds": [
+        "common-lf5-storage-foreign"
+      ]
+    }
+  ],
+  "review": {
+    "status": "reviewed",
+    "checkedAt": "2026-11-16"
+  }
+}
+

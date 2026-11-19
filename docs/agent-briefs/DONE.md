@@ -342,4 +342,54 @@
 
 - [OPS-041] README: eigene Debuggerseite, Modul-/DOM-/CSS-Umfang und Prüfnachweise aktualisiert, Quellstand von vorhandenen Paketen abgegrenzt; Links/Diff und unabhängiger Review grün — 2026-11-01 — [Brief](OPS-041-readme-debugger-stand.md)
 
-- [OPS-042] Debugger-Snapshotkosten bei unveränderten Limits reduziert und mobile Lesefassung umbruchsicher; 24 Zieltests, 443 lokale Gesamtfälle und 300 unabhängige Semantikvergleiche grün; GitHub-Linux-Nachlauf ausstehend — 2026-11-01 — [Brief](OPS-042-ci-linux-debugger-mobil.md)
+- [OPS-042] Debugger-Snapshotkosten bei unveränderten Limits reduziert und mobile Lesefassung umbruchsicher; 24 Zieltests, 443 lokale Gesamtfälle und 300 unabhängige Semantikvergleiche grün; anschließender GitHub-CI-Lauf nutzerseitig grün bestätigt — 2026-11-01 — [Brief](OPS-042-ci-linux-debugger-mobil.md)
+
+- [FE-055] Textinput/textarea und input/change/submit im abgeschirmten Debugger, ausdrückliche Entwurfsübernahme, Enter/Submitter und Begrüßungsbeispiel; 454 Gesamtfälle plus finale34 Zieltests, sieben Bediengruppen und unabhängiger Code-/Dokument-/Bildreview grün — 2026-11-02 — [Brief](FE-055-debugger-formulare.md)
+
+- [FE-056] Dynamische Elemente mit createElement/append/replaceChildren/remove, stabilen Handles und Budget auch für abgetrennte Teilbäume; Aufgabenliste,464 Gesamtfälle, finale43 Zieltests und sieben Bediengruppen grün; unabhängiger Code-/Dokument-/Bildreview samt317 nativen Vergleichen — 2026-11-02 — [Brief](FE-056-debugger-elemente.md)
+
+- [FE-057] Abgeschirmter sitzungsgebundener String-Übungsspeicher mit passiver Ansicht, atomarer Quota und Aufgabenlisten-Beispiel;474 Browser-/Windows-Electronfälle, sieben Bediengruppen und unabhängiger Code-/Dokument-/Bildreview samt10.000 Unicode-Proben grün — 2026-11-02 — [Brief](FE-057-debugger-uebungsspeicher.md)
+
+- [FE-058] Begrenztes JSON mit privaten Prüffassaden und Schema-vor-Übernahme-Beispiel;63 Zieltests,484 Gesamtfälle, finale10 JSON-Fälle und sieben Bediengruppen grün; unabhängiger Code-/Dokument-/Bildreview samt1000 nativen Datenvergleichen — 2026-11-02 — [Brief](FE-058-debugger-json.md)
+
+- [FE-059] Kontrollierte setTimeout-/clearTimeout-Abläufe mit eingefrorener Pausenzeit, echten Callback-Halten und gemeinsamem Befehlskanal; 497 Browser-/Windows-Electronfälle, sieben Bediengruppen und unabhängiger Code-/Dokument-/Bildreview samt separaten Controller-/Workerproben grün — 2026-11-09 — [Brief](FE-059-debugger-timer.md)
+
+- [FE-060] Native Promises, then/catch/finally und echter Asyncify-Jobadapter mit passiver begrenzter Rejectionprüfung; 29 Zieltests plus exakte Jobgrenze, frischer unabhängiger Review und WASM-Wachstumsprobe grün — 2026-11-09 — [Brief](FE-060-debugger-promises.md)
+
+- [FE-061] Native async/await, getrennte Warteaufrufe und Abschlusssemantik — 2026-11-09 — [Brief](FE-061-debugger-async-await.md)
+
+- [FE-062] Kontrollierte lokale Übungsantworten, fetch und gemeinsame Taskplanung — 2026-11-09 — [Brief](FE-062-debugger-datenladen.md)
+
+- [FE-063] Private Abbruchsignale und Schutz vor veralteten Antworten — 2026-11-09 — [Brief](FE-063-debugger-abbruch.md)
+
+- [FE-064] JavaScript-Gesamtprojekt und Abnahme529/529 — 2026-11-09 — [Brief](FE-064-debugger-js-abnahme.md)
+
+- [FE-065] Lokale TypeScript-Prüfung, positionsgleiche Erasure und Originalquellen;26 Zieltests und frischer unabhängiger Review — 2026-11-09 — [Brief](FE-065-debugger-typescript.md)
+
+- [FE-066] Echte React-/TSX-Komponenten mit Haltepunkten, Zustand/Effekten/Cleanup;42 finale Zieltests und frischer unabhängiger Review — 2026-11-09 — [Brief](FE-066-debugger-react.md)
+
+- [FE-067] Acht Debugger-Restschritte abgeschlossen; Anwendungssuite545/545 und Paketproben2/2, Desktop/Web0.1.5 gebaut und Inhalte geprüft, README aktualisiert, frischer unabhängiger Review — 2026-11-09 — [Brief](FE-067-debugger-abschluss-pakete.md)
+
+- [FE-068] Geführte FIAE-Lernreise geplant: allgemeine Grundlagen vor Spezialisierung, Theorie-/Fragenabgleich, Quiz/Fachgespräch/Karten/Mini-Test, lokale Privatgrenzen und eigenständige öffentliche Lehrtexte, Fortschritt und LF1-Pilotabnahme; Bestands-/Curriculumaudit und frischer unabhängiger Review, nur Dokumentation — 2026-11-09 — [Brief](FE-068-lernreise-fiae-planung.md)
+
+- [CONTENT-233] Lernreise R1: 84 Themen/218 Lernziele und vollständiger erster LF1-Inhalt mit vier Theorieblöcken, 14 getrennten Übungs-/Testfragen, drei Gesprächsimpulsen und sechs Karten; 72/72 Vertragstests, unabhängiger Fach- und Technikreview grün. Öffentliche eigene Inhalte, 7.000 Bestandsfragen unverändert; App-Anbindung folgt R2 — 2026-11-10 — [Brief](CONTENT-233-lernreise-lf1-inhaltsgrundlage.md)
+
+- [FE-069] Ersten LF1-Abschnitt in Web/Electron integriert: Beginnen/Fortsetzen, Theorie/Quiz/Selbstreflexion/Karten/Mini-Test, Lernziel-Auswertung, Wiederholung und geschützter lokaler Fortschritt mit Sicherung; 273 Backend-, 86 Zustands-/Inhalts-, 33 Desktoptests, finale zehn Journey-Fälle plus fünf Modulregressionen grün; zwei unabhängige Nachreviews freigegeben — 2026-11-10 — [Brief](FE-069-lernreise-lf1-app.md)
+
+- [FE-070] Optionale LF1-KI-Gespräche und Theoriehilfe für bestehende Anbieter, flüchtige begrenzte Sitzungen und lokale Privatgrenzen; 301 Backend- und 29 Browser-/Electronfälle grün, öffentliche Qwen-Liveprobe mit dokumentierten Modellgrenzen, zwei unabhängige Abschlussreviews — 2026-11-10 — [Brief](FE-070-lernreise-ki-gespraech.md)
+- [FE-071] Lernreise: zweites LF1-Thema Unternehmensziele, geführte Fortsetzung und getrennte Themenstände — 2026-11-11 — [Brief](FE-071-lernreise-lf1-ziele.md)
+- [FE-072] Lernreise: alle sechs LF1-Themen mit Präsentationsaufgabe, Rückblick und gespeichertem Lernfeldabschluss — 2026-11-11 — [Brief](FE-072-lernreise-lf1-abschluss.md)
+
+- [FE-073] Lernreise: vollständige WISO-Etappe mit zehn Themen, Rückblick, 140 Fragen, getrenntem Fortschritt und Reihenfolge LF1 → WISO → PM → LF2 — 2026-11-11 — [Brief](FE-073-lernreise-wiso.md)
+
+- [FE-074] Lernreise: vollständige Projektmanagement-Etappe mit zehn Themen, 140 Fragen, Rückblick und drei lokalen Rechentabellen für Kosten, Gewinn/Marge und Wirtschaftlichkeit; unabhängige Fach-/Technikreviews und Abschlussprüfung — 2026-11-11 — [Brief](FE-074-lernreise-pm-kalkulation.md)
+
+- [FE-075] Lernreise: alle sieben LF2-Themen mit 98 Fragen, Rückblick und lokaler Einrichtungsübung; 33 getrennte Lernstände, Sicherung und Desktop-Neustart, vollständige unabhängige Fach-/Technikreviews und mobile Abnahme — 2026-11-11 — [Brief](FE-075-lernreise-lf2.md)
+
+- [FE-076] Lernreise: alle sechs LF3-Themen mit 84 Fragen, Rückblick und lokalem Netzwerklabor für drei Störungen; 39 getrennte Lernstände, vollständige Fach-/Technikreviews, 409 Inhalts-/Zustands-, 726 Backend-, 45 Desktop- und 90 Browser-/Electronfälle grün — 2026-11-11 — [Brief](FE-076-lernreise-lf3.md)
+
+- [FE-077] Lernreise: LF4, LF5 und LF6 vollständig mit 18 Themen, 252 neuen Fragen, Schutzbedarfsanalyse, lokaler Datenanwendung mit QuickJS-Prüfung und Servicefall; 57 Themenstände, drei vollständige Fachreviews und Technik-/Mobilreview, 473 Inhalts-/Zustands-, 861 Backend-, 46 native Desktop- und 113 Browser-/Electronfälle grün — 2026-11-16 — [Brief](FE-077-lernreise-lf4-lf6.md)
+
+- [FE-078] Lernreise: LF7, LF8 und LF9 vollständig mit 17 Themen, 238 neuen Fragen und lokalen Laboren für Sensorsteuerung, Datenbereitstellung und Netzwerkdienste; 74 Themenstände, drei vollständige Fachreviews und Technik-/Mobilreview, 537 Inhalts-/Zustands-, 987 Backend-, 47 native Desktop- und 147 Browser-/Electronfälle einschließlich korrigierter Nachprüfung abgedeckt — 2026-11-16 — [Brief](FE-078-lernreise-lf7-lf9.md)
+
+- [FE-079] FIAE-Lernreise bis LF12a abgeschlossen. 20 Spezialisierungsthemen mit drei zusammenhängenden Praxisaufträgen und 280 unabhängig geprüften Fragen. 94 Themen, 248 Lernziele und 1.316 Lernreisefragen. Gesamtübersicht mit Lernzielergebnissen und Erhalt bei Wiederholung. 540 Inhalts-/Zustands-, 1.069 Backend-, 47 native Desktop- und 157 Browser-/Electronfälle bestanden — 2026-11-19 — [Brief](FE-079-lernreise-fiae-spezialisierung.md)

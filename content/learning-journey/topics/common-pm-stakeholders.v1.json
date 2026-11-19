@@ -1,0 +1,467 @@
+{
+  "schemaVersion": 1,
+  "id": "common-pm-stakeholders",
+  "version": "1.0.0",
+  "title": "Anforderungen und Zusammenarbeit",
+  "fieldId": "PM",
+  "scope": "common",
+  "prerequisites": [
+    "common-pm-project"
+  ],
+  "sourceIds": [
+    "ec-pm2-methodology",
+    "ec-pm2-artefacts"
+  ],
+  "sources": [
+    {
+      "id": "ec-pm2-methodology",
+      "title": "Europäische Kommission: PM²-Projektmanagement",
+      "url": "https://pm2.europa.eu/pm2-methodologies/pm2-project-management_en",
+      "checkedAt": "2026-11-11",
+      "note": "Öffentliche HTML-Übersicht zu Rollen, Phasen, Entscheidungspunkten und abgestimmter Projektarbeit geprüft. Vereinfachter IT-Übungsfall ist selbst verfasst."
+    },
+    {
+      "id": "ec-pm2-artefacts",
+      "title": "Europäische Kommission: PM²-Artefakte",
+      "url": "https://pm2.europa.eu/pm2-artefacts_en",
+      "checkedAt": "2026-11-11",
+      "note": "Öffentliches Verzeichnis nennt Projektauftrag, Stakeholder-Matrix, Arbeitsplan, Kommunikations- und Abnahmeplanung sowie Entscheidungsprotokoll. Eigene kleine Beispiele übertragen diese Hilfsmittel ohne Vorlagenkopie."
+    }
+  ],
+  "objectives": [
+    {
+      "id": "common-pm-stakeholders-needs",
+      "text": "Anforderungen und Abnahmekriterien mit Beteiligten klären und priorisieren."
+    },
+    {
+      "id": "common-pm-stakeholders-roles",
+      "text": "Auftraggeber, Projektleitung und Team nach ihren Aufgaben unterscheiden."
+    },
+    {
+      "id": "common-pm-stakeholders-communication",
+      "text": "Einen passenden Kommunikationsweg und dokumentierte Entscheidungen planen."
+    }
+  ],
+  "caseStudy": {
+    "title": "Nordlicht IT plant ein Serviceticket-Portal",
+    "text": "Für das fiktive Serviceticket-Portal von Nordlicht IT sprechen Auftraggeberin, Servicekräfte, spätere Nutzer und technischer Betrieb miteinander. Sie haben unterschiedliche Erwartungen. Du klärst mit den bereitgestellten Angaben Anforderungen und Zuständigkeiten; private Namen oder Betriebsdaten sind nicht nötig."
+  },
+  "blocks": [
+    {
+      "id": "common-pm-stakeholders-needs",
+      "title": "1. Von einem Wunsch zur prüfbaren Anforderung",
+      "objectiveIds": [
+        "common-pm-stakeholders-needs"
+      ],
+      "sourceIds": [
+        "ec-pm2-artefacts"
+      ],
+      "paragraphs": [
+        "Beteiligte und Betroffene eines Projekts heißen Stakeholder. Im Portal-Fall zählen dazu Auftraggeberin, Servicekräfte, meldende Beschäftigte und technischer Betrieb. Erfasse ihre Interessen und ihren Einfluss. Auch Personen ohne Entscheidungsbefugnis können wichtige Nutzungserfahrungen beitragen.",
+        "Eine Anforderung beschreibt eine benötigte Funktion oder Eigenschaft. 'Das Portal soll praktisch sein' ist ein Wunsch mit Klärungsbedarf. Frage nach Situation, Bedarf und Nutzen: Servicekräfte möchten aus einem Ticket erkennen, welches Gerät betroffen ist. Daraus wird die Anforderung, bei der Ticketanlage eine Gerätekennung erfassen zu können.",
+        "Ein Abnahmekriterium beschreibt, wie die Erfüllung geprüft wird. Beispiel: Ein Testnutzer gibt im vorgesehenen Feld die Gerätekennung PC-17 ein, speichert das Ticket und sieht dieselbe Kennung in der Detailansicht. Ein Kriterium zur Berechtigung könnte festlegen, dass ein normaler Nutzer fremde Tickets im vereinbarten Test nicht öffnen kann.",
+        "Halte Anforderung, Herkunft, Priorität und Kriterium gemeinsam fest. So lässt sich später fragen, weshalb eine Funktion gebraucht wird und ob der vereinbarte Test sie nachweist. Eine Anforderung und ihr Test sind verbunden, aber nicht dasselbe."
+      ],
+      "example": {
+        "title": "Eigener Übungsfall",
+        "text": "'Status muss sichtbar sein' wird präzisiert: Der meldende Nutzer sieht in seiner Ticketliste den aktuellen Bearbeitungsstatus. Das Testkriterium nennt das Testticket, den erwarteten Status und die Ansicht."
+      },
+      "misconception": {
+        "claim": "Ein Wunsch ist ausreichend geklärt, wenn das Team ungefähr weiß, was gemeint ist.",
+        "correction": "Prüfbare Anforderungen benötigen abgestimmte Bedeutung und einen passenden Nachweis."
+      },
+      "takeaway": "Frage nach Bedarf, betroffenen Personen und prüfbarer Erfüllung."
+    },
+    {
+      "id": "common-pm-stakeholders-priorities",
+      "title": "2. Prioritäten und Zielkonflikte klären",
+      "objectiveIds": [
+        "common-pm-stakeholders-needs",
+        "common-pm-stakeholders-roles"
+      ],
+      "sourceIds": [
+        "ec-pm2-artefacts",
+        "ec-pm2-methodology"
+      ],
+      "paragraphs": [
+        "Nicht alle Wünsche passen zugleich in eine erste Version. Priorisiere nach vereinbarten Kriterien wie notwendigem Nutzen, Risiko, Abhängigkeiten und Aufwand. Dringlichkeit in einer Nachricht allein ist noch keine fachlich begründete Priorität.",
+        "Im Übungsfall bedeutet Muss: Ohne dieses Ergebnis ist die erste Version nicht nutzbar oder ein vereinbartes Mindestkriterium verletzt. Soll bezeichnet eine wichtige Ergänzung, Kann eine entbehrliche Verbesserung. Die Einstufung erfolgt mit den zuständigen Beteiligten und wird dokumentiert; diese Begriffe sind hier eine vereinbarte Arbeitsregel.",
+        "Ticketanlage und sicherer Zugriff sind im Fall Muss, eine zusätzliche Farbauswahl ist Kann. Bei knapper Kapazität ist zuerst zu prüfen, ob die erste Version ohne Farbauswahl ihren Zweck erfüllt. Auch Muss-Anforderungen müssen realistisch geplant werden; eine zu große Muss-Liste löst den Zielkonflikt nicht.",
+        "Die Auftraggeberin verantwortet im hier vereinbarten Rollenmodell Auftrag, Rahmen und größere Umfangsentscheidungen. Die Projektleitung bereitet Folgen und Optionen auf. Das Team erklärt technische Möglichkeiten und Aufwand. Interessenkonflikte werden anhand dieser Informationen entschieden und festgehalten."
+      ],
+      "example": {
+        "title": "Eigener Übungsfall",
+        "text": "Servicekräfte wünschen eine Auswertung, Nutzer eine zusätzliche Darstellung. Die Leitung sammelt Nutzen und Aufwand beider Wünsche; die Auftraggeberin entscheidet über den ersten Umfang."
+      },
+      "misconception": {
+        "claim": "Die zuletzt eingegangene Anforderung hat automatisch Vorrang vor den bereits vereinbarten Mindestkriterien.",
+        "correction": "Priorität folgt den vereinbarten Kriterien und Zuständigkeiten; neue Informationen können eine begründete Änderung auslösen."
+      },
+      "takeaway": "Priorisiere transparent und lasse Konflikte durch die zuständige Stelle entscheiden."
+    },
+    {
+      "id": "common-pm-stakeholders-roles",
+      "title": "3. Verantwortung im kleinen Projekt verteilen",
+      "objectiveIds": [
+        "common-pm-stakeholders-roles"
+      ],
+      "sourceIds": [
+        "ec-pm2-methodology"
+      ],
+      "paragraphs": [
+        "Rollen beschreiben Aufgaben und Befugnisse, nicht den persönlichen Wert eines Menschen. Für unser kleines planorientiertes Projekt wird ausdrücklich vereinbart: Die Auftraggeberin gibt Auftrag und Budgetrahmen frei, entscheidet über wesentliche Änderungen und bestätigt die Abnahme nach den vereinbarten Regeln.",
+        "Die Projektleitung koordiniert Arbeit, Termine, Ressourcen und Informationen. Sie beobachtet Fortschritt, macht Probleme sichtbar und bereitet Entscheidungen vor. Sie darf nicht allein durch ihre Koordinationsaufgabe einen höheren Budgetrahmen versprechen; zusätzliche Befugnisse müssten vereinbart sein.",
+        "Das Team erstellt, prüft und dokumentiert die Ergebnisse. Es schätzt fachliche Aufgaben, meldet Hindernisse und liefert Informationen zur Planung. Spätere Nutzer liefern Rückmeldung zur Eignung; der Betrieb klärt Übernahme und Betreuung. Beteiligung an einem Test ist nicht mit einer Freigabebefugnis gleichzusetzen.",
+        "Ein Mensch kann in einem kleinen Vorhaben mehrere Rollen ausfüllen. Dann müssen trotzdem die jeweiligen Zuständigkeiten sichtbar bleiben. Die hier vereinbarte Verteilung ist ein einfaches Lernmodell; Organisationen können Befugnisse anders festlegen. Im folgenden Thema lernst du die eigenen Verantwortlichkeiten von Scrum kennen."
+      ],
+      "example": {
+        "title": "Eigener Übungsfall",
+        "text": "Die Projektleitung meldet: Der Import würde zwölf zusätzliche Stunden kosten. Das Team liefert die Schätzung; die Auftraggeberin entscheidet im Fall über die Erweiterung des Rahmens."
+      },
+      "misconception": {
+        "claim": "Wer im Team eine Funktion umsetzt, darf deshalb auch eine Budgeterhöhung gegenüber dem Kunden zusagen.",
+        "correction": "Fachliche Umsetzung und Entscheidungsbefugnis sind getrennt; maßgeblich ist die vereinbarte Zuständigkeit."
+      },
+      "takeaway": "Kläre, wer entscheidet, koordiniert, umsetzt und Rückmeldung liefert."
+    },
+    {
+      "id": "common-pm-stakeholders-communication",
+      "title": "4. Kommunikation und Entscheidungen nachvollziehbar machen",
+      "objectiveIds": [
+        "common-pm-stakeholders-communication"
+      ],
+      "sourceIds": [
+        "ec-pm2-artefacts"
+      ],
+      "paragraphs": [
+        "Ein Kommunikationsplan beantwortet für wichtige Informationen: Wer benötigt was, wozu, wann, über welchen Weg und von wem? Für den Portal-Fall sind ein wöchentlicher kurzer Status an die Auftraggeberin und ein gemeinsamer Arbeitsstand des Teams sinnvoll. Nicht jede Person braucht jede technische Einzelheit.",
+        "Wähle den Weg nach Zweck und Dringlichkeit. Ein unklarer Nutzungskonflikt lässt sich häufig in einem Gespräch oder Workshop schneller klären. Eine unmittelbar blockierende Störung meldet das Team über den vereinbarten dringenden Kontaktweg. Ein regelmäßiger Bericht macht Fortschritt, nächste Schritte und Entscheidungsbedarf sichtbar.",
+        "Ein Gespräch ersetzt die Dokumentation einer verbindlichen Entscheidung nicht. Halte Datum, Thema, entschiedene Option, Begründung, zuständige Person und Auswirkungen oder Folgeaufgaben fest. Verweise auf die aktuelle Anforderung oder Planfassung, damit die Entscheidung wiedergefunden wird.",
+        "Im Fall wird im Gespräch beschlossen, die Farbauswahl auf eine spätere Version zu verschieben. Die Leitung dokumentiert die Freigabe und passt den Umfang an. Das Team arbeitet anschließend nach derselben Fassung. Eine bloße Lesebestätigung im Chat zeigt dagegen noch keine inhaltliche Zustimmung."
+      ],
+      "example": {
+        "title": "Eigener Übungsfall",
+        "text": "Status: Ticketanlage fertig getestet; Statusanzeige in Arbeit; Testkonto fehlt. Entscheidung nötig bis Mittwoch: Wer stellt das Konto bereit? Der Bericht benennt einen konkreten Bedarf statt bloß 'Projekt läuft'."
+      },
+      "misconception": {
+        "claim": "Eine im Chat gelesene Nachricht gilt als bestätigte Änderung des Projektauftrags.",
+        "correction": "Lesen, verstehen und verbindlich entscheiden sind verschiedene Schritte. Die zuständige Entscheidung muss erkennbar festgehalten werden."
+      },
+      "takeaway": "Wähle den passenden Austauschweg und dokumentiere verbindliche Entscheidungen mit Folgen und Zuständigkeit."
+    }
+  ],
+  "questionFile": "questions/common-pm-stakeholders.v1.csv",
+  "quiz": {
+    "questionIds": [
+      "LJ-PM-STAKEHOLDERS-Q01",
+      "LJ-PM-STAKEHOLDERS-Q02",
+      "LJ-PM-STAKEHOLDERS-Q03",
+      "LJ-PM-STAKEHOLDERS-Q04",
+      "LJ-PM-STAKEHOLDERS-Q05",
+      "LJ-PM-STAKEHOLDERS-Q06"
+    ]
+  },
+  "exam": {
+    "questionIds": [
+      "LJ-PM-STAKEHOLDERS-E01",
+      "LJ-PM-STAKEHOLDERS-E02",
+      "LJ-PM-STAKEHOLDERS-E03",
+      "LJ-PM-STAKEHOLDERS-E04",
+      "LJ-PM-STAKEHOLDERS-E05",
+      "LJ-PM-STAKEHOLDERS-E06",
+      "LJ-PM-STAKEHOLDERS-E07",
+      "LJ-PM-STAKEHOLDERS-E08"
+    ],
+    "passPercent": 80,
+    "scoring": "all-or-nothing-per-question",
+    "timed": false
+  },
+  "questionLinks": [
+    {
+      "questionId": "LJ-PM-STAKEHOLDERS-Q01",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-pm-stakeholders-needs"
+      ],
+      "blockIds": [
+        "common-pm-stakeholders-needs"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-STAKEHOLDERS-Q02",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-pm-stakeholders-needs"
+      ],
+      "blockIds": [
+        "common-pm-stakeholders-needs"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-STAKEHOLDERS-Q03",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-pm-stakeholders-needs"
+      ],
+      "blockIds": [
+        "common-pm-stakeholders-priorities"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-STAKEHOLDERS-Q04",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-pm-stakeholders-roles"
+      ],
+      "blockIds": [
+        "common-pm-stakeholders-roles"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-STAKEHOLDERS-Q05",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-pm-stakeholders-roles"
+      ],
+      "blockIds": [
+        "common-pm-stakeholders-roles"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-STAKEHOLDERS-Q06",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-pm-stakeholders-communication"
+      ],
+      "blockIds": [
+        "common-pm-stakeholders-communication"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-STAKEHOLDERS-E01",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-pm-stakeholders-needs"
+      ],
+      "blockIds": [
+        "common-pm-stakeholders-needs"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-STAKEHOLDERS-E02",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-pm-stakeholders-needs"
+      ],
+      "blockIds": [
+        "common-pm-stakeholders-needs"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-STAKEHOLDERS-E03",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-pm-stakeholders-needs",
+        "common-pm-stakeholders-roles"
+      ],
+      "blockIds": [
+        "common-pm-stakeholders-priorities"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-STAKEHOLDERS-E04",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-pm-stakeholders-roles"
+      ],
+      "blockIds": [
+        "common-pm-stakeholders-roles"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-STAKEHOLDERS-E05",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-pm-stakeholders-roles"
+      ],
+      "blockIds": [
+        "common-pm-stakeholders-roles"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-STAKEHOLDERS-E06",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-pm-stakeholders-communication"
+      ],
+      "blockIds": [
+        "common-pm-stakeholders-communication"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-STAKEHOLDERS-E07",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-pm-stakeholders-communication"
+      ],
+      "blockIds": [
+        "common-pm-stakeholders-communication"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-STAKEHOLDERS-E08",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-pm-stakeholders-communication"
+      ],
+      "blockIds": [
+        "common-pm-stakeholders-communication"
+      ]
+    }
+  ],
+  "interview": [
+    {
+      "id": "common-pm-stakeholders-talk-needs",
+      "prompt": "Formuliere aus 'Servicekräfte müssen betroffene Geräte erkennen' eine Anforderung und ein passendes Abnahmekriterium. Ordne die zusätzliche Farbauswahl gegenüber der Muss-Ticketanlage ein.",
+      "objectiveIds": [
+        "common-pm-stakeholders-needs"
+      ],
+      "blockIds": [
+        "common-pm-stakeholders-needs",
+        "common-pm-stakeholders-priorities"
+      ],
+      "keyPoints": [
+        "Gerätekennung als benötigte Information nennen.",
+        "Eingabe, Speicherung und sichtbares Ergebnis prüfen.",
+        "Kann-Farbe darf die Muss-Funktion nicht verdrängen."
+      ],
+      "acceptableAlternatives": [
+        "Anderes konkret benanntes Testgerät oder eine gleichwertige Prüfansicht."
+      ],
+      "misconceptions": [
+        "Nutzenbeschreibung mit einem abgeschlossenen Test verwechseln."
+      ],
+      "sampleAnswer": "Bei der Ticketanlage soll eine Gerätekennung erfasst werden. Im Test wird PC-17 gespeichert und anschließend in der Ticketdetailansicht unverändert angezeigt. Die zusätzliche Farbauswahl ist im Fall Kann und kann nach abgestimmter Entscheidung später folgen; die Muss-Ticketanlage wird zuerst abgesichert.",
+      "followUp": "Wer könnte prüfen, ob die gewählte Anzeige im Servicealltag hilfreich ist?"
+    },
+    {
+      "id": "common-pm-stakeholders-talk-roles",
+      "prompt": "Ordne im Fall drei Schritte zu: Importaufwand schätzen, Terminfolgen aufbereiten, wesentliche Erweiterung freigeben. Begründe die Rollenverteilung.",
+      "objectiveIds": [
+        "common-pm-stakeholders-roles"
+      ],
+      "blockIds": [
+        "common-pm-stakeholders-roles",
+        "common-pm-stakeholders-priorities"
+      ],
+      "keyPoints": [
+        "Team liefert fachliche Schätzung.",
+        "Projektleitung koordiniert und bereitet Folgen auf.",
+        "Auftraggeberin entscheidet über wesentliche Erweiterung."
+      ],
+      "acceptableAlternatives": [
+        "Zusammenarbeit mehrerer Rollen bei der Vorbereitung, solange die Entscheidungsbefugnis klar bleibt."
+      ],
+      "misconceptions": [
+        "Technische Umsetzung als automatische Budgetbefugnis ansehen."
+      ],
+      "sampleAnswer": "Das Team schätzt den Import. Die Projektleitung verbindet die Schätzung mit Terminen und Kapazität und legt Optionen vor. Die Auftraggeberin entscheidet über die Erweiterung im vereinbarten Rahmen. Zusammenarbeit verändert nicht stillschweigend die Freigabebefugnis.",
+      "followUp": "Was müsstest du klären, wenn die Projektleitung selbst Änderungen freigeben soll?"
+    },
+    {
+      "id": "common-pm-stakeholders-talk-communication",
+      "prompt": "Plane einen wöchentlichen Status und die Meldung eines akut fehlenden Testkontos. Beschreibe zusätzlich, was nach der Entscheidung zur späteren Farbauswahl festgehalten wird.",
+      "objectiveIds": [
+        "common-pm-stakeholders-communication"
+      ],
+      "blockIds": [
+        "common-pm-stakeholders-communication"
+      ],
+      "keyPoints": [
+        "Status adressatengerecht mit Fortschritt und Entscheidungsbedarf planen.",
+        "Blockade über vereinbarten dringenden Kanal melden.",
+        "Entscheidung mit Datum, zuständiger Person, Begründung und Folgen protokollieren."
+      ],
+      "acceptableAlternatives": [
+        "Andere begründete Kanäle, die rechtzeitigen Empfang und nachvollziehbare Entscheidung ermöglichen."
+      ],
+      "misconceptions": [
+        "Eine gelesene Nachricht als Auftragsfreigabe behandeln."
+      ],
+      "sampleAnswer": "Die Leitung sendet der Auftraggeberin wöchentlich Fortschritt, nächste Schritte und offene Entscheidungen. Das fehlende Testkonto meldet das Team sofort über den dringenden Kontaktweg an den zuständigen Betrieb. Die Verschiebung der Farbauswahl erhält einen Protokolleintrag mit Freigabe, Begründung und geänderter Umfangsfassung.",
+      "followUp": "Welche technische Einzelheit kann für die Auftraggeberin entfallen, ohne den Entscheidungsbedarf zu verstecken?"
+    }
+  ],
+  "cards": [
+    {
+      "id": "common-pm-stakeholders-card-stakeholder",
+      "front": "Wer ist ein Stakeholder?",
+      "back": "Eine beteiligte oder betroffene Person beziehungsweise Gruppe mit relevantem Interesse oder Einfluss, etwa Auftraggeberin, Nutzer, Servicekräfte und Betrieb.",
+      "objectiveIds": [
+        "common-pm-stakeholders-needs"
+      ],
+      "blockIds": [
+        "common-pm-stakeholders-needs"
+      ]
+    },
+    {
+      "id": "common-pm-stakeholders-card-acceptance",
+      "front": "Wie hängen Anforderung und Abnahmekriterium zusammen?",
+      "back": "Die Anforderung beschreibt eine benötigte Funktion oder Eigenschaft. Das Kriterium nennt den prüfbaren Nachweis ihrer Erfüllung.",
+      "objectiveIds": [
+        "common-pm-stakeholders-needs"
+      ],
+      "blockIds": [
+        "common-pm-stakeholders-needs"
+      ]
+    },
+    {
+      "id": "common-pm-stakeholders-card-customer",
+      "front": "Welche Aufgabe hat die Auftraggeberin im Fall?",
+      "back": "Sie bestätigt Auftrag und Budgetrahmen, entscheidet über wesentliche Änderungen und bestätigt die Abnahme nach den vereinbarten Regeln.",
+      "objectiveIds": [
+        "common-pm-stakeholders-roles"
+      ],
+      "blockIds": [
+        "common-pm-stakeholders-roles"
+      ]
+    },
+    {
+      "id": "common-pm-stakeholders-card-lead",
+      "front": "Wie unterscheiden sich Leitung und Team im Lernmodell?",
+      "back": "Die Leitung koordiniert und bereitet Entscheidungen vor. Das Team schätzt, erstellt, prüft und dokumentiert Ergebnisse und meldet Hindernisse.",
+      "objectiveIds": [
+        "common-pm-stakeholders-roles"
+      ],
+      "blockIds": [
+        "common-pm-stakeholders-roles"
+      ]
+    },
+    {
+      "id": "common-pm-stakeholders-card-plan",
+      "front": "Welche Fragen beantwortet ein Kommunikationsplan?",
+      "back": "Wer benötigt welche Information, wozu, wann oder wie oft, über welchen Weg und von welchem verantwortlichen Absender?",
+      "objectiveIds": [
+        "common-pm-stakeholders-communication"
+      ],
+      "blockIds": [
+        "common-pm-stakeholders-communication"
+      ]
+    },
+    {
+      "id": "common-pm-stakeholders-card-decision",
+      "front": "Was enthält ein nachvollziehbarer Entscheidungsvermerk?",
+      "back": "Datum, Thema, entschiedene Option, Begründung, zuständige Person und Auswirkungen oder Folgeaufgaben mit Bezug zur aktuellen Fassung.",
+      "objectiveIds": [
+        "common-pm-stakeholders-communication"
+      ],
+      "blockIds": [
+        "common-pm-stakeholders-communication"
+      ]
+    }
+  ],
+  "review": {
+    "status": "reviewed",
+    "checkedAt": "2026-11-11"
+  }
+}

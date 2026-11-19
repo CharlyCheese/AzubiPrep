@@ -1,0 +1,498 @@
+{
+  "schemaVersion": 1,
+  "id": "common-wiso-change",
+  "version": "1.0.0",
+  "title": "Digitaler und ökologischer Wandel",
+  "fieldId": "WISO",
+  "scope": "common",
+  "prerequisites": [
+    "common-lf1-goals",
+    "common-wiso-employment"
+  ],
+  "sourceIds": [
+    "wiso-uba-digital",
+    "wiso-uba-rebound",
+    "wiso-gdpr-principles",
+    "wiso-ba-learning"
+  ],
+  "sources": [
+    {
+      "id": "wiso-uba-digital",
+      "title": "Umweltbundesamt – Digitalisierung und Klimaschutz",
+      "url": "https://www.umweltbundesamt.de/themen/digitalisierung-klimaschutz-herausforderung-chance",
+      "checkedAt": "2026-11-11",
+      "note": "Digitalisierung kann Emissionen senken, benötigt selbst Energie und Ressourcen; Umweltwirkung hängt von Rahmenbedingungen und Mehrnutzung ab. Eigene Zahlen sind gekennzeichnete Lernmodelle."
+    },
+    {
+      "id": "wiso-uba-rebound",
+      "title": "Umweltbundesamt – Rebound-Effekte durch digitale Leistungen und Produkte",
+      "url": "https://www.umweltbundesamt.de/publikationen/rebound-effekte-durch-digitale-leistungen-produkte",
+      "checkedAt": "2026-11-11",
+      "note": "Ausgangsbefund geprüft: Nebenwirkungen und zusätzliche Nutzung können erwartete Entlastungen verringern oder überkompensieren. Keine Übernahme der Studienbeispiele."
+    },
+    {
+      "id": "wiso-gdpr-principles",
+      "title": "EU-Datenschutz-Grundverordnung – Grundsätze und Rechtmäßigkeit",
+      "url": "https://eur-lex.europa.eu/legal-content/DE-EN/TXT/?uri=CELEX%3A32016R0679",
+      "checkedAt": "2026-11-11",
+      "note": "Art. 4–6: Personenbezug und Pseudonymisierung, Zweckbindung, Datenminimierung, Speicherbegrenzung und Rechtsgrundlage. Betriebliche Freigabe ist kein Ersatz für eine Rechtsgrundlage; keine pauschale Annahme einer wirksamen Beschäftigteneinwilligung."
+    },
+    {
+      "id": "wiso-ba-learning",
+      "title": "Bundesagentur für Arbeit – Karriere und Weiterbildung",
+      "url": "https://www.arbeitsagentur.de/karriere-und-weiterbildung",
+      "checkedAt": "2026-11-11",
+      "note": "Orientierungsangebote, Berufsberatung im Erwerbsleben und Verweis auf mein NOW geprüft. Zugang, Durchführung, Kosten und Fördervoraussetzungen bleiben angebotsspezifisch; eigene Kursangebote sind fiktiv."
+    }
+  ],
+  "objectives": [
+    {
+      "id": "common-wiso-change-impact",
+      "text": "Chancen und Risiken einer digitalen Veränderung für Arbeit, Teilhabe und Umwelt beschreiben."
+    },
+    {
+      "id": "common-wiso-change-conduct",
+      "text": "Für die Zusammenarbeit mit digitalen Medien ein Vorgehen wählen, das betriebliche Regeln und Persönlichkeitsrechte berücksichtigt."
+    },
+    {
+      "id": "common-wiso-change-learning",
+      "text": "Aus einer veränderten Arbeitsaufgabe einen eigenen Weiterbildungsbedarf ableiten."
+    }
+  ],
+  "caseStudy": {
+    "title": "Ein digitales Hilfesystem im Team",
+    "text": "Knotenpunkt führt im erfundenen Fall ein digitales System zur Verteilung von Serviceanfragen ein. Mira untersucht, ob es Arbeit erleichtert, wer Unterstützung bei der Bedienung braucht und welche Daten in gemeinsame Arbeitsräume gehören. Ein Gerätetausch soll Energie sparen. Sie erstellt einen kleinen Lernplan und prüft Umweltbehauptungen anhand offengelegter Annahmen."
+  },
+  "blocks": [
+    {
+      "id": "common-wiso-change-impact",
+      "title": "1. Chancen und Risiken für Menschen und Umwelt",
+      "objectiveIds": [
+        "common-wiso-change-impact"
+      ],
+      "sourceIds": [
+        "wiso-uba-digital",
+        "wiso-uba-rebound"
+      ],
+      "paragraphs": [
+        "Digitale Veränderungen können Routinearbeit erleichtern, Zusammenarbeit über Entfernung ermöglichen und Informationen schneller zugänglich machen. Im selben Prozess können neue Fehler, Überforderung, unklare Verantwortlichkeiten oder Ausschlüsse entstehen. Eine Chance ist eine mögliche Wirkung, noch kein gemessenes Ergebnis.",
+        "Teilhabe heißt hier, dass unterschiedliche Beschäftigte die neue Arbeitsweise nutzen können. Prüfe verständliche Sprache, Tastaturbedienung, ausreichend lesbare Anzeigen, passende Lernangebote und eine erreichbare Ansprechperson. Wer eine Oberfläche noch nicht bedienen kann, braucht eine passende Unterstützung; daraus folgt keine fehlende berufliche Eignung.",
+        "Digitale Technik benötigt selbst Energie und Ressourcen für Herstellung, Betrieb und Entsorgung. Weniger Fahrten oder Papier können entlasten; zusätzliche Geräte, Datenübertragung und häufige Neuanschaffungen können die Bilanz belasten. Vergleiche dieselbe Aufgabe und einen benannten Zeitraum.",
+        "Ein Rebound-Effekt liegt vor, wenn erwartete Einsparungen durch zusätzliche Nutzung teilweise oder mehr als aufgehoben werden. Das ist ein mögliches Risiko, keine Behauptung über jedes Projekt. Eine niedrigere Energieaufnahme pro Vorgang allein beweist keine niedrigere Gesamtenergie."
+      ],
+      "example": {
+        "title": "Eigener Übungsfall",
+        "text": "Im reinen Betriebsenergiemodell braucht ein Vorgang vorher 10 Wh und wird 100-mal ausgeführt: 1.000 Wh. Nachher sind es 6 Wh bei 200 Vorgängen: 1.200 Wh. Pro Vorgang sinkt der Bedarf, insgesamt steigt er um 200 Wh. Herstellung und weitere Wirkungen fehlen in dieser Teilrechnung."
+      },
+      "misconception": {
+        "claim": "Eine digitale Lösung ist schon wegen eingesparten Papiers insgesamt umweltfreundlicher.",
+        "correction": "Zusätzliche Energie, Geräte, Nutzungsmenge und Lebensdauer müssen in die betrachtete Bilanz einbezogen werden."
+      },
+      "takeaway": "Bewerte Arbeit, Teilhabe und Umwelt getrennt und benenne, was tatsächlich gemessen wurde."
+    },
+    {
+      "id": "common-wiso-change-conduct",
+      "title": "2. Mit digitalen Medien verantwortlich zusammenarbeiten",
+      "objectiveIds": [
+        "common-wiso-change-conduct"
+      ],
+      "sourceIds": [
+        "wiso-gdpr-principles"
+      ],
+      "paragraphs": [
+        "Personenbezogene Daten sind im Arbeitsalltag beispielsweise Namen in Tickets oder Informationen über einzelne Beschäftigte. Die DSGVO verlangt unter anderem eine tragfähige Rechtsgrundlage, festgelegte Zwecke, Datenminimierung und angemessene Sicherheit. Eine betriebliche Freigabe allein ersetzt keine rechtliche Grundlage.",
+        "Für die Übungen gilt die fiktive Betriebsregel: Servicefälle werden im freigegebenen Ticketsystem mit den erforderlichen Angaben und passenden Zugriffsrechten bearbeitet. In offenen Übungsräumen verwenden wir erfundene Daten. Kundendaten oder Gesprächsmitschnitte werden nicht ohne vorherige Klärung in einen privaten Chat oder externen Dienst übertragen.",
+        "Vor Aufzeichnung oder Weitergabe eines Gesprächs sind Zweck, Notwendigkeit, Rechtsgrundlage, Information der Betroffenen, Zugriff und Löschregeln zu klären. Eine technische Aufnahmetaste oder das Schweigen der Teilnehmenden beweist keine Erlaubnis. Bei Beschäftigten ist eine pauschale Annahme freiwilliger Einwilligung ungeeignet; die zuständige Stelle muss den konkreten Fall prüfen.",
+        "Ist eine Aufgabe ohne personenbezogene Details lösbar, nutze eine datensparsame Darstellung. Bloßes Ersetzen eines Namens durch eine Kennung macht den Rest nicht sicher anonym: Kann eine Person weiter zugeordnet werden, gelten weiterhin Datenschutzanforderungen. Hole bei Unsicherheit die verantwortliche Ansprechperson hinzu."
+      ],
+      "example": {
+        "title": "Eigener Übungsfall",
+        "text": "Für eine Übung ersetzt Mira einen realen Supportfall durch einen vollständig erfundenen Fall. Ein nötiger echter Kundenfall bleibt im freigegebenen System mit berechtigten Personen."
+      },
+      "misconception": {
+        "claim": "Was eine freigegebene Software technisch ermöglicht, ist damit rechtlich erlaubt.",
+        "correction": "Zweck, Rechtsgrundlage, erforderliche Daten und Zugriffe müssen zusätzlich passen."
+      },
+      "takeaway": "Nutze passende freigegebene Wege, erforderliche Daten und geklärte Berechtigungen."
+    },
+    {
+      "id": "common-wiso-change-learning",
+      "title": "3. Aus neuer Arbeit einen Lernbedarf ableiten",
+      "objectiveIds": [
+        "common-wiso-change-learning"
+      ],
+      "sourceIds": [
+        "wiso-ba-learning"
+      ],
+      "paragraphs": [
+        "Leite Lernbedarf aus einer konkreten Aufgabe ab: Was soll ich künftig können? Was kann ich schon? Welche beobachtbare Lücke verhindert die sichere Ausführung? Ein allgemeiner Wunsch nach mehr Digitalkompetenz ist schwerer zu prüfen als eine klar umrissene Aufgabe.",
+        "Mira soll Serviceanfragen nach Dringlichkeit einordnen und Vorschläge des Systems kontrollieren. Sie kann Anfragen lesen, verwechselt aber Dringlichkeit mit der Reihenfolge des Eingangs. Ihr Lernziel lautet: Bis Freitag fünf freigegebene Übungsfälle mit der vereinbarten Prioritätsregel einordnen und jede Abweichung erklären.",
+        "Wähle eine Maßnahme passend zur Lücke: kurze Einweisung, angeleitete Übung, Fachkurs oder Rücksprache mit erfahrenen Personen. Lege Zeit, Material und Rückmeldung fest. Ein Kompetenznachweis prüft die tatsächliche Aufgabe; eine Teilnahmebescheinigung allein zeigt noch keine sichere Anwendung.",
+        "Für längerfristige Weiterbildung können Berufsberatung im Erwerbsleben und mein NOW bei der Orientierung helfen. Inhalte, Voraussetzungen, Zeitbedarf und Finanzierung sind am konkreten Angebot zu prüfen. Ein Eintrag in einem Portal ist keine persönliche Förderzusage."
+      ],
+      "example": {
+        "title": "Eigener Übungsfall",
+        "text": "Mira bearbeitet fünf erfundene Anfragen, bespricht Fehlzuordnungen mit Sam und prüft anschließend neue Fälle. So wird sichtbar, ob die Einweisung die beobachtete Lücke schließt."
+      },
+      "misconception": {
+        "claim": "Eine allgemeine Schulung löst jeden neuen Lernbedarf gleichermaßen.",
+        "correction": "Die Maßnahme muss zu Aufgabe, Ausgangsstand und überprüfbarem Lernziel passen."
+      },
+      "takeaway": "Aufgabe → beobachtete Lücke → passende Lernmaßnahme → Anwendung prüfen."
+    },
+    {
+      "id": "common-wiso-change-evaluate",
+      "title": "4. Veränderung im kleinen Versuch prüfen",
+      "objectiveIds": [
+        "common-wiso-change-impact",
+        "common-wiso-change-conduct",
+        "common-wiso-change-learning"
+      ],
+      "sourceIds": [
+        "wiso-uba-digital",
+        "wiso-uba-rebound",
+        "wiso-gdpr-principles",
+        "wiso-ba-learning"
+      ],
+      "paragraphs": [
+        "Ein begrenzter Versuch macht Annahmen überprüfbar. Lege vorab Nutzenkriterien fest, etwa Bearbeitungszeit, Fehlzuordnungen und Bedienbarkeit. Nutze geeignete freigegebene Übungsdaten, eine Zuständigkeit und einen Zeitpunkt zur Auswertung. Prüfe Lernfortschritt und unerwartete Belastungen.",
+        "Umweltvergleiche benötigen eine klare Grenze: Eine Messung des Stroms im Betrieb erfasst nicht die Herstellung eines Ersatzgeräts. Eine längere Nutzungsdauer kann Herstellung vermeiden helfen, setzt aber Eignung, sicheren Betrieb und vertretbaren Aufwand voraus. Reparatur, Weiterverwendung und bedarfsgerechte Neuanschaffung müssen am Fall verglichen werden.",
+        "Trenne Befund und Entscheidung: Wenn die Bearbeitung schneller wird, aber bestimmte Personen die Oberfläche nicht nutzen können, ist die Einführung noch zu verbessern. Wenn der Energiebedarf pro Fall sinkt, die Zahl der Fälle aber stark wächst, prüfe den Gesamtbedarf neu.",
+        "Die konkrete Lernplanung und der verantwortliche Datenumgang gehören zum Veränderungsprojekt. Sie sind keine nachträglichen Zusätze. Halte offen, welche Wirkung nur vermutet wird und welche du mit geeigneten Daten nachweisen kannst."
+      ],
+      "example": {
+        "title": "Eigener Übungsfall",
+        "text": "Das Team übt mit fiktiven Fällen, misst Fehlzuordnungen und stellt eine Tastaturhürde fest. Es verbessert die Bedienung und wiederholt die Probe, bevor es Erfolg behauptet."
+      },
+      "misconception": {
+        "claim": "Ein schnellerer Ablauf beweist gleichzeitig gute Teilhabe und eine bessere Umweltbilanz.",
+        "correction": "Die Kriterien betreffen verschiedene Wirkungen und brauchen jeweils passende Nachweise."
+      },
+      "takeaway": "Bewerte den Versuch mit mehreren Kriterien und verbessere nach beobachteten Ergebnissen."
+    }
+  ],
+  "questionFile": "questions/common-wiso-change.v1.csv",
+  "quiz": {
+    "questionIds": [
+      "LJ-WISO-CHANGE-Q01",
+      "LJ-WISO-CHANGE-Q02",
+      "LJ-WISO-CHANGE-Q03",
+      "LJ-WISO-CHANGE-Q04",
+      "LJ-WISO-CHANGE-Q05",
+      "LJ-WISO-CHANGE-Q06"
+    ]
+  },
+  "exam": {
+    "questionIds": [
+      "LJ-WISO-CHANGE-E01",
+      "LJ-WISO-CHANGE-E02",
+      "LJ-WISO-CHANGE-E03",
+      "LJ-WISO-CHANGE-E04",
+      "LJ-WISO-CHANGE-E05",
+      "LJ-WISO-CHANGE-E06",
+      "LJ-WISO-CHANGE-E07",
+      "LJ-WISO-CHANGE-E08"
+    ],
+    "passPercent": 80,
+    "scoring": "all-or-nothing-per-question",
+    "timed": false
+  },
+  "questionLinks": [
+    {
+      "questionId": "LJ-WISO-CHANGE-Q01",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-wiso-change-impact"
+      ],
+      "blockIds": [
+        "common-wiso-change-impact"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-CHANGE-Q02",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-wiso-change-impact"
+      ],
+      "blockIds": [
+        "common-wiso-change-impact"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-CHANGE-Q03",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-wiso-change-conduct"
+      ],
+      "blockIds": [
+        "common-wiso-change-conduct"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-CHANGE-Q04",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-wiso-change-conduct"
+      ],
+      "blockIds": [
+        "common-wiso-change-conduct"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-CHANGE-Q05",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-wiso-change-learning"
+      ],
+      "blockIds": [
+        "common-wiso-change-learning"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-CHANGE-Q06",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-wiso-change-learning"
+      ],
+      "blockIds": [
+        "common-wiso-change-learning",
+        "common-wiso-change-evaluate"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-CHANGE-E01",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-wiso-change-impact"
+      ],
+      "blockIds": [
+        "common-wiso-change-impact",
+        "common-wiso-change-evaluate"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-CHANGE-E02",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-wiso-change-impact"
+      ],
+      "blockIds": [
+        "common-wiso-change-impact",
+        "common-wiso-change-evaluate"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-CHANGE-E03",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-wiso-change-impact"
+      ],
+      "blockIds": [
+        "common-wiso-change-impact"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-CHANGE-E04",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-wiso-change-conduct"
+      ],
+      "blockIds": [
+        "common-wiso-change-conduct"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-CHANGE-E05",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-wiso-change-conduct"
+      ],
+      "blockIds": [
+        "common-wiso-change-conduct"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-CHANGE-E06",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-wiso-change-learning"
+      ],
+      "blockIds": [
+        "common-wiso-change-learning"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-CHANGE-E07",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-wiso-change-learning"
+      ],
+      "blockIds": [
+        "common-wiso-change-learning",
+        "common-wiso-change-evaluate"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-CHANGE-E08",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-wiso-change-impact",
+        "common-wiso-change-conduct",
+        "common-wiso-change-learning"
+      ],
+      "blockIds": [
+        "common-wiso-change-evaluate",
+        "common-wiso-change-conduct",
+        "common-wiso-change-learning"
+      ]
+    }
+  ],
+  "interview": [
+    {
+      "id": "common-wiso-change-talk-impact",
+      "prompt": "Vergleiche eine Umstellung von Dienstreisen auf Videotreffen. Nenne je eine Chance und ein Risiko für Arbeit, Teilhabe und Umwelt. Kennzeichne, welche Wirkung du noch prüfen müsstest.",
+      "objectiveIds": [
+        "common-wiso-change-impact"
+      ],
+      "blockIds": [
+        "common-wiso-change-impact",
+        "common-wiso-change-evaluate"
+      ],
+      "keyPoints": [
+        "Arbeit etwa weniger Reisezeit versus neue Bedienbelastung.",
+        "Teilhabe etwa ortsunabhängiger Zugang versus Sprach- oder Bedienhürden.",
+        "Umwelt etwa weniger Fahrten versus Energie und Gerätebedarf."
+      ],
+      "acceptableAlternatives": [
+        "Andere plausible, am Fall erläuterte Wirkungen."
+      ],
+      "misconceptions": [
+        "Digital mit automatisch umweltfreundlich gleichsetzen."
+      ],
+      "sampleAnswer": "Weniger Reisen können Zeit und Fahrtenergie sparen. Zugleich braucht das Team Bedienkenntnisse und zugängliche Technik. Ich würde tatsächliche Reisen, Nutzung und Geräteaufwand prüfen, bevor ich eine Umweltentlastung behaupte.",
+      "followUp": "Welche Grenze hat eine Messung des Stroms während einer einzigen Besprechung?"
+    },
+    {
+      "id": "common-wiso-change-talk-conduct",
+      "prompt": "Du sollst eine Schulung mit Tickets vorbereiten und die Besprechung aufzeichnen. Beschreibe ein Vorgehen, das die fiktive Betriebsregel und Persönlichkeitsrechte berücksichtigt.",
+      "objectiveIds": [
+        "common-wiso-change-conduct"
+      ],
+      "blockIds": [
+        "common-wiso-change-conduct"
+      ],
+      "keyPoints": [
+        "Erfundene Übungsdaten im offenen Schulungsraum.",
+        "Aufzeichnung vorab auf Zweck, Erforderlichkeit und Rechtsgrundlage prüfen lassen.",
+        "Betroffene informieren, Zugriffe und Löschung klären."
+      ],
+      "acceptableAlternatives": [
+        "Auf Aufzeichnung verzichten und stattdessen ein datensparsames Ergebnisprotokoll prüfen."
+      ],
+      "misconceptions": [
+        "Schweigen oder vorhandene Aufnahmetaste als ausreichende Erlaubnis behandeln."
+      ],
+      "sampleAnswer": "Ich nutze erfundene Tickets. Vor einer Aufnahme kläre ich mit der zuständigen Stelle Zweck, Rechtsgrundlage, Information, Zugriffe und Löschregeln. Wenn ein sachliches Protokoll reicht, prüfe ich diese sparsamere Form.",
+      "followUp": "Warum ist ein Ticket mit ersetztem Namen nicht zwingend anonym?"
+    },
+    {
+      "id": "common-wiso-change-talk-learning",
+      "prompt": "Wähle eine neue digitale Arbeitsaufgabe aus dem Fall. Nenne vorhandene Fähigkeit, konkrete Lücke, Lernziel mit Termin, passende Maßnahme und eine Anwendung zur Überprüfung.",
+      "objectiveIds": [
+        "common-wiso-change-learning",
+        "common-wiso-change-impact"
+      ],
+      "blockIds": [
+        "common-wiso-change-learning",
+        "common-wiso-change-evaluate"
+      ],
+      "keyPoints": [
+        "Aufgabe und Ist-Stand konkret trennen.",
+        "Maßnahme auf die beobachtete Lücke ausrichten.",
+        "Zeitpunkt und Prüfung an neuen geeigneten Übungsfällen."
+      ],
+      "acceptableAlternatives": [
+        "Ein eigener unbedenklicher Fall mit gleich klarer Struktur."
+      ],
+      "misconceptions": [
+        "Teilnahme oder Lernzeit mit sicherer Anwendung gleichsetzen."
+      ],
+      "sampleAnswer": "Ich kann Tickets lesen, verwechsle aber Dringlichkeit und Eingangszeit. Bis Freitag übe ich die Prioritätsregel mit Sam an fünf fiktiven Fällen. Danach ordne ich neue Fälle ein und begründe die Entscheidung. Fehlzuordnungen zeigen weiteren Lernbedarf.",
+      "followUp": "Wie würdest du den Plan ändern, wenn eine Bedienhürde statt einer Wissenslücke vorliegt?"
+    }
+  ],
+  "cards": [
+    {
+      "id": "common-wiso-change-card-effects",
+      "front": "Welche drei Wirkungsbereiche prüfst du bei digitalem Wandel?",
+      "back": "Arbeit, Teilhabe und Umwelt. Nenne je Chancen und Risiken und trenne erwartete Wirkungen von beobachteten Ergebnissen.",
+      "objectiveIds": [
+        "common-wiso-change-impact"
+      ],
+      "blockIds": [
+        "common-wiso-change-impact"
+      ]
+    },
+    {
+      "id": "common-wiso-change-card-rebound",
+      "front": "Warum beweist weniger Energie je Vorgang keine Gesamtersparnis?",
+      "back": "Die Zahl der Vorgänge kann steigen. Gesamtbedarf im einfachen Modell = Bedarf je Vorgang × Anzahl. Herstellung und weitere Wirkungen benötigen eine eigene Betrachtung.",
+      "objectiveIds": [
+        "common-wiso-change-impact"
+      ],
+      "blockIds": [
+        "common-wiso-change-impact",
+        "common-wiso-change-evaluate"
+      ]
+    },
+    {
+      "id": "common-wiso-change-card-data",
+      "front": "Welche Daten passen in einen offenen Übungsraum nach der Fallregel?",
+      "back": "Vollständig erfundene Übungsfälle. Reale notwendige Supportdaten gehören in die dafür freigegebenen Systeme mit geeigneten Berechtigungen und rechtlicher Grundlage.",
+      "objectiveIds": [
+        "common-wiso-change-conduct"
+      ],
+      "blockIds": [
+        "common-wiso-change-conduct"
+      ]
+    },
+    {
+      "id": "common-wiso-change-card-recording",
+      "front": "Was ist vor einer Gesprächsaufzeichnung zu klären?",
+      "back": "Zweck, Notwendigkeit, Rechtsgrundlage, Information der Betroffenen, Zugriffe und Löschregeln. Technische Möglichkeit oder Schweigen ersetzt diese Prüfung nicht.",
+      "objectiveIds": [
+        "common-wiso-change-conduct"
+      ],
+      "blockIds": [
+        "common-wiso-change-conduct"
+      ]
+    },
+    {
+      "id": "common-wiso-change-card-gap",
+      "front": "Wie leitest du einen eigenen Lernbedarf ab?",
+      "back": "Vergleiche künftige Aufgabe und vorhandene Fähigkeit. Beschreibe eine beobachtbare Lücke, wähle eine passende Übung oder Weiterbildung und vereinbare Rückmeldung.",
+      "objectiveIds": [
+        "common-wiso-change-learning"
+      ],
+      "blockIds": [
+        "common-wiso-change-learning"
+      ]
+    },
+    {
+      "id": "common-wiso-change-card-check",
+      "front": "Woran erkennst du Fortschritt bei einem konkreten Lernziel?",
+      "back": "An der Anwendung auf geeignete neue Aufgaben mit überprüfbaren Kriterien und Rückmeldung. Teilnahmebescheinigung oder aufgewendete Zeit allein zeigen die Fähigkeit nicht.",
+      "objectiveIds": [
+        "common-wiso-change-learning"
+      ],
+      "blockIds": [
+        "common-wiso-change-learning",
+        "common-wiso-change-evaluate"
+      ]
+    }
+  ],
+  "review": {
+    "status": "reviewed",
+    "checkedAt": "2026-11-11"
+  }
+}

@@ -1,0 +1,659 @@
+{
+  "schemaVersion": 1,
+  "id": "common-lf2-handover",
+  "version": "1.0.0",
+  "title": "Arbeitsplatz einrichten und übergeben",
+  "fieldId": "LF2",
+  "scope": "common",
+  "prerequisites": [
+    "common-lf2-procurement"
+  ],
+  "sourceIds": [
+    "ec-pm2-artefacts",
+    "lf2-ms-accounts",
+    "lf2-ms-update-install",
+    "lf2-ms-displays",
+    "lf2-ibm-hardware",
+    "lf2-bgbau-workstation",
+    "lf2-uba-electronic-waste",
+    "lf2-bmf-nutzwert",
+    "pm-ihk-calculation",
+    "lf2-hgb-377",
+    "lf2-bgb-437",
+    "lf2-bgb-439",
+    "lf2-bgb-286",
+    "lf2-ni-safety",
+    "lf2-vz-energy"
+  ],
+  "sources": [
+    {
+      "id": "ec-pm2-artefacts",
+      "title": "Europäische Kommission: PM²-Artefakte",
+      "url": "https://pm2.europa.eu/pm2-artefacts_en",
+      "checkedAt": "2026-11-11",
+      "note": "HTML-Übersicht zu Anforderungen, Arbeitsplanung, Abnahme, Übergang und Abschluss geprüft. Lernprotokoll, Beispiele und Modellübung eigenständig formuliert, keine Vorlagendownloads."
+    },
+    {
+      "id": "lf2-ms-accounts",
+      "title": "Microsoft: Manage User Accounts in Windows",
+      "url": "https://support.microsoft.com/en-gb/windows/security/identity-signin/manage-user-accounts-in-windows",
+      "checkedAt": "2026-11-11",
+      "note": "Herstellerdokumentation zur Unterscheidung von Standardkonto und Administration sowie begrenzten Administratorrechten geprüft. Die eigene Modellübung ändert keine echten Konten oder Systeme."
+    },
+    {
+      "id": "lf2-ms-update-install",
+      "title": "Microsoft: Installieren von Windows-Updates",
+      "url": "https://support.microsoft.com/de-de/windows/deployment/updates-lifecycle/install-windows-updates",
+      "checkedAt": "2026-11-11",
+      "note": "Öffentliche Anleitung zu Updates geprüft. Keine aktuelle Betriebssystemversion empfohlen; in der Modellübung ist der Updatestatus ein ausdrücklich vereinfachter Übungsschritt."
+    },
+    {
+      "id": "lf2-ms-displays",
+      "title": "Microsoft: How to use multiple monitors in Windows",
+      "url": "https://support.microsoft.com/en-us/windows/hardware/display-graphics/how-to-use-multiple-monitors-in-windows",
+      "checkedAt": "2026-11-11",
+      "note": "Herstelleranleitung zum Verbinden und Erweitern mehrerer Anzeigen geprüft. Modellübung verändert keine echte Anzeigeeinstellung."
+    },
+    {
+      "id": "lf2-ibm-hardware",
+      "title": "IBM: What is computer hardware?",
+      "url": "https://www.ibm.com/think/topics/hardware",
+      "checkedAt": "2026-11-11",
+      "note": "Öffentliche Hardwareübersicht zu CPU, RAM und Massenspeicher geprüft. Alle Kapazitäten und Anforderungen im Rückblick sind eigene Lernvorgaben."
+    },
+    {
+      "id": "lf2-bgbau-workstation",
+      "title": "BG BAU: Idealer Bildschirmarbeitsplatz",
+      "url": "https://www.bgbau.de/themen/sicherheit-und-gesundheit/ergonomisches-arbeiten/buero-und-bildschirmarbeitsplaetze/idealer-bildschirmarbeitsplatz",
+      "checkedAt": "2026-11-11",
+      "note": "Arbeitsplatzanpassung und blendungsarme Bildschirmausrichtung geprüft. Keine individuellen medizinischen Aussagen oder starren Maße ohne Aufgabenbezug."
+    },
+    {
+      "id": "lf2-uba-electronic-waste",
+      "title": "Umweltbundesamt: Alte Elektrogeräte richtig entsorgen",
+      "url": "https://www.umweltbundesamt.de/umwelttipps-fuer-den-alltag/wohin-dem-elektroschrott-alte-elektrogeraete",
+      "checkedAt": "2026-11-11",
+      "note": "Weiternutzung, Reparierbarkeit und getrennter Entsorgungsweg für Elektroaltgeräte geprüft. Kein pauschaler Austausch allein wegen niedrigerer Leistungsaufnahme."
+    },
+    {
+      "id": "lf2-bmf-nutzwert",
+      "title": "BMF: Arbeitsanleitung Wirtschaftlichkeitsuntersuchungen – Nutzwertanalyse",
+      "url": "https://www.gesetze-bayern.de/Content/Document/VVBayHO-NN118?view=Print",
+      "checkedAt": "2026-11-11",
+      "note": "Amtliche Veröffentlichung der Arbeitsanleitung: Kriterien, Gewichtung, einheitlicher Bewertungsmaßstab und Teilnutzen. Übertragen wird die Methode, keine Vergaberechtsregel. Alle Geräte, Punktwerte und Preise sind eigene fiktive Lernannahmen."
+    },
+    {
+      "id": "pm-ihk-calculation",
+      "title": "IHK Darmstadt: Kalkulieren und mit Kennziffern überwachen",
+      "url": "https://www.ihk.de/darmstadt/produktmarken/beraten-und-informieren/festigung-wachstum/kaufmaennisches/kalkulation-3795552",
+      "checkedAt": "2026-11-11",
+      "note": "Öffentliche HTML-Kalkulation mit Selbstkosten, Gewinn, Nachlässen und Umsatzsteuer geprüft. Eigene Rechenfälle mit ausdrücklich vorgegebenen Bezugsgrößen und Steuersatz; keine realen Marktpreise oder allgemeingültigen Zuschläge."
+    },
+    {
+      "id": "lf2-hgb-377",
+      "title": "Bundesrecht: § 377 HGB – Untersuchung und Mängelanzeige",
+      "url": "https://www.gesetze-im-internet.de/hgb/__377.html",
+      "checkedAt": "2026-11-11",
+      "note": "Beiderseitiges Handelsgeschäft als Voraussetzung, Untersuchung und Anzeige erkennbarer sowie später entdeckter Mängel geprüft. Keine pauschale Stundenfrist oder Übertragung auf private Verbraucherkäufe."
+    },
+    {
+      "id": "lf2-bgb-437",
+      "title": "Bundesrecht: § 437 BGB – Rechte des Käufers bei Mängeln",
+      "url": "https://www.gesetze-im-internet.de/bgb/__437.html",
+      "checkedAt": "2026-11-11",
+      "note": "Rechte bei Mängeln mit ihren jeweiligen gesetzlichen Voraussetzungen geprüft; keine ungeprüfte Sofortzusage von Rücktritt oder Schadensersatz."
+    },
+    {
+      "id": "lf2-bgb-439",
+      "title": "Bundesrecht: § 439 BGB – Nacherfüllung",
+      "url": "https://www.gesetze-im-internet.juris.de/bgb/__439.html",
+      "checkedAt": "2026-11-11",
+      "note": "Amtliche Fassung über juris erreichbar: Beseitigung des Mangels oder mangelfreie Ersatzlieferung sowie mögliche Beschränkungen. Keine gleichzeitige Zusage beider Leistungsarten."
+    },
+    {
+      "id": "lf2-bgb-286",
+      "title": "Bundesrecht: § 286 BGB – Verzug des Schuldners",
+      "url": "https://www.gesetze-im-internet.de/bgb/__286.html",
+      "checkedAt": "2026-11-11",
+      "note": "Fälligkeit, Mahnung und gesetzliche Ausnahmen sowie Vertretenmüssen geprüft. Lieferverzögerung wird im Lernfall dokumentiert und zur rechtlichen Prüfung weitergegeben."
+    },
+    {
+      "id": "lf2-ni-safety",
+      "title": "Bildungsportal Niedersachsen: Prüfpflichtige Anlagen und Einrichtungen",
+      "url": "https://bildungsportal-niedersachsen.de/aug/arbeitsschutz-organisation/pruefpflichtige-anlagen",
+      "checkedAt": "2026-11-11",
+      "note": "Öffentliche Hinweise zur Meldung erkannter Mängel und zum Entzug defekter Geräte aus der Nutzung geprüft. Schulische Zuständigkeiten und Prüfintervalle werden nicht auf den fiktiven Betrieb übertragen."
+    },
+    {
+      "id": "lf2-vz-energy",
+      "title": "Verbraucherzentrale Energieberatung: Stromverbrauch messen und senken",
+      "url": "https://verbraucherzentrale-energieberatung.de/energie-sparen/allgemeines/stromverbrauch-messen/",
+      "checkedAt": "2026-11-11",
+      "note": "Einheiten W/kWh und Rechnung aus Leistung und Zeit geprüft. Die 60/90 Watt und 1.600 Stunden sind fiktive Lernannahmen für komplette Arbeitsplätze."
+    }
+  ],
+  "objectives": [
+    {
+      "id": "common-lf2-handover-setup",
+      "text": "Eine vorgegebene Einrichtung in nachvollziehbaren Schritten durchführen und die geforderten Funktionen prüfen."
+    },
+    {
+      "id": "common-lf2-handover-handover",
+      "text": "Ergebnisse, Einweisung und offene Punkte in einem Übergabeprotokoll festhalten."
+    },
+    {
+      "id": "common-lf2-handover-review",
+      "text": "Aufwand und Kundenergebnis mit dem Auftrag vergleichen und eine Verbesserung für den nächsten Auftrag ableiten."
+    }
+  ],
+  "caseStudy": {
+    "title": "Knotenpunkt stattet Radblick aus",
+    "text": "Eigener fiktiver Lernfall: Knotenpunkt richtet für Radblick einen Büroplatz für Ticketportal und Wissenssuche ein. Mira bearbeitet den Auftrag unter Sams Anleitung, Eda begleitet den Einkauf. Geräte, Preise, Zeiten und Lizenzbedingungen sind vorgegebene Lernannahmen, keine Marktangebote."
+  },
+  "blocks": [
+    {
+      "id": "common-lf2-handover-setup",
+      "title": "1. Geplant einrichten und die Sollfunktionen prüfen",
+      "objectiveIds": [
+        "common-lf2-handover-setup"
+      ],
+      "sourceIds": [
+        "lf2-ms-accounts",
+        "lf2-ms-update-install",
+        "lf2-ms-displays",
+        "ec-pm2-artefacts"
+      ],
+      "paragraphs": [
+        "Eine Einrichtung beginnt mit Auftrag und Prüfkriterien. Für Radblick sind mindestens 16 GB RAM, 512 GB SSD, zwei digitale Ausgänge für zwei unabhängige gleichzeitige Anzeigen, ein freigegebener Browser, ein Standardkonto und ein aktueller freigegebener Updatestand vorgegeben. Ticketportal und Wissenssuche sollen im späteren Betrieb nebeneinander nutzbar sein. Einrichtungsschritte und Prüfnachweise werden vorab geplant.",
+        "Im betrieblichen Ablauf werden freigegebene Ausstattung und Lieferumfang kontrolliert, der Arbeitsplatz sicher vorbereitet, Betriebssystem und freigegebene Software nach Anleitung eingerichtet, Rechte und Updates kontrolliert und Bildschirme passend angeordnet. Der Alltag nutzt ein Standardkonto; notwendige Administration erfolgt getrennt durch berechtigte Personen. Nur vorgesehene Testdaten kommen zum Einsatz.",
+        "Ein Funktionstest prüft beobachtbare Ergebnisse: passende Anzeige auf beiden Bildschirmen, nutzbarer Browser, vorgesehene Rechte und das Anlegen, Speichern sowie erneute Öffnen einer Testdatei. Eine gespeicherte Datei erneut öffnen zu können ist aussagekräftiger als allein ein angezeigter Dateiname. Soll, Ist und Ergebnis werden zu jedem Test notiert.",
+        "Bei Abweichungen werden Ursache und Zuständigkeit geklärt, eine freigegebene Korrektur durchgeführt und betroffene Funktionen erneut geprüft. Ein früherer erfolgreicher Test belegt den geänderten Zustand nicht. Unbekannte Testsoftware oder ein Administratorkonto im Alltag ersetzen keine fehlende Freigabe.",
+        "Die zusätzliche Übung in dieser App ist ein begrenztes Modell. Sie richtet keinen echten Rechner ein, installiert keine Software, legt keine echten Konten oder Dateien an und baut keine Netzwerkverbindung zum Kunden auf. Reale Praxis findet zusätzlich an freigegebenen Übungsgeräten unter Anleitung statt. Ein bestandenes Modell ist kein Zertifikat über echte Hardwarekonfiguration."
+      ],
+      "example": {
+        "title": "Eigener Lernfall",
+        "text": "Der Testschritt lautet: feste Testdatei im Arbeitsordner anlegen, schließen und ihren Inhalt erneut öffnen. Nach einer Korrektur wird die Funktion noch einmal geprüft."
+      },
+      "misconception": {
+        "claim": "Wenn das Gerät startet, sind alle Kundenfunktionen bereits nachgewiesen.",
+        "correction": "Jedes vereinbarte Kriterium benötigt einen passenden Test mit beobachtetem Ergebnis."
+      },
+      "takeaway": "Auftrag, sichere Reihenfolge und erneute Prüfung nach Änderungen verbinden."
+    },
+    {
+      "id": "common-lf2-handover-handover",
+      "title": "2. Ergebnisse und Einweisung nachvollziehbar übergeben",
+      "objectiveIds": [
+        "common-lf2-handover-setup",
+        "common-lf2-handover-handover"
+      ],
+      "sourceIds": [
+        "ec-pm2-artefacts",
+        "lf2-ms-accounts",
+        "lf2-ms-displays"
+      ],
+      "paragraphs": [
+        "Das Übergabeprotokoll nennt Auftrag und Datum, Beteiligte, tatsächlich eingerichtete Ausstattung, geprüfte Funktionen mit Soll und Ist, Einweisung, offene Punkte, Zuständigkeiten und vereinbarte Folgetermine. Passwörter oder vertrauliche Kundendaten gehören nicht in ein allgemein zugängliches Protokoll. Die zuständige Person entscheidet nach dem vereinbarten Verfahren über die Übergabe.",
+        "Eine Einweisung zeigt die für Radblick benötigten Abläufe verständlich. Die übernehmende Person soll die wesentlichen Schritte mit geeigneten Testdaten nachvollziehen können. Ein offener zweiter Bildschirm wird als Abweichung mit Maßnahme, Person und Termin dokumentiert; ein allgemeines fertig würde den tatsächlichen Zustand verschleiern.",
+        "Für die Modellübung in Reflexion 2 gibt es drei eigenständige fiktive Modelle: Kompakt mit 8 GB RAM, 256 GB SSD und einem digitalen Ausgang; Büro mit 16 GB RAM, 512 GB SSD und zwei digitalen Ausgängen; Leistung mit 32 GB RAM, 1.024 GB SSD und zwei digitalen Ausgängen. Büro und Leistung unterstützen die zwei geforderten unabhängigen Anzeigen. Diese Modelle sind eigene Übungsdaten, keine Produktangebote und keine Umbenennung früherer Hardwarebeispiele.",
+        "Wähle ein passendes Modell, den freigegebenen Browser, Standardkonto, Updates und zwei Bildschirme. Erstelle im Modell zuerst den Arbeitsordner Arbeitsplatz, lege dann die feste synthetische Datei funktionstest.txt an und öffne sie wieder. Der vorgegebene Testinhalt enthält auch ä, ö, ü und ß. Anschließend lässt du die Funktionen prüfen und liest das erzeugte Übergabeprotokoll.",
+        "Die Probe erlaubt Korrekturen. Änderungen verwerfen den vorherigen Prüfstatus; prüfe den neuen Zustand erneut. Erst nach erfolgreicher Modellprobe und bewusster Selbstbestätigung kann diese Reflexion abgeschlossen werden. Danach bleibt der abgeschlossene Modellstand lesbar und ist gesperrt. Die Bestätigung beschreibt deine Modellbearbeitung, keine beobachtete reale Installation."
+      ],
+      "example": {
+        "title": "Eigener Lernfall",
+        "text": "Im Modellprotokoll kontrollierst du Gerätewerte, Browser, Konto, Updates, Bildschirme und den erneut geöffneten Dateiinhalt. Deine Reflexionsnotiz nennt zusätzlich eine Beobachtung und einen Einweisungspunkt."
+      },
+      "misconception": {
+        "claim": "Die Selbstbestätigung der Modellübung beweist eine erfolgreiche Installation am Kundenrechner.",
+        "correction": "Sie bestätigt die eigene Modellbearbeitung. Echte Einrichtung und Einweisung müssen am freigegebenen Gerät gesondert geübt und geprüft werden."
+      },
+      "takeaway": "Ein Protokoll zeigt den tatsächlichen Stand; die Grenze der Modellübung bleibt sichtbar."
+    },
+    {
+      "id": "common-lf2-handover-improvement",
+      "title": "3. Aufwand und Kundenergebnis auswerten",
+      "objectiveIds": [
+        "common-lf2-handover-review"
+      ],
+      "sourceIds": [
+        "ec-pm2-artefacts",
+        "pm-ihk-calculation"
+      ],
+      "paragraphs": [
+        "Vergleiche zum Abschluss geplanten Umfang, Aufwand, Termin und Kundenergebnis mit dem dokumentierten Ist. Bei verändertem Auftrag trennst du genehmigten Zusatzumfang von Nacharbeit im ursprünglichen Umfang. Ein eingehaltenes Budget sagt noch nicht, ob Radblick Ticketportal und Wissenssuche wie vereinbart nutzen kann.",
+        "Im eigenen Lernfall waren vier Stunden Einrichtung und Übergabe geplant, tatsächlich waren es fünf bei unverändertem Umfang. Die Abweichung ist eine Stunde beziehungsweise 25 Prozent des Planaufwands. In der Nachkalkulation werden zusätzliche Kosten mit derselben Bezugsgröße wie zuvor berechnet, statt den höheren Aufwand zu verschweigen.",
+        "Ursache im Fall ist ein spät bemerkter fehlender passender Bildschirmanschluss. Eine konkrete Verbesserung lautet: Mira prüft beim nächsten Auftrag vor der Bestellung den ganzen Verbindungsweg von Rechner über Kabel oder Adapter bis zum Bildschirm und legt Sam den Nachweis vor. Erfolgskriterium ist, dass bei der Einrichtung kein Anschlusszubehör nachbeschafft werden muss.",
+        "Die Kundensicht gehört dazu: Zeigt die übernehmende Person die benötigte Anwendung auf zwei Anzeigen und öffnet die Testdatei, liegt ein Funktionsnachweis vor. Bleibt eine Funktion offen, bekommt sie einen dokumentierten Bearbeitungsweg. Eine Verbesserung benennt Beobachtung, Ursache, Maßnahme, Verantwortung, Zeitpunkt und einen prüfbaren Erfolg."
+      ],
+      "example": {
+        "title": "Eigener Lernfall",
+        "text": "Geplant 4 Stunden, tatsächlich 5: eine Stunde Mehrarbeit. Die nächste Anschlussprüfung vor Bestellung bekommt Mira als Aufgabe und Sam als kontrollierende Person."
+      },
+      "misconception": {
+        "claim": "Solange die Rechnung bezahlt wird, ist der Auftrag für den Rückblick erfolgreich.",
+        "correction": "Aufwand, vereinbarte Funktionen und Nutzen für die Kundenseite werden zusätzlich geprüft."
+      },
+      "takeaway": "Fakten und Ursachen führen zu einer konkreten Verbesserung für den nächsten Auftrag."
+    },
+    {
+      "id": "common-lf2-handover-review",
+      "title": "4. Alle sieben LF2-Themen am Büroplatz verbinden",
+      "objectiveIds": [
+        "common-lf2-handover-setup",
+        "common-lf2-handover-handover",
+        "common-lf2-handover-review"
+      ],
+      "sourceIds": [
+        "ec-pm2-artefacts",
+        "lf2-ibm-hardware",
+        "lf2-ms-displays",
+        "lf2-ms-accounts",
+        "lf2-ms-update-install",
+        "lf2-bgbau-workstation",
+        "lf2-uba-electronic-waste",
+        "lf2-bmf-nutzwert",
+        "pm-ihk-calculation",
+        "lf2-hgb-377",
+        "lf2-bgb-437",
+        "lf2-bgb-439",
+        "lf2-bgb-286",
+        "lf2-ni-safety",
+        "lf2-vz-energy"
+      ],
+      "paragraphs": [
+        "1. Anforderungen klären: Radblick möchte Ticketportal und Wissenssuche nebeneinander nutzen. Aus schnell und bequem werden messbare Vorgaben: mindestens 16 GB RAM, 512 GB SSD, zwei unabhängige gleichzeitige Anzeigen, freigegebener Browser, Standardkonto und Updates. Ein Prüfnachweis beschreibt beobachtbares Verhalten, zum Beispiel eine festgelegte Testdatei speichern und korrekt wieder öffnen. Mira klärt offene Fragen mit Sam. Der Plan nennt Schritt, verantwortliche Person, notwendige Vorleistung, Termin und erwartetes Ergebnis.",
+        "2. Hardware auswählen: Die CPU führt Programmbefehle aus, RAM hält laufende Daten flüchtig, die SSD speichert Dateien über das Ausschalten hinaus. Memory meint hier RAM, storage Massenspeicher, display outputs Bildschirmausgänge. Mehr SSD ersetzt keinen fehlenden RAM. Für zwei getrennte Anzeigen müssen Rechnerausgänge, Kabel oder Adapter, Bildschirme und unterstützter Anzeigemodus zusammenpassen; eine Steckerform allein beweist die Funktion nicht. Ein Rechner mit 8 GB RAM und 1 TB SSD verfehlt den 16-GB-Musswert trotz großer SSD.",
+        "3. Software und Rechte prüfen: Ein Betriebssystem verwaltet Ressourcen und stellt die Grundlage einschließlich passender Treiber bereit; der Browser ist eine Anwendung für die vorgegebenen Aufgaben. Systemvoraussetzungen, unterstützte Umgebung und Freigabe werden geprüft. Eine fiktive Lizenz mit ausdrücklich erlaubter geschäftlicher Nutzung auf einem Gerät gilt nicht schon für drei Geräte; Nutzungsart, Geräte- oder Benutzerzahl, Laufzeit und laufende Kosten werden aus den Bedingungen abgeleitet. Für den Modellplatz gelten freigegebener Browser, Standardkonto und Updates als festgelegte Anforderungen.",
+        "4. Ergonomie, Sicherheit und Lebenszyklus berücksichtigen: Arbeitsmittel werden an Tätigkeit und Person angepasst, Bildschirme blendungsarm aufgestellt und Kabelwege frei von Stolperstellen gehalten. Eine sichtbar beschädigte Netzleitung wird nicht benutzt; die zuständige Stelle organisiert Prüfung oder Austausch. Energiebedarf berechnet sich aus Leistung in kW mal Stunden. Zwei fiktive komplette Plätze mit durchschnittlich 60 W beziehungsweise 90 W bei je 1.600 Stunden benötigen 96 beziehungsweise 144 kWh, also 48 kWh Unterschied. Diese Betriebsenergie allein entscheidet keine gesamte Umweltbilanz: Bedarf, Reparatur und Weiternutzung sind mit zu betrachten. Elektroaltgeräte gehen über den vorgesehenen getrennten Entsorgungsweg, nicht in den Restmüll; gespeicherte Daten werden nach betrieblichem Verfahren behandelt.",
+        "5. Produkte und Lieferangebote vergleichen: Erst Mussmerkmale prüfen, dann geeignete Varianten mit vorab vereinbarten Gewichten und gleicher Skala bewerten. Im eigenen Matrixbeispiel zählen Reparaturzugang 60 Prozent und Speicherreserve 40 Prozent. 5 und 3 Punkte ergeben 0,6 × 5 + 0,4 × 3 = 4,2; 3 und 5 ergeben 3,8. Das Ergebnis gilt für diese Prioritäten. Im davon getrennten Lieferpreisfall kosten 1.000 Euro netto nach 10 Prozent Rabatt 900 Euro; 2 Prozent Skonto auf diesen Betrag ergeben 882 Euro, plus 30 Euro nicht skontierbare Bezugskosten 912 Euro. Ein gleichwertiges Angebot über 910 Euro inklusive Bezugskosten ist dann 2 Euro günstiger. Ohne eingehaltene Skontofrist kostet das erste 930 Euro. Menge, Umfang, Steuerbasis, Zahlungsannahmen und bestätigter Liefertermin müssen vergleichbar sein.",
+        "6. Angebot und Beschaffung verfolgen: Aus 800 Euro Einkauf, vier Stunden zu 40 Euro und 10 Prozent Gemeinkosten auf Einkauf plus direkte Arbeit werden 1.056 Euro Selbstkosten. 20 Prozent Gewinnaufschlag ergeben 1.267,20 Euro netto; vorgegebene 19 Prozent Steuer ergeben gerundet 240,77 Euro, also 1.507,97 Euro brutto. Die Steuer ist kein Gewinn. Eda bestellt nach Freigabe und vergleicht Bestätigung, tatsächlichen Wareneingang und Rechnung. Ein fehlender Bildschirm oder ein Schaden wird mit Soll/Ist, Bestellbezug, Datum und Nachweisen weitergegeben. Eda veranlasst die Lieferantenklärung. Im beiderseitigen Handelsgeschäft kann § 377 HGB unverzügliche Untersuchung und Mängelanzeige verlangen; eine interne Notiz ersetzt keine Anzeige an den Verkäufer. Nacherfüllung bedeutet Mangelbeseitigung oder mangelfreie Lieferung. Bei Verspätung werden Termin und Auswirkungen dokumentiert und weitere Voraussetzungen zuständig geprüft.",
+        "7. Einrichten, übergeben und verbessern: Auftrag prüfen, freigegebene Einrichtung durchführen, Funktionen mit Testdaten prüfen, Korrekturen erneut testen und den tatsächlichen Stand übergeben. Das Protokoll enthält Ausstattung, Soll/Ist-Prüfergebnisse, Datum und Beteiligte, Einweisung sowie offene Punkte mit Maßnahme, Person und Termin. Bei vier geplanten und fünf tatsächlichen Stunden für gleichen Umfang beträgt die Abweichung eine Stunde beziehungsweise 25 Prozent. Fehlendes Anschlusszubehör als Ursache führt zur Verbesserung: Mira prüft beim nächsten Auftrag vor Bestellung den ganzen Verbindungsweg, Sam kontrolliert den Nachweis. Das konkrete Erfolgskriterium ist keine Zubehörnachbeschaffung bei der Einrichtung.",
+        "Die praktische Modellfolge lautet: passende fiktive Ausstattung wählen, freigegebenen Browser und Standardkonto festlegen, Updates und zwei Bildschirme einrichten, Modellordner Arbeitsplatz erstellen, feste funktionstest.txt anlegen und wieder öffnen, Funktionen prüfen, Protokoll lesen und eigene Bearbeitung bewusst bestätigen. Eine Änderung erfordert erneute Prüfung. Nach Abschluss der Reflexion bleiben die Eingaben gesperrt. Diese Appübung erzeugt keine echten Systemänderungen und keinen Nachweis realer Hardwarearbeit; zusätzliche Praxis erfolgt am freigegebenen Übungsgerät unter Anleitung."
+      ],
+      "example": {
+        "title": "Eigener Lernfall",
+        "text": "Die Abschlussnotiz verbindet den ursprünglichen Bedarf mit Auswahl, Preisweg, Lieferprüfung, tatsächlichen Tests und einer überprüfbaren Verbesserung."
+      },
+      "misconception": {
+        "claim": "LF2 endet mit der Auswahl des günstigsten Geräts.",
+        "correction": "Zum vollständigen Auftrag gehören Anforderungen, passende Ausstattung, sicherer Arbeitsplatz, Vergleich, Beschaffung, geprüfte Einrichtung und nachvollziehbare Übergabe."
+      },
+      "takeaway": "Der Kundenbedarf wird durch sieben zusammenhängende Schritte zu einem geprüften, übergebenen Arbeitsplatz."
+    }
+  ],
+  "questionFile": "questions/common-lf2-handover.v1.csv",
+  "quiz": {
+    "questionIds": [
+      "LJ-LF2-HANDOVER-Q01",
+      "LJ-LF2-HANDOVER-Q02",
+      "LJ-LF2-HANDOVER-Q03",
+      "LJ-LF2-HANDOVER-Q04",
+      "LJ-LF2-HANDOVER-Q05",
+      "LJ-LF2-HANDOVER-Q06"
+    ]
+  },
+  "exam": {
+    "questionIds": [
+      "LJ-LF2-HANDOVER-E01",
+      "LJ-LF2-HANDOVER-E02",
+      "LJ-LF2-HANDOVER-E03",
+      "LJ-LF2-HANDOVER-E04",
+      "LJ-LF2-HANDOVER-E05",
+      "LJ-LF2-HANDOVER-E06",
+      "LJ-LF2-HANDOVER-E07",
+      "LJ-LF2-HANDOVER-E08"
+    ],
+    "passPercent": 80,
+    "scoring": "all-or-nothing-per-question",
+    "timed": false
+  },
+  "questionLinks": [
+    {
+      "questionId": "LJ-LF2-HANDOVER-Q01",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf2-handover-setup"
+      ],
+      "blockIds": [
+        "common-lf2-handover-setup"
+      ]
+    },
+    {
+      "questionId": "LJ-LF2-HANDOVER-Q02",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf2-handover-setup"
+      ],
+      "blockIds": [
+        "common-lf2-handover-setup",
+        "common-lf2-handover-handover"
+      ]
+    },
+    {
+      "questionId": "LJ-LF2-HANDOVER-Q03",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf2-handover-handover"
+      ],
+      "blockIds": [
+        "common-lf2-handover-handover"
+      ]
+    },
+    {
+      "questionId": "LJ-LF2-HANDOVER-Q04",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf2-handover-handover"
+      ],
+      "blockIds": [
+        "common-lf2-handover-handover"
+      ]
+    },
+    {
+      "questionId": "LJ-LF2-HANDOVER-Q05",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf2-handover-review"
+      ],
+      "blockIds": [
+        "common-lf2-handover-improvement"
+      ]
+    },
+    {
+      "questionId": "LJ-LF2-HANDOVER-Q06",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf2-handover-review"
+      ],
+      "blockIds": [
+        "common-lf2-handover-improvement"
+      ]
+    },
+    {
+      "questionId": "LJ-LF2-HANDOVER-E01",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf2-handover-setup"
+      ],
+      "blockIds": [
+        "common-lf2-handover-review"
+      ]
+    },
+    {
+      "questionId": "LJ-LF2-HANDOVER-E02",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf2-handover-setup"
+      ],
+      "blockIds": [
+        "common-lf2-handover-review"
+      ]
+    },
+    {
+      "questionId": "LJ-LF2-HANDOVER-E03",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf2-handover-setup"
+      ],
+      "blockIds": [
+        "common-lf2-handover-review"
+      ]
+    },
+    {
+      "questionId": "LJ-LF2-HANDOVER-E04",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf2-handover-review"
+      ],
+      "blockIds": [
+        "common-lf2-handover-review"
+      ]
+    },
+    {
+      "questionId": "LJ-LF2-HANDOVER-E05",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf2-handover-review"
+      ],
+      "blockIds": [
+        "common-lf2-handover-review"
+      ]
+    },
+    {
+      "questionId": "LJ-LF2-HANDOVER-E06",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf2-handover-handover"
+      ],
+      "blockIds": [
+        "common-lf2-handover-review"
+      ]
+    },
+    {
+      "questionId": "LJ-LF2-HANDOVER-E07",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf2-handover-setup",
+        "common-lf2-handover-handover"
+      ],
+      "blockIds": [
+        "common-lf2-handover-review"
+      ]
+    },
+    {
+      "questionId": "LJ-LF2-HANDOVER-E08",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf2-handover-review"
+      ],
+      "blockIds": [
+        "common-lf2-handover-review"
+      ]
+    }
+  ],
+  "interview": [
+    {
+      "id": "common-lf2-handover-talk-plan",
+      "prompt": "Lege eine nachvollziehbare Einrichtungs- und Prüfplanung für Radblick fest. Erläutere den Nachweis der Dateifunktion und welche Angaben später ins Übergabeprotokoll kommen.",
+      "objectiveIds": [
+        "common-lf2-handover-setup",
+        "common-lf2-handover-handover"
+      ],
+      "blockIds": [
+        "common-lf2-handover-setup",
+        "common-lf2-handover-handover"
+      ],
+      "keyPoints": [
+        "Pflichtdaten und Freigaben vor Einrichtung abgleichen.",
+        "Standardkonto, Updates, freigegebenen Browser und zwei Anzeigen berücksichtigen.",
+        "Datei anlegen und erneut öffnen, Soll/Ist dokumentieren, Änderungen erneut testen.",
+        "Protokoll mit Ausstattung, Ergebnissen, Einweisung und offenen Punkten samt Zuständigkeit."
+      ],
+      "acceptableAlternatives": [
+        "Andere sichere Reihenfolge mit erkennbaren Vorleistungen und denselben Prüfkriterien."
+      ],
+      "misconceptions": [
+        "Gerätestart als Beleg für alle Funktionen behandeln.",
+        "Anleitung oder Protokoll mit Klartextpasswörtern anreichern."
+      ],
+      "sampleAnswer": "Ich prüfe zuerst Bedarf und Freigaben und plane die Einrichtung in abhängigen Schritten. Danach prüfe ich Browser, Konto, Updates, zwei Anzeigen und die gespeicherte erneut geöffnete Testdatei. Im Protokoll stehen Soll/Ist, Ergebnisse, Einweisung und offene Aufgaben mit Person und Termin. Nach Änderungen teste ich erneut.",
+      "followUp": "Woran erkennst du, ob ein Testergebnis noch zum aktuellen Einrichtungsstand gehört?"
+    },
+    {
+      "id": "common-lf2-handover-talk-practice",
+      "prompt": "Bearbeite jetzt die Modellübung für Radblick. Beschreibe danach deine tatsächliche Auswahl, den wieder geöffneten Testinhalt, einen Befund aus dem Protokoll und einen Einweisungspunkt. Vergleiche dein Vorgehen mit dem Auftrag und nenne eine Verbesserung.",
+      "objectiveIds": [
+        "common-lf2-handover-setup",
+        "common-lf2-handover-handover",
+        "common-lf2-handover-review"
+      ],
+      "blockIds": [
+        "common-lf2-handover-setup",
+        "common-lf2-handover-handover",
+        "common-lf2-handover-improvement"
+      ],
+      "keyPoints": [
+        "Gerätedaten zuerst mit 16 GB RAM, 512 GB SSD und zwei digitalen Ausgängen vergleichen; Büro oder Leistung passen.",
+        "Freigegebenen Browser, Standardkonto, Updates und zwei Bildschirme wählen.",
+        "Modellordner Arbeitsplatz erstellen, feste funktionstest.txt anlegen und wieder öffnen.",
+        "Funktionen erfolgreich prüfen, Protokoll lesen, eventuelle Korrektur erneut prüfen.",
+        "Eigene Beobachtung, Einweisungspunkt und Verbesserung nennen; Modellbearbeitung bewusst selbst bestätigen."
+      ],
+      "acceptableAlternatives": [
+        "Büro oder Leistung sind bei sonst passender Konfiguration fachlich richtig.",
+        "Eine tatsächlich beobachtete Korrektur oder eine vorbeugende Verbesserung bei fehlerfreiem ersten Lauf."
+      ],
+      "misconceptions": [
+        "Die Beispielantwort als Ersatz für eigene Modellschritte verwenden.",
+        "Erfolg im Modell als echte Installation auf dem Kundenrechner darstellen."
+      ],
+      "sampleAnswer": "Beispiel für eine Notiz nach eigener Bearbeitung: Ich habe die Daten des gewählten Modells mit dem Auftrag verglichen, den freigegebenen Browser und das Standardkonto gewählt sowie Updates und zwei Anzeigen eingestellt. Nach Ordner und Testdatei habe ich den Inhalt wieder geöffnet und das Protokoll geprüft. Ich ergänze meine wirkliche Auswahl, Beobachtung und Verbesserung. Diese Beispielnotiz bestätigt keine Durchführung.",
+      "followUp": "Welche Beobachtung aus deiner Probe erklärst du bei der Einweisung, und welchen Schritt würdest du beim nächsten Auftrag früher prüfen?",
+      "practice": {
+        "task": "Richte in der begrenzten Modellübung den fiktiven Büroplatz für Radblick ein. Prüfe zuerst die Gerätedaten: mindestens 16 GB RAM, 512 GB SSD und zwei digitale Bildschirmausgänge für zwei unabhängige gleichzeitige Anzeigen. Wähle den freigegebenen Browser, ein Standardkonto, Updates und zwei Bildschirme. Erstelle im Modell den Arbeitsordner Arbeitsplatz, lege darin die feste synthetische Testdatei funktionstest.txt an und öffne ihren Inhalt wieder. Prüfe dann die Funktionen und lies das erzeugte Übergabeprotokoll. Korrigiere Fehler und prüfe Änderungen erneut. Notiere deine Beobachtung, einen Einweisungspunkt und eine Verbesserung. Bestätige deine Bearbeitung erst bewusst nach erfolgreicher Probe. Die App verändert keine echte Hardware, Software, Konten, Dateien oder Netzverbindungen; zusätzliche reale Praxis erfolgt nur am freigegebenen Übungsgerät unter Anleitung.",
+        "checklist": [
+          "Ich habe die Gerätedaten mit dem Pflichtbedarf verglichen und ein passendes Modell ausgewählt.",
+          "Ich habe freigegebenen Browser, Standardkonto, Updates und zwei Bildschirme eingestellt.",
+          "Ich habe den Modellordner Arbeitsplatz erstellt, funktionstest.txt angelegt und ihren festen Inhalt wieder geöffnet.",
+          "Ich habe die Funktionen erfolgreich geprüft, nach Änderungen erneut geprüft und das Übergabeprotokoll gelesen.",
+          "Ich habe eine eigene Beobachtung, einen Einweisungspunkt und eine konkrete Verbesserung festgehalten."
+        ],
+        "confirmation": "Ich bestätige, dass ich die Modellaufgabe selbst durchgeführt, die feste Testdatei wieder geöffnet, die Funktionen erfolgreich geprüft und das Protokoll gelesen habe. Meine Notiz enthält eigene Beobachtungen und eine Verbesserung. Dies ist meine Selbstbestätigung einer Modellübung, kein Nachweis einer echten Hardwareinstallation."
+      }
+    },
+    {
+      "id": "common-lf2-handover-talk-review",
+      "prompt": "Blicke auf alle sieben LF2-Themen zurück: 1. Formuliere Radblicks Bedarf messbar und plane Zuständigkeiten. 2. Erkläre CPU, RAM, SSD und den Verbindungsweg für zwei Anzeigen. 3. Unterscheide Betriebssystem, Browser, Freigabe und Lizenzbedingungen. 4. Nenne Ergonomie, elektrische Sicherheit, den Energievergleich 60/90 W bei 1.600 h und Weiternutzung. 5. Erläutere Mussprüfung, 60/40-Matrix und den Bezugspreis 912 €. 6. Rechne das Kundenangebot und beschreibe Liefer-/Rechnungsprüfung bei einer Abweichung. 7. Verbinde eigene Modellprobe, Übergabeprotokoll und Rückblick auf fünf tatsächliche statt vier geplante Stunden mit einer Verbesserung.",
+      "objectiveIds": [
+        "common-lf2-handover-setup",
+        "common-lf2-handover-handover",
+        "common-lf2-handover-review"
+      ],
+      "blockIds": [
+        "common-lf2-handover-review"
+      ],
+      "keyPoints": [
+        "Bedarf: zwei unabhängige Anzeigen, 16 GB RAM/512 GB SSD, prüfbare Funktionen; Plan mit Person, Vorleistung, Termin und Ergebnis.",
+        "Hardware: CPU verarbeitet, RAM flüchtig, SSD dauerhaft, memory/storage unterscheiden; ganzer Verbindungsweg zählt.",
+        "Software: Betriebssystem verwaltet Grundlagen, Browser Anwendung; Freigabe sowie Nutzungsart, Anzahl, Laufzeit und Kosten aus Bedingungen.",
+        "Arbeitsplatz: blendungsarm, angepasst und ohne Stolperstellen; beschädigte Netzleitung nicht nutzen; 96/144 kWh und 48 kWh Differenz; Reparatur/Weiternutzung und getrennte Entsorgung.",
+        "Vergleich: Musswerte zuerst; 4,2 statt 3,8 bei 60/40; 1.000−100−18+30=912 Euro bei genutztem Skonto, gleiche Bedingungen prüfen.",
+        "Beschaffung: 1.056 Selbstkosten, 1.267,20 netto, 240,77 Steuer, 1.507,97 brutto; Bestellung/Eingang/Rechnung abgleichen, Mangel oder Verzögerung belegen und Eda einbeziehen.",
+        "Übergabe: eigene Modellschritte, Testdatei wieder öffnen, erfolgreich prüfen, Protokoll samt Einweisung/offenen Punkten; eine Stunde oder 25 % Mehrarbeit, Anschlussprüfung vor Bestellung verbessern."
+      ],
+      "acceptableAlternatives": [
+        "Eine zusammenhängende Ablaufskizze mit denselben sieben fachlichen Bezügen.",
+        "Andere konkrete Verbesserung mit Beobachtung, Ursache, Zuständigkeit, Zeitpunkt und Erfolgskriterium."
+      ],
+      "misconceptions": [
+        "Viele Nutzwertpunkte als Ersatz für ein Mussmerkmal behandeln.",
+        "Modellabschluss als Nachweis realer Installation ausgeben.",
+        "Energieverbrauch mit vollständiger Umweltbilanz oder Umsatzsteuer mit Gewinn gleichsetzen."
+      ],
+      "sampleAnswer": "Ich kläre Radblicks zwei nebeneinander nutzbare Anwendungen und mache daraus prüfbare Anforderungen. CPU, RAM und SSD erfüllen verschiedene Aufgaben; für Anzeigen prüfe ich den gesamten Verbindungsweg. Betriebssystem, Browser, Freigabe und Lizenzumfang werden passend gewählt. Ich plane einen sicheren angepassten Platz; 60 und 90 Watt ergeben bei 1.600 Stunden 96 und 144 kWh. Weiternutzung bleibt gesondert zu prüfen. Nach Mussprüfung begründen die 60/40-Punkte den Nutzwert, die Lieferrechnung ergibt 912 Euro unter den angegebenen Bedingungen. Das Angebot liegt bei 1.267,20 Euro netto und 1.507,97 Euro brutto. Eda klärt dokumentierte Liefer- und Rechnungsabweichungen. Ich prüfe die Einrichtung mit Testdaten, dokumentiere Einweisung und offene Punkte und leite aus 25 Prozent Mehrarbeit eine frühere Anschlussprüfung ab. Meine tatsächliche Modellbeobachtung ergänze ich selbst.",
+      "followUp": "An welcher Verbindung zwischen zwei LF2-Schritten würdest du vor dem nächsten Auftrag gezielt früher eine Rückfrage stellen?"
+    }
+  ],
+  "cards": [
+    {
+      "id": "common-lf2-handover-card-setup",
+      "front": "Welche Abfolge macht eine Einrichtung prüfbar?",
+      "back": "Auftrag und Freigaben klären, sichere Schritte planen, Einrichtung durchführen, Sollfunktionen mit Testdaten prüfen. Korrekturen brauchen neue Tests.",
+      "objectiveIds": [
+        "common-lf2-handover-setup"
+      ],
+      "blockIds": [
+        "common-lf2-handover-setup"
+      ]
+    },
+    {
+      "id": "common-lf2-handover-card-model",
+      "front": "Welche Schritte führt die Modellübung aus?",
+      "back": "Passendes Gerät, Browser, Standardkonto, Updates und zwei Anzeigen wählen; Modellordner Arbeitsplatz erstellen, funktionstest.txt anlegen und wieder öffnen, Funktionen prüfen und Protokoll lesen. Keine echten Systemänderungen.",
+      "objectiveIds": [
+        "common-lf2-handover-setup"
+      ],
+      "blockIds": [
+        "common-lf2-handover-handover"
+      ]
+    },
+    {
+      "id": "common-lf2-handover-card-protocol",
+      "front": "Was gehört ins Übergabeprotokoll?",
+      "back": "Auftrag, Datum, Beteiligte, tatsächliche Ausstattung, Soll/Ist-Prüfergebnisse, Einweisung und offene Punkte mit Maßnahme, Person und Termin. Keine Klartextpasswörter.",
+      "objectiveIds": [
+        "common-lf2-handover-handover"
+      ],
+      "blockIds": [
+        "common-lf2-handover-handover"
+      ]
+    },
+    {
+      "id": "common-lf2-handover-card-confirmation",
+      "front": "Was bedeutet die Selbstbestätigung nach der Modellprobe?",
+      "back": "Du bestätigst deine eigene Bearbeitung und Prüfung im Modell. Sie ersetzt keine reale Einrichtung. Nach Reflexionsabschluss bleibt der Stand lesbar und gesperrt; echte Praxis erfolgt am freigegebenen Gerät unter Anleitung.",
+      "objectiveIds": [
+        "common-lf2-handover-handover"
+      ],
+      "blockIds": [
+        "common-lf2-handover-handover"
+      ]
+    },
+    {
+      "id": "common-lf2-handover-card-variance",
+      "front": "Was bedeutet ein Aufwand von fünf statt vier geplanten Stunden bei gleichem Umfang?",
+      "back": "Eine Stunde oder 25 Prozent Mehrarbeit bezogen auf den Plan. Ursache untersuchen und eine konkrete Maßnahme mit Verantwortung, Zeitpunkt und Erfolgskriterium festlegen.",
+      "objectiveIds": [
+        "common-lf2-handover-review"
+      ],
+      "blockIds": [
+        "common-lf2-handover-improvement"
+      ]
+    },
+    {
+      "id": "common-lf2-handover-card-journey",
+      "front": "Welche sieben Themen verbindet der LF2-Rückblick?",
+      "back": "Anforderungen, Hardware, Software und Nutzungsrechte, Ergonomie/Sicherheit/Energie, Lösungs- und Liefervergleich, Beschaffung sowie geprüfte Einrichtung und Übergabe. Der Rückblick vergleicht Aufwand und Kundenergebnis und leitet Verbesserungen ab.",
+      "objectiveIds": [
+        "common-lf2-handover-setup",
+        "common-lf2-handover-handover",
+        "common-lf2-handover-review"
+      ],
+      "blockIds": [
+        "common-lf2-handover-review"
+      ]
+    }
+  ],
+  "review": {
+    "status": "reviewed",
+    "checkedAt": "2026-11-11"
+  },
+  "fieldReview": {
+    "fieldId": "LF2",
+    "topicIds": [
+      "common-lf2-requirements",
+      "common-lf2-hardware",
+      "common-lf2-software",
+      "common-lf2-workplace",
+      "common-lf2-comparison",
+      "common-lf2-procurement",
+      "common-lf2-handover"
+    ],
+    "blockIds": [
+      "common-lf2-handover-review"
+    ],
+    "interviewIds": [
+      "common-lf2-handover-talk-review"
+    ],
+    "questionIds": [
+      "LJ-LF2-HANDOVER-E01",
+      "LJ-LF2-HANDOVER-E02",
+      "LJ-LF2-HANDOVER-E03",
+      "LJ-LF2-HANDOVER-E04",
+      "LJ-LF2-HANDOVER-E05",
+      "LJ-LF2-HANDOVER-E06",
+      "LJ-LF2-HANDOVER-E07",
+      "LJ-LF2-HANDOVER-E08"
+    ]
+  }
+}

@@ -1,0 +1,606 @@
+{
+  "schemaVersion": 1,
+  "version": "1.0.0",
+  "id": "fiae-lf11a-versions",
+  "title": "Änderungen im Team nachvollziehbar pflegen",
+  "fieldId": "LF11a",
+  "scope": "specialization",
+  "prerequisites": [
+    "fiae-lf11a-testing",
+    "common-lf8-interfaces"
+  ],
+  "objectives": [
+    {
+      "id": "fiae-lf11a-versions-version",
+      "text": "Eine zusammengehörige Änderung mit verständlicher Beschreibung in einer Versionsverwaltung festhalten."
+    },
+    {
+      "id": "fiae-lf11a-versions-review",
+      "text": "Eine Änderung anhand von Anforderungen, Lesbarkeit, Sicherheitsaspekten und Tests prüfen."
+    },
+    {
+      "id": "fiae-lf11a-versions-iteration",
+      "text": "Kundenrückmeldung in eine priorisierte Überarbeitung mit erneutem Test übersetzen."
+    }
+  ],
+  "caseStudy": {
+    "title": "Welche Änderung gibt die Werkstatt zur erneuten Erprobung frei?",
+    "text": "Die Annahme meldet, dass der gültige Altauftrag 1 abgewiesen wird. Ein zweiter Wunsch betrifft die Farbe der Trefferanzeige. Das Team soll die fachliche Korrektur getrennt festhalten und nachweisen. Alle Daten beziehen sich auf eine selbst erstellte kleine Werkstattanwendung."
+  },
+  "sources": [
+    {
+      "id": "lf11a-git",
+      "title": "Git: Recording Changes to the Repository",
+      "url": "https://git-scm.com/book/en/v2/Git-Basics-Recording-Changes-to-the-Repository",
+      "note": "Auswahl von Änderungen, Kontrolle des vorbereiteten Stands und Commit sind für den eigenen Übungsfall übernommen.",
+      "checkedAt": "2026-11-19"
+    },
+    {
+      "id": "lf8-rest",
+      "title": "OWASP: REST Security Cheat Sheet",
+      "url": "https://cheatsheetseries.owasp.org/cheatsheets/REST_Security_Cheat_Sheet.html",
+      "checkedAt": "2026-11-19",
+      "note": "Serverseitige Autorisierung, Eingabeprüfung und begrenzte Fehlermeldungen für fachliche Zugriffe geprüft."
+    },
+    {
+      "id": "lf5-ms-testing",
+      "title": "Microsoft: Best practices for writing unit tests",
+      "url": "https://learn.microsoft.com/en-us/dotnet/core/testing/unit-testing-best-practices",
+      "note": "Isolierte Tests, lesbare Anordnung der Prüfschritte und aussagekräftige Erwartungen wurden am eigenen Auftrag konkretisiert.",
+      "checkedAt": "2026-11-19"
+    },
+    {
+      "id": "scrum-guide-2020",
+      "title": "Schwaber und Sutherland: Scrum Guide 2020",
+      "url": "https://scrumguides.org/scrum-guide.html",
+      "checkedAt": "2026-11-19",
+      "note": "Überprüfen und Anpassen eines Arbeitsergebnisses auf Grundlage neuer Erkenntnisse. Der kurze Übungsablauf ist eine didaktische Auswahl."
+    },
+    {
+      "id": "lf5-nasa-requirements",
+      "title": "NASA: Requirements Management",
+      "url": "https://www.nasa.gov/reference/6-2-requirements-management/",
+      "note": "Anforderungen nachvollziehbar zuordnen und Änderungen an ihren Nachweisen verfolgen. Beispiele und Prüfdaten sind erfunden.",
+      "checkedAt": "2026-11-19"
+    },
+    {
+      "id": "lf11a-python-tests",
+      "title": "Python Software Foundation: unittest",
+      "url": "https://docs.python.org/3/library/unittest.html",
+      "note": "Automatisierte Prüfungen von Rückgabewerten und erwarteten Ausnahmen beziehen sich auf die Python-Standardbibliothek.",
+      "checkedAt": "2026-11-19"
+    },
+    {
+      "id": "lf11a-uml",
+      "title": "OMG: Unified Modeling Language 2.5.1",
+      "url": "https://www.omg.org/spec/UML/2.5.1/About-UML",
+      "note": "Die Standardsammlung unterscheidet Struktur- und Verhaltensmodelle. Die beschrifteten Textskizzen zum Reparaturauftrag sind eigene vereinfachte Darstellungen.",
+      "checkedAt": "2026-11-19"
+    },
+    {
+      "id": "lf11a-layers",
+      "title": "Microsoft: Common web application architectures",
+      "url": "https://learn.microsoft.com/en-us/dotnet/architecture/modern-web-apps-azure/common-web-application-architectures",
+      "note": "Die Gliederung von Oberfläche, Anwendungslogik und Infrastruktur sowie die Richtung ihrer Abhängigkeiten wurden am eigenen Fall konkretisiert.",
+      "checkedAt": "2026-11-19"
+    },
+    {
+      "id": "lf11a-python-structures",
+      "title": "Python Software Foundation: Data Structures",
+      "url": "https://docs.python.org/3/tutorial/datastructures.html",
+      "note": "Listen, Iteration und Wörterbücher in Python sind Grundlage der eigenen Suchbeispiele.",
+      "checkedAt": "2026-11-19"
+    },
+    {
+      "id": "lf11a-python-sqlite",
+      "title": "Python Software Foundation: sqlite3",
+      "url": "https://docs.python.org/3/library/sqlite3.html",
+      "note": "Die Beispiele nutzen die dokumentierte Parameterbindung und das Abholen einzelner Ergebniszeilen mit sqlite3.",
+      "checkedAt": "2026-11-19"
+    },
+    {
+      "id": "lf8-transactions",
+      "title": "PostgreSQL: Transactions",
+      "url": "https://www.postgresql.org/docs/current/tutorial-transactions.html",
+      "checkedAt": "2026-11-19",
+      "note": "Transaktionsgrenzen, gemeinsames Festschreiben und Rücksetzen anhand des Auftragswechsels eingeordnet."
+    },
+    {
+      "id": "lf8-logging",
+      "title": "OWASP: Logging Cheat Sheet",
+      "url": "https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html",
+      "checkedAt": "2026-11-19",
+      "note": "Ereignisse zuordnen und vertrauliche Angaben aus Protokollen heraushalten. Der Belegschlüssel ist fiktiv."
+    }
+  ],
+  "sourceIds": [
+    "lf11a-git",
+    "lf8-rest",
+    "lf5-ms-testing",
+    "scrum-guide-2020",
+    "lf5-nasa-requirements",
+    "lf11a-python-tests",
+    "lf11a-uml",
+    "lf11a-layers",
+    "lf11a-python-structures",
+    "lf11a-python-sqlite",
+    "lf8-transactions",
+    "lf8-logging"
+  ],
+  "blocks": [
+    {
+      "id": "fiae-lf11a-versions-block-01",
+      "title": "1. Eine fachlich zusammengehörige Änderung festhalten",
+      "objectiveIds": [
+        "fiae-lf11a-versions-version"
+      ],
+      "sourceIds": [
+        "lf11a-git"
+      ],
+      "paragraphs": [
+        "Ein Commit speichert in Git den vorbereiteten Stand. Prüfe zunächst mit git status die betroffenen Dateien und mit git diff die noch nicht vorbereiteten Änderungen. Wähle Implementierung und passende Tests gezielt aus. Kontrolliere anschließend mit git diff --staged den tatsächlich vorgemerkten Inhalt.",
+        "Beschreibe im Commit den Zweck und die Wirkung. „Suche akzeptiert Auftragsnummer 1“ erklärt mehr als „Dateien geändert“. Der Test für dieselbe Grenze gehört dazu. Eine unabhängige Farbänderung erschwert das Prüfen und Zurückverfolgen dieser fachlichen Änderung. Nimm sie in einen getrennten Stand auf."
+      ],
+      "example": {
+        "title": "Beispiel in einem eigenen lokalen Übungsprojekt",
+        "text": "git add repair.py test_repair.py\ngit diff --staged\ngit commit -m \"Suche akzeptiert Auftragsnummer 1\"\ngit log -1 --oneline"
+      },
+      "misconception": {
+        "claim": "Nach git add werden alle späteren Änderungen an derselben Datei beim Commit mitgenommen.",
+        "correction": "Vorgemerkt ist der bei git add ausgewählte Stand. Spätere Änderungen müssen bewusst neu ausgewählt werden."
+      },
+      "takeaway": "Verknüpfe Fehlerkorrektur, zugehörige Probe und nachvollziehbaren Zweck in einem überprüfbaren Stand."
+    },
+    {
+      "id": "fiae-lf11a-versions-block-02",
+      "title": "2. Ein Review am geänderten Verhalten durchführen",
+      "objectiveIds": [
+        "fiae-lf11a-versions-review"
+      ],
+      "sourceIds": [
+        "lf11a-git",
+        "lf8-rest",
+        "lf5-ms-testing",
+        "lf8-logging"
+      ],
+      "paragraphs": [
+        "Lies den vorbereiteten Unterschied mit dem Akzeptanzkriterium daneben. Prüfe die Rolle jeder geänderten Funktion, verständliche Namen, Grenzen und Fehlerpfade. Bei geschützten Vorgängen kontrolliere außerdem, ob die serverseitige Berechtigungsprüfung erhalten bleibt und ob die neuen Diagnoseausgaben sensible Daten vermeiden.",
+        "Führe die Proben der Änderung selbst am betreffenden Stand aus. Ein Review benennt Beobachtung, ihre fachliche Folge und einen nachprüfbaren Vorschlag. Die Autorin reagiert mit einer Korrektur und einem neuen Lauf. Halte fest, an welchem Stand die Rückmeldung überprüft wurde."
+      ],
+      "example": {
+        "title": "Ein konkreter Reviewhinweis",
+        "text": "„Der Vergleich number > 1 schließt Auftrag 1 aus. Er ist laut Kriterium gültig. Ergänze eine Probe für den unteren Rand und ändere die Bedingung.“ Das Team kann diesen Hinweis am Ergebnis für 1 und 0 prüfen."
+      },
+      "misconception": {
+        "claim": "Ein erfolgreicher Lauf mit Nummer 7 erledigt das Review der Grenzkorrektur.",
+        "correction": "Der Normalfall nutzt die fragliche Grenze nicht. Der Review braucht auch Rand- und Fehlerfall."
+      },
+      "takeaway": "Begründe einen Befund durch Kriterium, konkrete Beobachtung und passende Nachprobe."
+    },
+    {
+      "id": "fiae-lf11a-versions-block-03",
+      "title": "3. Eine Rückmeldung in eine geprüfte Überarbeitung überführen",
+      "objectiveIds": [
+        "fiae-lf11a-versions-iteration"
+      ],
+      "sourceIds": [
+        "scrum-guide-2020",
+        "lf5-nasa-requirements",
+        "lf11a-python-tests"
+      ],
+      "paragraphs": [
+        "Priorisiere nach Auswirkung auf die vereinbarte Aufgabe. Kann die Annahme einen gültigen Auftrag nicht bearbeiten, hat die Funktionskorrektur im Lernfall Vorrang vor dem Farbwunsch. Notiere das Soll und den geprüften Ausgangsbefund. Wähle eine Änderung, die genau auf die Abweichung zielt.",
+        "Sichere den bisherigen Fehler zunächst durch eine fehlschlagende Probe. Ändere anschließend die Untergrenze, führe dieselbe Probe und die bestehenden Fälle erneut aus. Zeige der Werkstatt den reparierten Vorgang. Sichere die geprüfte Fassung mit Zusammenhang zwischen Rückmeldung, Test und Version."
+      ],
+      "example": {
+        "title": "Vom Hinweis zur Entscheidung",
+        "text": "Nummer 1: erwartet „neu“, zuvor ValueError, danach „neu“. Nummer 0 bleibt ungültig. Nummer 7 liefert weiterhin „offen“. Der offene Farbwunsch bleibt separat mit seinem eigenen Zweck dokumentiert."
+      },
+      "misconception": {
+        "claim": "Die neueste Rückmeldung ist allein wegen ihres Zeitpunkts am wichtigsten.",
+        "correction": "Eine Priorität braucht eine fachliche Begründung. Hier verhindert die falsche Grenze den Zugriff auf einen gültigen Auftrag."
+      },
+      "takeaway": "Die Rückmeldung ist bearbeitet, wenn das vereinbarte Verhalten am überarbeiteten Stand nachgewiesen wurde."
+    },
+    {
+      "id": "fiae-lf11a-versions-block-04",
+      "title": "4. Die Entwicklungskette am Reparaturauftrag prüfen",
+      "objectiveIds": [
+        "fiae-lf11a-versions-version",
+        "fiae-lf11a-versions-review",
+        "fiae-lf11a-versions-iteration"
+      ],
+      "sourceIds": [
+        "lf5-nasa-requirements",
+        "lf11a-uml",
+        "lf11a-layers",
+        "lf11a-python-structures",
+        "lf11a-python-sqlite",
+        "lf8-transactions",
+        "lf8-rest",
+        "lf8-logging",
+        "lf5-ms-testing",
+        "lf11a-git",
+        "scrum-guide-2020"
+      ],
+      "paragraphs": [
+        "Beginne beim Prozess: „Zu vorhandener Nummer den Status lesen“. Formuliere Sollfälle und zeichne drei Wege. Ein ungültiger Wert endet vor der Suche, eine gültige freie Nummer liefert keinen Treffer und ein vorhandener Auftrag liefert seinen Status. Trenne Eingabeanzeige, prüfenden Dienst und Leseadapter. Eine eindeutige Nummer kann in einer Liste linear oder bei vielen Anfragen über einen gepflegten Index gesucht werden. Das Speicherformat bleibt im Adapter. Statuswechsel und zugehöriger Verlauf gehören in eine gemeinsame Transaktion. Prüfe den Abbruch vor dem Datenbank-Commit: Der Auftrag muss seinen bisherigen Status und Verlauf behalten. Der Git-Commit hingegen hält den überprüften Quelltextstand fest.",
+        "Prüfe Nummerntyp und Bereich, binde Datenwerte separat und entscheide serverseitig anhand der geprüften Rolle und Werkstatt. Eine Diagnose braucht eine Ereignisreferenz, keine Anmeldedaten. Isolierte Tests prüfen fachliche Grenzen am Ersatz, Integration prüft Dienst, echten Adapter und Testspeicher zusammen. Ein begründeter Review und ein zusammengehöriger Commit dokumentieren die überarbeitete Kundenanforderung. Für LF12a bleiben Anforderungen, Schnittstellen, Prüfergebnisse und offenes Feedback als Grundlage der Projektabnahme erhalten."
+      ],
+      "example": {
+        "title": "Ein Nachweis durch sieben Themen",
+        "text": "Modell: 1 ist gültig → Architektur: Grenze in den Dienst → Algorithmus: eindeutige Nummer suchen → Datenzugriff: Status als Text → Schutz: nur berechtigte Teamzuordnung → Test: 1 und 0 getrennt → Version: Änderung mit Grenzprobe und erneuter Rückmeldung prüfen."
+      },
+      "misconception": {
+        "claim": "Ein neuer Versionsname beweist bereits die Erfüllung der Werkstattanforderung.",
+        "correction": "Der Nachweis braucht ein beobachtetes Ergebnis am bezeichneten Stand und eine klare Zuordnung zur vereinbarten Anforderung."
+      },
+      "takeaway": "Verfolge den fachlichen Wunsch bis zum geprüften Ergebnis und halte den Gültigkeitsbereich des Nachweises fest."
+    }
+  ],
+  "questionFile": "questions/fiae-lf11a-versions.v1.csv",
+  "quiz": {
+    "questionIds": [
+      "LJ-LF11A-VERSIONS-Q01",
+      "LJ-LF11A-VERSIONS-Q02",
+      "LJ-LF11A-VERSIONS-Q03",
+      "LJ-LF11A-VERSIONS-Q04",
+      "LJ-LF11A-VERSIONS-Q05",
+      "LJ-LF11A-VERSIONS-Q06"
+    ]
+  },
+  "exam": {
+    "questionIds": [
+      "LJ-LF11A-VERSIONS-E01",
+      "LJ-LF11A-VERSIONS-E02",
+      "LJ-LF11A-VERSIONS-E03",
+      "LJ-LF11A-VERSIONS-E04",
+      "LJ-LF11A-VERSIONS-E05",
+      "LJ-LF11A-VERSIONS-E06",
+      "LJ-LF11A-VERSIONS-E07",
+      "LJ-LF11A-VERSIONS-E08"
+    ],
+    "passPercent": 80,
+    "scoring": "all-or-nothing-per-question",
+    "timed": false
+  },
+  "questionLinks": [
+    {
+      "questionId": "LJ-LF11A-VERSIONS-Q01",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf11a-versions-version"
+      ],
+      "blockIds": [
+        "fiae-lf11a-versions-block-01"
+      ]
+    },
+    {
+      "questionId": "LJ-LF11A-VERSIONS-Q02",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf11a-versions-version"
+      ],
+      "blockIds": [
+        "fiae-lf11a-versions-block-01"
+      ]
+    },
+    {
+      "questionId": "LJ-LF11A-VERSIONS-Q03",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf11a-versions-review"
+      ],
+      "blockIds": [
+        "fiae-lf11a-versions-block-02"
+      ]
+    },
+    {
+      "questionId": "LJ-LF11A-VERSIONS-Q04",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf11a-versions-review"
+      ],
+      "blockIds": [
+        "fiae-lf11a-versions-block-02"
+      ]
+    },
+    {
+      "questionId": "LJ-LF11A-VERSIONS-Q05",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf11a-versions-iteration"
+      ],
+      "blockIds": [
+        "fiae-lf11a-versions-block-03"
+      ]
+    },
+    {
+      "questionId": "LJ-LF11A-VERSIONS-Q06",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf11a-versions-iteration"
+      ],
+      "blockIds": [
+        "fiae-lf11a-versions-block-03"
+      ]
+    },
+    {
+      "questionId": "LJ-LF11A-VERSIONS-E01",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf11a-versions-review"
+      ],
+      "blockIds": [
+        "fiae-lf11a-versions-block-04"
+      ]
+    },
+    {
+      "questionId": "LJ-LF11A-VERSIONS-E02",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf11a-versions-review"
+      ],
+      "blockIds": [
+        "fiae-lf11a-versions-block-04"
+      ]
+    },
+    {
+      "questionId": "LJ-LF11A-VERSIONS-E03",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf11a-versions-review"
+      ],
+      "blockIds": [
+        "fiae-lf11a-versions-block-04"
+      ]
+    },
+    {
+      "questionId": "LJ-LF11A-VERSIONS-E04",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf11a-versions-review"
+      ],
+      "blockIds": [
+        "fiae-lf11a-versions-block-04"
+      ]
+    },
+    {
+      "questionId": "LJ-LF11A-VERSIONS-E05",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf11a-versions-review"
+      ],
+      "blockIds": [
+        "fiae-lf11a-versions-block-04"
+      ]
+    },
+    {
+      "questionId": "LJ-LF11A-VERSIONS-E06",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf11a-versions-review"
+      ],
+      "blockIds": [
+        "fiae-lf11a-versions-block-04"
+      ]
+    },
+    {
+      "questionId": "LJ-LF11A-VERSIONS-E07",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf11a-versions-version"
+      ],
+      "blockIds": [
+        "fiae-lf11a-versions-block-01",
+        "fiae-lf11a-versions-block-04"
+      ]
+    },
+    {
+      "questionId": "LJ-LF11A-VERSIONS-E08",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf11a-versions-iteration"
+      ],
+      "blockIds": [
+        "fiae-lf11a-versions-block-03",
+        "fiae-lf11a-versions-block-04"
+      ]
+    }
+  ],
+  "interview": [
+    {
+      "id": "fiae-lf11a-versions-talk-01",
+      "prompt": "Stelle einen prüfbaren Änderungsstand für die Korrektur zusammen. Was nimmt eine zweite Person in den Blick?",
+      "objectiveIds": [
+        "fiae-lf11a-versions-version",
+        "fiae-lf11a-versions-review"
+      ],
+      "blockIds": [
+        "fiae-lf11a-versions-block-01",
+        "fiae-lf11a-versions-block-02"
+      ],
+      "keyPoints": [
+        "Funktion und zugehörige Probe gemeinsam vormerken.",
+        "Genauen Unterschied und fachliches Soll vergleichen.",
+        "Lesbarkeit, Fehlerpfade und Schutz prüfen."
+      ],
+      "acceptableAlternatives": [
+        "Ein lokales grafisches Git-Werkzeug kann die gleichen Auswahl- und Prüfschritte sichtbar machen."
+      ],
+      "misconceptions": [
+        "Der Commitname allein belege die korrekte Umsetzung."
+      ],
+      "sampleAnswer": "Ich wähle die Suchfunktion und den Grenztest aus. Im vorbereiteten Unterschied prüfe ich, dass die Bedingung 1 einschließt und 0 weiter abweist. Die Beschreibung nennt den Zweck; der Farbwunsch bleibt separat.",
+      "followUp": "Wie bemerkst du eine ungewollt mit vorgemerkte Änderung?"
+    },
+    {
+      "id": "fiae-lf11a-versions-talk-02",
+      "prompt": "Implementiere die kleine Auftragsauskunft selbst außerhalb der App. Prüfe, überarbeite und versioniere sie. Welche eigene Beobachtung erklärt deine Änderung?",
+      "objectiveIds": [
+        "fiae-lf11a-versions-version",
+        "fiae-lf11a-versions-review",
+        "fiae-lf11a-versions-iteration"
+      ],
+      "blockIds": [
+        "fiae-lf11a-versions-block-01",
+        "fiae-lf11a-versions-block-02",
+        "fiae-lf11a-versions-block-03"
+      ],
+      "keyPoints": [
+        "Eigene Funktion und automatisierte Normal-, Grenz- und Fehlerproben erstellen.",
+        "Roten Grenzfall beobachten und kleinste passende Korrektur begründen.",
+        "Vorher und nachher vergleichen, bestehenden Testsatz erneut ausführen.",
+        "Änderung samt Tests verständlich festhalten und die Durchführung bewusst bestätigen."
+      ],
+      "acceptableAlternatives": [
+        "Eine andere lokale Programmiersprache mit gleichwertiger Funktion, Versionsverwaltung und ausführbaren automatisierten Proben ist geeignet."
+      ],
+      "misconceptions": [
+        "Das Lesen der Vorlage oder Übernehmen eines Musterwerts belege die eigene Durchführung."
+      ],
+      "sampleAnswer": "In meiner eigenen Notiz nenne ich den geprüften Ausgangsstand, das tatsächliche Testergebnis für Nummer 1, meine konkrete Änderung und die Ergebnisse des zweiten Laufs. Ich halte fest, worauf mein Review abzielte und welcher Stand die Korrektur enthält.",
+      "followUp": "Welche Gegenprobe würde beim versehentlichen Zulassen von 0 erstmals fehlschlagen?",
+      "practice": {
+        "task": "Arbeite außerhalb der Lernreise in einem eigenen lokalen Übungsordner. Verwende Python 3 und Git oder gleichwertige lokale Werkzeuge. Nutze erfundene Daten. Die Maske aus LF10a zeigt die Kennung mit Präfix an, beispielsweise R-7. Deine Fachfunktion bekommt den Zahlenteil 7. Für die Versuche genügt der Aufruf aus einem Test. Initialisiere im leeren Übungsordner ein eigenes Repository mit git init, falls du Git verwendest.\n\n1. Implementiere in repair.py die Funktion lookup(number, read). Sie ruft für gültige Nummern die übergebene Lesefunktion read(number) auf, reicht Status oder None zurück und löst für unzulässige Werte ValueError aus. Stelle für die erste Fassung den historischen Ausgangsstand mit echten Ganzzahlen 2 bis 9999 nach. Importiere in test_repair.py die Funktion mit from repair import lookup. Lege dort automatisierte Proben für 7 („offen“), 2 („wartet“), 8 (freie Nummer → None) und 0 (ValueError) an. Als Speicher genügt {1: \"neu\", 2: \"wartet\", 7: \"offen\"}.get. Du kannst den Aufbau des unittest-Beispiels aus dem Testthema nutzen. Führe im Ordner python -m unittest -v test_repair aus. Halte die erfolgreiche Ausgangsfassung mit beiden Dateien in der lokalen Versionsverwaltung fest. Falls Git eine Identität verlangt, kannst du in diesem Übungsrepository einen frei erfundenen Namen und eine Adresse mit der Endung .invalid verwenden.\n\n2. Prüfe die Rückmeldung „Altauftrag 1 muss auffindbar sein“ gegen das aktuelle Kriterium 1 bis 9999. Ergänze vor der Korrektur eine Probe, die lookup(1, read) mit „neu“ vergleicht. Führe sie aus und beobachte die Abweichung.\n\n3. Prüfe im Review, wo die Grenze sitzt, ob Zustände lesbar benannt sind und ob Fehlermeldungen ohne Auftragsinhalte auskommen. Korrigiere den konkreten Befund. Ergänze für 9999 und 10000 zwei obere Randproben. Lege für 9999 den Status „fertig“ an und erwarte diesen Text. 10000 muss ValueError auslösen. Führe anschließend den gesamten Satz erneut aus, einschließlich 0 und des fehlenden Treffers.\n\n4. Kontrolliere die ausgewählten Änderungen und halte Fachfunktion und Tests in einem zusammengehörigen Commit mit Zweck fest. Vergleiche die beiden Stände und die tatsächlichen Ergebnisse. Für LF12a stehen damit das bestätigte Kriterium, der geprüfte Stand und dein Nachweis zur Verfügung.\n\nOptional kannst du Eingaben, Reviewbefund und Versionskennung für dich lokal notieren. Bestätige deine Durchführung nach der eigenen Bearbeitung.",
+        "checklist": [
+          "Ich habe eine lokale Auftragsauskunft mit eigener Fachfunktion und einem künstlichen Testbestand umgesetzt und den ersten Stand festgehalten.",
+          "Ich habe Normalfall, fehlenden Treffer, gültige Randwerte und ungültige Eingaben automatisiert mit konkretem Soll geprüft.",
+          "Ich habe die geforderte Nummer 1 vor der Korrektur als fehlschlagende neue Probe beobachtet.",
+          "Ich habe meinen Reviewbefund begründet, die Fachfunktion gezielt überarbeitet und den ganzen Testsatz erneut ausgeführt.",
+          "Ich habe die Änderung und zugehörigen Tests gemeinsam versioniert, den ausgewählten Inhalt geprüft und die tatsächlichen Ergebnisse verglichen."
+        ],
+        "confirmation": "Ich bestätige, dass ich die Mini-Anwendung außerhalb der Lernreise selbst implementiert, die Proben ausgeführt, die Änderung geprüft und überarbeitet und den neuen Stand festgehalten habe."
+      }
+    },
+    {
+      "id": "fiae-lf11a-versions-talk-03",
+      "prompt": "Verfolge eine Werkstattrückmeldung durch alle sieben Themen. Worauf stützt du die Entscheidung über den überarbeiteten Stand?",
+      "objectiveIds": [
+        "fiae-lf11a-versions-version",
+        "fiae-lf11a-versions-review",
+        "fiae-lf11a-versions-iteration"
+      ],
+      "blockIds": [
+        "fiae-lf11a-versions-block-04"
+      ],
+      "keyPoints": [
+        "Prozess in prüfbare Kriterien und einen Ablauf übersetzen.",
+        "Anzeige, Dienst und Adapter mit klaren Verträgen trennen.",
+        "Eindeutige Nummer und zur Nutzung passende Suche wählen.",
+        "Lesezugriff und konsistente Schreibgrenze erklären.",
+        "Zugriff, Parameterbindung und sparsame Diagnose prüfen.",
+        "Isolierte und integrierte Proben unterscheiden.",
+        "Priorisierte Änderung mit Review und erneutem Test zum Stand zuordnen."
+      ],
+      "acceptableAlternatives": [
+        "Eine Skizze oder mündliche Belegkette mit nachvollziehbarem Stand und gleichwertigen Proben genügt."
+      ],
+      "misconceptions": [
+        "Ein bestandener Wörterbuchtest belege die Anbindung und den Schutz des realen Speichers."
+      ],
+      "sampleAnswer": "Ich übersetze die Meldung zu 1 in eine Ablaufentscheidung und einen Grenztest. Der Dienst verantwortet die Grenze, der Adapter liest den Status. Nummern bleiben eindeutig, ein Index braucht Pflege. Abschluss und Verlauf werden gemeinsam gespeichert. Ich prüfe Teamfreigabe und Parameterbindung. Dann unterscheide ich den isolierten Fachtest von der Adapterprobe. Rückmeldung, Commit, Review und neuer Lauf gehören zur Übergabe an das Projektteam.",
+      "followUp": "Welchen Nachweis würdest du für die Projektabnahme nachfordern, wenn bisher nur die Fachfunktion gelaufen ist?"
+    }
+  ],
+  "cards": [
+    {
+      "id": "fiae-lf11a-versions-card-01",
+      "front": "Was bewirkt das Vormerken einer Datei?",
+      "back": "Git wählt ihren aktuellen Stand für den nächsten Commit aus. Spätere Änderungen müssen neu ausgewählt werden.",
+      "objectiveIds": [
+        "fiae-lf11a-versions-version"
+      ],
+      "blockIds": [
+        "fiae-lf11a-versions-block-01"
+      ]
+    },
+    {
+      "id": "fiae-lf11a-versions-card-02",
+      "front": "Woran erkennst du eine hilfreiche Commitbeschreibung?",
+      "back": "Sie nennt die fachliche Änderung oder ihren Zweck und passt zum ausgewählten Inhalt.",
+      "objectiveIds": [
+        "fiae-lf11a-versions-version"
+      ],
+      "blockIds": [
+        "fiae-lf11a-versions-block-01"
+      ]
+    },
+    {
+      "id": "fiae-lf11a-versions-card-03",
+      "front": "Was verbindet ein konkreter Reviewhinweis?",
+      "back": "Die beobachtete Stelle, ihre Wirkung im Vergleich zum Kriterium und eine nachprüfbare Korrektur.",
+      "objectiveIds": [
+        "fiae-lf11a-versions-review"
+      ],
+      "blockIds": [
+        "fiae-lf11a-versions-block-02"
+      ]
+    },
+    {
+      "id": "fiae-lf11a-versions-card-04",
+      "front": "Welche Aspekte prüfst du zusätzlich zu einem grünen Normalfall?",
+      "back": "Lesbarkeit, fachliche Grenzen, Fehlerbehandlung, Berechtigung, Protokollinhalte und passende Gegenproben.",
+      "objectiveIds": [
+        "fiae-lf11a-versions-review"
+      ],
+      "blockIds": [
+        "fiae-lf11a-versions-block-02"
+      ]
+    },
+    {
+      "id": "fiae-lf11a-versions-card-05",
+      "front": "Wann hat der Fehler Vorrang vor dem Farbwunsch?",
+      "back": "Wenn die fehlerhafte Grenze eine vereinbarte Werkstattaufgabe verhindert und die Farbe diese Aufgabe nicht blockiert.",
+      "objectiveIds": [
+        "fiae-lf11a-versions-iteration"
+      ],
+      "blockIds": [
+        "fiae-lf11a-versions-block-03"
+      ]
+    },
+    {
+      "id": "fiae-lf11a-versions-card-06",
+      "front": "Welche Belege übergibst du nach einer Überarbeitung?",
+      "back": "Priorisiertes Kriterium, Änderung mit Version, Reviewbefund und die am neuen Stand beobachteten Ergebnisse einschließlich Gegenprobe.",
+      "objectiveIds": [
+        "fiae-lf11a-versions-iteration"
+      ],
+      "blockIds": [
+        "fiae-lf11a-versions-block-04"
+      ]
+    }
+  ],
+  "review": {
+    "status": "reviewed",
+    "checkedAt": "2026-11-19"
+  },
+  "fieldReview": {
+    "fieldId": "LF11a",
+    "topicIds": [
+      "fiae-lf11a-model",
+      "fiae-lf11a-architecture",
+      "fiae-lf11a-algorithms",
+      "fiae-lf11a-data-access",
+      "fiae-lf11a-security",
+      "fiae-lf11a-testing",
+      "fiae-lf11a-versions"
+    ],
+    "blockIds": [
+      "fiae-lf11a-versions-block-04"
+    ],
+    "interviewIds": [
+      "fiae-lf11a-versions-talk-03"
+    ],
+    "questionIds": [
+      "LJ-LF11A-VERSIONS-E01",
+      "LJ-LF11A-VERSIONS-E02",
+      "LJ-LF11A-VERSIONS-E03",
+      "LJ-LF11A-VERSIONS-E04",
+      "LJ-LF11A-VERSIONS-E05",
+      "LJ-LF11A-VERSIONS-E06",
+      "LJ-LF11A-VERSIONS-E07",
+      "LJ-LF11A-VERSIONS-E08"
+    ]
+  }
+}

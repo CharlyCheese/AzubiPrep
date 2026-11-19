@@ -1,0 +1,492 @@
+{
+  "schemaVersion": 1,
+  "id": "common-lf8-sources",
+  "version": "1.0.0",
+  "title": "Datenquellen und Datenqualität prüfen",
+  "fieldId": "LF8",
+  "scope": "common",
+  "prerequisites": [
+    "common-lf5-storage",
+    "common-lf4-privacy"
+  ],
+  "sourceIds": [
+    "lf8-csv",
+    "lf8-json",
+    "lf8-constraints",
+    "lf8-privileges"
+  ],
+  "sources": [
+    {
+      "id": "lf8-csv",
+      "title": "RFC 4180: Common Format and MIME Type for CSV Files",
+      "url": "https://www.rfc-editor.org/rfc/rfc4180",
+      "checkedAt": "2026-11-16",
+      "note": "Informative Beschreibung des Kommaformats, Kopfzeilen und Maskierung geprüft; das jeweilige Austauschprofil muss gesondert vereinbart werden."
+    },
+    {
+      "id": "lf8-json",
+      "title": "RFC 8259: The JavaScript Object Notation (JSON) Data Interchange Format",
+      "url": "https://www.rfc-editor.org/rfc/rfc8259",
+      "checkedAt": "2026-11-16",
+      "note": "Syntax von Objekten, Arrays, Zahlen, Zeichenketten und null geprüft. Eigene Datensätze und Feldverträge sind didaktische Beispiele."
+    },
+    {
+      "id": "lf8-constraints",
+      "title": "PostgreSQL: Constraints",
+      "url": "https://www.postgresql.org/docs/current/ddl-constraints.html",
+      "checkedAt": "2026-11-16",
+      "note": "Pflichtwerte, Prüfbedingungen, eindeutige Schlüssel und Fremdschlüssel geprüft; Feldgrenzen im Simulator sind eigene Vorgaben."
+    },
+    {
+      "id": "lf8-privileges",
+      "title": "PostgreSQL: Privileges",
+      "url": "https://www.postgresql.org/docs/current/ddl-priv.html",
+      "checkedAt": "2026-11-16",
+      "note": "Unterschiedliche Datenbankrechte wie SELECT und INSERT geprüft; Rollen und Befugnisse im Fall sind fiktiv."
+    }
+  ],
+  "objectives": [
+    {
+      "id": "common-lf8-sources-inspect",
+      "text": "Zwei Datenquellen nach Struktur, Zugriffsmöglichkeit, Nutzungsbefugnis und Aktualität vergleichen."
+    },
+    {
+      "id": "common-lf8-sources-quality",
+      "text": "Fehlende, doppelte oder unplausible Werte in einem kleinen Datenbestand erkennen und eine begründete Behandlung vorschlagen."
+    }
+  ],
+  "caseStudy": {
+    "title": "Mira erstellt einen regionalen Auftragsbericht",
+    "text": "Alle Angaben sind erfunden. Mira soll einen Bericht ganzer Eurobeträge je Region erstellen. Kundenquelle: Kunden 1/Nord und 2/Süd. Auftragsquelle: 101/1/10, 102/1/20, 103/2/5, nochmals exakt 102/1/20 sowie 104/null/7. Schreibweise: Auftrag/Kunde/Betrag. Die beiden Quellen sind freigegebene Modellbestände; es werden keine externen Daten geladen."
+  },
+  "blocks": [
+    {
+      "id": "common-lf8-sources-inspect",
+      "title": "1. Quellen nach Zweck und Befugnis vergleichen",
+      "objectiveIds": [
+        "common-lf8-sources-inspect"
+      ],
+      "sourceIds": [
+        "lf8-csv",
+        "lf8-json",
+        "lf8-constraints",
+        "lf8-privileges"
+      ],
+      "paragraphs": [
+        "Eine Quelle ist erst dann geeignet, wenn ihre Bedeutung zum Auftrag passt. Beschreibe Struktur und Feldbedeutung, Zugriffsmöglichkeit, erlaubte Nutzung und Aktualität getrennt. Eine lesbare Datei ist technisch erreichbar; daraus folgt keine Befugnis, ihre Daten weiterzugeben. Kläre Zweck, Empfänger und freigegebene Felder mit der verantwortlichen Stelle.",
+        "Im Fall stellt die Auftragsverwaltung einen CSV-Auszug bereit: Auftrag, Kunde und Betrag. Die Kundenverwaltung liefert einen JSON-Bestand: customerId und region. Mira darf beide synthetischen Stände lesen und einen Bericht mit Regionssummen bereitstellen. Kundenkontaktdaten werden für diesen Zweck nicht benötigt.",
+        "Beide Modellquellen gehören zum selben vereinbarten Stichtag. Bei echten Lieferungen dokumentierst du Erstellungszeit und fachlichen Bezugszeitpunkt; ein heute heruntergeladenes Archiv kann einen alten Bestand enthalten. Vergleiche außerdem, ob Zeiträume, Einheiten und Schlüssel zusammenpassen. Ein neueres Dateidatum allein belegt keine größere fachliche Aktualität."
+      ],
+      "example": {
+        "title": "Eigener synthetischer Lernfall",
+        "text": "Quellenblatt: Aufträge/CSV und Kunden/JSON, lesender Zugriff, Freigabe für Regionsbericht, gleicher Bezugszeitpunkt, Betrag in ganzen EUR."
+      },
+      "misconception": {
+        "claim": "Wenn eine Datei geöffnet werden kann, ist ihre Weitergabe erlaubt.",
+        "correction": "Technischer Zugriff und fachliche Nutzungsbefugnis müssen getrennt geprüft werden."
+      },
+      "takeaway": "Prüfe Struktur, Zugriff, Befugnis und fachlichen Zeitbezug."
+    },
+    {
+      "id": "common-lf8-sources-quality",
+      "title": "2. Fehlende und unplausible Werte sichtbar machen",
+      "objectiveIds": [
+        "common-lf8-sources-quality"
+      ],
+      "sourceIds": [
+        "lf8-csv",
+        "lf8-json",
+        "lf8-constraints",
+        "lf8-privileges"
+      ],
+      "paragraphs": [
+        "Datenqualität wird anhand des geplanten Zwecks und konkreter Regeln geprüft. Vollständigkeit fragt nach benötigten Angaben, Gültigkeit nach Typen und Wertebereichen, Eindeutigkeit nach Mehrfachvorkommen und Konsistenz nach passenden Beziehungen. Eine syntaktisch lesbare Datei kann diese fachlichen Regeln verletzen.",
+        "Im Modell sind Auftragsnummer und Kundenverweis ganze positive Zahlen. Der Kundenverweis muss auf Kunde 1 oder 2 zeigen. Betrag ist eine ganze Zahl von 0 bis 1000000 in EUR; es sind bewusst fiktive ganze Beträge, keine Vorlage zur Verarbeitung beliebiger Geldwerte. Die Auftragsnummer identifiziert einen Auftrag.",
+        "Auftrag 104 enthält null statt einer Kundennummer. Seine 7 EUR dürfen keiner Region geraten zugeordnet werden. Mira stellt diesen Datensatz mit Fehlergrund zur Klärung zurück. Diese Quarantäne bedeutet einen getrennten Fehlerbestand und einen sichtbaren offenen Punkt, keine stillschweigende Korrektur auf 0 oder auf Kunde 1."
+      ],
+      "example": {
+        "title": "Eigener synthetischer Lernfall",
+        "text": "104/null/7 ist für den Bericht unvollständig. 104 kommt in den Fehlerbestand; die zuständige Quelle muss den Kundenbezug klären."
+      },
+      "misconception": {
+        "claim": "Ein fehlender Kundenwert lässt sich mit dem häufigsten Kunden sinnvoll ergänzen.",
+        "correction": "Ohne fachliche Grundlage wäre die Zuordnung erfunden und könnte die Regionssumme verfälschen."
+      },
+      "takeaway": "Markiere den Befund und kläre fehlende Pflichtwerte an der Quelle."
+    },
+    {
+      "id": "common-lf8-sources-duplicates",
+      "title": "3. Duplikate anhand des vereinbarten Schlüssels behandeln",
+      "objectiveIds": [
+        "common-lf8-sources-quality"
+      ],
+      "sourceIds": [
+        "lf8-csv",
+        "lf8-json",
+        "lf8-constraints",
+        "lf8-privileges"
+      ],
+      "paragraphs": [
+        "Unterscheide ein exaktes Duplikat von zwei berechtigten Aufträgen mit gleichem Betrag. Im Rohbestand kommt 102/1/20 zweimal mit identischen Feldern vor. Der vereinbarte Vertrag verlangt eine Wertung je Auftragsnummer: Diese exakte Wiederholung wird einmal übernommen und einmal als entferntes Duplikat gezählt.",
+        "Zwei unterschiedliche Auftragsnummern mit 20 EUR sind dagegen zwei Vorgänge. Würdest du nach Betrag deduplizieren, gingen gültige Aufträge verloren. Ein mehrfacher Schlüssel mit unterschiedlichen Beträgen ist ein Konflikt, kein exaktes Duplikat. Ohne Regel zur maßgeblichen Version muss dieser Fall geklärt werden.",
+        "Bewahre Rohbestand und Prüfergebnis nachvollziehbar getrennt auf. Für den kleinen Modellfall genügt ein Verarbeitungsnachweis mit Eingangsmenge, angewendeter Regel und ausgeschlossenen Zeilen. Die Begriffe gelöscht und erledigt wären irreführend, wenn eine fehlende Information weiterhin offen ist."
+      ],
+      "example": {
+        "title": "Eigener synthetischer Lernfall",
+        "text": "102/1/20 und 102/1/20 → ein Auftrag. 102/1/20 und 105/1/20 → zwei Aufträge."
+      },
+      "misconception": {
+        "claim": "Gleiche Beträge sind der richtige Schlüssel für eine Duplikatprüfung.",
+        "correction": "Der Betrag kann bei verschiedenen Aufträgen gleich sein; entscheidend ist die vereinbarte Identität des Vorgangs."
+      },
+      "takeaway": "Gleiche Werte sind noch kein doppelter Vorgang."
+    },
+    {
+      "id": "common-lf8-sources-handover",
+      "title": "4. Qualitätsentscheidung und verbleibenden Umfang übergeben",
+      "objectiveIds": [
+        "common-lf8-sources-inspect",
+        "common-lf8-sources-quality"
+      ],
+      "sourceIds": [
+        "lf8-csv",
+        "lf8-json",
+        "lf8-constraints",
+        "lf8-privileges"
+      ],
+      "paragraphs": [
+        "Die Mengenrechnung macht die Bereinigung prüfbar: fünf Rohzeilen minus ein exaktes Duplikat minus eine ungeklärte Zeile ergeben drei verwendbare Aufträge. Deren Beträge 10, 20 und 5 ergeben 35 EUR. Die Rohsumme 62 EUR würde sowohl den Doppelbetrag 20 als auch den ungeklärten Betrag 7 enthalten.",
+        "Dokumentiere den Zweck, die beiden Quellen mit Bezugsstand, die Nutzungsfreigabe sowie Regeln und Befunde. Die aufbereitete Menge enthält 101, 102 und 103; 104 bleibt mit Grund offen. Der Bericht darf daher als Bericht der freigegebenen, gültig zuordenbaren Aufträge bezeichnet werden, nicht als bestätigte Summe aller ursprünglich angelieferten Vorgänge.",
+        "Die Übergabe an die nächste Bearbeitung benennt auch eine Grenze: Formate sind noch zuzuordnen und Kunden müssen über ihren Schlüssel verbunden werden. Ein passender Zeilenzähler ersetzt diese fachliche Verknüpfung nicht. Regeländerungen wie eine andere Behandlung von null müssen abgestimmt und erneut geprüft werden."
+      ],
+      "example": {
+        "title": "Eigener synthetischer Lernfall",
+        "text": "Prüfnotiz: Eingang 5; exakte Wiederholung 1; Quarantäne 1; gültig 3; gültige Beträge gesamt 35 EUR; Kundenbezug von 104 offen."
+      },
+      "misconception": {
+        "claim": "Eine plausible Gesamtsumme beweist, dass der gesamte Rohbestand richtig verarbeitet wurde.",
+        "correction": "Plausibilität muss durch Mengenabgleich, Regeln und überprüfte Beziehungen ergänzt werden."
+      },
+      "takeaway": "Mengen und offene Punkte machen die Datenqualität überprüfbar."
+    }
+  ],
+  "questionFile": "questions/common-lf8-sources.v1.csv",
+  "quiz": {
+    "questionIds": [
+      "LJ-LF8-SOURCES-Q01",
+      "LJ-LF8-SOURCES-Q02",
+      "LJ-LF8-SOURCES-Q03",
+      "LJ-LF8-SOURCES-Q04",
+      "LJ-LF8-SOURCES-Q05",
+      "LJ-LF8-SOURCES-Q06"
+    ]
+  },
+  "exam": {
+    "questionIds": [
+      "LJ-LF8-SOURCES-E01",
+      "LJ-LF8-SOURCES-E02",
+      "LJ-LF8-SOURCES-E03",
+      "LJ-LF8-SOURCES-E04",
+      "LJ-LF8-SOURCES-E05",
+      "LJ-LF8-SOURCES-E06",
+      "LJ-LF8-SOURCES-E07",
+      "LJ-LF8-SOURCES-E08"
+    ],
+    "passPercent": 80,
+    "scoring": "all-or-nothing-per-question",
+    "timed": false
+  },
+  "questionLinks": [
+    {
+      "questionId": "LJ-LF8-SOURCES-Q01",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf8-sources-inspect"
+      ],
+      "blockIds": [
+        "common-lf8-sources-inspect"
+      ]
+    },
+    {
+      "questionId": "LJ-LF8-SOURCES-Q02",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf8-sources-inspect"
+      ],
+      "blockIds": [
+        "common-lf8-sources-inspect"
+      ]
+    },
+    {
+      "questionId": "LJ-LF8-SOURCES-Q03",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf8-sources-quality"
+      ],
+      "blockIds": [
+        "common-lf8-sources-quality"
+      ]
+    },
+    {
+      "questionId": "LJ-LF8-SOURCES-Q04",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf8-sources-quality"
+      ],
+      "blockIds": [
+        "common-lf8-sources-duplicates"
+      ]
+    },
+    {
+      "questionId": "LJ-LF8-SOURCES-Q05",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf8-sources-quality"
+      ],
+      "blockIds": [
+        "common-lf8-sources-handover"
+      ]
+    },
+    {
+      "questionId": "LJ-LF8-SOURCES-Q06",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf8-sources-inspect",
+        "common-lf8-sources-quality"
+      ],
+      "blockIds": [
+        "common-lf8-sources-handover"
+      ]
+    },
+    {
+      "questionId": "LJ-LF8-SOURCES-E01",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf8-sources-inspect"
+      ],
+      "blockIds": [
+        "common-lf8-sources-inspect"
+      ]
+    },
+    {
+      "questionId": "LJ-LF8-SOURCES-E02",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf8-sources-inspect"
+      ],
+      "blockIds": [
+        "common-lf8-sources-inspect"
+      ]
+    },
+    {
+      "questionId": "LJ-LF8-SOURCES-E03",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf8-sources-quality"
+      ],
+      "blockIds": [
+        "common-lf8-sources-quality"
+      ]
+    },
+    {
+      "questionId": "LJ-LF8-SOURCES-E04",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf8-sources-quality"
+      ],
+      "blockIds": [
+        "common-lf8-sources-duplicates"
+      ]
+    },
+    {
+      "questionId": "LJ-LF8-SOURCES-E05",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf8-sources-quality"
+      ],
+      "blockIds": [
+        "common-lf8-sources-duplicates"
+      ]
+    },
+    {
+      "questionId": "LJ-LF8-SOURCES-E06",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf8-sources-quality"
+      ],
+      "blockIds": [
+        "common-lf8-sources-handover"
+      ]
+    },
+    {
+      "questionId": "LJ-LF8-SOURCES-E07",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf8-sources-inspect",
+        "common-lf8-sources-quality"
+      ],
+      "blockIds": [
+        "common-lf8-sources-handover"
+      ]
+    },
+    {
+      "questionId": "LJ-LF8-SOURCES-E08",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf8-sources-quality"
+      ],
+      "blockIds": [
+        "common-lf8-sources-quality",
+        "common-lf8-sources-handover"
+      ]
+    }
+  ],
+  "interview": [
+    {
+      "id": "common-lf8-sources-talk-01",
+      "prompt": "Vergleiche die beiden Modellquellen anhand von vier Kriterien und benenne eine offene Rückfrage bei abweichendem Datenstand.",
+      "objectiveIds": [
+        "common-lf8-sources-inspect"
+      ],
+      "blockIds": [
+        "common-lf8-sources-inspect"
+      ],
+      "keyPoints": [
+        "Struktur und Feldbedeutung nennen.",
+        "Zugriff von Nutzungsbefugnis unterscheiden.",
+        "Bezugszeitpunkte miteinander vergleichen."
+      ],
+      "acceptableAlternatives": [
+        "Eine gleichwertige fachliche Erklärung mit nachvollziehbarer Begründung und passenden Fallwerten."
+      ],
+      "misconceptions": [
+        "Ein Downloadzeitpunkt beweise den fachlichen Stand."
+      ],
+      "sampleAnswer": "Ich vergleiche Aufträge/CSV und Kunden/JSON nach Feldern und Schlüsseln, lesendem Zugriff, Freigabe für Regionssummen und gemeinsamem Bezugsstand. Bei abweichenden Ständen kläre ich, welcher Kundenstand zum Auftragszeitraum gehört.",
+      "followUp": "Welche zusätzliche Information wäre bei einem historischen Bericht nötig?"
+    },
+    {
+      "id": "common-lf8-sources-talk-02",
+      "prompt": "Begründe für die fünf Auftragszeilen, was du übernimmst, zurückstellst und als Wiederholung zählst.",
+      "objectiveIds": [
+        "common-lf8-sources-quality"
+      ],
+      "blockIds": [
+        "common-lf8-sources-quality",
+        "common-lf8-sources-duplicates",
+        "common-lf8-sources-handover"
+      ],
+      "keyPoints": [
+        "102 exakt einmal übernehmen.",
+        "104 wegen fehlendem Kundenbezug zur Klärung zurückstellen.",
+        "5 Eingang, 1 Duplikat, 1 Quarantäne, 3 verwendbar nennen."
+      ],
+      "acceptableAlternatives": [
+        "Eine gleichwertige fachliche Erklärung mit nachvollziehbarer Begründung und passenden Fallwerten."
+      ],
+      "misconceptions": [
+        "Gleiche Beträge bedeuteten stets denselben Auftrag."
+      ],
+      "sampleAnswer": "Ich übernehme 101, 102 und 103. Die zweite identische 102 zählt als entferntes Duplikat. 104 bleibt wegen null als Kundenverweis offen. Damit sind drei Aufträge mit 35 EUR verwendbar.",
+      "followUp": "Was würdest du tun, wenn beide Zeilen 102 unterschiedliche Beträge hätten?"
+    },
+    {
+      "id": "common-lf8-sources-talk-03",
+      "prompt": "Formuliere eine kurze Qualitätsübergabe, die den Berichtsumfang und seine Grenze erklärt.",
+      "objectiveIds": [
+        "common-lf8-sources-inspect",
+        "common-lf8-sources-quality"
+      ],
+      "blockIds": [
+        "common-lf8-sources-inspect",
+        "common-lf8-sources-handover"
+      ],
+      "keyPoints": [
+        "Zweck, Freigabe und Bezugsstand nennen.",
+        "Mengenabgleich mit 35 EUR dokumentieren.",
+        "Offenen Kundenbezug und Zuständigkeit zur Klärung benennen."
+      ],
+      "acceptableAlternatives": [
+        "Eine gleichwertige fachliche Erklärung mit nachvollziehbarer Begründung und passenden Fallwerten."
+      ],
+      "misconceptions": [
+        "Bereinigung bedeute, dass kein offener Punkt mehr existiert."
+      ],
+      "sampleAnswer": "Die Quellen sind für den synthetischen Regionsbericht freigegeben und haben denselben Bezugsstand. Nach den dokumentierten Regeln bleiben drei gültige Aufträge mit 35 EUR. Die Quellverantwortung muss den Kundenbezug von 104 klären; dieser Betrag ist noch nicht berichtet.",
+      "followUp": "Welche Schlussfolgerung über sämtliche ursprünglichen Aufträge wäre zu weitgehend?"
+    }
+  ],
+  "cards": [
+    {
+      "id": "common-lf8-sources-card-01",
+      "front": "Welche vier Fragen gehören zum Quellenvergleich?",
+      "back": "Welche Struktur hat die Quelle, wie ist sie zugänglich, wofür ist sie freigegeben und auf welchen fachlichen Stand bezieht sie sich?",
+      "objectiveIds": [
+        "common-lf8-sources-inspect"
+      ],
+      "blockIds": [
+        "common-lf8-sources-inspect"
+      ]
+    },
+    {
+      "id": "common-lf8-sources-card-02",
+      "front": "Was unterscheidet Zugriff und Nutzungsbefugnis?",
+      "back": "Eine technisch lesbare Quelle ist nicht dadurch für jeden Zweck oder Empfänger freigegeben.",
+      "objectiveIds": [
+        "common-lf8-sources-inspect"
+      ],
+      "blockIds": [
+        "common-lf8-sources-inspect"
+      ]
+    },
+    {
+      "id": "common-lf8-sources-card-03",
+      "front": "Wie wird 104/null/7 behandelt?",
+      "back": "Mit Fehlergrund in den Klärungsbestand stellen; keine Kundennummer und keine Region erfinden.",
+      "objectiveIds": [
+        "common-lf8-sources-quality"
+      ],
+      "blockIds": [
+        "common-lf8-sources-quality"
+      ]
+    },
+    {
+      "id": "common-lf8-sources-card-04",
+      "front": "Was macht die zweite Zeile 102/1/20 zum Duplikat?",
+      "back": "Gleiche Auftragsidentität und identische relevante Felder; der vereinbarte Bericht zählt diesen Vorgang einmal.",
+      "objectiveIds": [
+        "common-lf8-sources-quality"
+      ],
+      "blockIds": [
+        "common-lf8-sources-duplicates"
+      ]
+    },
+    {
+      "id": "common-lf8-sources-card-05",
+      "front": "Welche Mengen bleiben nach der Bereinigung?",
+      "back": "5 Eingang − 1 exakte Wiederholung − 1 ungeklärte Zeile = 3 gültige Aufträge mit 35 EUR.",
+      "objectiveIds": [
+        "common-lf8-sources-quality"
+      ],
+      "blockIds": [
+        "common-lf8-sources-handover"
+      ]
+    },
+    {
+      "id": "common-lf8-sources-card-06",
+      "front": "Was gehört in die Qualitätsübergabe?",
+      "back": "Zweck, Quellen und Bezugsstand, Befugnis, Prüfregeln, Mengen und offene Fehler samt Klärungsverantwortung.",
+      "objectiveIds": [
+        "common-lf8-sources-inspect",
+        "common-lf8-sources-quality"
+      ],
+      "blockIds": [
+        "common-lf8-sources-handover"
+      ]
+    }
+  ],
+  "review": {
+    "status": "reviewed",
+    "checkedAt": "2026-11-16"
+  }
+}

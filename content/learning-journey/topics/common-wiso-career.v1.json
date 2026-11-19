@@ -1,0 +1,504 @@
+{
+  "schemaVersion": 1,
+  "id": "common-wiso-career",
+  "version": "1.0.0",
+  "title": "Berufliche Entwicklung und Selbstständigkeit",
+  "fieldId": "WISO",
+  "scope": "common",
+  "prerequisites": [
+    "common-wiso-change",
+    "common-wiso-economy"
+  ],
+  "sourceIds": [
+    "wiso-ba-learning",
+    "wiso-bmwe-finance",
+    "wiso-it-qualification",
+    "wiso-bibb-it-development",
+    "wiso-ba-family"
+  ],
+  "sources": [
+    {
+      "id": "wiso-ba-learning",
+      "title": "Bundesagentur für Arbeit – Karriere und Weiterbildung",
+      "url": "https://www.arbeitsagentur.de/karriere-und-weiterbildung",
+      "checkedAt": "2026-11-11",
+      "note": "Orientierungsangebote, Berufsberatung im Erwerbsleben und Verweis auf mein NOW geprüft. Zugang, Durchführung, Kosten und Fördervoraussetzungen bleiben angebotsspezifisch; eigene Kursangebote sind fiktiv."
+    },
+    {
+      "id": "wiso-bmwe-finance",
+      "title": "Existenzgründungsportal – Finanzplan erstellen",
+      "url": "https://www.existenzgruendungsportal.de/Redaktion/DE/So-gehts/Finanzierung/finanzplan-erstellen",
+      "checkedAt": "2026-11-11",
+      "note": "Kapitalbedarf, laufende Kosten, Finanzierung und Liquidität unterschieden. Eigene vereinfachte Übungsrechnungen ohne Steuer- oder Rentabilitätsversprechen."
+    },
+    {
+      "id": "wiso-it-qualification",
+      "title": "Bachelor-Professional-IT-Fortbildungsprüfungsverordnung – Zulassung",
+      "url": "https://www.gesetze-im-internet.de/baproitfprv/__2.html",
+      "checkedAt": "2026-11-11",
+      "note": "§ 2: anerkannte IT-Ausbildung als ein Zugangsnachweis; Anforderungen nach BBiG § 53c und weitere Zulassungswege sind gesondert zu beachten. Kein Versprechen der Zulassung allein durch eine Kursbuchung."
+    },
+    {
+      "id": "wiso-bibb-it-development",
+      "title": "BIBB – Neuordnung des IT-Weiterbildungssystems",
+      "url": "https://www.bibb.de/de/189508.php",
+      "checkedAt": "2026-11-11",
+      "note": "Berufsspezialisten und Bachelor Professional in IT; der Berufsspezialistenabschluss ist keine allgemeine Vorbedingung des Bachelor Professional. Profile und Zuständigkeit der IHK geprüft; keine überholten Abschlussbezeichnungen oder behauptete Master-Angebote."
+    },
+    {
+      "id": "wiso-ba-family",
+      "title": "Bundesagentur für Arbeit – Familie und Beruf vereinbaren",
+      "url": "https://www.arbeitsagentur.de/familie-und-kinder/familie-und-beruf-vereinbaren",
+      "checkedAt": "2026-11-11",
+      "note": "Beratungsangebote und individuell passende Arbeitszeitmodelle für Vereinbarkeit geprüft. Keine Detailaussagen zu Höhe, Dauer oder Anspruchsvoraussetzungen von Familienleistungen verwendet."
+    }
+  ],
+  "objectives": [
+    {
+      "id": "common-wiso-career-path",
+      "text": "Für ein berufliches Ziel eine passende Fortbildung oder Weiterbildung mit Zugangsvoraussetzungen recherchieren."
+    },
+    {
+      "id": "common-wiso-career-life",
+      "text": "Eine berufliche Entwicklung unter Berücksichtigung persönlicher Stärken, Familienplanung und eigener Rollenvorstellungen abwägen."
+    },
+    {
+      "id": "common-wiso-career-business",
+      "text": "Für eine einfache Gründungsidee Kundennutzen, benötigte Mittel und ein wesentliches Risiko benennen."
+    }
+  ],
+  "caseStudy": {
+    "title": "Miras nächster beruflicher Schritt",
+    "text": "Mira plant im fiktiven Fall für die Zeit nach ihrer Ausbildung. Sie möchte ihre technische Arbeit vertiefen und später koordinieren. Sam vergleicht Fortbildung mit einer kleinen Gründungsidee für verständliche IT-Einweisungen. Beide berücksichtigen Zeit, Geld, persönliche Stärken und gewünschte Aufgabenverteilung im privaten Leben. Du kannst mit diesen erfundenen Lebenslagen arbeiten; private Angaben sind nicht erforderlich."
+  },
+  "blocks": [
+    {
+      "id": "common-wiso-career-path",
+      "title": "1. Ein Ziel in einen recherchierten Bildungsweg übersetzen",
+      "objectiveIds": [
+        "common-wiso-career-path"
+      ],
+      "sourceIds": [
+        "wiso-ba-learning",
+        "wiso-it-qualification",
+        "wiso-bibb-it-development"
+      ],
+      "paragraphs": [
+        "Beginne mit dem beruflichen Ziel: Welche Aufgaben möchtest du übernehmen und welche Fähigkeit fehlt dir? Eine kurze Anpassungsweiterbildung kann eine konkrete Lücke schließen. Eine geregelte höherqualifizierende Fortbildung führt nach bestandener Prüfung zu einem anerkannten Abschluss. Kursbesuch, Prüfungszulassung und bestandener Abschluss sind verschiedene Dinge.",
+        "Recherchiere zum Ziel über seriöse öffentliche Einstiege wie Berufsberatung im Erwerbsleben und mein NOW. Prüfe danach beim Anbieter Inhalt, Lernform, Umfang und Gesamtkosten. Für eine geregelte Fortbildungsprüfung sind die aktuelle Prüfungsverordnung und die zuständige Prüfungsstelle maßgeblich. Notiere Quelle, Prüfdatum, Zugangsvoraussetzungen und noch offene Fragen.",
+        "Ein konkretes Beispiel ist der Bachelor Professional in IT. Das BIBB beschreibt Fach- und Führungsaufgaben sowie verschiedene Spezialisierungen. § 2 BAProITFPrV nennt eine erfolgreich abgelegte Prüfung in einem anerkannten IT-Ausbildungsberuf als einen Zugangsnachweis; die Anforderungen nach § 53c BBiG bleiben zu beachten. Andere Zugangswege sind dort ebenfalls geregelt. Die zuständige IHK prüft die individuellen Nachweise.",
+        "Ein vorheriger IT-Berufsspezialistenabschluss ist keine allgemeine Pflicht vor dem Bachelor Professional in IT. Er ist ein möglicher Bildungsweg, nicht der einzig denkbare. Eine gebuchte Vorbereitung oder eine Werbeaussage garantiert weder Zulassung noch Bestehen. Prüfe die aktuelle Regelung erneut, wenn du einen konkreten Schritt planst."
+      ],
+      "example": {
+        "title": "Eigener Übungsfall",
+        "text": "Mira hält fest: Ziel sind später Fach- und Koordinationsaufgaben. Als Kandidat recherchiert sie Bachelor Professional in IT, liest § 2 und lässt ihre Nachweise vor einer kostenpflichtigen Buchung von der Prüfungsstelle prüfen."
+      },
+      "misconception": {
+        "claim": "Wer einen Vorbereitungskurs bezahlen kann, ist dadurch bereits zur Fortbildungsprüfung zugelassen.",
+        "correction": "Der Anbieter organisiert den Kurs; die Prüfungsstelle beurteilt die Zulassung nach den geltenden Regeln."
+      },
+      "takeaway": "Dokumentiere Ziel, passende Inhalte, Zugang, Zeit, Kosten, Quelle und offenen Prüfbedarf."
+    },
+    {
+      "id": "common-wiso-career-life",
+      "title": "2. Entwicklung und Lebensplanung abwägen",
+      "objectiveIds": [
+        "common-wiso-career-life"
+      ],
+      "sourceIds": [
+        "wiso-ba-family",
+        "wiso-ba-learning"
+      ],
+      "paragraphs": [
+        "Eine tragfähige Entwicklung passt zu Interessen und Stärken sowie zu zeitlichen und finanziellen Möglichkeiten. Familienplanung, Sorgearbeit, Erholung oder andere persönliche Bindungen können den passenden Umfang und Zeitpunkt beeinflussen. Es gibt keinen für alle richtigen Karriereweg.",
+        "Unterscheide eigene Wünsche von Rollenerwartungen anderer. Technische, leitende oder betreuende Aufgaben sind nicht durch Geschlecht oder Familienrolle vorgegeben. Bespreche, welche Aufgabenverteilung du möchtest und welche Unterstützung tatsächlich verfügbar ist; persönliche Entscheidungen bleiben bei der betroffenen Person.",
+        "Im fiktiven Fall benötigt Sam dienstags und donnerstags Zeit für vereinbarte Sorgearbeit. Kurs Nord findet an beiden Abenden statt, Kurs Süd samstags und mit flexibel einteilbaren Übungen. Wenn Inhalt, Zugang und Kosten gleich geeignet sind und Samstag verfügbar ist, passt Süd zeitlich besser. Das beweist noch nicht, dass der gesamte Wochenumfang tragbar ist.",
+        "Vergleiche Wochenstunden einschließlich Vor- und Nachbereitung, Fahrtzeit, Kosten, Einkommenswirkung und verlässliche Unterstützung. Online bedeutet nicht automatisch frei einteilbare Zeit: Live-Sitzungen können feste Termine haben. Besondere Rechtsansprüche auf Freistellung oder Förderung werden hier nicht unterstellt."
+      ],
+      "example": {
+        "title": "Eigener Übungsfall",
+        "text": "Mira möchte technisch arbeiten, obwohl Bekannte ihr eine bestimmte Rolle nahelegen. Sie prüft passende Angebote an ihren eigenen Zielen und einer realistischen Wochenplanung."
+      },
+      "misconception": {
+        "claim": "Familienplanung legt unabhängig von eigenen Wünschen einen bestimmten Beruf oder eine geringere Verantwortung fest.",
+        "correction": "Persönliche Ziele, verfügbare Zeit und gewünschte Aufgabenverteilung müssen individuell abgewogen werden."
+      },
+      "takeaway": "Wähle anhand eigener Ziele und realer Rahmenbedingungen, nicht anhand starrer Rollenbilder."
+    },
+    {
+      "id": "common-wiso-career-business",
+      "title": "3. Eine Gründungsidee auf Nutzen und Mittel prüfen",
+      "objectiveIds": [
+        "common-wiso-career-business"
+      ],
+      "sourceIds": [
+        "wiso-bmwe-finance"
+      ],
+      "paragraphs": [
+        "Eine einfache Gründungsidee braucht eine bestimmte Kundengruppe, ein konkretes Problem und einen erkennbaren Nutzen. Sams Idee lautet: kleine Vereine erhalten verständliche Einweisungen in ihre vorhandene Mitgliederverwaltung. Der Nutzen ist sicherere Anwendung im Alltag, nicht bloß der Besitz einer Webseite.",
+        "Liste benötigte Mittel: Fachwissen, Arbeitszeit, geeignete Technik, Räume oder Onlinezugang, Material und verfügbare Zahlungsmittel. Einmalige Anschaffungen sind von laufenden Ausgaben zu unterscheiden. Einnahmen sind unsicher, solange es keine belastbaren Aufträge und Zahlungseingänge gibt.",
+        "Liquidität beschreibt verfügbare Zahlungsmittel zur Begleichung fälliger Zahlungen. Eine erwartete Rechnung ist noch kein eingegangenes Geld. Im reinen Zahlungsmodell startet Sam mit 1.500 Euro, zahlt 600 Euro für Ausrüstung und 400 Euro für fällige laufende Ausgaben; vor Kundenzahlungen bleiben 500 Euro. Das Modell lässt Steuern und weitere Posten ausdrücklich weg und ist kein vollständiger Geschäftsplan.",
+        "Nenne mindestens ein wesentliches Risiko und eine passende Prüfung: zu wenig Nachfrage durch Gespräche mit potenziellen Kunden und einen begrenzten Versuch prüfen; späte Zahlung durch Liquiditätsplanung berücksichtigen; Abhängigkeit von einem Kunden durch breitere Kundensuche verringern. Eine Gründung garantiert weder Gewinn noch freie Arbeitszeit. Konkrete Rechts-, Steuer- und Versicherungspflichten müssen passend zum Vorhaben separat geklärt werden."
+      ],
+      "example": {
+        "title": "Eigener Übungsfall",
+        "text": "Sam befragt drei Vereine zu ihren Problemen und testet ein begrenztes Einweisungsangebot. Er behandelt positive Rückmeldungen noch nicht als bezahlte Aufträge."
+      },
+      "misconception": {
+        "claim": "Ein hoher erwarteter Umsatz bedeutet bereits genügend Geld für heute fällige Rechnungen.",
+        "correction": "Umsatzerwartung, tatsächlicher Zahlungseingang, Kosten und Liquidität sind zu trennen."
+      },
+      "takeaway": "Beschreibe Kundennutzen, benötigte Mittel, Zahlungsbedarf und eine überprüfbare Unsicherheit."
+    },
+    {
+      "id": "common-wiso-career-decision",
+      "title": "4. Alternativen begründet auswählen",
+      "objectiveIds": [
+        "common-wiso-career-path",
+        "common-wiso-career-life",
+        "common-wiso-career-business"
+      ],
+      "sourceIds": [
+        "wiso-ba-learning",
+        "wiso-it-qualification",
+        "wiso-ba-family",
+        "wiso-bmwe-finance"
+      ],
+      "paragraphs": [
+        "Eine Entscheidung verknüpft drei Fragen: Welcher Weg passt zur gewünschten Aufgabe? Ist er mit den verfügbaren Ressourcen und der Lebensplanung vereinbar? Welche Risiken bleiben? Ein Fortbildungstitel allein beantwortet keine dieser Fragen vollständig.",
+        "Vergleiche zwei Angebote anhand derselben Kriterien. Ein fiktiver Kurs mit 80 Lernstunden für 400 Euro kann für eine begrenzte Anwendungslücke genügen; eine umfangreichere geregelte Fortbildung verfolgt ein anderes Ziel. Dauer und Preis sind keine direkten Qualitätsbeweise. Individuelle Förderung ist vorab bei der zuständigen Stelle zu klären.",
+        "Selbstständigkeit und Beschäftigung unterscheiden sich unter anderem bei Verantwortung für Kundengewinnung, Einnahmerisiko und Planung. Für Sams Gründungsidee wären belegter Bedarf und ausreichende Mittel wichtig. Für Miras Fortbildung wären passende Inhalte und geprüfte Zulassung zentral. Beide Wege benötigen einen realistischen Zeitplan.",
+        "Halte eine vorläufige Entscheidung mit Begründung, nächstem Prüfschritt und offenem Risiko fest. Wenn entscheidende Informationen fehlen, ist deren gezielte Recherche selbst ein sinnvoller nächster Schritt. Eine Anfrage bei der Prüfungsstelle oder ein Kundengespräch ist konkreter als eine unbelegte Erfolgserwartung."
+      ],
+      "example": {
+        "title": "Eigener Übungsfall",
+        "text": "Mira wählt zunächst eine zielgerichtete Recherche und einen Beratungstermin. Sam prüft einen kleinen Pilotauftrag und eine Zahlungsübersicht, bevor er größere Ausgaben plant."
+      },
+      "misconception": {
+        "claim": "Eine Entscheidung ist erst gut, wenn sie alle Unsicherheiten ausschließt.",
+        "correction": "Gute Entscheidungen benennen Unsicherheit und legen überprüfbare nächste Schritte fest."
+      },
+      "takeaway": "Entscheide anhand passender Kriterien und prüfe das größte offene Risiko zuerst."
+    }
+  ],
+  "questionFile": "questions/common-wiso-career.v1.csv",
+  "quiz": {
+    "questionIds": [
+      "LJ-WISO-CAREER-Q01",
+      "LJ-WISO-CAREER-Q02",
+      "LJ-WISO-CAREER-Q03",
+      "LJ-WISO-CAREER-Q04",
+      "LJ-WISO-CAREER-Q05",
+      "LJ-WISO-CAREER-Q06"
+    ]
+  },
+  "exam": {
+    "questionIds": [
+      "LJ-WISO-CAREER-E01",
+      "LJ-WISO-CAREER-E02",
+      "LJ-WISO-CAREER-E03",
+      "LJ-WISO-CAREER-E04",
+      "LJ-WISO-CAREER-E05",
+      "LJ-WISO-CAREER-E06",
+      "LJ-WISO-CAREER-E07",
+      "LJ-WISO-CAREER-E08"
+    ],
+    "passPercent": 80,
+    "scoring": "all-or-nothing-per-question",
+    "timed": false
+  },
+  "questionLinks": [
+    {
+      "questionId": "LJ-WISO-CAREER-Q01",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-wiso-career-path"
+      ],
+      "blockIds": [
+        "common-wiso-career-path"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-CAREER-Q02",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-wiso-career-path"
+      ],
+      "blockIds": [
+        "common-wiso-career-path"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-CAREER-Q03",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-wiso-career-life"
+      ],
+      "blockIds": [
+        "common-wiso-career-life"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-CAREER-Q04",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-wiso-career-life"
+      ],
+      "blockIds": [
+        "common-wiso-career-life"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-CAREER-Q05",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-wiso-career-business"
+      ],
+      "blockIds": [
+        "common-wiso-career-business"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-CAREER-Q06",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-wiso-career-business"
+      ],
+      "blockIds": [
+        "common-wiso-career-business"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-CAREER-E01",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-wiso-career-path"
+      ],
+      "blockIds": [
+        "common-wiso-career-path",
+        "common-wiso-career-decision"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-CAREER-E02",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-wiso-career-path"
+      ],
+      "blockIds": [
+        "common-wiso-career-path"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-CAREER-E03",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-wiso-career-path"
+      ],
+      "blockIds": [
+        "common-wiso-career-path"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-CAREER-E04",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-wiso-career-life"
+      ],
+      "blockIds": [
+        "common-wiso-career-life",
+        "common-wiso-career-decision"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-CAREER-E05",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-wiso-career-life"
+      ],
+      "blockIds": [
+        "common-wiso-career-life"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-CAREER-E06",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-wiso-career-business"
+      ],
+      "blockIds": [
+        "common-wiso-career-business"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-CAREER-E07",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-wiso-career-business"
+      ],
+      "blockIds": [
+        "common-wiso-career-business",
+        "common-wiso-career-decision"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-CAREER-E08",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-wiso-career-business"
+      ],
+      "blockIds": [
+        "common-wiso-career-business",
+        "common-wiso-career-decision"
+      ]
+    }
+  ],
+  "interview": [
+    {
+      "id": "common-wiso-career-talk-path",
+      "prompt": "Recherchiere für ein berufliches Ziel eine passende Weiterbildung oder Fortbildung. Nutze zum Beispiel die verlinkten BA-, BIBB- und Prüfungsverordnungsquellen. Halte Ziel, Inhalt, Zugangsvoraussetzungen, Lernform, Zeit, Kosten, Quelle und Prüfdatum fest. Nenne eine offene Frage an Anbieter oder Prüfungsstelle. Ohne weitere Suche kannst du das bereitgestellte Beispiel Bachelor Professional in IT auswerten und fehlende Angaben ausdrücklich offenlassen.",
+      "objectiveIds": [
+        "common-wiso-career-path"
+      ],
+      "blockIds": [
+        "common-wiso-career-path",
+        "common-wiso-career-decision"
+      ],
+      "keyPoints": [
+        "Passung zum beruflichen Ziel begründen.",
+        "Zugang anhand aktueller zuständiger Quelle prüfen und Kurs von Prüfung trennen.",
+        "Quelle/Datum und fehlende konkrete Angaben notieren."
+      ],
+      "acceptableAlternatives": [
+        "Andere passende belegte Weiterbildung mit denselben Prüfkriterien.",
+        "Das bereitgestellte Beispiel nutzen und individuelle Zulassung, Anbieterzeit und Kosten als offen kennzeichnen."
+      ],
+      "misconceptions": [
+        "Kurswerbung als individuelle Zulassungsentscheidung ausgeben."
+      ],
+      "sampleAnswer": "Für spätere Fach- und Koordinationsaufgaben prüfe ich den Bachelor Professional in IT. BIBB und § 2 nennen das Profil bzw. mögliche Zugangswege. Meine individuellen Nachweise lasse ich durch die IHK prüfen. Zeit, Kosten und Lernform muss ich am konkreten Angebot ergänzen; Quelle und heutiges Prüfdatum notiere ich.",
+      "followUp": "Welche Angabe muss die Prüfungsstelle bestätigen und welche der konkrete Kursanbieter?"
+    },
+    {
+      "id": "common-wiso-career-talk-life",
+      "prompt": "Vergleiche Sams fiktive Kurse Nord an Dienstag/Donnerstag und Süd am verfügbaren Samstag. Beide sind gleich geeignet und gleich teuer, Sorgearbeit liegt an den beiden Abenden. Begründe eine vorläufige Wahl und nenne zwei weitere persönliche Kriterien, ohne private Angaben preiszugeben.",
+      "objectiveIds": [
+        "common-wiso-career-life"
+      ],
+      "blockIds": [
+        "common-wiso-career-life",
+        "common-wiso-career-decision"
+      ],
+      "keyPoints": [
+        "Süd hat nach den Fallangaben weniger Terminkonflikte.",
+        "Gesamte Lernzeit, Erholung, Fahrt oder Betreuung prüfen.",
+        "Keine Rollenverteilung aus Geschlecht oder Familienstatus ableiten."
+      ],
+      "acceptableAlternatives": [
+        "Begründete andere Wahl nach ausdrücklich veränderten und realistischen Annahmen."
+      ],
+      "misconceptions": [
+        "Online oder Teilzeit als Synonym für beliebig wenig Zeit behandeln."
+      ],
+      "sampleAnswer": "Süd passt zunächst besser, weil Samstag frei ist. Ich prüfe zusätzlich Vorbereitungszeit und Erholung sowie eine verlässliche Aufgabenverteilung. Meine Wahl folgt den eigenen Zielen und der Zeitplanung, nicht einem vorgegebenen Rollenbild.",
+      "followUp": "Welche neue Information könnte deine vorläufige Wahl ändern?"
+    },
+    {
+      "id": "common-wiso-career-talk-business",
+      "prompt": "Prüfe Sams Idee für IT-Einweisungen kleiner Vereine: Nenne Kundennutzen, zwei benötigte Mittel und ein wesentliches Risiko. Rechne den Rest aus 1.500 Euro Startmitteln abzüglich 600 Euro Ausrüstung und 400 Euro fälligen Ausgaben. Plane einen nächsten Prüfschritt.",
+      "objectiveIds": [
+        "common-wiso-career-business"
+      ],
+      "blockIds": [
+        "common-wiso-career-business",
+        "common-wiso-career-decision"
+      ],
+      "keyPoints": [
+        "Nutzen: sicherere Anwendung vorhandener Vereinssoftware.",
+        "Mittel etwa Fachwissen, Zeit, Technik und Liquidität.",
+        "500 Euro verbleiben; Bedarf oder Zahlungsrisiko konkret prüfen."
+      ],
+      "acceptableAlternatives": [
+        "Anderes plausibles Risiko mit passender Prüfmaßnahme."
+      ],
+      "misconceptions": [
+        "Erwartete Einnahmen als bereits verfügbare Mittel ausgeben."
+      ],
+      "sampleAnswer": "Vereine sollen ihre Software sicherer nutzen. Sam braucht Wissen, Zeit, geeignete Technik und Zahlungsmittel. Im Modell bleiben 500 Euro. Weil noch keine Aufträge vorliegen, prüft er Bedarf und Zahlungsbereitschaft mit einigen Zielkunden vor weiteren Ausgaben.",
+      "followUp": "Was würde eine verspätete Kundenzahlung in deiner Planung verändern?"
+    }
+  ],
+  "cards": [
+    {
+      "id": "common-wiso-career-card-research",
+      "front": "Welche Angaben gehören in eine überprüfbare Weiterbildungsrecherche?",
+      "back": "Ziel, passende Inhalte, Zugangsvoraussetzungen, Lernform, Zeit, Gesamtkosten, Quelle und Prüfdatum sowie offene Fragen. Bei geregelten Prüfungen die zuständige Prüfungsstelle einbeziehen.",
+      "objectiveIds": [
+        "common-wiso-career-path"
+      ],
+      "blockIds": [
+        "common-wiso-career-path"
+      ]
+    },
+    {
+      "id": "common-wiso-career-card-admission",
+      "front": "Sind Kursplatz und Prüfungszulassung dasselbe?",
+      "back": "Nein. Der Anbieter organisiert die Vorbereitung; die zuständige Prüfungsstelle beurteilt die Zulassung nach den geltenden Regeln. Ein Kursplatz ist auch kein bestandener Abschluss.",
+      "objectiveIds": [
+        "common-wiso-career-path"
+      ],
+      "blockIds": [
+        "common-wiso-career-path"
+      ]
+    },
+    {
+      "id": "common-wiso-career-card-life",
+      "front": "Welche persönlichen Kriterien gehören in die Entwicklungsplanung?",
+      "back": "Eigene Interessen und Stärken, gewünschte Aufgaben, verfügbare Zeit, Geld, Sorgearbeit, Erholung und Unterstützung. Nutze individuelle Ziele statt starrer Rollenbilder.",
+      "objectiveIds": [
+        "common-wiso-career-life"
+      ],
+      "blockIds": [
+        "common-wiso-career-life"
+      ]
+    },
+    {
+      "id": "common-wiso-career-card-online",
+      "front": "Warum muss auch ein Onlinekurs in den Wochenplan passen?",
+      "back": "Live-Termine können festliegen; Übungen und Vorbereitung kosten zusätzliche Zeit. Prüfe den gesamten Umfang zusammen mit Arbeit und persönlichen Verpflichtungen.",
+      "objectiveIds": [
+        "common-wiso-career-life"
+      ],
+      "blockIds": [
+        "common-wiso-career-life"
+      ]
+    },
+    {
+      "id": "common-wiso-career-card-benefit",
+      "front": "Was unterscheidet Kundennutzen von benötigten Mitteln?",
+      "back": "Nutzen löst ein konkretes Problem der Zielgruppe. Mittel wie Wissen, Zeit, Technik und Geld ermöglichen die Leistung. Eine Webseite allein beschreibt noch keinen Kundennutzen.",
+      "objectiveIds": [
+        "common-wiso-career-business"
+      ],
+      "blockIds": [
+        "common-wiso-career-business"
+      ]
+    },
+    {
+      "id": "common-wiso-career-card-liquidity",
+      "front": "Warum ist erwarteter Umsatz nicht mit Liquidität gleichzusetzen?",
+      "back": "Liquidität meint verfügbare Zahlungsmittel für fällige Zahlungen. Erwartete oder noch unbezahlte Aufträge sind noch kein Geldzufluss. Plane Ausgaben, Zahlungstermine und Reserven.",
+      "objectiveIds": [
+        "common-wiso-career-business"
+      ],
+      "blockIds": [
+        "common-wiso-career-business",
+        "common-wiso-career-decision"
+      ]
+    }
+  ],
+  "review": {
+    "status": "reviewed",
+    "checkedAt": "2026-11-11"
+  }
+}

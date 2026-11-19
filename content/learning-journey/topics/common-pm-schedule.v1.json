@@ -1,0 +1,489 @@
+{
+  "schemaVersion": 1,
+  "id": "common-pm-schedule",
+  "version": "1.0.0",
+  "title": "Termine, Abhängigkeiten und Kapazität",
+  "fieldId": "PM",
+  "scope": "common",
+  "prerequisites": [
+    "common-pm-planning"
+  ],
+  "sourceIds": [
+    "pm-nasa-planning",
+    "pm-ms-schedule",
+    "pm-ms-critical",
+    "ec-pm2-artefacts"
+  ],
+  "sources": [
+    {
+      "id": "pm-nasa-planning",
+      "title": "NASA: Technical Planning",
+      "url": "https://www.nasa.gov/reference/6-1-technical-planning/",
+      "checkedAt": "2026-11-11",
+      "note": "Öffentliche HTML-Fassung zur Zerlegung von Arbeit, realistischen Ressourcen, Schätzannahmen und aufeinander abgestimmter Planung geprüft. Alle Zahlen und Arbeitspakete sind eigene vereinfachte Übungsfälle."
+    },
+    {
+      "id": "pm-ms-schedule",
+      "title": "Microsoft: How Project schedules tasks",
+      "url": "https://support.microsoft.com/en-us/project/how-project-schedules-tasks-behind-the-scenes",
+      "checkedAt": "2026-11-11",
+      "note": "Zusammenhang von Arbeit, Dauer, zugeordneten Ressourcen, Verfügbarkeiten und Abhängigkeiten geprüft. Produktunabhängige Handrechnung mit ausdrücklich genannten Vereinfachungen."
+    },
+    {
+      "id": "pm-ms-critical",
+      "title": "Microsoft: Show the critical path of your project",
+      "url": "https://support.microsoft.com/en-us/project/show-the-critical-path-of-your-project-in-project",
+      "checkedAt": "2026-11-11",
+      "note": "Kritischer Pfad und Puffer anhand der offiziellen Produkterklärung geprüft. Eigenes kleines Netz ohne Kalenderunterbrechungen; zusätzliche Ressourcenkonflikte werden separat erklärt."
+    },
+    {
+      "id": "ec-pm2-artefacts",
+      "title": "Europäische Kommission: PM²-Artefakte",
+      "url": "https://pm2.europa.eu/pm2-artefacts_en",
+      "checkedAt": "2026-11-11",
+      "note": "Öffentliches Verzeichnis nennt Projektauftrag, Stakeholder-Matrix, Arbeitsplan, Kommunikations- und Abnahmeplanung sowie Entscheidungsprotokoll. Eigene kleine Beispiele übertragen diese Hilfsmittel ohne Vorlagenkopie."
+    }
+  ],
+  "objectives": [
+    {
+      "id": "common-pm-schedule-dependencies",
+      "text": "Abhängigkeiten und einen einfachen zeitlichen Ablauf bestimmen."
+    },
+    {
+      "id": "common-pm-schedule-capacity",
+      "text": "Mit vorgegebener Kapazität eine realistische Dauer berechnen."
+    },
+    {
+      "id": "common-pm-schedule-milestones",
+      "text": "Meilensteine und mögliche Terminengpässe erkennen."
+    }
+  ],
+  "caseStudy": {
+    "title": "Nordlicht IT plant ein Serviceticket-Portal",
+    "text": "Für einen kleinen Ausschnitt der fiktiven Portaleinführung plant Nordlicht IT vier Vorgänge: A Anforderungen klären, B System einrichten, C Anleitung vorbereiten und D gemeinsam testen. Dieser bewusst vereinfachte Teilablauf ist ein eigenes Terminbeispiel und ersetzt nicht die 80-Stunden-Gesamtplanung aus dem vorherigen Thema."
+  },
+  "blocks": [
+    {
+      "id": "common-pm-schedule-dependencies",
+      "title": "1. Voraussetzungen in einen Ablauf übersetzen",
+      "objectiveIds": [
+        "common-pm-schedule-dependencies"
+      ],
+      "sourceIds": [
+        "pm-nasa-planning",
+        "pm-ms-schedule"
+      ],
+      "paragraphs": [
+        "Ein Vorgang beschreibt Arbeit mit einer Dauer. Eine Abhängigkeit legt fest, welche Voraussetzung für einen anderen Vorgang erfüllt sein muss. Hier verwenden wir eine einfache Ende-Anfang-Beziehung ohne Zeitabstand: Der Nachfolger kann beginnen, sobald der Vorgänger beendet ist.",
+        "Im eigenen Ablauf dauert A zwei Arbeitstage. Danach dürfen B mit drei Tagen und C mit einem Tag beginnen. D dauert zwei Tage und braucht sowohl B als auch C als abgeschlossene Vorgänger. Zunächst nehmen wir ausreichend getrennte Ressourcen an; Wochenenden, Feiertage und weitere Wartezeiten bleiben in dieser Modellrechnung außen vor.",
+        "Rechne vom Start vorwärts: A belegt die ersten zwei Tage. B läuft danach drei Tage und endet nach Tag fünf; C braucht einen Tag und endet nach Tag drei. D wartet auf beide Ergebnisse, beginnt daher nach Tag fünf und endet nach Tag sieben. Die Modellgesamtdauer ist 2 + max(3, 1) + 2 = 7 Arbeitstage.",
+        "Die Summe aller Vorgangsdauern wäre acht Tage. Sie ist hier nicht die Gesamtdauer, weil B und C parallel laufen dürfen. Beginnt D vor dem Ende von B, würde eine fachliche Voraussetzung fehlen. Halte Vorgänger deshalb neben jeder Dauer fest."
+      ],
+      "example": {
+        "title": "Eigener Übungsfall",
+        "text": "A: 2 Tage, kein Vorgänger. B: 3 Tage nach A. C: 1 Tag nach A. D: 2 Tage nach B und C. Bei ausreichenden Ressourcen beträgt der Ablauf sieben Arbeitstage."
+      },
+      "misconception": {
+        "claim": "Die Projektdauer ist bei parallelen Vorgängen gleich der Summe ihrer einzelnen Dauern.",
+        "correction": "Parallelität verkürzt die verstrichene Zeit. Am Zusammenführungspunkt zählt das zuletzt fertige benötigte Ergebnis."
+      },
+      "takeaway": "Prüfe Vorgänger und rechne am Zusammenführungspunkt mit dem spätesten erforderlichen Ende."
+    },
+    {
+      "id": "common-pm-schedule-capacity",
+      "title": "2. Nutzbare Kapazität in Dauer umrechnen",
+      "objectiveIds": [
+        "common-pm-schedule-capacity"
+      ],
+      "sourceIds": [
+        "pm-ms-schedule"
+      ],
+      "paragraphs": [
+        "Kapazität ist die tatsächlich verfügbare Arbeitsmenge pro Zeitraum. Ziehe andere Aufgaben und Abwesenheiten ab. Eine Person mit acht Arbeitsstunden täglich kann für das Portal beispielsweise nur vier Stunden frei haben. Für die Projektplanung zählen diese vier Stunden.",
+        "Im einfachen Modell gilt: Dauer = Aufwand ÷ nutzbare Kapazität pro Arbeitstag. 24 Personenstunden bei sechs verfügbaren Stunden pro Tag ergeben 24 ÷ 6 = 4 Arbeitstage. Zwei geeignete Personen mit je drei Stunden bringen zusammen ebenfalls sechs Stunden pro Tag, wenn die Arbeit passend teilbar ist.",
+        "Bei einem Gesamtaufwand von 80 Personenstunden und zwei Personen mit je vier Projektstunden pro Tag sind rechnerisch 80 ÷ (2 × 4) = 10 Arbeitstage nötig. Fällt eine Person weg, bleiben vier Stunden täglich und die gleiche teilbare Arbeitsmenge braucht 20 Arbeitstage. Der Aufwand selbst bleibt in diesem Modell 80 Stunden.",
+        "Die Rechnung setzt voraus, dass Arbeit und Fähigkeiten passend verteilt werden können. Reihenfolge, gemeinsame Spezialisten oder zusätzliche Abstimmung können die Dauer erhöhen. Liefert die Rechnung 3,5 Arbeitstage, endet die Arbeit bei kontinuierlicher Kapazität während des vierten Arbeitstags; eine Planung in ganzen belegten Arbeitstagen benötigt vier Tage."
+      ],
+      "example": {
+        "title": "Eigener Übungsfall",
+        "text": "14 Personenstunden bei vier Stunden täglicher Projektkapazität ergeben 3,5 Arbeitstage. Werden nur ganze verfügbare Arbeitstage geplant, sind vier Tage zu reservieren; es entstehen dadurch nicht automatisch 16 Stunden tatsächlicher Arbeit."
+      },
+      "misconception": {
+        "claim": "Die vertragliche Arbeitszeit einer Person ist identisch mit ihrer freien Kapazität für jedes Projekt.",
+        "correction": "Andere Aufgaben und Abwesenheiten verringern die nutzbare Projektkapazität."
+      },
+      "takeaway": "Rechne mit verfügbarer Projektzeit, passenden Einheiten und ausdrücklich genannten Annahmen."
+    },
+    {
+      "id": "common-pm-schedule-milestones",
+      "title": "3. Meilensteine und kritischen Pfad erkennen",
+      "objectiveIds": [
+        "common-pm-schedule-milestones"
+      ],
+      "sourceIds": [
+        "pm-ms-critical",
+        "ec-pm2-artefacts"
+      ],
+      "paragraphs": [
+        "Ein Meilenstein ist ein wichtiger überprüfbarer Zustand oder ein Entscheidungspunkt, etwa 'Testumgebung freigegeben'. Im Ablaufplan hat er selbst keine Bearbeitungsdauer. Die nötige Prüfung und Vorbereitung sind eigene Vorgänge mit Aufwand. Ein Datum ohne beschriebenen Zustand sagt noch nicht, was erreicht sein muss.",
+        "Ein kritischer Pfad ist im hier verwendeten einfachen Netz eine längste Kette abhängiger Vorgänge. Sie bestimmt den frühesten Projektabschluss. Ihre Vorgänge haben ohne zusätzlich eingebauten Terminpuffer keinen Spielraum für eine Verzögerung, die den Endtermin unverändert lässt. Es können mehrere gleich lange kritische Pfade existieren.",
+        "Im Netz A 2 Tage → B 3 Tage und C 1 Tag parallel → D 2 Tage ist A-B-D mit sieben Tagen kritisch. A-C-D hat fünf Tage. C kann gegenüber seinem frühesten Ende zwei Tage später fertig werden, bevor D später starten müsste. Dieser Spielraum ist sein Gesamtpuffer im vereinfachten Netz.",
+        "Verlängert sich B um einen Tag, endet das Netz nach acht statt sieben Tagen. Wird C von einem auf drei Tage verlängert, bleiben es sieben Tage; beide Zweige sind dann gleich lang. Dauert C vier Tage, verschiebt sich das Ende auf acht Tage und der Weg über C bestimmt den Ablauf. Nach Änderungen muss der kritische Pfad neu geprüft werden."
+      ],
+      "example": {
+        "title": "Eigener Übungsfall",
+        "text": "Der Meilenstein 'gemeinsamer Test bestanden' liegt nach D. Dauert die erforderliche Prüfung zwei Tage, gehören diese Tage zum Vorgang D; der erreichte Meilenstein fügt nicht nochmals zwei Tage hinzu."
+      },
+      "misconception": {
+        "claim": "Ein Vorgang ohne aktuellen kritischen Pfad kann sich unbegrenzt verzögern, ohne den Endtermin zu beeinflussen.",
+        "correction": "Sein Puffer ist begrenzt. Nach dessen Verbrauch kann auch dieser Zweig den Endtermin bestimmen."
+      },
+      "takeaway": "Beschreibe Meilensteine als erreichte Zustände und überwache kritische Vorgänge sowie begrenzte Puffer."
+    },
+    {
+      "id": "common-pm-schedule-realistic",
+      "title": "4. Den Ablauf mit echten Verfügbarkeiten abgleichen",
+      "objectiveIds": [
+        "common-pm-schedule-dependencies",
+        "common-pm-schedule-capacity",
+        "common-pm-schedule-milestones"
+      ],
+      "sourceIds": [
+        "pm-ms-schedule",
+        "pm-nasa-planning"
+      ],
+      "paragraphs": [
+        "Fachlich mögliche Parallelität ist noch keine verfügbare Parallelität. Prüfe, ob benötigte Personen, Testgeräte und Umgebungen gleichzeitig bereitstehen. Wenn B und C im Fall dieselbe Person jeweils während ihrer gesamten Vorgangsdauer benötigen, können sie nicht parallel laufen.",
+        "Bei sonst unveränderten Dauern werden B und C dann nacheinander eingeplant: A zwei Tage, B drei Tage, C ein Tag, D zwei Tage ergeben acht Arbeitstage. Die ursprüngliche Sieben-Tage-Rechnung war an getrennte Ressourcen gebunden. Eine fachliche Abhängigkeit zwischen B und C entsteht dadurch nicht; es handelt sich um einen Ressourcenkonflikt.",
+        "Ergänze den Arbeitskalender erst nach der Modellrechnung. Beginnen sechs Arbeitstage an einem Montag, wird nur Montag bis Freitag gearbeitet und gibt es keine Feiertage, liegt das Ende am folgenden Montag. Externe Freigaben und Lieferzeiten können zusätzliche Warteabschnitte verursachen, auch ohne aktive Projektarbeit.",
+        "Wird ein Termin unrealistisch, erkläre Ursache und Folgen. Prüfe etwa geeignete zusätzliche Kapazität, eine andere Reihenfolge unabhängiger Arbeit oder eine abgestimmte Umfangs- beziehungsweise Terminänderung. Dokumentiere die Entscheidung und aktualisiere den Plan. Ein neuer Balken im Diagramm beseitigt weder fehlende Kapazität noch eine nötige Voraussetzung."
+      ],
+      "example": {
+        "title": "Eigener Übungsfall",
+        "text": "Die Anleitung könnte fachlich gleichzeitig mit der Einrichtung entstehen, aber beide benötigen dieselbe Fachkraft. Die Leitung plant sie nacheinander oder prüft eine geeignete zweite Person; sie verspricht nicht weiter sieben Tage ohne Grundlage."
+      },
+      "misconception": {
+        "claim": "Zwei Balken nebeneinander im Plan beweisen, dass beide Vorgänge gleichzeitig durchgeführt werden können.",
+        "correction": "Parallelität muss sowohl fachlich möglich als auch durch reale Ressourcen gedeckt sein."
+      },
+      "takeaway": "Verbinde Abhängigkeiten, Kapazität, Kalender und erreichbare Meilensteine zu einem plausiblen Ablauf."
+    }
+  ],
+  "questionFile": "questions/common-pm-schedule.v1.csv",
+  "quiz": {
+    "questionIds": [
+      "LJ-PM-SCHEDULE-Q01",
+      "LJ-PM-SCHEDULE-Q02",
+      "LJ-PM-SCHEDULE-Q03",
+      "LJ-PM-SCHEDULE-Q04",
+      "LJ-PM-SCHEDULE-Q05",
+      "LJ-PM-SCHEDULE-Q06"
+    ]
+  },
+  "exam": {
+    "questionIds": [
+      "LJ-PM-SCHEDULE-E01",
+      "LJ-PM-SCHEDULE-E02",
+      "LJ-PM-SCHEDULE-E03",
+      "LJ-PM-SCHEDULE-E04",
+      "LJ-PM-SCHEDULE-E05",
+      "LJ-PM-SCHEDULE-E06",
+      "LJ-PM-SCHEDULE-E07",
+      "LJ-PM-SCHEDULE-E08"
+    ],
+    "passPercent": 80,
+    "scoring": "all-or-nothing-per-question",
+    "timed": false
+  },
+  "questionLinks": [
+    {
+      "questionId": "LJ-PM-SCHEDULE-Q01",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-pm-schedule-dependencies"
+      ],
+      "blockIds": [
+        "common-pm-schedule-dependencies"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-SCHEDULE-Q02",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-pm-schedule-dependencies"
+      ],
+      "blockIds": [
+        "common-pm-schedule-dependencies"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-SCHEDULE-Q03",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-pm-schedule-capacity"
+      ],
+      "blockIds": [
+        "common-pm-schedule-capacity"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-SCHEDULE-Q04",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-pm-schedule-capacity"
+      ],
+      "blockIds": [
+        "common-pm-schedule-capacity"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-SCHEDULE-Q05",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-pm-schedule-milestones"
+      ],
+      "blockIds": [
+        "common-pm-schedule-milestones"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-SCHEDULE-Q06",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-pm-schedule-milestones"
+      ],
+      "blockIds": [
+        "common-pm-schedule-milestones"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-SCHEDULE-E01",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-pm-schedule-dependencies"
+      ],
+      "blockIds": [
+        "common-pm-schedule-dependencies"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-SCHEDULE-E02",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-pm-schedule-dependencies"
+      ],
+      "blockIds": [
+        "common-pm-schedule-dependencies",
+        "common-pm-schedule-realistic"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-SCHEDULE-E03",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-pm-schedule-capacity"
+      ],
+      "blockIds": [
+        "common-pm-schedule-capacity"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-SCHEDULE-E04",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-pm-schedule-capacity"
+      ],
+      "blockIds": [
+        "common-pm-schedule-capacity"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-SCHEDULE-E05",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-pm-schedule-milestones"
+      ],
+      "blockIds": [
+        "common-pm-schedule-milestones"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-SCHEDULE-E06",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-pm-schedule-milestones"
+      ],
+      "blockIds": [
+        "common-pm-schedule-milestones"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-SCHEDULE-E07",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-pm-schedule-milestones"
+      ],
+      "blockIds": [
+        "common-pm-schedule-milestones"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-SCHEDULE-E08",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-pm-schedule-dependencies",
+        "common-pm-schedule-capacity",
+        "common-pm-schedule-milestones"
+      ],
+      "blockIds": [
+        "common-pm-schedule-realistic"
+      ]
+    }
+  ],
+  "interview": [
+    {
+      "id": "common-pm-schedule-talk-dependencies",
+      "prompt": "Erkläre den Ablauf A 2 Tage, danach B 3 und C 1 Tag parallel, anschließend D 2 Tage nach beiden. Berechne die Dauer bei getrennten Ressourcen und bei einer gemeinsam benötigten Person für B und C.",
+      "objectiveIds": [
+        "common-pm-schedule-dependencies"
+      ],
+      "blockIds": [
+        "common-pm-schedule-dependencies",
+        "common-pm-schedule-realistic"
+      ],
+      "keyPoints": [
+        "D wartet auf beide Vorgänger.",
+        "Getrennte Ressourcen: 2 + max(3,1) + 2 = 7 Tage.",
+        "Gemeinsame durchgehend benötigte Person: 2 + 3 + 1 + 2 = 8 Tage."
+      ],
+      "acceptableAlternatives": [
+        "C vor B bearbeiten, sofern sonstige Voraussetzungen passen; Gesamtdauer bleibt acht Tage."
+      ],
+      "misconceptions": [
+        "Fachliche Unabhängigkeit mit garantierter gleichzeitiger Verfügbarkeit verwechseln."
+      ],
+      "sampleAnswer": "Mit getrennten Ressourcen endet A nach zwei Tagen, B nach fünf und C nach drei. D beginnt nach Tag fünf und endet nach sieben Tagen. Brauchen B und C dieselbe Person durchgehend, werden sie nacheinander geplant. Dann dauert der Ablauf acht Arbeitstage.",
+      "followUp": "Welche Information würde belegen, dass B und C doch gleichzeitig möglich sind?"
+    },
+    {
+      "id": "common-pm-schedule-talk-capacity",
+      "prompt": "Berechne für 80 Personenstunden die Modell-Dauer mit zwei Personen zu je vier Projektstunden täglich. Berechne danach den Ausfall einer Person und nenne eine Grenze beider Rechnungen.",
+      "objectiveIds": [
+        "common-pm-schedule-capacity"
+      ],
+      "blockIds": [
+        "common-pm-schedule-capacity"
+      ],
+      "keyPoints": [
+        "Tageskapazität zunächst acht Stunden, danach vier Stunden.",
+        "Zehn beziehungsweise zwanzig Arbeitstage ermitteln.",
+        "Teilbarkeit, geeignete Fähigkeiten und fehlende zusätzliche Engpässe nennen."
+      ],
+      "acceptableAlternatives": [
+        "Kalender und Wartezeiten als zusätzliche Grenzen benennen."
+      ],
+      "misconceptions": [
+        "Mit voller Vertragsarbeitszeit rechnen, obwohl nur Projektkapazität angegeben ist."
+      ],
+      "sampleAnswer": "Anfangs gibt es acht Projektstunden täglich, also 80/8 = zehn Arbeitstage. Mit einer Person bleiben vier Stunden täglich, also 20 Arbeitstage. Die Arbeitsmenge bleibt im Modell 80 Stunden. Die Rechnung setzt passende Teilbarkeit voraus; Abhängigkeiten und Wartezeiten können den Ablauf verlängern.",
+      "followUp": "Welche zusätzlichen Angaben brauchst du für ein konkretes Kalenderdatum?"
+    },
+    {
+      "id": "common-pm-schedule-talk-milestones",
+      "prompt": "Nenne einen prüfbaren Portal-Meilenstein. Bestimme im Netz A 2 → B 3 und C 1 parallel → D 2 den kritischen Pfad und C-Puffer. Erkläre die Folgen einer Verlängerung von C auf vier Tage.",
+      "objectiveIds": [
+        "common-pm-schedule-milestones"
+      ],
+      "blockIds": [
+        "common-pm-schedule-milestones",
+        "common-pm-schedule-realistic"
+      ],
+      "keyPoints": [
+        "Erreichten Zustand statt Bearbeitungszeit formulieren.",
+        "A-B-D sieben Tage und C-Puffer zwei Tage nennen.",
+        "Bei C vier Tage wird A-C-D mit acht Tagen bestimmend."
+      ],
+      "acceptableAlternatives": [
+        "Ein anderer konkreter Meilenstein mit nachvollziehbaren Voraussetzungen."
+      ],
+      "misconceptions": [
+        "Puffer eines Zweigs als unbegrenzte Reserve für alle Vorgänge behandeln."
+      ],
+      "sampleAnswer": "Ein Meilenstein lautet 'gemeinsamer Test bestanden'. Zunächst bestimmt A-B-D mit sieben Tagen den Abschluss; C hat zwei Tage Puffer. Dauert C statt eines Tages vier Tage, beträgt A-C-D acht Tage. Der bisherige Puffer reicht nicht mehr, und der Endtermin verschiebt sich im Modell um einen Tag.",
+      "followUp": "Wie würdest du eine solche Terminänderung gegenüber der Auftraggeberin begründen?"
+    }
+  ],
+  "cards": [
+    {
+      "id": "common-pm-schedule-card-dependency",
+      "front": "Wann startet ein Vorgang mit mehreren Ende-Anfang-Vorgängern?",
+      "back": "Nachdem alle benötigten Vorgänger abgeschlossen sind. Ohne zusätzlichen Abstand zählt das späteste ihrer Enden.",
+      "objectiveIds": [
+        "common-pm-schedule-dependencies"
+      ],
+      "blockIds": [
+        "common-pm-schedule-dependencies"
+      ]
+    },
+    {
+      "id": "common-pm-schedule-card-parallel",
+      "front": "Welche zwei Voraussetzungen braucht Parallelität?",
+      "back": "Die Arbeit muss fachlich gleichzeitig möglich sein, und die benötigten Personen sowie anderen Ressourcen müssen gleichzeitig verfügbar sein.",
+      "objectiveIds": [
+        "common-pm-schedule-dependencies"
+      ],
+      "blockIds": [
+        "common-pm-schedule-dependencies",
+        "common-pm-schedule-realistic"
+      ]
+    },
+    {
+      "id": "common-pm-schedule-card-capacity",
+      "front": "Welche Zeit zählt als Projektkapazität?",
+      "back": "Die tatsächlich für dieses Projekt verfügbare Arbeitszeit nach Berücksichtigung anderer Aufgaben und Abwesenheiten.",
+      "objectiveIds": [
+        "common-pm-schedule-capacity"
+      ],
+      "blockIds": [
+        "common-pm-schedule-capacity"
+      ]
+    },
+    {
+      "id": "common-pm-schedule-card-formula",
+      "front": "Wie werden 80 Personenstunden mit zwei Personen zu je vier Stunden täglich gerechnet?",
+      "back": "80 ÷ (2 × 4) = 10 Arbeitstage, wenn Arbeit passend teilbar ist und keine weiteren Engpässe oder Wartezeiten entstehen.",
+      "objectiveIds": [
+        "common-pm-schedule-capacity"
+      ],
+      "blockIds": [
+        "common-pm-schedule-capacity"
+      ]
+    },
+    {
+      "id": "common-pm-schedule-card-milestone",
+      "front": "Was ist ein Meilenstein?",
+      "back": "Ein wichtiger überprüfbarer Zustand oder Entscheidungspunkt ohne eigene Bearbeitungsdauer im Plan. Nötige Vorbereitung und Prüfung sind Vorgänge.",
+      "objectiveIds": [
+        "common-pm-schedule-milestones"
+      ],
+      "blockIds": [
+        "common-pm-schedule-milestones"
+      ]
+    },
+    {
+      "id": "common-pm-schedule-card-critical",
+      "front": "Was bedeutet kritischer Pfad im einfachen Netz?",
+      "back": "Eine längste Abhängigkeitskette, die den frühesten Abschluss bestimmt. Verzögerungen ohne Puffer verschieben den Endtermin; mehrere gleich lange kritische Pfade sind möglich.",
+      "objectiveIds": [
+        "common-pm-schedule-milestones"
+      ],
+      "blockIds": [
+        "common-pm-schedule-milestones"
+      ]
+    }
+  ],
+  "review": {
+    "status": "reviewed",
+    "checkedAt": "2026-11-11"
+  }
+}

@@ -1,0 +1,477 @@
+{
+  "schemaVersion": 1,
+  "version": "1.0.0",
+  "id": "fiae-lf12a-acceptance",
+  "title": "Ergebnisse prüfen und abnehmen lassen",
+  "fieldId": "LF12a",
+  "scope": "specialization",
+  "prerequisites": [
+    "fiae-lf12a-implementation"
+  ],
+  "objectives": [
+    {
+      "id": "fiae-lf12a-acceptance-evidence",
+      "text": "Für die vereinbarten Abnahmekriterien passende Prüfergebnisse und bekannte Abweichungen zusammenstellen."
+    },
+    {
+      "id": "fiae-lf12a-acceptance-present",
+      "text": "Das Projektergebnis zielgruppengerecht vorführen und technische Entscheidungen verständlich begründen."
+    },
+    {
+      "id": "fiae-lf12a-acceptance-protocol",
+      "text": "Ein Abnahmeprotokoll mit Ergebnis, offenen Punkten und Zuständigkeiten erstellen."
+    }
+  ],
+  "caseStudy": {
+    "title": "Was darf die Leitung heute abnehmen?",
+    "text": "Für den korrigierten Stand R2 liegen Prüfprotokolle vor. Die Werkstattleitung möchte wissen, ob sie den Ticketablauf übernehmen kann. Der Nachweis zur selbstständigen Bedienung entsteht erst bei der anschließenden Einweisung."
+  },
+  "sourceIds": [
+    "ec-pm2-artefacts",
+    "lf12a-ms-testing",
+    "lf12a-gds-usability"
+  ],
+  "sources": [
+    {
+      "id": "ec-pm2-artefacts",
+      "title": "Europäische Kommission: PM²-Artefakte",
+      "url": "https://pm2.europa.eu/pm2-artefacts_en",
+      "checkedAt": "2026-11-19",
+      "note": "Artefakte zu Auftrag, Arbeitsplan, Änderung, Abnahme, Übergang und Projektabschluss geprüft. Die Werkstattunterlagen und Entscheidungen im Beispiel sind selbst erstellt."
+    },
+    {
+      "id": "lf12a-ms-testing",
+      "title": "Microsoft: Architecture strategies for testing",
+      "url": "https://learn.microsoft.com/en-us/azure/well-architected/operational-excellence/testing",
+      "checkedAt": "2026-11-19",
+      "note": "Prüfebenen, Benutzerabläufe, Teststände und Prüfumgebungen geprüft. Fälle und Ergebnisse der Reparaturwerkstatt sind erfunden."
+    },
+    {
+      "id": "lf12a-gds-usability",
+      "title": "Government Digital Service: Usability benchmarking a website or whole service",
+      "url": "https://www.gov.uk/service-manual/measuring-success/usability-benchmarking-a-website-or-whole-service",
+      "checkedAt": "2026-11-19",
+      "note": "Aufgabenbasierte Beobachtung, Erfolgsquote und Bearbeitungsdauer geprüft. Schulungsaufträge und Schwellen sind eigene Beispiele."
+    }
+  ],
+  "blocks": [
+    {
+      "id": "fiae-lf12a-acceptance-block-1",
+      "title": "1. Eine Tabelle vom Kriterium zum Beleg aufbauen",
+      "objectiveIds": [
+        "fiae-lf12a-acceptance-evidence"
+      ],
+      "sourceIds": [
+        "ec-pm2-artefacts",
+        "lf12a-ms-testing",
+        "lf12a-gds-usability"
+      ],
+      "paragraphs": [
+        "Übertrage die bestätigten Kriterien aus dem Auftrag. Lege pro Zeile fest, welcher Stand, welche Rolle und welche Eingabe geprüft werden. Notiere Soll, beobachtetes Ist, Belegkennung und Bewertung. Eine belegte Funktion beantwortet eine konkrete Frage. Andere Kriterien brauchen eigene Nachweise.",
+        "R2 besteht F1, wenn ein gültiger Modellauftrag gespeichert und nach erneutem Öffnen mit denselben Angaben angezeigt wird. F2 verlangt bei leerer Gerätekennung einen Hinweis und unveränderten Bestand. Für S1 sollen drei von vier Personen nach der Einweisung einen Fall selbstständig in höchstens 120 Sekunden erledigen. Bis dahin steht S1 auf „offen“."
+      ],
+      "example": {
+        "title": "Aus dem Werkstattprojekt",
+        "text": "F2, R2, Bestand vorher 12, Versuch ohne Gerätekennung, Hinweis sichtbar, Bestand nachher 12. Die Prüferin kann diese Zeile gegen den vereinbarten Negativfall halten."
+      },
+      "misconception": {
+        "claim": "Ein offener Prüffall ist bereits ein nachgewiesener Fehler.",
+        "correction": "Unterscheide „noch nicht geprüft“ von „geprüft und abweichend“. Die nächste Aktion unterscheidet sich."
+      },
+      "takeaway": "Erst der Vergleich von Soll und Ist am bezeichneten Stand trägt die Bewertung."
+    },
+    {
+      "id": "fiae-lf12a-acceptance-block-2",
+      "title": "2. Der richtigen Zielgruppe den richtigen Nachweis zeigen",
+      "objectiveIds": [
+        "fiae-lf12a-acceptance-present"
+      ],
+      "sourceIds": [
+        "lf12a-ms-testing",
+        "lf12a-gds-usability"
+      ],
+      "paragraphs": [
+        "Beginne die Vorführung mit einer vertrauten Aufgabe. Die Annahme möchte erleben, wie sie G-17 meldet, die Ticketkennung notiert und das Ticket wieder öffnet. Zeige auch eine fehlende Pflichtangabe und den Weg zurück zur gültigen Meldung. Beschreibe die Folgen für den Arbeitsablauf.",
+        "Der Betrieb braucht einen anderen Blick auf denselben Fall. Zeige den Stand, das Testprotokoll und die Stelle im technischen Blatt, an der Datenzuordnung und Rechte erklärt werden. Begründe eine Entscheidung mit dem beobachtbaren Nutzen. Eine gemeinsame Gültigkeitsregel in der Fachfunktion hält die Prüfung an der Speicherstelle konsistent."
+      ],
+      "example": {
+        "title": "Aus dem Werkstattprojekt",
+        "text": "Der Leitung zeigt die Entwicklerin die wieder geöffnete Meldung und erklärt, dass die frühere Zweiterfassung entfällt. Die technische Prüfung führt sie bei Rückfragen am Protokoll vor. Ein eigenes Üben in der Schulung liefert später den Bediennachweis."
+      },
+      "misconception": {
+        "claim": "Eine flüssige Vorführung durch die Entwicklerin belegt die selbstständige Arbeit der Annahme.",
+        "correction": "Die Vorführung erklärt den Ablauf. Das Schulungskriterium verlangt Beobachtungen bei den Übungspersonen."
+      },
+      "takeaway": "Begründe Technik über ihre Auswirkung auf Arbeit und Prüfbarkeit."
+    },
+    {
+      "id": "fiae-lf12a-acceptance-block-3",
+      "title": "3. Entscheidung und offene Punkte protokollieren",
+      "objectiveIds": [
+        "fiae-lf12a-acceptance-protocol"
+      ],
+      "sourceIds": [
+        "ec-pm2-artefacts"
+      ],
+      "paragraphs": [
+        "Führe Auftrag, Stand, Zeitpunkt, Beteiligte, Belege und Bewertung zusammen. Die entscheidungsbefugte Leitung dokumentiert im Modell, welche Ergebnisse sie übernimmt und welche Entscheidung noch aussteht. Das Protokoll trennt den nachgewiesenen Funktionsumfang vom offenen Schulungskriterium.",
+        "Jeder offene Punkt erhält Auswirkung, zuständige Rolle, Fälligkeit und Nachweis für den Abschluss. Falls ein kritisches Kriterium scheitert, kläre die vereinbarte Entscheidungsregel und bereite Nacharbeit und erneute Prüfung vor. Trage keine stillschweigende Freigabe durch die Entwicklerin ein."
+      ],
+      "example": {
+        "title": "Aus dem Werkstattprojekt",
+        "text": "„R2 funktional übernommen. S1 offen. Schichtleitung führt die Eigenaufgabe an Tag 5 durch, Leitung ergänzt die Gesamtentscheidung nach Sichtung der vier Ergebnisse.“ Diese Entscheidung beschreibt die Reichweite der bisherigen Übernahme."
+      },
+      "misconception": {
+        "claim": "Mit dem Versand des Protokolls gilt das ganze Projekt als freigegeben.",
+        "correction": "Wer im Modell entscheiden darf und welche Kriterien erfüllt sind, ergibt sich aus Auftrag und dokumentiertem Entscheid."
+      },
+      "takeaway": "Ein Protokoll benennt Entscheidung, Reichweite und den nächsten verantwortlichen Schritt."
+    },
+    {
+      "id": "fiae-lf12a-acceptance-block-4",
+      "title": "4. Bei einer Abweichung den nächsten Versuch vorbereiten",
+      "objectiveIds": [
+        "fiae-lf12a-acceptance-evidence",
+        "fiae-lf12a-acceptance-present",
+        "fiae-lf12a-acceptance-protocol"
+      ],
+      "sourceIds": [
+        "ec-pm2-artefacts",
+        "lf12a-ms-testing"
+      ],
+      "paragraphs": [
+        "Ein neuer Defekt während der Vorführung ändert den Befund. Sichere Testfall, Istwert und betroffenen Stand. Prüfe die Wirkung auf die Nutzung und auf die Entscheidung. Eine neue Version erhält einen neuen Nachweis. Ein alter Erfolgsbeleg zu R2 genügt nicht als Prüfung eines geänderten R3.",
+        "Spiele die Entscheidung im Gespräch durch. Der Leitung genügen für die Funktionsübernahme der gültige und der ungültige Kernfall, für den gesamten vereinbarten Pilot verlangt sie zusätzlich S1. Nach der Einweisung ergänzt die Schichtleitung das Protokoll und legt die Ergebnisse der Werkstattleitung zur Entscheidung vor."
+      ],
+      "example": {
+        "title": "Aus dem Werkstattprojekt",
+        "text": "Zeigt die erneut geöffnete Meldung wieder einen alten Wert, bleibt F1 abweichend. Die Entwicklerin korrigiert, prüft mit der Annahme an der neuen Version und legt der Leitung den ergänzten Beleg zur Entscheidung vor."
+      },
+      "misconception": {
+        "claim": "Eine abgezeichnete ältere Testreihe macht erneutes Prüfen nach einer Änderung überflüssig.",
+        "correction": "Nach einer Änderung müssen betroffene Anforderungen und Nebenwirkungen am neuen Stand geprüft werden."
+      },
+      "takeaway": "Halte die Entscheidung auf dem Stand der tatsächlich vorliegenden Belege."
+    }
+  ],
+  "questionFile": "questions/fiae-lf12a-acceptance.v1.csv",
+  "quiz": {
+    "questionIds": [
+      "LJ-LF12A-ACCEPTANCE-Q01",
+      "LJ-LF12A-ACCEPTANCE-Q02",
+      "LJ-LF12A-ACCEPTANCE-Q03",
+      "LJ-LF12A-ACCEPTANCE-Q04",
+      "LJ-LF12A-ACCEPTANCE-Q05",
+      "LJ-LF12A-ACCEPTANCE-Q06"
+    ]
+  },
+  "exam": {
+    "questionIds": [
+      "LJ-LF12A-ACCEPTANCE-E01",
+      "LJ-LF12A-ACCEPTANCE-E02",
+      "LJ-LF12A-ACCEPTANCE-E03",
+      "LJ-LF12A-ACCEPTANCE-E04",
+      "LJ-LF12A-ACCEPTANCE-E05",
+      "LJ-LF12A-ACCEPTANCE-E06",
+      "LJ-LF12A-ACCEPTANCE-E07",
+      "LJ-LF12A-ACCEPTANCE-E08"
+    ],
+    "passPercent": 80,
+    "scoring": "all-or-nothing-per-question",
+    "timed": false
+  },
+  "questionLinks": [
+    {
+      "questionId": "LJ-LF12A-ACCEPTANCE-Q01",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf12a-acceptance-evidence"
+      ],
+      "blockIds": [
+        "fiae-lf12a-acceptance-block-1"
+      ]
+    },
+    {
+      "questionId": "LJ-LF12A-ACCEPTANCE-Q02",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf12a-acceptance-evidence"
+      ],
+      "blockIds": [
+        "fiae-lf12a-acceptance-block-1"
+      ]
+    },
+    {
+      "questionId": "LJ-LF12A-ACCEPTANCE-Q03",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf12a-acceptance-present"
+      ],
+      "blockIds": [
+        "fiae-lf12a-acceptance-block-2"
+      ]
+    },
+    {
+      "questionId": "LJ-LF12A-ACCEPTANCE-Q04",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf12a-acceptance-present"
+      ],
+      "blockIds": [
+        "fiae-lf12a-acceptance-block-2"
+      ]
+    },
+    {
+      "questionId": "LJ-LF12A-ACCEPTANCE-Q05",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf12a-acceptance-protocol"
+      ],
+      "blockIds": [
+        "fiae-lf12a-acceptance-block-3"
+      ]
+    },
+    {
+      "questionId": "LJ-LF12A-ACCEPTANCE-Q06",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf12a-acceptance-protocol"
+      ],
+      "blockIds": [
+        "fiae-lf12a-acceptance-block-3"
+      ]
+    },
+    {
+      "questionId": "LJ-LF12A-ACCEPTANCE-E01",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf12a-acceptance-evidence"
+      ],
+      "blockIds": [
+        "fiae-lf12a-acceptance-block-1",
+        "fiae-lf12a-acceptance-block-4"
+      ]
+    },
+    {
+      "questionId": "LJ-LF12A-ACCEPTANCE-E02",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf12a-acceptance-present"
+      ],
+      "blockIds": [
+        "fiae-lf12a-acceptance-block-2"
+      ]
+    },
+    {
+      "questionId": "LJ-LF12A-ACCEPTANCE-E03",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf12a-acceptance-protocol"
+      ],
+      "blockIds": [
+        "fiae-lf12a-acceptance-block-3",
+        "fiae-lf12a-acceptance-block-4"
+      ]
+    },
+    {
+      "questionId": "LJ-LF12A-ACCEPTANCE-E04",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf12a-acceptance-evidence"
+      ],
+      "blockIds": [
+        "fiae-lf12a-acceptance-block-1"
+      ]
+    },
+    {
+      "questionId": "LJ-LF12A-ACCEPTANCE-E05",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf12a-acceptance-present"
+      ],
+      "blockIds": [
+        "fiae-lf12a-acceptance-block-2"
+      ]
+    },
+    {
+      "questionId": "LJ-LF12A-ACCEPTANCE-E06",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf12a-acceptance-protocol"
+      ],
+      "blockIds": [
+        "fiae-lf12a-acceptance-block-3",
+        "fiae-lf12a-acceptance-block-4"
+      ]
+    },
+    {
+      "questionId": "LJ-LF12A-ACCEPTANCE-E07",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf12a-acceptance-evidence",
+        "fiae-lf12a-acceptance-present"
+      ],
+      "blockIds": [
+        "fiae-lf12a-acceptance-block-1",
+        "fiae-lf12a-acceptance-block-2"
+      ]
+    },
+    {
+      "questionId": "LJ-LF12A-ACCEPTANCE-E08",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf12a-acceptance-protocol"
+      ],
+      "blockIds": [
+        "fiae-lf12a-acceptance-block-3",
+        "fiae-lf12a-acceptance-block-4"
+      ]
+    }
+  ],
+  "interview": [
+    {
+      "id": "fiae-lf12a-acceptance-talk-1",
+      "prompt": "Schreibe die Prüflogik für einen abgewiesenen Werkstattauftrag in eigenen Worten.",
+      "objectiveIds": [
+        "fiae-lf12a-acceptance-evidence"
+      ],
+      "blockIds": [
+        "fiae-lf12a-acceptance-block-1"
+      ],
+      "keyPoints": [
+        "Stand und ungültige Eingabe nennen.",
+        "Hinweis beobachten.",
+        "Bestand vor und nach dem Versuch vergleichen."
+      ],
+      "acceptableAlternatives": [
+        "Ein Vergleich anhand der gespeicherten Kennungen ist ebenfalls geeignet."
+      ],
+      "misconceptions": [
+        "Die Anzahl vor dem Versuch weglassen und den Nachherwert als Beweis ansehen."
+      ],
+      "sampleAnswer": "Ich prüfe R2 mit leerer Gerätekennung. Der Bestand steht vorher bei zwölf, ein Hinweis erscheint und danach sind weiter zwölf Tickets vorhanden. F2 ist für diesen Versuch erfüllt.",
+      "followUp": "Was würdest du eintragen, wenn trotz Hinweis eine neue Kennung auftaucht?"
+    },
+    {
+      "id": "fiae-lf12a-acceptance-talk-2",
+      "prompt": "Wie führst du denselben Auftrag für Annahme und IT unterschiedlich vor?",
+      "objectiveIds": [
+        "fiae-lf12a-acceptance-present"
+      ],
+      "blockIds": [
+        "fiae-lf12a-acceptance-block-2"
+      ],
+      "keyPoints": [
+        "Alltagsaufgabe und Wiederabruf vorführen.",
+        "Für IT technischen Stand und Protokoll zeigen.",
+        "Entscheidung mit Nutzen begründen."
+      ],
+      "acceptableAlternatives": [
+        "Ein gemeinsamer Start mit getrennten Vertiefungen ist ebenso geeignet."
+      ],
+      "misconceptions": [
+        "Technische Detailtiefe mit Verständlichkeit für jede Zielgruppe gleichsetzen."
+      ],
+      "sampleAnswer": "Die Annahme meldet G-17 und sieht nach dem Abruf ihre Eingaben. Der IT zeige ich R2 mit dem Protokoll und der zentralen Gültigkeitsprüfung, damit sie den Ablauf später nachvollziehen kann.",
+      "followUp": "Wer muss die anschließende Eigenaufgabe durchführen?"
+    },
+    {
+      "id": "fiae-lf12a-acceptance-talk-3",
+      "prompt": "Formuliere die Teilentscheidung, solange S1 noch aussteht.",
+      "objectiveIds": [
+        "fiae-lf12a-acceptance-protocol"
+      ],
+      "blockIds": [
+        "fiae-lf12a-acceptance-block-3",
+        "fiae-lf12a-acceptance-block-4"
+      ],
+      "keyPoints": [
+        "Funktion und offene Schulungsprobe trennen.",
+        "Zuständigkeit und Termin benennen.",
+        "Gesamtentscheidung vormerken."
+      ],
+      "acceptableAlternatives": [
+        "Ein Protokoll mit zwei getrennten Entscheidungszeilen ist gleichwertig."
+      ],
+      "misconceptions": [
+        "Aus Vorführung und Anwesenheit eine Gesamtübernahme ableiten."
+      ],
+      "sampleAnswer": "Die Leitung übernimmt die belegten F1- und F2-Ergebnisse für R2. Die Schichtleitung liefert die vier S1-Ergebnisse an Tag fünf. Danach entscheidet die Werkstattleitung über den gesamten Pilotumfang.",
+      "followUp": "Wie behandelst du eine zwischenzeitliche Änderung an R2?"
+    }
+  ],
+  "cards": [
+    {
+      "id": "fiae-lf12a-acceptance-card-01",
+      "front": "Welche Informationen verbinden Prüfergebnis und Anforderung?",
+      "back": "Kriterium, Stand, Rolle, Eingabe, Soll, Ist, Beleg und Bewertung.",
+      "objectiveIds": [
+        "fiae-lf12a-acceptance-evidence"
+      ],
+      "blockIds": [
+        "fiae-lf12a-acceptance-block-1"
+      ]
+    },
+    {
+      "id": "fiae-lf12a-acceptance-card-02",
+      "front": "Wie unterscheiden sich „offen“ und „abweichend“?",
+      "back": "Offen bedeutet hier fehlender Prüfbefund. Abweichend bedeutet beobachtete Nichterfüllung eines Kriteriums.",
+      "objectiveIds": [
+        "fiae-lf12a-acceptance-evidence"
+      ],
+      "blockIds": [
+        "fiae-lf12a-acceptance-block-1",
+        "fiae-lf12a-acceptance-block-4"
+      ]
+    },
+    {
+      "id": "fiae-lf12a-acceptance-card-03",
+      "front": "Wie erklärst du der Annahme den Nutzen des Abrufs?",
+      "back": "Sie erfasst das Gerät einmal und kann denselben Auftrag über seine Kennung wiederfinden.",
+      "objectiveIds": [
+        "fiae-lf12a-acceptance-present"
+      ],
+      "blockIds": [
+        "fiae-lf12a-acceptance-block-2"
+      ]
+    },
+    {
+      "id": "fiae-lf12a-acceptance-card-04",
+      "front": "Welche Frage stellt der Betrieb an denselben Nachweis?",
+      "back": "Welcher Stand wurde mit welchen Daten geprüft und wie lässt sich der Ablauf wiederholen?",
+      "objectiveIds": [
+        "fiae-lf12a-acceptance-present"
+      ],
+      "blockIds": [
+        "fiae-lf12a-acceptance-block-2"
+      ]
+    },
+    {
+      "id": "fiae-lf12a-acceptance-card-05",
+      "front": "Was enthält ein verfolgbarer offener Punkt?",
+      "back": "Auswirkung, zuständige Rolle, Termin und geforderter Abschlussnachweis.",
+      "objectiveIds": [
+        "fiae-lf12a-acceptance-protocol"
+      ],
+      "blockIds": [
+        "fiae-lf12a-acceptance-block-3"
+      ]
+    },
+    {
+      "id": "fiae-lf12a-acceptance-card-06",
+      "front": "Wozu dient die dokumentierte Teilentscheidung im Werkstattfall?",
+      "back": "Sie hält die übernommene Funktion fest und macht sichtbar, dass die Gesamtentscheidung noch vom Schulungsnachweis abhängt.",
+      "objectiveIds": [
+        "fiae-lf12a-acceptance-protocol"
+      ],
+      "blockIds": [
+        "fiae-lf12a-acceptance-block-3",
+        "fiae-lf12a-acceptance-block-4"
+      ]
+    }
+  ],
+  "review": {
+    "status": "reviewed",
+    "checkedAt": "2026-11-19"
+  }
+}

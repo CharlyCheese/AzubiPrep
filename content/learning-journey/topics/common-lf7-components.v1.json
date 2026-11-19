@@ -1,0 +1,460 @@
+{
+  "schemaVersion": 1,
+  "id": "common-lf7-components",
+  "version": "1.0.0",
+  "title": "Sensoren, Aktoren und Steuerung verstehen",
+  "fieldId": "LF7",
+  "scope": "common",
+  "prerequisites": [
+    "common-lf3-physical",
+    "common-lf5-control"
+  ],
+  "sourceIds": [
+    "lf7-nist-cps"
+  ],
+  "sources": [
+    {
+      "id": "lf7-nist-cps",
+      "title": "NIST: Cyber-Physical Systems and Internet of Things Foundations",
+      "url": "https://www.nist.gov/programs-projects/cyber-physical-systems-and-internet-things-foundations",
+      "checkedAt": "2026-11-16",
+      "note": "Öffentliche HTML-Projektbeschreibung zu physikalischen Komponenten, Sensorik, Aktorik, Logik sowie überprüfbaren Anforderungen gelesen. Tischmodell, Rollen und alle Fallwerte sind eigene Fiktion."
+    }
+  ],
+  "objectives": [
+    {
+      "id": "common-lf7-components-roles",
+      "text": "Sensor, Aktor und Steuerung in einem einfachen cyber-physischen System unterscheiden."
+    },
+    {
+      "id": "common-lf7-components-flow",
+      "text": "Den Weg von einer physikalischen Änderung über einen Messwert zu einer Systemreaktion erklären."
+    }
+  ],
+  "caseStudy": {
+    "title": "Nora ergänzt das Tischmodell Luftpunkt",
+    "text": "Luftpunkt ist ein frei erfundenes, ungefährliches Tischmodell im Browser. Nora ergänzt eine Temperaturanzeige und einen dargestellten Lüfter. Es gibt keine reale Wärmequelle, keine gefährdeten Personen, keine echten Geräte und keine echte elektrische Verbindung. Messwerte, Lüfterbewegung und Alarm sind Modellzustände. An diesem Fall lernst du den Weg zwischen physikalischer Größe und digitaler Entscheidung."
+  },
+  "blocks": [
+    {
+      "id": "common-lf7-components-roles",
+      "title": "1. Drei Rollen an einer Aufgabe erkennen",
+      "objectiveIds": [
+        "common-lf7-components-roles"
+      ],
+      "sourceIds": [
+        "lf7-nist-cps"
+      ],
+      "paragraphs": [
+        "Ein cyber-physisches System verbindet Rechnen und Kommunikation mit Vorgängen in der physikalischen Welt. Ein Sensor erfasst eine physikalische Größe; eine Steuerung verarbeitet die erhaltene Information nach einer Vorgabe; ein Aktor bewirkt eine physikalische Veränderung. Die Rollen beschreiben Aufgaben, nicht bestimmte Gehäuse oder Produktnamen.",
+        "Bei Luftpunkt steht der Temperatursensor für das Erfassen der Lufttemperatur. Die Steuerfunktion vergleicht den geprüften Messwert mit der vereinbarten Schaltschwelle. Der Lüfter steht für einen Aktor, der Luft bewegt. In der Simulation werden diese Vorgänge dargestellt; du baust kein echtes System auf.",
+        "Ein Gerät kann mehrere Rollen enthalten. Ein Sensormodul kann bereits intern umrechnen, und ein Aktor kann eine eigene Rückmeldung liefern. Ordne deshalb die konkrete Teilaufgabe zu: Temperatur erfassen, Entscheidung berechnen oder Bewegung ausführen. Eine bloße Bildschirmanzeige der Temperatur ersetzt keine Lüfterwirkung."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Lernfall",
+        "text": "Nora markiert im Modell: Temperatur erfassen → Sensor, Schaltregel auswerten → Steuerung, Luft bewegen → Lüfter als Aktor."
+      },
+      "misconception": {
+        "claim": "Ein Sensor entscheidet bereits durch seine Bezeichnung, wann der Lüfter laufen soll.",
+        "correction": "Der Sensor liefert die Messinformation; die vorgegebene Steuerlogik trifft die Entscheidung."
+      },
+      "takeaway": "Sensor erfasst, Steuerung entscheidet, Aktor wirkt."
+    },
+    {
+      "id": "common-lf7-components-flow",
+      "title": "2. Die Wirkungskette Schritt für Schritt verfolgen",
+      "objectiveIds": [
+        "common-lf7-components-flow",
+        "common-lf7-components-roles"
+      ],
+      "sourceIds": [
+        "lf7-nist-cps"
+      ],
+      "paragraphs": [
+        "Beginne bei der Veränderung in der Umgebung: Die dargestellte Luft wird wärmer. Der Sensor bildet die Temperatur als Messwert ab. Dieser Wert gelangt über die vorgesehene Schnittstelle zur Steuerung. Sie prüft seine Verwendbarkeit, wendet die Regel an und liefert einen Befehl. Erst die Aktorreaktion steht für eine Wirkung auf die Umgebung.",
+        "Die feste Regel von Luftpunkt lautet: Bei gültigem Wert ab 30 °C läuft der Modelllüfter, unter 30 °C steht er. Ein Beispiel ist 28 °C → gültiger Messwert → Vergleich mit 30 °C → aus. Bei 32 °C ergibt dieselbe Kette ein. Die Temperatur entsteht nicht dadurch, dass der Programmcode eine Zahl ausgibt.",
+        "Unterscheide Messwert, Entscheidung und Wirkung als drei Prüfpunkte. Ein korrekt empfangener Wert beweist noch keine richtige Schaltregel. Ein richtiger Befehl beweist bei einem realen System noch keine Bewegung. Auch die Modellansicht und ihr protokolliertes Ergebnis werden später mit dem Soll verglichen."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Lernfall",
+        "text": "Der gültige Wert 32 °C erreicht die Steuerung. Sie fordert ein an; die Modellansicht zeigt den laufenden Lüfter. Damit sind Eingang, Entscheidung und dargestellte Wirkung getrennt sichtbar."
+      },
+      "misconception": {
+        "claim": "Eine Erfolgsmeldung der Steuerfunktion beweist jede physikalische Wirkung des Aktors.",
+        "correction": "Entscheidung und Aktorwirkung sind getrennte Glieder und benötigen passende Nachweise."
+      },
+      "takeaway": "Verfolge Umgebung → Messwert → Prüfung → Entscheidung → Aktorwirkung."
+    },
+    {
+      "id": "common-lf7-components-boundary",
+      "title": "3. Systemgrenze und Fehlerrückmeldung festlegen",
+      "objectiveIds": [
+        "common-lf7-components-roles",
+        "common-lf7-components-flow"
+      ],
+      "sourceIds": [
+        "lf7-nist-cps"
+      ],
+      "paragraphs": [
+        "Die Systemgrenze sagt, was du in der Aufgabe betrachtest. Bei Luftpunkt gehören Sensor, Verbindung, Steuerfunktion, Lüfterdarstellung und Alarmanzeige dazu. Die Stromversorgung wird als vorgegebener Modellwert betrachtet. Ein Internetdienst ist für diesen lokalen Lernfall nicht nötig.",
+        "Der Fall gibt zusätzlich vor: Wenn die Verbindung ausfällt oder der Messwert ungültig ist, lautet das Ergebnis fault. Das bedeutet in diesem ausdrücklich ungefährlichen Tischmodell: Lüfter aus und Alarm an. Bei gültigem Normalbetrieb ist der Alarm aus. Der Alarm macht die fehlende Grundlage für eine normale Entscheidung sichtbar.",
+        "Diese Reaktion ist eine vereinbarte sichere Modellreaktion, keine allgemeine Regel für Lüfter oder Kühlanlagen. In einer realen Anlage muss eine geeignete verantwortliche Stelle das Fehlerverhalten aus Gefährdungen und Betriebsanforderungen ableiten. Ein stehen gebliebener Kühllüfter kann dort gerade gefährlich sein. Die Lernübung gibt deshalb keine Freigabe für echte Geräte."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Lernfall",
+        "text": "Nora trennt die simulierte Verbindung. Die Anzeige meldet fault, der Modelllüfter steht und der Alarm ist an; der letzte Temperaturwert gilt nicht als frische Messung."
+      },
+      "misconception": {
+        "claim": "Lüfter aus ist bei einem Sensorfehler in jeder Anlage die sichere Reaktion.",
+        "correction": "Das gilt hier als Modellvorgabe; echtes Fehlerverhalten hängt vom Prozess und seinen Gefährdungen ab."
+      },
+      "takeaway": "Lege Systemgrenze und Fehlerreaktion für den konkreten Fall fest."
+    },
+    {
+      "id": "common-lf7-components-trace",
+      "title": "4. Mit Beobachtungen statt Vermutungen erklären",
+      "objectiveIds": [
+        "common-lf7-components-roles",
+        "common-lf7-components-flow"
+      ],
+      "sourceIds": [
+        "lf7-nist-cps"
+      ],
+      "paragraphs": [
+        "Beschreibe einen Ablauf mit konkreten Zuständen: Eingangsgröße und Einheit, empfangener Wert, Verbindungszustand, erwartete Entscheidung sowie beobachtete Reaktion. So kann eine zweite Person den Weg nachverfolgen. Die Aussage der Lüfter geht irgendwie an lässt offen, an welcher Stelle der Nachweis fehlt.",
+        "Wenn das Ergebnis abweicht, suche entlang der Kette. Ist kein aktueller Wert angekommen, prüfst du den Empfang. Bei richtigem Eingang und falscher Entscheidung untersuchst du die Regel. Bei richtigem Befehl und falscher Darstellung untersuchst du die Umsetzung. Eine Beobachtung grenzt die Suche ein; sie beweist nicht ohne Weiteres eine konkrete defekte Komponente.",
+        "Für Luftpunkt protokolliert Nora zum Beispiel: verbunden, 29 °C, erwartet aus, beobachtet aus. Danach: verbunden, 30 °C, erwartet ein, beobachtet ein. Bei Verbindung aus erwartet sie fault mit Alarm. Diese gezielten Fälle bereiten spätere Prüfungen vor."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Lernfall",
+        "text": "32 °C werden richtig empfangen, aber die Steuerung liefert aus. Nora prüft zuerst die Schaltregel, weil der bisherige Befund den Empfang bereits bestätigt."
+      },
+      "misconception": {
+        "claim": "Wenn der Lüfter steht, muss der Temperatursensor defekt sein.",
+        "correction": "Der Stillstand kann regelgerecht sein oder aus verschiedenen Gliedern der Wirkungskette entstehen."
+      },
+      "takeaway": "Ordne jede Beobachtung dem Glied zu, das sie tatsächlich prüft."
+    }
+  ],
+  "questionFile": "questions/common-lf7-components.v1.csv",
+  "quiz": {
+    "questionIds": [
+      "LJ-LF7-COMPONENTS-Q01",
+      "LJ-LF7-COMPONENTS-Q02",
+      "LJ-LF7-COMPONENTS-Q03",
+      "LJ-LF7-COMPONENTS-Q04",
+      "LJ-LF7-COMPONENTS-Q05",
+      "LJ-LF7-COMPONENTS-Q06"
+    ]
+  },
+  "exam": {
+    "questionIds": [
+      "LJ-LF7-COMPONENTS-E01",
+      "LJ-LF7-COMPONENTS-E02",
+      "LJ-LF7-COMPONENTS-E03",
+      "LJ-LF7-COMPONENTS-E04",
+      "LJ-LF7-COMPONENTS-E05",
+      "LJ-LF7-COMPONENTS-E06",
+      "LJ-LF7-COMPONENTS-E07",
+      "LJ-LF7-COMPONENTS-E08"
+    ],
+    "passPercent": 80,
+    "scoring": "all-or-nothing-per-question",
+    "timed": false
+  },
+  "questionLinks": [
+    {
+      "questionId": "LJ-LF7-COMPONENTS-Q01",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf7-components-roles"
+      ],
+      "blockIds": [
+        "common-lf7-components-roles"
+      ]
+    },
+    {
+      "questionId": "LJ-LF7-COMPONENTS-Q02",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf7-components-roles"
+      ],
+      "blockIds": [
+        "common-lf7-components-roles"
+      ]
+    },
+    {
+      "questionId": "LJ-LF7-COMPONENTS-Q03",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf7-components-flow"
+      ],
+      "blockIds": [
+        "common-lf7-components-flow"
+      ]
+    },
+    {
+      "questionId": "LJ-LF7-COMPONENTS-Q04",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf7-components-flow"
+      ],
+      "blockIds": [
+        "common-lf7-components-flow"
+      ]
+    },
+    {
+      "questionId": "LJ-LF7-COMPONENTS-Q05",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf7-components-roles",
+        "common-lf7-components-flow"
+      ],
+      "blockIds": [
+        "common-lf7-components-boundary"
+      ]
+    },
+    {
+      "questionId": "LJ-LF7-COMPONENTS-Q06",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf7-components-flow"
+      ],
+      "blockIds": [
+        "common-lf7-components-trace"
+      ]
+    },
+    {
+      "questionId": "LJ-LF7-COMPONENTS-E01",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf7-components-roles"
+      ],
+      "blockIds": [
+        "common-lf7-components-roles"
+      ]
+    },
+    {
+      "questionId": "LJ-LF7-COMPONENTS-E02",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf7-components-roles"
+      ],
+      "blockIds": [
+        "common-lf7-components-roles"
+      ]
+    },
+    {
+      "questionId": "LJ-LF7-COMPONENTS-E03",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf7-components-flow"
+      ],
+      "blockIds": [
+        "common-lf7-components-flow"
+      ]
+    },
+    {
+      "questionId": "LJ-LF7-COMPONENTS-E04",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf7-components-flow"
+      ],
+      "blockIds": [
+        "common-lf7-components-flow",
+        "common-lf7-components-trace"
+      ]
+    },
+    {
+      "questionId": "LJ-LF7-COMPONENTS-E05",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf7-components-flow",
+        "common-lf7-components-roles"
+      ],
+      "blockIds": [
+        "common-lf7-components-boundary"
+      ]
+    },
+    {
+      "questionId": "LJ-LF7-COMPONENTS-E06",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf7-components-flow"
+      ],
+      "blockIds": [
+        "common-lf7-components-boundary"
+      ]
+    },
+    {
+      "questionId": "LJ-LF7-COMPONENTS-E07",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf7-components-flow"
+      ],
+      "blockIds": [
+        "common-lf7-components-trace"
+      ]
+    },
+    {
+      "questionId": "LJ-LF7-COMPONENTS-E08",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf7-components-roles",
+        "common-lf7-components-flow"
+      ],
+      "blockIds": [
+        "common-lf7-components-roles",
+        "common-lf7-components-trace"
+      ]
+    }
+  ],
+  "interview": [
+    {
+      "id": "common-lf7-components-talk-1",
+      "prompt": "Erkläre Nora die drei Rollen im Tischmodell und ordne jeder eine konkrete Aufgabe zu.",
+      "objectiveIds": [
+        "common-lf7-components-roles"
+      ],
+      "blockIds": [
+        "common-lf7-components-roles"
+      ],
+      "keyPoints": [
+        "Sensor erfasst Temperatur.",
+        "Steuerung prüft den Wert und wertet die Schaltregel aus.",
+        "Lüfter wirkt als Aktor durch dargestellte Luftbewegung."
+      ],
+      "acceptableAlternatives": [
+        "Eine fachlich gleichwertige Erklärung mit passenden Modellbefunden und nachvollziehbarer Begründung."
+      ],
+      "misconceptions": [
+        "Gehäusebezeichnungen mit den konkreten Aufgaben verwechseln."
+      ],
+      "sampleAnswer": "Der Temperatursensor erfasst die Lufttemperatur. Die Steuerung entscheidet anhand des geprüften Werts und der Schwelle. Der Lüfter steht für die Aktorwirkung auf die Luft. Ein Gerät kann mehrere Teilaufgaben enthalten.",
+      "followUp": "Welche Rolle hat die reine Berechnung eines Schaltbefehls?"
+    },
+    {
+      "id": "common-lf7-components-talk-2",
+      "prompt": "Beschreibe den Weg von 28 °C zu 32 °C bis zur Lüfterwirkung und nenne passende Beobachtungen.",
+      "objectiveIds": [
+        "common-lf7-components-flow",
+        "common-lf7-components-roles"
+      ],
+      "blockIds": [
+        "common-lf7-components-flow",
+        "common-lf7-components-trace"
+      ],
+      "keyPoints": [
+        "Physikalische Änderung vor der Messung benennen.",
+        "Messwert, Regelentscheidung und Aktorwirkung unterscheiden.",
+        "Bei gültigem Eingang unter 30 aus, ab 30 ein erwarten."
+      ],
+      "acceptableAlternatives": [
+        "Eine fachlich gleichwertige Erklärung mit passenden Modellbefunden und nachvollziehbarer Begründung."
+      ],
+      "misconceptions": [
+        "Den Befehl bereits als umfassenden Wirkungsnachweis behandeln."
+      ],
+      "sampleAnswer": "Der Sensor bildet die steigende Temperatur als Messwert ab. Bei gültiger Verbindung ergibt 28 °C aus, 32 °C ein. Ich vergleiche Eingang, Ergebnis der Regel und Lüfterdarstellung getrennt mit dem Soll.",
+      "followUp": "Wo würdest du suchen, wenn der Eingang stimmt, die Entscheidung aber abweicht?"
+    },
+    {
+      "id": "common-lf7-components-talk-3",
+      "prompt": "Begründe die Fehlerreaktion bei Verbindungsverlust und die Grenze dieser Aussage für echte Anlagen.",
+      "objectiveIds": [
+        "common-lf7-components-flow",
+        "common-lf7-components-roles"
+      ],
+      "blockIds": [
+        "common-lf7-components-boundary",
+        "common-lf7-components-trace"
+      ],
+      "keyPoints": [
+        "Verlust der aktuellen Messgrundlage erkennen.",
+        "fault bedeutet hier Lüfter aus und Alarm an.",
+        "Fehlerstrategie realer Anlagen muss prozessbezogen festgelegt werden."
+      ],
+      "acceptableAlternatives": [
+        "Eine fachlich gleichwertige Erklärung mit passenden Modellbefunden und nachvollziehbarer Begründung."
+      ],
+      "misconceptions": [
+        "Die Modellreaktion ungeprüft auf eine echte Kühlanlage übertragen."
+      ],
+      "sampleAnswer": "Bei unterbrochener Verbindung fehlt der Steuerung ein verlässlicher aktueller Eingang. Luftpunkt verlangt fault: Modelllüfter aus, Alarm an. Das ist eine Vorgabe für das ungefährliche Tischmodell; bei realen Kühlprozessen kann Stillstand gefährlich sein.",
+      "followUp": "Warum reicht der letzte empfangene Temperaturwert nicht als frische Messung?"
+    }
+  ],
+  "cards": [
+    {
+      "id": "common-lf7-components-card-01",
+      "front": "Welche drei Rollen bilden die einfache CPS-Kette?",
+      "back": "Sensor erfasst eine physikalische Größe, Steuerung verarbeitet die Information, Aktor bewirkt eine physikalische Änderung.",
+      "objectiveIds": [
+        "common-lf7-components-roles"
+      ],
+      "blockIds": [
+        "common-lf7-components-roles"
+      ]
+    },
+    {
+      "id": "common-lf7-components-card-02",
+      "front": "Kann ein Bauteil mehrere Rollen enthalten?",
+      "back": "Ja. Ordne die jeweilige Teilaufgabe zu, etwa messen, berechnen oder wirken; der Gehäusename reicht dafür nicht.",
+      "objectiveIds": [
+        "common-lf7-components-roles"
+      ],
+      "blockIds": [
+        "common-lf7-components-roles"
+      ]
+    },
+    {
+      "id": "common-lf7-components-card-03",
+      "front": "Wie verläuft die Wirkungskette bei Luftpunkt?",
+      "back": "Umgebungstemperatur → Messwert → Gültigkeitsprüfung → Schaltentscheidung → dargestellte Lüfterwirkung.",
+      "objectiveIds": [
+        "common-lf7-components-flow"
+      ],
+      "blockIds": [
+        "common-lf7-components-flow"
+      ]
+    },
+    {
+      "id": "common-lf7-components-card-04",
+      "front": "Was gilt bei gültigen 30 °C?",
+      "back": "Die Schwelle ist erreicht: ein. Ab 30 °C schließt die Gleichheit ein.",
+      "objectiveIds": [
+        "common-lf7-components-flow"
+      ],
+      "blockIds": [
+        "common-lf7-components-flow"
+      ]
+    },
+    {
+      "id": "common-lf7-components-card-05",
+      "front": "Was bedeutet fault in diesem Tischmodell?",
+      "back": "Lüfter aus, Alarm an. Das ist die festgelegte Reaktion des ungefährlichen Modells und keine allgemeine Sicherheitsregel.",
+      "objectiveIds": [
+        "common-lf7-components-flow",
+        "common-lf7-components-roles"
+      ],
+      "blockIds": [
+        "common-lf7-components-boundary"
+      ]
+    },
+    {
+      "id": "common-lf7-components-card-06",
+      "front": "Was gehört zu einer nachvollziehbaren Beobachtung?",
+      "back": "Verbindungszustand, Messwert mit Einheit, erwartete Entscheidung und beobachtete Reaktion. So lassen sich Glieder der Kette getrennt prüfen.",
+      "objectiveIds": [
+        "common-lf7-components-flow"
+      ],
+      "blockIds": [
+        "common-lf7-components-trace"
+      ]
+    }
+  ],
+  "review": {
+    "status": "reviewed",
+    "checkedAt": "2026-11-16"
+  }
+}

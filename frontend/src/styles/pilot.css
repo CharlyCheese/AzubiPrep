@@ -67,3 +67,10 @@
 .debug-css-editor .pilot-code { min-height: 240px; }
 
 .prepared-course .btn { max-width: 100%; min-width: 0; white-space: normal; overflow-wrap: anywhere; }
+.debug-input-help { border-inline-start: 3px solid var(--accent, #14b8a6); padding-inline-start: .8rem; margin-block: 1rem; }
+.debug-dom-preview input, .debug-dom-preview textarea { font: inherit; padding: .5rem; max-width: 100%; min-width: 0; box-sizing: border-box; color: #17202a; background: #fff; }
+.debug-dom-preview form { display: grid; gap: .6rem; }
+.debug-storage-view { margin-block: 1rem; padding: .8rem; border: 1px solid var(--border, #64748b); border-radius: .5rem; }
+.debug-storage-view summary { cursor: pointer; min-height: 44px; align-content: center; }
+.debug-storage-view th, .debug-storage-view td { overflow-wrap: anywhere; white-space: pre-wrap; }
+.debug-storage-view th { min-width: 6rem; }

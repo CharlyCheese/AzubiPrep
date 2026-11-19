@@ -1,0 +1,515 @@
+{
+  "schemaVersion": 1,
+  "version": "1.0.0",
+  "id": "common-lf9-monitoring",
+  "title": "Verfügbarkeit überwachen und Störungen eingrenzen",
+  "fieldId": "LF9",
+  "scope": "common",
+  "prerequisites": [
+    "common-lf9-security",
+    "common-lf6-diagnosis"
+  ],
+  "objectives": [
+    {
+      "id": "common-lf9-monitoring-observe",
+      "text": "Aus vorgegebenen Messwerten und Protokollen eine Dienststörung erkennen und ihre Auswirkung beschreiben."
+    },
+    {
+      "id": "common-lf9-monitoring-isolate",
+      "text": "Eine Störung mit gezielten Client-, Netz- und Dienstprüfungen eingrenzen."
+    },
+    {
+      "id": "common-lf9-monitoring-privacy",
+      "text": "Für ein Überwachungsprotokoll benötigte Informationen von unnötigen personenbezogenen Daten unterscheiden."
+    }
+  ],
+  "sourceIds": [
+    "lf9-ms-monitoring",
+    "lf9-rfc1034",
+    "lf9-rfc9110",
+    "lf9-ms-network",
+    "lf9-ms-deployment",
+    "wiso-gdpr-principles"
+  ],
+  "sources": [
+    {
+      "id": "lf9-ms-monitoring",
+      "title": "Microsoft: Architecture strategies for designing a monitoring system",
+      "url": "https://learn.microsoft.com/en-us/azure/well-architected/operational-excellence/observability",
+      "note": "Messwerte, strukturierte Protokolle, Kontext und Vermeidung sensibler Protokolldaten geprüft. Messreihen, Alarmgrenze und Protokollbeispiele sind synthetisch.",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "lf9-rfc1034",
+      "title": "RFC 1034: Domain names – concepts and facilities",
+      "url": "https://www.rfc-editor.org/rfc/rfc1034.html",
+      "note": "Grundlagen der Namensauflösung und typisierten DNS-Daten geprüft. Der A-Eintrag im Lernfall und die vereinfachte Auflösung sind synthetisch.",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "lf9-rfc9110",
+      "title": "RFC 9110: HTTP Semantics",
+      "url": "https://www.rfc-editor.org/rfc/rfc9110.html",
+      "note": "HTTPS-URI-Schema, Standardport 443 und Identitätsprüfung geprüft. Das Modell nutzt vorgegeben HTTPS über TCP; TLS-Zertifikate, Routing und Rückverkehr sind als funktionsfähig abstrahiert.",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "lf9-ms-network",
+      "title": "Microsoft: Architecture strategies for networking and connectivity",
+      "url": "https://learn.microsoft.com/en-us/azure/well-architected/security/networking",
+      "note": "Öffentliche Herstellergrundlagen zu Segmentierung, Verkehrsbeziehungen und Filtern geprüft. Der begrenzte Netzplan und seine Freigaben sind fiktive Modellvorgaben.",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "lf9-ms-deployment",
+      "title": "Microsoft: Architecture strategies for safe deployment practices",
+      "url": "https://learn.microsoft.com/en-us/azure/well-architected/operational-excellence/safe-deployments",
+      "note": "Prüfung von Änderungen, Zuständigkeiten und Wiederherstellung eines bekannten funktionierenden Stands geprüft. Aktualisierungsplan im Lernfall ist selbst erstellt.",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "wiso-gdpr-principles",
+      "title": "EU-Datenschutz-Grundverordnung – Grundsätze und Rechtmäßigkeit",
+      "url": "https://eur-lex.europa.eu/legal-content/DE-EN/TXT/?uri=CELEX%3A32016R0679",
+      "checkedAt": "2026-11-16",
+      "note": "Begriffe der Identifizierbarkeit und Pseudonymisierung sowie Datenminimierung geprüft (Artikel 4 und 5). Pseudonyme technische Kennungen können weiterhin Personen zugeordnet werden; Übungskennungen und Befunde sind synthetisch."
+    }
+  ],
+  "caseStudy": {
+    "title": "Mira plant das Lernportal für Radblick",
+    "text": "Mira beobachtet synthetische Portalproben bei Radblick. Zehn geplante Beschäftigtenproben liefern acht Erfolge und zwei Fehler. Sie trennt Auswirkungen von Ursachen, vergleicht DNS-, Dienst- und Regelbefunde und hält nur die für Diagnose und Übergabe nötigen Angaben fest."
+  },
+  "blocks": [
+    {
+      "id": "common-lf9-monitoring-observe",
+      "title": "1. Messwerte mit Arbeitsauswirkungen verbinden",
+      "objectiveIds": [
+        "common-lf9-monitoring-observe"
+      ],
+      "sourceIds": [
+        "lf9-ms-monitoring",
+        "lf9-rfc1034",
+        "lf9-rfc9110",
+        "lf9-ms-network",
+        "lf9-ms-deployment"
+      ],
+      "paragraphs": [
+        "Überwachung beantwortet, ob eine benötigte Funktion unter festgelegten Bedingungen nutzbar ist. Lege Probe, Messpunkt, Zeitbezug, erwartetes Ergebnis und Reaktion fest. Eine reine CPU-Anzeige erklärt nicht, ob Beschäftigte das Portal öffnen können. Eine passende Dienstprobe ergänzt technische Betriebswerte.",
+        "Im fiktiven Protokoll gelingen acht von zehn geplanten Beschäftigtenproben. Die Erfolgsquote dieser Stichprobe beträgt 8 / 10 × 100 = 80 Prozent. Das ist kein Beleg für eine zeitliche Jahresverfügbarkeit von 80 Prozent. Aus wenigen diskreten Proben lässt sich die exakte gesamte Ausfalldauer nicht ablesen.",
+        "Radblick legt als eigene Alarmregel fest: zwei aufeinanderfolgende fehlgeschlagene Beschäftigtenproben werden an Sam gemeldet. Beschreibe dann die beobachtete Auswirkung, etwa Portal an diesen Messpunkten nicht nutzbar. Die erwartete Gästeablehnung zählt nicht als Störung; sie ist ein erfolgreich geprüfter Schutzfall."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Lernfall",
+        "text": "Zwei Beschäftigtenproben schlagen um 10:01 und 10:02 fehl. Mira meldet die Auswirkung, die genaue Ursache ist noch offen."
+      },
+      "misconception": {
+        "claim": "Eine Probe mit abgewiesenem Zugriff ist immer ein Betriebsfehler.",
+        "correction": "Bei der Gästeprobe ist Abweisung das erwartete Schutzverhalten."
+      },
+      "takeaway": "Vergleiche Befund und Soll für die jeweilige Probe, bevor du alarmierst."
+    },
+    {
+      "id": "common-lf9-monitoring-isolate",
+      "title": "2. Gezielt zwischen Name, Weg und Dienst unterscheiden",
+      "objectiveIds": [
+        "common-lf9-monitoring-isolate"
+      ],
+      "sourceIds": [
+        "lf9-ms-monitoring",
+        "lf9-rfc1034",
+        "lf9-rfc9110",
+        "lf9-ms-network",
+        "lf9-ms-deployment"
+      ],
+      "paragraphs": [
+        "Beginne mit dem Umfang: Welche Clients, welcher Dienst und seit wann? Vergleiche den Sollplan mit den sichtbaren Befunden. Im begrenzten Modell werden DNS-Ziel, Serveradresse, Dienstzustand, Port und Portalrichtlinie getrennt angezeigt. Nimm die vorhandenen Informationen ernst, bevor du Werte änderst.",
+        "Fall A: DNS zeigt 198.51.100.11, Server ist .10. Die Namenszuordnung weicht ab; auf .10 korrigieren und erneut prüfen. Fall B: DNS ist korrekt, Port und Regel passen, Dienst steht. Den Dienst starten und erneut prüfen. Fall C: Beide Clients erhalten eine Portalantwort. Der Dienst funktioniert, aber die Gästesperre ist verletzt; Richtlinie einschränken und beide Proben wiederholen.",
+        "Diese Befundketten gelten für das ausdrücklich begrenzte Modell mit funktionsfähigem Routing, DNS-Transport und Rückweg. In einem realen Netz können weitere Ursachen vorliegen. Eine Ping-Antwort bestätigt weder korrekte Namensauflösung noch eine funktionierende Anwendung. Gezielte Dienst- und Clientproben halten die Aussagegrenzen sichtbar."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Lernfall",
+        "text": "Beobachtung: DNS .11, Soll .10. Maßnahme: A-Eintrag korrigieren. Nachweis: Auflösung .10 plus erfolgreiche Beschäftigtenprobe."
+      },
+      "misconception": {
+        "claim": "Ein Fehlertext oder Ping-Erfolg beweist ohne weitere Befunde die genaue Ursache.",
+        "correction": "Vergleich und gezielte Nachprobe verbinden Hypothese und beobachtete Wirkung."
+      },
+      "takeaway": "Ändere die belegte Abweichung und prüfe denselben Fall erneut."
+    },
+    {
+      "id": "common-lf9-monitoring-privacy",
+      "title": "3. Ein hilfreiches, sparsames Protokoll führen",
+      "objectiveIds": [
+        "common-lf9-monitoring-privacy"
+      ],
+      "sourceIds": [
+        "lf9-ms-monitoring",
+        "lf9-rfc1034",
+        "lf9-rfc9110",
+        "lf9-ms-network",
+        "lf9-ms-deployment",
+        "wiso-gdpr-principles"
+      ],
+      "paragraphs": [
+        "Für die Modellanalyse reichen Zeitpunkt, pseudonyme Clientkennung oder Segment, Ziel, Probenart, erwartetes und tatsächliches Ergebnis, relevanter Konfigurationsstand und Maßnahme. So lassen sich Ereignisse ordnen und eine Korrektur nachvollziehen. Statt einer echten Person steht beispielsweise staff-test-01 als rein synthetische Kennung.",
+        "Passwörter, Zugangstokens, private Telefonnummern und vollständige Portal- oder Formularinhalte gehören nicht in das Diagnoseprotokoll dieses Falls. Auch technische Kennungen können in realen Systemen Personen zugeordnet werden. Pseudonymisierung ist daher nicht gleichbedeutend mit anonymer oder beliebig veröffentlichbarer Information.",
+        "Lege Zugriff, Zweck und Aufbewahrung nach dem tatsächlichen Bedarf fest. Im Lernfall bleiben Proben und Kennungen synthetisch. Bei einer Übergabe werden benötigte Befunde zusammengefasst, statt ungezielt Rohdaten zu kopieren. Zusätzliche Detailaufzeichnung muss einen konkreten Diagnosezweck haben."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Lernfall",
+        "text": "Geeignet: 10:02, staff-test-01, portal.example.test, Dienstprobe fehlgeschlagen, DNS-Ziel .11, Soll .10."
+      },
+      "misconception": {
+        "claim": "Ein technischer Logeintrag kann grundsätzlich keine personenbezogenen Informationen enthalten.",
+        "correction": "Kennungen und Adressen können in realen Umgebungen Personenbezug haben."
+      },
+      "takeaway": "Protokolliere genug für den Denkweg und vermeide unnötige sensible Inhalte."
+    },
+    {
+      "id": "common-lf9-monitoring-retest",
+      "title": "4. Behebung mit Gegenprobe und offenen Punkten abschließen",
+      "objectiveIds": [
+        "common-lf9-monitoring-observe",
+        "common-lf9-monitoring-isolate",
+        "common-lf9-monitoring-privacy"
+      ],
+      "sourceIds": [
+        "lf9-ms-monitoring",
+        "lf9-rfc1034",
+        "lf9-rfc9110",
+        "lf9-ms-network",
+        "lf9-ms-deployment"
+      ],
+      "paragraphs": [
+        "Ein Abschlussprotokoll enthält Ausgangsbefund, begründete Korrektur, geprüften Stand und Ergebnis der Wiederholungsprobe. Prüfe auch die zweite Anforderung: Nach einer DNS- oder Dienstkorrektur müssen Beschäftigte zugreifen können, während Gäste weiterhin an der Richtlinie scheitern. Eine Reparatur darf die Schutzvorgabe nicht unbemerkt aufheben.",
+        "Ein Messwert von 2.020 ms überschreitet eine vereinbarte Grenze von 2.000 ms, auch wenn die Seite schließlich angezeigt wird. Funktionsfähigkeit und Antwortzeit sind verschiedene Kriterien. Die lokale Netzsimulation erfasst keine reale Laufzeit; solche Werte sind hier vorgegebene Auswertungsbeispiele, keine Messungen deines Rechners.",
+        "Kennzeichne verbleibende Abweichungen mit Auswirkung, zuständiger Rolle und nächstem Prüfschritt. Technische Ursache und Entstehungsgrund sind zu trennen: Ein falscher A-Eintrag ist belegt; weshalb er eingetragen wurde, ist damit noch nicht erklärt. Eine konkrete Verbesserung wäre ein Soll-Ist-Abgleich mit Beschäftigten- und Gästeprobe nach DNS-Änderungen."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Lernfall",
+        "text": "Nach Korrektur .11 → .10: Beschäftigte erfolgreich, Gäste durch Regel abgewiesen; Ursache der falschen Eintragung als offene Folgefrage."
+      },
+      "misconception": {
+        "claim": "Ein erfolgreiches Nachtestergebnis erklärt bereits, warum der ursprüngliche Fehler entstanden ist.",
+        "correction": "Nachtest belegt die Wirkung der Korrektur; der organisatorische Entstehungsgrund kann offenbleiben."
+      },
+      "takeaway": "Prüfe Wirkung und Nebenbedingungen und halte Beleggrenzen im Protokoll fest."
+    }
+  ],
+  "questionFile": "questions/common-lf9-monitoring.v1.csv",
+  "quiz": {
+    "questionIds": [
+      "LJ-LF9-MONITORING-Q01",
+      "LJ-LF9-MONITORING-Q02",
+      "LJ-LF9-MONITORING-Q03",
+      "LJ-LF9-MONITORING-Q04",
+      "LJ-LF9-MONITORING-Q05",
+      "LJ-LF9-MONITORING-Q06"
+    ]
+  },
+  "exam": {
+    "questionIds": [
+      "LJ-LF9-MONITORING-E01",
+      "LJ-LF9-MONITORING-E02",
+      "LJ-LF9-MONITORING-E03",
+      "LJ-LF9-MONITORING-E04",
+      "LJ-LF9-MONITORING-E05",
+      "LJ-LF9-MONITORING-E06",
+      "LJ-LF9-MONITORING-E07",
+      "LJ-LF9-MONITORING-E08"
+    ],
+    "passPercent": 80,
+    "scoring": "all-or-nothing-per-question",
+    "timed": false
+  },
+  "questionLinks": [
+    {
+      "questionId": "LJ-LF9-MONITORING-Q01",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf9-monitoring-observe"
+      ],
+      "blockIds": [
+        "common-lf9-monitoring-observe"
+      ]
+    },
+    {
+      "questionId": "LJ-LF9-MONITORING-Q02",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf9-monitoring-observe"
+      ],
+      "blockIds": [
+        "common-lf9-monitoring-observe"
+      ]
+    },
+    {
+      "questionId": "LJ-LF9-MONITORING-Q03",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf9-monitoring-isolate"
+      ],
+      "blockIds": [
+        "common-lf9-monitoring-isolate"
+      ]
+    },
+    {
+      "questionId": "LJ-LF9-MONITORING-Q04",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf9-monitoring-isolate"
+      ],
+      "blockIds": [
+        "common-lf9-monitoring-isolate"
+      ]
+    },
+    {
+      "questionId": "LJ-LF9-MONITORING-Q05",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf9-monitoring-privacy"
+      ],
+      "blockIds": [
+        "common-lf9-monitoring-privacy"
+      ]
+    },
+    {
+      "questionId": "LJ-LF9-MONITORING-Q06",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf9-monitoring-privacy"
+      ],
+      "blockIds": [
+        "common-lf9-monitoring-privacy"
+      ]
+    },
+    {
+      "questionId": "LJ-LF9-MONITORING-E01",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf9-monitoring-observe"
+      ],
+      "blockIds": [
+        "common-lf9-monitoring-observe"
+      ]
+    },
+    {
+      "questionId": "LJ-LF9-MONITORING-E02",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf9-monitoring-observe"
+      ],
+      "blockIds": [
+        "common-lf9-monitoring-observe"
+      ]
+    },
+    {
+      "questionId": "LJ-LF9-MONITORING-E03",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf9-monitoring-observe"
+      ],
+      "blockIds": [
+        "common-lf9-monitoring-retest"
+      ]
+    },
+    {
+      "questionId": "LJ-LF9-MONITORING-E04",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf9-monitoring-isolate"
+      ],
+      "blockIds": [
+        "common-lf9-monitoring-isolate"
+      ]
+    },
+    {
+      "questionId": "LJ-LF9-MONITORING-E05",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf9-monitoring-isolate"
+      ],
+      "blockIds": [
+        "common-lf9-monitoring-retest"
+      ]
+    },
+    {
+      "questionId": "LJ-LF9-MONITORING-E06",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf9-monitoring-isolate"
+      ],
+      "blockIds": [
+        "common-lf9-monitoring-retest"
+      ]
+    },
+    {
+      "questionId": "LJ-LF9-MONITORING-E07",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf9-monitoring-privacy"
+      ],
+      "blockIds": [
+        "common-lf9-monitoring-privacy"
+      ]
+    },
+    {
+      "questionId": "LJ-LF9-MONITORING-E08",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf9-monitoring-privacy"
+      ],
+      "blockIds": [
+        "common-lf9-monitoring-privacy",
+        "common-lf9-monitoring-retest"
+      ]
+    }
+  ],
+  "interview": [
+    {
+      "id": "common-lf9-monitoring-talk-observe",
+      "prompt": "Werte die zehn Proben aus und formuliere eine sachliche Störungsmeldung.",
+      "objectiveIds": [
+        "common-lf9-monitoring-observe"
+      ],
+      "blockIds": [
+        "common-lf9-monitoring-observe",
+        "common-lf9-monitoring-retest"
+      ],
+      "keyPoints": [
+        "8/10 = 80 Prozent als Stichprobenquote benennen.",
+        "Zwei aufeinanderfolgende Beschäftigtenfehler lösen die Modellmeldung aus.",
+        "Auswirkung ohne unbelegte Ursache oder Jahresverfügbarkeit beschreiben."
+      ],
+      "acceptableAlternatives": [
+        "Eine fachlich gleichwertige Begründung mit passenden Modellannahmen und überprüfbaren Belegen."
+      ],
+      "misconceptions": [
+        "Eine Stichprobenquote mit exakter zeitlicher Verfügbarkeit gleichsetzen."
+      ],
+      "sampleAnswer": "Acht der zehn Beschäftigtenproben gelangen, also 80 Prozent dieser Stichprobe. Zwei aufeinanderfolgende Fehler lösen die Meldung an Sam aus. Das Portal war an diesen Messpunkten nicht nutzbar; Ursache und gesamte Ausfalldauer sind noch offen.",
+      "followUp": "Wie würde sich eine erwartete Gästeablehnung auf diese Bewertung auswirken?"
+    },
+    {
+      "id": "common-lf9-monitoring-talk-isolate",
+      "prompt": "Grenze den Fall DNS .11 bei Server .10 ein und beschreibe deine Nachprüfung.",
+      "objectiveIds": [
+        "common-lf9-monitoring-isolate"
+      ],
+      "blockIds": [
+        "common-lf9-monitoring-isolate",
+        "common-lf9-monitoring-retest"
+      ],
+      "keyPoints": [
+        "DNS-Abweichung vom Soll dokumentieren.",
+        "A-Ziel gezielt korrigieren und erneut prüfen.",
+        "Positive Funktion und negative Gästeprobe im neuen Stand verbinden."
+      ],
+      "acceptableAlternatives": [
+        "Eine fachlich gleichwertige Begründung mit passenden Modellannahmen und überprüfbaren Belegen."
+      ],
+      "misconceptions": [
+        "Mehrere unbeteiligte Einstellungen gleichzeitig ändern."
+      ],
+      "sampleAnswer": "Ich vergleiche den A-Eintrag mit der Serveradresse und korrigiere .11 auf .10. Danach prüfe ich DNS und Beschäftigtenzugriff sowie die Gästeablehnung. Warum die falsche Zuordnung entstanden ist, bleibt eine getrennte Frage.",
+      "followUp": "Welcher Befund würde stattdessen auf einen gestoppten Dienst zeigen?"
+    },
+    {
+      "id": "common-lf9-monitoring-talk-privacy",
+      "prompt": "Entwirf einen kurzen hilfreichen Protokolleintrag und erläutere, welche Angaben du weglässt.",
+      "objectiveIds": [
+        "common-lf9-monitoring-privacy"
+      ],
+      "blockIds": [
+        "common-lf9-monitoring-privacy",
+        "common-lf9-monitoring-retest"
+      ],
+      "keyPoints": [
+        "Zeit, synthetische Kennung, Ziel, Soll/Ist und Stand nennen.",
+        "Passwörter, Tokens und unnötige private Inhalte weglassen.",
+        "Zugriff, Zweck und Aufbewahrung berücksichtigen."
+      ],
+      "acceptableAlternatives": [
+        "Eine fachlich gleichwertige Begründung mit passenden Modellannahmen und überprüfbaren Belegen."
+      ],
+      "misconceptions": [
+        "Technische Daten ohne Prüfung als anonym ansehen."
+      ],
+      "sampleAnswer": "Mein Eintrag nennt 10:02, staff-test-01, Portalprobe fehlgeschlagen, DNS .11 statt .10 und den Konfigurationsstand. Ich ergänze Korrektur und Nachtest. Tokens und Portalformulare brauche ich dafür nicht; reale Kennungen könnten Personenbezug haben.",
+      "followUp": "Wie kann eine Zusammenfassung die Übergabe erleichtern, ohne den Denkweg zu verlieren?"
+    }
+  ],
+  "cards": [
+    {
+      "id": "common-lf9-monitoring-card-01",
+      "front": "Was bedeuten acht Erfolge aus zehn Proben?",
+      "back": "80 Prozent Erfolgsquote dieser Stichprobe; daraus folgen weder exakte Ausfalldauer noch Jahresverfügbarkeit.",
+      "objectiveIds": [
+        "common-lf9-monitoring-observe"
+      ],
+      "blockIds": [
+        "common-lf9-monitoring-observe"
+      ]
+    },
+    {
+      "id": "common-lf9-monitoring-card-02",
+      "front": "Ist erwartete Gästeablehnung ein Alarmfall?",
+      "back": "Nein. Sie erfüllt den negativen Schutztest; die Alarmregel des Falls bezieht sich auf Beschäftigtenproben.",
+      "objectiveIds": [
+        "common-lf9-monitoring-observe"
+      ],
+      "blockIds": [
+        "common-lf9-monitoring-observe"
+      ]
+    },
+    {
+      "id": "common-lf9-monitoring-card-03",
+      "front": "Welche drei Modellfehler werden gezielt unterschieden?",
+      "back": "Falsches DNS-Ziel .11, gestoppter Dienst und zu breite Gästeerlaubnis; jede Korrektur verlangt eine passende Nachprobe.",
+      "objectiveIds": [
+        "common-lf9-monitoring-isolate"
+      ],
+      "blockIds": [
+        "common-lf9-monitoring-isolate"
+      ]
+    },
+    {
+      "id": "common-lf9-monitoring-card-04",
+      "front": "Warum bleibt der Entstehungsgrund nach einer Reparatur eventuell offen?",
+      "back": "Die Nachprobe belegt die Wirkung der technischen Korrektur, nicht automatisch den organisatorischen Grund des Fehlers.",
+      "objectiveIds": [
+        "common-lf9-monitoring-isolate"
+      ],
+      "blockIds": [
+        "common-lf9-monitoring-retest"
+      ]
+    },
+    {
+      "id": "common-lf9-monitoring-card-05",
+      "front": "Welche Angaben tragen den Diagnoseweg?",
+      "back": "Zeit, synthetische Testkennung/Segment, Ziel, Probenart, Soll/Ist, Stand, Änderung und Nachtestergebnis.",
+      "objectiveIds": [
+        "common-lf9-monitoring-privacy"
+      ],
+      "blockIds": [
+        "common-lf9-monitoring-privacy",
+        "common-lf9-monitoring-retest"
+      ]
+    },
+    {
+      "id": "common-lf9-monitoring-card-06",
+      "front": "Welche Daten sind für diesen Diagnosefall unnötig?",
+      "back": "Passwörter, Tokens, private Kontaktdaten und vollständige Portalformulare; auch technische Kennungen können real Personenbezug haben.",
+      "objectiveIds": [
+        "common-lf9-monitoring-privacy"
+      ],
+      "blockIds": [
+        "common-lf9-monitoring-privacy"
+      ]
+    }
+  ],
+  "review": {
+    "status": "reviewed",
+    "checkedAt": "2026-11-16"
+  }
+}

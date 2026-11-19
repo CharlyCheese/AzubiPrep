@@ -1,0 +1,501 @@
+{
+  "schemaVersion": 1,
+  "version": "1.0.0",
+  "id": "common-lf9-design",
+  "title": "Netzstruktur und Ressourcen planen",
+  "fieldId": "LF9",
+  "scope": "common",
+  "prerequisites": [
+    "common-lf9-requirements",
+    "common-lf3-addressing"
+  ],
+  "objectives": [
+    {
+      "id": "common-lf9-design-structure",
+      "text": "Ein kleines Netz mit passenden Komponenten, Teilnetzen und einem begründeten Segmentierungsvorschlag entwerfen."
+    },
+    {
+      "id": "common-lf9-design-compare",
+      "text": "Interne und externe Betriebsvarianten nach Kosten, Energiebedarf, Zuständigkeiten und Schutzanforderungen vergleichen."
+    }
+  ],
+  "sourceIds": [
+    "lf9-rfc4632",
+    "lf9-rfc5737",
+    "lf9-ms-network",
+    "lf9-ms-capacity",
+    "lf9-ms-redundancy"
+  ],
+  "sources": [
+    {
+      "id": "lf9-rfc4632",
+      "title": "RFC 4632: Classless Inter-domain Routing (CIDR)",
+      "url": "https://www.rfc-editor.org/rfc/rfc4632.html",
+      "note": "Abschnitt 3.1 zu IPv4-Präfixen und Blockgrößen geprüft. Teilnetze und Kapazitätsrechnungen im Lernfall sind eigene Beispiele.",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "lf9-rfc5737",
+      "title": "RFC 5737: IPv4 Address Blocks Reserved for Documentation",
+      "url": "https://www.rfc-editor.org/rfc/rfc5737.html",
+      "note": "Dokumentationsbereiche 192.0.2.0/24, 198.51.100.0/24 und 203.0.113.0/24 geprüft; im Lernfall werden keine realen Netze angesprochen.",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "lf9-ms-network",
+      "title": "Microsoft: Architecture strategies for networking and connectivity",
+      "url": "https://learn.microsoft.com/en-us/azure/well-architected/security/networking",
+      "note": "Öffentliche Herstellergrundlagen zu Segmentierung, Verkehrsbeziehungen und Filtern geprüft. Der begrenzte Netzplan und seine Freigaben sind fiktive Modellvorgaben.",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "lf9-ms-capacity",
+      "title": "Microsoft: Architecture strategies for capacity planning",
+      "url": "https://learn.microsoft.com/en-us/azure/well-architected/performance-efficiency/capacity-planning",
+      "note": "Öffentliche Herstellergrundlagen zu Arbeitslast, Spitzenlast, Leistungszielen und Kapazitätsplanung geprüft. Nutzerzahlen, Anforderungen und Rechenwerte sind selbst erstellte Fallannahmen.",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "lf9-ms-redundancy",
+      "title": "Microsoft: Architecture strategies for designing for redundancy",
+      "url": "https://learn.microsoft.com/en-us/azure/well-architected/reliability/redundancy",
+      "note": "Redundanz und gemeinsame Fehlerquellen anhand öffentlicher Herstellerbeschreibung geprüft. Kein Verfügbarkeitsversprechen für den fiktiven Einserverfall.",
+      "checkedAt": "2026-11-16"
+    }
+  ],
+  "caseStudy": {
+    "title": "Mira plant das Lernportal für Radblick",
+    "text": "Mira trennt für Radblick Beschäftigte, Gäste und Portaldienst. Der Netzplan verwendet reservierte Dokumentationsadressen. Kosten, Leistungsaufnahme und Betriebsvarianten sind ausdrücklich erfundene Vergleichswerte, keine Anbieterpreise oder Produktzusagen."
+  },
+  "blocks": [
+    {
+      "id": "common-lf9-design-structure",
+      "title": "1. Komponenten und Verkehrswege zeichnen",
+      "objectiveIds": [
+        "common-lf9-design-structure"
+      ],
+      "sourceIds": [
+        "lf9-rfc4632",
+        "lf9-rfc5737",
+        "lf9-ms-network",
+        "lf9-ms-capacity",
+        "lf9-ms-redundancy"
+      ],
+      "paragraphs": [
+        "Zeichne zuerst Gruppen und benötigte Verkehrsbeziehungen. Ein Switch verbindet Geräte innerhalb eines lokalen Netzes; ein Router vermittelt zwischen IP-Netzen. Eine Firewall kontrolliert Übergänge nach Regeln. Diese Funktionen können in einem Gerät zusammengefasst sein. Geräteanzahl und Funktionsanzahl sind deshalb nicht identisch.",
+        "Radblick trennt Beschäftigte, Gäste und Portaldienst in drei Segmente. Beschäftigte benötigen HTTPS zum Portal, Gäste nicht. Der getrennte Dienstbereich macht diesen Übergang sichtbar. Ein eigenes Teilnetz verhindert unerwünschte Verbindungen erst zusammen mit korrekt umgesetzten Regeln; Routing ohne passende Filter kann die Segmente verbinden.",
+        "Der Plan nennt Segment, Präfix, Gateway, Geräte und erlaubte Verkehrswege. DNS steht im Modell unter 203.0.113.53 in einer weiteren vorgegebenen Infrastruktur. Routing, DNS-Erreichbarkeit und erlaubter Rückverkehr funktionieren bereits. Du konfigurierst später keine echten Geräte und führst keine Scans aus."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Lernfall",
+        "text": "Beschäftigtenclient → Gateway/Firewall → Portaldienst: HTTPS zulässig. Gästeclient → Portal: abzuweisen."
+      },
+      "misconception": {
+        "claim": "Verschiedene Teilnetze allein beweisen eine wirksame Zugriffssperre.",
+        "correction": "Die Übergänge brauchen passende Filterregeln und eine negative Zugriffsprobe."
+      },
+      "takeaway": "Zeichne Verkehrsbedarf und Kontrollpunkte, bevor du Produkte auswählst."
+    },
+    {
+      "id": "common-lf9-design-address",
+      "title": "2. Teilnetze mit ausreichender Reserve planen",
+      "objectiveIds": [
+        "common-lf9-design-structure"
+      ],
+      "sourceIds": [
+        "lf9-rfc4632",
+        "lf9-rfc5737",
+        "lf9-ms-network",
+        "lf9-ms-capacity",
+        "lf9-ms-redundancy"
+      ],
+      "paragraphs": [
+        "Ein IPv4-Präfix /26 lässt sechs Bits für Adressen: 2⁶ = 64 Adressen. In den hier verwendeten gewöhnlichen IPv4-Teilnetzen sind Netz- und Broadcastadresse nicht als Hostadressen vergeben; es bleiben 62 Hostadressen. Diese Rechnung ist kein allgemeines Verbot anderer Präfixarten wie /31-Verbindungen.",
+        "Beschäftigte: 192.0.2.0/26, Hostbereich .1 bis .62, Broadcast .63; Client .10, Gateway .1. Gäste: 192.0.2.64/26, Hosts .65 bis .126, Broadcast .127; Client .70, Gateway .65. Beide Teilnetze überlappen sich nicht. Für 30 Beschäftigtenclients plus ein Gateway reichen 31 der 62 Hostadressen.",
+        "Der Dienstbereich ist 198.51.100.0/27: 32 Adressen, 30 Hostadressen .1 bis .30, Broadcast .31. Server .10 und Gateway .1 passen hinein. Eine Adresse .53 wäre hier außerhalb des Teilnetzes. Diese Dokumentationsnetze nach RFC 5737 dienen hier der Simulation und Dokumentation, nicht als Adressplan für ein reales Betriebsnetz."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Lernfall",
+        "text": "198.51.100.10/27 und Gateway 198.51.100.1 liegen im selben Dienstteilnetz; .53 liegt außerhalb."
+      },
+      "misconception": {
+        "claim": "Jede Adresse mit denselben ersten drei Zahlen gehört bei /27 zum gleichen Teilnetz.",
+        "correction": "Das Präfix bestimmt die Grenze; /27 umfasst hier .0 bis .31."
+      },
+      "takeaway": "Prüfe Präfix, Hostbereich, Gateway und Reserve gemeinsam."
+    },
+    {
+      "id": "common-lf9-design-variants",
+      "title": "3. Interne und externe Betriebsvarianten vergleichen",
+      "objectiveIds": [
+        "common-lf9-design-compare"
+      ],
+      "sourceIds": [
+        "lf9-rfc4632",
+        "lf9-rfc5737",
+        "lf9-ms-network",
+        "lf9-ms-capacity",
+        "lf9-ms-redundancy"
+      ],
+      "paragraphs": [
+        "Beim internen Betrieb muss geklärt sein, wer Hardware, Betriebssystem, Anwendung, Sicherung und Störungen betreut. Beim externen Betrieb werden bestimmte Aufgaben vertraglich übernommen; welche das sind, hängt vom Angebot ab. Zugriffsregeln, Datenverantwortung, Abnahme und die Prüfung vereinbarter Leistungen bleiben zuzuordnen.",
+        "Vergleiche einen gleichen Zeitraum und Leistungsumfang: Anschaffung, Betrieb, Energie, Wartung, Sicherung, Wiederherstellung und Erweiterung. Für den fiktiven internen Server werden 600 Euro Anschaffung, 400 Euro Betreuung pro Jahr und 60 Watt mittlere Leistungsaufnahme bei 2.000 Betriebsstunden angesetzt. 0,060 kW × 2.000 h = 120 kWh; bei 0,30 Euro/kWh sind das 36 Euro. Im ersten Jahr ergeben diese genannten Posten 1.036 Euro.",
+        "Ein erfundenes externes Angebot kostet 70 Euro im Monat, also 840 Euro im Jahr, einschließlich der vereinbarten Betreuung und Sicherung. Migration und Netzanbindung sind in beiden Vergleichswerten nicht enthalten. Ohne Angaben zum zugeordneten Energieverbrauch des Anbieters ist ein Energievergleich offen; keine Hardware im eigenen Raum bedeutet nicht keinen Energiebedarf."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Lernfall",
+        "text": "Interner erster Jahresvergleich: 600 + 400 + 36 = 1.036 Euro. Extern: 12 × 70 = 840 Euro, bei ausdrücklich beschriebenem Umfang."
+      },
+      "misconception": {
+        "claim": "Ein extern betriebener Dienst benötigt aus Kundensicht keine zu klärenden Zuständigkeiten.",
+        "correction": "Aufgaben und Nachweise müssen anhand des Vertrags auf Anbieter und Kunde verteilt werden."
+      },
+      "takeaway": "Vergleiche denselben Umfang und Zeitraum; kennzeichne fehlende Kosten- und Energiedaten."
+    },
+    {
+      "id": "common-lf9-design-decide",
+      "title": "4. Eine begründete Planungsentscheidung treffen",
+      "objectiveIds": [
+        "common-lf9-design-structure",
+        "common-lf9-design-compare"
+      ],
+      "sourceIds": [
+        "lf9-rfc4632",
+        "lf9-rfc5737",
+        "lf9-ms-network",
+        "lf9-ms-capacity",
+        "lf9-ms-redundancy"
+      ],
+      "paragraphs": [
+        "Bewerte zuerst, ob eine Variante die verbindlichen Anforderungen erfüllt. Danach vergleichst du Nutzen, Kosten, Energie, Erweiterbarkeit und Betriebsaufwand. Im Beispiel ist extern bei den genannten Erstjahresposten 196 Euro günstiger. Das begründet noch keine Wahl, solange Schutzanforderungen oder Wiederherstellungsleistung unklar bleiben.",
+        "Ein zweiter Server kann einen Ausfall abfangen, benötigt aber einen funktionierenden Umschaltweg und zusätzliche Ressourcen. Teilen beide Server Stromversorgung oder einen einzigen Netzübergang, bleibt eine gemeinsame Fehlerquelle. Eine Reserve im Adressplan beseitigt solche Abhängigkeiten nicht.",
+        "Halte die Entscheidung mit Annahmen und offenen Nachweisen fest: zum Beispiel Segmentierung wie geplant, interner Betrieb zunächst gewählt, externe Variante nach Klärung der Schutz- und Wiederherstellungsbedingungen erneut bewerten. Benenne die zuständige Rolle. Eine nachvollziehbare Abwägung kann unterschiedliche Lösungen zulassen, wenn Bedingungen unterschiedlich gewichtet werden."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Lernfall",
+        "text": "Mira vermerkt 196 Euro Erstjahresdifferenz, offene externe Energiedaten und die noch zu prüfende Wiederherstellungsleistung."
+      },
+      "misconception": {
+        "claim": "Die niedrigste genannte Jahreszahl ist schon eine vollständige Betriebsentscheidung.",
+        "correction": "Preis, vergleichbarer Umfang, Schutz, Zuständigkeiten und Nachweise gehören zusammen."
+      },
+      "takeaway": "Begründe die Wahl mit erfüllten Anforderungen und ausdrücklich offenen Punkten."
+    }
+  ],
+  "questionFile": "questions/common-lf9-design.v1.csv",
+  "quiz": {
+    "questionIds": [
+      "LJ-LF9-DESIGN-Q01",
+      "LJ-LF9-DESIGN-Q02",
+      "LJ-LF9-DESIGN-Q03",
+      "LJ-LF9-DESIGN-Q04",
+      "LJ-LF9-DESIGN-Q05",
+      "LJ-LF9-DESIGN-Q06"
+    ]
+  },
+  "exam": {
+    "questionIds": [
+      "LJ-LF9-DESIGN-E01",
+      "LJ-LF9-DESIGN-E02",
+      "LJ-LF9-DESIGN-E03",
+      "LJ-LF9-DESIGN-E04",
+      "LJ-LF9-DESIGN-E05",
+      "LJ-LF9-DESIGN-E06",
+      "LJ-LF9-DESIGN-E07",
+      "LJ-LF9-DESIGN-E08"
+    ],
+    "passPercent": 80,
+    "scoring": "all-or-nothing-per-question",
+    "timed": false
+  },
+  "questionLinks": [
+    {
+      "questionId": "LJ-LF9-DESIGN-Q01",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf9-design-structure"
+      ],
+      "blockIds": [
+        "common-lf9-design-structure"
+      ]
+    },
+    {
+      "questionId": "LJ-LF9-DESIGN-Q02",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf9-design-structure"
+      ],
+      "blockIds": [
+        "common-lf9-design-address"
+      ]
+    },
+    {
+      "questionId": "LJ-LF9-DESIGN-Q03",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf9-design-structure"
+      ],
+      "blockIds": [
+        "common-lf9-design-address"
+      ]
+    },
+    {
+      "questionId": "LJ-LF9-DESIGN-Q04",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf9-design-compare"
+      ],
+      "blockIds": [
+        "common-lf9-design-variants"
+      ]
+    },
+    {
+      "questionId": "LJ-LF9-DESIGN-Q05",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf9-design-compare"
+      ],
+      "blockIds": [
+        "common-lf9-design-variants"
+      ]
+    },
+    {
+      "questionId": "LJ-LF9-DESIGN-Q06",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf9-design-compare"
+      ],
+      "blockIds": [
+        "common-lf9-design-decide"
+      ]
+    },
+    {
+      "questionId": "LJ-LF9-DESIGN-E01",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf9-design-structure"
+      ],
+      "blockIds": [
+        "common-lf9-design-structure"
+      ]
+    },
+    {
+      "questionId": "LJ-LF9-DESIGN-E02",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf9-design-structure"
+      ],
+      "blockIds": [
+        "common-lf9-design-address"
+      ]
+    },
+    {
+      "questionId": "LJ-LF9-DESIGN-E03",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf9-design-structure"
+      ],
+      "blockIds": [
+        "common-lf9-design-address"
+      ]
+    },
+    {
+      "questionId": "LJ-LF9-DESIGN-E04",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf9-design-structure"
+      ],
+      "blockIds": [
+        "common-lf9-design-structure",
+        "common-lf9-design-address"
+      ]
+    },
+    {
+      "questionId": "LJ-LF9-DESIGN-E05",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf9-design-compare"
+      ],
+      "blockIds": [
+        "common-lf9-design-variants"
+      ]
+    },
+    {
+      "questionId": "LJ-LF9-DESIGN-E06",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf9-design-compare"
+      ],
+      "blockIds": [
+        "common-lf9-design-variants"
+      ]
+    },
+    {
+      "questionId": "LJ-LF9-DESIGN-E07",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf9-design-compare"
+      ],
+      "blockIds": [
+        "common-lf9-design-decide"
+      ]
+    },
+    {
+      "questionId": "LJ-LF9-DESIGN-E08",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf9-design-compare"
+      ],
+      "blockIds": [
+        "common-lf9-design-decide"
+      ]
+    }
+  ],
+  "interview": [
+    {
+      "id": "common-lf9-design-talk-structure",
+      "prompt": "Skizziere den Modellweg vom Beschäftigtenclient zum Portal und begründe die Trennung der Gäste.",
+      "objectiveIds": [
+        "common-lf9-design-structure"
+      ],
+      "blockIds": [
+        "common-lf9-design-structure",
+        "common-lf9-design-address"
+      ],
+      "keyPoints": [
+        "Beschäftigte 192.0.2.0/26, Gäste 192.0.2.64/26, Dienst 198.51.100.0/27 nennen.",
+        "Passende Gateways und kontrollierte Übergänge beschreiben.",
+        "Erlaubten Beschäftigtenzugriff und gesperrten Gästezugriff unterscheiden."
+      ],
+      "acceptableAlternatives": [
+        "Eine fachlich gleichwertige Begründung mit passenden Modellannahmen und überprüfbaren Belegen."
+      ],
+      "misconceptions": [
+        "Andere Teilnetze ohne Filter als ausreichende Sperre behandeln."
+      ],
+      "sampleAnswer": "Der Beschäftigtenclient .10 nutzt .1 im eigenen /26. Routing führt zum Dienstnetz, dessen Server .10/27 über .1 angebunden ist. Die Firewall erlaubt den Portaldienst für Beschäftigte und sperrt Gäste aus dem anderen /26.",
+      "followUp": "Warum liegt .53 nicht im Dienstteilnetz?"
+    },
+    {
+      "id": "common-lf9-design-talk-compare",
+      "prompt": "Vergleiche die beiden fiktiven Betriebsvarianten mit transparenten Rechenschritten.",
+      "objectiveIds": [
+        "common-lf9-design-compare"
+      ],
+      "blockIds": [
+        "common-lf9-design-variants",
+        "common-lf9-design-decide"
+      ],
+      "keyPoints": [
+        "60 W × 2.000 h als 120 kWh berechnen.",
+        "36 Euro Energie, 1.036 Euro interne Erstjahresposten und 840 Euro externe Jahresrate nennen.",
+        "Unterschiedlichen Umfang und offene Energie-/Schutznachweise kennzeichnen."
+      ],
+      "acceptableAlternatives": [
+        "Eine fachlich gleichwertige Begründung mit passenden Modellannahmen und überprüfbaren Belegen."
+      ],
+      "misconceptions": [
+        "Den externen Energieverbrauch wegen fehlender Angaben mit null ansetzen."
+      ],
+      "sampleAnswer": "Intern ergeben 0,060 kW × 2.000 h 120 kWh und 36 Euro Energie. Zusammen sind es 1.036 Euro; extern 840 Euro. Die 196 Euro Differenz ersetzt weder Schutzprüfung noch Klärung fehlender Energiedaten.",
+      "followUp": "Welche zusätzlichen Posten könnten eine Entscheidung verändern?"
+    },
+    {
+      "id": "common-lf9-design-talk-decide",
+      "prompt": "Begründe eine vorläufige Planungsentscheidung und benenne eine verbleibende Unsicherheit.",
+      "objectiveIds": [
+        "common-lf9-design-structure",
+        "common-lf9-design-compare"
+      ],
+      "blockIds": [
+        "common-lf9-design-decide"
+      ],
+      "keyPoints": [
+        "Verbindliche Anforderungen vor Preispräferenz prüfen.",
+        "Segmentierung und Betriebsverantwortung verbinden.",
+        "Offenen Nachweis mit Zuständigkeit zur Klärung festhalten."
+      ],
+      "acceptableAlternatives": [
+        "Eine fachlich gleichwertige Begründung mit passenden Modellannahmen und überprüfbaren Belegen."
+      ],
+      "misconceptions": [
+        "Eine günstige Zahl als vollständigen Eignungsnachweis behandeln."
+      ],
+      "sampleAnswer": "Ich übernehme die drei Segmente und kontrolliere die Übergänge. Eine Betriebsvariante wähle ich vorläufig nach Leistung und Zuständigkeiten. Den offenen Energieverbrauch und die externe Wiederherstellungsleistung lasse ich durch die Betriebsverantwortlichen klären.",
+      "followUp": "Welche gemeinsame Fehlerquelle würde ein zweiter Server noch nicht beseitigen?"
+    }
+  ],
+  "cards": [
+    {
+      "id": "common-lf9-design-card-01",
+      "front": "Welche Funktionen unterscheidest du im Netzplan?",
+      "back": "Switch für lokale Verbindungen, Router zwischen IP-Netzen, Firewall für kontrollierte Übergänge; mehrere Funktionen können in einem Gerät liegen.",
+      "objectiveIds": [
+        "common-lf9-design-structure"
+      ],
+      "blockIds": [
+        "common-lf9-design-structure"
+      ]
+    },
+    {
+      "id": "common-lf9-design-card-02",
+      "front": "Wie groß ist 192.0.2.64/26?",
+      "back": "64 Adressen von .64 bis .127; im Fall nutzbare Hosts .65 bis .126, Gateway .65 und Client .70.",
+      "objectiveIds": [
+        "common-lf9-design-structure"
+      ],
+      "blockIds": [
+        "common-lf9-design-address"
+      ]
+    },
+    {
+      "id": "common-lf9-design-card-03",
+      "front": "Warum passt .53 nicht in 198.51.100.0/27?",
+      "back": "Das Teilnetz reicht von .0 bis .31; die Hostadressen liegen zwischen .1 und .30.",
+      "objectiveIds": [
+        "common-lf9-design-structure"
+      ],
+      "blockIds": [
+        "common-lf9-design-address"
+      ]
+    },
+    {
+      "id": "common-lf9-design-card-04",
+      "front": "Wie berechnest du elektrische Energie aus mittlerer Leistung?",
+      "back": "Leistung in kW × Betriebszeit in h = Energie in kWh; 0,060 kW × 2.000 h = 120 kWh.",
+      "objectiveIds": [
+        "common-lf9-design-compare"
+      ],
+      "blockIds": [
+        "common-lf9-design-variants"
+      ]
+    },
+    {
+      "id": "common-lf9-design-card-05",
+      "front": "Was braucht ein fairer Betriebsvergleich?",
+      "back": "Gleichen Zeitraum und Leistungsumfang, passende Kosten- und Energiedaten, geklärte Zuständigkeiten sowie Schutz- und Wiederherstellungsanforderungen.",
+      "objectiveIds": [
+        "common-lf9-design-compare"
+      ],
+      "blockIds": [
+        "common-lf9-design-variants",
+        "common-lf9-design-decide"
+      ]
+    },
+    {
+      "id": "common-lf9-design-card-06",
+      "front": "Was begrenzt den Nutzen eines zweiten Servers?",
+      "back": "Gemeinsame Fehlerquellen und ein ungeprüfter Umschaltweg; zusätzliche Hardware allein garantiert keine Dienstverfügbarkeit.",
+      "objectiveIds": [
+        "common-lf9-design-compare"
+      ],
+      "blockIds": [
+        "common-lf9-design-decide"
+      ]
+    }
+  ],
+  "review": {
+    "status": "reviewed",
+    "checkedAt": "2026-11-16"
+  }
+}

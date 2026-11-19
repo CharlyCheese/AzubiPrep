@@ -1,0 +1,764 @@
+{
+  "schemaVersion": 1,
+  "id": "common-wiso-europe",
+  "version": "1.0.0",
+  "title": "Europa und weltweite Wirtschaftsbeziehungen",
+  "fieldId": "WISO",
+  "scope": "common",
+  "prerequisites": [
+    "common-wiso-economy",
+    "common-wiso-career"
+  ],
+  "sourceIds": [
+    "wiso-eu-work",
+    "wiso-eu-erasmus",
+    "wiso-eu-residence",
+    "wiso-eu-social-cover",
+    "wiso-eu-recognition",
+    "wiso-eu-trade",
+    "wiso-uba-digital",
+    "wiso-uba-rebound",
+    "wiso-gdpr-principles",
+    "wiso-bgb-consumer",
+    "wiso-bundesbank-cycle",
+    "wiso-bundesbank-price",
+    "wiso-bmwe-market",
+    "wiso-bmwe-competition",
+    "wiso-ba-learning",
+    "wiso-bmwe-finance",
+    "wiso-it-qualification",
+    "wiso-bibb-it-development",
+    "wiso-ba-family",
+    "bbig-wiso",
+    "bgb-611a",
+    "bgb-623",
+    "kschg-4",
+    "tvg-wiso",
+    "betrvg-wiso",
+    "sgb1-wiso",
+    "entgbv-1"
+  ],
+  "sources": [
+    {
+      "id": "wiso-eu-work",
+      "title": "Your Europe – Arbeitserlaubnis in der EU",
+      "url": "https://europa.eu/youreurope/citizens/work/work-abroad/work-permits/index_de.htm",
+      "checkedAt": "2026-11-11",
+      "note": "EU-Bürger benötigen für Erwerbstätigkeit in einem anderen EU-Land im Allgemeinen keine Arbeitserlaubnis. Aufenthaltsformalitäten, Sozialversicherung und gegebenenfalls Berufsqualifikationsanerkennung gesondert prüfen; keine Übertragung auf Drittstaatsangehörige."
+    },
+    {
+      "id": "wiso-eu-erasmus",
+      "title": "Europäische Kommission – Erasmus+ in der beruflichen Bildung",
+      "url": "https://erasmus-plus.ec.europa.eu/de/opportunities/individuals/trainees/vocational-education-learners-apprenticeships-and-recent-graduates",
+      "checkedAt": "2026-11-11",
+      "note": "Lernvereinbarung und Zugang über die entsendende Organisation geprüft. Förderung ist an Programm- und Organisationsbedingungen gebunden, keine individuelle Vollfinanzierungsgarantie."
+    },
+    {
+      "id": "wiso-eu-residence",
+      "title": "Your Europe – Wohnsitzregistrierung in einem anderen EU-Land",
+      "url": "https://europa.eu/youreurope/citizens/residence/documents-formalities/registering-residence/index_de.htm",
+      "checkedAt": "2026-11-11",
+      "note": "Nach drei Monaten können abhängig vom Gastland Registrierungsformalitäten bestehen; mögliche frühere Meldung der Anwesenheit gesondert prüfen. Keine Gleichsetzung von Arbeitnehmerfreizügigkeit mit Befreiung von sämtlichen Formalitäten."
+    },
+    {
+      "id": "wiso-eu-social-cover",
+      "title": "Your Europe – Sozialschutz beim Leben oder Arbeiten im EU-Ausland",
+      "url": "https://europa.eu/youreurope/citizens/work/social-security-and-benefits/country-coverage/index_de.htm",
+      "checkedAt": "2026-11-11",
+      "note": "Zuständiges Sozialversicherungssystem hängt von Arbeitssituation und Wohnort ab; Koordinierung ist keine freie Wahl oder pauschale Fortgeltung aller deutschen Leistungen. Keine individuelle Entsendungs- oder Leistungsentscheidung getroffen."
+    },
+    {
+      "id": "wiso-eu-recognition",
+      "title": "Your Europe – Reglementierte Berufe und Anerkennung",
+      "url": "https://europa.eu/youreurope/citizens/work/professional-qualifications/regulated-professions/index_de.htm",
+      "checkedAt": "2026-11-11",
+      "note": "Vor Tätigkeit prüfen, ob Beruf im Zielland reglementiert ist und ein Anerkennungsverfahren erforderlich wird. Keine pauschale Anerkennung deutscher Abschlüsse für alle Tätigkeiten behauptet."
+    },
+    {
+      "id": "wiso-eu-trade",
+      "title": "Europäische Kommission – Economic security und vielfältige Lieferketten",
+      "url": "https://policy.trade.ec.europa.eu/economic-security_en",
+      "checkedAt": "2026-11-11",
+      "note": "Chancen offenen Handels, Risiken konzentrierter Lieferketten und Diversifizierung geprüft. Keine politischen Ankündigungen oder aktuellen Handelsquoten übernommen; Standortdaten sind fiktiv."
+    },
+    {
+      "id": "wiso-uba-digital",
+      "title": "Umweltbundesamt – Digitalisierung und Klimaschutz",
+      "url": "https://www.umweltbundesamt.de/themen/digitalisierung-klimaschutz-herausforderung-chance",
+      "checkedAt": "2026-11-11",
+      "note": "Digitalisierung kann Emissionen senken, benötigt selbst Energie und Ressourcen; Umweltwirkung hängt von Rahmenbedingungen und Mehrnutzung ab. Eigene Zahlen sind gekennzeichnete Lernmodelle."
+    },
+    {
+      "id": "wiso-uba-rebound",
+      "title": "Umweltbundesamt – Rebound-Effekte durch digitale Leistungen und Produkte",
+      "url": "https://www.umweltbundesamt.de/publikationen/rebound-effekte-durch-digitale-leistungen-produkte",
+      "checkedAt": "2026-11-11",
+      "note": "Ausgangsbefund geprüft: Nebenwirkungen und zusätzliche Nutzung können erwartete Entlastungen verringern oder überkompensieren. Keine Übernahme der Studienbeispiele."
+    },
+    {
+      "id": "wiso-gdpr-principles",
+      "title": "EU-Datenschutz-Grundverordnung – Grundsätze und Rechtmäßigkeit",
+      "url": "https://eur-lex.europa.eu/legal-content/DE-EN/TXT/?uri=CELEX%3A32016R0679",
+      "checkedAt": "2026-11-11",
+      "note": "Art. 4–6: Personenbezug und Pseudonymisierung, Zweckbindung, Datenminimierung, Speicherbegrenzung und Rechtsgrundlage. Betriebliche Freigabe ist kein Ersatz für eine Rechtsgrundlage; keine pauschale Annahme einer wirksamen Beschäftigteneinwilligung."
+    },
+    {
+      "id": "wiso-bgb-consumer",
+      "title": "BGB – Geschäftsfähigkeit, Vertragspflichten und Verbraucherrechte",
+      "url": "https://www.gesetze-im-internet.de/bgb/",
+      "checkedAt": "2026-11-11",
+      "note": "Deutschland: §§ 106–110, 312g, 355, 356, 433, 439, 488 und 535 anhand der aktuellen Einzelnormen geprüft. Beschränkte Geschäftsfähigkeit, vollständig bewirkte Leistung aus überlassenen Mitteln, Pflichten bei Kauf/Miete/Darlehen und begrenzte Fälle von Widerruf/Nacherfüllung. Keine pauschale Rückgabe- oder Finanzierungszusage."
+    },
+    {
+      "id": "wiso-bundesbank-cycle",
+      "title": "Deutsche Bundesbank – Geld- und Güterkreislauf",
+      "url": "https://publikationen.bundesbank.de/publikationen-de/schule-bildung/geld-und-geldpolitik-921580?article=1-funktionen-und-formen-des-geldes-921582",
+      "checkedAt": "2026-11-11",
+      "note": "Abschnitt Geld- und Güterkreislauf: Gegenrichtung von Arbeitsleistung/Einkommen und Konsumgut/Konsumausgabe. Eigene vereinfachte Fälle; keine gesamtwirtschaftliche Prognose."
+    },
+    {
+      "id": "wiso-bundesbank-price",
+      "title": "Deutsche Bundesbank – Preisbildung durch Angebot und Nachfrage",
+      "url": "https://publikationen.bundesbank.de/publikationen-de/schule-bildung/geld-und-geldpolitik-921580?article=5-der-wert-stabilen-geldes-922608",
+      "checkedAt": "2026-11-11",
+      "note": "Abschnitt Preisbildung: Angebot, Nachfrage und Preisbewegung im vereinfachten Modell. Ceteris-paribus-Annahme ausdrücklich benannt; keine deterministische Prognose realer Preise."
+    },
+    {
+      "id": "wiso-bmwe-market",
+      "title": "Bundeswirtschaftsministerium – Wirtschaftspolitik und soziale Marktwirtschaft",
+      "url": "https://www.bundeswirtschaftsministerium.de/Navigation/DE/Ministerium/Wirtschaftspolitik-1949-bis-heute/wirtschaftspolitik-1949-bis-heute.html",
+      "checkedAt": "2026-11-11",
+      "note": "Grundgedanke Wettbewerb, Privateigentum und Gewinnorientierung verbunden mit sozialem Ausgleich. Eigene Anwendungsbeispiele ohne Behauptung bestimmter Förderansprüche."
+    },
+    {
+      "id": "wiso-bmwe-competition",
+      "title": "Bundeswirtschaftsministerium – Fairen Wettbewerb schützen",
+      "url": "https://www.bundeswirtschaftsministerium.de/Redaktion/DE/Dossier/wettbewerbspolitik.html",
+      "checkedAt": "2026-11-11",
+      "note": "Wettbewerbspolitik als Rahmen für offene Märkte und fairen Wettbewerb; eigener Fall zur Trennung von Wettbewerbsordnung und sozialer Absicherung."
+    },
+    {
+      "id": "wiso-ba-learning",
+      "title": "Bundesagentur für Arbeit – Karriere und Weiterbildung",
+      "url": "https://www.arbeitsagentur.de/karriere-und-weiterbildung",
+      "checkedAt": "2026-11-11",
+      "note": "Orientierungsangebote, Berufsberatung im Erwerbsleben und Verweis auf mein NOW geprüft. Zugang, Durchführung, Kosten und Fördervoraussetzungen bleiben angebotsspezifisch; eigene Kursangebote sind fiktiv."
+    },
+    {
+      "id": "wiso-bmwe-finance",
+      "title": "Existenzgründungsportal – Finanzplan erstellen",
+      "url": "https://www.existenzgruendungsportal.de/Redaktion/DE/So-gehts/Finanzierung/finanzplan-erstellen",
+      "checkedAt": "2026-11-11",
+      "note": "Kapitalbedarf, laufende Kosten, Finanzierung und Liquidität unterschieden. Eigene vereinfachte Übungsrechnungen ohne Steuer- oder Rentabilitätsversprechen."
+    },
+    {
+      "id": "wiso-it-qualification",
+      "title": "Bachelor-Professional-IT-Fortbildungsprüfungsverordnung – Zulassung",
+      "url": "https://www.gesetze-im-internet.de/baproitfprv/__2.html",
+      "checkedAt": "2026-11-11",
+      "note": "§ 2: anerkannte IT-Ausbildung als ein Zugangsnachweis; Anforderungen nach BBiG § 53c und weitere Zulassungswege sind gesondert zu beachten. Kein Versprechen der Zulassung allein durch eine Kursbuchung."
+    },
+    {
+      "id": "wiso-bibb-it-development",
+      "title": "BIBB – Neuordnung des IT-Weiterbildungssystems",
+      "url": "https://www.bibb.de/de/189508.php",
+      "checkedAt": "2026-11-11",
+      "note": "Berufsspezialisten und Bachelor Professional in IT; der Berufsspezialistenabschluss ist keine allgemeine Vorbedingung des Bachelor Professional. Profile und Zuständigkeit der IHK geprüft; keine überholten Abschlussbezeichnungen oder behauptete Master-Angebote."
+    },
+    {
+      "id": "wiso-ba-family",
+      "title": "Bundesagentur für Arbeit – Familie und Beruf vereinbaren",
+      "url": "https://www.arbeitsagentur.de/familie-und-kinder/familie-und-beruf-vereinbaren",
+      "checkedAt": "2026-11-11",
+      "note": "Beratungsangebote und individuell passende Arbeitszeitmodelle für Vereinbarkeit geprüft. Keine Detailaussagen zu Höhe, Dauer oder Anspruchsvoraussetzungen von Familienleistungen verwendet."
+    },
+    {
+      "id": "bbig-wiso",
+      "title": "Berufsbildungsgesetz – duale Ausbildung, Vertragsabfassung, Pflichten und Beendigung",
+      "url": "https://www.gesetze-im-internet.de/bbig_2005/BJNR093110005.html",
+      "checkedAt": "2026-11-11",
+      "note": "Geprüft: §§ 2, 5, 11, 13–15, 20–22, 39, 71 und 76. Geltungsbereich hier: duale Ausbildung nach BBiG in Deutschland, fiktiver IHK-Ausbildungsbetrieb."
+    },
+    {
+      "id": "bgb-611a",
+      "title": "BGB § 611a – Arbeitsvertrag",
+      "url": "https://www.gesetze-im-internet.de/bgb/__611a.html",
+      "checkedAt": "2026-11-11",
+      "note": "Weisungsgebundene Arbeit und Vergütung als Hauptpflichten."
+    },
+    {
+      "id": "bgb-623",
+      "title": "BGB § 623 – Schriftform der Kündigung",
+      "url": "https://www.gesetze-im-internet.de/bgb/__623.html",
+      "checkedAt": "2026-11-11",
+      "note": "Schriftform, Ausschluss elektronischer Form; amtlicher Suchindex zusätzlich wegen zeitweiser Abrufprobleme geprüft."
+    },
+    {
+      "id": "kschg-4",
+      "title": "Kündigungsschutzgesetz § 4 – Anrufung des Arbeitsgerichts",
+      "url": "https://www.gesetze-im-internet.de/kschg/__4.html",
+      "checkedAt": "2026-11-11",
+      "note": "Drei Wochen nach Zugang schriftlicher Kündigung; gesetzliche Sonderfälle bleiben zu prüfen."
+    },
+    {
+      "id": "tvg-wiso",
+      "title": "Tarifvertragsgesetz – Tarifparteien, Bindung und Wirkung",
+      "url": "https://www.gesetze-im-internet.de/tvg/BJNR700550949.html",
+      "checkedAt": "2026-11-11",
+      "note": "§§ 1–5: Tarifvertragsparteien, beiderseitige Bindung und Geltungsbereich, günstigere Abreden, Allgemeinverbindlichkeit."
+    },
+    {
+      "id": "betrvg-wiso",
+      "title": "Betriebsverfassungsgesetz – Interessenvertretung und Beteiligung",
+      "url": "https://www.gesetze-im-internet.de/betrvg/BJNR000130972.html",
+      "checkedAt": "2026-11-11",
+      "note": "Insbesondere §§ 60, 70, 74, 77 und 87. Fälle betreffen einen privaten Betrieb im Anwendungsbereich des BetrVG mit bestehendem Betriebsrat und bestehender JAV."
+    },
+    {
+      "id": "sgb1-wiso",
+      "title": "SGB I – soziale Rechte, Beratung und Leistungsträger",
+      "url": "https://www.gesetze-im-internet.de/sgb_1/BJNR030150975.html",
+      "checkedAt": "2026-11-11",
+      "note": "Insbesondere §§ 4, 14, 19, 21, 21a, 22 und 23: Leistungsbereiche, Beratung und zuständige Träger."
+    },
+    {
+      "id": "entgbv-1",
+      "title": "Entgeltbescheinigungsverordnung § 1 – Inhalt der Entgeltbescheinigung",
+      "url": "https://www.gesetze-im-internet.de/entgbv/__1.html",
+      "checkedAt": "2026-11-11",
+      "note": "Gesamtbrutto, steuer- und sozialversicherungspflichtige Größen, gesetzliche Abzüge, Netto und Auszahlung unterscheiden."
+    }
+  ],
+  "objectives": [
+    {
+      "id": "common-wiso-europe-mobility",
+      "text": "An einem Berufsszenario erklären, welche Möglichkeiten und Anforderungen mit Arbeiten oder Lernen in der EU verbunden sind."
+    },
+    {
+      "id": "common-wiso-europe-trade",
+      "text": "Für eine internationale IT-Lieferkette wirtschaftliche Chancen und Abhängigkeiten benennen."
+    },
+    {
+      "id": "common-wiso-europe-sustainability",
+      "text": "Standortalternativen anhand vorgegebener Lohn-, Arbeits- und Umweltbedingungen vergleichen."
+    }
+  ],
+  "caseStudy": {
+    "title": "Knotenpunkt arbeitet über Grenzen hinweg",
+    "text": "Mira ist im fiktiven Fall deutsche Staatsbürgerin und 19 Jahre alt. Sie plant einen Lernaufenthalt in einem anderen EU-Land und später vielleicht dort eine Beschäftigung. Knotenpunkt bezieht IT-Bauteile international und vergleicht zwei fiktive Dienstleistungsstandorte. Der vierte Block führt alle zehn WISO-Themen zusammen. Deutsche Rechtsregeln gelten in den Aufgaben nur für ausdrücklich deutsche Sachverhalte; aus dem EU-Bezug folgt keine pauschale Übertragung auf ein Gastland."
+  },
+  "blocks": [
+    {
+      "id": "common-wiso-europe-mobility",
+      "title": "1. Arbeiten und Lernen in der EU vorbereiten",
+      "objectiveIds": [
+        "common-wiso-europe-mobility"
+      ],
+      "sourceIds": [
+        "wiso-eu-work",
+        "wiso-eu-erasmus",
+        "wiso-eu-residence",
+        "wiso-eu-social-cover",
+        "wiso-eu-recognition"
+      ],
+      "paragraphs": [
+        "EU-Bürgerinnen und EU-Bürger können im Allgemeinen ohne Arbeitserlaubnis in einem anderen EU-Staat arbeiten. Das ist eine Möglichkeit der Freizügigkeit, aber keine Zusage eines Arbeitsplatzes. Für Menschen ohne EU-Staatsangehörigkeit gelten andere zu prüfende Regeln; ein deutscher Wohnsitz allein macht sie nicht zu EU-Bürgern.",
+        "Prüfe vor einem Wechsel Ziel, Aufgabe, Vertragsbedingungen, Sprache und zuständige Ansprechpersonen. Aufenthalts- und Meldeformalitäten hängen vom Gastland und der Dauer ab; nach drei Monaten können Registrierungsanforderungen bestehen. Prüfe außerdem, ob die konkrete Tätigkeit im Zielland reglementiert ist und eine Anerkennung der Qualifikation nötig wird.",
+        "Auch die Sozialversicherung ist zu klären. Die Zuständigkeit hängt unter anderem von Arbeits- und Wohnsituation ab; Beschäftigung vor Ort, Entsendung oder Arbeit in mehreren Staaten sind nicht derselbe Fall. Aus Freizügigkeit folgt weder freie Wahl eines beliebigen Systems noch garantierte unveränderte Leistung. Nutze die zuständigen Träger und offizielle EU-Informationen.",
+        "Ein Erasmus+-Lernaufenthalt in der Berufsbildung wird über eine teilnehmende Organisation vorbereitet. Lernziele, Betreuung und Anerkennung werden vorab in einer Lernvereinbarung abgestimmt. Förderung ist an Bedingungen gebunden und wird über die entsendende Organisation organisiert; die bloße Teilnahmeabsicht garantiert keine vollständige Finanzierung.",
+        "Mira klärt mit Ausbildungsbetrieb und entsendender Organisation, welche Aufgabe sie im Ausland lernt, wie sie betreut wird und welche Kosten und Versicherungsfragen offen sind. Sie muss dafür keinen normalen deutschen Vertrag ungeprüft auf ein anderes Land übertragen."
+      ],
+      "example": {
+        "title": "Eigener Übungsfall",
+        "text": "Mira plant einen Lernaufenthalt zu systematischer Fehlerdokumentation. Vorher stimmt sie Lernziel, Betreuung, Anerkennung, Versicherungszuständigkeit und Finanzierung ab und prüft später für eine Beschäftigung die Regeln des Ziellands."
+      },
+      "misconception": {
+        "claim": "Wer ohne Arbeitserlaubnis arbeiten darf, braucht keine weiteren Voraussetzungen oder Formalitäten zu prüfen.",
+        "correction": "Freizügigkeit, Aufenthaltsformalitäten, Qualifikationsregeln und soziale Absicherung sind unterschiedliche Fragen."
+      },
+      "takeaway": "Nutze EU-Möglichkeiten und kläre die konkrete Lern-, Arbeits- und Versicherungssituation vorab."
+    },
+    {
+      "id": "common-wiso-europe-trade",
+      "title": "2. Internationale Lieferketten erklären",
+      "objectiveIds": [
+        "common-wiso-europe-trade"
+      ],
+      "sourceIds": [
+        "wiso-eu-trade",
+        "wiso-bundesbank-price",
+        "wiso-bundesbank-cycle"
+      ],
+      "paragraphs": [
+        "Eine IT-Leistung kann auf Entwicklung, Rohstoffen, Bauteilen, Montage, Transport und Betrieb aus verschiedenen Ländern beruhen. Internationale Arbeitsteilung ermöglicht Spezialisierung, Zugang zu Wissen und Produkten sowie zusätzliche Absatzmärkte. Ein günstiger Einkaufspreis ist dabei nur eine wirtschaftliche Größe.",
+        "Abhängigkeiten entstehen, wenn ein kritisches Teil von einer einzigen Fabrik, Region oder Transportroute kommt. Ausfall, Lieferverzögerung oder Handelshemmnisse können die eigene Leistung beeinträchtigen. Zwei Händler verringern diese Abhängigkeit nicht unbedingt, wenn beide aus derselben Fabrik beziehen.",
+        "Eine belastbare Alternative muss technisch passen, verfügbar und organisatorisch nutzbar sein. Prüfe Herkunft, Lieferzeit, Qualität, Transport, Bestände und Gesamtkosten. Mehrere hinreichend unabhängige Bezugswege können Risiken verteilen; sie garantieren keine störungsfreie Lieferung.",
+        "Verbinde dies mit dem Marktmodell: Wird ein Bauteil bei gleichbleibender Nachfrage knapper, entsteht modellhaft Aufwärtsdruck auf den Preis. Wie groß der tatsächliche Effekt ist, bleibt ohne weitere Angaben offen. Im Kreislauf fließen Bauteil und Bezahlung zwischen Lieferant und Käufer in Gegenrichtung."
+      ],
+      "example": {
+        "title": "Eigener Übungsfall",
+        "text": "Knotenpunkt entdeckt, dass zwei Anbieter ihre Controller aus Werk R beziehen. Eine zusätzliche kompatible Bezugsquelle aus Werk S wäre unabhängiger, muss aber auf Qualität, Kapazität und Lieferbedingungen geprüft werden."
+      },
+      "misconception": {
+        "claim": "Eine zweite Händleradresse beweist bereits eine unabhängige Lieferkette.",
+        "correction": "Mehrere Händler können dieselbe vorgelagerte Fabrik oder Transportroute nutzen."
+      },
+      "takeaway": "Verfolge die Herkunft kritischer Vorleistungen und prüfe geeignete unabhängige Alternativen."
+    },
+    {
+      "id": "common-wiso-europe-sustainability",
+      "title": "3. Standorte nach Lohn, Arbeit und Umwelt vergleichen",
+      "objectiveIds": [
+        "common-wiso-europe-sustainability"
+      ],
+      "sourceIds": [
+        "wiso-eu-trade",
+        "wiso-uba-digital"
+      ],
+      "paragraphs": [
+        "Vergleiche Standorte mit demselben Leistungsumfang, Zeitraum und nachvollziehbaren Daten. Trenne Lohnbedingungen der Beschäftigten, Arbeitsbedingungen und Umweltwirkungen von der gesamten Angebotssumme. Ein niedriges Angebot beweist weder faire Arbeit noch schlechte Qualität; diese Merkmale sind gesondert zu prüfen.",
+        "Für die Übung legt das Team zwei Mindestkriterien fest: dokumentierter geeigneter Arbeitsschutz und höchstens 12 kWh Betriebsenergie je vergleichbarem Auftrag. Das sind fiktive Auswahlkriterien, keine gesetzlichen Grenzwerte und keine vollständige Umweltbilanz. Erst unter geeigneten Angeboten vergleicht es Kosten und weitere Wirkungen.",
+        "Standort A nennt 16 Euro Bruttostundenlohn, 70 Euro Gesamtkosten je Auftrag, 8 kWh Betriebsenergie und lückenhafte Arbeitsschutznachweise. Standort B nennt 20 Euro Bruttostundenlohn, 82 Euro Gesamtkosten, 10 kWh und geprüfte geeignete Schutzmaßnahmen. Diese Zahlen sind erfunden und weder gesetzliche Lohnsätze noch Daten über bestimmte Länder. Nach den festgelegten Mindestkriterien ist B zur Auswahl geeignet; A benötigt vor einer Freigabe weitere Klärung.",
+        "B kostet mehr und hat in der engen Betriebsenergiemessung einen höheren Wert als A. Die belegten Schutzmaßnahmen und höheren angegebenen Löhne dürfen trotzdem in die Abwägung eingehen. Eine Umweltgesamtbewertung benötigt weitere Angaben wie Herstellung, Energiequelle, Transport und Lebensdauer. Fehlende Daten sind als fehlend zu benennen, nicht als günstiger Wert zu behandeln.",
+        "Begründe eine Empfehlung mit Kriterien und verbleibender Unsicherheit. Ist die Qualität der Nachweise unklar, ist eine gezielte Prüfung sinnvoller als eine allgemeine Behauptung über ein Land oder seine Beschäftigten."
+      ],
+      "example": {
+        "title": "Eigener Übungsfall",
+        "text": "Mira empfiehlt B unter den gegebenen Mindestkriterien, nennt die Mehrkosten von 12 Euro je Auftrag und verlangt für eine umfassende Umweltbewertung zusätzliche Daten. Für A klärt sie zunächst den fehlenden Arbeitsschutznachweis."
+      },
+      "misconception": {
+        "claim": "Das niedrigste Angebot ist unabhängig von Arbeits- und Umweltbedingungen die beste Standortentscheidung.",
+        "correction": "Die vereinbarten Kriterien und belastbaren Nachweise bestimmen, welche Angebote überhaupt vergleichbar geeignet sind."
+      },
+      "takeaway": "Prüfe Mindestbedingungen, vergleiche gleiche Leistungen und benenne Zielkonflikte."
+    },
+    {
+      "id": "common-wiso-europe-review",
+      "title": "4. WISO-Rückblick: zehn Themen in einem zusammenhängenden Fall",
+      "objectiveIds": [
+        "common-wiso-europe-mobility",
+        "common-wiso-europe-trade",
+        "common-wiso-europe-sustainability"
+      ],
+      "sourceIds": [
+        "wiso-eu-work",
+        "wiso-eu-erasmus",
+        "wiso-eu-residence",
+        "wiso-eu-social-cover",
+        "wiso-eu-recognition",
+        "wiso-eu-trade",
+        "wiso-uba-digital",
+        "wiso-uba-rebound",
+        "wiso-gdpr-principles",
+        "wiso-bgb-consumer",
+        "wiso-bundesbank-cycle",
+        "wiso-bundesbank-price",
+        "wiso-bmwe-market",
+        "wiso-bmwe-competition",
+        "wiso-ba-learning",
+        "wiso-bmwe-finance",
+        "wiso-it-qualification",
+        "wiso-bibb-it-development",
+        "wiso-ba-family",
+        "bbig-wiso",
+        "bgb-611a",
+        "bgb-623",
+        "kschg-4",
+        "betrvg-wiso",
+        "tvg-wiso",
+        "sgb1-wiso",
+        "entgbv-1"
+      ],
+      "paragraphs": [
+        "Dieser Rückblick wiederholt alle zehn WISO-Themen in ihrer Lernreihenfolge. Ausgangspunkt ist Miras geplanter EU-Lernaufenthalt, Knotenpunkts internationale Beschaffung und Sams berufliche Entwicklung. Die rechtlichen Aussagen zu Ausbildung, Beschäftigung, Interessenvertretung, Sozialversicherung und Verbraucherfällen beziehen sich hier ausdrücklich auf Deutschland. Für das Gastland ist der passende Rahmen gesondert zu prüfen. Zahlen sind vorgegebene Lernmodelle, keine aktuellen gesetzlichen Beitragssätze, Löhne oder garantierten Leistungen.",
+        "1. Ausbildung: Im deutschen dualen System sind Betrieb und Berufsschule Lernorte; im Fall ist die IHK die zuständige Stelle. Ausbildungsordnung und Ausbildungsrahmenplan geben den verbindlichen beruflichen Rahmen vor; der betriebliche Ausbildungsplan ordnet die konkrete Umsetzung nach Inhalt, Zeit und Betreuung. Mira lernt sorgfältig und führt den Ausbildungsnachweis; der Betrieb muss planmäßig ausbilden und erforderliche Ausbildungsmittel kostenlos bereitstellen. Für den EU-Lernaufenthalt wird eine passende Lernaufgabe mit Betreuung und Anerkennung abgestimmt. Ein bloßes Reiseziel ersetzt keinen Lernplan.",
+        "2. Beschäftigung: Ein Arbeitsverhältnis verbindet weisungsgebundene Arbeit mit Vergütung; Vertragsart, Bedingungen und Schutzvorschriften sind zu prüfen. Für die Beendigung eines deutschen Arbeitsverhältnisses verlangt § 623 BGB Schriftform und schließt elektronische Form aus: Eine gewöhnliche Chatnachricht genügt nicht. Bei Zugang einer schriftlichen Kündigung ist die regelmäßig dreiwöchige Klagefrist nach § 4 KSchG zu beachten und zeitnah Beratung einzuholen. Frist, Form und Kündigungsgrund sind getrennte Fragen. Die bloße Planung eines EU-Wechsels beendet den bestehenden Vertrag nicht.",
+        "3. Interessenvertretung: Im privaten deutschen Fall bestehen Betriebsrat und JAV. Der Betriebsrat beteiligt sich an der Lage der Arbeitszeit nach § 87 BetrVG, soweit keine gesetzliche oder tarifliche Regelung besteht. Die JAV bringt Anliegen der von ihr vertretenen Jugendlichen und Auszubildenden über den Betriebsrat ein. Gewerkschaften verhandeln mit Arbeitgebern bzw. Arbeitgeberverbänden Tarifverträge; ein Betriebsrat ist kein Tarifvertragspartner. Vor einem Auslandseinsatz können betriebliche Zeitfragen und individuelle Vertragsfragen deshalb unterschiedliche Ansprechpersonen brauchen.",
+        "4. Sozialversicherung: Die fünf Zweige und erste Ansprechstellen im deutschen System sind Krankenversicherung/Krankenkasse, Pflegeversicherung/Pflegekasse, Rentenversicherung/Rentenversicherungsträger, Unfallversicherung/Berufsgenossenschaft oder Unfallkasse sowie Arbeitslosenversicherung/Agentur für Arbeit. Gemeinschaftliche Absicherung ist kein persönliches Sparkonto; Leistungen brauchen die jeweiligen gesetzlichen Voraussetzungen. Bei einem Arbeitsunfall kommt der Unfallversicherungsträger in Betracht; Krankheit ist nicht allein aufgrund einer Beitragszahlung mit beliebiger Kostenerstattung gleichzusetzen. Vor EU-Arbeit wird zusätzlich geklärt, welches System tatsächlich zuständig ist.",
+        "5. Entgelt: Im vereinfachten Abrechnungsmodell ergibt Brutto minus vorgegebene Steuerabzüge minus Arbeitnehmeranteile zur Sozialversicherung das Netto. Weitere Nettoabzüge, etwa ein bereits erhaltener Vorschuss, beeinflussen die Auszahlung. Arbeitgeberbeiträge werden nicht nochmals vom Arbeitnehmerbrutto abgezogen. Beispiel: 1.600 Euro Brutto − 100 Euro Steuern − 300 Euro Arbeitnehmerbeiträge = 1.200 Euro Netto; abzüglich 50 Euro Vorschuss werden 1.150 Euro ausgezahlt. Alle Abzüge sind vorgegebene Rechenwerte, keine behaupteten gesetzlichen Sätze.",
+        "6. Verträge und Budget: Von 1.150 Euro Auszahlung bleiben nach 650 Euro festen Ausgaben, 250 Euro variablen Ausgaben und 100 Euro Rücklage 150 Euro. Neue Raten müssen in diese Planung passen. Kauf verpflichtet zu Kaufpreis und Eigentumsverschaffung, Miete gewährt Gebrauch auf Zeit, ein Darlehen führt zur Rückzahlung und gegebenenfalls geschuldeten Zinsen. Bei Minderjährigen kann eine erforderliche Genehmigung fehlen; eine erst begonnene Ratenzahlung erfüllt § 110 BGB nicht. Beim normalen Onlinekauf vorgefertigter Waren von einem Unternehmen durch einen Verbraucher besteht ohne Ausnahme und bei ordnungsgemäßer Belehrung regelmäßig eine 14-Tage-Widerrufsfrist ab Erhalt. Eine eindeutige Erklärung ist erforderlich. Mangelhafter Kauf und Nacherfüllung sind davon zu trennen; ein mangelfreier Ladenkauf bietet wegen Nichtgefallens kein allgemeines gesetzliches Widerrufsrecht.",
+        "7. Wirtschaft: Arbeitsleistung fließt vom Haushalt zum Unternehmen, Lohn zurück. Waren und Dienstleistungen gehen zum Käufer, die Bezahlung zum Verkäufer. Steuern gehen an den Staat; ein Staatsauftrag bezahlt eine Leistung, ein Transfer an Haushalte keine unmittelbar erbrachte Gegenleistung. Weniger Teileangebot bei unveränderter Nachfrage erzeugt im Modell Aufwärtsdruck auf Preise, keine bestimmte Prozentzahl. Soziale Marktwirtschaft verbindet Wettbewerb und sozialen Ausgleich; Wettbewerbsschutz und Absicherung sozialer Risiken erfüllen verschiedene Aufgaben.",
+        "8. Digitaler und ökologischer Wandel: Ein neues Ticketsystem kann Zeit sparen und zugleich Bedienhürden oder Lernbedarf schaffen. Prüfe Arbeit, Teilhabe und Umwelt getrennt. Nach der Fallregel werden offene Übungen mit erfundenen Daten durchgeführt; echte notwendige Angaben gehören in freigegebene Systeme mit passenden Rechten und Rechtsgrundlage. Zweck, Erforderlichkeit, Information, Zugriff und Löschung sind vor einer Aufzeichnung zu klären. Weniger Energie je Vorgang bedeutet bei mehr Vorgängen nicht zwingend weniger Gesamtbedarf. Ein Lernplan benennt Aufgabe, Lücke, Maßnahme, Termin und Überprüfung an neuen Übungsfällen.",
+        "9. Berufliche Entwicklung: Wähle Weiterbildung nach Ziel, passenden Inhalten, Zugang, Zeit und Kosten; notiere Quelle und Prüfdatum. Für geregelte Prüfungen ist die zuständige Stelle maßgeblich, eine Kursbuchung keine Zulassung. Eigene Stärken, Familienplanung, Sorgearbeit und gewünschte Rollen gehen ohne stereotype Vorgaben in die Abwägung ein. Eine Gründungsidee braucht Kundennutzen, Mittel und Risikoprüfung. Bei Sams IT-Einweisungen ist sicherere Nutzung der Vereinssoftware der Nutzen; Fachwissen, Zeit und Geld sind Mittel. Positive Rückmeldungen sind keine bezahlten Aufträge; Bedarf und Zahlungsfähigkeit müssen vor größeren Ausgaben geprüft werden.",
+        "10. Europa und internationale Beziehungen: Mira kann als EU-Bürgerin im Allgemeinen ohne Arbeitserlaubnis in einem anderen EU-Land arbeiten, muss aber konkrete Lern-, Vertrags-, Aufenthalts-, Qualifikations- und Versicherungsfragen klären. Erasmus+ wird über eine teilnehmende Organisation mit Lernvereinbarung vorbereitet; ein Zuschuss ist keine Vollfinanzierungsgarantie. Internationale Lieferketten ermöglichen Spezialisierung und Absatz, schaffen aber Abhängigkeit. Zwei Händler mit derselben Vorfabrik sind keine verlässlich unabhängigen Quellen. Beim Standortvergleich sind vorgegebene Löhne, Arbeitsbedingungen, Umwelt und Gesamtkosten gemeinsam zu bewerten. Im wiederholten Beispiel hat A 16 Euro Stundenlohn, 70 Euro Auftragskosten, 8 kWh und lückenhafte Schutzbelege; B hat 20 Euro Stundenlohn, 82 Euro Auftragskosten, 10 kWh und geprüften Schutz. Das Team verlangt geprüften Schutz und höchstens 12 kWh; B erfüllt beide Kriterien. Die Werte erlauben keine umfassende Ökobilanz oder Aussage über ein bestimmtes Land.",
+        "Bearbeite die dritte Reflexion als überprüfbare Zusammenfassung dieser zehn Bereiche. Die acht abschließenden Testfragen greifen die ausdrücklich wiederholten Grundlagen auf und können mehrere Themen verbinden. Sie prüfen die hier behandelten WISO-Grundlagen; ein bestandener Rückblick ist weder ein Projektmanagement-Abschluss noch eine Garantie für jede mögliche externe Prüfungsfrage."
+      ],
+      "example": {
+        "title": "Eigener Übungsfall",
+        "text": "Mira erstellt zehn kurze Antworten: Lernplan, Arbeitsvertragsprüfung, Interessenvertretung, Sozialzweige, Entgeltrechnung, Budget und Verbraucherrechte, Kreislauf und Preis, verantwortlicher Wandel, Entwicklungsplan und EU-/Lieferketten-/Standortvergleich. Sie markiert offene individuelle Rechts- und Finanzierungsfragen statt Lösungen zu erfinden."
+      },
+      "misconception": {
+        "claim": "Der WISO-Rückblick verlangt unbekannte Zusatzregeln, die erstmals in den Testantworten erscheinen.",
+        "correction": "Die nötigen Grundlagen werden hier wiederholt; individuelle Sonderfälle und fremdes nationales Recht werden nicht stillschweigend vorausgesetzt."
+      },
+      "takeaway": "Verbinde die zehn Grundlagen mit konkreten Entscheidungen und benenne Geltungsbereich, Annahmen und offene Prüfungen."
+    }
+  ],
+  "questionFile": "questions/common-wiso-europe.v1.csv",
+  "quiz": {
+    "questionIds": [
+      "LJ-WISO-EUROPE-Q01",
+      "LJ-WISO-EUROPE-Q02",
+      "LJ-WISO-EUROPE-Q03",
+      "LJ-WISO-EUROPE-Q04",
+      "LJ-WISO-EUROPE-Q05",
+      "LJ-WISO-EUROPE-Q06"
+    ]
+  },
+  "exam": {
+    "questionIds": [
+      "LJ-WISO-EUROPE-E01",
+      "LJ-WISO-EUROPE-E02",
+      "LJ-WISO-EUROPE-E03",
+      "LJ-WISO-EUROPE-E04",
+      "LJ-WISO-EUROPE-E05",
+      "LJ-WISO-EUROPE-E06",
+      "LJ-WISO-EUROPE-E07",
+      "LJ-WISO-EUROPE-E08"
+    ],
+    "passPercent": 80,
+    "scoring": "all-or-nothing-per-question",
+    "timed": false
+  },
+  "questionLinks": [
+    {
+      "questionId": "LJ-WISO-EUROPE-Q01",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-wiso-europe-mobility"
+      ],
+      "blockIds": [
+        "common-wiso-europe-mobility"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-EUROPE-Q02",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-wiso-europe-mobility"
+      ],
+      "blockIds": [
+        "common-wiso-europe-mobility"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-EUROPE-Q03",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-wiso-europe-trade"
+      ],
+      "blockIds": [
+        "common-wiso-europe-trade"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-EUROPE-Q04",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-wiso-europe-trade"
+      ],
+      "blockIds": [
+        "common-wiso-europe-trade"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-EUROPE-Q05",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-wiso-europe-sustainability"
+      ],
+      "blockIds": [
+        "common-wiso-europe-sustainability"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-EUROPE-Q06",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-wiso-europe-sustainability"
+      ],
+      "blockIds": [
+        "common-wiso-europe-sustainability"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-EUROPE-E01",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-wiso-europe-mobility"
+      ],
+      "blockIds": [
+        "common-wiso-europe-review",
+        "common-wiso-europe-mobility"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-EUROPE-E02",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-wiso-europe-mobility"
+      ],
+      "blockIds": [
+        "common-wiso-europe-review",
+        "common-wiso-europe-mobility"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-EUROPE-E03",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-wiso-europe-mobility"
+      ],
+      "blockIds": [
+        "common-wiso-europe-review",
+        "common-wiso-europe-mobility"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-EUROPE-E04",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-wiso-europe-mobility"
+      ],
+      "blockIds": [
+        "common-wiso-europe-review"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-EUROPE-E05",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-wiso-europe-mobility"
+      ],
+      "blockIds": [
+        "common-wiso-europe-review"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-EUROPE-E06",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-wiso-europe-trade"
+      ],
+      "blockIds": [
+        "common-wiso-europe-review",
+        "common-wiso-europe-trade"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-EUROPE-E07",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-wiso-europe-sustainability"
+      ],
+      "blockIds": [
+        "common-wiso-europe-review",
+        "common-wiso-europe-sustainability"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-EUROPE-E08",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-wiso-europe-mobility",
+        "common-wiso-europe-trade"
+      ],
+      "blockIds": [
+        "common-wiso-europe-review",
+        "common-wiso-europe-mobility",
+        "common-wiso-europe-trade"
+      ]
+    }
+  ],
+  "interview": [
+    {
+      "id": "common-wiso-europe-talk-mobility",
+      "prompt": "Mira ist EU-Bürgerin und plant erst einen Lernaufenthalt, später eventuell Arbeit in einem anderen EU-Staat. Erkläre die Erwerbsmöglichkeit, drei noch zu klärende Anforderungen und den organisatorischen Weg eines Erasmus+-Lernaufenthalts.",
+      "objectiveIds": [
+        "common-wiso-europe-mobility"
+      ],
+      "blockIds": [
+        "common-wiso-europe-mobility"
+      ],
+      "keyPoints": [
+        "Im Allgemeinen keine Arbeitserlaubnis für EU-Bürger im anderen EU-Staat.",
+        "Konkrete Aufenthaltsformalitäten, Qualifikationsregeln, Versicherung und Vertragsbedingungen prüfen.",
+        "Teilnehmende Organisation und Lernvereinbarung mit Zielen, Betreuung, Anerkennung und Finanzierung."
+      ],
+      "acceptableAlternatives": [
+        "Andere sinnvolle konkrete Vorbereitungsfrage, etwa benötigte Sprachkenntnisse."
+      ],
+      "misconceptions": [
+        "Freizügigkeit mit garantierter Stelle oder unveränderter deutscher Absicherung gleichsetzen."
+      ],
+      "sampleAnswer": "Mira kann im Allgemeinen ohne Arbeitserlaubnis arbeiten. Sie klärt aber Gastlandformalitäten, mögliche Anerkennung und die Versicherungszuständigkeit sowie Vertragsbedingungen. Den Erasmus+-Aufenthalt bereitet sie mit Betrieb und entsendender Organisation vor; Ziele, Betreuung und Anerkennung werden vereinbart, Förderung geprüft.",
+      "followUp": "Warum muss eine Drittstaatsangehörige mit deutschem Wohnsitz gesonderte Regeln prüfen?"
+    },
+    {
+      "id": "common-wiso-europe-talk-trade",
+      "prompt": "Zwei Händler beziehen aus Werk R. Vergleiche eine weitere kompatible Quelle aus Werk S. Beurteile außerdem die Standorte A und B aus Block 3 anhand von Lohn, Arbeitsschutz, Energie und Kosten. Begründe einen nächsten Schritt und benenne eine fehlende Umweltinformation.",
+      "objectiveIds": [
+        "common-wiso-europe-trade",
+        "common-wiso-europe-sustainability"
+      ],
+      "blockIds": [
+        "common-wiso-europe-trade",
+        "common-wiso-europe-sustainability"
+      ],
+      "keyPoints": [
+        "Zwei Händler aus R bleiben abhängig; Quelle S auf Eignung, Kapazität und Lieferweg prüfen.",
+        "B erfüllt Schutz und Energiegrenze, hat höhere angegebene Löhne und Kosten.",
+        "A hat niedrigere gemessene Energie, aber fehlenden Schutzbeleg; Gesamtbilanz ist offen."
+      ],
+      "acceptableAlternatives": [
+        "A zunächst gezielt nachprüfen statt abschließender Ablehnung für alle Zukunft.",
+        "Weitere passende Umweltinformation wie Transport, Energiequelle, Herstellung oder Lebensdauer."
+      ],
+      "misconceptions": [
+        "Händlerzahl mit unabhängiger Produktion verwechseln.",
+        "Niedrigsten Stromwert als vollständige Nachhaltigkeitsbewertung ausgeben."
+      ],
+      "sampleAnswer": "Ich prüfe Werk S auf Kompatibilität, Lieferfähigkeit und unabhängige Wege. B erfüllt die Fallkriterien, kostet 12 Euro mehr je Auftrag und zahlt den höheren genannten Lohn. A ist beim Stromwert niedriger, sein Schutzbeleg fehlt aber. Für eine Gesamtbilanz brauche ich etwa Herstellung und Transport.",
+      "followUp": "Wie würde ein gemeinsamer Transportengpass trotz zweier Fabriken die Bewertung verändern?"
+    },
+    {
+      "id": "common-wiso-europe-talk-review",
+      "prompt": "Bearbeite alle zehn Rückblickaufgaben mit den Angaben aus Block 4: 1. Unterscheide Ausbildungsrahmen und Betriebsplan und nenne je eine Pflicht von Mira und Betrieb für den EU-Lernaufenthalt. 2. Beurteile eine Chatkündigung des deutschen Arbeitsverhältnisses und nenne den Umgang mit einer schriftlichen Kündigung. 3. Ordne Arbeitszeitlage, Azubi-Anliegen und Tarifverhandlung BR, JAV und Gewerkschaft zu. 4. Nenne fünf Sozialversicherungszweige mit Ansprechstellen und eine zusätzliche Versicherungsfrage beim EU-Wechsel. 5. Berechne Netto und Auszahlung aus 1.600 Euro Brutto, 100 Euro Steuer, 300 Euro Arbeitnehmer-SV und 50 Euro Vorschuss. 6. Berechne danach den Budgetrest nach 650/250/100 Euro Ausgaben/Rücklage; unterscheide Online-Widerruf, mangelhaften Kauf und erst begonnenen Ratenkauf mit 17 ohne Zustimmung. 7. Beschreibe Arbeit/Lohn und Ware/Zahlung im Kreislauf, die Preisrichtung bei Teileknappheit sowie Wettbewerb und sozialen Ausgleich. 8. Nenne für ein neues Ticketsystem eine Chance, ein Teilhaberisiko, ein datensparsames Vorgehen und einen überprüfbaren Lernschritt; erkläre Mehrnutzung als Umweltproblem. 9. Begründe Sams Weiterbildungsrecherche mit Zeit- und Rollenplanung und nenne Kundennutzen, Mittel und ein Gründungsrisiko. 10. Erkläre Miras EU-Möglichkeiten und verbleibende Anforderungen, prüfe die gemeinsame Vorfabrik und empfehle A oder B anhand der vorgegebenen Standortkriterien samt offener Umweltfrage.",
+      "objectiveIds": [
+        "common-wiso-europe-mobility",
+        "common-wiso-europe-trade",
+        "common-wiso-europe-sustainability"
+      ],
+      "blockIds": [
+        "common-wiso-europe-review"
+      ],
+      "keyPoints": [
+        "1. Ausbildungsrahmen verbindlich, Betriebsplan konkrete Umsetzung; Mira lernt sorgfältig/führt Nachweis, Betrieb bildet planmäßig aus/stellt Mittel. Auslandslernziel, Betreuung und Anerkennung abstimmen.",
+        "2. Gewöhnliche Chatkündigung erfüllt § 623 BGB nicht. Schriftliche Kündigung: Zugang sichern, regelmäßig dreiwöchige Klagefrist beachten, zeitnah Beratung.",
+        "3. BR: offene Arbeitszeitlage im Fall. JAV: Anliegen über BR. Gewerkschaft mit Arbeitgeberseite: Tarifvertrag.",
+        "4. Kranken/Krankenkasse, Pflege/Pflegekasse, Rente/Rentenversicherung, Unfall/BG oder Unfallkasse, Arbeitslos/Agentur für Arbeit. EU-Zuständigkeit konkret klären, keine Leistungsgarantie.",
+        "5. 1.200 Euro Netto, 1.150 Euro Auszahlung; keine erneute Kürzung um Arbeitgeberbeiträge.",
+        "6. 150 Euro Rest. Normaler Onlinefall: 14 Tage ab Erhalt bei ordnungsgemäßer Belehrung und ohne Ausnahme. Mangel: Nacherfüllung prüfen. Minderjährigenraten: Genehmigung klären, erste Rate reicht nicht für § 110.",
+        "7. Geld und Leistung entgegengesetzt; weniger Angebot bei gleicher Nachfrage erzeugt Aufwärtsdruck. Wettbewerbsschutz und soziale Absicherung unterscheiden.",
+        "8. Zeitgewinn versus Bedienhürden; fiktive Übungsdaten bzw. berechtigte notwendige Echtdaten; Aufgabe/Lücke/Maßnahme/Termin/Prüfung. Mehrnutzung kann Entlastung mindern.",
+        "9. Zielpassende Inhalte/Zugang/Zeit/Kosten/Quelle prüfen, eigene Ziele und Sorgezeiten berücksichtigen. Nutzen sichere Vereinssoftware, Mittel Wissen/Zeit/Geld, Risiko fehlende oder spät zahlende Kunden.",
+        "10. EU-Arbeit im Allgemeinen ohne Arbeitserlaubnis, weitere Anforderungen bleiben. Gemeinsame Vorfabrik erhält Abhängigkeit. B erfüllt Schutz und 12-kWh-Grenze bei höheren Löhnen/Kosten; umfassende Umweltbilanz offen."
+      ],
+      "acceptableAlternatives": [
+        "Sinngleiche Bezeichnungen der Träger und sinnvoll begründete zusätzliche Prüfungen.",
+        "Andere nachvollziehbare Lernmaßnahme oder Risikoprüfung bei unveränderter fachlicher Zuordnung."
+      ],
+      "misconceptions": [
+        "Deutsche Regeln ungeprüft auf ein Gastland übertragen oder Freizügigkeit als Vollgarantie behandeln.",
+        "Brutto, Netto, Auszahlung und frei verfügbares Budget gleichsetzen.",
+        "Händlerzahl oder einzelnes Umweltmaß als vollständigen Nachweis ansehen."
+      ],
+      "sampleAnswer": "1. Der Ausbildungsrahmen ist verbindlich; der Betriebsplan konkretisiert Aufgaben, Zeiten und Betreuung. Mira lernt und führt Nachweis, der Betrieb bildet planmäßig aus. 2. Eine Chatnachricht reicht für die deutsche Kündigung nicht; bei schriftlicher Kündigung sichere ich den Zugang und kläre fristgerecht Beratung. 3. Arbeitszeitlage gehört im Fall zum BR, die JAV bringt Azubi-Anliegen dort ein, Gewerkschaften verhandeln Tarife. 4. Ich ordne Krankheit der Krankenkasse, Pflege der Pflegekasse, Rente der Rentenversicherung, Arbeitsunfall BG/Unfallkasse und Arbeitslosigkeit der Agentur für Arbeit zu; EU-Zuständigkeit bleibt zu prüfen. 5. Netto sind 1.200, Auszahlung 1.150 Euro. 6. Es bleiben 150 Euro. Im normalen Onlinefall ist Widerruf binnen 14 Tagen ab Erhalt möglich; ein Mangel eröffnet Nacherfüllungsfragen, die erste Rate eines Minderjährigen ersetzt keine notwendige Genehmigung. 7. Lohn/Arbeit und Zahlung/Ware fließen entgegengesetzt; Knappheit erhöht bei gleicher Nachfrage den Preisdruck. Wettbewerb und soziale Absicherung ergänzen sich. 8. Ein Ticketsystem spart vielleicht Zeit, kann aber Bedienhürden schaffen; ich übe mit erfundenen Daten und prüfe eine konkrete Lernaufgabe. Mehrnutzung kann Energieeinsparung aufheben. 9. Sam recherchiert passende Inhalte und Zugang, plant Sorge- und Lernzeit und testet bezahlbaren Kundennutzen statt Umsatz zu garantieren. 10. Mira nutzt EU-Möglichkeiten, klärt aber Formalitäten, Anerkennung und Versicherung. Zwei Händler aus einem Werk bleiben abhängig. B erfüllt die Mindestbedingungen, kostet mehr und zahlt den höheren genannten Lohn; Herstellung und Transport fehlen zur Umweltgesamtbewertung.",
+      "followUp": "Bei welchem der zehn Punkte fehlen dir noch Begründung oder Rechnung? Ergänze gezielt diese Antwort und nenne die passende Quelle oder offene Sachverhaltsfrage."
+    }
+  ],
+  "cards": [
+    {
+      "id": "common-wiso-europe-card-mobility",
+      "front": "Was ermöglicht EU-Arbeitnehmerfreizügigkeit und was bleibt zu prüfen?",
+      "back": "EU-Bürger brauchen im Allgemeinen keine Arbeitserlaubnis in einem anderen EU-Staat. Vertragsbedingungen, Aufenthalt, gegebenenfalls Anerkennung, Sprache und zuständige Sozialversicherung sind dennoch konkret zu klären.",
+      "objectiveIds": [
+        "common-wiso-europe-mobility"
+      ],
+      "blockIds": [
+        "common-wiso-europe-mobility"
+      ]
+    },
+    {
+      "id": "common-wiso-europe-card-erasmus",
+      "front": "Wie wird ein Erasmus+-Lernaufenthalt vorbereitet?",
+      "back": "Über eine teilnehmende Organisation mit abgestimmter Lernvereinbarung: Ziele, Betreuung, Rechte/Pflichten und Anerkennung. Finanzierung und Versicherungsfragen vorher klären; keine Vollfinanzierung voraussetzen.",
+      "objectiveIds": [
+        "common-wiso-europe-mobility"
+      ],
+      "blockIds": [
+        "common-wiso-europe-mobility"
+      ]
+    },
+    {
+      "id": "common-wiso-europe-card-chain",
+      "front": "Welche Chance und welches Risiko verbindet internationale IT-Arbeitsteilung?",
+      "back": "Spezialisierte Kenntnisse, Produkte und Absatzmärkte können zugänglich werden. Gemeinsame kritische Fabriken oder Lieferwege schaffen Abhängigkeiten, die am tatsächlichen Beschaffungsweg geprüft werden müssen.",
+      "objectiveIds": [
+        "common-wiso-europe-trade"
+      ],
+      "blockIds": [
+        "common-wiso-europe-trade"
+      ]
+    },
+    {
+      "id": "common-wiso-europe-card-sources",
+      "front": "Wann sind mehrere Lieferanten nicht ausreichend unabhängig?",
+      "back": "Wenn sie dieselbe kritische Vorfabrik oder Route verwenden. Eine zusätzliche Bezugsquelle muss auch technisch passen und hinsichtlich Qualität, Kapazität und Lieferbedingungen geprüft sein.",
+      "objectiveIds": [
+        "common-wiso-europe-trade"
+      ],
+      "blockIds": [
+        "common-wiso-europe-trade"
+      ]
+    },
+    {
+      "id": "common-wiso-europe-card-sites",
+      "front": "Wie vergleichst du internationale Standortalternativen?",
+      "back": "Gleiche Leistung und Zeitraum, dann Löhne, Arbeitsbedingungen, Umwelt und Gesamtkosten. Mindestbedingungen und Nachweise prüfen, Zielkonflikte nennen und fehlende Daten offenlassen.",
+      "objectiveIds": [
+        "common-wiso-europe-sustainability"
+      ],
+      "blockIds": [
+        "common-wiso-europe-sustainability"
+      ]
+    },
+    {
+      "id": "common-wiso-europe-card-limits",
+      "front": "Warum reicht ein niedriger kWh-Wert je Auftrag nicht für eine vollständige Standortbewertung?",
+      "back": "Er beschreibt eine begrenzte Umweltgröße. Herstellung, Transport, Energiequelle, Gesamtmenge und Lebensdauer können fehlen; Lohn- und Arbeitsbedingungen benötigen außerdem eigene Kriterien.",
+      "objectiveIds": [
+        "common-wiso-europe-sustainability"
+      ],
+      "blockIds": [
+        "common-wiso-europe-sustainability",
+        "common-wiso-europe-review"
+      ]
+    }
+  ],
+  "review": {
+    "status": "reviewed",
+    "checkedAt": "2026-11-11"
+  },
+  "fieldReview": {
+    "fieldId": "WISO",
+    "topicIds": [
+      "common-wiso-training",
+      "common-wiso-employment",
+      "common-wiso-representation",
+      "common-wiso-social-security",
+      "common-wiso-pay",
+      "common-wiso-consumer",
+      "common-wiso-economy",
+      "common-wiso-change",
+      "common-wiso-career",
+      "common-wiso-europe"
+    ],
+    "blockIds": [
+      "common-wiso-europe-review"
+    ],
+    "interviewIds": [
+      "common-wiso-europe-talk-review"
+    ],
+    "questionIds": [
+      "LJ-WISO-EUROPE-E01",
+      "LJ-WISO-EUROPE-E02",
+      "LJ-WISO-EUROPE-E03",
+      "LJ-WISO-EUROPE-E04",
+      "LJ-WISO-EUROPE-E05",
+      "LJ-WISO-EUROPE-E06",
+      "LJ-WISO-EUROPE-E07",
+      "LJ-WISO-EUROPE-E08"
+    ]
+  }
+}

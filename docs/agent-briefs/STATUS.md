@@ -1,5 +1,11 @@
 # Agent-Status (nur offene Punkte)
 
+- Geführte FIAE-Lernreise – neue Weitergabepakete stehen aus.
+  Web und Desktop teilen sich die Inhalte aller 94 Themen. In LF10a, LF11a und
+  LF12a begleitet ein Reparaturauftrag die Oberflächengestaltung, die Entwicklung
+  der Ticketlogik und die Kundenübergabe. Der Abschluss zeigt die Ergebnisse zu
+  allen 248 Lernzielen. → [Plan und Etappen](../61-Lernreise-FIAE-Planung.md)
+
 - Frontendkurs und gemeinsame Qwen-Lernbegleitung (Pilot in dokumentierter Matrix abgenommen, Ausbau offen) —
   Abschlusskompetenzen, 31 Kapitel, regelmäßige Projekte, Vorschau/Inspect,
   Validator, Sicherheitsanforderungen und Pilot-vor-KI-vor-Ausbau-Reihenfolge
@@ -180,12 +186,62 @@
   nach Beispieldatenbereinigung CSS 10/10 und sieben Bediengruppen erneut grün.
   Unabhängiger Review einschließlich neuer Bilder ohne offene Findings, SW v44.
   → [CSS im Debugger](../47-Debugger-CSS.md)
+  FE-055 ergänzt Textinput/textarea, value/disabled/readOnly und synchrone
+  input/change/submit-Handler mit Submitbutton/Enter/Leerprüfung. Textentwürfe
+  werden ausdrücklich übernommen; native Formularübertragung bleibt gesperrt.
+  Originalquellen gespeichert, Feldentwürfe/Livewerte flüchtig. Zwölf neue Fälle,
+  454 Gesamtfälle vor letzter Parserkorrektur, danach34 betroffene Fälle grün;
+  sieben Bediengruppen und unabhängiger Code-/Dokument-/Bildreview bestätigt.
+  Weitere Feldtypen, DOM-Erzeugung und Async bleiben getrennte Stufen.
+  → [Texteingaben und Formulare](../48-Debugger-Formulare.md)
+  FE-056 ergänzt createElement, append/appendChild, replaceChildren und
+  remove/removeChild, stabile abgetrennte Handles und eine Aufgabenliste.
+  Unveränderte Ressourcenbudgets zählen nun alle gehaltenen Teilbäume.
+  Neun neue Fälle,464 gesamte Browser-/Windows-Electronfälle und finale43
+  betroffene Fälle ohne Wiederholung grün; sieben finale Bediengruppen,
+  313 unabhängige native Einfügevergleiche plus vier Defaultfälle bestätigt.
+  Code-/Dokument-/Bildreview ohne Findings. Weitere Feld-/DOM-/Speicher-/
+  Async- und TS-/React-Stufen separat.
+  → [Elemente erzeugen und entfernen](../49-Debugger-Elemente.md)
+  FE-057 ergänzt sitzungsgebundenen String-Übungsspeicher mit getItem/setItem/
+  removeItem/clear/key/length, passiver Tabelle und Speichern-/Laden-Beispiel.
+  Keine Browserpersistenz oder Appdatenrechte. Quota fangbar/atomar, Operations-
+  und Sicherheitsgrenzen endgültig. Zehn neue Speicherfälle,474 Gesamtfälle
+  ohne Wiederholung grün, sieben Bediengruppen und unabhängiger Code-/Dokument-/
+  Bildreview einschließlich10.000 Unicode-Proben bestätigt. JSON/strukturierte
+  Zustände, dauerhafte Übungssicherung und Async bleiben eigene Stufen.
+  → [Übungsspeicher](../50-Debugger-Uebungsspeicher.md)
+  FE-058 ergänzt begrenztes JSON.parse/stringify und Array.isArray/Number.isInteger
+  im DOM-Modus mit privater Compilerauflösung und sicheren Datenkopien. Eigenes
+  versioniertes Aufgabenbeispiel prüft Syntax/Schema vor Übernahme; fehlerhafte
+  Daten überschreiben weder laufenden Zustand noch gespeicherten Text.63 Ziel-
+  und484 Gesamtfälle ohne Wiederholung grün, nach echten Worker-Grenzproben/
+  Darstellungsnacharbeit10 JSON-Fälle erneut grün. Sieben finale Bediengruppen
+  und unabhängiger Code-/Dokument-/Bildreview mit1000 nativen Datenvergleichen
+  bestätigt. Dauerhafte Übungssicherung, weitere Sprache und Async separat.
+  → [JSON und geprüfte Speicherzustände](../51-Debugger-JSON.md)
+  FE-059 ergänzt direkte setTimeout-/clearTimeout-Aufrufe im DOM-Modus,
+  eingefrorene Timerzeit während Debuggerpausen, echte Callback-Halte und
+  serialisierte Weck-/Klickbefehle. Einmalige Timer bleiben sitzungsgebunden;
+  Beispiel vermittelt Registrierung, Millisekunden, Mindestwartezeit und Abbruch.
+  497 Browser-/Windows-Electronfälle ohne Wiederholung, sieben Bediengruppen
+  und unabhängiger Code-/Dokument-/Bildreview grün. Separate Controller- und
+  Workerproben bestätigen frühe/veraltete Weckungen, importierte Callbacks und
+  aus der Timerzeit ausgeschlossene Pausen. Intervalle, Promises/async und
+  kontrolliertes Datenladen bleiben eigene Stufen.
+  → [Timer im Debugger](../52-Debugger-Timer.md)
+  FE-060 ergänzt native Promise-Ketten mit echten Reaktionshalten, then/catch/
+  finally, begrenzter passiver Rejectionprüfung im Worker und explizit
+  asynchronem Engine-Jobadapter. 29 Zieltests plus Jobgrenze 1/1, unabhängiger
+  Review einschließlich realem WASM-Wachstum grün. Restauftrag läuft weiter
+  über async/await, Daten/Abbruch, Projektabnahme, TypeScript/React und Pakete.
+  → [Promises](../53-Debugger-Promises.md)
   OPS-042 korrigiert die Linux-CI-Fehlerpfade: Snapshotaufbereitung bei vielen
   Bindungen beschleunigt, exakte JSON-/Trunkierungssemantik erhalten; lange
   Lesefassungs-Tokens und Buttons umbrechen auch bei abweichenden Schriftmaßen.
   Produktionsgrenzen unverändert. 24 Zieltests und 443/443 lokale Browser-/
   Windows-Electronfälle grün; 300 unabhängige Semantikvergleiche ohne Abweichung.
-  Tatsächlicher GitHub-Linux-Nachlauf nach nächstem Push noch ausstehend.
+  Anschließender GitHub-CI-Lauf nach Push nutzerseitig als vollständig grün bestätigt.
   → [CI-Korrektur](OPS-042-ci-linux-debugger-mobil.md)
   Weitere Sprach-/Plattformstufen bleiben eigene Aufgaben.
   → [Technikpilot und Grenzen](../39-Debugger-Technikpilot.md)

@@ -1,0 +1,487 @@
+{
+  "schemaVersion": 1,
+  "id": "common-lf2-software",
+  "version": "1.0.0",
+  "title": "Betriebssysteme, Anwendungen und Nutzungsrechte",
+  "fieldId": "LF2",
+  "scope": "common",
+  "prerequisites": [
+    "common-lf2-hardware"
+  ],
+  "sourceIds": [
+    "lf2-ibm-os",
+    "lf2-osi-faq",
+    "lf2-ms-accounts",
+    "lf2-ms-updates"
+  ],
+  "sources": [
+    {
+      "id": "lf2-ibm-os",
+      "title": "IBM: What is an operating system?",
+      "url": "https://www.ibm.com/think/topics/operating-systems",
+      "checkedAt": "2026-11-11",
+      "note": "Öffentliche HTML-Erklärung zu Ressourcen-, Datei-, Geräte- und Rechteverwaltung geprüft. Betriebssystem- und Anwendungsnamen sowie Voraussetzungen des Lernfalls sind erfunden."
+    },
+    {
+      "id": "lf2-osi-faq",
+      "title": "Open Source Initiative: Frequently Answered Questions",
+      "url": "https://opensource.org/faq",
+      "checkedAt": "2026-11-11",
+      "note": "Öffentliche FAQ zu Nutzung, Änderung, Weitergabe und kommerzieller Verwendung unter Open-Source-Lizenzen geprüft. Die im Fall berechneten Produktlizenzen sind eigene ausdrücklich fiktive Bedingungen."
+    },
+    {
+      "id": "lf2-ms-accounts",
+      "title": "Microsoft: Manage User Accounts in Windows",
+      "url": "https://support.microsoft.com/en-gb/windows/security/identity-signin/manage-user-accounts-in-windows",
+      "checkedAt": "2026-11-11",
+      "note": "Öffentliche HTML-Erläuterung zur Begrenzung administrativer Konten und zur alltäglichen Arbeit mit Standardkonten geprüft. Keine Kontoänderung Teil der Lernaufgabe."
+    },
+    {
+      "id": "lf2-ms-updates",
+      "title": "Microsoft: Windows Update: FAQ",
+      "url": "https://support.microsoft.com/en-us/windows/deployment/updates-lifecycle/windows-update-faq",
+      "checkedAt": "2026-11-11",
+      "note": "Öffentliche HTML-FAQ zu Aktualisierungen und Sicherheitskorrekturen geprüft. Keine Aussage über eine reale Produktlaufzeit und keine echte Installation; Freigabe und Aktualisierung im Fall sind Vorgaben."
+    }
+  ],
+  "objectives": [
+    {
+      "id": "common-lf2-software-fit",
+      "text": "Betriebssystem und Anwendungssoftware anhand von Aufgaben und Systemvoraussetzungen auswählen."
+    },
+    {
+      "id": "common-lf2-software-license",
+      "text": "Aus vorgegebenen Lizenzbedingungen erlaubte Nutzung, Anzahl der Installationen und laufende Kosten ableiten."
+    }
+  ],
+  "caseStudy": {
+    "title": "Knotenpunkt stattet Radblick aus",
+    "text": "Radblick benötigt einen Browser für Ticketportal und Wissenssuche sowie eventuell ein Notizprogramm. Knotenpunkt prüft Funktion, Systemvoraussetzungen, Nutzungsrechte und Folgekosten. Alle hier genannten Produkte, Versionen, Freigaben, Preise und Lizenzbedingungen sind fiktiv und vollständig als Übungsannahmen vorgegeben."
+  },
+  "blocks": [
+    {
+      "id": "common-lf2-software-layers",
+      "title": "1. Betriebssystem und Anwendung unterscheiden",
+      "objectiveIds": [
+        "common-lf2-software-fit"
+      ],
+      "sourceIds": [
+        "lf2-ibm-os",
+        "lf2-ms-accounts"
+      ],
+      "paragraphs": [
+        "Das Betriebssystem, englisch operating system oder OS, verwaltet unter anderem Prozessorzeit, Arbeitsspeicher, Dateien, Gerätezugriffe und Benutzerrechte. Ein Treiber vermittelt die Zusammenarbeit mit einem bestimmten Gerät. Eine Anwendung erfüllt eine konkrete Aufgabe, etwa ein Browser die Darstellung und Bedienung eines Webportals.",
+        "Der Browser ist daher eine Anwendung auf dem Betriebssystem. „Das Portal läuft im Browser“ bedeutet nicht, dass Betriebssystem, Bildschirmtreiber oder Browserfassung beliebig austauschbar sind. Die zusammengehörigen Voraussetzungen müssen erfüllt sein.",
+        "Im Fall soll die tägliche Ticketarbeit mit einem Standardkonto erfolgen. Administratorrechte erlauben weiterreichende Systemänderungen und werden nur für freigegebene Verwaltungsaufgaben durch die zuständige Person eingesetzt. Eine bequemere Alltagsbedienung ist kein ausreichender Grund für zusätzliche Rechte.",
+        "Softwareauswahl beginnt bei der benötigten Aufgabe. Danach prüfst du Betriebssystemunterstützung, Hardwarebedarf, Geräteunterstützung und betriebliche Freigabe. Ein Programmstart beweist weder eine gültige Lizenz noch den erfolgreichen Test aller benötigten Funktionen."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Übungsfall",
+        "text": "Der Browser zeigt das Ticket. Das Betriebssystem verwaltet die zugehörigen Dateien und Rechte; ein passender Treiber unterstützt die Bildschirmhardware."
+      },
+      "misconception": {
+        "claim": "Ein Webbrowser ersetzt das Betriebssystem des Arbeitsplatzes.",
+        "correction": "Er verwendet die Dienste des Betriebssystems und bleibt von dessen Unterstützung abhängig."
+      },
+      "takeaway": "Ordne Plattform, Geräteunterstützung und konkrete Fachaufgabe auseinander."
+    },
+    {
+      "id": "common-lf2-software-compatibility",
+      "title": "2. Vorgegebene Systemvoraussetzungen prüfen",
+      "objectiveIds": [
+        "common-lf2-software-fit"
+      ],
+      "sourceIds": [
+        "lf2-ibm-os",
+        "lf2-ms-updates"
+      ],
+      "paragraphs": [
+        "System requirements bedeutet Systemvoraussetzungen. Vergleiche unterstützte OS-Version, Prozessorarchitektur, RAM, freien Massenspeicher und erforderliche Gerätefunktionen. x64 und ARM bezeichnen unterschiedliche Prozessorarchitekturen; eine passende Fassung muss ausdrücklich unterstützt werden. Eine größere RAM-Zahl beseitigt eine nicht unterstützte Architektur nicht.",
+        "Fiktive Vorgaben: Gerät Büro A hat x64-Architektur, 16 GB RAM und 100 GB freien SSD-Speicher. Das freigegebene Betriebssystem Basis S4 verlangt x64, mindestens 8 GB RAM und 20 GB freien Speicher. Nach seiner Einrichtung sind im Beispiel noch 80 GB frei. Der freigegebene Browser Portalblick 3 unterstützt Basis S4 und benötigt mindestens 8 GB RAM sowie 1 GB freien Speicher. Damit sind die genannten Voraussetzungen erfüllt.",
+        "Die erfundene Alternative SchnellTest 1 ist eine ungeprüfte Vorabfassung für ARM und steht nicht auf der Freigabeliste. Für Büro A ist sie damit keine belegte passende Auswahl. Diese Feststellung folgt aus den vorgegebenen Daten, nicht aus Vermutungen über reale Produkte.",
+        "Achte auf freie Kapazität statt nur auf die Gesamtgröße der SSD. Plane bei knappen Ressourcen einen realistischen Funktionstest mit den gleichzeitig benötigten Anwendungen. Sicherheitsupdates beheben bekannte Schwachstellen; Aktualisierungen und erforderliche Neustarts werden nach betrieblicher Vorgabe eingeplant und anschließend geprüft."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Übungsfall",
+        "text": "80 GB freier Speicher nach Einrichtung von Basis S4 reichen für den genannten zusätzlichen Bedarf von 1 GB. Das ist von der gesamten SSD-Kapazität zu unterscheiden."
+      },
+      "misconception": {
+        "claim": "Ein größerer Arbeitsspeicher macht jede Programmfassung kompatibel.",
+        "correction": "OS-Version, Architektur, benötigte Funktionen und Freigabe müssen ebenfalls passen."
+      },
+      "takeaway": "Prüfe die konkrete Softwarefassung gegen die vorgegebenen Bedingungen."
+    },
+    {
+      "id": "common-lf2-software-rights",
+      "title": "3. Nutzungsrechte aus Bedingungen ableiten",
+      "objectiveIds": [
+        "common-lf2-software-license"
+      ],
+      "sourceIds": [
+        "lf2-osi-faq"
+      ],
+      "paragraphs": [
+        "Eine Lizenz regelt erlaubte Nutzung. Prüfe insbesondere betriebliche oder private Verwendung, Bindung an Person oder Gerät, erlaubte Installationen, Laufzeit und Zusatzleistungen. Technische Installierbarkeit und rechtlich erlaubte Nutzung sind getrennte Fragen; bei unklaren Bedingungen entscheidet die zuständige Beschaffungs- oder Lizenzstelle.",
+        "Kostenlos beschreibt einen Preis, nicht automatisch die Nutzungsrechte. Open-Source-Lizenzen gewähren Nutzungs-, Änderungs- und Weitergaberechte unter ihren jeweiligen Bedingungen und erlauben auch kommerzielle Nutzung. Trotzdem können Leistungen wie Betreuung oder Hosting Geld kosten. Eine kostenlose private Testversion ist deshalb nicht mit Open Source gleichzusetzen.",
+        "Für den Fall gilt ausdrücklich: Portalblick 3 darf ohne Lizenzgebühr betrieblich eingesetzt werden und ist freigegeben. Demo Privat 1 kostet ebenfalls 0 Euro, erlaubt laut fiktiven Bedingungen aber private Tests und keinen betrieblichen Einsatz. Dass beide Programme startbar wären, ändert diese Bedingungen nicht.",
+        "Zwei weitere erfundene Modelle: NotizPlus wird je namentlich berechtigter Person lizenziert. Eine solche Person darf auf zwei ihr zugeordneten Geräten installieren; andere Personen dürfen diese Berechtigung nicht mitnutzen. FormularWerk wird je Gerät lizenziert und erlaubt auf genau diesem Gerät betriebliche Nutzung durch mehrere Beschäftigte. Installationszahl und Personenzahl sind damit nicht dieselbe Bezugsgröße."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Übungsfall",
+        "text": "Drei Beschäftigte brauchen für NotizPlus drei Personenlizenzen, auch wenn sie denselben Arbeitsplatz zeitversetzt benutzen."
+      },
+      "misconception": {
+        "claim": "Ein kostenloser Download erlaubt jede betriebliche Nutzung.",
+        "correction": "Die konkreten Bedingungen bestimmen die erlaubte Verwendung; der Preis allein sagt das nicht aus."
+      },
+      "takeaway": "Lies Nutzung, Bezugsgröße, Installationszahl und Laufzeit vor der Entscheidung."
+    },
+    {
+      "id": "common-lf2-software-costs",
+      "title": "4. Laufzeit und Kosten nachvollziehbar berechnen",
+      "objectiveIds": [
+        "common-lf2-software-license",
+        "common-lf2-software-fit"
+      ],
+      "sourceIds": [
+        "lf2-osi-faq",
+        "lf2-ms-updates"
+      ],
+      "paragraphs": [
+        "Für alle folgenden Rechnungen gelten fiktive Nettopreise ohne Steuer, Rabatt oder Zusatzkosten. NotizPlus kostet 6 Euro je berechtigter Person und Monat. Die Mindestlaufzeit beträgt zwölf Monate; das Nutzungsrecht besteht während der bezahlten Laufzeit. Drei Personen kosten für zwölf Monate 3 × 6 × 12 = 216 Euro netto. Erlaubte Zweitinstallationen derselben Person verdoppeln die Gebühr nicht.",
+        "FormularWerk kostet einmalig 40 Euro netto je Gerät. Die vorgegebene Fassung darf auf diesem Gerät zeitlich unbefristet betrieblich verwendet werden; neue Hauptversionen und Betreuung sind nicht enthalten. Vier Geräte kosten 4 × 40 = 160 Euro netto. Eine unbefristete Nutzungslizenz verspricht damit keine unbegrenzten Updates oder Unterstützungsleistungen.",
+        "Vergleiche Kosten für denselben Zeitraum und denselben Nutzungsumfang. Ein niedriger Monatspreis ist kein vollständiger Jahrespreis. Eine einmalige Lizenz und ein Abonnement lassen sich erst mit ihren Rechten, enthaltenen Leistungen und dem betrachteten Zeitraum sinnvoll bewerten.",
+        "Die begründete Auswahl nennt deshalb Aufgabe, passende Systemvoraussetzungen, Freigabe, zulässige Nutzung und Kosten. Portalblick 3 erfüllt im Fall die genannten Browserbedingungen. Ob zusätzlich NotizPlus oder FormularWerk benötigt wird, ergibt sich aus der fachlichen Aufgabe und dem jeweiligen Lizenzmodell, nicht allein aus dem günstigeren Betrag."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Übungsfall",
+        "text": "Zwei berechtigte Personen mit je zwei erlaubten NotizPlus-Installationen kosten für zwölf Monate 2 × 6 × 12 = 144 Euro netto."
+      },
+      "misconception": {
+        "claim": "Eine zeitlich unbefristete Lizenz enthält auch jede spätere Hauptversion und Betreuung.",
+        "correction": "Nutzungsdauer und enthaltene Aktualisierungen oder Dienstleistungen sind getrennt zu lesen."
+      },
+      "takeaway": "Rechne Bezugsgröße mal Preis mal Laufzeit und vergleiche den gleichen Bedarf."
+    }
+  ],
+  "questionFile": "questions/common-lf2-software.v1.csv",
+  "quiz": {
+    "questionIds": [
+      "LJ-LF2-SOFTWARE-Q01",
+      "LJ-LF2-SOFTWARE-Q02",
+      "LJ-LF2-SOFTWARE-Q03",
+      "LJ-LF2-SOFTWARE-Q04",
+      "LJ-LF2-SOFTWARE-Q05",
+      "LJ-LF2-SOFTWARE-Q06"
+    ]
+  },
+  "exam": {
+    "questionIds": [
+      "LJ-LF2-SOFTWARE-E01",
+      "LJ-LF2-SOFTWARE-E02",
+      "LJ-LF2-SOFTWARE-E03",
+      "LJ-LF2-SOFTWARE-E04",
+      "LJ-LF2-SOFTWARE-E05",
+      "LJ-LF2-SOFTWARE-E06",
+      "LJ-LF2-SOFTWARE-E07",
+      "LJ-LF2-SOFTWARE-E08"
+    ],
+    "passPercent": 80,
+    "scoring": "all-or-nothing-per-question",
+    "timed": false
+  },
+  "questionLinks": [
+    {
+      "questionId": "LJ-LF2-SOFTWARE-Q01",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf2-software-fit"
+      ],
+      "blockIds": [
+        "common-lf2-software-layers"
+      ]
+    },
+    {
+      "questionId": "LJ-LF2-SOFTWARE-Q02",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf2-software-fit"
+      ],
+      "blockIds": [
+        "common-lf2-software-compatibility",
+        "common-lf2-software-rights"
+      ]
+    },
+    {
+      "questionId": "LJ-LF2-SOFTWARE-Q03",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf2-software-fit"
+      ],
+      "blockIds": [
+        "common-lf2-software-layers"
+      ]
+    },
+    {
+      "questionId": "LJ-LF2-SOFTWARE-Q04",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf2-software-license"
+      ],
+      "blockIds": [
+        "common-lf2-software-rights"
+      ]
+    },
+    {
+      "questionId": "LJ-LF2-SOFTWARE-Q05",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf2-software-license"
+      ],
+      "blockIds": [
+        "common-lf2-software-rights"
+      ]
+    },
+    {
+      "questionId": "LJ-LF2-SOFTWARE-Q06",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf2-software-license"
+      ],
+      "blockIds": [
+        "common-lf2-software-costs"
+      ]
+    },
+    {
+      "questionId": "LJ-LF2-SOFTWARE-E01",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf2-software-fit"
+      ],
+      "blockIds": [
+        "common-lf2-software-layers"
+      ]
+    },
+    {
+      "questionId": "LJ-LF2-SOFTWARE-E02",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf2-software-fit"
+      ],
+      "blockIds": [
+        "common-lf2-software-compatibility"
+      ]
+    },
+    {
+      "questionId": "LJ-LF2-SOFTWARE-E03",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf2-software-fit"
+      ],
+      "blockIds": [
+        "common-lf2-software-compatibility"
+      ]
+    },
+    {
+      "questionId": "LJ-LF2-SOFTWARE-E04",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf2-software-license"
+      ],
+      "blockIds": [
+        "common-lf2-software-rights"
+      ]
+    },
+    {
+      "questionId": "LJ-LF2-SOFTWARE-E05",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf2-software-license"
+      ],
+      "blockIds": [
+        "common-lf2-software-rights",
+        "common-lf2-software-costs"
+      ]
+    },
+    {
+      "questionId": "LJ-LF2-SOFTWARE-E06",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf2-software-license"
+      ],
+      "blockIds": [
+        "common-lf2-software-costs"
+      ]
+    },
+    {
+      "questionId": "LJ-LF2-SOFTWARE-E07",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf2-software-license"
+      ],
+      "blockIds": [
+        "common-lf2-software-costs"
+      ]
+    },
+    {
+      "questionId": "LJ-LF2-SOFTWARE-E08",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf2-software-fit",
+        "common-lf2-software-license"
+      ],
+      "blockIds": [
+        "common-lf2-software-compatibility",
+        "common-lf2-software-rights",
+        "common-lf2-software-costs"
+      ]
+    }
+  ],
+  "interview": [
+    {
+      "id": "common-lf2-software-talk-fit",
+      "prompt": "Begründe die Auswahl von Basis S4 und Portalblick 3 für Büro A anhand der fiktiven Vorgaben.",
+      "objectiveIds": [
+        "common-lf2-software-fit"
+      ],
+      "blockIds": [
+        "common-lf2-software-layers",
+        "common-lf2-software-compatibility"
+      ],
+      "keyPoints": [
+        "OS und Anwendung unterscheiden.",
+        "x64, RAM und freien Speicher vergleichen.",
+        "Freigabe und vorgesehene Updates beachten."
+      ],
+      "acceptableAlternatives": [
+        "Eine gleichwertige ausdrücklich fiktive Alternative mit belegten Voraussetzungen und Freigabe."
+      ],
+      "misconceptions": [
+        "Den bloßen Programmstart als vollständigen Eignungsnachweis behandeln."
+      ],
+      "sampleAnswer": "Basis S4 verwaltet das Gerät, Portalblick 3 erfüllt die Browseraufgabe. Büro A bietet x64, 16 GB RAM und genügend freien Speicher. Die genannten Versionen sind unterstützt und freigegeben; Updates werden nach Vorgabe eingeplant und geprüft.",
+      "followUp": "Welche Angabe würde dich bei einer anderen Programmfassung zunächst stoppen?"
+    },
+    {
+      "id": "common-lf2-software-talk-rights",
+      "prompt": "Drei Beschäftigte nutzen denselben Rechner. Erkläre den Unterschied zwischen NotizPlus-Personenlizenz und FormularWerk-Gerätelizenz.",
+      "objectiveIds": [
+        "common-lf2-software-license"
+      ],
+      "blockIds": [
+        "common-lf2-software-rights"
+      ],
+      "keyPoints": [
+        "Bei NotizPlus zählt jede benannte Person.",
+        "Zweitinstallation derselben Person ist keine weitere Benutzerberechtigung.",
+        "Bei FormularWerk zählt das lizenzierte Gerät."
+      ],
+      "acceptableAlternatives": [
+        "Ein anderes Zahlenbeispiel mit unverändert angewandten fiktiven Lizenzbedingungen."
+      ],
+      "misconceptions": [
+        "Zwei erlaubte Installationen als zwei Personenrechte auslegen."
+      ],
+      "sampleAnswer": "NotizPlus benötigt drei Personenlizenzen, obwohl nur ein Rechner verwendet wird. Bei FormularWerk genügt für dieses eine Gerät die Gerätelizenz, da mehrere Beschäftigte dort zugelassen sind. Welche Software passt, hängt zusätzlich von der Aufgabe ab.",
+      "followUp": "Warum sagt der Installationsumfang noch nichts über die Zahl berechtigter Personen?"
+    },
+    {
+      "id": "common-lf2-software-talk-costs",
+      "prompt": "Zwei Personen brauchen NotizPlus zwölf Monate. Berechne die Nettokosten und nenne zwei weitere Prüfpunkte vor der Auswahl.",
+      "objectiveIds": [
+        "common-lf2-software-license",
+        "common-lf2-software-fit"
+      ],
+      "blockIds": [
+        "common-lf2-software-costs",
+        "common-lf2-software-compatibility"
+      ],
+      "keyPoints": [
+        "2 × 6 × 12 = 144 Euro netto.",
+        "Systemvoraussetzungen und Freigabe prüfen.",
+        "Rechte und enthaltene Leistungen aus den Bedingungen lesen."
+      ],
+      "acceptableAlternatives": [
+        "Andere zusätzliche Prüfpunkte aus Aufgabe, Updatebedarf und Lizenzumfang."
+      ],
+      "misconceptions": [
+        "Monatspreis als vollständigen Jahresbetrag behandeln."
+      ],
+      "sampleAnswer": "Die Kosten betragen 144 Euro netto. Zusätzlich prüfe ich, ob die benötigte Funktion, OS-Fassung und Ressourcen passen und die Software freigegeben ist. Die Bedingungen müssen die gewünschte betriebliche Nutzung sowie den Zeitraum abdecken.",
+      "followUp": "Würde eine zweite erlaubte Installation derselben Person diese Rechnung ändern?"
+    }
+  ],
+  "cards": [
+    {
+      "id": "common-lf2-software-card-os",
+      "front": "Was unterscheidet OS und Anwendung?",
+      "back": "Das Betriebssystem verwaltet Ressourcen, Geräte, Dateien und Rechte. Die Anwendung erfüllt eine konkrete Aufgabe, etwa der Browser die Portalbedienung.",
+      "objectiveIds": [
+        "common-lf2-software-fit"
+      ],
+      "blockIds": [
+        "common-lf2-software-layers"
+      ]
+    },
+    {
+      "id": "common-lf2-software-card-requirements",
+      "front": "Was wird unter system requirements geprüft?",
+      "back": "Unterstützte OS-Version, Prozessorarchitektur, RAM, freier Speicher und Gerätefunktionen; dazu die betriebliche Freigabe.",
+      "objectiveIds": [
+        "common-lf2-software-fit"
+      ],
+      "blockIds": [
+        "common-lf2-software-compatibility"
+      ]
+    },
+    {
+      "id": "common-lf2-software-card-account",
+      "front": "Welche Vorgaben gehören zur sicheren Softwarebereitstellung im Fall?",
+      "back": "Freigegebene Software, Standardkonto für Alltagsarbeit sowie eingeplante und geprüfte Updates nach betrieblicher Vorgabe.",
+      "objectiveIds": [
+        "common-lf2-software-fit"
+      ],
+      "blockIds": [
+        "common-lf2-software-layers",
+        "common-lf2-software-compatibility"
+      ]
+    },
+    {
+      "id": "common-lf2-software-card-license",
+      "front": "Welche Angaben sind in Lizenzbedingungen entscheidend?",
+      "back": "Erlaubte Verwendung, Bindung an Person oder Gerät, Installationszahl, Laufzeit und enthaltene Leistungen. Kostenlos ist keine Nutzungserlaubnis.",
+      "objectiveIds": [
+        "common-lf2-software-license"
+      ],
+      "blockIds": [
+        "common-lf2-software-rights"
+      ]
+    },
+    {
+      "id": "common-lf2-software-card-person",
+      "front": "Erlaubt eine NotizPlus-Lizenz für zwei Installationen auch zwei Personen?",
+      "back": "Nein. Im fiktiven Vertrag gelten die Installationen für dieselbe benannte Person; jede zusätzliche Person braucht eine eigene Berechtigung.",
+      "objectiveIds": [
+        "common-lf2-software-license"
+      ],
+      "blockIds": [
+        "common-lf2-software-rights"
+      ]
+    },
+    {
+      "id": "common-lf2-software-card-cost",
+      "front": "Wie berechnest du die NotizPlus-Jahreskosten?",
+      "back": "Anzahl berechtigter Personen × 6 Euro netto × 12 Monate. Drei Personen kosten 216 Euro; Zweitinstallationen derselben Person sind enthalten.",
+      "objectiveIds": [
+        "common-lf2-software-license"
+      ],
+      "blockIds": [
+        "common-lf2-software-costs"
+      ]
+    }
+  ],
+  "review": {
+    "status": "reviewed",
+    "checkedAt": "2026-11-11"
+  }
+}

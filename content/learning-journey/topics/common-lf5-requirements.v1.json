@@ -1,0 +1,474 @@
+{
+  "schemaVersion": 1,
+  "id": "common-lf5-requirements",
+  "version": "1.0.0",
+  "title": "Eine kleine Datenanwendung planen",
+  "fieldId": "LF5",
+  "scope": "common",
+  "prerequisites": [
+    "common-lf2-requirements",
+    "common-lf4-privacy"
+  ],
+  "sourceIds": [
+    "lf5-nasa-requirements",
+    "lf5-sqlite-storage",
+    "lf5-ms-testing"
+  ],
+  "sources": [
+    {
+      "id": "lf5-nasa-requirements",
+      "title": "NASA: Requirements Management",
+      "url": "https://www.nasa.gov/reference/6-2-requirements-management/",
+      "note": "Öffentliche HTML-Grundsätze zu nachvollziehbaren Anforderungen und Änderungen geprüft. Rollen, Größen und Abnahmekriterien des Lernfalls sind eigene fiktive Vorgaben.",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "lf5-sqlite-storage",
+      "title": "SQLite: Appropriate Uses For SQLite",
+      "url": "https://www.sqlite.org/whentouse.html",
+      "note": "Lokale eingebettete Datenbanken und Abgrenzung von Client/Server-Datenbanken geprüft. Eine Datenbank kann in einer Datei liegen.",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "lf5-ms-testing",
+      "title": "Microsoft: Best practices for writing unit tests",
+      "url": "https://learn.microsoft.com/en-us/dotnet/core/testing/unit-testing-best-practices",
+      "note": "Grundsätze verständlicher, unabhängiger und wiederholbarer Tests geprüft. Die Sprachbeispiele werden nicht übernommen; JavaScript-Fälle und Erwartungen sind selbst erstellt.",
+      "checkedAt": "2026-11-16"
+    }
+  ],
+  "objectives": [
+    {
+      "id": "common-lf5-requirements-data",
+      "text": "Für eine Verwaltungsaufgabe benötigte Daten, Herkunft, Zugriffsberechtigung und Speicherbedarf bestimmen."
+    },
+    {
+      "id": "common-lf5-requirements-scope",
+      "text": "Eine kleine Softwareänderung in überprüfbare Teilaufgaben mit erwarteten Ergebnissen zerlegen."
+    },
+    {
+      "id": "common-lf5-requirements-tests",
+      "text": "Vor der Umsetzung einen einfachen Normalfall und einen Fehlerfall als Abnahmekriterien formulieren."
+    }
+  ],
+  "caseStudy": {
+    "title": "Mira plant die Materialliste von Radblick",
+    "text": "Eigener fiktiver Lernfall: Eda möchte Kabel, Mäuse und Adapter verwalten. Mira plant mit Sam einen kleinen Bestand ohne Personenbezug. Die Lagerrolle darf Mengen pflegen, die Lesefunktion zeigt freigegebene Bestände. Alle Rollen und Daten sind Modellvorgaben."
+  },
+  "blocks": [
+    {
+      "id": "common-lf5-requirements-data",
+      "title": "1. Zweck, Daten und Herkunft klären",
+      "objectiveIds": [
+        "common-lf5-requirements-data"
+      ],
+      "sourceIds": [
+        "lf5-nasa-requirements"
+      ],
+      "paragraphs": [
+        "Beginne mit der Aufgabe: Eda möchte sehen, welche Materialien vorhanden sind und welchen Bestand eine freigegebene Änderung betrifft. Dafür genügt zunächst ein Datensatz pro Material mit id, name und quantity. Die id identifiziert das Material, name beschreibt es, quantity enthält die gezählte Stückzahl. Namen allein können doppelt vorkommen.",
+        "Halte die Herkunft fest: Die Materialbezeichnung stammt aus der freigegebenen Artikelliste, die Menge aus der bestätigten Lagerzählung. Im Lernfall sind beide Quellen erfunden. Eine Vermutung wie vermutlich noch fünf Stück ersetzt keinen geprüften Ausgangswert.",
+        "Zur Datenbeschreibung gehören Einheit, zulässige Werte und Zugriff. quantity ist eine ganze Stückzahl von 0 bis 1000. Die Lagerrolle darf erfassen und korrigieren, eine Lesefunktion darf anzeigen. Eda braucht für diese Aufgabe weder Privatadressen noch Geburtstage. Berechtigungen sind Anforderungen an die Anwendung und werden nicht durch das bloße Verstecken einer Schaltfläche erfüllt."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Übungsfall",
+        "text": "Die Liste enthält 1/Kabel/8, 2/Maus/2 und 3/Adapter/0. Sam bestätigt, welche Rolle Mengen ändern darf."
+      },
+      "misconception": {
+        "claim": "Eine bekannte Materialbezeichnung ist bereits eine eindeutige Kennung.",
+        "correction": "Mehrere Materialien können gleich heißen. Eine stabile id trennt die Datensätze."
+      },
+      "takeaway": "Bestimme Zweck, Herkunft, Einheit, Wertebereich und berechtigte Rolle je benötigtem Feld."
+    },
+    {
+      "id": "common-lf5-requirements-size",
+      "title": "2. Speicherbedarf mit Annahmen abschätzen",
+      "objectiveIds": [
+        "common-lf5-requirements-data"
+      ],
+      "sourceIds": [
+        "lf5-sqlite-storage"
+      ],
+      "paragraphs": [
+        "Eine Speicherabschätzung benötigt Zahl der Datensätze und angenommene Größe je Datensatz. Bei 200 Datensätzen und angenommenen 100 Byte pro Datensatz ergeben sich 20 000 Byte Rohdaten. Mit der hier festgelegten dezimalen Einheit 1 kB = 1000 Byte sind das 20 kB.",
+        "Die Annahme 100 Byte ist eine Lernvorgabe, keine feste Größe jedes Namens oder jeder Datenbankzeile. Zeichencodierung, Feldlängen, Verwaltungsdaten und zusätzliche Kopien verändern den tatsächlichen Platzbedarf. Nenne daher Schätzung und Reserve getrennt; überprüfe später die echte Größe.",
+        "Lege auch fest, wie lange der Bestand benötigt wird und wie Änderungen erhalten bleiben sollen. Eine laufende Variable allein ist keine geplante dauerhafte Ablage. Für die Auswahl zwischen strukturierter Datei und Datenbank folgen später konkrete Kriterien."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Übungsfall",
+        "text": "300 Datensätze × 80 Byte ergeben geschätzte 24 000 Byte, also 24 kB Rohdaten vor Reserve."
+      },
+      "misconception": {
+        "claim": "Die Rohdatenschätzung ist exakt der gesamte Platz auf dem Datenträger.",
+        "correction": "Sie berücksichtigt nur die ausdrücklich angenommenen Datensätze und Größen, nicht alle Verwaltungsdaten oder Kopien."
+      },
+      "takeaway": "Rechne mit benannten Einheiten und dokumentiere, was in der Schätzung fehlt."
+    },
+    {
+      "id": "common-lf5-requirements-scope",
+      "title": "3. Änderung in prüfbare Ergebnisse zerlegen",
+      "objectiveIds": [
+        "common-lf5-requirements-scope"
+      ],
+      "sourceIds": [
+        "lf5-nasa-requirements"
+      ],
+      "paragraphs": [
+        "Die kleine Änderung lautet: Bestände anzeigen und eine Menge gezielt korrigieren. Teile sie nach beobachtbaren Ergebnissen auf: Datenfelder und Regeln festlegen; Eingaben prüfen; den gewünschten Datensatz auswählen; Änderung übernehmen; aktualisierte Anzeige und Testnachweis erstellen.",
+        "Jede Teilaufgabe bekommt ein Ergebnis, das Sam prüfen kann. Eingabeprüfung fertig ist zu ungenau. Besser: Eine negative Menge wird zurückgewiesen und der bisherige Bestand bleibt erhalten. Die Teilaufgaben können Abhängigkeiten haben: Eine Anzeigeprüfung braucht einen definierten Testbestand.",
+        "Grenze den Auftrag ein. In dieser Etappe sind Bestandsdaten synthetisch, der Umfang klein und die Rechte vorgegeben. Echte Warenwirtschaft, Benutzerverwaltung und parallele Lagerbuchungen sind keine vereinbarten Ergebnisse dieser Änderung. Neue Wünsche werden mit Eda geklärt, bevor sie den Umfang verändern."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Übungsfall",
+        "text": "Teilaufgabe Auswahl: Die Vorschau für id 2 zeigt genau Maus mit Menge 2. Teilaufgabe Änderung: Danach steht bei id 2 die bestätigte Menge 6."
+      },
+      "misconception": {
+        "claim": "Eine Aufgabenliste aus Verben wie programmieren und prüfen reicht zur Abnahme.",
+        "correction": "Ohne erwartete Ergebnisse bleibt offen, wann die Arbeit erfolgreich ist."
+      },
+      "takeaway": "Benenne pro Teilaufgabe ein sichtbares Ergebnis und die nötigen Voraussetzungen."
+    },
+    {
+      "id": "common-lf5-requirements-criteria",
+      "title": "4. Erfolg und Fehler vorab beschreiben",
+      "objectiveIds": [
+        "common-lf5-requirements-tests",
+        "common-lf5-requirements-scope"
+      ],
+      "sourceIds": [
+        "lf5-ms-testing",
+        "lf5-nasa-requirements"
+      ],
+      "paragraphs": [
+        "Ein Abnahmekriterium verbindet Ausgangslage, Handlung und erwartetes Ergebnis. Normalfall: Material id 2 hat Menge 2; die Lagerrolle setzt die Menge auf 6; danach zeigt id 2 die Menge 6, die anderen Zeilen bleiben gleich.",
+        "Ein Fehlerfall beschreibt auch den Erhalt des bisherigen Zustands. Beispiel: Für id 2 wird -1 eingegeben; die Anwendung lehnt den Wert ab und zeigt weiter 2. Fehlerfall bedeutet nicht, dass das Programm abstürzen soll. Die gewünschte Reaktion wird vor der Umsetzung vereinbart.",
+        "Eine Aussage wie bedienbar oder funktioniert gut ist ohne konkrete Beobachtung schwer prüfbar. Notiere Eingaben, erwartete Ausgabe und betroffene Daten. Grenzwerte wie 0 und 1000 kommen in den späteren Tests hinzu. Verwende für Tests vorbereitete künstliche Daten."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Übungsfall",
+        "text": "Mira notiert erst Sollwerte und prüft später Istwerte dagegen. Ein Test kann eine Abweichung sichtbar machen, aber keine unbekannten Anforderungen ersetzen."
+      },
+      "misconception": {
+        "claim": "Das erwartete Testergebnis lässt sich am besten erst aus dem fertigen Programm ablesen.",
+        "correction": "Dann könnte ein Fehler versehentlich zum Soll erklärt werden. Das Soll folgt aus dem vereinbarten Auftrag."
+      },
+      "takeaway": "Formuliere vor der Umsetzung einen Normalfall und eine definierte Fehlerreaktion."
+    }
+  ],
+  "questionFile": "questions/common-lf5-requirements.v1.csv",
+  "quiz": {
+    "questionIds": [
+      "LJ-LF5-REQUIREMENTS-Q01",
+      "LJ-LF5-REQUIREMENTS-Q02",
+      "LJ-LF5-REQUIREMENTS-Q03",
+      "LJ-LF5-REQUIREMENTS-Q04",
+      "LJ-LF5-REQUIREMENTS-Q05",
+      "LJ-LF5-REQUIREMENTS-Q06"
+    ]
+  },
+  "exam": {
+    "questionIds": [
+      "LJ-LF5-REQUIREMENTS-E01",
+      "LJ-LF5-REQUIREMENTS-E02",
+      "LJ-LF5-REQUIREMENTS-E03",
+      "LJ-LF5-REQUIREMENTS-E04",
+      "LJ-LF5-REQUIREMENTS-E05",
+      "LJ-LF5-REQUIREMENTS-E06",
+      "LJ-LF5-REQUIREMENTS-E07",
+      "LJ-LF5-REQUIREMENTS-E08"
+    ],
+    "passPercent": 80,
+    "scoring": "all-or-nothing-per-question",
+    "timed": false
+  },
+  "questionLinks": [
+    {
+      "questionId": "LJ-LF5-REQUIREMENTS-Q01",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf5-requirements-data"
+      ],
+      "blockIds": [
+        "common-lf5-requirements-data"
+      ]
+    },
+    {
+      "questionId": "LJ-LF5-REQUIREMENTS-Q02",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf5-requirements-data"
+      ],
+      "blockIds": [
+        "common-lf5-requirements-data"
+      ]
+    },
+    {
+      "questionId": "LJ-LF5-REQUIREMENTS-Q03",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf5-requirements-data"
+      ],
+      "blockIds": [
+        "common-lf5-requirements-size"
+      ]
+    },
+    {
+      "questionId": "LJ-LF5-REQUIREMENTS-Q04",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf5-requirements-scope"
+      ],
+      "blockIds": [
+        "common-lf5-requirements-scope"
+      ]
+    },
+    {
+      "questionId": "LJ-LF5-REQUIREMENTS-Q05",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf5-requirements-tests"
+      ],
+      "blockIds": [
+        "common-lf5-requirements-criteria"
+      ]
+    },
+    {
+      "questionId": "LJ-LF5-REQUIREMENTS-Q06",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf5-requirements-tests",
+        "common-lf5-requirements-scope"
+      ],
+      "blockIds": [
+        "common-lf5-requirements-criteria"
+      ]
+    },
+    {
+      "questionId": "LJ-LF5-REQUIREMENTS-E01",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf5-requirements-data"
+      ],
+      "blockIds": [
+        "common-lf5-requirements-data"
+      ]
+    },
+    {
+      "questionId": "LJ-LF5-REQUIREMENTS-E02",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf5-requirements-data"
+      ],
+      "blockIds": [
+        "common-lf5-requirements-size"
+      ]
+    },
+    {
+      "questionId": "LJ-LF5-REQUIREMENTS-E03",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf5-requirements-scope"
+      ],
+      "blockIds": [
+        "common-lf5-requirements-scope"
+      ]
+    },
+    {
+      "questionId": "LJ-LF5-REQUIREMENTS-E04",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf5-requirements-scope"
+      ],
+      "blockIds": [
+        "common-lf5-requirements-scope"
+      ]
+    },
+    {
+      "questionId": "LJ-LF5-REQUIREMENTS-E05",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf5-requirements-tests"
+      ],
+      "blockIds": [
+        "common-lf5-requirements-criteria"
+      ]
+    },
+    {
+      "questionId": "LJ-LF5-REQUIREMENTS-E06",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf5-requirements-tests"
+      ],
+      "blockIds": [
+        "common-lf5-requirements-criteria"
+      ]
+    },
+    {
+      "questionId": "LJ-LF5-REQUIREMENTS-E07",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf5-requirements-data"
+      ],
+      "blockIds": [
+        "common-lf5-requirements-data"
+      ]
+    },
+    {
+      "questionId": "LJ-LF5-REQUIREMENTS-E08",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf5-requirements-scope",
+        "common-lf5-requirements-tests"
+      ],
+      "blockIds": [
+        "common-lf5-requirements-scope",
+        "common-lf5-requirements-criteria"
+      ]
+    }
+  ],
+  "interview": [
+    {
+      "id": "common-lf5-requirements-talk-1",
+      "prompt": "Beschreibe die benötigten Materialdaten, ihre Herkunft, die Rollenrechte und eine Speicherabschätzung.",
+      "objectiveIds": [
+        "common-lf5-requirements-data"
+      ],
+      "blockIds": [
+        "common-lf5-requirements-data",
+        "common-lf5-requirements-size"
+      ],
+      "keyPoints": [
+        "id, name und quantity mit Stückzahlbereich benennen.",
+        "Artikelliste und bestätigte Zählung als fiktive Quellen nennen.",
+        "Lesen und Ändern trennen; Größe und Zusatzbedarf unterscheiden."
+      ],
+      "acceptableAlternatives": [
+        "Eine fachlich gleichwertige Erklärung mit passenden eigenen Beispielen."
+      ],
+      "misconceptions": [
+        "Eine bekannte Materialbezeichnung ist bereits eine eindeutige Kennung."
+      ],
+      "sampleAnswer": "Ich benötige id, Name und Menge. Die Namen kommen aus der freigegebenen Liste, die Mengen aus einer bestätigten Zählung. Die Lagerrolle ändert, die Lesefunktion zeigt an. 200 mal 100 Byte sind geschätzt 20 kB Rohdaten; Verwaltungsdaten und Kopien kommen hinzu.",
+      "followUp": "Warum ist die Größe eines Datensatzes hier eine Annahme?"
+    },
+    {
+      "id": "common-lf5-requirements-talk-2",
+      "prompt": "Zerlege eine gezielte Mengenkorrektur in kleine Teilaufgaben mit sichtbaren Ergebnissen.",
+      "objectiveIds": [
+        "common-lf5-requirements-scope"
+      ],
+      "blockIds": [
+        "common-lf5-requirements-scope"
+      ],
+      "keyPoints": [
+        "Regeln und Ausgangsbestand festlegen.",
+        "Datensatz gezielt auswählen und Eingabe prüfen.",
+        "Änderung und unveränderte Nachbarzeilen nachweisen."
+      ],
+      "acceptableAlternatives": [
+        "Eine fachlich gleichwertige Erklärung mit passenden eigenen Beispielen."
+      ],
+      "misconceptions": [
+        "Eine Aufgabenliste aus Verben wie programmieren und prüfen reicht zur Abnahme."
+      ],
+      "sampleAnswer": "Ich lege Felder und Bereich fest, bereite drei Testzeilen vor und lasse id 2 auswählen. Danach prüfe ich die neue Menge, übernehme einen zulässigen Wert und vergleiche die Anzeige mit dem Soll. Für jeden Schritt ist ein Ergebnis benannt.",
+      "followUp": "Welche Teilaufgabe braucht zuerst einen definierten Testbestand?"
+    },
+    {
+      "id": "common-lf5-requirements-talk-3",
+      "prompt": "Formuliere einen Normalfall und einen Fehlerfall, bevor die Änderung entsteht.",
+      "objectiveIds": [
+        "common-lf5-requirements-tests"
+      ],
+      "blockIds": [
+        "common-lf5-requirements-criteria"
+      ],
+      "keyPoints": [
+        "Ausgangszustand und Handlung angeben.",
+        "Erlaubte Änderung mit Sollwert beschreiben.",
+        "Ungültige Eingabe mit Ablehnung und Zustandserhalt beschreiben."
+      ],
+      "acceptableAlternatives": [
+        "Eine fachlich gleichwertige Erklärung mit passenden eigenen Beispielen."
+      ],
+      "misconceptions": [
+        "Das erwartete Testergebnis lässt sich am besten erst aus dem fertigen Programm ablesen."
+      ],
+      "sampleAnswer": "Normal: id 2 hat 2 Stück, ich setze 6 und erwarte dort 6. Fehler: Ausgehend von 2 gebe ich -1 ein und erwarte Ablehnung sowie weiter 2. Die übrigen Zeilen dürfen sich in beiden Fällen nicht ändern.",
+      "followUp": "Warum wäre das beobachtete Programmverhalten allein kein geeigneter Sollwert?"
+    }
+  ],
+  "cards": [
+    {
+      "id": "common-lf5-requirements-card-1",
+      "front": "Welche Angaben braucht eine Datenanforderung?",
+      "back": "Zweck, Feld, Herkunft, Einheit, zulässige Werte und berechtigte Rolle.",
+      "objectiveIds": [
+        "common-lf5-requirements-data"
+      ],
+      "blockIds": [
+        "common-lf5-requirements-data"
+      ]
+    },
+    {
+      "id": "common-lf5-requirements-card-2",
+      "front": "Warum eine id neben dem Namen?",
+      "back": "Die id identifiziert eine Zeile stabil; Namen können sich gleichen oder ändern.",
+      "objectiveIds": [
+        "common-lf5-requirements-data"
+      ],
+      "blockIds": [
+        "common-lf5-requirements-data"
+      ]
+    },
+    {
+      "id": "common-lf5-requirements-card-3",
+      "front": "Wie wird eine einfache Rohdatenschätzung berechnet?",
+      "back": "Datensatzanzahl × angenommene Byte je Datensatz; Zusatzbedarf gesondert nennen.",
+      "objectiveIds": [
+        "common-lf5-requirements-data"
+      ],
+      "blockIds": [
+        "common-lf5-requirements-size"
+      ]
+    },
+    {
+      "id": "common-lf5-requirements-card-4",
+      "front": "Was macht eine Teilaufgabe prüfbar?",
+      "back": "Ein konkretes Ergebnis und klar benannte Voraussetzungen, nicht nur ein allgemeines Tätigkeitswort.",
+      "objectiveIds": [
+        "common-lf5-requirements-scope"
+      ],
+      "blockIds": [
+        "common-lf5-requirements-scope"
+      ]
+    },
+    {
+      "id": "common-lf5-requirements-card-5",
+      "front": "Was gehört in einen Normalfall?",
+      "back": "Ausgangslage, gültige Handlung und das vereinbarte erwartete Ergebnis.",
+      "objectiveIds": [
+        "common-lf5-requirements-tests"
+      ],
+      "blockIds": [
+        "common-lf5-requirements-criteria"
+      ]
+    },
+    {
+      "id": "common-lf5-requirements-card-6",
+      "front": "Was gehört in einen Fehlerfall?",
+      "back": "Ungültige Eingabe, definierte Reaktion und die erwartete Auswirkung auf den bisherigen Zustand.",
+      "objectiveIds": [
+        "common-lf5-requirements-tests"
+      ],
+      "blockIds": [
+        "common-lf5-requirements-criteria"
+      ]
+    }
+  ],
+  "review": {
+    "status": "reviewed",
+    "checkedAt": "2026-11-16"
+  }
+}
+

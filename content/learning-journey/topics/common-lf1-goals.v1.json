@@ -1,0 +1,163 @@
+{
+  "schemaVersion": 1,
+  "id": "common-lf1-goals",
+  "version": "1.0.0",
+  "title": "Unternehmensziele und Zielkonflikte",
+  "fieldId": "LF1",
+  "scope": "common",
+  "prerequisites": ["common-lf1-role"],
+  "sourceIds": ["kmk-fachinformatiker-2019", "fiausbv-annex"],
+  "sources": [
+    {
+      "id": "kmk-fachinformatiker-2019",
+      "title": "KMK-Rahmenlehrplan Fachinformatiker/Fachinformatikerin vom 13.12.2019",
+      "url": "https://www.kmk.org/fileadmin/Dateien/pdf/Bildung/BeruflicheBildung/rlp/Fachinformatiker_19-12-13_EL.pdf",
+      "checkedAt": "2026-11-11",
+      "note": "Lernfeld 1, gedruckte Seite 12: ökonomische, ökologische und soziale Zielsetzungen des Unternehmens. Öffentliche Quelle am angegebenen Datum geprüft. Die Erläuterungen, Zielbeziehungen und Zahlenfälle sind eigenständige didaktische Ausarbeitungen, keine übernommenen Aufgaben."
+    },
+    {
+      "id": "fiausbv-annex",
+      "title": "Fachinformatikerausbildungsverordnung – Ausbildungsrahmenplan",
+      "url": "https://www.gesetze-im-internet.de/fiausbv/anlage.html",
+      "checkedAt": "2026-11-11",
+      "note": "Abschnitt A Nr. 1 b, e und f: Vorgaben berücksichtigen, Alternativen beurteilen sowie wirtschaftlicher und ökologischer Ressourceneinsatz. Abschnitt F Nr. 3 und 4: Gesundheitsschutz, Umweltbelastungen sowie Energie- und Materialverwendung. Grundlage des Berufsbezugs, kein Beleg für die erfundenen Beträge oder eine allgemeine Umweltbilanz einzelner Geräte."
+    }
+  ],
+  "objectives": [
+    {"id": "common-lf1-goals-classify", "text": "Wirtschaftliche, ökologische und soziale Ziele eines IT-Betriebs an Beispielen zuordnen."},
+    {"id": "common-lf1-goals-balance", "text": "Einen Zielkonflikt zwischen Kosten, Umweltwirkung und Arbeitsbedingungen beschreiben."}
+  ],
+  "caseStudy": {
+    "title": "Eine Einführung mit mehreren Zielen",
+    "text": "Der frei erfundene Fall setzt den Auftrag von Knotenpunkt bei Radblick fort. Die Reparaturübersicht soll nun im Arbeitsalltag eingeführt werden. Knotenpunkt möchte den Auftrag wirtschaftlich bearbeiten, geeignete vorhandene Geräte weiterverwenden und die Einführung für das eigene Team gut planbar gestalten. Sam stellt mögliche Vorgehensweisen zusammen. Mira hilft, die Ziele und ihre Auswirkungen zu erklären. Lea stimmt die Einführung für Radblick ab. Die Zahlen sind Übungsannahmen, keine Marktpreise oder gemessenen Umweltwerte. Du brauchst keine technischen Gerätekenntnisse, um die Entscheidungen nachzuvollziehen."
+  },
+  "blocks": [
+    {
+      "id": "common-lf1-goals-types",
+      "title": "1. Was möchte ein Unternehmen erreichen?",
+      "objectiveIds": ["common-lf1-goals-classify"],
+      "sourceIds": ["kmk-fachinformatiker-2019"],
+      "paragraphs": [
+        "Ein Unternehmensziel beschreibt einen angestrebten Zustand: Was soll sich verbessern oder erhalten bleiben? Eine Maßnahme beschreibt dagegen, was das Unternehmen dafür tut. Knotenpunkt möchte den Aufwand für Nacharbeiten verringern. Das ist ein Ziel. Eine gemeinsame Einweisung zu veranstalten ist eine mögliche Maßnahme. Erst das Ergebnis zeigt, ob die Maßnahme das Ziel unterstützt.",
+        "Wirtschaftliche, auch ökonomische Ziele betreffen den wirtschaftlichen Erfolg und die finanzielle Handlungsfähigkeit. Beispiele sind, Kosten bei gleicher Leistung zu senken, Aufträge kostendeckend auszuführen oder genügend Geld für fällige Zahlungen verfügbar zu halten. Eine niedrige Ausgabe allein beweist noch keinen guten wirtschaftlichen Erfolg: Spätere Reparaturen oder zusätzliche Arbeitszeit können ebenfalls Kosten verursachen.",
+        "Ökologische Ziele betreffen den Schutz von Umwelt und Ressourcen. Ein IT-Betrieb kann beispielsweise seinen Stromverbrauch senken, Material sparen oder unnötigen Geräteabfall vermeiden wollen. Ob eine konkrete Lösung umweltschonender ist, hängt von ihren Wirkungen ab. Ein niedriger Preis ist kein Umweltmaß.",
+        "Soziale Ziele betreffen Menschen und ihre Arbeitsbedingungen, etwa Gesundheit, verlässliche Arbeitsplanung, faire Zusammenarbeit und Möglichkeiten zum Lernen. Knotenpunkt möchte zum Beispiel kurzfristige Zusatzbelastung im Team verringern. Entscheidend für die Einordnung ist die beabsichtigte Wirkung, nicht der Name der Abteilung oder die Person, die das Ziel nennt."
+      ],
+      "example": {
+        "title": "Drei Ziele für denselben Auftrag",
+        "text": "Sam notiert: Den Einführungsaufwand bezahlbar halten ist wirtschaftlich. Weniger geeignete Geräte ausmustern ist ökologisch. Kurzfristig angesetzte Zusatzarbeit im Team reduzieren ist sozial. Eine Einweisung durchführen beschreibt dagegen zunächst eine Maßnahme. Ihr Zweck muss genannt werden, bevor ihre Wirkung einem Zielbereich zugeordnet werden kann."
+      },
+      "misconception": {"claim": "Alles, wofür ein Betrieb Geld ausgibt, ist ein wirtschaftliches Ziel.", "correction": "Die Finanzierung einer Maßnahme ist von ihrem Zweck zu unterscheiden. Eine bezahlte Lernzeit kann ein soziales Ziel unterstützen, obwohl sie auch Kosten verursacht."},
+      "takeaway": "Frage nach der gewünschten Wirkung: wirtschaftlicher Erfolg, Schutz von Umwelt und Ressourcen oder bessere Bedingungen für Menschen."
+    },
+    {
+      "id": "common-lf1-goals-effects",
+      "title": "2. Ziele zuordnen und ihre Wirkung prüfen",
+      "objectiveIds": ["common-lf1-goals-classify"],
+      "sourceIds": ["kmk-fachinformatiker-2019", "fiausbv-annex"],
+      "paragraphs": [
+        "Eine Maßnahme kann mehrere Ziele unterstützen. Wenn geeignete Geräte außerhalb der vereinbarten Nutzungszeiten weniger Strom verbrauchen, können sowohl der Energiebedarf als auch die Stromkosten sinken. Weniger Energieverbrauch ist die ökologische Wirkung, weniger Ausgaben sind die wirtschaftliche Wirkung. Die beiden Aussagen widersprechen sich nicht.",
+        "Auch eine Einweisung kann verschiedene Zwecke haben. Soll das Team sicherer und mit weniger Stress arbeiten, steht eine soziale Wirkung im Vordergrund. Soll weniger Nacharbeit anfallen, ist eine wirtschaftliche Wirkung gemeint. Beides kann eintreten. In einer Zuordnungsfrage achtest du deshalb auf den ausdrücklich beschriebenen Zweck und erfindest keine zusätzlichen Wirkungen.",
+        "Um ein Ziel später zu prüfen, vereinbart das Team ein Merkmal und einen Vergleichsrahmen. Für Kosten eignen sich etwa die geschätzten Gesamtkosten der Einführung. Für Arbeitsbelastung kann das Team die zusätzlichen Arbeitsstunden während dieser Einführung erfassen. Für Energieverbrauch vergleicht es verbrauchte Kilowattstunden bei vergleichbarer Nutzung und im gleichen Zeitraum. Die Einheit Kilowattstunde beschreibt eine Energiemenge. Ein niedrigerer Strompreis allein zeigt keine Energieeinsparung.",
+        "Im Übungsfall dient die Anzahl weiterverwendeter geeigneter Geräte als Merkmal für vermiedene Ausmusterung. Das bildet einen Teilaspekt ab, keine vollständige Umweltbilanz. Für einen umfassenden Vergleich wären unter anderem Herstellung, Nutzung und spätere Entsorgung zu betrachten. Ebenso zeigen wenige Zusatzstunden einen Teil der Arbeitsbelastung, aber noch nicht alle Arbeitsbedingungen. Technische Eignung und Sicherheit müssen bei jeder Variante gegeben sein."
+      ],
+      "example": {"title": "Eine Maßnahme, zwei Wirkungen", "text": "Ein passender Energiesparplan senkt im fiktiven Vergleich den Strombedarf bei gleicher Nutzung. Dadurch fallen auch geringere Stromkosten an. Mira hält beide Wirkungen fest. Sie behauptet weder, dass damit bereits alle Umweltfolgen bewertet seien, noch dass der günstigere Stromtarif eines anderen Anbieters dieselbe Energieeinsparung belegen würde."},
+      "misconception": {"claim": "Eine Maßnahme muss genau einem Zielbereich zugeordnet werden können.", "correction": "Die Maßnahme kann mehrere Wirkungen haben. Ordne die ausdrücklich genannte Wirkung zu und erläutere weitere Wirkungen gesondert."},
+      "takeaway": "Trenne Maßnahme und Wirkung. Nutze passende Merkmale mit einem gemeinsamen Vergleichsrahmen und benenne ihre Grenzen."
+    },
+    {
+      "id": "common-lf1-goals-relations",
+      "title": "3. Wann entsteht ein Zielkonflikt?",
+      "objectiveIds": ["common-lf1-goals-classify", "common-lf1-goals-balance"],
+      "sourceIds": ["kmk-fachinformatiker-2019", "fiausbv-annex"],
+      "paragraphs": [
+        "Von einem Zielkonflikt spricht man, wenn die stärkere Erfüllung eines Ziels unter den betrachteten Bedingungen ein anderes Ziel erschwert. Es reicht nicht, zwei unterschiedliche Ziele aufzuzählen. Du musst die gegenläufige Wirkung erklären. Beispiel: Eine sorgfältige Aufarbeitung erhält mehr Geräte, verursacht in dieser Einführung aber höhere Arbeitskosten. Das ökologische Ziel weniger Ausmusterung steht hier dem wirtschaftlichen Ziel niedriger Einführungskosten gegenüber.",
+        "Auch Kosten und Arbeitsbedingungen können in Spannung stehen. Ein zusätzlicher betreuter Übungstermin kann Unsicherheit im Team verringern, kostet aber zunächst bezahlte Arbeitszeit. Die kurzfristige Kostenbegrenzung und die soziale Entlastung sind dann gegeneinander abzuwägen. Spätere Einsparungen durch weniger Fehler sind möglich, müssen aber gesondert geprüft werden. Kurzfristige Mehrkosten beweisen keine langfristige Unwirtschaftlichkeit.",
+        "Unterstützen sich zwei Ziele, spricht man von Zielharmonie. Weniger Stromverbrauch und dadurch geringere Stromkosten sind im beschriebenen Fall ein Beispiel. Ist im betrachteten Fall kein Einfluss erkennbar, spricht man von Zielneutralität. Ob Ziele zusammenpassen, in Konflikt stehen oder sich nicht erkennbar beeinflussen, hängt von der konkreten Maßnahme und dem betrachteten Zeitraum ab.",
+        "Du beschreibst einen Konflikt in drei Schritten: Nenne die Ziele, erkläre die Verbesserung auf einer Seite und die Erschwerung auf der anderen Seite. Ergänze die Bedingungen, unter denen der Zusammenhang gilt. So wird aus Umwelt und Kosten sind verschieden die nachvollziehbare Aussage: Mehr geeignete Geräte aufzuarbeiten vermeidet hier Ausmusterung, erhöht aber die geplanten Kosten dieser Einführung."
+      ],
+      "example": {"title": "Eine Entlastung kostet zunächst Zeit", "text": "Sam plant eine betreute Übungsstunde innerhalb der Arbeitszeit. Das Team kann Fragen in Ruhe klären und fühlt sich bei der Einführung sicherer. Für Knotenpunkt entstehen zusätzliche Personalkosten. Mira beschreibt den kurzfristigen Konflikt zwischen sozialer Unterstützung und niedrigen Einführungskosten. Sie hält offen, ob die Übung später genügend Nacharbeit spart, um sich auch finanziell zu lohnen."},
+      "misconception": {"claim": "Ökologische und soziale Ziele stehen immer im Widerspruch zu wirtschaftlichen Zielen.", "correction": "Es kommt auf die Wirkungen im konkreten Fall an. Energieeinsparung kann Umwelt und Kosten zugleich entlasten. Bei einer anderen Maßnahme können zunächst Mehrkosten entstehen."},
+      "takeaway": "Ein Konflikt braucht eine begründete Gegenwirkung. Verschiedene Ziele allein sind noch kein Widerspruch."
+    },
+    {
+      "id": "common-lf1-goals-decisions",
+      "title": "4. Alternativen vergleichen und eine Entscheidung begründen",
+      "objectiveIds": ["common-lf1-goals-classify", "common-lf1-goals-balance"],
+      "sourceIds": ["fiausbv-annex"],
+      "paragraphs": [
+        "Beim Abwägen gehst du schrittweise vor: Halte die Ziele fest, sammle passende Angaben zu den Alternativen und vergleiche dieselben Merkmale. Trenne gesicherte Angaben von Annahmen. Für die folgende Übung gelten alle Varianten als technisch geeignet und sicher. Verglichen werden geschätzte Gesamtkosten der Einführung, weiterverwendete Geräte und zusätzliche Arbeitsstunden im Einführungsteam. Die Stunden sind Arbeitsaufwand, keine Aussage über unbezahlte oder rechtlich zulässige Mehrarbeit.",
+        "Sam hat drei fiktive Varianten zusammengestellt. Variante A kostet 600 Euro, verwendet acht Geräte weiter und benötigt sechs zusätzliche Arbeitsstunden. Variante B kostet 900 Euro, verwendet acht Geräte weiter und benötigt zwei zusätzliche Arbeitsstunden. Variante C kostet 750 Euro, verwendet vier Geräte weiter und benötigt zwei zusätzliche Arbeitsstunden. Die Kosten enthalten den jeweils geschätzten Arbeitsaufwand bereits. Keine Variante ist nach allen drei Merkmalen zugleich besser als jede andere.",
+        "Knotenpunkt vereinbart für diese Übung drei Grenzen: höchstens 900 Euro Einführungskosten, mindestens acht weiterverwendete Geräte und höchstens zwei zusätzliche Arbeitsstunden. B erfüllt alle drei Grenzen. A liegt bei den Zusatzstunden darüber, C bei der Gerätezahl darunter. B ist damit unter diesen Vorgaben passend, obwohl A günstiger wäre. Die Grenzen sind Vereinbarungen im Fall, keine allgemeinen Vorschriften für IT-Betriebe.",
+        "Wenn keine Variante die vereinbarten Grenzen erfüllt, klärt Sam Alternativen und Prioritäten mit den zuständigen Beteiligten. Er kann beispielsweise einen geänderten Ablauf oder einen anderen Zeitrahmen prüfen. Eine Grenze still zu streichen wäre keine begründete Lösung. Gesetzliche und sicherheitsbezogene Anforderungen werden nicht gegen einen Kostenvorteil aufgerechnet. Mira bereitet die Beobachtungen vor und erweitert ihre Entscheidungsbefugnis nicht selbst.",
+        "Eine nachvollziehbare Empfehlung nennt die Variante, den erfüllten Bedarf und den verbleibenden Nachteil: B vermeidet im Vergleich zu A vier zusätzliche Arbeitsstunden und erhält ebenfalls acht Geräte, kostet aber 300 Euro mehr. Nach der Einführung vergleicht das Team die tatsächlichen Ergebnisse mit den Annahmen. Ein Vorschlag ist nicht schon deshalb bewiesen, weil er auf dem Papier alle Grenzen einhält."
+      ],
+      "example": {"title": "Ein neuer Kostenrahmen", "text": "Wird die Kostengrenze auf 800 Euro abgesenkt, während acht weiterverwendete Geräte und höchstens zwei Zusatzstunden gefordert bleiben, passt keine der drei Varianten. Mira benennt die Abweichungen und legt sie Sam zur Abstimmung vor. Erst ein anderer Ablauf oder eine abgestimmte Änderung der vereinbarten Ziele kann den Konflikt auflösen."},
+      "misconception": {"claim": "Beim Abwägen ist die billigste Variante die beste, solange alle Zahlen bekannt sind.", "correction": "Die Empfehlung hängt von den vereinbarten Zielen und Grenzen ab. Ein niedriger Preis kann eine unerfüllte Anforderung an Umweltwirkung oder Arbeitsbelastung nicht unbemerkt ersetzen."},
+      "takeaway": "Vergleiche die vereinbarten Merkmale, prüfe die Grenzen und begründe Nutzen und Nachteil. Offene Konflikte müssen abgestimmt werden."
+    }
+  ],
+  "questionFile": "questions/common-lf1-goals.v1.csv",
+  "quiz": {"questionIds": ["LJ-LF1-GOALS-Q01", "LJ-LF1-GOALS-Q02", "LJ-LF1-GOALS-Q03", "LJ-LF1-GOALS-Q04", "LJ-LF1-GOALS-Q05", "LJ-LF1-GOALS-Q06"]},
+  "exam": {"questionIds": ["LJ-LF1-GOALS-E01", "LJ-LF1-GOALS-E02", "LJ-LF1-GOALS-E03", "LJ-LF1-GOALS-E04", "LJ-LF1-GOALS-E05", "LJ-LF1-GOALS-E06", "LJ-LF1-GOALS-E07", "LJ-LF1-GOALS-E08"], "passPercent": 80, "scoring": "all-or-nothing-per-question", "timed": false},
+  "questionLinks": [
+    {"questionId": "LJ-LF1-GOALS-Q01", "phase": "quiz", "objectiveIds": ["common-lf1-goals-classify"], "blockIds": ["common-lf1-goals-types"]},
+    {"questionId": "LJ-LF1-GOALS-Q02", "phase": "quiz", "objectiveIds": ["common-lf1-goals-classify"], "blockIds": ["common-lf1-goals-types", "common-lf1-goals-effects"]},
+    {"questionId": "LJ-LF1-GOALS-Q03", "phase": "quiz", "objectiveIds": ["common-lf1-goals-classify"], "blockIds": ["common-lf1-goals-effects"]},
+    {"questionId": "LJ-LF1-GOALS-Q04", "phase": "quiz", "objectiveIds": ["common-lf1-goals-classify", "common-lf1-goals-balance"], "blockIds": ["common-lf1-goals-types", "common-lf1-goals-relations"]},
+    {"questionId": "LJ-LF1-GOALS-Q05", "phase": "quiz", "objectiveIds": ["common-lf1-goals-balance"], "blockIds": ["common-lf1-goals-relations"]},
+    {"questionId": "LJ-LF1-GOALS-Q06", "phase": "quiz", "objectiveIds": ["common-lf1-goals-balance"], "blockIds": ["common-lf1-goals-decisions"]},
+    {"questionId": "LJ-LF1-GOALS-E01", "phase": "exam", "objectiveIds": ["common-lf1-goals-classify"], "blockIds": ["common-lf1-goals-types"]},
+    {"questionId": "LJ-LF1-GOALS-E02", "phase": "exam", "objectiveIds": ["common-lf1-goals-classify"], "blockIds": ["common-lf1-goals-types", "common-lf1-goals-effects"]},
+    {"questionId": "LJ-LF1-GOALS-E03", "phase": "exam", "objectiveIds": ["common-lf1-goals-classify"], "blockIds": ["common-lf1-goals-effects"]},
+    {"questionId": "LJ-LF1-GOALS-E04", "phase": "exam", "objectiveIds": ["common-lf1-goals-balance"], "blockIds": ["common-lf1-goals-relations"]},
+    {"questionId": "LJ-LF1-GOALS-E05", "phase": "exam", "objectiveIds": ["common-lf1-goals-classify", "common-lf1-goals-balance"], "blockIds": ["common-lf1-goals-relations"]},
+    {"questionId": "LJ-LF1-GOALS-E06", "phase": "exam", "objectiveIds": ["common-lf1-goals-balance"], "blockIds": ["common-lf1-goals-decisions"]},
+    {"questionId": "LJ-LF1-GOALS-E07", "phase": "exam", "objectiveIds": ["common-lf1-goals-classify"], "blockIds": ["common-lf1-goals-effects"]},
+    {"questionId": "LJ-LF1-GOALS-E08", "phase": "exam", "objectiveIds": ["common-lf1-goals-balance"], "blockIds": ["common-lf1-goals-decisions"]}
+  ],
+  "interview": [
+    {
+      "id": "common-lf1-goals-talk-types",
+      "prompt": "Knotenpunkt möchte Einführungskosten begrenzen, geeignete Geräte weiterverwenden und kurzfristige Zusatzbelastung vermeiden. Ordne die drei gewünschten Wirkungen den Zielbereichen zu. Wieso ist eine Einweisung zunächst eine Maßnahme?",
+      "objectiveIds": ["common-lf1-goals-classify"],
+      "blockIds": ["common-lf1-goals-types", "common-lf1-goals-effects"],
+      "keyPoints": ["Kostenbegrenzung wirtschaftlich, vermiedene Ausmusterung ökologisch und geringere Zusatzbelastung sozial zuordnen.", "Ziele beschreiben angestrebte Zustände, Maßnahmen das Vorgehen.", "Bei der Einweisung den beabsichtigten Zweck nennen, etwa weniger Unsicherheit oder weniger Nacharbeit."],
+      "acceptableAlternatives": ["Ökonomisch und wirtschaftlich sind gleichwertig, ebenso Umweltziel und ökologisches Ziel.", "Die Einweisung darf mehrere Ziele unterstützen, wenn die Wirkungen nachvollziehbar getrennt erklärt werden."],
+      "misconceptions": ["Eine bezahlte Einweisung wegen der Kosten allein als wirtschaftliches Ziel bezeichnen.", "Die technische Durchführung einer Maßnahme mit ihrem gewünschten Ergebnis gleichsetzen."],
+      "sampleAnswer": "Die Kosten betreffen den wirtschaftlichen Bereich. Weniger Geräte auszumustern ist ökologisch, weniger Zusatzbelastung sozial. Eine Einweisung ist etwas, das wir tun. Weniger Unsicherheit im Team wäre ihr soziales Ziel, weniger Nacharbeit ein wirtschaftliches Ziel.",
+      "followUp": "Welche zwei Wirkungen könnte ein passender Energiesparplan haben?"
+    },
+    {
+      "id": "common-lf1-goals-talk-conflict",
+      "prompt": "Die Aufarbeitung geeigneter Geräte vermeidet im Fall Ausmusterung, benötigt aber mehr bezahlte Arbeitszeit. Beschreibe den Zielkonflikt. Wie unterscheidet er sich von einem Energiesparplan, der zugleich Stromverbrauch und Stromkosten senkt?",
+      "objectiveIds": ["common-lf1-goals-classify", "common-lf1-goals-balance"],
+      "blockIds": ["common-lf1-goals-effects", "common-lf1-goals-relations"],
+      "keyPoints": ["Weniger Ausmusterung als ökologische und niedrige Einführungskosten als wirtschaftliche Zielsetzung erklären.", "Die Gegenwirkung benennen: Die Aufarbeitung erhält Geräte, erhöht im beschriebenen Fall aber den Arbeitsaufwand und damit die Kosten.", "Die Energie- und Kosteneinsparung als Zielharmonie erklären, weil sich diese Wirkungen unterstützen."],
+      "acceptableAlternatives": ["Ein Ziel behindert das andere ist als Erklärung für Konflikt ausreichend, wenn der konkrete Zusammenhang folgt.", "Gemeinsame Verbesserung kann statt Zielharmonie verwendet werden. Die Wirkung muss stimmen, nicht das Fachwort allein."],
+      "misconceptions": ["Das Vorhandensein zweier Zielbereiche bereits als Beweis eines Konflikts behandeln.", "Aus diesem Fall ableiten, dass Umweltschutz immer höhere Kosten verursache."],
+      "sampleAnswer": "Die Geräte weiterzuverwenden vermeidet Ausmusterung. Die zusätzliche Aufarbeitung kostet hier jedoch mehr Arbeitszeit. Das erschwert niedrige Einführungskosten und ist deshalb ein Konflikt. Beim Energiesparplan sinken Energieverbrauch und Kosten gemeinsam. Hier unterstützen sich die Ziele.",
+      "followUp": "Warum müsste eine mögliche spätere Einsparung getrennt von den Einführungskosten geprüft werden?"
+    },
+    {
+      "id": "common-lf1-goals-talk-decision",
+      "prompt": "A kostet 600 Euro, erhält acht Geräte und benötigt sechs Zusatzstunden. B kostet 900 Euro, erhält acht Geräte und benötigt zwei Zusatzstunden. Erlaubt sind höchstens 900 Euro und zwei Zusatzstunden, gefordert sind mindestens acht Geräte. Begründe eine Empfehlung mit einem Vorteil und einem Nachteil. Was wäre bei einer Kostengrenze von 800 Euro zu klären?",
+      "objectiveIds": ["common-lf1-goals-balance"],
+      "blockIds": ["common-lf1-goals-decisions"],
+      "keyPoints": ["B empfehlen, weil es alle genannten Grenzen einhält, während A die Stundengrenze überschreitet.", "B erhält ebenso acht Geräte, benötigt vier Zusatzstunden weniger und kostet 300 Euro mehr als A.", "Bei 800 Euro passt keine der beiden Varianten. Andere Abläufe oder vereinbarte Prioritäten müssen mit den Zuständigen geklärt werden."],
+      "acceptableAlternatives": ["Eine Empfehlung in eigenen Worten ist passend, wenn die drei Grenzen und die gegenläufigen Auswirkungen erkennbar sind.", "Weitere Alternativen dürfen vorgeschlagen werden, sofern ihre Kosten, Gerätezahl und Arbeitsbelastung erst geprüft und keine Vorteile als erwiesen ausgegeben werden."],
+      "misconceptions": ["A wegen des niedrigeren Preises empfehlen, ohne die verletzte Stundengrenze zu erwähnen.", "Mira könne die vereinbarte Kostengrenze selbst streichen oder geschätzte Ergebnisse als gemessen darstellen."],
+      "sampleAnswer": "B passt zu den drei Vorgaben. Es erhält wie A acht Geräte und braucht vier Zusatzstunden weniger, kostet aber 300 Euro mehr. Bei einer Kostengrenze von 800 Euro passt weder A noch B. Sam muss einen anderen Ablauf oder eine abgestimmte Änderung der Ziele prüfen. Nach der Umsetzung werden die tatsächlichen Ergebnisse verglichen.",
+      "followUp": "Welche drei tatsächlichen Ergebnisse würdest du nach der Einführung mit der Planung vergleichen?"
+    }
+  ],
+  "cards": [
+    {"id": "common-lf1-goals-card-types", "front": "Woran erkennst du wirtschaftliche, ökologische und soziale Ziele?", "back": "Wirtschaftlich: Erfolg und finanzielle Handlungsfähigkeit, etwa Kosten begrenzen. Ökologisch: Umwelt und Ressourcen schützen, etwa Ausmusterung vermeiden. Sozial: Bedingungen für Menschen verbessern, etwa Arbeitsbelastung verringern. Die beabsichtigte Wirkung entscheidet.", "objectiveIds": ["common-lf1-goals-classify"], "blockIds": ["common-lf1-goals-types"]},
+    {"id": "common-lf1-goals-card-action", "front": "Wie unterscheiden sich Ziel und Maßnahme bei einer Einweisung?", "back": "Die Einweisung ist eine Maßnahme. Weniger Unsicherheit im Team kann ihr soziales Ziel sein, weniger Nacharbeit ein wirtschaftliches Ziel. Eine Maßnahme kann mehrere Ziele unterstützen, wenn die entsprechenden Wirkungen eintreten.", "objectiveIds": ["common-lf1-goals-classify"], "blockIds": ["common-lf1-goals-types", "common-lf1-goals-effects"]},
+    {"id": "common-lf1-goals-card-evidence", "front": "Was zeigt eine niedrigere Stromrechnung über das ökologische Ziel Energie sparen?", "back": "Eine niedrigere Rechnung allein belegt keine Energieeinsparung, denn auch der Preis kann gesunken sein. Vergleiche verbrauchte Kilowattstunden bei vergleichbarer Nutzung und im gleichen Zeitraum. Selbst dieses Merkmal erfasst noch keine vollständige Umweltbilanz.", "objectiveIds": ["common-lf1-goals-classify"], "blockIds": ["common-lf1-goals-effects"]},
+    {"id": "common-lf1-goals-card-conflict", "front": "Wie erklärst du einen Zielkonflikt verständlich?", "back": "Nenne beide Ziele und die Gegenwirkung unter den betrachteten Bedingungen. Beispiel: Geräte aufarbeiten vermeidet Ausmusterung, erhöht hier aber die Einführungskosten. Unterschiedliche Ziele allein beweisen noch keinen Konflikt.", "objectiveIds": ["common-lf1-goals-balance"], "blockIds": ["common-lf1-goals-relations"]},
+    {"id": "common-lf1-goals-card-harmony", "front": "Was unterscheidet Zielharmonie und Zielneutralität von einem Konflikt?", "back": "Bei Harmonie unterstützen sich Ziele, etwa wenn Energieverbrauch und Stromkosten gemeinsam sinken. Bei Neutralität ist im betrachteten Fall kein Einfluss erkennbar. Im Konflikt erschwert die Verbesserung bei einem Ziel ein anderes. Maßnahme und Zeitraum sind entscheidend.", "objectiveIds": ["common-lf1-goals-balance"], "blockIds": ["common-lf1-goals-relations"]},
+    {"id": "common-lf1-goals-card-decision", "front": "Wie gehst du vor, wenn keine Variante alle vereinbarten Grenzen erfüllt?", "back": "Benenne die Abweichungen und kläre mit den Zuständigen andere Abläufe oder die vereinbarten Prioritäten. Streiche keine Grenze stillschweigend. Eine Empfehlung nennt erfüllte Ziele und verbleibende Nachteile. Prüfe nach der Umsetzung, ob die erwarteten Wirkungen eingetreten sind.", "objectiveIds": ["common-lf1-goals-balance"], "blockIds": ["common-lf1-goals-decisions"]}
+  ],
+  "review": {"status": "reviewed", "checkedAt": "2026-11-11"}
+}

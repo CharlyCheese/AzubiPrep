@@ -1,0 +1,486 @@
+{
+  "schemaVersion": 1,
+  "version": "1.0.0",
+  "id": "fiae-lf12a-scope",
+  "title": "Kundenauftrag und Projektziele abgrenzen",
+  "fieldId": "LF12a",
+  "scope": "specialization",
+  "prerequisites": [
+    "fiae-lf11a-versions",
+    "common-lf1-presentation"
+  ],
+  "objectives": [
+    {
+      "id": "fiae-lf12a-scope-clarify",
+      "text": "Mit einem Auftraggeber Ausgangssituation, gewünschtes Ergebnis und Grenzen eines kleinen Softwareprojekts klären."
+    },
+    {
+      "id": "fiae-lf12a-scope-criteria",
+      "text": "Messbare Projektziele und überprüfbare Abnahmekriterien einschließlich Schulungsbedarf formulieren."
+    },
+    {
+      "id": "fiae-lf12a-scope-constraints",
+      "text": "Zeitliche, technische und rechtliche Rahmenbedingungen sowie wichtige Beteiligte erfassen."
+    }
+  ],
+  "caseStudy": {
+    "title": "Ein Auftrag für die Werkstattannahme",
+    "text": "Die interne Werkstatt erfasst Reparaturen auf Zetteln und tippt sie später ab. Die Werkstattleitung möchte aus dem Maskenentwurf aus LF10a und der getesteten Ticketfunktion aus LF11a eine kleine, abnehmbare Lösung für die Annahme machen."
+  },
+  "sourceIds": [
+    "ec-pm2-artefacts",
+    "kmk-fachinformatiker-2019",
+    "lf12a-gds-usability",
+    "lf4-eu-gdpr"
+  ],
+  "sources": [
+    {
+      "id": "ec-pm2-artefacts",
+      "title": "Europäische Kommission: PM²-Artefakte",
+      "url": "https://pm2.europa.eu/pm2-artefacts_en",
+      "checkedAt": "2026-11-19",
+      "note": "Artefakte zu Auftrag, Arbeitsplan, Änderung, Abnahme, Übergang und Projektabschluss geprüft. Die Werkstattunterlagen und Entscheidungen im Beispiel sind selbst erstellt."
+    },
+    {
+      "id": "kmk-fachinformatiker-2019",
+      "title": "KMK-Rahmenlehrplan Fachinformatiker/Fachinformatikerin vom 13.12.2019",
+      "url": "https://www.kmk.org/fileadmin/Dateien/pdf/Bildung/BeruflicheBildung/rlp/Fachinformatiker_19-12-13_EL.pdf",
+      "checkedAt": "2026-11-19",
+      "note": "LF12a und Einordnung der vorherigen Lernfelder im öffentlichen Rahmenlehrplan geprüft. Fall, Schwellen und Übungsbewertung sind eigene Lernbeispiele."
+    },
+    {
+      "id": "lf12a-gds-usability",
+      "title": "Government Digital Service: Usability benchmarking a website or whole service",
+      "url": "https://www.gov.uk/service-manual/measuring-success/usability-benchmarking-a-website-or-whole-service",
+      "checkedAt": "2026-11-19",
+      "note": "Aufgabenbasierte Beobachtung, Erfolgsquote und Bearbeitungsdauer geprüft. Schulungsaufträge und Schwellen sind eigene Beispiele."
+    },
+    {
+      "id": "lf4-eu-gdpr",
+      "title": "EUR-Lex: Datenschutz-Grundverordnung, konsolidierte geltende Fassung",
+      "url": "https://eur-lex.europa.eu/legal-content/DE/TXT/?uri=CELEX:02016R0679-20160504",
+      "checkedAt": "2026-11-19",
+      "note": "Art. 5 zu Zweckbindung und Datenminimierung im öffentlichen Verordnungstext geprüft. Die Übungen verwenden erfundene Geräte und Rollen."
+    }
+  ],
+  "blocks": [
+    {
+      "id": "fiae-lf12a-scope-block-1",
+      "title": "1. Den Auftrag aus dem Arbeitsablauf ableiten",
+      "objectiveIds": [
+        "fiae-lf12a-scope-clarify"
+      ],
+      "sourceIds": [
+        "ec-pm2-artefacts",
+        "kmk-fachinformatiker-2019"
+      ],
+      "paragraphs": [
+        "Lass dir einen typischen Fall zeigen. Die Annahme schreibt die Gerätekennung auf einen Zettel, die Werkstatt überträgt sie in eine Liste. Beim Übertragen bleiben Aufträge liegen. Frage nach der gewünschten Veränderung und danach, wer sie im Alltag bemerkt. „Wir brauchen eine App“ legt noch kein Ergebnis fest.",
+        "Beschreibe den kürzesten vollständigen Weg vom Eingang bis zum auffindbaren Auftrag. Stimme ein Lieferergebnis und ausdrücklich zurückgestellte Wünsche ab. Die Leitung verantwortet hier den Umfang, die Annahme erklärt die Arbeit und der Betrieb klärt technische Voraussetzungen."
+      ],
+      "example": {
+        "title": "Aus dem Werkstattprojekt",
+        "text": "Für Übungsgerät G-17 soll die Annahme einen Fehler erfassen und das erzeugte Ticket über seine eigene Ticketnummer wiederfinden. Die LF10a-Maske liefert die Eingaben. Die Suche aus LF11a liefert den Abruf über die numerische Ticketnummer. Das Anlegen eines Tickets mit Gerätekennung und Fehlerbeschreibung wird hier ergänzt. Das Projekt liefert dafür Erfassungsmaske und Speicherung. Ersatzteilbestellung und Rechnungsdruck bleiben spätere Vorhaben."
+      },
+      "misconception": {
+        "claim": "Der vorhandene Prototyp ist schon der ganze Auftrag.",
+        "correction": "Der Prototyp zeigt die Bedienidee. Ob das Ticket erhalten bleibt und wiedergefunden wird, ist ein weiteres Lieferergebnis."
+      },
+      "takeaway": "Formuliere Problem, Zielgruppe, Ergebnis und Grenzen in den Worten der Werkstatt."
+    },
+    {
+      "id": "fiae-lf12a-scope-block-2",
+      "title": "2. Aus Wünschen beobachtbare Kriterien machen",
+      "objectiveIds": [
+        "fiae-lf12a-scope-criteria"
+      ],
+      "sourceIds": [
+        "ec-pm2-artefacts",
+        "lf12a-gds-usability"
+      ],
+      "paragraphs": [
+        "Trenne den gewünschten Nutzen von seinem Nachweis. Aus „einfacher bedienen“ wird im Modell ein Schulungsziel. Nach einer Einweisung bearbeiten mindestens drei von vier Übungspersonen einen vorgegebenen Fall ohne Hilfestellung in höchstens zwei Minuten. Lege Aufgabe, Beginn und Ende der Messung vorab fest.",
+        "Ergänze Funktionskriterien. Speichern einer gültigen Meldung liefert eine Kennung, das erneute Öffnen dieser Kennung zeigt dieselben Angaben. Bei fehlender Gerätekennung erscheint ein Hinweis und der Bestand wächst nicht. Erst ein Vergleich des Bestands vor und nach dem Versuch belegt den zweiten Teil."
+      ],
+      "example": {
+        "title": "Aus dem Werkstattprojekt",
+        "text": "Rechenbeispiel für den Entwurf der Entscheidungsregel: Bei vier selbstständig und korrekt abgeschlossenen Versuchen mit 80, 115, 125 und 95 Sekunden liegen drei innerhalb der Grenze. Eine solche Reihe würde das Ziel erfüllen. Die tatsächlichen Schulungsversuche des Piloten folgen nach der Umsetzung."
+      },
+      "misconception": {
+        "claim": "Eine besuchte Einweisung belegt die sichere Bedienung.",
+        "correction": "Teilnahme dokumentiert Anwesenheit. Für das hier vereinbarte Ziel zählt die beobachtete selbstständige Bearbeitung."
+      },
+      "takeaway": "Schreibe Bedingungen, erwartetes Ergebnis und Entscheidungsregel vor der Probe auf."
+    },
+    {
+      "id": "fiae-lf12a-scope-block-3",
+      "title": "3. Grenzen, Beteiligte und offene Entscheidungen sammeln",
+      "objectiveIds": [
+        "fiae-lf12a-scope-constraints"
+      ],
+      "sourceIds": [
+        "ec-pm2-artefacts",
+        "lf4-eu-gdpr"
+      ],
+      "paragraphs": [
+        "Arbeite mit drei Spalten. In „gesetzt“ stehen der Vorführtermin am vierten Arbeitstag und der vorhandene interne Browser. In „offen“ steht etwa die Freischaltung des Testzugangs. In „zu klären mit“ steht die verantwortliche Rolle mit Termin. So wird aus einer Annahme eine nachverfolgbare Frage. Lege für die Testumgebung zwei Punkte fest. Die IT bestätigt den Zugang bis Tag eins und prüft ihn an Tag zwei vor dem geplanten Integrationstest erneut.",
+        "Erhebe beim Entwurf mögliche Personenbezüge, Verwendungszwecke und notwendige Felder. Für die Übung reichen erfundene Gerätekennungen und Fehlerkürzel. Der reale Umgang mit Personenbezügen müsste vor einem Betrieb fachlich geklärt werden. Im Projekt entscheidet die Werkstattleitung über Ergebnis und Umfang, die IT über die technische Bereitstellung."
+      ],
+      "example": {
+        "title": "Aus dem Werkstattprojekt",
+        "text": "Der Wunsch nach einem privaten Rückrufkontakt erscheint im Gespräch. Die Annahme begründet keinen Bedarf für den vereinbarten internen Ablauf. Die Leitung streicht das Feld aus dem Übungsumfang und hält die Entscheidung fest."
+      },
+      "misconception": {
+        "claim": "Jeder vorgetragene Datenwunsch rechtfertigt ein neues Pflichtfeld.",
+        "correction": "Prüfe den konkreten Zweck und beschränke die Eingabe auf erforderliche Angaben."
+      },
+      "takeaway": "Ordne offene Voraussetzungen einer Rolle und einem Entscheidungstermin zu."
+    },
+    {
+      "id": "fiae-lf12a-scope-block-4",
+      "title": "4. Die Auftragsklärung gemeinsam abschließen",
+      "objectiveIds": [
+        "fiae-lf12a-scope-clarify",
+        "fiae-lf12a-scope-criteria",
+        "fiae-lf12a-scope-constraints"
+      ],
+      "sourceIds": [
+        "ec-pm2-artefacts",
+        "kmk-fachinformatiker-2019"
+      ],
+      "paragraphs": [
+        "Lies der Leitung einen kurzen Entwurf vor. Nenne den heutigen Übertragungsfehler, den künftigen Weg und die vereinbarten Prüffälle. Lass die Annahme den Fall an der Maske nacherzählen. So fallen unterschiedliche Vorstellungen von „wiederfinden“ auf, etwa direkter Aufruf über die Kennung oder eine globale Suchfunktion.",
+        "Führe offene Punkte mit Frist. Setze den Entwurf erst nach Bestätigung der zuständigen Rolle als Vergleichsgrundlage für Aufwand und Abnahme ein. Spätere Zusatzwünsche können damit als bewusste Änderung geprüft werden."
+      ],
+      "example": {
+        "title": "Aus dem Werkstattprojekt",
+        "text": "Die Leitung bestätigt den Abruf per Ticketkennung. Eine Volltextsuche wird als späterer Wunsch abgelegt. Die IT klärt die Bereitstellung bis Tag eins und prüft den Zugang vor dem Integrationstest nochmals. Die Annahme reserviert vier Übungsplätze."
+      },
+      "misconception": {
+        "claim": "Ein zusätzlich genannter Wunsch gehört mit dem Gespräch bereits zur Lieferung.",
+        "correction": "Der vereinbarte und bestätigte Umfang bildet hier die Grundlage für die spätere Kalkulation."
+      },
+      "takeaway": "Lass die Beteiligten die gleiche Aufgabenbeschreibung und die gleichen Grenzen bestätigen."
+    }
+  ],
+  "questionFile": "questions/fiae-lf12a-scope.v1.csv",
+  "quiz": {
+    "questionIds": [
+      "LJ-LF12A-SCOPE-Q01",
+      "LJ-LF12A-SCOPE-Q02",
+      "LJ-LF12A-SCOPE-Q03",
+      "LJ-LF12A-SCOPE-Q04",
+      "LJ-LF12A-SCOPE-Q05",
+      "LJ-LF12A-SCOPE-Q06"
+    ]
+  },
+  "exam": {
+    "questionIds": [
+      "LJ-LF12A-SCOPE-E01",
+      "LJ-LF12A-SCOPE-E02",
+      "LJ-LF12A-SCOPE-E03",
+      "LJ-LF12A-SCOPE-E04",
+      "LJ-LF12A-SCOPE-E05",
+      "LJ-LF12A-SCOPE-E06",
+      "LJ-LF12A-SCOPE-E07",
+      "LJ-LF12A-SCOPE-E08"
+    ],
+    "passPercent": 80,
+    "scoring": "all-or-nothing-per-question",
+    "timed": false
+  },
+  "questionLinks": [
+    {
+      "questionId": "LJ-LF12A-SCOPE-Q01",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf12a-scope-clarify"
+      ],
+      "blockIds": [
+        "fiae-lf12a-scope-block-1"
+      ]
+    },
+    {
+      "questionId": "LJ-LF12A-SCOPE-Q02",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf12a-scope-clarify"
+      ],
+      "blockIds": [
+        "fiae-lf12a-scope-block-1"
+      ]
+    },
+    {
+      "questionId": "LJ-LF12A-SCOPE-Q03",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf12a-scope-criteria"
+      ],
+      "blockIds": [
+        "fiae-lf12a-scope-block-2"
+      ]
+    },
+    {
+      "questionId": "LJ-LF12A-SCOPE-Q04",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf12a-scope-criteria"
+      ],
+      "blockIds": [
+        "fiae-lf12a-scope-block-2"
+      ]
+    },
+    {
+      "questionId": "LJ-LF12A-SCOPE-Q05",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf12a-scope-constraints"
+      ],
+      "blockIds": [
+        "fiae-lf12a-scope-block-3",
+        "fiae-lf12a-scope-block-4"
+      ]
+    },
+    {
+      "questionId": "LJ-LF12A-SCOPE-Q06",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf12a-scope-constraints"
+      ],
+      "blockIds": [
+        "fiae-lf12a-scope-block-3"
+      ]
+    },
+    {
+      "questionId": "LJ-LF12A-SCOPE-E01",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf12a-scope-clarify"
+      ],
+      "blockIds": [
+        "fiae-lf12a-scope-block-1",
+        "fiae-lf12a-scope-block-4"
+      ]
+    },
+    {
+      "questionId": "LJ-LF12A-SCOPE-E02",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf12a-scope-criteria"
+      ],
+      "blockIds": [
+        "fiae-lf12a-scope-block-2"
+      ]
+    },
+    {
+      "questionId": "LJ-LF12A-SCOPE-E03",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf12a-scope-criteria"
+      ],
+      "blockIds": [
+        "fiae-lf12a-scope-block-2"
+      ]
+    },
+    {
+      "questionId": "LJ-LF12A-SCOPE-E04",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf12a-scope-constraints"
+      ],
+      "blockIds": [
+        "fiae-lf12a-scope-block-3"
+      ]
+    },
+    {
+      "questionId": "LJ-LF12A-SCOPE-E05",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf12a-scope-clarify"
+      ],
+      "blockIds": [
+        "fiae-lf12a-scope-block-1"
+      ]
+    },
+    {
+      "questionId": "LJ-LF12A-SCOPE-E06",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf12a-scope-constraints"
+      ],
+      "blockIds": [
+        "fiae-lf12a-scope-block-3",
+        "fiae-lf12a-scope-block-4"
+      ]
+    },
+    {
+      "questionId": "LJ-LF12A-SCOPE-E07",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf12a-scope-clarify",
+        "fiae-lf12a-scope-criteria"
+      ],
+      "blockIds": [
+        "fiae-lf12a-scope-block-2",
+        "fiae-lf12a-scope-block-4"
+      ]
+    },
+    {
+      "questionId": "LJ-LF12A-SCOPE-E08",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf12a-scope-clarify",
+        "fiae-lf12a-scope-constraints"
+      ],
+      "blockIds": [
+        "fiae-lf12a-scope-block-3",
+        "fiae-lf12a-scope-block-4"
+      ]
+    }
+  ],
+  "interview": [
+    {
+      "id": "fiae-lf12a-scope-talk-1",
+      "prompt": "Erkläre der Leitung, warum „eine neue Maske“ den Auftrag noch offenlässt.",
+      "objectiveIds": [
+        "fiae-lf12a-scope-clarify"
+      ],
+      "blockIds": [
+        "fiae-lf12a-scope-block-1"
+      ],
+      "keyPoints": [
+        "Den Übertragungsfehler benennen.",
+        "Erfassung und Abruf als Ergebnis beschreiben.",
+        "Rechnungsdruck abgrenzen."
+      ],
+      "acceptableAlternatives": [
+        "Ein Ablaufbild mit Ein- und Ausgang kann den kurzen Auftragstext ergänzen."
+      ],
+      "misconceptions": [
+        "Das Vorhandensein des Entwurfs mit einer einsatzfähigen Lösung verwechseln."
+      ],
+      "sampleAnswer": "Auf dem Papier fallen Meldungen zwischen Annahme und Liste heraus. Wir wollen sie am Platz einmal erfassen und per Kennung wieder öffnen. Rechnungen gehören in einen Folgeauftrag.",
+      "followUp": "Wie würdest du erkennen, dass die alte Doppelerfassung weiterläuft?"
+    },
+    {
+      "id": "fiae-lf12a-scope-talk-2",
+      "prompt": "Formuliere den Nachweis für eine gelungene Einweisung so, dass zwei Beobachtende gleich bewerten können.",
+      "objectiveIds": [
+        "fiae-lf12a-scope-criteria"
+      ],
+      "blockIds": [
+        "fiae-lf12a-scope-block-2"
+      ],
+      "keyPoints": [
+        "Einheitlichen Übungsfall festlegen.",
+        "Hilfen und Zeitgrenze definieren.",
+        "Drei von vier selbstständigen Erfolgen zählen."
+      ],
+      "acceptableAlternatives": [
+        "Eine vorher abgestimmte Beobachtungsliste mit Start- und Endereignis eignet sich ebenfalls."
+      ],
+      "misconceptions": [
+        "Die mittlere Zeit als Ersatz für die Zahl richtiger Einzelversuche verwenden."
+      ],
+      "sampleAnswer": "Alle starten mit derselben Aufgabe. Die Zeit läuft vom ersten Lesen bis zum Wiederöffnen der korrekten Meldung. Wir zählen, wie viele Personen ohne Tipp innerhalb von 120 Sekunden fertig sind. Drei von vier genügen.",
+      "followUp": "Wie bewertest du einen schnellen Versuch mit falscher Gerätekennung?"
+    },
+    {
+      "id": "fiae-lf12a-scope-talk-3",
+      "prompt": "Welche zwei offenen Voraussetzungen würdest du vor der Freigabe mit wem klären?",
+      "objectiveIds": [
+        "fiae-lf12a-scope-constraints"
+      ],
+      "blockIds": [
+        "fiae-lf12a-scope-block-3",
+        "fiae-lf12a-scope-block-4"
+      ],
+      "keyPoints": [
+        "IT zum Testzugang befragen.",
+        "Vier Plätze mit der Annahme abstimmen.",
+        "Rollen und Fristen im Auftrag vermerken."
+      ],
+      "acceptableAlternatives": [
+        "Andere konkret begründete technische oder organisatorische Voraussetzungen sind möglich."
+      ],
+      "misconceptions": [
+        "Eine Reservierung mit einem durchgeführten Versuch verwechseln."
+      ],
+      "sampleAnswer": "Die IT bestätigt den Browserzugang bis Tag eins. Die Annahme benennt einen Termin für vier Übungsplätze. Ich trage beide Antworten neben der bestätigten Auftragsfassung ein.",
+      "followUp": "Welche Folge hätte ein verspäteter Testzugang?"
+    }
+  ],
+  "cards": [
+    {
+      "id": "fiae-lf12a-scope-card-01",
+      "front": "Was unterscheidet Ausgangslage und Lieferergebnis in der Werkstatt?",
+      "back": "Heute bleiben Papiermeldungen liegen. Geliefert werden soll ein erfassbarer und per Kennung auffindbarer Auftrag.",
+      "objectiveIds": [
+        "fiae-lf12a-scope-clarify"
+      ],
+      "blockIds": [
+        "fiae-lf12a-scope-block-1"
+      ]
+    },
+    {
+      "id": "fiae-lf12a-scope-card-02",
+      "front": "Wie begrenzt die Leitung die Suche?",
+      "back": "Der Abruf per Ticketkennung ist vereinbart. Eine Volltextsuche ist ein gesondert zu bewertender Wunsch.",
+      "objectiveIds": [
+        "fiae-lf12a-scope-clarify"
+      ],
+      "blockIds": [
+        "fiae-lf12a-scope-block-1",
+        "fiae-lf12a-scope-block-4"
+      ]
+    },
+    {
+      "id": "fiae-lf12a-scope-card-03",
+      "front": "Woran erkennst du einen erfolgreichen Negativfall?",
+      "back": "Bei fehlender Pflichtangabe erscheint ein verständlicher Hinweis und der Ticketbestand bleibt gleich.",
+      "objectiveIds": [
+        "fiae-lf12a-scope-criteria"
+      ],
+      "blockIds": [
+        "fiae-lf12a-scope-block-2"
+      ]
+    },
+    {
+      "id": "fiae-lf12a-scope-card-04",
+      "front": "Welche vier Angaben machen das Einweisungsziel prüfbar?",
+      "back": "Übungsaufgabe, erlaubte Hilfen, Zeitgrenze und Mindestzahl erfolgreicher Teilnehmender.",
+      "objectiveIds": [
+        "fiae-lf12a-scope-criteria"
+      ],
+      "blockIds": [
+        "fiae-lf12a-scope-block-2"
+      ]
+    },
+    {
+      "id": "fiae-lf12a-scope-card-05",
+      "front": "Wie machst du aus einem angenommenen Zugang eine geplante Voraussetzung?",
+      "back": "Die IT erhält einen Termin, bis zu dem sie Einrichtung und Funktion des Testzugangs bestätigt.",
+      "objectiveIds": [
+        "fiae-lf12a-scope-constraints"
+      ],
+      "blockIds": [
+        "fiae-lf12a-scope-block-3"
+      ]
+    },
+    {
+      "id": "fiae-lf12a-scope-card-06",
+      "front": "Welche Daten genügen für den erfundenen Werkstattfall?",
+      "back": "Eine synthetische Gerätekennung und eine Fehlerbeschreibung ohne echte personenbezogene Angaben.",
+      "objectiveIds": [
+        "fiae-lf12a-scope-constraints"
+      ],
+      "blockIds": [
+        "fiae-lf12a-scope-block-3"
+      ]
+    }
+  ],
+  "review": {
+    "status": "reviewed",
+    "checkedAt": "2026-11-19"
+  }
+}

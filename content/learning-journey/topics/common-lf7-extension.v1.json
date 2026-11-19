@@ -1,0 +1,501 @@
+{
+  "schemaVersion": 1,
+  "id": "common-lf7-extension",
+  "version": "1.0.0",
+  "title": "Eine Systemerweiterung planen",
+  "fieldId": "LF7",
+  "scope": "common",
+  "prerequisites": [
+    "common-lf7-signals",
+    "common-lf2-workplace"
+  ],
+  "sourceIds": [
+    "lf7-nist-cps",
+    "lf7-adi-uart",
+    "lf7-arduino-library",
+    "lf7-vt-energy",
+    "lf7-nist-configuration"
+  ],
+  "sources": [
+    {
+      "id": "lf7-nist-cps",
+      "title": "NIST: Cyber-Physical Systems and Internet of Things Foundations",
+      "url": "https://www.nist.gov/programs-projects/cyber-physical-systems-and-internet-things-foundations",
+      "checkedAt": "2026-11-16",
+      "note": "Öffentliche HTML-Projektbeschreibung zu physikalischen Komponenten, Sensorik, Aktorik, Logik sowie überprüfbaren Anforderungen gelesen. Tischmodell, Rollen und alle Fallwerte sind eigene Fiktion."
+    },
+    {
+      "id": "lf7-adi-uart",
+      "title": "Analog Devices: UART – A Hardware Communication Protocol",
+      "url": "https://www.analog.com/en/resources/analog-dialogue/articles/uart-a-hardware-communication-protocol.html",
+      "checkedAt": "2026-11-16",
+      "note": "HTML-Herstellerartikel zu asynchroner serieller Übertragung, Datenrahmen und abgestimmten Parametern gelesen. Das konkrete UART-Format und die elektrischen Eigenschaften der Übung sind erfundene Dokumentauszüge."
+    },
+    {
+      "id": "lf7-arduino-library",
+      "title": "Arduino: Library specification",
+      "url": "https://docs.arduino.cc/arduino-cli/library-specification",
+      "checkedAt": "2026-11-16",
+      "note": "Herstellerspezifikation zu Bibliotheksversion, unterstützten Architekturen und Abhängigkeiten geprüft. Namen und Eigenschaften der Modellbibliotheken sind erfunden; keine Installation oder tatsächliche Bibliotheksfreigabe."
+    },
+    {
+      "id": "lf7-vt-energy",
+      "title": "Virginia Tech: Estimating Appliance and Home Electronic Energy Use",
+      "url": "https://www.pubs.ext.vt.edu/2901/2901-9014/2901-9014.html",
+      "checkedAt": "2026-11-16",
+      "note": "HTML-Lehrtext der Universität zu Leistung aus Spannung/Strom und Energie aus Leistung/Laufzeit geprüft. Verwendet wird ein eigenes idealisiertes Gleichstrommodell; keine Anleitung zum Messen oder Anschließen echter Geräte."
+    },
+    {
+      "id": "lf7-nist-configuration",
+      "title": "NIST: IoT Device Configuration",
+      "url": "https://pages.nist.gov/IoT-Device-Cybersecurity-Requirement-Catalogs/technical/configuration/",
+      "checkedAt": "2026-11-16",
+      "note": "Öffentlicher technischer Katalog zu autorisierten Konfigurationsänderungen, Schnittstellen und Wiederherstellung gelesen. Konkrete Rollen, Nachweise und Grenzen des Lernmodells sind eigenständig festgelegt."
+    }
+  ],
+  "objectives": [
+    {
+      "id": "common-lf7-extension-requirements",
+      "text": "Aus einem Erweiterungswunsch Anforderungen an Sensor, Schnittstelle und Energieversorgung ableiten."
+    },
+    {
+      "id": "common-lf7-extension-selection",
+      "text": "Komponenten und vorhandene Softwarebibliotheken anhand technischer Unterlagen auf Eignung prüfen."
+    },
+    {
+      "id": "common-lf7-extension-plan",
+      "text": "Einbau, Konfiguration und Prüfschritte mit Zuständigkeiten und Sicherheitsgrenzen planen."
+    }
+  ],
+  "caseStudy": {
+    "title": "Ein prüfbarer Erweiterungsauftrag für Luftpunkt",
+    "text": "Nora soll das ungefährliche Tischmodell so ergänzen, dass es gültige Temperaturen auswertet, ab 30 °C den Modelllüfter einschaltet und Fehler sichtbar macht. Sie vergleicht erfundene Komponenten- und Bibliotheksunterlagen, plant die Versorgung rechnerisch und verteilt Aufgaben. Der Auftrag enthält keine Beschaffung, Installation oder Arbeiten an echten Geräten."
+  },
+  "blocks": [
+    {
+      "id": "common-lf7-extension-requirements",
+      "title": "1. Den Wunsch in prüfbare Anforderungen übersetzen",
+      "objectiveIds": [
+        "common-lf7-extension-requirements"
+      ],
+      "sourceIds": [
+        "lf7-nist-cps",
+        "lf7-adi-uart"
+      ],
+      "paragraphs": [
+        "Der Wunsch der Lüfter soll bei Wärme angehen ist noch nicht prüfbar. Formuliere Eingänge, Entscheidung und Ergebnis: Luftpunkt übernimmt einen Zahlenwert in Grad Celsius und einen Verbindungsstatus. Bei gültiger Verbindung und endlicher Zahl von −20 bis +80 °C gilt unter 30 aus, ab 30 ein. Sonst gilt fault: Lüfter aus und Alarm an im ungefährlichen Tischmodell.",
+        "Leite Auswahlkriterien aus Auftrag und Bestand ab. Der Sensor muss den festgelegten Bereich abdecken und Celsiuswerte im vereinbarten Format liefern. Die vorhandene Modellsteuerung akzeptiert laut erfundener Unterlage UART mit 3,3-V-Datenpegel, 9600 Baud und 8N1. Eine passende Zahl genügt deshalb nicht; auch Transport und elektrische Verträglichkeit müssen laut Unterlage passen.",
+        "Dokumentiere Messgenauigkeit, Aktualisierung, Betriebswerte und Fehlerausgabe. Sensor A liefert einmal pro Sekunde, Schritt 0,1 °C und Genauigkeit ±0,5 °C. Die Simulationsschwelle bezieht sich auf den gelieferten Modellwert. Eine Garantie, dass reale Luft bei exakt 30,0 °C schaltet, lässt sich daraus nicht ableiten."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Lernfall",
+        "text": "Prüfbares Kriterium: gültige 29,9 °C → aus; gültige 30,0 °C → ein; Verbindung verloren → fault mit Alarm."
+      },
+      "misconception": {
+        "claim": "Ein passender Produktname reicht als technische Anforderung.",
+        "correction": "Messbereich, Format, Schnittstelle, Versorgung und erwartetes Verhalten müssen prüfbar beschrieben werden."
+      },
+      "takeaway": "Leite Anforderungen aus Aufgabe und bestehender Systemumgebung ab."
+    },
+    {
+      "id": "common-lf7-extension-selection",
+      "title": "2. Komponenten und Bibliotheken anhand der Unterlage auswählen",
+      "objectiveIds": [
+        "common-lf7-extension-selection",
+        "common-lf7-extension-requirements"
+      ],
+      "sourceIds": [
+        "lf7-adi-uart",
+        "lf7-arduino-library"
+      ],
+      "paragraphs": [
+        "Fiktiver Vergleich: Sensor A hat UART/3,3-V-Datenpegel, 5-V-Modulversorgung, −20…80 °C und die ASCII-Zeile temp=28.0 degC mit LF. Sensor B hat I²C/5-V-Datenpegel und einen binären Temperaturwert. Die vorhandene Modellsteuerung dokumentiert UART/3,3 V; eine Anpassung für B ist nicht vorgesehen. A passt zu diesen Anforderungen, B ist nicht direkt kompatibel. 5 V Versorgung und 3,3 V Datenpegel sind getrennte Eigenschaften.",
+        "Vergleiche vorhandene Software. Fiktiver Parser A, Version 1.2, ist für die Modelllaufzeit freigegeben, liest genau das ASCII-Format mit degC und LF, gibt eine Zahl zurück und meldet Formatfehler. Parser B, Version 2.0, erwartet binäre I²C-Registerdaten und eine andere Laufzeit. Für diesen Fall passt Parser A. Die höhere Versionsnummer von B ist kein Eignungsnachweis.",
+        "Prüfe in echter Dokumentation unterstützte Geräte und Laufzeiten, Eingabe-/Ausgabeformat, Fehlerverhalten, Version, Abhängigkeiten und Nutzungserlaubnis. Ein erfolgreicher Programmstart beweist noch keine fachlich richtige Interpretation. Hier vergleichst du erfundene Unterlagen; der Adapter ist vorgegeben, du installierst keine Bibliothek. Halte die passende Kombination und die Grenze der Entscheidung fest."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Lernfall",
+        "text": "Nora wählt Sensor A und Parser A wegen UART/3,3 V, Celsius-ASCII-Format und Modelllaufzeit. B benötigt nicht eingeplante Anpassungen."
+      },
+      "misconception": {
+        "claim": "Eine höhere Bibliotheksversion gleicht ein unpassendes Sensorprotokoll von selbst aus.",
+        "correction": "Protokoll, Format und Laufzeit müssen dokumentiert passen; eine Versionsnummer beweist das nicht."
+      },
+      "takeaway": "Begründe Auswahl mit passenden Eigenschaften, nicht mit Namen oder Versionshöhe."
+    },
+    {
+      "id": "common-lf7-extension-supply",
+      "title": "3. Versorgung mit nachvollziehbaren Modellwerten planen",
+      "objectiveIds": [
+        "common-lf7-extension-requirements",
+        "common-lf7-extension-selection"
+      ],
+      "sourceIds": [
+        "lf7-vt-energy"
+      ],
+      "paragraphs": [
+        "Für die Rechnung gelten ideale gleichzeitige Gleichstrom-Betriebswerte bei 5 V: Sensor 0,1 A, Steuerung einschließlich Anzeigen 0,2 A, Lüfter bei Dauerlauf 0,4 A. Addiere die Ströme der hier gemeinsam versorgten Verbraucher: 0,1 + 0,2 + 0,4 = 0,7 A. Die verfügbare Versorgung ist mit 5 V und maximal 1 A angegeben.",
+        "Bei Gleichstrom gilt in dieser Rechnung P = U × I. Mit 5 V × 0,7 A ergeben sich 3,5 W. Die Versorgung kann bei 5 V und 1 A rechnerisch 5 W bereitstellen. Im festgelegten Betriebsfall bleiben 0,3 A beziehungsweise 1,5 W Reserve. Die Last nimmt nicht allein wegen der 1-A-Nennangabe ständig 1 A auf.",
+        "Anlaufspitzen, Leitungs- und Wandlungsverluste sowie weitere Verbraucher bleiben bewusst unberücksichtigt. Die Alarmanzeige ist im Steuerungsbudget enthalten. Eine reale Auswahl müsste zusätzliche Lasten und Herstellergrenzen berücksichtigen. Die Modellrechnung ist ein begrenzter Planungsnachweis und keine Freigabe zum Anschluss."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Lernfall",
+        "text": "Die Planung hält 5 V, 0,7 A, 3,5 W und 0,3 A Reserve fest und nennt die idealisierten Annahmen."
+      },
+      "misconception": {
+        "claim": "Eine 5-V-/1-A-Versorgung zwingt jeden Verbraucher zur Aufnahme von 1 A.",
+        "correction": "1 A ist die maximale Lieferfähigkeit; die Modelllast benötigt laut Annahmen 0,7 A."
+      },
+      "takeaway": "Prüfe passende Spannung und erforderlichen Strom samt Annahmen."
+    },
+    {
+      "id": "common-lf7-extension-plan",
+      "title": "4. Reihenfolge, Verantwortung und Grenzen festhalten",
+      "objectiveIds": [
+        "common-lf7-extension-plan",
+        "common-lf7-extension-requirements",
+        "common-lf7-extension-selection"
+      ],
+      "sourceIds": [
+        "lf7-nist-cps",
+        "lf7-nist-configuration"
+      ],
+      "paragraphs": [
+        "Ein Plan nennt Ausgangsstand, freigegebene Erweiterung, Verantwortliche und Nachweise. Im fiktiven Fall prüft Nora Anforderungen und Unterlagen; die zuständige Betreuung gibt die Modelländerung frei. Nora dokumentiert Auswahl und bisherigen Konfigurationsstand, ergänzt die lokale Steuerfunktion und prüft danach das Gesamtergebnis.",
+        "Für einen echten Einbau wäre vor Beginn festzulegen, welche befugte Person Aufbau und elektrische Sicherheit nach passenden Unterlagen verantwortet. Hier bleibt Einbau eine Planungsposition: Die Simulation hat keine realen Geräte und enthält keine Verdrahtungsanweisung. In der App erfolgen Auswahl, Konfiguration und Tests an Modellwerten.",
+        "Plane Normalfälle, Schaltgrenze und Fehlerfälle vor der Änderung: gültige Werte unter und ab 30 °C, −20 und 80 als erlaubte Grenzen, Werte außerhalb, falsche Datentypen sowie Verbindungsausfall. Leite Sollwerte aus Anforderungen ab. Eine Rückkehr zum dokumentierten Ausgangsstand begrenzt eine fehlgeschlagene Erweiterung, ersetzt aber keinen Nachtest.",
+        "Dokumentiere für die Übergabe Komponenten-/Parserstände, Einstellungen, Soll-Ist-Prüfungen, Versorgung und offene Grenzen. Änderungen an geprüftem Code verlangen neue Prüfung. Codebearbeitung allein verleiht keine Befugnis für elektrische Arbeiten."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Lernfall",
+        "text": "Unterlagenvergleich → Freigabe/Ausgangsstand → Modellkonfiguration und Code → Normal-, Grenz- und Fehlerproben → Energieabgleich → Übergabe."
+      },
+      "misconception": {
+        "claim": "Die Zuständigkeit für elektrische Sicherheit folgt automatisch daraus, wer den Code schreibt.",
+        "correction": "Verantwortung und Befugnisse müssen ausdrücklich zugeordnet werden."
+      },
+      "takeaway": "Plane Arbeitsschritte, Zuständigkeiten und Tests vor der Änderung."
+    }
+  ],
+  "questionFile": "questions/common-lf7-extension.v1.csv",
+  "quiz": {
+    "questionIds": [
+      "LJ-LF7-EXTENSION-Q01",
+      "LJ-LF7-EXTENSION-Q02",
+      "LJ-LF7-EXTENSION-Q03",
+      "LJ-LF7-EXTENSION-Q04",
+      "LJ-LF7-EXTENSION-Q05",
+      "LJ-LF7-EXTENSION-Q06"
+    ]
+  },
+  "exam": {
+    "questionIds": [
+      "LJ-LF7-EXTENSION-E01",
+      "LJ-LF7-EXTENSION-E02",
+      "LJ-LF7-EXTENSION-E03",
+      "LJ-LF7-EXTENSION-E04",
+      "LJ-LF7-EXTENSION-E05",
+      "LJ-LF7-EXTENSION-E06",
+      "LJ-LF7-EXTENSION-E07",
+      "LJ-LF7-EXTENSION-E08"
+    ],
+    "passPercent": 80,
+    "scoring": "all-or-nothing-per-question",
+    "timed": false
+  },
+  "questionLinks": [
+    {
+      "questionId": "LJ-LF7-EXTENSION-Q01",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf7-extension-requirements"
+      ],
+      "blockIds": [
+        "common-lf7-extension-requirements"
+      ]
+    },
+    {
+      "questionId": "LJ-LF7-EXTENSION-Q02",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf7-extension-selection"
+      ],
+      "blockIds": [
+        "common-lf7-extension-selection"
+      ]
+    },
+    {
+      "questionId": "LJ-LF7-EXTENSION-Q03",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf7-extension-selection"
+      ],
+      "blockIds": [
+        "common-lf7-extension-selection"
+      ]
+    },
+    {
+      "questionId": "LJ-LF7-EXTENSION-Q04",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf7-extension-requirements"
+      ],
+      "blockIds": [
+        "common-lf7-extension-supply"
+      ]
+    },
+    {
+      "questionId": "LJ-LF7-EXTENSION-Q05",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf7-extension-plan"
+      ],
+      "blockIds": [
+        "common-lf7-extension-plan"
+      ]
+    },
+    {
+      "questionId": "LJ-LF7-EXTENSION-Q06",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf7-extension-plan"
+      ],
+      "blockIds": [
+        "common-lf7-extension-plan"
+      ]
+    },
+    {
+      "questionId": "LJ-LF7-EXTENSION-E01",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf7-extension-requirements"
+      ],
+      "blockIds": [
+        "common-lf7-extension-requirements"
+      ]
+    },
+    {
+      "questionId": "LJ-LF7-EXTENSION-E02",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf7-extension-selection"
+      ],
+      "blockIds": [
+        "common-lf7-extension-selection"
+      ]
+    },
+    {
+      "questionId": "LJ-LF7-EXTENSION-E03",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf7-extension-selection"
+      ],
+      "blockIds": [
+        "common-lf7-extension-selection"
+      ]
+    },
+    {
+      "questionId": "LJ-LF7-EXTENSION-E04",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf7-extension-requirements",
+        "common-lf7-extension-selection"
+      ],
+      "blockIds": [
+        "common-lf7-extension-supply"
+      ]
+    },
+    {
+      "questionId": "LJ-LF7-EXTENSION-E05",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf7-extension-requirements"
+      ],
+      "blockIds": [
+        "common-lf7-extension-supply"
+      ]
+    },
+    {
+      "questionId": "LJ-LF7-EXTENSION-E06",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf7-extension-plan"
+      ],
+      "blockIds": [
+        "common-lf7-extension-plan"
+      ]
+    },
+    {
+      "questionId": "LJ-LF7-EXTENSION-E07",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf7-extension-plan"
+      ],
+      "blockIds": [
+        "common-lf7-extension-plan"
+      ]
+    },
+    {
+      "questionId": "LJ-LF7-EXTENSION-E08",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf7-extension-plan",
+        "common-lf7-extension-requirements"
+      ],
+      "blockIds": [
+        "common-lf7-extension-supply",
+        "common-lf7-extension-plan"
+      ]
+    }
+  ],
+  "interview": [
+    {
+      "id": "common-lf7-extension-talk-1",
+      "prompt": "Formuliere einen prüfbaren Auftrag für Luftpunkt mit Sensor-, Schnittstellen- und Versorgungsanforderungen.",
+      "objectiveIds": [
+        "common-lf7-extension-requirements"
+      ],
+      "blockIds": [
+        "common-lf7-extension-requirements",
+        "common-lf7-extension-supply"
+      ],
+      "keyPoints": [
+        "Bereich −20…80 °C, Schwelle 30 °C und Fehlerverhalten nennen.",
+        "UART/3,3 V und Celsiusformat mit dem Bestand abgleichen.",
+        "5 V, 0,7 A Modelllast und 1 A Lieferfähigkeit vergleichen."
+      ],
+      "acceptableAlternatives": [
+        "Eine fachlich gleichwertige Erklärung mit passenden Modellbefunden und nachvollziehbarer Begründung."
+      ],
+      "misconceptions": [
+        "Den unscharfen Wunsch bei Wärme einschalten als ausreichenden Auftrag behandeln."
+      ],
+      "sampleAnswer": "Das Modell übernimmt gültige Celsiuszahlen von −20 bis 80 bei intakter Verbindung. Unter 30 ist der Lüfter aus, ab 30 ein; Fehler führen zu fault. Sensor und Steuerung brauchen passenden UART-/3,3-V-Transport. Die ideale Last benötigt 0,7 A bei 5 V und liegt unter 1 A.",
+      "followUp": "Welche Annahmen begrenzen den Versorgungsnachweis?"
+    },
+    {
+      "id": "common-lf7-extension-talk-2",
+      "prompt": "Begründe anhand der fiktiven Unterlagen Sensor A mit Parser A. Welche Kriterien schließen B im unveränderten Plan aus?",
+      "objectiveIds": [
+        "common-lf7-extension-selection",
+        "common-lf7-extension-requirements"
+      ],
+      "blockIds": [
+        "common-lf7-extension-selection",
+        "common-lf7-extension-requirements"
+      ],
+      "keyPoints": [
+        "Transport und Pegel mit dem Bestand vergleichen.",
+        "ASCII-Celsiusformat, Laufzeit und Fehlerverhalten prüfen.",
+        "Versionshöhe ist kein Eignungsnachweis."
+      ],
+      "acceptableAlternatives": [
+        "Eine fachlich gleichwertige Erklärung mit passenden Modellbefunden und nachvollziehbarer Begründung."
+      ],
+      "misconceptions": [
+        "Ein Parser könne ein unpassendes elektrisches Protokoll ohne Anpassung ersetzen."
+      ],
+      "sampleAnswer": "Sensor A passt zu UART/3,3 V und zum Celsiusformat. Parser A versteht dieses Format in der Modelllaufzeit. B erwartet I²C beziehungsweise binäre Register und eine andere Laufzeit. Die Kombination B ist ohne nicht eingeplante Änderungen ungeeignet.",
+      "followUp": "Welche neue Prüfung wäre vor einer Anpassung für B nötig?"
+    },
+    {
+      "id": "common-lf7-extension-talk-3",
+      "prompt": "Beschreibe einen Ablaufplan mit Verantwortlichkeiten, Tests und Sicherheitsgrenze der lokalen Erweiterung.",
+      "objectiveIds": [
+        "common-lf7-extension-plan",
+        "common-lf7-extension-selection",
+        "common-lf7-extension-requirements"
+      ],
+      "blockIds": [
+        "common-lf7-extension-plan",
+        "common-lf7-extension-selection",
+        "common-lf7-extension-supply"
+      ],
+      "keyPoints": [
+        "Unterlagen, Freigabe und Ausgangsstand vor der Änderung klären.",
+        "Normal-, Grenz- und Fehlerfälle aus Anforderungen prüfen.",
+        "Versorgung, Ergebnisse und Grenzen dokumentieren; keine realen Arbeiten."
+      ],
+      "acceptableAlternatives": [
+        "Eine fachlich gleichwertige Erklärung mit passenden Modellbefunden und nachvollziehbarer Begründung."
+      ],
+      "misconceptions": [
+        "Einen erfolgreichen Programmlauf als Freigabe für echte Geräte behandeln."
+      ],
+      "sampleAnswer": "Nora klärt Anforderungen und Dokumente; die Betreuung gibt die Modelländerung frei. Nora hält den Ausgangsstand fest, ergänzt die Funktion und prüft vorher festgelegte Sollfälle. Danach dokumentiert sie Energieabgleich und Ergebnisse. Echter Einbau bräuchte befugte Verantwortung und eigene Prüfung.",
+      "followUp": "Was muss nach einer Änderung an schon geprüftem Code wiederholt werden?"
+    }
+  ],
+  "cards": [
+    {
+      "id": "common-lf7-extension-card-01",
+      "front": "Was macht einen Erweiterungswunsch prüfbar?",
+      "back": "Konkrete Eingänge, Einheiten, Bereiche, Schaltregel und Fehlerreaktion mit erwarteten Ergebnissen.",
+      "objectiveIds": [
+        "common-lf7-extension-requirements"
+      ],
+      "blockIds": [
+        "common-lf7-extension-requirements"
+      ]
+    },
+    {
+      "id": "common-lf7-extension-card-02",
+      "front": "Welche Versorgung ist im Modell geplant?",
+      "back": "5 V und maximal 1 A. Ideale Last: 0,7 A beziehungsweise 3,5 W; Reserve: 0,3 A.",
+      "objectiveIds": [
+        "common-lf7-extension-requirements"
+      ],
+      "blockIds": [
+        "common-lf7-extension-supply"
+      ]
+    },
+    {
+      "id": "common-lf7-extension-card-03",
+      "front": "Warum passt Sensor A zur Steuerung?",
+      "back": "Dokumentierter UART-Transport mit 3,3-V-Datenpegel und Celsiusformat stimmen mit dem Modellbestand überein.",
+      "objectiveIds": [
+        "common-lf7-extension-selection"
+      ],
+      "blockIds": [
+        "common-lf7-extension-selection"
+      ]
+    },
+    {
+      "id": "common-lf7-extension-card-04",
+      "front": "Welche Kriterien zählen bei einer Bibliothek?",
+      "back": "Geräte/Laufzeit, Format, Rückgabe, Fehlerbehandlung, Version, Abhängigkeiten und Nutzungserlaubnis; Versionshöhe allein reicht nicht.",
+      "objectiveIds": [
+        "common-lf7-extension-selection"
+      ],
+      "blockIds": [
+        "common-lf7-extension-selection"
+      ]
+    },
+    {
+      "id": "common-lf7-extension-card-05",
+      "front": "Welche Reihenfolge gehört in den Plan?",
+      "back": "Anforderungen/Unterlagen → Freigabe/Ausgangsstand → Konfiguration/Code → Soll-Ist-Tests → Übergabe.",
+      "objectiveIds": [
+        "common-lf7-extension-plan"
+      ],
+      "blockIds": [
+        "common-lf7-extension-plan"
+      ]
+    },
+    {
+      "id": "common-lf7-extension-card-06",
+      "front": "Wo liegt die Sicherheitsgrenze der Übung?",
+      "back": "Einbau ist eine Planungsposition. Bearbeitet wird die lokale Simulation; reale elektrische Arbeiten sind nicht enthalten.",
+      "objectiveIds": [
+        "common-lf7-extension-plan"
+      ],
+      "blockIds": [
+        "common-lf7-extension-plan"
+      ]
+    }
+  ],
+  "review": {
+    "status": "reviewed",
+    "checkedAt": "2026-11-16"
+  }
+}

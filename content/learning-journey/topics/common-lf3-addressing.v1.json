@@ -1,0 +1,514 @@
+{
+  "schemaVersion": 1,
+  "id": "common-lf3-addressing",
+  "version": "1.0.0",
+  "title": "IP-Adressen und Teilnetze",
+  "fieldId": "LF3",
+  "scope": "common",
+  "prerequisites": [
+    "common-lf3-protocols"
+  ],
+  "sourceIds": [
+    "lf3-rfc4632-cidr",
+    "lf3-rfc1122-addressing",
+    "lf3-rfc5737-documentation",
+    "lf3-rfc4291-addressing",
+    "lf3-rfc5952-text",
+    "lf3-rfc3849-documentation",
+    "lf3-rfc3596-dns"
+  ],
+  "sources": [
+    {
+      "id": "lf3-rfc4632-cidr",
+      "title": "IETF: RFC 4632 – Classless Inter-domain Routing (CIDR)",
+      "url": "https://www.rfc-editor.org/rfc/rfc4632.html",
+      "checkedAt": "2026-11-11",
+      "note": "Öffentliche HTML-Fassung zur Präfixnotation und Größe von IPv4-Adressblöcken geprüft. /24- und /26-Rechnungen sind eigene Lernbeispiele."
+    },
+    {
+      "id": "lf3-rfc1122-addressing",
+      "title": "IETF: RFC 1122 – Requirements for Internet Hosts, IPv4-Adressierung",
+      "url": "https://www.rfc-editor.org/rfc/rfc1122.html",
+      "checkedAt": "2026-11-11",
+      "note": "HTML-Abschnitte zu lokalen/entfernten Zielen, Subnetzmaske, Broadcast und Gateway-Auswahl geprüft. Der Lernfall verwendet ein einfaches direkt angeschlossenes IPv4-LAN."
+    },
+    {
+      "id": "lf3-rfc5737-documentation",
+      "title": "IETF: RFC 5737 – IPv4 Address Blocks Reserved for Documentation",
+      "url": "https://www.rfc-editor.org/rfc/rfc5737.html",
+      "checkedAt": "2026-11-11",
+      "note": "Öffentliche HTML-Fassung zum Dokumentationsbereich 192.0.2.0/24 geprüft. Beispiele sind keine Produktionsadressplanung."
+    },
+    {
+      "id": "lf3-rfc4291-addressing",
+      "title": "IETF: RFC 4291 – IP Version 6 Addressing Architecture",
+      "url": "https://www.rfc-editor.org/rfc/rfc4291.html",
+      "checkedAt": "2026-11-11",
+      "note": "Öffentliche HTML-Fassung zu 128-Bit-Adressen, Schreibweise, Präfix und fehlendem IPv6-Broadcast geprüft. Weiterführende Adressarten sind nicht Gegenstand des Lernfalls."
+    },
+    {
+      "id": "lf3-rfc5952-text",
+      "title": "IETF: RFC 5952 – A Recommendation for IPv6 Address Text Representation",
+      "url": "https://www.rfc-editor.org/rfc/rfc5952.html",
+      "checkedAt": "2026-11-11",
+      "note": "HTML-Empfehlungen für führende Nullen, einmalige Kompression der längsten Nullfolge und Kleinschreibung geprüft."
+    },
+    {
+      "id": "lf3-rfc3849-documentation",
+      "title": "IETF: RFC 3849 – IPv6 Address Prefix Reserved for Documentation",
+      "url": "https://www.rfc-editor.org/rfc/rfc3849.html",
+      "checkedAt": "2026-11-11",
+      "note": "HTML-Fassung zum IPv6-Dokumentationspräfix 2001:db8::/32 geprüft."
+    },
+    {
+      "id": "lf3-rfc3596-dns",
+      "title": "IETF: RFC 3596 – DNS Extensions to Support IPv6",
+      "url": "https://www.rfc-editor.org/rfc/rfc3596.html",
+      "checkedAt": "2026-11-11",
+      "note": "HTML-Fassung zu AAAA-Einträgen und Unabhängigkeit von DNS-Transport und abgefragtem Adresstyp geprüft. DNS ist kein exklusives Merkmal einer IP-Version."
+    }
+  ],
+  "objectives": [
+    {
+      "id": "common-lf3-addressing-ipv4",
+      "text": "Für ein einfaches IPv4-Netz mit vorgegebenem Präfix Netzzugehörigkeit, Hostbereich und Gateway prüfen."
+    },
+    {
+      "id": "common-lf3-addressing-ipv6",
+      "text": "Eine IPv6-Adresse lesen und grundlegende Unterschiede zur IPv4-Adressierung erläutern."
+    }
+  ],
+  "caseStudy": {
+    "title": "Knotenpunkt verbindet Radblick",
+    "text": "Knotenpunkt plant für Radblick ein einfaches Clientnetz. Mira prüft Adressen und Präfixe, Sam kontrolliert den Routereintrag und Eda erklärt eine IPv6-Schreibweise. Sämtliche Adressen stammen aus Dokumentationsbereichen und sind Unterrichtsbeispiele für einen fiktiven Plan, keine Aufforderung zur Konfiguration echter Geräte."
+  },
+  "blocks": [
+    {
+      "id": "common-lf3-addressing-ipv4",
+      "title": "1. IPv4-Adresse und Präfix zusammen lesen",
+      "objectiveIds": [
+        "common-lf3-addressing-ipv4"
+      ],
+      "sourceIds": [
+        "lf3-rfc4632-cidr",
+        "lf3-rfc1122-addressing",
+        "lf3-rfc5737-documentation"
+      ],
+      "paragraphs": [
+        "Eine IPv4-Adresse umfasst 32 bit. Ihre übliche Schreibweise teilt sie in vier durch Punkte getrennte Dezimalzahlen mit je 8 bit: Jede Zahl liegt zwischen 0 und 255. Die Adresse 192.0.2.20 allein sagt noch nicht, welche anderen Adressen zum selben Teilnetz gehören; dafür wird das Präfix benötigt.",
+        "192.0.2.20/24 bedeutet: Die ersten 24 bit bilden den Netzanteil, die übrigen 8 bit den Hostanteil. Die zugehörige Maske ist 255.255.255.0. In diesem /24 müssen die ersten drei Zahlen übereinstimmen. Das Netz heißt 192.0.2.0/24; 192.0.2.30 liegt darin, 198.51.100.30 nicht.",
+        "Im hier betrachteten gewöhnlichen IPv4-LAN hat der ganz leere Hostanteil die Netzadresse 192.0.2.0 und der mit Einsen gefüllte Hostanteil die Broadcastadresse 192.0.2.255. Der nutzbare Hostbereich reicht von 192.0.2.1 bis 192.0.2.254. Broadcast adressiert die Teilnehmer des betreffenden lokalen IP-Teilnetzes, nicht das gesamte Internet.",
+        "Hostbereich bedeutet noch nicht freie Adresse. Bereits belegte oder reservierte Adressen stehen einem neuen Client nicht zur Verfügung. In unserem Plan sind .1 für das Routerinterface, .10 für einen anderen Client und .53 für einen Dienst vergeben. .20 ist für Miras Client vorgesehen. Diese Kurzformen beziehen sich in diesem Absatz auf 192.0.2.x."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Übungsfall",
+        "text": "Mira prüft 192.0.2.20/24: Netz 192.0.2.0, gültiger Hostbereich .1 bis .254, .20 im Plan frei. 192.0.2.255 fällt trotz gleicher erster drei Zahlen als Clientadresse aus."
+      },
+      "misconception": {
+        "claim": "Gleiche erste drei Zahlen reichen bei jeder IPv4-Adresse aus, um dasselbe Teilnetz zu erkennen.",
+        "correction": "Das gilt im Beispiel wegen /24. Bei einem anderen Präfix können auch Teile der letzten Zahl zum Netzanteil gehören."
+      },
+      "takeaway": "Prüfe Adresse, Präfix, reservierte Rollen und Belegung zusammen."
+    },
+    {
+      "id": "common-lf3-addressing-subnet",
+      "title": "2. Ein /26-Teilnetz Schritt für Schritt bestimmen",
+      "objectiveIds": [
+        "common-lf3-addressing-ipv4"
+      ],
+      "sourceIds": [
+        "lf3-rfc4632-cidr",
+        "lf3-rfc1122-addressing",
+        "lf3-rfc5737-documentation"
+      ],
+      "paragraphs": [
+        "Ein längeres Präfix lässt weniger Hostbits übrig. Bei /26 gilt 32 − 26 = 6 Hostbits. Das ergibt 2 hoch 6 = 64 Adressen je Block. Die Maske lautet 255.255.255.192: In der letzten Zahl sind 192 = 128 + 64, also binär 11000000, die beiden ersten Bits Netzbits.",
+        "Für dieses /26-Beispiel teilen sich die letzten Zahlen in vier 64er-Blöcke: 0–63, 64–127, 128–191 und 192–255. Suche zuerst den Block der gegebenen Adresse. 192.0.2.70 gehört zum Block 64–127 und damit zum Netz 192.0.2.64/26.",
+        "Die erste Adresse dieses Blocks ist die Netzadresse .64, die letzte die Broadcastadresse .127. Als Hostadressen bleiben .65 bis .126, also 62 Adressen. .100 gehört zum selben /26, .130 zum nächsten Block. Der Rechenweg funktioniert hier, weil die Teilung innerhalb der letzten acht Bits liegt.",
+        "Die Regel 2 hoch Hostbits minus 2 beschreibt diese gewöhnlichen /24- und /26-LAN-Beispiele. Spezialfälle wie /31-Punkt-zu-Punkt-Verbindungen und /32-Einzeladressen werden damit nicht pauschal bewertet. Auch im passenden Bereich muss eine konkrete Adresse noch frei und laut Plan zulässig sein."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Übungsfall",
+        "text": "Sam prüft 192.0.2.100/26: 100 liegt zwischen 64 und 127, damit Netz .64, Broadcast .127, Hostbereich .65–.126. Die letzte Zahl ist keine eigenständige Netzkennung ohne Präfix."
+      },
+      "misconception": {
+        "claim": "192.0.2.70 und 192.0.2.130 liegen bei /26 im selben Teilnetz, weil drei Zahlen übereinstimmen.",
+        "correction": "70 gehört zum Block 64–127, 130 zum Block 128–191. Beide liegen mit /26 in unterschiedlichen Teilnetzen."
+      },
+      "takeaway": "Bestimme zuerst die Blockgröße, dann Netzadresse, Broadcast und Hostbereich."
+    },
+    {
+      "id": "common-lf3-addressing-gateway",
+      "title": "3. Das Gateway als Routerinterface prüfen",
+      "objectiveIds": [
+        "common-lf3-addressing-ipv4"
+      ],
+      "sourceIds": [
+        "lf3-rfc4632-cidr",
+        "lf3-rfc1122-addressing"
+      ],
+      "paragraphs": [
+        "Für ein Ziel im eigenen direkt angeschlossenen Teilnetz kann der Client im einfachen LAN direkt zustellen. Für ein entferntes Ziel braucht er einen passenden nächsten Router. Das Standardgateway wird verwendet, wenn keine spezifischere Route zum Ziel vorliegt. Es ist die IP-Adresse eines dafür eingerichteten Routerinterfaces, nicht der Name eines zusätzlichen Adressbereichs.",
+        "Im /24-Plan lautet das Routerinterface 192.0.2.1. Der Client 192.0.2.20/24 kann dieses Interface im eigenen Teilnetz erreichen. Ein Eintrag 198.51.100.1 wäre in diesem einfachen Plan außerhalb des lokalen Teilnetzes und daher nicht das vorgegebene passende Gateway.",
+        "Die Endzahl .1 ist keine feste Regel. Ein Routerinterface könnte in einem anderen freigegebenen /24-Plan etwa .254 verwenden. Im gesonderten /26-Beispiel ist 192.0.2.65 als Routerinterface festgelegt; der Client 192.0.2.70/26 verwendet dann .65. Eine beliebige andere Hostadresse wird nicht dadurch zum Router, dass sie im selben Netz liegt.",
+        "Prüfe in Reihenfolge: Gehört die Clientadresse zum vorgesehenen Netz? Ist sie eine zulässige freie Hostadresse? Passen Präfix und Netzplan zusammen? Ist das eingetragene Gateway das tatsächlich konfigurierte Routerinterface im lokalen Teilnetz? Diese Übung prüft einfache Netzkonfigurationen, nicht komplexe Sonderrouten."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Übungsfall",
+        "text": "Eda lehnt für .70/26 den Gatewayeintrag .1 ab: .1 liegt außerhalb des Blocks .64–.127. Laut /26-Plan ist .65 das Routerinterface und daher der passende Eintrag."
+      },
+      "misconception": {
+        "claim": "Das Standardgateway muss immer die erste Adresse mit der Endzahl .1 sein.",
+        "correction": "Maßgeblich sind das konfigurierte Routerinterface und der Netzplan. Bei unserem /26-Beispiel ist .65 vorgegeben."
+      },
+      "takeaway": "Eine passende Zahl im Hostbereich genügt nicht: Das Gateway muss wirklich als Routerinterface dienen."
+    },
+    {
+      "id": "common-lf3-addressing-ipv6",
+      "title": "4. IPv6 lesen, kürzen und von IPv4 abgrenzen",
+      "objectiveIds": [
+        "common-lf3-addressing-ipv6"
+      ],
+      "sourceIds": [
+        "lf3-rfc4291-addressing",
+        "lf3-rfc5952-text",
+        "lf3-rfc3849-documentation",
+        "lf3-rfc3596-dns"
+      ],
+      "paragraphs": [
+        "Eine IPv6-Adresse umfasst 128 bit. Voll ausgeschrieben besteht sie aus acht durch Doppelpunkte getrennten Gruppen mit je vier Hexadezimalstellen. Eine Hexadezimalstelle verwendet 0–9 oder a–f und steht für vier Bits; eine Gruppe umfasst somit 16 bit. 8 × 16 ergibt 128. Wir verwenden den Dokumentationsbereich 2001:db8::/32.",
+        "Zum Kürzen zuerst führende Nullen jeder Gruppe entfernen: 2001:0db8:0000:0000:0000:0000:0000:0020 wird zu 2001:db8:0:0:0:0:0:20. Danach darf eine zusammenhängende Folge von Nullgruppen einmal durch :: ersetzt werden: 2001:db8::20. Die fehlenden Gruppen werden beim Lesen bis auf acht ergänzt. Hier ersetzt :: fünf Nullgruppen; die Adresse bleibt 128 bit lang.",
+        "Für die empfohlene einheitliche Schreibweise werden Kleinbuchstaben verwendet und die längste Folge aus mindestens zwei Nullgruppen gekürzt; bei gleicher Länge die erste von links. :: darf in einer Adresse höchstens einmal vorkommen, sonst wäre die Zahl der Nullgruppen je Lücke mehrdeutig. Nullen am Ende einer Gruppe darfst du nicht streichen: 0020 wird 20, nicht 2.",
+        "Auch IPv6 verwendet Präfixe: Bei 2001:db8:2::20/64 gehören die ersten 64 bit zum angegebenen Präfix 2001:db8:2::/64. Die /64 bezieht sich auf Bits, nicht auf geschriebene Zeichen. Kürzung ändert weder Adresse noch Präfix. Die Hostbereichsrechnung mit IPv4-Broadcast darf nicht auf IPv6 übertragen werden.",
+        "IPv6 hat keine Broadcastadressen; für bestimmte Aufgaben wird Multicast an definierte Empfängergruppen verwendet. DNS kann sowohl zu IPv4 als auch zu IPv6 Adressen liefern: A-Einträge enthalten IPv4, AAAA-Einträge IPv6. Die IP-Version macht Namensauflösung nicht überflüssig und ist für sich keine Verschlüsselung oder Zugriffsberechtigung."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Übungsfall",
+        "text": "Mira expandiert 2001:db8::20 zurück zu acht Gruppen und zählt fünf ergänzte Nullgruppen. Sam prüft zusätzlich, dass 20 als Hexgruppe nicht auf 2 verkürzt werden darf."
+      },
+      "misconception": {
+        "claim": "Die gekürzte IPv6-Adresse hat weniger Bits und benötigt kein DNS mehr.",
+        "correction": "Die Schreibweise wird kürzer, die Adresse bleibt 128 bit lang. DNS kann Namen für beide IP-Versionen auflösen."
+      },
+      "takeaway": "Unterscheide die unveränderte Adresse von ihrer Textdarstellung und übertrage IPv4-Regeln nicht ungeprüft auf IPv6."
+    }
+  ],
+  "questionFile": "questions/common-lf3-addressing.v1.csv",
+  "quiz": {
+    "questionIds": [
+      "LJ-LF3-ADDRESSING-Q01",
+      "LJ-LF3-ADDRESSING-Q02",
+      "LJ-LF3-ADDRESSING-Q03",
+      "LJ-LF3-ADDRESSING-Q04",
+      "LJ-LF3-ADDRESSING-Q05",
+      "LJ-LF3-ADDRESSING-Q06"
+    ]
+  },
+  "exam": {
+    "questionIds": [
+      "LJ-LF3-ADDRESSING-E01",
+      "LJ-LF3-ADDRESSING-E02",
+      "LJ-LF3-ADDRESSING-E03",
+      "LJ-LF3-ADDRESSING-E04",
+      "LJ-LF3-ADDRESSING-E05",
+      "LJ-LF3-ADDRESSING-E06",
+      "LJ-LF3-ADDRESSING-E07",
+      "LJ-LF3-ADDRESSING-E08"
+    ],
+    "passPercent": 80,
+    "scoring": "all-or-nothing-per-question",
+    "timed": false
+  },
+  "questionLinks": [
+    {
+      "questionId": "LJ-LF3-ADDRESSING-Q01",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf3-addressing-ipv4"
+      ],
+      "blockIds": [
+        "common-lf3-addressing-ipv4"
+      ]
+    },
+    {
+      "questionId": "LJ-LF3-ADDRESSING-Q02",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf3-addressing-ipv4"
+      ],
+      "blockIds": [
+        "common-lf3-addressing-subnet"
+      ]
+    },
+    {
+      "questionId": "LJ-LF3-ADDRESSING-Q03",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf3-addressing-ipv4"
+      ],
+      "blockIds": [
+        "common-lf3-addressing-subnet",
+        "common-lf3-addressing-gateway"
+      ]
+    },
+    {
+      "questionId": "LJ-LF3-ADDRESSING-Q04",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf3-addressing-ipv6"
+      ],
+      "blockIds": [
+        "common-lf3-addressing-ipv6"
+      ]
+    },
+    {
+      "questionId": "LJ-LF3-ADDRESSING-Q05",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf3-addressing-ipv6"
+      ],
+      "blockIds": [
+        "common-lf3-addressing-ipv6"
+      ]
+    },
+    {
+      "questionId": "LJ-LF3-ADDRESSING-Q06",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf3-addressing-ipv6"
+      ],
+      "blockIds": [
+        "common-lf3-addressing-ipv6"
+      ]
+    },
+    {
+      "questionId": "LJ-LF3-ADDRESSING-E01",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf3-addressing-ipv4"
+      ],
+      "blockIds": [
+        "common-lf3-addressing-ipv4"
+      ]
+    },
+    {
+      "questionId": "LJ-LF3-ADDRESSING-E02",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf3-addressing-ipv4"
+      ],
+      "blockIds": [
+        "common-lf3-addressing-subnet"
+      ]
+    },
+    {
+      "questionId": "LJ-LF3-ADDRESSING-E03",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf3-addressing-ipv4"
+      ],
+      "blockIds": [
+        "common-lf3-addressing-ipv4",
+        "common-lf3-addressing-subnet"
+      ]
+    },
+    {
+      "questionId": "LJ-LF3-ADDRESSING-E04",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf3-addressing-ipv4"
+      ],
+      "blockIds": [
+        "common-lf3-addressing-gateway"
+      ]
+    },
+    {
+      "questionId": "LJ-LF3-ADDRESSING-E05",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf3-addressing-ipv6"
+      ],
+      "blockIds": [
+        "common-lf3-addressing-ipv6"
+      ]
+    },
+    {
+      "questionId": "LJ-LF3-ADDRESSING-E06",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf3-addressing-ipv6"
+      ],
+      "blockIds": [
+        "common-lf3-addressing-ipv6"
+      ]
+    },
+    {
+      "questionId": "LJ-LF3-ADDRESSING-E07",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf3-addressing-ipv6"
+      ],
+      "blockIds": [
+        "common-lf3-addressing-ipv6"
+      ]
+    },
+    {
+      "questionId": "LJ-LF3-ADDRESSING-E08",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf3-addressing-ipv6"
+      ],
+      "blockIds": [
+        "common-lf3-addressing-ipv6"
+      ]
+    }
+  ],
+  "interview": [
+    {
+      "id": "common-lf3-addressing-talk-ipv4",
+      "prompt": "Prüfe 192.0.2.100/26: Nenne Netz, Broadcast, Hostbereich und die noch offene Belegungsfrage.",
+      "objectiveIds": [
+        "common-lf3-addressing-ipv4"
+      ],
+      "blockIds": [
+        "common-lf3-addressing-ipv4",
+        "common-lf3-addressing-subnet"
+      ],
+      "keyPoints": [
+        "64 Adressen pro Block berechnen.",
+        "Netz .64, Broadcast .127 und Hosts .65–.126 nennen.",
+        "Gültigen Hostbereich von einer freien Adresse unterscheiden."
+      ],
+      "acceptableAlternatives": [
+        "Die Netzzugehörigkeit mit der Maske 255.255.255.192 herleiten."
+      ],
+      "misconceptions": [
+        "Die /24-Grenzen trotz /26 verwenden."
+      ],
+      "sampleAnswer": "Bei /26 bleiben sechs Hostbits und damit 64 Adressen pro Block. 100 liegt im Block 64–127. Das Netz ist 192.0.2.64/26, Broadcast .127 und Hostbereich .65 bis .126. .100 ist eine Hostadresse in diesem Bereich; ob sie frei ist, muss der Plan bestätigen.",
+      "followUp": "Warum gehört .130 nicht zu diesem Teilnetz?"
+    },
+    {
+      "id": "common-lf3-addressing-talk-ipv6",
+      "prompt": "Erkläre Sam die Adresse 2001:db8::20 und ihren Unterschied zur IPv4-Schreibweise.",
+      "objectiveIds": [
+        "common-lf3-addressing-ipv6"
+      ],
+      "blockIds": [
+        "common-lf3-addressing-ipv6"
+      ],
+      "keyPoints": [
+        "128 bit in acht 16-Bit-Hexgruppen nennen.",
+        ":: zu fünf Nullgruppen ergänzen und führende Nullen erklären.",
+        "Kein IPv6-Broadcast sowie DNS für beide Versionen nennen."
+      ],
+      "acceptableAlternatives": [
+        "Die ausgeschriebene Adresse vollständig notieren."
+      ],
+      "misconceptions": [
+        "Durch Kürzung eine Änderung des Adresswerts behaupten."
+      ],
+      "sampleAnswer": "IPv6 nutzt 128 bit. Ausgeschrieben lautet die Adresse 2001:0db8:0000:0000:0000:0000:0000:0020. :: ersetzt hier fünf Nullgruppen; der Wert bleibt gleich. Anders als IPv4 nutzt IPv6 keine Broadcastadressen. DNS kann Namen zu IPv4- und IPv6-Adressen auflösen.",
+      "followUp": "Warum darfst du aus 0020 zwar 20, aber nicht 2 machen?"
+    },
+    {
+      "id": "common-lf3-addressing-talk-plan",
+      "prompt": "Fasse zusammen, was du bei IPv4-Client, Gateway und einer daneben notierten IPv6-Adresse jeweils prüfst.",
+      "objectiveIds": [
+        "common-lf3-addressing-ipv4",
+        "common-lf3-addressing-ipv6"
+      ],
+      "blockIds": [
+        "common-lf3-addressing-ipv4",
+        "common-lf3-addressing-subnet",
+        "common-lf3-addressing-gateway",
+        "common-lf3-addressing-ipv6"
+      ],
+      "keyPoints": [
+        "IPv4-Adresse und Präfix zum Netzplan prüfen.",
+        "Freie Hostadresse und tatsächlich eingerichtetes Routerinterface prüfen.",
+        "IPv6-Schreibweise zu acht Gruppen zurückführen und Präfix in Bits lesen."
+      ],
+      "acceptableAlternatives": [
+        "Die Prüfung als kurze Liste mit einem /24- oder /26-Beispiel formulieren."
+      ],
+      "misconceptions": [
+        "Gateway .1 oder IPv4-Broadcastregeln als allgemeine IPv6-Regeln behandeln."
+      ],
+      "sampleAnswer": "Ich bestimme zuerst das IPv4-Netz aus Adresse und Präfix und prüfe Hostbereich sowie Belegung. Das Gateway muss im einfachen Plan das erreichbare Routerinterface sein, etwa .65 im /26-Beispiel. Bei IPv6 prüfe ich acht Hexgruppen nach dem Ergänzen von :: und lese das Präfix in Bits. Die Adresse bleibt 128 bit lang und hat keine Broadcastadresse.",
+      "followUp": "Welche Angabe im Plan verhindert, dass du eine fremde belegte Hostadresse übernimmst?"
+    }
+  ],
+  "cards": [
+    {
+      "id": "common-lf3-addressing-card-prefix",
+      "front": "Was bedeutet 192.0.2.20/24?",
+      "back": "Die ersten 24 der 32 IPv4-Bits bilden den Netzanteil. Das Netz ist 192.0.2.0/24, die Maske 255.255.255.0. Adresse und Präfix werden zusammen geprüft.",
+      "objectiveIds": [
+        "common-lf3-addressing-ipv4"
+      ],
+      "blockIds": [
+        "common-lf3-addressing-ipv4"
+      ]
+    },
+    {
+      "id": "common-lf3-addressing-card-subnet",
+      "front": "Wie lautet der Bereich von 192.0.2.64/26?",
+      "back": "64 Adressen von .64 bis .127: Netz .64, Broadcast .127, gewöhnlicher Hostbereich .65–.126. Belegte Adressen sind zusätzlich auszunehmen.",
+      "objectiveIds": [
+        "common-lf3-addressing-ipv4"
+      ],
+      "blockIds": [
+        "common-lf3-addressing-subnet"
+      ]
+    },
+    {
+      "id": "common-lf3-addressing-card-gateway",
+      "front": "Muss ein Standardgateway auf .1 enden?",
+      "back": "Nein. Es muss das passende konfigurierte Routerinterface sein. Im /26-Lernplan ist .65 vorgegeben; in einem anderen /24-Plan kann beispielsweise .254 verwendet werden.",
+      "objectiveIds": [
+        "common-lf3-addressing-ipv4"
+      ],
+      "blockIds": [
+        "common-lf3-addressing-gateway"
+      ]
+    },
+    {
+      "id": "common-lf3-addressing-card-ipv6-size",
+      "front": "Wie ist eine IPv6-Adresse aufgebaut?",
+      "back": "128 bit, vollständig acht Gruppen mit je 16 bit beziehungsweise vier Hexadezimalstellen. /64 bezeichnet die ersten 64 Bits des angegebenen Präfixes.",
+      "objectiveIds": [
+        "common-lf3-addressing-ipv6"
+      ],
+      "blockIds": [
+        "common-lf3-addressing-ipv6"
+      ]
+    },
+    {
+      "id": "common-lf3-addressing-card-compression",
+      "front": "Welche Regeln führen zu 2001:db8::20?",
+      "back": "Führende Nullen je Gruppe entfernen; die längste Nullgruppenfolge einmal mit :: kürzen. 0020 wird 20. Beim Ergänzen müssen acht Gruppen entstehen.",
+      "objectiveIds": [
+        "common-lf3-addressing-ipv6"
+      ],
+      "blockIds": [
+        "common-lf3-addressing-ipv6"
+      ]
+    },
+    {
+      "id": "common-lf3-addressing-card-ipv6-dns",
+      "front": "Was gilt bei IPv6 für Broadcast und DNS?",
+      "back": "IPv6 hat keinen Broadcast; bestimmte Aufgaben nutzen Multicast. DNS funktioniert mit beiden Versionen: A für IPv4-Adressen, AAAA für IPv6-Adressen.",
+      "objectiveIds": [
+        "common-lf3-addressing-ipv6"
+      ],
+      "blockIds": [
+        "common-lf3-addressing-ipv6"
+      ]
+    }
+  ],
+  "review": {
+    "status": "reviewed",
+    "checkedAt": "2026-11-11"
+  }
+}

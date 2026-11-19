@@ -1,0 +1,468 @@
+{
+  "schemaVersion": 1,
+  "version": "1.0.0",
+  "id": "fiae-lf11a-security",
+  "title": "Fehler und Sicherheitsrisiken behandeln",
+  "fieldId": "LF11a",
+  "scope": "specialization",
+  "prerequisites": [
+    "fiae-lf11a-data-access",
+    "common-lf9-security"
+  ],
+  "objectives": [
+    {
+      "id": "fiae-lf11a-security-validation",
+      "text": "Eingabeprüfung und parametrisierte Datenbankzugriffe in einer kleinen Anwendung anwenden."
+    },
+    {
+      "id": "fiae-lf11a-security-authorization",
+      "text": "Anmeldung und Berechtigungsprüfung unterscheiden und Zugriffskontrollen an der zuständigen Stelle einbauen."
+    },
+    {
+      "id": "fiae-lf11a-security-errors",
+      "text": "Fehler so behandeln und protokollieren, dass sie untersuchbar bleiben und keine unnötigen vertraulichen Daten offenlegen."
+    }
+  ],
+  "caseStudy": {
+    "title": "Wer darf welchen Werkstattauftrag lesen?",
+    "text": "Für die Übung arbeitet Team Blau am Auftrag 7, Team Grün am Auftrag 12. Die angemeldete Annahme darf die Aufträge ihres zugewiesenen Werkstattteams lesen. Zum Abschluss braucht sie eine zusätzliche Berechtigung. Die Aufträge, Rollen und Protokollkennungen sind erfunden."
+  },
+  "sources": [
+    {
+      "id": "lf8-rest",
+      "title": "OWASP: REST Security Cheat Sheet",
+      "url": "https://cheatsheetseries.owasp.org/cheatsheets/REST_Security_Cheat_Sheet.html",
+      "checkedAt": "2026-11-19",
+      "note": "Serverseitige Autorisierung, Eingabeprüfung und begrenzte Fehlermeldungen für fachliche Zugriffe geprüft."
+    },
+    {
+      "id": "lf11a-python-sqlite",
+      "title": "Python Software Foundation: sqlite3",
+      "url": "https://docs.python.org/3/library/sqlite3.html",
+      "note": "Die Beispiele nutzen die dokumentierte Parameterbindung und das Abholen einzelner Ergebniszeilen mit sqlite3.",
+      "checkedAt": "2026-11-19"
+    },
+    {
+      "id": "lf8-logging",
+      "title": "OWASP: Logging Cheat Sheet",
+      "url": "https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html",
+      "checkedAt": "2026-11-19",
+      "note": "Ereignisse zuordnen und vertrauliche Angaben aus Protokollen heraushalten. Der Belegschlüssel ist fiktiv."
+    }
+  ],
+  "sourceIds": [
+    "lf8-rest",
+    "lf11a-python-sqlite",
+    "lf8-logging"
+  ],
+  "blocks": [
+    {
+      "id": "fiae-lf11a-security-block-01",
+      "title": "1. Typ und Wertebereich prüfen, Werte getrennt übergeben",
+      "objectiveIds": [
+        "fiae-lf11a-security-validation"
+      ],
+      "sourceIds": [
+        "lf8-rest",
+        "lf11a-python-sqlite"
+      ],
+      "paragraphs": [
+        "Der Fachdienst akzeptiert im Beispiel echte ganze Zahlen von 1 bis 9999. Die API prüft Typ und Grenzen, bevor sie eine Nummer zur Suche weiterreicht. In Python erfasst type(number) is int genau ganze Zahlen dieses Typs. Der boolesche Wert True gilt damit nicht als Auftragsnummer.",
+        "Schreibe die SQL-Struktur fest und übergib Werte separat über den Treiber. Python sqlite3 verwendet zum Beispiel Fragezeichen als Platzhalter und ein Tupel mit den Werten. Die Eingabeprüfung setzt den Fachvertrag durch, die Parameterbindung hält Datenwerte von der Struktur des SQL-Befehls getrennt."
+      ],
+      "example": {
+        "title": "Ausschnitt für eine bereits geprüfte Teamzuordnung",
+        "text": "if type(number) is not int or not 1 <= number <= 9999:\n    raise ValueError(\"ungültige Nummer\")\nrow = db.execute(\"SELECT status FROM tickets WHERE id = ? AND team = ?\", (number, session_team)).fetchone()"
+      },
+      "misconception": {
+        "claim": "Die Werteprüfung allein erledigt auch die technische Parameterbindung.",
+        "correction": "Beide Schritte haben eigene Aufgaben. Eine zulässige Zahl wird weiterhin als Datenwert gebunden."
+      },
+      "takeaway": "Prüfe erlaubte Eingaben und verwende für die Abfrage feste Struktur mit gebundenen Werten."
+    },
+    {
+      "id": "fiae-lf11a-security-block-02",
+      "title": "2. Identität und erlaubte Handlung auseinanderhalten",
+      "objectiveIds": [
+        "fiae-lf11a-security-authorization"
+      ],
+      "sourceIds": [
+        "lf8-rest"
+      ],
+      "paragraphs": [
+        "Bei der Anmeldung wird die Identität festgestellt. Die Autorisierung klärt für einen konkreten Vorgang, welche Aktion und welcher Auftragsbestand dieser Identität erlaubt sind. Verwende die serverseitig geprüfte Sitzung als Quelle für Rolle und Werkstattzuordnung.",
+        "Prüfe auf dem Server, ob die Rolle lesen oder abschließen darf, und beschränke den Zugriff auf zugewiesene Aufträge. Die Oberfläche kann ungeeignete Schaltflächen ausblenden. Die Entscheidung über jede geschützte Operation trifft der zuständige Dienst. Fehlt die nötige Freigabe, führt er die Operation nicht aus."
+      ],
+      "example": {
+        "title": "Eine Entscheidungsmatrix",
+        "text": "Sitzung Team Blau, Recht Lesen → Status von 7 lesbar. Derselbe Zugang ohne Abschlussrecht → Abschluss von 7 abgelehnt. Für Auftrag 12 erteilt das Leserecht für Blau keine Freigabe."
+      },
+      "misconception": {
+        "claim": "Ein erfolgreich angemeldetes Teammitglied darf den gesamten Bestand bearbeiten.",
+        "correction": "Die Anmeldung stellt die Identität fest. Aktion und Auftragszuordnung werden zusätzlich geprüft."
+      },
+      "takeaway": "Autorisierung verbindet verifizierte Identität, konkrete Aktion und betroffene Ressource."
+    },
+    {
+      "id": "fiae-lf11a-security-block-03",
+      "title": "3. Meldung an die Annahme und Diagnosebeleg gestalten",
+      "objectiveIds": [
+        "fiae-lf11a-security-errors"
+      ],
+      "sourceIds": [
+        "lf8-rest",
+        "lf8-logging"
+      ],
+      "paragraphs": [
+        "Bei einer Lesestörung braucht die Annahme eine knappe Meldung und eine Referenz für Rückfragen. Die betreuende Rolle braucht Zeitpunkt, Komponentenname, Ereigniskategorie und dieselbe Referenz. Nutze dafür eine eigens vergebene Vorgangskennung, getrennt von Anmeldedaten.",
+        "Übernimm keine Passwörter, Sitzungskennzeichen, vollständigen Auftragstexte oder pauschalen Anfragedaten in die Protokolle. Lege den Zugriff auf Diagnoseprotokolle nach Aufgabe fest. Prüfe an einem fiktiven Eintrag, dass die Referenz auffindbar bleibt und die enthaltenen Angaben der Fehlersuche dienen."
+      ],
+      "example": {
+        "title": "Zwei Ansichten derselben Störung",
+        "text": "Meldung „Suche vorübergehend nicht verfügbar. Referenz V-41.“ Interner Eintrag „10:15 · Suchdienst · Speicher nicht erreichbar · V-41“. Die Bearbeitung kann Meldung und Ereignis über V-41 zuordnen."
+      },
+      "misconception": {
+        "claim": "Zur Zuordnung einer Störung braucht die Werkstatt ein Sitzungskennzeichen im Protokoll.",
+        "correction": "Eine getrennte, nicht zur Anmeldung nutzbare Ereignisreferenz genügt für diesen Zweck."
+      },
+      "takeaway": "Gib Nutzenden einen nächsten Schritt und berechtigten Betreuenden einen sparsamen Diagnosebeleg."
+    },
+    {
+      "id": "fiae-lf11a-security-block-04",
+      "title": "4. Ablehnung, Nichttreffer und Störung passend behandeln",
+      "objectiveIds": [
+        "fiae-lf11a-security-authorization",
+        "fiae-lf11a-security-errors"
+      ],
+      "sourceIds": [
+        "lf8-rest",
+        "lf8-logging"
+      ],
+      "paragraphs": [
+        "Lege vorab fest, was die Oberfläche verraten darf. Im Lernfall antwortet der Leseweg bei einer freien Nummer und bei einem Auftrag außerhalb des freigegebenen Teams gleich mit „kein zugänglicher Auftrag“. Die Anwendung gibt dabei keinen fremden Status aus. Ein technischer Ausfall erhält eine eigene Meldung.",
+        "Ein verweigerter Abschluss führt zu keiner Statusänderung und keinem Verlaufseintrag. Ein interner, zugriffsbeschränkter Beleg darf die Ereigniskategorie nennen. Vergleiche bei einer Funktionsprüfung mit synthetischen Rollen sowohl die angezeigte Rückmeldung als auch den resultierenden Datenstand."
+      ],
+      "example": {
+        "title": "Abnahme für die Störung",
+        "text": "Eine zulässige Anfrage bei gestörtem Speicher hat ein unbekanntes Fachergebnis. Die Oberfläche meldet die vorübergehende Störung mit Referenz, intern wird die Kategorie mit Zeitpunkt erfasst."
+      },
+      "misconception": {
+        "claim": "Wenn der Speicher ausfällt, kann die Suche beruhigt „kein zugänglicher Auftrag“ melden.",
+        "correction": "Das Fachergebnis steht bei einer technischen Störung nicht fest. Der Hinweis muss eine erneute Anfrage ermöglichen."
+      },
+      "takeaway": "Verwende gleiche öffentliche Ausgaben für geschützte Existenzinformationen und eigene Ausgaben für technische Störungen."
+    }
+  ],
+  "questionFile": "questions/fiae-lf11a-security.v1.csv",
+  "quiz": {
+    "questionIds": [
+      "LJ-LF11A-SECURITY-Q01",
+      "LJ-LF11A-SECURITY-Q02",
+      "LJ-LF11A-SECURITY-Q03",
+      "LJ-LF11A-SECURITY-Q04",
+      "LJ-LF11A-SECURITY-Q05",
+      "LJ-LF11A-SECURITY-Q06"
+    ]
+  },
+  "exam": {
+    "questionIds": [
+      "LJ-LF11A-SECURITY-E01",
+      "LJ-LF11A-SECURITY-E02",
+      "LJ-LF11A-SECURITY-E03",
+      "LJ-LF11A-SECURITY-E04",
+      "LJ-LF11A-SECURITY-E05",
+      "LJ-LF11A-SECURITY-E06",
+      "LJ-LF11A-SECURITY-E07",
+      "LJ-LF11A-SECURITY-E08"
+    ],
+    "passPercent": 80,
+    "scoring": "all-or-nothing-per-question",
+    "timed": false
+  },
+  "questionLinks": [
+    {
+      "questionId": "LJ-LF11A-SECURITY-Q01",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf11a-security-validation"
+      ],
+      "blockIds": [
+        "fiae-lf11a-security-block-01"
+      ]
+    },
+    {
+      "questionId": "LJ-LF11A-SECURITY-Q02",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf11a-security-validation"
+      ],
+      "blockIds": [
+        "fiae-lf11a-security-block-01"
+      ]
+    },
+    {
+      "questionId": "LJ-LF11A-SECURITY-Q03",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf11a-security-authorization"
+      ],
+      "blockIds": [
+        "fiae-lf11a-security-block-02"
+      ]
+    },
+    {
+      "questionId": "LJ-LF11A-SECURITY-Q04",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf11a-security-authorization"
+      ],
+      "blockIds": [
+        "fiae-lf11a-security-block-02"
+      ]
+    },
+    {
+      "questionId": "LJ-LF11A-SECURITY-Q05",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf11a-security-errors"
+      ],
+      "blockIds": [
+        "fiae-lf11a-security-block-03"
+      ]
+    },
+    {
+      "questionId": "LJ-LF11A-SECURITY-Q06",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf11a-security-errors"
+      ],
+      "blockIds": [
+        "fiae-lf11a-security-block-04"
+      ]
+    },
+    {
+      "questionId": "LJ-LF11A-SECURITY-E01",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf11a-security-validation"
+      ],
+      "blockIds": [
+        "fiae-lf11a-security-block-01"
+      ]
+    },
+    {
+      "questionId": "LJ-LF11A-SECURITY-E02",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf11a-security-authorization"
+      ],
+      "blockIds": [
+        "fiae-lf11a-security-block-02"
+      ]
+    },
+    {
+      "questionId": "LJ-LF11A-SECURITY-E03",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf11a-security-errors"
+      ],
+      "blockIds": [
+        "fiae-lf11a-security-block-03"
+      ]
+    },
+    {
+      "questionId": "LJ-LF11A-SECURITY-E04",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf11a-security-authorization"
+      ],
+      "blockIds": [
+        "fiae-lf11a-security-block-04"
+      ]
+    },
+    {
+      "questionId": "LJ-LF11A-SECURITY-E05",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf11a-security-validation"
+      ],
+      "blockIds": [
+        "fiae-lf11a-security-block-01"
+      ]
+    },
+    {
+      "questionId": "LJ-LF11A-SECURITY-E06",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf11a-security-authorization"
+      ],
+      "blockIds": [
+        "fiae-lf11a-security-block-02"
+      ]
+    },
+    {
+      "questionId": "LJ-LF11A-SECURITY-E07",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf11a-security-errors"
+      ],
+      "blockIds": [
+        "fiae-lf11a-security-block-03"
+      ]
+    },
+    {
+      "questionId": "LJ-LF11A-SECURITY-E08",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf11a-security-authorization",
+        "fiae-lf11a-security-errors"
+      ],
+      "blockIds": [
+        "fiae-lf11a-security-block-04"
+      ]
+    }
+  ],
+  "interview": [
+    {
+      "id": "fiae-lf11a-security-talk-01",
+      "prompt": "Erkläre die zwei getrennten Prüfungen für die Eingabe 7 vor und bei der Abfrage.",
+      "objectiveIds": [
+        "fiae-lf11a-security-validation"
+      ],
+      "blockIds": [
+        "fiae-lf11a-security-block-01"
+      ],
+      "keyPoints": [
+        "Typ und Bereich im Dienst prüfen.",
+        "Wert und Team über Platzhalter übergeben."
+      ],
+      "acceptableAlternatives": [
+        "Benannte Parameter statt Fragezeichen sind bei passender Treiberunterstützung gleichwertig."
+      ],
+      "misconceptions": [
+        "Eine fachlich gültige Zahl mache Parameterbindung entbehrlich."
+      ],
+      "sampleAnswer": "Ich akzeptiere 7 als echte Ganzzahl im festgelegten Bereich. Für die Abfrage lasse ich die SQL-Struktur fest und binde 7 sowie die geprüfte Teamzuordnung separat.",
+      "followUp": "Wie behandelt der Dienst den booleschen Wert True?"
+    },
+    {
+      "id": "fiae-lf11a-security-talk-02",
+      "prompt": "Leite für die Annahme von Team Blau eine Lese- und eine Abschlussentscheidung her.",
+      "objectiveIds": [
+        "fiae-lf11a-security-authorization"
+      ],
+      "blockIds": [
+        "fiae-lf11a-security-block-02",
+        "fiae-lf11a-security-block-04"
+      ],
+      "keyPoints": [
+        "Aktion und Auftrag der Sitzung zuordnen.",
+        "Fehlendes Abschlussrecht vor der Änderung beachten."
+      ],
+      "acceptableAlternatives": [
+        "Eine kleine Matrix aus Rolle, Ressource, Aktion und erwarteter Entscheidung ist möglich."
+      ],
+      "misconceptions": [
+        "Ein erfolgreiches Login erteile automatisch Schreibrechte."
+      ],
+      "sampleAnswer": "Die geprüfte Sitzung von Blau darf den eigenen Auftrag 7 lesen. Abschlussrecht fehlt. Daher bleibt der Auftrag beim versuchten Abschluss samt Verlauf unverändert.",
+      "followUp": "Was ändert sich beim Lesen des Auftrags 12 von Team Grün?"
+    },
+    {
+      "id": "fiae-lf11a-security-talk-03",
+      "prompt": "Eine Kollegin meldet „Suche nicht verfügbar“ mit V-41. Wie untersuchst du das Ereignis datensparsam?",
+      "objectiveIds": [
+        "fiae-lf11a-security-errors"
+      ],
+      "blockIds": [
+        "fiae-lf11a-security-block-03",
+        "fiae-lf11a-security-block-04"
+      ],
+      "keyPoints": [
+        "Eintrag über V-41 und Zeitpunkt suchen.",
+        "Kategorie und Komponente auswerten.",
+        "Vertrauliche Daten aus dem Beleg halten."
+      ],
+      "acceptableAlternatives": [
+        "Ein strukturierter Eintrag mit getrennten Feldern kann die Textzeile ersetzen."
+      ],
+      "misconceptions": [
+        "Ein vollständiger Auftragstext sei zur Zuordnung erforderlich."
+      ],
+      "sampleAnswer": "Als zuständige Betreuung suche ich V-41. Zeitpunkt und Kategorie „Speicher nicht erreichbar“ weisen auf den Suchdienst und die Datenanbindung. Für diese Zuordnung brauche ich weder Passwort noch Auftragstext.",
+      "followUp": "Warum führt diese Störung nicht zur Aussage „Auftrag fehlt“?"
+    }
+  ],
+  "cards": [
+    {
+      "id": "fiae-lf11a-security-card-01",
+      "front": "Woran unterscheidet sich Fachvalidierung von Parameterbindung?",
+      "back": "Die Validierung prüft den fachlich zulässigen Wert. Der Treiber bindet ihn separat in eine feste Anweisungsstruktur ein.",
+      "objectiveIds": [
+        "fiae-lf11a-security-validation"
+      ],
+      "blockIds": [
+        "fiae-lf11a-security-block-01"
+      ]
+    },
+    {
+      "id": "fiae-lf11a-security-card-02",
+      "front": "Welche Werte sind an den Grenzen zulässig?",
+      "back": "1 und 9999 sind enthalten. 0 und 10000 liegen außerhalb. Der Dienst erwartet echte ganze Zahlen.",
+      "objectiveIds": [
+        "fiae-lf11a-security-validation"
+      ],
+      "blockIds": [
+        "fiae-lf11a-security-block-01"
+      ]
+    },
+    {
+      "id": "fiae-lf11a-security-card-03",
+      "front": "Was klärt die Anmeldung?",
+      "back": "Wer handelt. Ob diese Identität die gewünschte Aktion am konkreten Auftrag ausführen darf, klärt die Autorisierung.",
+      "objectiveIds": [
+        "fiae-lf11a-security-authorization"
+      ],
+      "blockIds": [
+        "fiae-lf11a-security-block-02"
+      ]
+    },
+    {
+      "id": "fiae-lf11a-security-card-04",
+      "front": "Woraus leitet der Dienst die Werkstattzuordnung ab?",
+      "back": "Aus einer geprüften serverseitigen Sitzung oder einer gleichwertig vertrauenswürdigen serverseitigen Quelle.",
+      "objectiveIds": [
+        "fiae-lf11a-security-authorization"
+      ],
+      "blockIds": [
+        "fiae-lf11a-security-block-02"
+      ]
+    },
+    {
+      "id": "fiae-lf11a-security-card-05",
+      "front": "Welche vier Angaben helfen im Modell bei einer Störung?",
+      "back": "Ereignisreferenz, Zeitpunkt, Komponente und Fehlerkategorie.",
+      "objectiveIds": [
+        "fiae-lf11a-security-errors"
+      ],
+      "blockIds": [
+        "fiae-lf11a-security-block-03"
+      ]
+    },
+    {
+      "id": "fiae-lf11a-security-card-06",
+      "front": "Wie unterscheidet sich ein technischer Ausfall von einem regulären Nichttreffer?",
+      "back": "Ein Ausfall lässt das Fachergebnis offen. Eine funktionierende Suche kann dagegen zuverlässig „kein zugänglicher Auftrag“ melden.",
+      "objectiveIds": [
+        "fiae-lf11a-security-errors"
+      ],
+      "blockIds": [
+        "fiae-lf11a-security-block-04"
+      ]
+    }
+  ],
+  "review": {
+    "status": "reviewed",
+    "checkedAt": "2026-11-19"
+  }
+}

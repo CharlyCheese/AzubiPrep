@@ -2,6 +2,15 @@ const { contextBridge, ipcRenderer } = require('electron');
 
 contextBridge.exposeInMainWorld('azubiDesktop', Object.freeze({
   version: 1,
+  journey: Object.freeze({
+    load: (topicId = 'common-lf1-role') => ipcRenderer.invoke('journey:load', topicId),
+    save: (value) => {
+      const own = key => value != null && Object.hasOwn(value, key);
+      const payload = { raw: own('raw') ? value.raw : undefined, expectedRaw: own('expectedRaw') ? value.expectedRaw : undefined };
+      if (value != null && typeof value === 'object' && 'topicId' in value) payload.topicId = own('topicId') ? value.topicId : undefined;
+      return ipcRenderer.invoke('journey:save', payload);
+    },
+  }),
   jsPilot: Object.freeze({
     catalog: () => ipcRenderer.invoke('js-pilot:catalog'),
     start: id => ipcRenderer.invoke('js-pilot:start', id),

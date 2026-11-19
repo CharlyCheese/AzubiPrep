@@ -19,6 +19,9 @@ async function request(endpoint, { body, signal, method, pdf } = {}) {
   return value;
 }
 export const ai = {
+  journeyStart: (body, signal) => request('journey/start', { body, signal }),
+  journeyTurn: (body, signal) => request('journey/turn', { body, signal }),
+  journeyEnd: sessionId => request('journey/end', { body: { sessionId } }),
   status: (signal, provider = 'qwen') => request(provider === 'qwen' ? 'status' : `status?provider=${encodeURIComponent(provider)}`, { signal }), help: (body, signal) => request('help', { body, signal }),
   chatgptStatus: signal => request('chatgpt/status', { signal }),
   chatgptSignin: accountId => request('chatgpt/signin', { body: { ...(accountId ? { accountId } : {}) } }),

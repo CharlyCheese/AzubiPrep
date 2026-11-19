@@ -36,15 +36,14 @@ bei der Vorbereitung auf die IHK-Abschlussprüfung: **7.000 Prüfungsfragen** in
 **26 Modulen**, aufbereitet als interaktives Quiz, Karteikarten-Training und
 zeitlimitierte Prüfungssimulation mit automatischer Auswertung. Lernfelder
 gliedern den Einstieg. Theorie & Glossar helfen beim Verstehen vor dem Quiz;
-die Frontend-Werkstatt bietet im Quellstand **167 eingebundene Lektionen in Kapitel 1–31**, einschließlich lokaler DOM-/React-Übungen, TypeScript-Prüfung und externer Werkzeugvorlage. Ein eigener Quellcode-Debugger bietet echte Haltepunkte und eine begrenzte HTML-/CSS-Klickvorschau.
+die Frontend-Werkstatt bietet **167 eingebundene Lektionen in Kapitel 1–31**, einschließlich lokaler DOM-/React-Übungen, TypeScript-Prüfung und externer Werkzeugvorlage. Der eigene Quellcode-Debugger verbindet echte Haltepunkte mit HTML/CSS, Formularen, asynchronen JavaScript-Abläufen sowie TypeScript und React.
 
-**Quellstand und fertige Pakete:** Desktop **0.1.4** enthält 7.000 Fragen,
-Theorie & Glossar, die freiwillige KI-Auswahl, lokale PDF-Wissenssuche und den
-Werkstattstand mit 82 Übungen/85 Inhaltslektionen. Die technische Einbindung von Kapitel 18–31 und der eigene Quellcode-Debugger
-wurden danach im Quellstand ergänzt und sind noch nicht neu als Installer gebaut.
-Die älteren Webpakete **0.1.2** enthalten diese späteren
-Erweiterungen noch nicht. Modelle, eigene Unterlagen und angemeldete Konten
-werden nicht mitgeliefert. Die Screenshots zeigen ausgewählte App-Ansichten.
+**Aktuelle Windows-Pakete: 0.1.5** für Desktop und lokale Webversion. Beide
+enthalten 7.000 Fragen, Theorie & Glossar, die freiwillige KI-Auswahl, lokale
+PDF-Wissenssuche, alle eingebundenen Kurskapitel und den erweiterten Debugger.
+Modelle, eigene Unterlagen und angemeldete Konten werden nicht mitgeliefert.
+Jeder Anwender richtet seine eigene freiwillige KI-Verbindung ein.
+Die Screenshots zeigen ausgewählte App-Ansichten.
 
 Bewusste Architektur-Entscheidung für den MVP: **kein erzwungener
 Datenbank-Server, kein Pflicht-Login, kein Docker.** Das Backend ist im
@@ -122,7 +121,33 @@ Unterlagen, persönlichen Lerndaten oder Modellantworten sind abgebildet.
 - Lernfortschritt und Erfolgsquote je Modul und Fragetyp
 - Prüfungsverlauf mit Frage-für-Frage-Review (eigene Antwort vs. richtige Antwort)
 - Lernkalender mit Lernserie, Wiederholungsplan und eigenen Lerninhalten
-- Lernreise als Stationenweg (gemeinsame Module zuerst, danach die eigene Fachrichtung)
+- Lernreise als Stationenweg: LF1 → Wirtschafts- und Sozialkunde → Projektmanagement → LF2 und weitere Lernfelder
+- Die geführte FIAE-Lernreise umfasst alle 94 Themen aus LF1, WISO, Projektmanagement, LF2 bis LF9 und LF10a bis LF12a mit passender
+  Theorie, Quiz, Selbstreflexion oder optionalem KI-Gespräch, Karten und Mini-Tests;
+  eigener LF1-Präsentationsaufgabe, Rückblicken und lokal gespeichertem Fortschritt.
+  Aufklappbare Etappen und drei eingebaute Rechentabellen für Projektkosten,
+  Verkaufspreis/Gewinn/Marge und Wirtschaftlichkeit – mit eigenen Zahlen,
+  Zellformeln, Rechenhilfe und Sicherung. Excel ist dafür nicht nötig.
+  LF2 führt vom Kundenbedarf über Ausstattung und Beschaffung bis zur Übergabe.
+  Eine lokale Modellübung lässt einen Büroarbeitsplatz zusammenstellen, prüfen
+  und dokumentieren; sie verändert keine Einstellungen am echten PC.
+  LF3 ergänzt Netzwerkwege, Protokolle, IP-Adressierung, DHCP/DNS, sicheren Zugang
+  und ein lokales Diagnosemodell mit drei korrigierbaren Störungen.
+  LF4 ergänzt eine begründete Schutzbedarfsanalyse, LF5 eine lokale Bestandsverwaltung
+  mit SQL-Baukasten und eigener geprüfter JavaScript-Funktion, LF6 einen durchgängigen
+  Servicefall. LF7 ergänzt eine eigene Sensorsteuerung, LF8 eine Datenaufbereitung
+  mit geprüftem Empfängerbestand und LF9 ein Netz-/Dienstmodell mit Fehlerbehebung.
+  In der FIAE-Spezialisierung begleitet ein Reparaturauftrag drei Praxisprojekte.
+  Du entwirfst die Oberfläche in LF10a, implementierst und testest die Ticketlogik
+  in LF11a und bereitest in LF12a Abnahme, Übergabe und Projektauswertung vor.
+  Die Praxisaufträge bearbeitest du mit eigenen Werkzeugen und prüfst sie anhand
+  einer Checkliste. Die Lernreise hat 1.316 eigene Fragen. Nach dem letzten
+  bestandenen Thema kannst du deine Mini-Test-Ergebnisse für alle 248 Lernziele ansehen.
+  [LF7–LF9 und Lernlabore](docs/72-Lernreise-LF7-LF9.md) ·
+  [LF4–LF6 und Praxis](docs/71-Lernreise-LF4-LF6.md) ·
+  [LF3 und Netzwerklabor](docs/70-Lernreise-LF3.md) ·
+  [LF2, Einrichtungsübung und Prüfstand](docs/69-Lernreise-LF2.md) ·
+  [Projektmanagement, Kalkulation und Prüfstand](docs/68-Lernreise-Projektmanagement-Kalkulation.md)
 - XP-System, Levels, Missionen und Abzeichen
 - Lernnotizen, lokal gespeichert und als `.txt` export-/importierbar
 
@@ -171,13 +196,20 @@ Verlassen wird die Ausführung beendet, beim Zurückkehren startet kein Code aut
 - **Eigene JavaScript-Datei:** Variablen, Bedingungen, Schleifen, Funktionen,
   Arrays/Objekte, ausgewählte Arraymethoden, synchrone Callbacks/Closures sowie
   `try`/`catch`/`finally` und eigene Fehler schrittweise untersuchen.
-- **Mehrere Dateien / Module:** lokale JS-Projekte mit Unterordnern und relativen
-  Imports, Sammelimports und Weiterexporten; dateigenaue Haltepunkte und Frames.
-- **HTML und Klickereignisse:** erlaubte Elemente auswählen, Texte/IDs/Klassen
-  ändern und synchrone Klickhandler mit echten Pausen verfolgen. Eine optionale
-  CSS-Quelle gestaltet ausschließlich den gesonderten Vorschaurahmen.
+- **Mehrere Dateien / Module:** lokale JS-/TS-Projekte mit Unterordnern und
+  relativen Imports, Sammelimports und Weiterexporten; dateigenaue Haltepunkte.
+- **HTML und Ereignisse:** Texte/Klassen ändern, Elemente erzeugen/entfernen,
+  Eingabe-/Formularhandler verfolgen und mit CSS gestalten. Eingaben werden
+  bewusst übernommen, statt bei jedem physischen Tastendruck auszuführen.
+- **Asynchrone Abläufe:** setTimeout/clearTimeout, Promises, async/await,
+  kontrolliertes Datenladen, Abbruchsignale und Schutz vor veralteten Antworten.
+  fetch verwendet ausschließlich vorbereitete lokale Übungsantworten.
+- **TypeScript:** strenge lokale Prüfung aller TS-/TSX-Dateien, Haltepunkte im
+  Originalcode; ungetypte JS-/JSX-Dateien werden selbst nicht streng typgeprüft.
+- **React-Komponenten:** JSX/TSX, Props, useState, useEffect/Cleanup und
+  kontrollierte Ereignisse mit echtem ReactDOM innerhalb der begrenzten Laufzeit.
 
-**Erster CSS-Versuch:** Debugmodus „HTML und Klickereignisse“ wählen,
+**Erster CSS-Versuch:** Debugmodus „HTML und Ereignisse“ wählen,
 „CSS bearbeiten und einlesen · styles.css“ aufklappen und nach Bestätigung
 „CSS-Beispiel laden“. „Debuggen starten“ hält zunächst vor der ersten Anweisung;
 mit „Weiter / bis zum nächsten Haltepunkt“ die Listener einrichten. Danach
@@ -192,20 +224,28 @@ läuft in einer begrenzten QuickJS-Laufzeit; der skriptlose CSS-Rahmen erhält n
 geprüfte Darstellungsdaten. Styles können die App nicht überdecken, externe
 CSS-Ressourcen und Imports sind gesperrt.
 
-Der freie Debugger hat einen ausdrücklich begrenzten Sprach-/DOM-Umfang.
-Weitere Ereignisse, Formulare, zusätzliche DOM-/CSS-APIs, Übungsspeicher,
-asynchrone Abläufe und TypeScript-/React-Debugging folgen in eigenen Stufen.
-Die Kursprüfungen für diese Themen sind bereits separat eingebunden.
+Der Debugger bietet einen ausdrücklich begrenzten Lernumfang: keine freien
+Browser-/Datei-/Netzwerkrechte, keine vollständige Objektinspektion oder IDE.
+React-Refs/Router, asynchrone React-Handler, JSX-Spreads und freie styles sind
+beispielsweise nicht freigegeben; TypeScript-Klassen/Enums benötigen noch eine
+andere Laufzeitumformung. Die Kursprüfungen laufen weiterhin separat.
 
-**Geprüfter Stand:** 440 Browser-/Windows-Electronfälle ohne Wiederholung
-erfolgreich, anschließend nach Bereinigung der CSS-Beispieldaten alle zehn
-CSS-Fälle erneut bestanden. Sieben agentseitige CSS-Bediengruppen und Desktop-/
-Mobilbilder sowie ein unabhängiger Review sind abgeschlossen. Diese Nachweise
-betreffen den Quellstand, nicht einen neu gebauten Installer.
+**Zum Ausprobieren:** Im Modus „HTML und Ereignisse“ das
+„JavaScript-Gesamtprojekt laden“, oder „TypeScript-Beispiel laden“ bzw.
+„React-Beispiel laden“ wählen. Der erste Halt ist beabsichtigt; mit „Weiter“
+fortsetzen. Bei Ereignissen und asynchronen Fortsetzungen hält der Debugger erneut.
 
+Technische Gesamtprüfung und Paketnachweise:
+[Abschlussstand](docs/60-Debugger-Abschluss.md).
 Bedienung und Grenzen: [Debugger](docs/39-Debugger-Technikpilot.md),
-[Module](docs/44-Debugger-Module.md), [Modulausbau](docs/45-Debugger-Modulausbau.md),
-[DOM und Klicks](docs/46-Debugger-DOM-Klicks.md), [CSS](docs/47-Debugger-CSS.md).
+[Module](docs/44-Debugger-Module.md), [CSS](docs/47-Debugger-CSS.md),
+[Formulare](docs/48-Debugger-Formulare.md), [Elemente](docs/49-Debugger-Elemente.md),
+[Übungsspeicher](docs/50-Debugger-Uebungsspeicher.md),
+[JSON](docs/51-Debugger-JSON.md), [Timer](docs/52-Debugger-Timer.md),
+[Promises](docs/53-Debugger-Promises.md), [Async/await](docs/54-Debugger-Async-Await.md),
+[Datenladen](docs/55-Debugger-Datenladen.md), [Abbruch](docs/56-Debugger-Abbruch.md),
+[Gesamtprojekt](docs/57-Debugger-JavaScript-Abnahme.md),
+[TypeScript](docs/58-Debugger-TypeScript.md), [React](docs/59-Debugger-React.md).
 
 ## Lokale Lernbegleitung und eigene Unterlagen
 
@@ -275,15 +315,15 @@ voraus; das eigenständige Paket nutzt den mitgelieferten CSV-Katalog.
 Paket für die Weitergabe bauen (nur auf dem Entwicklungsrechner):
 `cd desktop` und `npm run dist:web`. Die fertigen EXE-Dateien liegen unter
 `Installer-Web/`. Entwickler-Zugangsdaten werden nicht mitgeliefert.
-Für Lernende genügt die Weitergabe von `AzubiPrep-Web-0.1.2-portabel.exe`;
+Für Lernende genügt die Weitergabe von `AzubiPrep-Web-0.1.5-portabel.exe`;
 die Projektordner müssen nicht mitkopiert werden. Das Entpacken beim Start
-kann einen Moment dauern. Alternativ richtet `AzubiPrep-Web-Setup-0.1.2.exe`
+kann einen Moment dauern. Alternativ richtet `AzubiPrep-Web-Setup-0.1.5.exe`
 die App im Benutzerkonto ein. Die Pakete sind derzeit unsigniert;
 Windows kann deshalb beim Öffnen eine Rückfrage anzeigen.
 
-Diese vorhandenen Webpakete 0.1.2 enthalten die später ergänzten Qwen-/RAG-/
-Theoriefunktionen noch nicht. Für den aktuellen Quellstand die folgende
-Startroutine nutzen oder ein neues Paket aus dem Projekt bauen.
+Die Webpakete 0.1.5 enthalten denselben aktuellen Lern- und Debuggerumfang
+wie Desktop 0.1.5. `node desktop/scripts/verify-web-release.cjs` prüft
+Setup und portable Ausgabe gegen die öffentlichen Quelldateien und Ausschlüsse.
 
 **Start aus dem Quellprojekt:**
 
@@ -325,10 +365,8 @@ cd ../backend && npm start   # http://localhost:3001
 
 ## Desktop-App (Electron)
 
-Die [lokale Lernbegleitung](#lokale-lernbegleitung-und-eigene-unterlagen),
-Theorie & Glossar und der Kursstand mit 82 Übungen/85 Inhaltslektionen sind in
-Desktop 0.1.4 enthalten. Der spätere Quellstand bindet zusätzlich Kapitel 18–31
-und den eigenen Quellcode-Debugger einschließlich DOM-/CSS-Pilot ein.
+Desktop 0.1.5 enthält die [lokale Lernbegleitung](#lokale-lernbegleitung-und-eigene-unterlagen),
+Theorie & Glossar, alle 167 eingebundenen Lektionen und den eigenen Debugger.
 Qwen/Ollama wird bei Bedarf separat eingerichtet; für ChatGPT ist die eigene
 Anmeldung erforderlich. Ohne KI bleiben Quiz und feste Übungen nutzbar.
 
@@ -351,14 +389,11 @@ daher vorher `npm run prepare:electron`; CI und Installerbuild erledigen diesen
 Schritt ausdrücklich. Dabei wird die bereits festgelegte Electron-Version geladen,
 kein KI-Modell.
 
-Der aktuelle Desktopinstaller heißt **`AzubiPrep Setup 0.1.4.exe`** und liegt
-nach dem Build in `Installer/`. Er enthält 7.000 Fragen, Lernfeldunterstützung,
-Theorie/Glossar, die KI-Auswahl und die Frontend-Werkstatt mit 82 integrierten
-Übungen sowie 85 vorbereiteten Inhaltslektionen. Die Integration von DOM,
-Browserfunktionen und Werkzeugen für Kapitel 19–31 sowie der eigene Quellcode-
-Debugger mit DOM-/CSS-Pilot sind inzwischen im Quellstand ergänzt. Das vorhandene
-Paket enthält diesen späteren Stand noch nicht. Die praktische Nutzerabnahme
-der neuen Kurskapitel bleibt ein eigener offener Punkt.
+Der aktuelle Desktopinstaller heißt **`AzubiPrep Setup 0.1.5.exe`** und liegt
+nach dem Build in `Installer/`. Er enthält 7.000 Fragen mit Lernfeldzuordnung,
+Theorie/Glossar, die KI-Auswahl, alle eingebundenen Werkstattkapitel und den
+Debugger einschließlich Formularen, asynchronem JavaScript, TypeScript und React.
+Die praktische Nutzerabnahme der neuen Kurskapitel bleibt ein eigener Punkt.
 Node.js muss auf dem Ziel-PC nicht separat installiert werden.
 Entwickler-`.env`-Dateien, private Lernunterlagen, daraus erzeugte Daten und
 persönliche KI-Konten werden ausgeschlossen; ohne eigene Kontoserver-
@@ -373,8 +408,8 @@ unverändert. F12 in der Vorschau öffnet eine getrennte Projektprüfung ohne
 Zugriff auf App-Daten oder Node.js. Electron: 45.2.0.
 Die genaue Testmatrix und ihre Grenzen stehen in der
 [Pilotabnahme](docs/21-Frontendpilot-Abnahme.md) und im
-[Kursstand 18–31](docs/35-Frontendkurs-Kapitel-18-31.md). Die Webpakete 0.1.2 werden
-durch diesen Desktopbuild nicht ersetzt.
+[Kursstand 18–31](docs/35-Frontendkurs-Kapitel-18-31.md). Webpakete werden mit
+`npm run dist:web` separat gebaut und eigenständig geprüft.
 
 ## Inhalte pflegen (ohne Code)
 
@@ -449,16 +484,15 @@ Ausbau auf 7.000 Fragen, Lernfeldzuordnung, Windows-Pakete mit eigener Laufzeit,
 Frontend-Werkstatt im Quellstand mit 167 eingebundenen Lektionen bis Kapitel 31,
 optionale Content-Datenbank mit CSV-Fallback, Autoren-Weboberfläche und
 Fragenfeedback. Qwen/eigenes ChatGPT, lokale PDF-Wissenssuche und Theorie/Glossar
-sind im Desktopinstaller 0.1.4 enthalten. Dessen Kursstand liegt noch bei
-82 Übungen/85 Inhaltslektionen; Kapitel 18–31 und der eigene Debugger mit
-Modul-/DOM-/CSS-Unterstützung wurden erst anschließend eingebunden.
+sind zusammen mit allen eingebundenen Kapiteln und dem erweiterten Debugger
+in den Desktop- und Webpaketen 0.1.5 enthalten.
 
 Offen bleiben praktische Nutzerabnahme der neuen Kapitel und externe Bedien-/
-Werkzeugnachweise, weitere DOM-/Formular-/Async- und TypeScript-/React-Stufen
-des freien Debuggers, vertiefte fachlich-didaktische KI-Evaluation, semantische Suche/OCR,
-Nachweise auf weiteren Zielgeräten, aktualisierte Webpakete sowie Installersignatur
-und Desktop-Auto-Update. Die Inhaltsfassung führt keinen Beispielcode aus und
-verändert keine bisherigen Prüfungsergebnisse.
+Werkzeugnachweise, Erweiterungen jenseits des dokumentierten Debuggerumfangs,
+vertiefte fachlich-didaktische KI-Evaluation, semantische Suche/OCR,
+Nachweise auf weiteren Zielgeräten sowie Installersignatur und Desktop-Auto-Update.
+Die Inhaltsfassung führt keinen Beispielcode aus und verändert keine bisherigen
+Prüfungsergebnisse.
 
 Die README-Bilder lassen sich mit den vorhandenen Playwright-Abhängigkeiten
 erneuern: erst in `frontend/` mit `npm run build` bauen, dann in `e2e/`

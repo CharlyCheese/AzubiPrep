@@ -1,0 +1,459 @@
+{
+  "schemaVersion": 1,
+  "version": "1.0.0",
+  "id": "fiae-lf11a-algorithms",
+  "title": "Datenstrukturen und Algorithmen auswählen",
+  "fieldId": "LF11a",
+  "scope": "specialization",
+  "prerequisites": [
+    "fiae-lf11a-architecture",
+    "common-lf5-functions"
+  ],
+  "objectives": [
+    {
+      "id": "fiae-lf11a-algorithms-structure",
+      "text": "Für eine Such-, Zuordnungs- oder Reihenfolgeaufgabe eine passende einfache Datenstruktur wählen."
+    },
+    {
+      "id": "fiae-lf11a-algorithms-algorithm",
+      "text": "Einen Such- oder Sortierablauf an Beispieldaten nachvollziehen und in einer vorgegebenen Sprache umsetzen."
+    },
+    {
+      "id": "fiae-lf11a-algorithms-compare",
+      "text": "Zwei Lösungswege für dieselbe Aufgabe anhand von Korrektheit, Aufwand und Verständlichkeit vergleichen."
+    }
+  ],
+  "caseStudy": {
+    "title": "Wie findet die Annahme den richtigen Auftrag?",
+    "text": "Zum Schichtbeginn liegen die fiktiven Aufträge in Eingangsreihenfolge vor. Die Werkstatt braucht einmal die geordnete Arbeitsliste und oft den Status einer bestimmten Nummer. Am selben Bestand vergleichst du zwei Suchwege."
+  },
+  "sources": [
+    {
+      "id": "lf11a-python-structures",
+      "title": "Python Software Foundation: Data Structures",
+      "url": "https://docs.python.org/3/tutorial/datastructures.html",
+      "note": "Listen, Iteration und Wörterbücher in Python sind Grundlage der eigenen Suchbeispiele.",
+      "checkedAt": "2026-11-19"
+    },
+    {
+      "id": "lf11a-python-complexity",
+      "title": "Python Software Foundation: Time complexity of operations on built-in types",
+      "url": "https://docs.python.org/3.14/builtins/time-complexity.html",
+      "note": "Die Tabelle für CPython beschreibt unter anderem den durchschnittlichen Aufwand für das Nachschlagen in einem Wörterbuch und nennt die Voraussetzungen. Die Rechenbeispiele verwenden erfundene kleine Ganzzahlschlüssel.",
+      "checkedAt": "2026-11-19"
+    }
+  ],
+  "sourceIds": [
+    "lf11a-python-structures",
+    "lf11a-python-complexity"
+  ],
+  "blocks": [
+    {
+      "id": "fiae-lf11a-algorithms-block-01",
+      "title": "1. Von der benötigten Operation ausgehen",
+      "objectiveIds": [
+        "fiae-lf11a-algorithms-structure"
+      ],
+      "sourceIds": [
+        "lf11a-python-structures"
+      ],
+      "paragraphs": [
+        "Eine Liste hält Elemente in einer Reihenfolge. Bei einer Liste aus Nummer-Status-Paaren kannst du die Aufträge nacheinander anzeigen. Die Nummer eines Auftrags ist unabhängig von seiner Position. Wird vorn ein Auftrag eingefügt, verschieben sich die Positionen.",
+        "Ein Wörterbuch ordnet einem Schlüssel einen Wert zu. Ist die Nummer eindeutig, eignet sie sich als Schlüssel für den Status. In Python behält ein Wörterbuch die Einfügereihenfolge, eine geordnete Liste ist jedoch für Positionszugriff und frei angeordnete Einträge direkter. Kläre bei doppelten Nummern zuerst die fachliche Regel."
+      ],
+      "example": {
+        "title": "Position und Schlüssel",
+        "text": "rows = [(12, \"in Arbeit\"), (7, \"offen\")]. rows[0] ist das Paar zu Nummer 12. Bei by_id = {12: \"in Arbeit\", 7: \"offen\"} liefert by_id[7] den Status von Auftrag 7."
+      },
+      "misconception": {
+        "claim": "Die Auftragsnummer kann als Listenposition verwendet werden.",
+        "correction": "Eine Position hängt von der Reihenfolge ab. Eine Auftragsnummer behält ihre fachliche Bedeutung."
+      },
+      "takeaway": "Wähle die Struktur nach der gesuchten Zuordnung oder Reihenfolge."
+    },
+    {
+      "id": "fiae-lf11a-algorithms-block-02",
+      "title": "2. Die lineare Suche selbst ausführen",
+      "objectiveIds": [
+        "fiae-lf11a-algorithms-algorithm"
+      ],
+      "sourceIds": [
+        "lf11a-python-structures"
+      ],
+      "paragraphs": [
+        "Vergleiche den Schlüssel des ersten Paares mit dem Suchwert. Bei Gleichheit gib den Status zurück. Andernfalls gehe zum nächsten Paar. Erst nach dem letzten erfolglosen Vergleich steht fest, dass der gesuchte Schlüssel fehlt. Für eine leere Liste geschieht das ohne Vergleich.",
+        "Setze den Ablauf in Python 3 um. Die Einrückung des letzten return ist entscheidend. Innerhalb der Schleife würde ein Fehlwert beim ersten abweichenden Eintrag die Suche zu früh beenden. Der Ausschnitt setzt geprüfte Nummern und eindeutige Schlüssel voraus."
+      ],
+      "example": {
+        "title": "Ausführbare lineare Suche",
+        "text": "def lookup(rows, number):\n    for key, status in rows:\n        if key == number:\n            return status\n    return None\n\nrows = [(12, \"in Arbeit\"), (7, \"offen\")]\nprint(lookup(rows, 7), lookup(rows, 9))"
+      },
+      "misconception": {
+        "claim": "Der erste ungleiche Schlüssel beweist, dass kein Treffer existiert.",
+        "correction": "Ein späteres Paar kann passen. None ist erst nach Ende der Schleife gerechtfertigt."
+      },
+      "takeaway": "Verfolge für jeden Vergleich den aktuellen Schlüssel und den nächsten Schritt."
+    },
+    {
+      "id": "fiae-lf11a-algorithms-block-03",
+      "title": "3. Einen Index aufbauen und konsistent halten",
+      "objectiveIds": [
+        "fiae-lf11a-algorithms-structure",
+        "fiae-lf11a-algorithms-compare"
+      ],
+      "sourceIds": [
+        "lf11a-python-structures"
+      ],
+      "paragraphs": [
+        "Einmaliges Durchlaufen der Paare baut mit dict(rows) einen Index von Nummer zu Status auf. Eine anschließende Abfrage mit get(number) liefert den Wert oder standardmäßig None. Im Modell sind Zustände Texte, sodass None ein fehlendes Ergebnis eindeutig bezeichnet.",
+        "Python behält bei doppeltem Schlüssel den zuletzt zugewiesenen Wert, die lineare Suche liefert den ersten. Beide Verfahren erfüllen denselben Vertrag, wenn die Schlüssel eindeutig sind. Leite den Index aus einem festen Bestand ab oder aktualisiere ihn bei Änderungen zusammen mit dem Bestand."
+      ],
+      "example": {
+        "title": "Ein veralteter Index",
+        "text": "rows = [(7, \"offen\")]; by_id = dict(rows). Ändert sich das Paar später zu (7, \"fertig\"), enthält der zuvor erzeugte Index weiterhin „offen“, bis er aktualisiert wird."
+      },
+      "misconception": {
+        "claim": "Der kopierte Index übernimmt spätere Änderungen an den Paaren von selbst.",
+        "correction": "Beim Aufbau wurden Nummer und damaliger Status zugeordnet. Der Index braucht eine geregelte Aktualisierung."
+      },
+      "takeaway": "Eindeutige Nummern und aktuelle Werte sind Voraussetzungen einer korrekten Zuordnung."
+    },
+    {
+      "id": "fiae-lf11a-algorithms-block-04",
+      "title": "4. Aufwand für Aufbau und Nutzung vergleichen",
+      "objectiveIds": [
+        "fiae-lf11a-algorithms-compare"
+      ],
+      "sourceIds": [
+        "lf11a-python-structures",
+        "lf11a-python-complexity"
+      ],
+      "paragraphs": [
+        "Für n Paare braucht die lineare Suche im ungünstigsten Fall n Schlüsselvergleiche je Abfrage. Der zusätzliche Speicher für die Suche bleibt konstant. Ein Index über n verschiedene Schlüssel braucht zusätzlichen Speicher und einen Durchlauf zum Aufbau. Für kleine ganzzahlige Schlüssel braucht ein Wörterbuchzugriff in CPython durchschnittlich konstanten Aufwand.",
+        "Rechne erst mit der konkreten Nutzung. Bei einer Fehlsuche in einer kleinen Liste ist der Aufbau eines neuen Index zusätzlicher Aufwand. Bei vielen Nachfragen im gleichen stabilen Bestand kann sich ein einmaliger Aufbau lohnen. Für eine Zeitvorgabe unter Last brauchst du zusätzlich Messungen mit passenden Daten. Bei einer einmaligen Suche ist die Schleife leicht zu verfolgen. Ein Index lohnt sich fachlich erst, wenn das Team seine Pflege bei Änderungen zuverlässig nachvollziehen kann."
+      ],
+      "example": {
+        "title": "Rechnung für vier Fehlsuchen",
+        "text": "Bei 30 Paaren prüft der lineare Weg viermal 30, also 120 Schlüssel. Der Indexweg verarbeitet einmal 30 Paare und danach vier Wörterbuchabfragen. Das sind unterschiedliche Operationen, keine Zeitmessung."
+      },
+      "misconception": {
+        "claim": "Ein günstigerer durchschnittlicher Aufwand garantiert eine konkrete Antwortzeit.",
+        "correction": "Aufwand beschreibt das Wachstum. Tatsächliche Laufzeit hängt unter anderem von Daten, Implementierung und Umgebung ab."
+      },
+      "takeaway": "Vergleiche Korrektheit, Anzahl der Suchen, Aufbau, Pflege, Speicher und Lesbarkeit."
+    }
+  ],
+  "questionFile": "questions/fiae-lf11a-algorithms.v1.csv",
+  "quiz": {
+    "questionIds": [
+      "LJ-LF11A-ALGORITHMS-Q01",
+      "LJ-LF11A-ALGORITHMS-Q02",
+      "LJ-LF11A-ALGORITHMS-Q03",
+      "LJ-LF11A-ALGORITHMS-Q04",
+      "LJ-LF11A-ALGORITHMS-Q05",
+      "LJ-LF11A-ALGORITHMS-Q06"
+    ]
+  },
+  "exam": {
+    "questionIds": [
+      "LJ-LF11A-ALGORITHMS-E01",
+      "LJ-LF11A-ALGORITHMS-E02",
+      "LJ-LF11A-ALGORITHMS-E03",
+      "LJ-LF11A-ALGORITHMS-E04",
+      "LJ-LF11A-ALGORITHMS-E05",
+      "LJ-LF11A-ALGORITHMS-E06",
+      "LJ-LF11A-ALGORITHMS-E07",
+      "LJ-LF11A-ALGORITHMS-E08"
+    ],
+    "passPercent": 80,
+    "scoring": "all-or-nothing-per-question",
+    "timed": false
+  },
+  "questionLinks": [
+    {
+      "questionId": "LJ-LF11A-ALGORITHMS-Q01",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf11a-algorithms-structure"
+      ],
+      "blockIds": [
+        "fiae-lf11a-algorithms-block-01"
+      ]
+    },
+    {
+      "questionId": "LJ-LF11A-ALGORITHMS-Q02",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf11a-algorithms-structure"
+      ],
+      "blockIds": [
+        "fiae-lf11a-algorithms-block-01"
+      ]
+    },
+    {
+      "questionId": "LJ-LF11A-ALGORITHMS-Q03",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf11a-algorithms-algorithm"
+      ],
+      "blockIds": [
+        "fiae-lf11a-algorithms-block-02"
+      ]
+    },
+    {
+      "questionId": "LJ-LF11A-ALGORITHMS-Q04",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf11a-algorithms-algorithm"
+      ],
+      "blockIds": [
+        "fiae-lf11a-algorithms-block-02"
+      ]
+    },
+    {
+      "questionId": "LJ-LF11A-ALGORITHMS-Q05",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf11a-algorithms-compare"
+      ],
+      "blockIds": [
+        "fiae-lf11a-algorithms-block-03"
+      ]
+    },
+    {
+      "questionId": "LJ-LF11A-ALGORITHMS-Q06",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf11a-algorithms-compare"
+      ],
+      "blockIds": [
+        "fiae-lf11a-algorithms-block-04"
+      ]
+    },
+    {
+      "questionId": "LJ-LF11A-ALGORITHMS-E01",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf11a-algorithms-algorithm"
+      ],
+      "blockIds": [
+        "fiae-lf11a-algorithms-block-02"
+      ]
+    },
+    {
+      "questionId": "LJ-LF11A-ALGORITHMS-E02",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf11a-algorithms-structure"
+      ],
+      "blockIds": [
+        "fiae-lf11a-algorithms-block-01"
+      ]
+    },
+    {
+      "questionId": "LJ-LF11A-ALGORITHMS-E03",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf11a-algorithms-structure",
+        "fiae-lf11a-algorithms-compare"
+      ],
+      "blockIds": [
+        "fiae-lf11a-algorithms-block-03"
+      ]
+    },
+    {
+      "questionId": "LJ-LF11A-ALGORITHMS-E04",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf11a-algorithms-compare"
+      ],
+      "blockIds": [
+        "fiae-lf11a-algorithms-block-04"
+      ]
+    },
+    {
+      "questionId": "LJ-LF11A-ALGORITHMS-E05",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf11a-algorithms-algorithm"
+      ],
+      "blockIds": [
+        "fiae-lf11a-algorithms-block-02"
+      ]
+    },
+    {
+      "questionId": "LJ-LF11A-ALGORITHMS-E06",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf11a-algorithms-compare"
+      ],
+      "blockIds": [
+        "fiae-lf11a-algorithms-block-04"
+      ]
+    },
+    {
+      "questionId": "LJ-LF11A-ALGORITHMS-E07",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf11a-algorithms-structure",
+        "fiae-lf11a-algorithms-compare"
+      ],
+      "blockIds": [
+        "fiae-lf11a-algorithms-block-03"
+      ]
+    },
+    {
+      "questionId": "LJ-LF11A-ALGORITHMS-E08",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf11a-algorithms-compare"
+      ],
+      "blockIds": [
+        "fiae-lf11a-algorithms-block-04"
+      ]
+    }
+  ],
+  "interview": [
+    {
+      "id": "fiae-lf11a-algorithms-talk-01",
+      "prompt": "Wähle Strukturen für Arbeitsreihenfolge und häufige Nummernsuche. Begründe deinen Vorschlag.",
+      "objectiveIds": [
+        "fiae-lf11a-algorithms-structure"
+      ],
+      "blockIds": [
+        "fiae-lf11a-algorithms-block-01",
+        "fiae-lf11a-algorithms-block-03",
+        "fiae-lf11a-algorithms-block-04"
+      ],
+      "keyPoints": [
+        "Positionen von stabilen Schlüsseln trennen.",
+        "Zusatzspeicher und Pflege eines Index bedenken."
+      ],
+      "acceptableAlternatives": [
+        "Ein einziger Bestand kann genügen, wenn die gewünschte Operation darin verständlich und schnell genug bleibt."
+      ],
+      "misconceptions": [
+        "Eine Auftragsnummer müsse der Listenposition entsprechen."
+      ],
+      "sampleAnswer": "Ich verwende eine Liste für die Arbeitsreihenfolge. Wenn viele Nummernsuchen anfallen, ergänze ich einen Index von der eindeutigen Nummer zum Status und aktualisiere ihn beim Ändern.",
+      "followUp": "Was prüfst du, bevor du einen zweiten Bestand einführst?"
+    },
+    {
+      "id": "fiae-lf11a-algorithms-talk-02",
+      "prompt": "Spiele die Python-Suche für die Paare 4, 9 und 6 mit dem Suchwert 6 durch.",
+      "objectiveIds": [
+        "fiae-lf11a-algorithms-algorithm"
+      ],
+      "blockIds": [
+        "fiae-lf11a-algorithms-block-02"
+      ],
+      "keyPoints": [
+        "Schlüssel in Reihenfolge vergleichen.",
+        "Bei Gleichheit den Status liefern und beenden."
+      ],
+      "acceptableAlternatives": [
+        "Eine handschriftliche Tabelle mit Schlüssel, Vergleich und Entscheidung erfüllt denselben Zweck."
+      ],
+      "misconceptions": [
+        "Ein Fehlwert gehöre bereits zum ersten ungleichen Paar."
+      ],
+      "sampleAnswer": "Ich vergleiche 4 mit 6 und gehe weiter. Auch 9 ist ungleich. Beim dritten Paar ist der Schlüssel 6. Jetzt liefere ich den dort gespeicherten Status zurück.",
+      "followUp": "Was ändert sich bei der Suche nach 8?"
+    },
+    {
+      "id": "fiae-lf11a-algorithms-talk-03",
+      "prompt": "Eine Kollegin schlägt einen Index vor. Prüfe die Voraussetzungen und nenne einen Fall, in dem du die Schleife bevorzugst.",
+      "objectiveIds": [
+        "fiae-lf11a-algorithms-compare"
+      ],
+      "blockIds": [
+        "fiae-lf11a-algorithms-block-03",
+        "fiae-lf11a-algorithms-block-04"
+      ],
+      "keyPoints": [
+        "Eindeutige Schlüssel und zeitnahe Aktualisierung sichern.",
+        "Aufbau gegen Zahl der späteren Anfragen abwägen."
+      ],
+      "acceptableAlternatives": [
+        "Ein Vergleich mit gemessenen realistischen Übungsdaten ist ebenfalls schlüssig."
+      ],
+      "misconceptions": [
+        "Ein Index spare Zeit unabhängig von Aufbau und Nutzungszahl."
+      ],
+      "sampleAnswer": "Ich kontrolliere zuerst, ob Nummern eindeutig und Werte aktuell sind. Bei vier Paaren und einer Abfrage behalte ich die einfache Schleife. Bei vielen Abfragen messe ich den Vergleich einschließlich Indexaufbau.",
+      "followUp": "Welcher Datenfehler führt schon vor jeder Laufzeitbetrachtung zu verschiedenen Ergebnissen?"
+    }
+  ],
+  "cards": [
+    {
+      "id": "fiae-lf11a-algorithms-card-01",
+      "front": "Welche Eigenschaft hat eine Listenposition?",
+      "back": "Sie bezeichnet die Stelle in der aktuellen Reihenfolge und kann sich durch Einfügen ändern.",
+      "objectiveIds": [
+        "fiae-lf11a-algorithms-structure"
+      ],
+      "blockIds": [
+        "fiae-lf11a-algorithms-block-01"
+      ]
+    },
+    {
+      "id": "fiae-lf11a-algorithms-card-02",
+      "front": "Was beschreibt ein Wörterbuchschlüssel im Fallbeispiel?",
+      "back": "Die eindeutige Nummer, über die der Status eines Auftrags gelesen werden kann.",
+      "objectiveIds": [
+        "fiae-lf11a-algorithms-structure"
+      ],
+      "blockIds": [
+        "fiae-lf11a-algorithms-block-01"
+      ]
+    },
+    {
+      "id": "fiae-lf11a-algorithms-card-03",
+      "front": "Wie endet die lineare Suche ohne Treffer?",
+      "back": "Nach allen ungleichen Schlüsseln liefert sie None. Eine leere Liste erreicht das Ende sofort.",
+      "objectiveIds": [
+        "fiae-lf11a-algorithms-algorithm"
+      ],
+      "blockIds": [
+        "fiae-lf11a-algorithms-block-02"
+      ]
+    },
+    {
+      "id": "fiae-lf11a-algorithms-card-04",
+      "front": "Wann endet die lineare Suche mit Treffer?",
+      "back": "Unmittelbar beim ersten gleichen Schlüssel gibt sie den zugehörigen Status zurück.",
+      "objectiveIds": [
+        "fiae-lf11a-algorithms-algorithm"
+      ],
+      "blockIds": [
+        "fiae-lf11a-algorithms-block-02"
+      ]
+    },
+    {
+      "id": "fiae-lf11a-algorithms-card-05",
+      "front": "Welche Datenregel macht beide Suchwege vergleichbar?",
+      "back": "Jede Auftragsnummer tritt genau einmal auf, die Indexwerte stammen aus dem aktuellen Bestand.",
+      "objectiveIds": [
+        "fiae-lf11a-algorithms-compare"
+      ],
+      "blockIds": [
+        "fiae-lf11a-algorithms-block-03"
+      ]
+    },
+    {
+      "id": "fiae-lf11a-algorithms-card-06",
+      "front": "Wofür bezahlst du beim Index vor der ersten Suche?",
+      "back": "Für einen Durchlauf zum Aufbau und zusätzlichen Speicher für die Zuordnung.",
+      "objectiveIds": [
+        "fiae-lf11a-algorithms-compare"
+      ],
+      "blockIds": [
+        "fiae-lf11a-algorithms-block-04"
+      ]
+    }
+  ],
+  "review": {
+    "status": "reviewed",
+    "checkedAt": "2026-11-19"
+  }
+}

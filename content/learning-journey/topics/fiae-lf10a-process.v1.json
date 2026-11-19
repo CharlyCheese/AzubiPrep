@@ -1,0 +1,474 @@
+{
+  "schemaVersion": 1,
+  "version": "1.0.0",
+  "id": "fiae-lf10a-process",
+  "title": "Nutzeraufgaben und Geschäftsprozesse verstehen",
+  "fieldId": "LF10a",
+  "scope": "specialization",
+  "prerequisites": [
+    "common-lf1-value-chain",
+    "common-lf8-delivery",
+    "common-lf9-handover"
+  ],
+  "objectives": [
+    {
+      "id": "fiae-lf10a-process-model",
+      "text": "Einen einfachen Geschäftsprozess mit Beteiligten, Arbeitsschritten und Informationsfluss darstellen."
+    },
+    {
+      "id": "fiae-lf10a-process-needs",
+      "text": "Aus einer Nutzeraufgabe Anforderungen an Oberfläche und Rückmeldung ableiten."
+    },
+    {
+      "id": "fiae-lf10a-process-improve",
+      "text": "Eine unnötige Eingabe oder Medienunterbrechung im Ablauf erkennen und eine Verbesserung vorschlagen."
+    }
+  ],
+  "sourceIds": [
+    "kmk-fachinformatiker-2019",
+    "lf10a-gds-map",
+    "lf10a-wai-forms"
+  ],
+  "sources": [
+    {
+      "id": "kmk-fachinformatiker-2019",
+      "title": "KMK-Rahmenlehrplan Fachinformatiker/Fachinformatikerin vom 13.12.2019",
+      "url": "https://www.kmk.org/fileadmin/Dateien/pdf/Bildung/BeruflicheBildung/rlp/Fachinformatiker_19-12-13_EL.pdf",
+      "checkedAt": "2026-11-19",
+      "note": "Lernfeld 10a, Seite 21 des Rahmenlehrplans, verbindet Prozessmodellierung, Oberflächengestaltung, Tests und Wirtschaftlichkeit."
+    },
+    {
+      "id": "lf10a-gds-map",
+      "title": "Government Digital Service: Creating an experience map",
+      "url": "https://www.gov.uk/service-manual/user-research/creating-an-experience-map",
+      "note": "Abläufe aus Sicht der beteiligten Rollen und Übergaben untersuchen.",
+      "checkedAt": "2026-11-19"
+    },
+    {
+      "id": "lf10a-wai-forms",
+      "title": "W3C WAI: Forms Tutorial",
+      "url": "https://www.w3.org/WAI/tutorials/forms/",
+      "note": "Beschriftung, Eingabehilfen, Validierung und Rückmeldungen zu Formularen.",
+      "checkedAt": "2026-11-19"
+    }
+  ],
+  "caseStudy": {
+    "title": "Vom Werkstattzettel zum Reparaturticket",
+    "text": "Die Annahme eines fiktiven Gerätebetriebs meldet einen streikenden Scanner an die interne Werkstatt. Auf dem Zettel steht G-17, in der Liste versehentlich G-71. An dieser Übergabe untersuchst du, welche Information verloren gehen kann und was die Annahme nach dem Melden wissen muss."
+  },
+  "blocks": [
+    {
+      "id": "fiae-lf10a-process-model",
+      "title": "1. Den heutigen Ablauf aufnehmen",
+      "objectiveIds": [
+        "fiae-lf10a-process-model"
+      ],
+      "sourceIds": [
+        "kmk-fachinformatiker-2019",
+        "lf10a-gds-map"
+      ],
+      "paragraphs": [
+        "Lege den Ausschnitt fest. Er beginnt mit einem gemeldeten Defekt und endet, sobald die Werkstatt einen zuordenbaren Auftrag hat und die Annahme dessen Kennung kennt. Spätere Diagnose und eigentliche Reparatur gehören zu einem anderen Ausschnitt.",
+        "Zeichne für Annahme und Werkstatt je eine Bahn. Trage je Schritt die Tätigkeit ein. Beschrifte Pfeile zwischen den Bahnen mit der übergebenen Information. Markiere Entscheidungen mit einer Frage und benenne die möglichen Wege. Damit kannst du eine Rückfrage von einer regulären Übergabe unterscheiden."
+      ],
+      "example": {
+        "title": "Der Weg von G-17",
+        "text": "Zuerst notiert die Annahme „G-17, Einzug klemmt“. Die Werkstatt liest den Zettel und prüft, ob das Gerät erkennbar ist. Bei fehlender Kennung geht eine Rückfrage zurück. Sonst übernimmt sie den Fall in die Liste und gibt eine Ticketnummer an die Annahme."
+      },
+      "misconception": {
+        "claim": "Die Liste der Bildschirmseiten beschreibt den Geschäftsprozess hinreichend.",
+        "correction": "Erst Rollen, Tätigkeiten, Entscheidungen und übergebene Informationen erklären, wer was zum Ergebnis beiträgt."
+      },
+      "takeaway": "Ein Ablaufmodell zeigt auch die Arbeit und Übergaben außerhalb der Oberfläche."
+    },
+    {
+      "id": "fiae-lf10a-process-needs",
+      "title": "2. Aus einer Tätigkeit eine Anforderung gewinnen",
+      "objectiveIds": [
+        "fiae-lf10a-process-needs"
+      ],
+      "sourceIds": [
+        "lf10a-gds-map",
+        "lf10a-wai-forms"
+      ],
+      "paragraphs": [
+        "Frage die Rolle, welches Ergebnis sie in der konkreten Situation braucht. Aus „Ich muss meinen Auftrag wiederfinden“ folgt eine prüfbare Rückmeldung. Die Wahl von Farbe oder Schriftart löst diese Aufgabe für sich genommen noch nicht.",
+        "Beschreibe Ausgangslage, Handlung und sichtbares Ergebnis. Für einen gültigen Auftrag gibt es nach bestätigter Speicherung eine Kennung. Bei einer fehlenden Gerätekennung bleibt das Formular bearbeitbar. Die Oberfläche nennt das fehlende Feld und behält das bereits beschriebene Symptom."
+      ],
+      "example": {
+        "title": "Ein Kriterium am Schalter",
+        "text": "Die Annahme gibt G-17 und „Einzug klemmt“ ein und sendet. Nach erfolgreichem Speichern liest sie die neue Ticketnummer ab. Im Gegenversuch lässt sie die Gerätekennung leer und prüft, ob sie genau diese nachtragen kann."
+      },
+      "misconception": {
+        "claim": "Der Klick auf die Schaltfläche belegt die erfolgreiche Anlage.",
+        "correction": "Die Anforderung umfasst das Ergebnis der Verarbeitung. Ein Klick allein sagt nichts über einen gespeicherten Auftrag."
+      },
+      "takeaway": "Ordne jeder Nutzeraufgabe eine prüfbare Reaktion der Oberfläche zu."
+    },
+    {
+      "id": "fiae-lf10a-process-improve",
+      "title": "3. Doppelerfassung an der Quelle beseitigen",
+      "objectiveIds": [
+        "fiae-lf10a-process-improve"
+      ],
+      "sourceIds": [
+        "lf10a-gds-map"
+      ],
+      "paragraphs": [
+        "Ein Medienbruch liegt etwa vor, wenn jemand einen Papierzettel in eine digitale Liste abtippt. Auch zwischen zwei digitalen Programmen kann eine manuelle Übertragung vermeidbare Arbeit erzeugen. Suche nach derselben Information an zwei Stellen und frage, ob der zweite Schritt eine eigenständige Prüfung ist.",
+        "Im Sollprozess erfasst die Annahme Gerät und Symptom einmal. Die Werkstatt öffnet dieselben Daten über die Ticketkennung. Die fachliche Prüfung auf erkennbare Geräte und die Möglichkeit zur Rückfrage bleiben erhalten. Bei einer Korrektur ist klar, welcher gemeinsame Stand gilt."
+      ],
+      "example": {
+        "title": "Welche Eingabe kann entfallen?",
+        "text": "Markiere die Gerätekennung auf Zettel und Liste. Streiche das erneute Abtippen. Lass die Werkstatt anschließend die Kennung am Gerät mit dem Ticket vergleichen. Der Vergleich hat einen fachlichen Zweck und braucht keine zweite Erfassung."
+      },
+      "misconception": {
+        "claim": "Wer einen Prozess verkürzt, sollte auch die Geräteprüfung streichen.",
+        "correction": "Die Prüfung kann eine Verwechslung aufdecken. Das Abschreiben verursacht zusätzlichen Aufwand, ohne diese Entscheidung zu ersetzen."
+      },
+      "takeaway": "Streiche unnötige Übertragung und erhalte die fachliche Entscheidung."
+    },
+    {
+      "id": "fiae-lf10a-process-check",
+      "title": "4. Den Sollprozess mit beiden Rollen durchspielen",
+      "objectiveIds": [
+        "fiae-lf10a-process-model",
+        "fiae-lf10a-process-needs",
+        "fiae-lf10a-process-improve"
+      ],
+      "sourceIds": [
+        "kmk-fachinformatiker-2019",
+        "lf10a-gds-map"
+      ],
+      "paragraphs": [
+        "Prüfe eine normale Meldung und eine unklare Meldung vom Auslöser bis zum vereinbarten Ende. Bei jedem Rollenwechsel müssen Eingabe, Empfänger und Rückmeldung zusammenpassen. Ein gespeicherter Datensatz allein beantwortet noch nicht, wie die Werkstatt den Auftrag findet.",
+        "Vergleiche den bisherigen und den geplanten Ablauf mit derselben Zähleinheit. Für die Kennung zählen hier manuelle Erfassungen je Auftrag, auch wenn die Eingaben in unterschiedlichen Abteilungen stattfinden. Beobachte zusätzlich Fälle mit Rückfrage, damit ein schnellerer Ablauf die Qualität der Zuordnung nicht verdeckt."
+      ],
+      "example": {
+        "title": "Zwei Durchläufe auf Papier",
+        "text": "Gehe zuerst G-17 vom Schalter zur Werkstatt und wieder zurück bis zur Ticketnummer durch. Wiederhole den Ablauf ohne Kennung. Im ersten Fall zählst du früher zwei Erfassungen der Kennung und künftig eine. Im zweiten muss die fehlende Angabe vor der Übergabe geklärt werden."
+      },
+      "misconception": {
+        "claim": "Die Zahl der Masken ist schon ein Maß für vermiedene Doppelerfassung.",
+        "correction": "Zähle, wie oft die Rolle dieselbe Information tatsächlich neu eingibt. Mehrere Ansichten können denselben Datenstand verwenden."
+      },
+      "takeaway": "Prüfe Nutzen und Informationsfluss am konkreten Fall über die Rollengrenze hinweg."
+    }
+  ],
+  "questionFile": "questions/fiae-lf10a-process.v1.csv",
+  "quiz": {
+    "questionIds": [
+      "LJ-LF10A-PROCESS-Q01",
+      "LJ-LF10A-PROCESS-Q02",
+      "LJ-LF10A-PROCESS-Q03",
+      "LJ-LF10A-PROCESS-Q04",
+      "LJ-LF10A-PROCESS-Q05",
+      "LJ-LF10A-PROCESS-Q06"
+    ]
+  },
+  "exam": {
+    "questionIds": [
+      "LJ-LF10A-PROCESS-E01",
+      "LJ-LF10A-PROCESS-E02",
+      "LJ-LF10A-PROCESS-E03",
+      "LJ-LF10A-PROCESS-E04",
+      "LJ-LF10A-PROCESS-E05",
+      "LJ-LF10A-PROCESS-E06",
+      "LJ-LF10A-PROCESS-E07",
+      "LJ-LF10A-PROCESS-E08"
+    ],
+    "passPercent": 80,
+    "scoring": "all-or-nothing-per-question",
+    "timed": false
+  },
+  "questionLinks": [
+    {
+      "questionId": "LJ-LF10A-PROCESS-Q01",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf10a-process-model"
+      ],
+      "blockIds": [
+        "fiae-lf10a-process-model"
+      ]
+    },
+    {
+      "questionId": "LJ-LF10A-PROCESS-Q02",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf10a-process-model"
+      ],
+      "blockIds": [
+        "fiae-lf10a-process-model"
+      ]
+    },
+    {
+      "questionId": "LJ-LF10A-PROCESS-Q03",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf10a-process-needs"
+      ],
+      "blockIds": [
+        "fiae-lf10a-process-needs"
+      ]
+    },
+    {
+      "questionId": "LJ-LF10A-PROCESS-Q04",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf10a-process-needs"
+      ],
+      "blockIds": [
+        "fiae-lf10a-process-needs"
+      ]
+    },
+    {
+      "questionId": "LJ-LF10A-PROCESS-Q05",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf10a-process-improve"
+      ],
+      "blockIds": [
+        "fiae-lf10a-process-improve"
+      ]
+    },
+    {
+      "questionId": "LJ-LF10A-PROCESS-Q06",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf10a-process-improve"
+      ],
+      "blockIds": [
+        "fiae-lf10a-process-check"
+      ]
+    },
+    {
+      "questionId": "LJ-LF10A-PROCESS-E01",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf10a-process-model"
+      ],
+      "blockIds": [
+        "fiae-lf10a-process-model"
+      ]
+    },
+    {
+      "questionId": "LJ-LF10A-PROCESS-E02",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf10a-process-model"
+      ],
+      "blockIds": [
+        "fiae-lf10a-process-check"
+      ]
+    },
+    {
+      "questionId": "LJ-LF10A-PROCESS-E03",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf10a-process-needs"
+      ],
+      "blockIds": [
+        "fiae-lf10a-process-needs"
+      ]
+    },
+    {
+      "questionId": "LJ-LF10A-PROCESS-E04",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf10a-process-needs"
+      ],
+      "blockIds": [
+        "fiae-lf10a-process-needs"
+      ]
+    },
+    {
+      "questionId": "LJ-LF10A-PROCESS-E05",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf10a-process-improve"
+      ],
+      "blockIds": [
+        "fiae-lf10a-process-improve"
+      ]
+    },
+    {
+      "questionId": "LJ-LF10A-PROCESS-E06",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf10a-process-improve"
+      ],
+      "blockIds": [
+        "fiae-lf10a-process-improve"
+      ]
+    },
+    {
+      "questionId": "LJ-LF10A-PROCESS-E07",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf10a-process-model",
+        "fiae-lf10a-process-improve"
+      ],
+      "blockIds": [
+        "fiae-lf10a-process-improve",
+        "fiae-lf10a-process-check"
+      ]
+    },
+    {
+      "questionId": "LJ-LF10A-PROCESS-E08",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf10a-process-needs",
+        "fiae-lf10a-process-improve"
+      ],
+      "blockIds": [
+        "fiae-lf10a-process-needs",
+        "fiae-lf10a-process-check"
+      ]
+    }
+  ],
+  "interview": [
+    {
+      "id": "fiae-lf10a-process-talk-1",
+      "prompt": "Wie würdest du einer neuen Kollegin den Ausschnitt vom Defekt bis zur Übergabe zeichnen?",
+      "objectiveIds": [
+        "fiae-lf10a-process-model"
+      ],
+      "blockIds": [
+        "fiae-lf10a-process-model"
+      ],
+      "keyPoints": [
+        "Anfang und Ende benennen.",
+        "Tätigkeiten den beiden Rollen zuordnen.",
+        "Übergabe und mögliche Rückfrage beschriften."
+      ],
+      "acceptableAlternatives": [
+        "Eine Tabelle mit Rolle, Eingang, Tätigkeit und Ausgang bildet dieselben Zusammenhänge ab."
+      ],
+      "misconceptions": [
+        "Eine Bildschirmfolge ohne Rollen lässt die Übergabe offen."
+      ],
+      "sampleAnswer": "Ich beginne beim gemeldeten Defekt. Die Annahme notiert Gerät und Symptom. Die Werkstatt prüft die Zuordnung, stellt bei Bedarf eine Rückfrage und gibt bei Übernahme die Ticketnummer zurück.",
+      "followUp": "Wo zeichnest du die Entscheidung über eine unlesbare Kennung ein?"
+    },
+    {
+      "id": "fiae-lf10a-process-talk-2",
+      "prompt": "Wie machst du aus „Ich will wissen, ob mein Auftrag angekommen ist“ ein Abnahmekriterium?",
+      "objectiveIds": [
+        "fiae-lf10a-process-needs"
+      ],
+      "blockIds": [
+        "fiae-lf10a-process-needs"
+      ],
+      "keyPoints": [
+        "Ausgangsdaten und Absenden beschreiben.",
+        "Erfolg an einer nach dem Speichern angezeigten Kennung erkennen.",
+        "Fehlerreaktion separat prüfen."
+      ],
+      "acceptableAlternatives": [
+        "Ein nachweisbar gespeicherter, direkt erreichbarer Auftrag mit sichtbarer Kennung erfüllt den Bedarf ebenfalls."
+      ],
+      "misconceptions": [
+        "Eine Animation beim Drücken belegt keine erfolgreiche Verarbeitung."
+      ],
+      "sampleAnswer": "Ich sende G-17 mit einem Symptom ab. Nach der Speicherbestätigung muss ich die neue Kennung lesen können. Lasse ich das Gerät weg, muss ich zum Feld zurückkehren und das Symptom behalten können.",
+      "followUp": "Wann darf die Oberfläche eine Erfolgsbestätigung zeigen?"
+    },
+    {
+      "id": "fiae-lf10a-process-talk-3",
+      "prompt": "Welche Änderung behebt den Zahlendreher beim Abschreiben, und wie prüfst du ihren Nutzen?",
+      "objectiveIds": [
+        "fiae-lf10a-process-improve"
+      ],
+      "blockIds": [
+        "fiae-lf10a-process-improve",
+        "fiae-lf10a-process-check"
+      ],
+      "keyPoints": [
+        "Wiederholte Eingabe lokalisieren.",
+        "Einen gemeinsamen Stand und die fachliche Kontrolle beschreiben.",
+        "Eingaben vor und nach der Änderung je Fall zählen."
+      ],
+      "acceptableAlternatives": [
+        "Ein überprüfter Import aus der Erfassung kann die Abschrift ebenfalls ersetzen."
+      ],
+      "misconceptions": [
+        "Eine Pflicht zur zweiten Eingabe verschiebt den Aufwand lediglich an eine andere Stelle."
+      ],
+      "sampleAnswer": "Die Werkstatt öffnet das schon erfasste Ticket und prüft G-17 am Gerät. Für denselben Auftrag fällt eine manuelle Eingabe weg. Eine Rückfrage bleibt möglich, wenn das Schild unlesbar ist.",
+      "followUp": "Welcher Schritt bleibt trotz Zeitgewinn erforderlich?"
+    }
+  ],
+  "cards": [
+    {
+      "id": "fiae-lf10a-process-card-01",
+      "front": "Wie legst du die Grenze eines Prozessmodells fest?",
+      "back": "Benenne das auslösende Ereignis und das Ergebnis, mit dem die betrachtete Aufgabe endet.",
+      "objectiveIds": [
+        "fiae-lf10a-process-model"
+      ],
+      "blockIds": [
+        "fiae-lf10a-process-model"
+      ]
+    },
+    {
+      "id": "fiae-lf10a-process-card-02",
+      "front": "Was gehört an den Pfeil zwischen zwei Rollen?",
+      "back": "Die tatsächlich übergebene Information, etwa Gerät und Symptom auf dem Hinweg oder die Ticketnummer auf dem Rückweg.",
+      "objectiveIds": [
+        "fiae-lf10a-process-model"
+      ],
+      "blockIds": [
+        "fiae-lf10a-process-model"
+      ]
+    },
+    {
+      "id": "fiae-lf10a-process-card-03",
+      "front": "Wodurch wird eine Oberflächenanforderung prüfbar?",
+      "back": "Ausgangslage, Handlung und beobachtbares Ergebnis lassen sich konkret durchspielen.",
+      "objectiveIds": [
+        "fiae-lf10a-process-needs"
+      ],
+      "blockIds": [
+        "fiae-lf10a-process-needs"
+      ]
+    },
+    {
+      "id": "fiae-lf10a-process-card-04",
+      "front": "Was muss die Annahme nach erfolgreichem Speichern erfahren?",
+      "back": "Dass der Auftrag angelegt wurde und mit welcher Kennung sie ihn wiederfindet.",
+      "objectiveIds": [
+        "fiae-lf10a-process-needs"
+      ],
+      "blockIds": [
+        "fiae-lf10a-process-needs"
+      ]
+    },
+    {
+      "id": "fiae-lf10a-process-card-05",
+      "front": "Warum bleibt der Vergleich mit dem Geräteschild sinnvoll?",
+      "back": "Er prüft die fachliche Zuordnung. Das bloße erneute Eintippen derselben Kennung erfüllt diesen Zweck nicht.",
+      "objectiveIds": [
+        "fiae-lf10a-process-improve"
+      ],
+      "blockIds": [
+        "fiae-lf10a-process-improve"
+      ]
+    },
+    {
+      "id": "fiae-lf10a-process-card-06",
+      "front": "Welche Einheit zeigt vermiedene Mehrfacheingaben?",
+      "back": "Anzahl manueller Erfassungen derselben Angabe je vergleichbarem Auftrag.",
+      "objectiveIds": [
+        "fiae-lf10a-process-improve"
+      ],
+      "blockIds": [
+        "fiae-lf10a-process-check"
+      ]
+    }
+  ],
+  "review": {
+    "status": "reviewed",
+    "checkedAt": "2026-11-19"
+  }
+}

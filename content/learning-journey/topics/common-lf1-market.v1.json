@@ -1,0 +1,473 @@
+{
+  "schemaVersion": 1,
+  "id": "common-lf1-market",
+  "version": "1.0.0",
+  "title": "Kunden, Lieferanten und Wettbewerb",
+  "fieldId": "LF1",
+  "scope": "common",
+  "prerequisites": [
+    "common-lf1-role"
+  ],
+  "sourceIds": [
+    "kmk-fachinformatiker-2019",
+    "fiausbv-annex"
+  ],
+  "sources": [
+    {
+      "id": "kmk-fachinformatiker-2019",
+      "title": "KMK-Rahmenlehrplan Fachinformatiker/Fachinformatikerin vom 13.12.2019",
+      "url": "https://www.kmk.org/fileadmin/Dateien/pdf/Bildung/BeruflicheBildung/rlp/Fachinformatiker_19-12-13_EL.pdf",
+      "checkedAt": "2026-11-11",
+      "note": "Lernfeld 1, gedruckte Seite 12: Marktstruktur, Markt- und Kundenbeziehungen sowie Leistungsschwerpunkte. Öffentliche Originalquelle am angegebenen Datum geprüft. Rollenübersicht, Unternehmen und Angebote sind eigenständige didaktische Beispiele, keine übernommenen Prüfungsaufgaben."
+    },
+    {
+      "id": "fiausbv-annex",
+      "title": "Fachinformatikerausbildungsverordnung – Ausbildungsrahmenplan",
+      "url": "https://www.gesetze-im-internet.de/fiausbv/anlage.html",
+      "checkedAt": "2026-11-11",
+      "note": "Abschnitt A Nr. 2 a und b: Preise, Leistungen und Konditionen von Wettbewerbern vergleichen sowie Kundenbedarfe feststellen. Nr. 3 b: Angebote und Konditionen vergleichen. Die Quelle begründet die berufliche Aufgabe, nicht die erfundenen Anbieter, Preise oder Leistungszusagen."
+    }
+  ],
+  "objectives": [
+    {
+      "id": "common-lf1-market-relations",
+      "text": "Kunden-, Lieferanten- und Wettbewerbsbeziehungen für einen IT-Dienstleister darstellen."
+    },
+    {
+      "id": "common-lf1-market-offer",
+      "text": "Zwei Leistungsangebote anhand eines beschriebenen Kundenbedarfs vergleichen."
+    }
+  ],
+  "caseStudy": {
+    "title": "Wer liefert wem welche Leistung?",
+    "text": "Im frei erfundenen Fall benötigt die Fahrradwerkstatt Radblick eine gemeinsame Reparaturübersicht. Lea vertritt Radblick, Sam koordiniert den Auftrag beim IT-Dienstleister Knotenpunkt und Mira unterstützt als Auszubildende. Netzhafen stellt Knotenpunkt gegen Bezahlung einen Betriebsdienst für die Übersicht bereit. Systemufer bietet Radblick ebenfalls eine passende Reparaturübersicht an. Mira soll die Beziehungen erklären und die Angebote anhand des Bedarfs vergleichen. Alle Unternehmen, Beträge und Zusagen sind Übungsannahmen. Technisches Vorwissen über den Betriebsdienst ist nicht nötig."
+  },
+  "blocks": [
+    {
+      "id": "common-lf1-market-roles",
+      "title": "1. Kunden, Lieferanten und Wettbewerber unterscheiden",
+      "objectiveIds": [
+        "common-lf1-market-relations"
+      ],
+      "sourceIds": [
+        "kmk-fachinformatiker-2019"
+      ],
+      "paragraphs": [
+        "Ein Kunde fragt eine Leistung nach und bezieht sie vom Anbieter. Im Fall beauftragt Radblick die Reparaturübersicht und bezahlt Knotenpunkt dafür. Radblick ist damit Kunde von Knotenpunkt. Die Beschäftigten von Radblick sollen die Übersicht später benutzen. Wer eine Anwendung nutzt, muss nicht selbst den Auftrag erteilt haben: Auftraggeber und nutzende Personen können verschieden sein.",
+        "Ein Lieferant stellt einem Unternehmen benötigte Güter oder Dienstleistungen bereit. Netzhafen liefert Knotenpunkt den vereinbarten Betriebsdienst. Netzhafen ist in dieser Beziehung Lieferant, Knotenpunkt ist dessen Kunde. Lieferanten verkaufen also nicht zwingend greifbare Waren. Auch ein eingekaufter Dienst kann eine Vorleistung für den eigenen Kundenauftrag sein.",
+        "Wettbewerber bieten Leistungen an, zwischen denen sich dieselbe Kundengruppe zur Deckung eines Bedarfs entscheiden kann. Knotenpunkt und Systemufer konkurrieren hier um Radblicks Auftrag für eine Reparaturübersicht. Die Lösungen müssen nicht technisch gleich aufgebaut sein. Entscheidend ist, dass sie für den betrachteten Bedarf als Alternativen infrage kommen. Die bloße Nähe zweier Firmensitze begründet noch keinen solchen Wettbewerb."
+      ],
+      "example": {
+        "title": "Drei Beziehungen im Auftrag",
+        "text": "Radblick bezieht die Übersicht von Knotenpunkt. Knotenpunkt kauft dafür einen Betriebsdienst von Netzhafen ein. Systemufer bietet Radblick eine Alternative an. So lassen sich Kunde, Lieferant und Wettbewerber mit der jeweils betroffenen Leistung erklären."
+      },
+      "misconception": {
+        "claim": "Ein IT-Dienstleister hat Kunden, kann aber nicht selbst Kunde sein.",
+        "correction": "Knotenpunkt ist Anbieter gegenüber Radblick und Kunde gegenüber Netzhafen. Die Rolle hängt von der konkreten Beziehung ab."
+      },
+      "takeaway": "Nenne immer die Beteiligten und die Leistung. Eine Firma hat je nach Beziehung unterschiedliche Rollen."
+    },
+    {
+      "id": "common-lf1-market-map",
+      "title": "2. Beziehungen mit Perspektive und Richtung darstellen",
+      "objectiveIds": [
+        "common-lf1-market-relations"
+      ],
+      "sourceIds": [
+        "kmk-fachinformatiker-2019",
+        "fiausbv-annex"
+      ],
+      "paragraphs": [
+        "Eine einfache Beziehungsübersicht beginnt beim betrachteten Unternehmen. Zeichne Knotenpunkt in die Mitte und beschrifte die Verbindung zu Radblick mit Reparaturübersicht sowie die Verbindung von Netzhafen mit Betriebsdienst. Ein Leistungspfeil zeigt vom liefernden zum empfangenden Unternehmen: Netzhafen → Knotenpunkt → Radblick. Diese Darstellung beschreibt die vereinbarten Leistungen, nicht den technischen Weg einzelner Daten.",
+        "Die Zahlungen gehen im Fall in die Gegenrichtung: Radblick bezahlt Knotenpunkt für die Übersicht, Knotenpunkt bezahlt Netzhafen für den Betriebsdienst. Systemufer erhält einen gesonderten Hinweis als konkurrierender Anbieter für Radblicks Bedarf. Aus einem Alternativangebot folgt noch keine Lieferung oder Zahlung. Eine Skizze sollte deshalb zwischen bestehender Geschäftsbeziehung und möglicher Alternative unterscheiden.",
+        "Rollen können sich überschneiden. Würde Netzhafen Radblick zusätzlich eine eigene Reparaturübersicht anbieten, wäre Netzhafen weiter Lieferant von Knotenpunkt und zugleich Wettbewerber um diesen Kundenbedarf. Daraus folgt nicht, dass die bisherige Lieferbeziehung beendet ist. Benenne die Leistung und den Blickwinkel, statt dem Unternehmen ein einziges unveränderliches Etikett zu geben.",
+        "Für eine Marktbetrachtung ist außerdem wichtig, welche Kundengruppe und welcher Bedarf gemeint sind. Radblick gehört in diesem Fall zu kleinen Werkstätten, die Reparaturstände gemeinsam verfolgen wollen. Ein Anbieter einer reinen Lohnabrechnung deckt damit einen anderen Bedarf. Eine Aussage über Wettbewerb muss auf vergleichbaren Leistungen oder geeigneten Alternativen beruhen."
+      ],
+      "example": {
+        "title": "Leistung und Bezahlung nicht verwechseln",
+        "text": "Mira zeichnet einen Pfeil Betriebsdienst von Netzhafen zu Knotenpunkt und einen Pfeil Bezahlung zurück. Systemufer verbindet sie mit Radblick als Angebotsalternative. Sie zeichnet keine bereits erfolgte Zahlung an Systemufer ein, weil Radblick dessen Angebot noch nicht angenommen hat."
+      },
+      "misconception": {
+        "claim": "Ein Lieferant kann nicht gleichzeitig Wettbewerber sein.",
+        "correction": "Bei unterschiedlichen Leistungen oder Beziehungen sind beide Rollen möglich. Maßgeblich ist, wer wem etwas liefert und um welchen Bedarf konkurriert wird."
+      },
+      "takeaway": "Beschrifte Leistung, Richtung und Perspektive. Trenne bestätigte Geschäftsbeziehungen von möglichen Alternativen."
+    },
+    {
+      "id": "common-lf1-market-needs",
+      "title": "3. Aus einem Kundenwunsch Vergleichskriterien machen",
+      "objectiveIds": [
+        "common-lf1-market-offer"
+      ],
+      "sourceIds": [
+        "fiausbv-annex"
+      ],
+      "paragraphs": [
+        "Ein Wunsch wie Wir brauchen eine gute Übersicht ist noch zu ungenau für einen Angebotsvergleich. Sam fragt nach der Aufgabe im Alltag, den nutzenden Personen, notwendigen Leistungen, dem Termin und dem verfügbaren Budget. Erst daraus entstehen prüfbare Kriterien. Die Zahl der Funktionen auf einer Werbeseite sagt noch nicht, ob eine Lösung zum Kunden passt.",
+        "Lea beschreibt Radblicks Bedarf: Acht Beschäftigte brauchen jeweils einen eigenen Zugang zur Reparaturübersicht. Eine gemeinsame Einweisung soll enthalten sein. Die Lösung muss zum vereinbarten Einführungstermin bereitstehen. Für Einrichtung und die ersten zwölf Monate stehen höchstens 800 Euro zur Verfügung. In diesem Fall sind diese vier Punkte verbindliche Anforderungen. Eine zusätzliche Farbauswahl wäre angenehm, ist aber keine solche Anforderung.",
+        "Vergleiche beide Angebote mit denselben Kriterien und demselben Zeitraum. Ein Einrichtungspreis allein lässt sich nicht sinnvoll mit einem Gesamtpreis für Einrichtung und zwölf Monate vergleichen. Monatliche Entgelte sind für den betrachteten Zeitraum hinzuzurechnen. Beispielsweise ergeben 300 Euro Einrichtung und zwölfmal 30 Euro einen Betrag von 660 Euro. Die Übungsbeträge sind auf derselben Preisbasis angegeben, zusätzliche Preisbestandteile gibt es in diesem Rechenbeispiel nicht.",
+        "Fehlt eine Angabe, ist der Punkt offen. Eine nicht erwähnte Einweisung ist weder als enthalten noch als ausgeschlossen nachgewiesen. Mira hält die Lücke fest und lässt sie klären. Anforderungen dürfen auch nicht still verändert werden: Vier Zugänge werden nicht dadurch zu acht passenden Zugängen, dass man ohne Abstimmung das Teilen von Konten vorschlägt."
+      ],
+      "example": {
+        "title": "Eine brauchbare Rückfrage",
+        "text": "Statt Welche Farbe soll die Startseite haben? fragt Mira zunächst: Wie viele Beschäftigte benötigen einen eigenen Zugang und welche Arbeit sollen sie damit erledigen? So klärt sie einen für die Leistung entscheidenden Bedarf. Gestaltungswünsche können anschließend ergänzt werden."
+      },
+      "misconception": {
+        "claim": "Was im Angebot nicht genannt wird, ist bestimmt im Preis enthalten.",
+        "correction": "Eine fehlende Angabe ist eine offene Frage. Erst eine belastbare Klärung ermöglicht die Bewertung dieses Kriteriums."
+      },
+      "takeaway": "Leite Kriterien aus dem Bedarf ab, vergleiche denselben Umfang und Zeitraum und kennzeichne fehlende Angaben."
+    },
+    {
+      "id": "common-lf1-market-compare",
+      "title": "4. Angebote beurteilen und die Empfehlung begründen",
+      "objectiveIds": [
+        "common-lf1-market-relations",
+        "common-lf1-market-offer"
+      ],
+      "sourceIds": [
+        "fiausbv-annex"
+      ],
+      "paragraphs": [
+        "Für Radblick liegen zwei fiktive Angebote auf gleicher Preisbasis vor. Angebot A umfasst vier eigene Zugänge und keine Einweisung für 600 Euro Gesamtpreis einschließlich Einrichtung und zwölf Monaten. Angebot B umfasst acht eigene Zugänge und eine gemeinsame Einweisung für 780 Euro im selben Zeitraum. Beide Anbieter bestätigen den Einführungstermin. Weitere Kosten fallen nach den Annahmen dieses Vergleichs nicht an.",
+        "Mira prüft zuerst die verbindlichen Anforderungen. A bleibt im Budget und hält den Termin ein, verfehlt aber Zugängezahl und Einweisung. B erfüllt alle vier Anforderungen und bleibt mit 780 Euro innerhalb des Budgets von 800 Euro. Für den beschriebenen Bedarf ist B daher passend. Die Empfehlung lautet nicht B ist immer besser, sondern B passt zu diesen Vorgaben und kostet gegenüber A 180 Euro mehr.",
+        "Zusatzfunktionen können bei mehreren passenden Angeboten für die Auswahl hilfreich sein. Sie gleichen aber eine verfehlte verbindliche Anforderung nicht von selbst aus. Auch ein bekannter Firmenname oder eine höhere Anzahl von Funktionen ersetzt keinen Bedarfsvergleich. Bei gleicher Eignung können Preis und weitere abgestimmte Kriterien den Ausschlag geben.",
+        "Ändert Radblick den Bedarf oder wird eine Angabe korrigiert, muss die Bewertung erneut geprüft werden. Wenn kein Angebot die Vorgaben erfüllt, dokumentiert Mira die Abweichungen und lässt mit Sam und Lea Alternativen klären. Denkbar sind ein ergänztes Angebot oder ein abgestimmter anderer Umfang. Sie stellt einen ungeklärten Punkt nicht als zugesagt dar und trifft keine neue Vereinbarung im Namen anderer."
+      ],
+      "example": {
+        "title": "Ein günstigeres Angebot nachbessern lassen",
+        "text": "Anbieter A könnte ein ergänztes Angebot für acht Zugänge samt Einweisung vorlegen. Erst mit dessen Preis und Termin lässt sich erneut vergleichen. Die ursprünglichen 600 Euro dürfen nicht als Preis dieser erweiterten Leistung ausgegeben werden."
+      },
+      "misconception": {
+        "claim": "Das günstigste Angebot passt am besten, weil damit Geld für spätere Ergänzungen übrig bleibt.",
+        "correction": "Zunächst muss der geforderte Leistungsumfang abgedeckt sein. Kosten und Verfügbarkeit möglicher Ergänzungen sind ohne Angaben noch offen."
+      },
+      "takeaway": "Begründe die Empfehlung mit erfüllten Anforderungen, vergleichbaren Kosten und offenen Punkten. Eine niedrigere Zahl allein reicht nicht."
+    }
+  ],
+  "questionFile": "questions/common-lf1-market.v1.csv",
+  "quiz": {
+    "questionIds": [
+      "LJ-LF1-MARKET-Q01",
+      "LJ-LF1-MARKET-Q02",
+      "LJ-LF1-MARKET-Q03",
+      "LJ-LF1-MARKET-Q04",
+      "LJ-LF1-MARKET-Q05",
+      "LJ-LF1-MARKET-Q06"
+    ]
+  },
+  "exam": {
+    "questionIds": [
+      "LJ-LF1-MARKET-E01",
+      "LJ-LF1-MARKET-E02",
+      "LJ-LF1-MARKET-E03",
+      "LJ-LF1-MARKET-E04",
+      "LJ-LF1-MARKET-E05",
+      "LJ-LF1-MARKET-E06",
+      "LJ-LF1-MARKET-E07",
+      "LJ-LF1-MARKET-E08"
+    ],
+    "passPercent": 80,
+    "scoring": "all-or-nothing-per-question",
+    "timed": false
+  },
+  "questionLinks": [
+    {
+      "questionId": "LJ-LF1-MARKET-Q01",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf1-market-relations"
+      ],
+      "blockIds": [
+        "common-lf1-market-roles"
+      ]
+    },
+    {
+      "questionId": "LJ-LF1-MARKET-Q02",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf1-market-relations"
+      ],
+      "blockIds": [
+        "common-lf1-market-roles",
+        "common-lf1-market-map"
+      ]
+    },
+    {
+      "questionId": "LJ-LF1-MARKET-Q03",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf1-market-offer"
+      ],
+      "blockIds": [
+        "common-lf1-market-needs"
+      ]
+    },
+    {
+      "questionId": "LJ-LF1-MARKET-Q04",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf1-market-offer"
+      ],
+      "blockIds": [
+        "common-lf1-market-needs"
+      ]
+    },
+    {
+      "questionId": "LJ-LF1-MARKET-Q05",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf1-market-offer"
+      ],
+      "blockIds": [
+        "common-lf1-market-needs",
+        "common-lf1-market-compare"
+      ]
+    },
+    {
+      "questionId": "LJ-LF1-MARKET-Q06",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf1-market-offer"
+      ],
+      "blockIds": [
+        "common-lf1-market-needs",
+        "common-lf1-market-compare"
+      ]
+    },
+    {
+      "questionId": "LJ-LF1-MARKET-E01",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf1-market-relations"
+      ],
+      "blockIds": [
+        "common-lf1-market-roles"
+      ]
+    },
+    {
+      "questionId": "LJ-LF1-MARKET-E02",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf1-market-relations"
+      ],
+      "blockIds": [
+        "common-lf1-market-roles",
+        "common-lf1-market-map"
+      ]
+    },
+    {
+      "questionId": "LJ-LF1-MARKET-E03",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf1-market-relations"
+      ],
+      "blockIds": [
+        "common-lf1-market-map"
+      ]
+    },
+    {
+      "questionId": "LJ-LF1-MARKET-E04",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf1-market-offer"
+      ],
+      "blockIds": [
+        "common-lf1-market-needs"
+      ]
+    },
+    {
+      "questionId": "LJ-LF1-MARKET-E05",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf1-market-offer"
+      ],
+      "blockIds": [
+        "common-lf1-market-needs"
+      ]
+    },
+    {
+      "questionId": "LJ-LF1-MARKET-E06",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf1-market-offer"
+      ],
+      "blockIds": [
+        "common-lf1-market-needs",
+        "common-lf1-market-compare"
+      ]
+    },
+    {
+      "questionId": "LJ-LF1-MARKET-E07",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf1-market-offer"
+      ],
+      "blockIds": [
+        "common-lf1-market-compare"
+      ]
+    },
+    {
+      "questionId": "LJ-LF1-MARKET-E08",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf1-market-offer"
+      ],
+      "blockIds": [
+        "common-lf1-market-compare"
+      ]
+    }
+  ],
+  "interview": [
+    {
+      "id": "common-lf1-market-talk-relations",
+      "prompt": "Erkläre Radblick, Knotenpunkt, Netzhafen und Systemufer in einer Beziehungsübersicht. Welche Leistungen und Zahlungen würdest du einzeichnen? Wie könnte Netzhafen zusätzlich Wettbewerber werden?",
+      "objectiveIds": [
+        "common-lf1-market-relations"
+      ],
+      "blockIds": [
+        "common-lf1-market-roles",
+        "common-lf1-market-map"
+      ],
+      "keyPoints": [
+        "Radblick als Kunden von Knotenpunkt und Netzhafen als dessen Lieferanten des Betriebsdienstes einordnen.",
+        "Leistungen von Netzhafen zu Knotenpunkt und von Knotenpunkt zu Radblick darstellen, Zahlungen jeweils zurück.",
+        "Systemufer als Angebotsalternative für Radblick erklären. Netzhafen könnte bei einem eigenen passenden Angebot zugleich Lieferant und Wettbewerber sein."
+      ],
+      "acceptableAlternatives": [
+        "Eine mündliche Beschreibung mit klaren Beziehungen ersetzt eine gezeichnete Skizze.",
+        "Anbieter einer Vorleistung darf statt Lieferant verwendet werden, wenn Leistung und Empfänger genannt sind."
+      ],
+      "misconceptions": [
+        "Knotenpunkt wegen seines eigenen Kunden als möglichen Kunden von Netzhafen ausschließen.",
+        "Das konkurrierende Angebot bereits als erfolgte Lieferung oder Zahlung darstellen."
+      ],
+      "sampleAnswer": "Netzhafen liefert den Betriebsdienst an Knotenpunkt. Knotenpunkt liefert Radblick die Übersicht. Radblick bezahlt Knotenpunkt und Knotenpunkt bezahlt Netzhafen. Systemufer bietet eine Alternative für denselben Bedarf an. Würde Netzhafen Radblick auch eine eigene Übersicht anbieten, könnte Netzhafen zugleich Lieferant und Wettbewerber sein.",
+      "followUp": "Weshalb ist ein benachbarter Anbieter für Lohnabrechnung nicht schon aufgrund seiner Adresse Wettbewerber um diesen Auftrag?"
+    },
+    {
+      "id": "common-lf1-market-talk-needs",
+      "prompt": "Lea wünscht eine gute Reparaturübersicht. Welche Angaben brauchst du, bevor du Angebote vergleichst? Erkläre auch, wie du einen Einrichtungspreis mit monatlichen Entgelten und eine fehlende Angabe zur Einweisung behandelst.",
+      "objectiveIds": [
+        "common-lf1-market-offer"
+      ],
+      "blockIds": [
+        "common-lf1-market-needs"
+      ],
+      "keyPoints": [
+        "Aufgabe, nutzende Personen, notwendige Leistung, Termin und Budget erfragen und daraus Kriterien machen.",
+        "Für denselben Umfang und Zeitraum rechnen, etwa Einrichtung plus zwölf monatliche Entgelte.",
+        "Eine fehlende Angabe als offen markieren und klären, statt eine Zusage zu unterstellen."
+      ],
+      "acceptableAlternatives": [
+        "Eigene konkrete Rückfragen sind passend, wenn sie zu überprüfbaren Anforderungen führen.",
+        "Ein anderer gemeinsamer Zeitraum ist zulässig, wenn er mit dem Bedarf abgestimmt und in beiden Angeboten gleich verwendet wird."
+      ],
+      "misconceptions": [
+        "Die meisten Funktionen mit der besten Bedarfserfüllung gleichsetzen.",
+        "Ein nicht genanntes Leistungsmerkmal ohne Nachfrage als enthalten bewerten."
+      ],
+      "sampleAnswer": "Ich frage nach den Arbeitsaufgaben, der Zahl eigener Zugänge, der Einweisung, dem Einführungstermin und dem Budget. Dann prüfe ich diese Kriterien in beiden Angeboten. Einrichtung und Monatsentgelte rechne ich für denselben Zeitraum zusammen. Fehlt die Einweisung im Text, bleibt das Kriterium bis zur Klärung offen.",
+      "followUp": "Warum ist die Farbauswahl im beschriebenen Fall anders zu behandeln als die acht eigenen Zugänge?"
+    },
+    {
+      "id": "common-lf1-market-talk-recommendation",
+      "prompt": "Radblick benötigt acht eigene Zugänge, eine Einweisung und die Bereitstellung zum vereinbarten Termin für höchstens 800 Euro einschließlich zwölf Monaten. A bietet vier Zugänge ohne Einweisung für 600 Euro, B acht mit Einweisung für 780 Euro. Beide halten den Termin ein. Begründe eine Empfehlung und erkläre, was für ein erweitertes Angebot A neu zu prüfen wäre.",
+      "objectiveIds": [
+        "common-lf1-market-offer"
+      ],
+      "blockIds": [
+        "common-lf1-market-needs",
+        "common-lf1-market-compare"
+      ],
+      "keyPoints": [
+        "B erfüllt die vier Anforderungen, A verfehlt Zugängezahl und Einweisung.",
+        "B kostet im selben Zeitraum 180 Euro mehr und bleibt innerhalb des Budgets.",
+        "Für ein erweitertes A sind Leistungsumfang, neuer Preis und Termin erneut zu prüfen. Der alte Preis belegt das neue Angebot nicht."
+      ],
+      "acceptableAlternatives": [
+        "Eine tabellarische Gegenüberstellung oder eine begründete Beschreibung ist gleichermaßen passend.",
+        "Ein ergänztes A darf als zu prüfende Alternative vorgeschlagen werden, aber nicht ohne weitere Angaben als günstiger bestätigt werden."
+      ],
+      "misconceptions": [
+        "A trotz fehlender verbindlicher Leistungen wegen des Preises als passend bestätigen.",
+        "Die zusätzlichen Zugänge und Einweisung ohne Nachweis zum alten Preis hinzurechnen."
+      ],
+      "sampleAnswer": "Ich empfehle B für diesen Bedarf. Es bietet acht Zugänge und die Einweisung, hält den Termin und bleibt mit 780 Euro unter 800 Euro. Gegenüber A kostet es 180 Euro mehr. Ein erweitertes A wäre eine neue Vergleichsgrundlage. Dafür brauchen wir die zugesagten Leistungen, den Preis und den Termin.",
+      "followUp": "Wie würdest du vorgehen, wenn auch B den bestätigten Einführungstermin nicht mehr halten könnte?"
+    }
+  ],
+  "cards": [
+    {
+      "id": "common-lf1-market-card-roles",
+      "front": "Was unterscheidet Kunde, Lieferant und Wettbewerber?",
+      "back": "Der Kunde bezieht eine Leistung. Der Lieferant stellt einem Unternehmen benötigte Güter oder Dienste bereit. Ein Wettbewerber bietet eine Alternative für denselben Kundenbedarf an. Benenne stets die betrachtete Beziehung und Leistung.",
+      "objectiveIds": [
+        "common-lf1-market-relations"
+      ],
+      "blockIds": [
+        "common-lf1-market-roles"
+      ]
+    },
+    {
+      "id": "common-lf1-market-card-perspective",
+      "front": "Wie kann Knotenpunkt zugleich Anbieter und Kunde sein?",
+      "back": "Gegenüber Radblick liefert Knotenpunkt die Reparaturübersicht. Gegenüber Netzhafen bezieht Knotenpunkt einen Betriebsdienst und ist dessen Kunde. Auch Lieferant und Wettbewerber können sich als Rollen überschneiden, wenn ein Unternehmen beide Beziehungen unterhält.",
+      "objectiveIds": [
+        "common-lf1-market-relations"
+      ],
+      "blockIds": [
+        "common-lf1-market-roles",
+        "common-lf1-market-map"
+      ]
+    },
+    {
+      "id": "common-lf1-market-card-arrows",
+      "front": "Was müssen Pfeile in einer Beziehungsübersicht erklären?",
+      "back": "Beschrifte die Leistung und zeige vom Anbieter zum Empfänger. Zahlungen verlaufen im Fall zurück. Kennzeichne konkurrierende Angebote als Alternativen, solange keine entsprechende Geschäftsbeziehung besteht. Die Skizze ist kein technischer Datenflussplan.",
+      "objectiveIds": [
+        "common-lf1-market-relations"
+      ],
+      "blockIds": [
+        "common-lf1-market-map"
+      ]
+    },
+    {
+      "id": "common-lf1-market-card-needs",
+      "front": "Welche Angaben machen einen Kundenwunsch vergleichbar?",
+      "back": "Kläre Aufgabe, nutzende Personen, erforderliche Leistungen, Termin und Budget. Trenne verbindliche Anforderungen von zusätzlichen Wünschen. Ein Angebot mit vielen Funktionen kann trotzdem am konkreten Bedarf vorbeigehen.",
+      "objectiveIds": [
+        "common-lf1-market-offer"
+      ],
+      "blockIds": [
+        "common-lf1-market-needs"
+      ]
+    },
+    {
+      "id": "common-lf1-market-card-comparison",
+      "front": "Wie behandelst du laufende Entgelte und fehlende Angaben?",
+      "back": "Vergleiche denselben Umfang, dieselbe Preisbasis und denselben Zeitraum. Rechne Einrichtung und die Entgelte des Zeitraums zusammen. Fehlende Angaben bleiben offen, bis sie geklärt sind. Eine Lücke ist keine Leistungszusage.",
+      "objectiveIds": [
+        "common-lf1-market-offer"
+      ],
+      "blockIds": [
+        "common-lf1-market-needs"
+      ]
+    },
+    {
+      "id": "common-lf1-market-card-choice",
+      "front": "Was gehört in eine begründete Angebotsempfehlung?",
+      "back": "Nenne erfüllte Anforderungen, vergleichbare Kosten, Nachteile und offene Punkte. Prüfe verbindliche Anforderungen vor zusätzlichen Vorteilen. Wenn kein Angebot passt, kläre Alternativen oder abgestimmte Änderungen des Bedarfs. Bewerte geänderte Angebote erneut.",
+      "objectiveIds": [
+        "common-lf1-market-offer"
+      ],
+      "blockIds": [
+        "common-lf1-market-compare"
+      ]
+    }
+  ],
+  "review": {
+    "status": "reviewed",
+    "checkedAt": "2026-11-11"
+  }
+}

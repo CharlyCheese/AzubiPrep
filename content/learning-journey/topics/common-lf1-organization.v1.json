@@ -1,0 +1,521 @@
+{
+  "schemaVersion": 1,
+  "id": "common-lf1-organization",
+  "version": "1.0.0",
+  "title": "Organisation und Entscheidungsspielräume",
+  "fieldId": "LF1",
+  "scope": "common",
+  "prerequisites": [
+    "common-lf1-value-chain"
+  ],
+  "sourceIds": [
+    "kmk-fachinformatiker-2019",
+    "fiausbv-annex",
+    "bmwe-einzelunternehmen",
+    "gmbhg-organization",
+    "bgb-164",
+    "bgb-177"
+  ],
+  "sources": [
+    {
+      "id": "kmk-fachinformatiker-2019",
+      "title": "KMK-Rahmenlehrplan Fachinformatiker/Fachinformatikerin vom 13.12.2019",
+      "url": "https://www.kmk.org/fileadmin/Dateien/pdf/Bildung/BeruflicheBildung/rlp/Fachinformatiker_19-12-13_EL.pdf",
+      "checkedAt": "2026-11-11",
+      "note": "Lernfeld 1, gedruckte Seite 12: Organisationsstruktur, Rechtsform, Entscheidungsspielraum sowie adressatengerechte Darstellung, Vortrag und kriteriengeleitete Verbesserung. Die Beispiele und Aufgaben sind eigenständige didaktische Ausarbeitungen."
+    },
+    {
+      "id": "fiausbv-annex",
+      "title": "Fachinformatikerausbildungsverordnung – Ausbildungsrahmenplan",
+      "url": "https://www.gesetze-im-internet.de/fiausbv/anlage.html",
+      "checkedAt": "2026-11-11",
+      "note": "Abschnitt A Nr. 1: Aufgaben und betriebliche Vorgaben abstimmen. Nr. 2: Zielgruppen unterscheiden, Sachverhalte verständlich und multimedial präsentieren. Abschnitt F Nr. 2: Aufbau und Organisation des Ausbildungsbetriebs. Grundlage des Berufsbezugs, keine Quelle für erfundene Personen oder Betriebsregeln."
+    },
+    {
+      "id": "bmwe-einzelunternehmen",
+      "title": "Bundeswirtschaftsministerium – Einzelunternehmen: Unternehmensführung und Haftung",
+      "url": "https://www.existenzgruendungsportal.de/SharedDocs/Expertenforum_Unterseiten/Rechtsformen/Einzelunternehmen/Einzelunternehmen?nn=ab2aecfd-f411-4b5f-8eb3-15182e2c27bd",
+      "checkedAt": "2026-11-11",
+      "note": "Abschnitte Unternehmensführung und Haftung geprüft: Inhaberin oder Inhaber leitet und haftet mit Geschäfts- und Privatvermögen im gesetzlichen Rahmen. Weitere Aussagen der Seite zu Gründung, Wohnsitz, Steuern oder Buchführung werden hier nicht verwendet."
+    },
+    {
+      "id": "gmbhg-organization",
+      "title": "GmbH-Gesetz – Rechtsstellung, Vertretung und Verantwortung",
+      "url": "https://www.gesetze-im-internet.de/gmbhg/BJNR004770892.html",
+      "checkedAt": "2026-11-11",
+      "note": "§ 13: eigene Rechtspersönlichkeit und Gesellschaftsvermögen als Haftungsmasse. §§ 35 und 37: Vertretung durch Geschäftsführung und Unterschied zwischen internen Grenzen und Außenwirkung. § 43: mögliche Haftung der Geschäftsführung bei Pflichtverletzung. Beschränkte Grundlagendarstellung, keine pauschale Haftungsgarantie."
+    },
+    {
+      "id": "bgb-164",
+      "title": "Bürgerliches Gesetzbuch § 164 – Wirkung der Erklärung des Vertreters",
+      "url": "https://www.gesetze-im-internet.de/bgb/__164.html",
+      "checkedAt": "2026-11-11",
+      "note": "Absatz 1 geprüft: Erklärung im Namen des Vertretenen innerhalb der Vertretungsmacht wirkt für und gegen ihn. Die Befugnisse im Übungsfall sind ausdrücklich erfundene Vorgaben, keine gesetzlichen Betragsgrenzen."
+    },
+    {
+      "id": "bgb-177",
+      "title": "Bürgerliches Gesetzbuch § 177 – Vertragsschluss ohne Vertretungsmacht",
+      "url": "https://www.gesetze-im-internet.de/bgb/__177.html",
+      "checkedAt": "2026-11-11",
+      "note": "Absatz 1 geprüft: Bei Vertragsschluss ohne Vertretungsmacht hängt die Wirksamkeit für den Vertretenen von dessen Genehmigung ab. Die Lerneinheit rät zum vorherigen Klären und behauptet keine ausnahmslose Unwirksamkeit."
+    }
+  ],
+  "objectives": [
+    {
+      "id": "common-lf1-organization-structure",
+      "text": "Aus einem Organigramm Zuständigkeiten und einen passenden Abstimmungsweg ablesen."
+    },
+    {
+      "id": "common-lf1-organization-legalform",
+      "text": "Einzelunternehmen und GmbH anhand von Leitung und grundlegender Haftung unterscheiden."
+    },
+    {
+      "id": "common-lf1-organization-authority",
+      "text": "In einem vorgegebenen betrieblichen Fall prüfen, ob eine Entscheidung von der eigenen Befugnis gedeckt ist."
+    }
+  ],
+  "caseStudy": {
+    "title": "Wer darf den nächsten Schritt freigeben?",
+    "text": "Der erfundene Auftrag bei Radblick wächst: Lea fragt nach einer zusätzlichen Auswertung. Knotenpunkt ist in dieser Übung eine GmbH mit Geschäftsführerin Noor. Sam koordiniert das Projektteam, Mira lernt dort. Eda betreut den kaufmännischen Bereich. Radblick wird als Einzelunternehmen von Lea geführt. Die folgenden Zuständigkeiten und Grenzen gelten für diesen Lernfall. Sie beschreiben keine allgemeine Regel für Auszubildende oder IT-Betriebe."
+  },
+  "blocks": [
+    {
+      "id": "common-lf1-organization-chart",
+      "title": "1. Ein Organigramm lesen",
+      "objectiveIds": [
+        "common-lf1-organization-structure"
+      ],
+      "sourceIds": [
+        "kmk-fachinformatiker-2019",
+        "fiausbv-annex"
+      ],
+      "paragraphs": [
+        "Eine Aufbauorganisation verteilt Aufgaben auf Stellen und Bereiche und zeigt, wer wem zugeordnet ist. Ein Organigramm stellt diese Struktur dar. Es beantwortet etwa: Wer koordiniert mein Team, und welcher Bereich bearbeitet Rechnungen? Ein Ablaufplan zeigt dagegen, in welcher Reihenfolge Arbeitsschritte erfolgen.",
+        "Das vereinfachte Organigramm von Knotenpunkt lässt sich in drei Linien lesen. Ein Pfeil bedeutet hier: Die links genannte Stelle leitet den rechts genannten Bereich. Er beschreibt keine zeitliche Reihenfolge.",
+        "Linie 1: Geschäftsführung Noor → Projektteam mit Koordination Sam → Auszubildende Mira.",
+        "Linie 2: Geschäftsführung Noor → kaufmännischer Bereich Eda.",
+        "Linie 3: Projektteam Sam ↔ kaufmännischer Bereich Eda. Dieser Doppelpfeil bezeichnet die fachliche Abstimmung zu Preisen und Rechnungen, keine gegenseitige Weisungsbefugnis.",
+        "Mira bespricht offene Projektaufgaben zunächst mit Sam. Rechnungsangaben werden mit Eda geklärt. Überschreitet eine Entscheidung Sams vorgegebene Befugnis, legt er sie Noor vor. Lea ist eine externe Kundin und gehört nicht zur Leitung von Knotenpunkt. Das Organigramm erleichtert die Orientierung, ersetzt aber keine konkrete Befugnisregel."
+      ],
+      "example": {
+        "title": "Ein unklarer Rechnungsposten",
+        "text": "Mira entdeckt in der Auftragsübersicht eine unklare Rechnungsangabe. Sie informiert Sam und klärt den Sachverhalt mit Eda. Ein neuer Preis wird dadurch noch nicht zugesagt."
+      },
+      "misconception": {
+        "claim": "Wer in einem Organigramm mit einer anderen Person verbunden ist, darf für sie Verträge schließen.",
+        "correction": "Eine Verbindung kann Unterstellung oder Zusammenarbeit zeigen. Vertragsbefugnisse müssen gesondert feststehen."
+      },
+      "takeaway": "Lies zuerst die Bedeutung der Linien, dann Zuständigkeit und Abstimmungsweg."
+    },
+    {
+      "id": "common-lf1-organization-legalforms",
+      "title": "2. Leitung und Haftung unterscheiden",
+      "objectiveIds": [
+        "common-lf1-organization-legalform"
+      ],
+      "sourceIds": [
+        "bmwe-einzelunternehmen",
+        "gmbhg-organization"
+      ],
+      "paragraphs": [
+        "Eine Rechtsform beschreibt den rechtlichen Rahmen eines Unternehmens. Sie ist etwas anderes als seine Größe oder die Zahl seiner Teams. Hier vergleichen wir das Einzelunternehmen mit einer bereits eingetragenen GmbH. Sonderfragen zur Gründung oder Insolvenz sind nicht Gegenstand des Vergleichs.",
+        "Beim Einzelunternehmen ist eine natürliche Person Inhaberin oder Inhaber und leitet das Unternehmen. Beschäftigte und beauftragte Vertretungen sind möglich. Für betriebliche Schulden haftet die Person mit ihrem Geschäfts- und Privatvermögen im gesetzlichen Rahmen. Einzelunternehmen bedeutet deshalb nicht, dass dort nur eine Person arbeitet. Im Fall trägt Lea diese Stellung bei Radblick.",
+        "Die GmbH ist eine eigene juristische Person. Ihre Geschäfte führt die Geschäftsführung, die sie nach § 35 GmbHG auch nach außen vertritt. Gesellschafter halten Anteile und treffen Entscheidungen in ihrem Zuständigkeitsbereich. Sie müssen nicht zugleich Geschäftsführer sein. Im Fall ist Noor Geschäftsführerin von Knotenpunkt.",
+        "Für Verbindlichkeiten der GmbH haftet nach § 13 GmbHG das Gesellschaftsvermögen. Das ist keine Begrenzung der Schulden auf die Höhe des Stammkapitals. Ebenso bedeutet die Rechtsform keine persönliche Haftungsfreiheit in jeder Situation: Nach § 43 GmbHG kann etwa eine Geschäftsführerin der Gesellschaft bei Pflichtverletzungen zum Ersatz eines Schadens verpflichtet sein.",
+        "Für die Grundlagenfrage unterscheidest du daher: Wer führt und vertritt den Betrieb, wer ist Träger der Verbindlichkeiten, und welches Vermögen haftet dafür? Leas persönliche Haftung als Einzelunternehmerin und die Haftung der GmbH mit Gesellschaftsvermögen dürfen nicht vertauscht werden."
+      ],
+      "example": {
+        "title": "Zwei Rechnungsempfänger",
+        "text": "Eine betriebliche Forderung gegen Leas Einzelunternehmen betrifft Lea als Unternehmerin. Eine Forderung gegen die eingetragene Knotenpunkt GmbH betrifft die Gesellschaft. Aus dem Wort GmbH folgt weder ein fester Höchstbetrag für die Forderung noch eine Befreiung der Geschäftsführung von ihren Pflichten."
+      },
+      "misconception": {
+        "claim": "Eine GmbH kann nur bis zur Höhe ihres Stammkapitals Schulden haben.",
+        "correction": "Das Gesellschaftsvermögen ist die Haftungsmasse. Die Höhe einer Schuld wird durch das Stammkapital nicht gedeckelt."
+      },
+      "takeaway": "Trenne Inhaberschaft, Geschäftsführung und Haftungsmasse; vermeide pauschale Haftungsversprechen."
+    },
+    {
+      "id": "common-lf1-organization-powers",
+      "title": "3. Aufgabe und Befugnis sind verschieden",
+      "objectiveIds": [
+        "common-lf1-organization-structure",
+        "common-lf1-organization-authority"
+      ],
+      "sourceIds": [
+        "kmk-fachinformatiker-2019",
+        "fiausbv-annex",
+        "bgb-164",
+        "gmbhg-organization"
+      ],
+      "paragraphs": [
+        "Eine Aufgabe sagt, was du bearbeiten sollst. Eine Befugnis sagt, welche Entscheidungen oder Erklärungen du dafür treffen darfst. Fachwissen und Zugriff auf eine Bestellseite verleihen für sich genommen keine Entscheidungsbefugnis. Auch eine dringende Kundenanfrage erweitert sie nicht.",
+        "Für Mira gilt im Fall: Sie darf Anforderungen sammeln, freigegebene Beispieldaten bearbeiten und Lösungsvorschläge vorbereiten. Sie darf keine kostenpflichtigen Zusatzleistungen bestellen und keine Preise oder verbindlichen Liefertermine zusagen. Sam darf im vereinbarten Projektumfang Arbeitsaufgaben und interne Termine abstimmen. Preisänderungen oder zusätzlicher Leistungsumfang sind vor einer Zusage mit Noor zu klären. Eda stellt dafür kaufmännische Angaben zusammen.",
+        "Prüfe eine Entscheidung in vier Schritten: Was soll konkret entschieden werden? Welche Befugnis wurde dafür erteilt? Welche Grenzen gelten, etwa für Betrag, Gegenstand oder Termin? Wer klärt eine Überschreitung oder Unklarheit? Notiere die Rückmeldung so, dass das Team später denselben Stand kennt.",
+        "Bei rechtlichen Erklärungen unterscheidet man interne Zuständigkeit und Vertretungsmacht gegenüber anderen. Nach § 164 BGB kann eine Erklärung innerhalb der Vertretungsmacht im Namen des Betriebs für diesen wirken. Nicht jede interne Grenze hat dieselbe Außenwirkung; für die Geschäftsführung einer GmbH enthält § 37 GmbHG besondere Regeln. In unseren Fällen ist ausdrücklich festgelegt, dass Mira weder eine Freigabe noch Vertretungsmacht für Bestellungen oder Preiszusagen hat. Entscheide nicht aus einem Organigramm über die Wirksamkeit realer Verträge."
+      ],
+      "example": {
+        "title": "Ein hilfreicher Vorschlag",
+        "text": "Mira darf zwei Möglichkeiten für eine zusätzliche Auswertung vergleichen und Sam vorlegen. Den Aufpreis gegenüber Lea darf sie nach der Fallregel nicht festlegen. Eine Entscheidung vorzubereiten ist ein eigener Beitrag, auch wenn eine andere Stelle sie freigibt."
+      },
+      "misconception": {
+        "claim": "Wer eine Aufgabe fachlich beherrscht, darf auch deren Preis und Liefertermin verbindlich zusagen.",
+        "correction": "Fachliche Eignung und Entscheidungsbefugnis sind getrennt zu prüfen. Im Fall sind Preis- und Terminzusagen für Mira nicht freigegeben."
+      },
+      "takeaway": "Beschreibe die konkrete Entscheidung und vergleiche sie mit den ausdrücklich erteilten Befugnissen."
+    },
+    {
+      "id": "common-lf1-organization-clarification",
+      "title": "4. Bei Grenzen handlungsfähig bleiben",
+      "objectiveIds": [
+        "common-lf1-organization-authority",
+        "common-lf1-organization-structure"
+      ],
+      "sourceIds": [
+        "fiausbv-annex",
+        "bgb-164",
+        "bgb-177"
+      ],
+      "paragraphs": [
+        "Lea bittet Mira um eine zusätzliche Auswertung bis Freitag für einen festen Aufpreis. Mira hält fest, was gebraucht wird, welche Frist gewünscht ist und welche Angaben noch fehlen. Damit bearbeitet sie ihre Aufgabe weiter. Sie erklärt, dass Preis, Umfang und Termin erst intern geklärt werden.",
+        "Der vereinbarte Weg lautet: Mira → Sam → bei zusätzlichem Umfang oder Preisentscheidung Noor; Eda liefert bei Bedarf die Kostenangaben. Nach der Freigabe klärt die dafür befugte Person das Angebot mit Lea. Ein längerer Abstimmungsweg kann nötig sein, obwohl der technische Wunsch einfach klingt.",
+        "Unklare oder fehlende Befugnis wird vor einer verbindlichen Zusage geklärt. Hat jemand bereits ohne Vertretungsmacht im fremden Namen einen Vertrag geschlossen, hängt dessen Wirksamkeit für den Vertretenen nach § 177 Absatz 1 BGB von dessen Genehmigung ab. Es wäre deshalb ebenso falsch, einen solchen Vertrag pauschal für wirksam wie pauschal für endgültig unwirksam zu erklären. Im Lernfall ist der sinnvolle nächste Schritt, Sam und die zuständige Leitung sofort zu informieren.",
+        "Dokumentiere bei der Rückfrage den Wunsch, den bisherigen Stand und die offene Entscheidung. Formuliere gegenüber Lea zum Beispiel: Ich habe die gewünschte Auswertung und Freitag als Wunschtermin aufgenommen. Sam klärt den zusätzlichen Umfang mit Noor; danach erhalten Sie eine abgestimmte Rückmeldung. Das ist eine Information über das Vorgehen und keine Zusage des Termins."
+      ],
+      "example": {
+        "title": "Eine Bestellung für 60 Euro",
+        "text": "Mira findet ein passendes kostenpflichtiges Zusatzangebot für 60 Euro. Auch dieser kleine Betrag ist nach ihrer Fallregel nicht freigegeben. Sie legt Nutzen, Preis und Bedingungen zur Entscheidung vor, bevor eine befugte Person bestellt."
+      },
+      "misconception": {
+        "claim": "Eine kleine oder dringende Bestellung ist auch ohne passende Befugnis zulässig.",
+        "correction": "Entscheidend ist die erteilte Befugnis, nicht das eigene Gefühl für einen kleinen Betrag oder die Dringlichkeit."
+      },
+      "takeaway": "Offene Entscheidungen mit klaren Angaben weitergeben und eine verbindliche Zusage erst nach passender Klärung veranlassen."
+    }
+  ],
+  "questionFile": "questions/common-lf1-organization.v1.csv",
+  "quiz": {
+    "questionIds": [
+      "LJ-LF1-ORGANIZATION-Q01",
+      "LJ-LF1-ORGANIZATION-Q02",
+      "LJ-LF1-ORGANIZATION-Q03",
+      "LJ-LF1-ORGANIZATION-Q04",
+      "LJ-LF1-ORGANIZATION-Q05",
+      "LJ-LF1-ORGANIZATION-Q06"
+    ]
+  },
+  "exam": {
+    "questionIds": [
+      "LJ-LF1-ORGANIZATION-E01",
+      "LJ-LF1-ORGANIZATION-E02",
+      "LJ-LF1-ORGANIZATION-E03",
+      "LJ-LF1-ORGANIZATION-E04",
+      "LJ-LF1-ORGANIZATION-E05",
+      "LJ-LF1-ORGANIZATION-E06",
+      "LJ-LF1-ORGANIZATION-E07",
+      "LJ-LF1-ORGANIZATION-E08"
+    ],
+    "passPercent": 80,
+    "scoring": "all-or-nothing-per-question",
+    "timed": false
+  },
+  "questionLinks": [
+    {
+      "questionId": "LJ-LF1-ORGANIZATION-Q01",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf1-organization-structure"
+      ],
+      "blockIds": [
+        "common-lf1-organization-chart"
+      ]
+    },
+    {
+      "questionId": "LJ-LF1-ORGANIZATION-Q02",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf1-organization-structure"
+      ],
+      "blockIds": [
+        "common-lf1-organization-chart"
+      ]
+    },
+    {
+      "questionId": "LJ-LF1-ORGANIZATION-Q03",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf1-organization-legalform"
+      ],
+      "blockIds": [
+        "common-lf1-organization-legalforms"
+      ]
+    },
+    {
+      "questionId": "LJ-LF1-ORGANIZATION-Q04",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf1-organization-legalform"
+      ],
+      "blockIds": [
+        "common-lf1-organization-legalforms"
+      ]
+    },
+    {
+      "questionId": "LJ-LF1-ORGANIZATION-Q05",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf1-organization-authority"
+      ],
+      "blockIds": [
+        "common-lf1-organization-powers"
+      ]
+    },
+    {
+      "questionId": "LJ-LF1-ORGANIZATION-Q06",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf1-organization-authority",
+        "common-lf1-organization-structure"
+      ],
+      "blockIds": [
+        "common-lf1-organization-clarification"
+      ]
+    },
+    {
+      "questionId": "LJ-LF1-ORGANIZATION-E01",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf1-organization-structure"
+      ],
+      "blockIds": [
+        "common-lf1-organization-chart"
+      ]
+    },
+    {
+      "questionId": "LJ-LF1-ORGANIZATION-E02",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf1-organization-structure",
+        "common-lf1-organization-authority"
+      ],
+      "blockIds": [
+        "common-lf1-organization-chart",
+        "common-lf1-organization-powers"
+      ]
+    },
+    {
+      "questionId": "LJ-LF1-ORGANIZATION-E03",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf1-organization-legalform"
+      ],
+      "blockIds": [
+        "common-lf1-organization-legalforms"
+      ]
+    },
+    {
+      "questionId": "LJ-LF1-ORGANIZATION-E04",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf1-organization-legalform"
+      ],
+      "blockIds": [
+        "common-lf1-organization-legalforms"
+      ]
+    },
+    {
+      "questionId": "LJ-LF1-ORGANIZATION-E05",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf1-organization-authority"
+      ],
+      "blockIds": [
+        "common-lf1-organization-powers",
+        "common-lf1-organization-clarification"
+      ]
+    },
+    {
+      "questionId": "LJ-LF1-ORGANIZATION-E06",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf1-organization-authority"
+      ],
+      "blockIds": [
+        "common-lf1-organization-powers"
+      ]
+    },
+    {
+      "questionId": "LJ-LF1-ORGANIZATION-E07",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf1-organization-authority"
+      ],
+      "blockIds": [
+        "common-lf1-organization-clarification"
+      ]
+    },
+    {
+      "questionId": "LJ-LF1-ORGANIZATION-E08",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf1-organization-authority",
+        "common-lf1-organization-structure"
+      ],
+      "blockIds": [
+        "common-lf1-organization-clarification"
+      ]
+    }
+  ],
+  "interview": [
+    {
+      "id": "common-lf1-organization-talk-chart",
+      "prompt": "Lies die drei Organigramm-Linien: Wer koordiniert Miras Arbeit, wer bearbeitet Rechnungsangaben und wie wird ein zusätzlicher Leistungsumfang abgestimmt? Erkläre auch den Doppelpfeil zwischen Sam und Eda.",
+      "objectiveIds": [
+        "common-lf1-organization-structure",
+        "common-lf1-organization-authority"
+      ],
+      "blockIds": [
+        "common-lf1-organization-chart",
+        "common-lf1-organization-powers",
+        "common-lf1-organization-clarification"
+      ],
+      "keyPoints": [
+        "Sam koordiniert das Projektteam und ist Miras erster Projektkontakt.",
+        "Eda bearbeitet kaufmännische Angaben; der Doppelpfeil zeigt Zusammenarbeit.",
+        "Zusätzlichen Umfang gibt Sam an Noor zur Entscheidung weiter; Mira sagt ihn nicht zu."
+      ],
+      "acceptableAlternatives": [
+        "Den Weg als Skizze oder in eigenen Worten beschreiben."
+      ],
+      "misconceptions": [
+        "Eda aufgrund der Querverbindung zu Sams Vorgesetzter erklären.",
+        "Lea als Kundin an die Stelle der Geschäftsführung von Knotenpunkt setzen."
+      ],
+      "sampleAnswer": "Mira klärt Projektfragen mit Sam und Rechnungsangaben mit Eda. Sam und Eda arbeiten zusammen, ohne dass der Doppelpfeil eine Weisungsrichtung vorgibt. Eine Erweiterung des Auftrags legt Sam Noor vor.",
+      "followUp": "Welche Information fehlt dir, wenn du aus dem Organigramm eine konkrete Bestellbefugnis ableiten möchtest?"
+    },
+    {
+      "id": "common-lf1-organization-talk-legalforms",
+      "prompt": "Vergleiche Radblick als Einzelunternehmen und die eingetragene Knotenpunkt GmbH: Wer leitet, und welches Vermögen haftet für betriebliche Verbindlichkeiten? Wieso ist „bei einer GmbH haftet persönlich niemand“ zu weitgehend?",
+      "objectiveIds": [
+        "common-lf1-organization-legalform"
+      ],
+      "blockIds": [
+        "common-lf1-organization-legalforms"
+      ],
+      "keyPoints": [
+        "Lea führt als Inhaberin das Einzelunternehmen und haftet mit Geschäfts- und Privatvermögen im gesetzlichen Rahmen.",
+        "Bei der GmbH führt und vertritt die Geschäftsführung die Gesellschaft; Haftungsmasse ist das Gesellschaftsvermögen.",
+        "Eine persönliche Verantwortlichkeit kann etwa bei Pflichtverletzungen der Geschäftsführung bestehen; Stammkapital ist kein Schuldenhöchstbetrag."
+      ],
+      "acceptableAlternatives": [
+        "Geschäftsführung und Anteilseigner können personell zusammenfallen, müssen es aber nicht."
+      ],
+      "misconceptions": [
+        "Einzelunternehmen mit einem Einpersonenbetrieb gleichsetzen.",
+        "Gesellschaftsvermögen und Stammkapital als denselben Haftungshöchstbetrag bezeichnen."
+      ],
+      "sampleAnswer": "Lea ist Inhaberin und leitet Radblick; auch ihr Privatvermögen kann für Unternehmensschulden haften. Knotenpunkt ist eine eigene Gesellschaft, vertreten durch Noor. Für Gesellschaftsschulden haftet das Gesellschaftsvermögen. Pflichtverletzungen können dennoch eine eigene Haftung der Geschäftsführung auslösen.",
+      "followUp": "Kann ein Einzelunternehmen Beschäftigte haben, und ändert das die grundlegende Haftungszuordnung?"
+    },
+    {
+      "id": "common-lf1-organization-talk-authority",
+      "prompt": "Lea möchte die zusätzliche Auswertung bis Freitag. Mira kann sie fachlich vorbereiten, hat aber keine Befugnis für Preis- oder Terminzusagen. Formuliere ihre Antwort und den anschließenden Abstimmungsweg.",
+      "objectiveIds": [
+        "common-lf1-organization-authority",
+        "common-lf1-organization-structure"
+      ],
+      "blockIds": [
+        "common-lf1-organization-powers",
+        "common-lf1-organization-clarification"
+      ],
+      "keyPoints": [
+        "Bedarf und Wunschtermin aufnehmen, ohne sie verbindlich zuzusagen.",
+        "Fehlende Befugnis erkennen; Sam klärt zusätzlichen Umfang und Preis mit Noor.",
+        "Sachstand, offene Entscheidung und erhaltene Freigabe nachvollziehbar festhalten."
+      ],
+      "acceptableAlternatives": [
+        "Eine Rückmeldefrist ankündigen, wenn diese intern abgestimmt ist, ohne damit den Liefertermin zuzusagen."
+      ],
+      "misconceptions": [
+        "Technische Machbarkeit als Freigabe verwenden.",
+        "Mira wegen der fehlenden Befugnis jede Vorbereitung untersagen."
+      ],
+      "sampleAnswer": "Ich nehme die gewünschte Auswertung und Freitag als Wunschtermin auf. Sam klärt Umfang, Preis und Termin mit Noor. Danach bekommen Sie eine abgestimmte Rückmeldung. Intern dokumentiere ich den Wunsch und was noch entschieden werden muss.",
+      "followUp": "Was ändert sich an deiner Entscheidung, wenn das Zusatzangebot nur 60 Euro kostet?"
+    }
+  ],
+  "cards": [
+    {
+      "id": "common-lf1-organization-card-chart",
+      "front": "Was zeigt ein Organigramm, und was sagt eine Linie nicht von selbst aus?",
+      "back": "Es zeigt Stellen, Bereiche und definierte Beziehungen. Lies die Legende: Eine Linie kann Leitung oder Zusammenarbeit bedeuten. Eine konkrete Vertragsbefugnis folgt daraus nicht.",
+      "objectiveIds": [
+        "common-lf1-organization-structure"
+      ],
+      "blockIds": [
+        "common-lf1-organization-chart"
+      ]
+    },
+    {
+      "id": "common-lf1-organization-card-route",
+      "front": "Welcher Abstimmungsweg passt zur Auftragserweiterung bei Knotenpunkt?",
+      "back": "Mira nimmt den Wunsch auf und spricht mit Sam. Sam legt zusätzlichen Umfang und Preis Noor vor. Eda liefert kaufmännische Angaben. Lea ist externe Kundin, keine Vorgesetzte bei Knotenpunkt.",
+      "objectiveIds": [
+        "common-lf1-organization-structure",
+        "common-lf1-organization-authority"
+      ],
+      "blockIds": [
+        "common-lf1-organization-chart",
+        "common-lf1-organization-clarification"
+      ]
+    },
+    {
+      "id": "common-lf1-organization-card-sole",
+      "front": "Was bedeutet Einzelunternehmen für Leitung und Haftung?",
+      "back": "Eine natürliche Person ist Inhaberin und leitet. Beschäftigte sind möglich. Für betriebliche Schulden haftet sie mit Geschäfts- und Privatvermögen im gesetzlichen Rahmen.",
+      "objectiveIds": [
+        "common-lf1-organization-legalform"
+      ],
+      "blockIds": [
+        "common-lf1-organization-legalforms"
+      ]
+    },
+    {
+      "id": "common-lf1-organization-card-gmbh",
+      "front": "Was unterscheidet die GmbH vom Einzelunternehmen in diesem Vergleich?",
+      "back": "Die GmbH ist eine eigene juristische Person. Die Geschäftsführung führt und vertritt sie. Für Gesellschaftsschulden haftet das Gesellschaftsvermögen, ohne Schuldenobergrenze in Höhe des Stammkapitals. Eigene Pflichtverletzungen können zusätzliche persönliche Haftung auslösen.",
+      "objectiveIds": [
+        "common-lf1-organization-legalform"
+      ],
+      "blockIds": [
+        "common-lf1-organization-legalforms"
+      ]
+    },
+    {
+      "id": "common-lf1-organization-card-power",
+      "front": "Wie prüfst du deine Befugnis für eine Entscheidung?",
+      "back": "Benenne die Entscheidung, die erteilte Befugnis, deren Grenzen und die zuständige Stelle für Unklarheiten. Technisches Wissen oder Zugriff auf eine Bestellseite ersetzen die Befugnis nicht.",
+      "objectiveIds": [
+        "common-lf1-organization-authority"
+      ],
+      "blockIds": [
+        "common-lf1-organization-powers"
+      ]
+    },
+    {
+      "id": "common-lf1-organization-card-unclear",
+      "front": "Was tust du vor einer Zusage, wenn die Befugnis fehlt oder unklar ist?",
+      "back": "Nimm den Bedarf auf, kennzeichne offene Punkte und kläre sie mit der zuständigen Person. Informiere über den Abstimmungsweg. Ein ohne Vertretungsmacht geschlossener Vertrag ist nach § 177 BGB nicht pauschal endgültig unwirksam; die Genehmigung des Vertretenen ist maßgeblich.",
+      "objectiveIds": [
+        "common-lf1-organization-authority"
+      ],
+      "blockIds": [
+        "common-lf1-organization-clarification"
+      ]
+    }
+  ],
+  "review": {
+    "status": "reviewed",
+    "checkedAt": "2026-11-11"
+  }
+}

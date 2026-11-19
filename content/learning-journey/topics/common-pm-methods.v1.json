@@ -1,0 +1,504 @@
+{
+  "schemaVersion": 1,
+  "id": "common-pm-methods",
+  "version": "1.0.0",
+  "title": "Klassisch, agil und passend kombiniert",
+  "fieldId": "PM",
+  "scope": "common",
+  "prerequisites": [
+    "common-pm-stakeholders"
+  ],
+  "sourceIds": [
+    "ec-pm2-methodology",
+    "scrum-guide-2020",
+    "scrum-org-sprint",
+    "scrum-org-team",
+    "scrum-org-artifacts",
+    "scrum-alliance-points"
+  ],
+  "sources": [
+    {
+      "id": "ec-pm2-methodology",
+      "title": "Europäische Kommission: PM²-Projektmanagement",
+      "url": "https://pm2.europa.eu/pm2-methodologies/pm2-project-management_en",
+      "checkedAt": "2026-11-11",
+      "note": "Öffentliche HTML-Übersicht zu Rollen, Phasen, Entscheidungspunkten und abgestimmter Projektarbeit geprüft. Vereinfachter IT-Übungsfall ist selbst verfasst."
+    },
+    {
+      "id": "scrum-guide-2020",
+      "title": "Schwaber und Sutherland: Scrum Guide 2020",
+      "url": "https://scrumguides.org/scrum-guide.html",
+      "checkedAt": "2026-11-11",
+      "note": "Offizielle HTML-Fassung und Downloadindex geprüft: aktuell November 2020. Verantwortlichkeiten, Ereignisse, Artefakte und zugehörige Commitments anhand des Guides; keine frühere gesonderte Entwicklungsteam-Rolle."
+    },
+    {
+      "id": "scrum-org-sprint",
+      "title": "Scrum.org: Introduction to The Sprint",
+      "url": "https://www.scrum.org/resources/introduction-sprint",
+      "checkedAt": "2026-11-11",
+      "note": "Sprint als Zeitraum bis zu einem Monat mit Planung, täglicher Überprüfung, Review und Retrospektive geprüft. Eigene Portalbeispiele sind didaktische Übertragungen."
+    },
+    {
+      "id": "scrum-org-team",
+      "title": "Scrum.org: The Scrum Team",
+      "url": "https://www.scrum.org/resources/scrum-team",
+      "checkedAt": "2026-11-11",
+      "note": "Aktuelle Verantwortlichkeiten Product Owner, Scrum Master und Developers sowie Selbstmanagement geprüft."
+    },
+    {
+      "id": "scrum-org-artifacts",
+      "title": "Scrum.org: The Scrum Artifacts",
+      "url": "https://www.scrum.org/resources/scrum-artifacts-0",
+      "checkedAt": "2026-11-11",
+      "note": "Drei Artefakte und Zuordnung der Commitments Produktziel, Sprintziel und Definition of Done geprüft."
+    },
+    {
+      "id": "scrum-alliance-points",
+      "title": "Scrum Alliance: What is story point estimation on an agile team?",
+      "url": "https://resources.scrumalliance.org/Article/story-point-estimation",
+      "checkedAt": "2026-11-11",
+      "note": "Relative teambezogene Schätzung geprüft; keine feste Umrechnung zwischen Story Points und Stunden."
+    }
+  ],
+  "objectives": [
+    {
+      "id": "common-pm-methods-compare",
+      "text": "Planorientiertes und iteratives Vorgehen nach Rückmeldung und Planbarkeit vergleichen."
+    },
+    {
+      "id": "common-pm-methods-scrum",
+      "text": "Scrum-Verantwortlichkeiten, Ereignisse und Artefakte in einem einfachen Fall einordnen."
+    },
+    {
+      "id": "common-pm-methods-choose",
+      "text": "Für einen Auftrag ein begründetes Vorgehen wählen, ohne Agilität mit Planungslosigkeit zu verwechseln."
+    }
+  ],
+  "caseStudy": {
+    "title": "Nordlicht IT plant ein Serviceticket-Portal",
+    "text": "Nordlicht IT kennt die technischen Schritte für die Portalinstallation gut. Bei der Bedienoberfläche ist noch unklar, welche Darstellung den Servicekräften hilft. Du vergleichst Vorgehensweisen für diese unterschiedlichen Bedingungen. Der Fall stellt keine bereits beschlossene Einführung von Scrum dar."
+  },
+  "blocks": [
+    {
+      "id": "common-pm-methods-compare",
+      "title": "1. Planen und aus Rückmeldung lernen",
+      "objectiveIds": [
+        "common-pm-methods-compare"
+      ],
+      "sourceIds": [
+        "ec-pm2-methodology",
+        "scrum-org-sprint"
+      ],
+      "paragraphs": [
+        "Ein planorientiertes Vorgehen legt Ergebnisse, Arbeitsschritte und Freigaben im Voraus möglichst verlässlich fest. Das hilft, wenn Anforderungen und Umsetzung gut verstanden sind, etwa beim Austausch einer bekannten technischen Komponente zu einem festen Wartungstermin. Ein Plan kann bei neuen Erkenntnissen trotzdem geändert werden.",
+        "Iteratives Vorgehen arbeitet in wiederholten Lernschritten: einen Teil planen, umsetzen, prüfen und anhand von Rückmeldung verbessern. Inkrementell bedeutet, das nutzbare Ergebnis schrittweise zu erweitern. Die Begriffe hängen oft zusammen, meinen aber nicht genau dasselbe: Wiederholte Überarbeitung ist Iteration; zusätzlicher nutzbarer Umfang ist ein Inkrement.",
+        "Für die noch unklare Portalbedienung können frühe nutzbare Teilstände oder begrenzte Prototypen Missverständnisse aufdecken. Ein Prototyp ist zunächst ein Erprobungsmittel und nicht schon ein qualitätsgesichertes auslieferbares Ergebnis. Wiederholte Rückmeldung hilft nur, wenn geeignete Nutzer rechtzeitig teilnehmen und Erkenntnisse verarbeitet werden.",
+        "Beide Vorgehensweisen brauchen Ziele, Planung, Qualitätskriterien und Kommunikation. Auch ein planorientiertes Projekt kann früh Nutzer einbeziehen. Agiles Vorgehen plant laufend auf Grundlage von Erfahrung und Rückmeldung; es bedeutet weder beliebige Wünsche ohne Folgen noch den Verzicht auf Dokumentation."
+      ],
+      "example": {
+        "title": "Eigener Übungsfall",
+        "text": "Die bekannte Installation kann mit klaren Schritten und einem Freigabetermin geplant werden. Für die unklare Ticketansicht zeigt das Team früh eine begrenzte Variante und prüft sie mit Servicekräften."
+      },
+      "misconception": {
+        "claim": "Planorientiert heißt ohne Rückmeldung; agil heißt ohne Planung.",
+        "correction": "Beides sind falsche Gegensätze. Unterschiede liegen unter anderem im Umgang mit Unsicherheit, Detailplanung und Rückmeldeschleifen."
+      },
+      "takeaway": "Vergleiche Planbarkeit, Unsicherheit und verfügbare Rückmeldung statt bloßer Etiketten."
+    },
+    {
+      "id": "common-pm-methods-scrum-team",
+      "title": "2. Die drei Scrum-Verantwortlichkeiten",
+      "objectiveIds": [
+        "common-pm-methods-scrum"
+      ],
+      "sourceIds": [
+        "scrum-guide-2020",
+        "scrum-org-team"
+      ],
+      "paragraphs": [
+        "Scrum ist ein Rahmenwerk für komplexe Arbeit. Nach dem aktuell geprüften Scrum Guide 2020 besteht ein Scrum Team aus Product Owner, Scrum Master und Developers. Es managt seine Arbeit selbst und vereint die nötigen Fähigkeiten. Developers bezeichnet alle, die am nutzbaren Produkt arbeiten, nicht nur Programmierende.",
+        "Der Product Owner verantwortet den Produktwert und das wirksame Management des geordneten Product Backlogs. Die Developers planen die Arbeit im Sprint, erstellen ein nutzbares Increment und achten auf die Definition of Done. Der Scrum Master verantwortet die Wirksamkeit des Teams und unterstützt Verständnis und Anwendung von Scrum.",
+        "Für das Portal könnte der Product Owner den Nutzen einer besseren Ticketübersicht gegen weitere Wünsche abwägen. Die Developers entscheiden, wie sie den ausgewählten Umfang technisch und fachlich umsetzen. Der Scrum Master hilft etwa, Hindernisse für die Zusammenarbeit zu beseitigen und die gemeinsame Arbeitsweise zu verbessern.",
+        "Diese Verantwortlichkeiten sind nicht einfach neue Namen für Auftraggeber, Projektleitung und Team aus dem vorherigen Lernmodell. Insbesondere ist der Scrum Master kein Vorgesetzter, der den Developers täglich ihre Aufgaben zuteilt. Die Verantwortlichkeiten bleiben auch dann klar, wenn Beschäftigte zusätzlich andere betriebliche Aufgaben haben."
+      ],
+      "example": {
+        "title": "Eigener Übungsfall",
+        "text": "Die Developers bemerken, dass Tests zu spät vorbereitet werden. Sie ändern ihren Arbeitsplan; der Scrum Master unterstützt die Verbesserung der Zusammenarbeit. Der Product Owner klärt den Wert der nächsten Produktanforderungen."
+      },
+      "misconception": {
+        "claim": "Der Scrum Master teilt den Developers im Daily Scrum ihre Tagesaufgaben zu.",
+        "correction": "Die Developers managen ihre Arbeit selbst. Der Scrum Master unterstützt Scrum und Teamwirksamkeit."
+      },
+      "takeaway": "Unterscheide Produktwert, Umsetzung und Teamwirksamkeit als drei Verantwortungsbereiche."
+    },
+    {
+      "id": "common-pm-methods-scrum-flow",
+      "title": "3. Ereignisse, Artefakte und gemeinsame Maßstäbe",
+      "objectiveIds": [
+        "common-pm-methods-scrum"
+      ],
+      "sourceIds": [
+        "scrum-guide-2020",
+        "scrum-org-sprint",
+        "scrum-org-artifacts"
+      ],
+      "paragraphs": [
+        "Der Sprint ist ein fest begrenzter Zeitraum von höchstens einem Monat. Er enthält die übrigen Ereignisse und die Arbeit am Produkt. Im Sprint Planning klärt das Scrum Team Nutzen, ausgewählte Arbeit und Umsetzung; die Developers planen das Wie. Im Daily Scrum prüfen die Developers in 15 Minuten den Fortschritt zum Sprintziel und passen ihre geplante Arbeit an.",
+        "Im Sprint Review untersuchen Scrum Team und wichtige Stakeholder das Ergebnis und mögliche nächste Anpassungen. In der Sprint Retrospective verbessert das Scrum Team seine Zusammenarbeit, Abläufe und Qualität. Das Review richtet den Blick auf Produkt und Umfeld; die Retrospektive auf die Arbeitsweise. Beide haben unterschiedliche Zwecke.",
+        "Die drei Artefakte machen Arbeit und Ergebnis sichtbar: Das Product Backlog ist die geordnete, sich entwickelnde Arbeit für das Produkt. Das Sprint Backlog enthält Sprintziel, ausgewählte Einträge und Umsetzungsplan. Ein Increment ist ein nutzbarer, integrierter Produktstand, der die Definition of Done erfüllt.",
+        "Zu jedem Artefakt gehört ein Commitment, ein gemeinsamer Bezugsmaßstab: Product Backlog – Produktziel; Sprint Backlog – Sprintziel; Increment – Definition of Done. Letztere beschreibt den geforderten Qualitätszustand, etwa die im Team verbindlich vereinbarten Prüfungen. Ein angefangener Teil ohne erfüllte Definition of Done zählt nicht zum Increment. Das Review ist kein vorgeschriebenes Freigabetor; ein fertiges Increment kann schon davor geliefert werden."
+      ],
+      "example": {
+        "title": "Eigener Übungsfall",
+        "text": "Im Portal-Sprint soll die erste Ticketmeldung nutzbar werden. Der Plan steht im Sprint Backlog. Nach bestandenen gemeinsamen Qualitätsprüfungen gibt es ein Increment. Im Review prüfen Stakeholder den Nutzen; in der Retrospektive bespricht das Team einen besseren Testablauf."
+      },
+      "misconception": {
+        "claim": "Eine vorgeführte, aber ungeprüfte Funktion ist bereits ein fertiges Increment.",
+        "correction": "Ein Increment muss nutzbar sein und die Definition of Done erfüllen; eine Vorführung ersetzt diese Kriterien nicht."
+      },
+      "takeaway": "Ordne jedem Ereignis seinen Zweck und jedem Artefakt sein Commitment zu."
+    },
+    {
+      "id": "common-pm-methods-choose",
+      "title": "4. Ein begründetes Vorgehen wählen",
+      "objectiveIds": [
+        "common-pm-methods-compare",
+        "common-pm-methods-choose"
+      ],
+      "sourceIds": [
+        "ec-pm2-methodology",
+        "scrum-guide-2020",
+        "scrum-alliance-points"
+      ],
+      "paragraphs": [
+        "Beginne bei den Bedingungen des Auftrags: Wie stabil sind Anforderungen? Wie bekannt ist die Technik? Wie schnell erhält das Team Rückmeldung? Welche Liefertermine, Freigaben und Qualitätsanforderungen müssen eingehalten werden? Das passende Vorgehen folgt aus diesen Antworten.",
+        "Bei gut verstandenen Installationsschritten und einem festen Wartungsfenster ist eine planorientierte Ablaufplanung plausibel. Für unklare Bedienabläufe mit verfügbaren Testnutzern sind kurze überprüfbare Lernschritte hilfreich. Fehlt Rückmeldung, ist das eine zu lösende Einschränkung; das Wort agil ersetzt keinen Zugang zu Nutzern.",
+        "Eine Kombination kann sinnvoll sein: ein abgestimmter Rahmen mit Budget, Einführungstermin und Freigaben sowie iterative Entwicklung der Oberfläche. Dann muss geklärt sein, wie Erkenntnisse den Umfang verändern dürfen und wer Folgen entscheidet. Einzelne übernommene Praktiken wie ein tägliches Treffen allein machen ein Vorgehen noch nicht zu Scrum.",
+        "Story Points sind eine mögliche relative Schätztechnik eines Teams; sie sind keine Stundenangabe und werden vom Scrum Guide nicht vorgeschrieben. Acht Punkte bedeuten deshalb nicht acht Stunden. Für Kalendertermine und Kosten braucht es zusätzliche Annahmen, Erfahrungswerte und Kapazitätsplanung. Auch agile Planung muss Unsicherheit sichtbar halten."
+      ],
+      "example": {
+        "title": "Eigener Übungsfall",
+        "text": "Nordlicht plant Installation und Betriebsübergabe mit festen Voraussetzungen. Die Ticketansicht entsteht in kurzen Lernschritten mit Servicekräften. Der Auftrag regelt, wie neue Wünsche bewertet werden. Diese Kombination wird begründet beschrieben, ohne sie allein wegen kurzer Treffen Scrum zu nennen."
+      },
+      "misconception": {
+        "claim": "Wer Story Points nutzt, kann sie ohne weitere Annahmen als Arbeitsstunden in die Kostenrechnung übernehmen.",
+        "correction": "Die relative teambezogene Schätzung ist keine feste Zeiteinheit. Stunden und Termine benötigen eine eigene begründete Planung."
+      },
+      "takeaway": "Begründe das Vorgehen an den Bedingungen und verbinde Rückmeldung mit klaren Entscheidungen."
+    }
+  ],
+  "questionFile": "questions/common-pm-methods.v1.csv",
+  "quiz": {
+    "questionIds": [
+      "LJ-PM-METHODS-Q01",
+      "LJ-PM-METHODS-Q02",
+      "LJ-PM-METHODS-Q03",
+      "LJ-PM-METHODS-Q04",
+      "LJ-PM-METHODS-Q05",
+      "LJ-PM-METHODS-Q06"
+    ]
+  },
+  "exam": {
+    "questionIds": [
+      "LJ-PM-METHODS-E01",
+      "LJ-PM-METHODS-E02",
+      "LJ-PM-METHODS-E03",
+      "LJ-PM-METHODS-E04",
+      "LJ-PM-METHODS-E05",
+      "LJ-PM-METHODS-E06",
+      "LJ-PM-METHODS-E07",
+      "LJ-PM-METHODS-E08"
+    ],
+    "passPercent": 80,
+    "scoring": "all-or-nothing-per-question",
+    "timed": false
+  },
+  "questionLinks": [
+    {
+      "questionId": "LJ-PM-METHODS-Q01",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-pm-methods-compare"
+      ],
+      "blockIds": [
+        "common-pm-methods-compare"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-METHODS-Q02",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-pm-methods-compare"
+      ],
+      "blockIds": [
+        "common-pm-methods-compare"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-METHODS-Q03",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-pm-methods-scrum"
+      ],
+      "blockIds": [
+        "common-pm-methods-scrum-team"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-METHODS-Q04",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-pm-methods-scrum"
+      ],
+      "blockIds": [
+        "common-pm-methods-scrum-flow"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-METHODS-Q05",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-pm-methods-choose"
+      ],
+      "blockIds": [
+        "common-pm-methods-choose"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-METHODS-Q06",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-pm-methods-choose"
+      ],
+      "blockIds": [
+        "common-pm-methods-choose"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-METHODS-E01",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-pm-methods-compare"
+      ],
+      "blockIds": [
+        "common-pm-methods-compare"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-METHODS-E02",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-pm-methods-compare"
+      ],
+      "blockIds": [
+        "common-pm-methods-compare",
+        "common-pm-methods-choose"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-METHODS-E03",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-pm-methods-scrum"
+      ],
+      "blockIds": [
+        "common-pm-methods-scrum-team"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-METHODS-E04",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-pm-methods-scrum"
+      ],
+      "blockIds": [
+        "common-pm-methods-scrum-flow"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-METHODS-E05",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-pm-methods-scrum"
+      ],
+      "blockIds": [
+        "common-pm-methods-scrum-flow"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-METHODS-E06",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-pm-methods-scrum"
+      ],
+      "blockIds": [
+        "common-pm-methods-scrum-flow"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-METHODS-E07",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-pm-methods-choose"
+      ],
+      "blockIds": [
+        "common-pm-methods-choose"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-METHODS-E08",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-pm-methods-choose"
+      ],
+      "blockIds": [
+        "common-pm-methods-choose"
+      ]
+    }
+  ],
+  "interview": [
+    {
+      "id": "common-pm-methods-talk-compare",
+      "prompt": "Vergleiche bekannte Installation und unklare Ticketansicht im Fall. Erkläre, wo Vorausplanung und wo frühe Lernschritte helfen. Unterscheide eine Überarbeitung von zusätzlichem nutzbarem Umfang.",
+      "objectiveIds": [
+        "common-pm-methods-compare"
+      ],
+      "blockIds": [
+        "common-pm-methods-compare"
+      ],
+      "keyPoints": [
+        "Bekannte Schritte erleichtern Vorausplanung.",
+        "Unklare Bedienung profitiert von passenden Tests und Anpassung.",
+        "Iteration als Überarbeitung, Inkrement als nutzbare Erweiterung unterscheiden."
+      ],
+      "acceptableAlternatives": [
+        "Andere begründete Aufteilung, solange Voraussetzungen und Rückmeldung genannt werden."
+      ],
+      "misconceptions": [
+        "Agil als Verzicht auf Planung oder Qualität beschreiben."
+      ],
+      "sampleAnswer": "Die Installation ist bekannt und lässt sich mit Voraussetzungen und Termin planen. Bei der Ticketansicht prüfe ich früh eine Variante mit Servicekräften und verbessere sie iterativ. Kommt später eine weitere nutzbare Funktion hinzu, wächst das Produkt inkrementell. Beide Vorgehensweisen brauchen Ziele und Qualitätskriterien.",
+      "followUp": "Welche Information könnte deine Einschätzung der Planbarkeit verändern?"
+    },
+    {
+      "id": "common-pm-methods-talk-scrum",
+      "prompt": "Ordne im Portalbeispiel Produktwert, Umsetzungsplanung und Teamwirksamkeit den Scrum-Verantwortlichkeiten zu. Erkläre Review und Retrospektive sowie die drei Artefakte mit ihren Commitments.",
+      "objectiveIds": [
+        "common-pm-methods-scrum"
+      ],
+      "blockIds": [
+        "common-pm-methods-scrum-team",
+        "common-pm-methods-scrum-flow"
+      ],
+      "keyPoints": [
+        "Product Owner: Wert; Developers: Umsetzung; Scrum Master: Wirksamkeit.",
+        "Review: Produkt/Stakeholder; Retrospektive: Arbeitsweise.",
+        "Product Backlog/Produktziel, Sprint Backlog/Sprintziel, Increment/Definition of Done."
+      ],
+      "acceptableAlternatives": [
+        "Gleichwertige deutsche Bezeichnungen mit fachlich richtiger Zuordnung."
+      ],
+      "misconceptions": [
+        "Scrum Master als täglichen Aufgabenverteiler oder ungeprüften Prototyp als Increment einordnen."
+      ],
+      "sampleAnswer": "Der Product Owner verantwortet den Produktwert, die Developers planen und erstellen die Umsetzung, der Scrum Master unterstützt Wirksamkeit und Scrum. Im Review wird das Ergebnis mit Stakeholdern untersucht, in der Retrospektive die Arbeitsweise verbessert. Product Backlog, Sprint Backlog und Increment haben als Commitments Produktziel, Sprintziel und Definition of Done.",
+      "followUp": "Welches Ereignis hilft den Developers täglich, den Fortschritt zum Sprintziel zu prüfen?"
+    },
+    {
+      "id": "common-pm-methods-talk-choose",
+      "prompt": "Empfiehl für die Fallbedingungen ein Vorgehen und nenne zwei Gründe sowie eine Voraussetzung. Erkläre zusätzlich, warum acht Story Points noch keine Kostenrechnung ergeben.",
+      "objectiveIds": [
+        "common-pm-methods-choose"
+      ],
+      "blockIds": [
+        "common-pm-methods-choose",
+        "common-pm-methods-compare"
+      ],
+      "keyPoints": [
+        "Vorgehen mit stabiler Installation und unklarer Oberfläche begründen.",
+        "Nutzerverfügbarkeit und Umgang mit Änderungen klären.",
+        "Punkte von Stunden und Stundensätzen trennen."
+      ],
+      "acceptableAlternatives": [
+        "Planorientiertes oder iteratives Gesamtvorgehen mit klaren, plausibel veränderten Annahmen."
+      ],
+      "misconceptions": [
+        "Eine relative Punktezahl ohne Grundlage als Stunden einsetzen."
+      ],
+      "sampleAnswer": "Ich kombiniere geplante Installation und Übergabe mit kurzen Lernschritten für die Oberfläche. Die Installation ist bekannt, die Bedienung muss mit Nutzern geklärt werden. Rückmeldetermine und Entscheidungen über Umfang sind vorab zu regeln. Acht Story Points sind eine relative Teamschätzung; für Kosten brauche ich begründeten Stundenaufwand und Kostensätze.",
+      "followUp": "Was änderst du, wenn die Testnutzer über mehrere Wochen nicht verfügbar sind?"
+    }
+  ],
+  "cards": [
+    {
+      "id": "common-pm-methods-card-compare",
+      "front": "Was unterscheidet planorientiertes und iteratives Vorgehen?",
+      "back": "Planorientiert wird bei gut bekannten Bedingungen mehr vorab festgelegt. Iterativ wird in wiederholten Schritten geprüft und angepasst. Beide benötigen Planung und Qualitätskriterien.",
+      "objectiveIds": [
+        "common-pm-methods-compare"
+      ],
+      "blockIds": [
+        "common-pm-methods-compare"
+      ]
+    },
+    {
+      "id": "common-pm-methods-card-incremental",
+      "front": "Was bedeutet iterativ und was inkrementell?",
+      "back": "Iterativ: durch Wiederholung lernen und verbessern. Inkrementell: das nutzbare Ergebnis schrittweise erweitern. Beides kann zusammen auftreten.",
+      "objectiveIds": [
+        "common-pm-methods-compare"
+      ],
+      "blockIds": [
+        "common-pm-methods-compare"
+      ]
+    },
+    {
+      "id": "common-pm-methods-card-accountability",
+      "front": "Welche drei Verantwortlichkeiten nennt Scrum?",
+      "back": "Product Owner: Produktwert und Product Backlog. Developers: Umsetzungsplan und nutzbares Increment. Scrum Master: Wirksamkeit des Teams und Verständnis von Scrum.",
+      "objectiveIds": [
+        "common-pm-methods-scrum"
+      ],
+      "blockIds": [
+        "common-pm-methods-scrum-team"
+      ]
+    },
+    {
+      "id": "common-pm-methods-card-artifacts",
+      "front": "Welche Commitments gehören zu den drei Scrum-Artefakten?",
+      "back": "Product Backlog – Produktziel; Sprint Backlog – Sprintziel; Increment – Definition of Done. Ein Increment muss diese Qualitätsdefinition erfüllen.",
+      "objectiveIds": [
+        "common-pm-methods-scrum"
+      ],
+      "blockIds": [
+        "common-pm-methods-scrum-flow"
+      ]
+    },
+    {
+      "id": "common-pm-methods-card-choice",
+      "front": "Welche Bedingungen helfen bei der Methodenwahl?",
+      "back": "Stabilität der Anforderungen, Bekanntheit der Technik, verfügbare Rückmeldung, Termine, Freigaben und Qualität. Eine Kombination benötigt klare Änderungsentscheidungen.",
+      "objectiveIds": [
+        "common-pm-methods-choose"
+      ],
+      "blockIds": [
+        "common-pm-methods-choose"
+      ]
+    },
+    {
+      "id": "common-pm-methods-card-points",
+      "front": "Sind Story Points Stunden oder eine Scrum-Pflicht?",
+      "back": "Nein. Sie sind eine mögliche relative teambezogene Schätzung. Eine feste Umrechnung in Stunden gibt es nicht; der Scrum Guide schreibt sie nicht vor.",
+      "objectiveIds": [
+        "common-pm-methods-choose"
+      ],
+      "blockIds": [
+        "common-pm-methods-choose"
+      ]
+    }
+  ],
+  "review": {
+    "status": "reviewed",
+    "checkedAt": "2026-11-11"
+  }
+}

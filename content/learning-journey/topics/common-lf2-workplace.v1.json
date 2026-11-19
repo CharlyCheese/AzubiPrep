@@ -1,0 +1,489 @@
+{
+  "schemaVersion": 1,
+  "id": "common-lf2-workplace",
+  "version": "1.0.0",
+  "title": "Ergonomie, Sicherheit und Energiebedarf",
+  "fieldId": "LF2",
+  "scope": "common",
+  "prerequisites": [
+    "common-lf2-hardware"
+  ],
+  "sourceIds": [
+    "lf2-bghm-screen",
+    "lf2-ni-safety",
+    "lf2-vz-energy",
+    "lf2-uba-lifetime",
+    "lf2-uba-ewaste"
+  ],
+  "sources": [
+    {
+      "id": "lf2-bghm-screen",
+      "title": "BGHM: Bildschirmarbeitsplatz",
+      "url": "https://www.bghm.de/arbeitsschuetzer/praxishilfen/arbeitsschutz-kompakt/065-bildschirmarbeit",
+      "checkedAt": "2026-11-11",
+      "note": "Öffentliche HTML-Praxishilfe zu Blendung, Blickrichtung sowie individuell passender Bildschirm-, Stuhl- und Tischeinstellung geprüft. Keine starren Universalmaße oder medizinischen Aussagen abgeleitet."
+    },
+    {
+      "id": "lf2-ni-safety",
+      "title": "Bildungsportal Niedersachsen: Prüfpflichtige Anlagen und Einrichtungen",
+      "url": "https://bildungsportal-niedersachsen.de/aug/arbeitsschutz-organisation/pruefpflichtige-anlagen",
+      "checkedAt": "2026-11-11",
+      "note": "Öffentliche HTML-Seite zu Meldung von Mängeln, Entzug defekter Geräte aus der Nutzung und Prüfung durch befähigte Personen geprüft. Schulische Zuständigkeitsregeln und Prüfintervalle werden nicht auf den Betriebsfall übertragen."
+    },
+    {
+      "id": "lf2-vz-energy",
+      "title": "Verbraucherzentrale Energieberatung: Stromverbrauch messen und senken",
+      "url": "https://verbraucherzentrale-energieberatung.de/energie-sparen/allgemeines/stromverbrauch-messen/",
+      "checkedAt": "2026-11-11",
+      "note": "Öffentliche HTML-Erklärung der Einheiten W, kWh und der Rechnung aus Leistung und Zeit geprüft. Leistungswerte, Stunden und Preisannahmen im Fall sind fiktiv; keine Messung an realen Geräten verlangt."
+    },
+    {
+      "id": "lf2-uba-lifetime",
+      "title": "Umweltbundesamt: Produkte länger nutzen",
+      "url": "https://www.umweltbundesamt.de/umwelttipps-fuer-den-alltag/produkte-laenger-nutzen-sachgerechter-gebrauch",
+      "checkedAt": "2026-11-11",
+      "note": "Öffentliche HTML-Empfehlungen zu längerer Nutzung, Reparierbarkeit und Umweltbelastungen der Herstellung geprüft. Keine konkreten Rechtsfristen oder pauschalen Einsparversprechen übernommen."
+    },
+    {
+      "id": "lf2-uba-ewaste",
+      "title": "Umweltbundesamt: Wohin mit dem Elektroschrott?",
+      "url": "https://www.umweltbundesamt.de/en/alte-elektrogerate-richtig-entsorgen",
+      "checkedAt": "2026-11-11",
+      "note": "Öffentliche HTML-Hinweise zu getrennter Sammlung, Wiederverwendung, fachgerechter Entsorgung und Datenschutz geprüft. Betrieblicher Entsorgungsweg ist im Fall mit der zuständigen Stelle zu klären; keine kostenlosen Rücknahmerechte für jeden Betriebsfall behauptet."
+    }
+  ],
+  "objectives": [
+    {
+      "id": "common-lf2-workplace-risk",
+      "text": "An einem Arbeitsplatz ergonomische und elektrische Gefährdungen erkennen und geeignete organisatorische Maßnahmen benennen."
+    },
+    {
+      "id": "common-lf2-workplace-energy",
+      "text": "Mit vorgegebener Leistung und Nutzungsdauer den Energiebedarf zweier Arbeitsplatzvarianten vergleichen."
+    },
+    {
+      "id": "common-lf2-workplace-lifecycle",
+      "text": "Reparatur, Weiternutzung und fachgerechte Entsorgung bei einer Beschaffungsentscheidung berücksichtigen."
+    }
+  ],
+  "caseStudy": {
+    "title": "Knotenpunkt stattet Radblick aus",
+    "text": "Mira betrachtet für Radblick den gesamten fiktiven Büroplatz mit Rechner und zwei Bildschirmen. Sam begleitet die Beurteilung von Ergonomie, sicheren Geräten und längerer Nutzung. Alle Verbrauchswerte und Kosten sind erfunden. Die Lernaufgabe fordert weder elektrische Arbeiten noch Messungen an echten Geräten."
+  },
+  "blocks": [
+    {
+      "id": "common-lf2-workplace-ergonomics",
+      "title": "1. Den Arbeitsplatz an die Person anpassen",
+      "objectiveIds": [
+        "common-lf2-workplace-risk"
+      ],
+      "sourceIds": [
+        "lf2-bghm-screen"
+      ],
+      "paragraphs": [
+        "Ergonomie richtet Arbeitsmittel und Arbeitsablauf an der Aufgabe und der Person aus. Passe Stuhl, Tisch, Eingabegeräte und Bildschirme zusammen an. Die Füße sollen unterstützt sein, Schultern und Arme entspannt bleiben und genügend Bewegungsraum vorhanden sein. Haltung wechseln und passende Unterbrechungen einplanen gehören ebenfalls zur Organisation.",
+        "Bildschirme werden so angeordnet, dass die Inhalte gut lesbar sind und kein ständiges starkes Verdrehen des Kopfes nötig ist. Höhe, Abstand und Neigung werden an Sehaufgabe und Person angepasst; eine entspannte, leicht abgesenkte Blickrichtung ist günstiger als ein nach hinten geneigter Kopf.",
+        "Vermeide Blendung und Spiegelungen. Eine Blickrichtung parallel zur Fensterfront, Tageslicht von der Seite und bei Bedarf geeigneter Blendschutz helfen. Die Helligkeit des Bildschirms ersetzt keine ungünstige Raum- und Geräteanordnung.",
+        "Bei Radblick liegen beide Bildschirme im gut erreichbaren Blickfeld. Kabel werden aus Laufwegen geführt, Bewegungsflächen bleiben frei. Mira hält fest, wo Anpassungen nötig sind; bei weitergehenden Fragen werden die zuständigen Arbeitsschutzfachleute einbezogen."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Übungsfall",
+        "text": "Spiegelt sich das Fenster im Monitor, werden Aufstellung und Blendschutz geprüft. Die Person soll den Kopf nicht ständig verdrehen, um den Text zu lesen."
+      },
+      "misconception": {
+        "claim": "Ein höhenverstellbarer Tisch macht jeden Arbeitsplatz ohne weitere Anpassung ergonomisch.",
+        "correction": "Stuhl, Tisch, Anzeigen, Eingaben, Licht und Arbeitsablauf müssen zusammenpassen."
+      },
+      "takeaway": "Prüfe Körperhaltung, Lesbarkeit, Licht und Bewegungsraum gemeinsam."
+    },
+    {
+      "id": "common-lf2-workplace-safety",
+      "title": "2. Mängel erkennen und zuständig handeln",
+      "objectiveIds": [
+        "common-lf2-workplace-risk"
+      ],
+      "sourceIds": [
+        "lf2-ni-safety"
+      ],
+      "paragraphs": [
+        "Sichtbare Kabelschäden, ein gebrochenes Gehäuse, Brandgeruch oder Flüssigkeit am Gerät sind Warnzeichen. Ein normales Bild auf dem Monitor beweist keine elektrische Sicherheit. Bei einem solchen Verdacht die Nutzung stoppen, eine weitere Nutzung verhindern und die zuständige Stelle informieren.",
+        "Im Fall meldet Mira den Befund an Sam. Sam veranlasst die Beurteilung durch eine dafür qualifizierte Fachperson. Mira öffnet kein Netzteil, führt keine elektrischen Arbeiten durch und versucht keine Reparatur an Leitungen. Eine Sichtkontrolle im Lernfall ersetzt keine vorgeschriebene elektrische Prüfung.",
+        "Ein gekennzeichnetes defektes Gerät bleibt bis zur fachlichen Klärung außer Betrieb. Dokumentiert werden Gerät, beobachteter Mangel, Zeitpunkt, getroffene organisatorische Maßnahme und zuständige Person. Die Kennzeichnung hilft gegen versehentliche Nutzung; sie ist keine Reparatur.",
+        "Stolperstellen durch lose Kabel sind ebenfalls Gefährdungen. Eine geeignete Führung außerhalb der Laufwege wird veranlasst, statt einen regelmäßigen Umweg von den Beschäftigten zu verlangen. Prüffristen und Fachzuständigkeiten werden betrieblich anhand der Gefährdungsbeurteilung festgelegt, nicht aus diesem Lerntext geraten."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Übungsfall",
+        "text": "Mira entdeckt einen Riss in einer Anschlussleitung. Der Arbeitsplatz wird nicht für den Abnahmetest weitergenutzt; der Befund geht zur zuständigen Fachperson."
+      },
+      "misconception": {
+        "claim": "Ein Gerät ist sicher, solange es noch normal funktioniert.",
+        "correction": "Funktion und elektrische Sicherheit sind unterschiedliche Eigenschaften; erkennbare Mängel sind fachlich zu klären."
+      },
+      "takeaway": "Nutzung stoppen, gegen Weiterbenutzung sichern, Mangel melden und Fachperson einbeziehen."
+    },
+    {
+      "id": "common-lf2-workplace-energy",
+      "title": "3. Von Watt zu Kilowattstunden rechnen",
+      "objectiveIds": [
+        "common-lf2-workplace-energy"
+      ],
+      "sourceIds": [
+        "lf2-vz-energy"
+      ],
+      "paragraphs": [
+        "Leistung P in Watt (W) beschreibt den Energiebedarf pro Zeit. Energie E in Kilowattstunden (kWh) erhältst du bei konstanter oder passend gemittelter Leistung mit E = P / 1000 × t. Dabei ist t die Nutzungsdauer in Stunden und 1000 W = 1 kW. Watt und kWh sind unterschiedliche Größen.",
+        "Fiktiver Vergleich bei gleicher Aufgabe: Arbeitsplatz Spar hat für Rechner und beide Bildschirme zusammen eine mittlere Leistungsaufnahme von 60 W, Arbeitsplatz Standard von 90 W. Beide arbeiten 1600 Stunden im Jahr. Außerhalb dieser Zeit wird für diesen ersten Vergleich kein weiterer Verbrauch angesetzt. Spar: 60 / 1000 × 1600 = 96 kWh. Standard: 90 / 1000 × 1600 = 144 kWh. Unterschied: 48 kWh im Jahr.",
+        "Stromkosten ergeben sich aus kWh × Preis je kWh. Mit dem ausdrücklich fiktiven Nettopreis von 0,30 Euro je kWh kosten die genannten Nutzungsphasen 28,80 Euro und 43,20 Euro; die Differenz beträgt 14,40 Euro. Preise und Betriebszeiten sind Rechenannahmen, keine Prognose eines realen Tarifs.",
+        "Gibt eine Aufgabe weitere Betriebszustände vor, berechnest du deren Energie getrennt und addierst sie. Beispiel: Zusätzliche 400 Stunden Bereitschaft mit zusammen 5 W ergeben 5 / 1000 × 400 = 2 kWh. Beim Platz Spar werden daraus 98 kWh einschließlich dieser Zusatzphase. Ein maximaler Typenschildwert ist nicht automatisch die mittlere Leistungsaufnahme; verglichen werden dieselben Gerätebestandteile und Nutzungszeiten."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Übungsfall",
+        "text": "Ein vollständiger Platz mit 75 W im Mittel benötigt in 800 Stunden 75 / 1000 × 800 = 60 kWh."
+      },
+      "misconception": {
+        "claim": "Ein Gerät mit 60 W benötigt nach jeder Nutzungsdauer 60 kWh.",
+        "correction": "Die Energiemenge hängt neben der Leistung von der Dauer ab und erfordert die Umrechnung von W in kW."
+      },
+      "takeaway": "Gleiche Systemgrenze wählen, W durch 1000 teilen, mit Stunden multiplizieren."
+    },
+    {
+      "id": "common-lf2-workplace-lifecycle",
+      "title": "4. Reparatur, Weiternutzung und Entsorgung abwägen",
+      "objectiveIds": [
+        "common-lf2-workplace-lifecycle"
+      ],
+      "sourceIds": [
+        "lf2-uba-lifetime",
+        "lf2-uba-ewaste"
+      ],
+      "paragraphs": [
+        "Bei einer Beschaffung zählt mehr als der Stromverbrauch im Betrieb. Rohstoffgewinnung, Herstellung und Transport verursachen ebenfalls Umweltbelastungen. Prüfe deshalb, ob vorhandene geeignete Geräte weitergenutzt, fachgerecht repariert oder sinnvoll aufgerüstet werden können, bevor sie ersetzt werden.",
+        "Für Radblick ist ein vorhandener Monitor nach fachlicher Prüfung sicher und geeignet, und sein Standfuß lässt sich durch einen passenden verfügbaren Ersatz instand setzen. Diese geprüfte Reparaturoption ist eine begründete Alternative zum Neukauf. Verfügbarkeit von Ersatzteilen, Reparaturkosten, verbleibende Nutzbarkeit und sichere Softwareunterstützung gehören in die Betrachtung.",
+        "Eine niedrigere Leistungsaufnahme eines Neugeräts allein beweist keinen Umweltvorteil über den ganzen Lebensweg. Die berechnete Stromersparnis beschreibt die festgelegte Nutzungsphase. Eine Entscheidung nennt zusätzlich Herstellungsaufwand, erwartete Nutzungsdauer und Reparaturoptionen; ohne weitere Daten wird keine genaue Umweltbilanz behauptet.",
+        "Nicht weiter nutzbare Elektrogeräte gehören in einen dafür vorgesehenen, betrieblich abgestimmten Rücknahme- oder Entsorgungsweg, nicht in den Restmüll. Vor Weitergabe werden betriebliche Daten durch die zuständige Stelle nach Vorgabe sicher behandelt und gelöscht. Ein defekter Datenträger macht diese Frage nicht gegenstandslos. Übergabe und Entsorgung werden nachvollziehbar dokumentiert; Geräte oder Netzteile werden dafür nicht eigenständig geöffnet."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Übungsfall",
+        "text": "Der sichere, technisch passende Bestandsmonitor erhält nach fachlicher Prüfung einen passenden Standfuß und bleibt im Einsatz. Ein ausgemustertes Gerät wird über den abgestimmten Entsorgungsweg abgegeben."
+      },
+      "misconception": {
+        "claim": "Ein etwas sparsameres Neugerät ist unabhängig von Herstellung und Nutzungsdauer umweltfreundlicher.",
+        "correction": "Strombedarf ist ein Teil der Betrachtung; lange sichere Nutzung und fachgerechte Reparatur können Herstellung vermeiden."
+      },
+      "takeaway": "Prüfe sichere Weiternutzung und Reparatur, plane Datenbehandlung und getrennte Entsorgung."
+    }
+  ],
+  "questionFile": "questions/common-lf2-workplace.v1.csv",
+  "quiz": {
+    "questionIds": [
+      "LJ-LF2-WORKPLACE-Q01",
+      "LJ-LF2-WORKPLACE-Q02",
+      "LJ-LF2-WORKPLACE-Q03",
+      "LJ-LF2-WORKPLACE-Q04",
+      "LJ-LF2-WORKPLACE-Q05",
+      "LJ-LF2-WORKPLACE-Q06"
+    ]
+  },
+  "exam": {
+    "questionIds": [
+      "LJ-LF2-WORKPLACE-E01",
+      "LJ-LF2-WORKPLACE-E02",
+      "LJ-LF2-WORKPLACE-E03",
+      "LJ-LF2-WORKPLACE-E04",
+      "LJ-LF2-WORKPLACE-E05",
+      "LJ-LF2-WORKPLACE-E06",
+      "LJ-LF2-WORKPLACE-E07",
+      "LJ-LF2-WORKPLACE-E08"
+    ],
+    "passPercent": 80,
+    "scoring": "all-or-nothing-per-question",
+    "timed": false
+  },
+  "questionLinks": [
+    {
+      "questionId": "LJ-LF2-WORKPLACE-Q01",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf2-workplace-risk"
+      ],
+      "blockIds": [
+        "common-lf2-workplace-ergonomics"
+      ]
+    },
+    {
+      "questionId": "LJ-LF2-WORKPLACE-Q02",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf2-workplace-risk"
+      ],
+      "blockIds": [
+        "common-lf2-workplace-safety"
+      ]
+    },
+    {
+      "questionId": "LJ-LF2-WORKPLACE-Q03",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf2-workplace-energy"
+      ],
+      "blockIds": [
+        "common-lf2-workplace-energy"
+      ]
+    },
+    {
+      "questionId": "LJ-LF2-WORKPLACE-Q04",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf2-workplace-energy"
+      ],
+      "blockIds": [
+        "common-lf2-workplace-energy"
+      ]
+    },
+    {
+      "questionId": "LJ-LF2-WORKPLACE-Q05",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf2-workplace-lifecycle"
+      ],
+      "blockIds": [
+        "common-lf2-workplace-lifecycle"
+      ]
+    },
+    {
+      "questionId": "LJ-LF2-WORKPLACE-Q06",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf2-workplace-lifecycle"
+      ],
+      "blockIds": [
+        "common-lf2-workplace-lifecycle"
+      ]
+    },
+    {
+      "questionId": "LJ-LF2-WORKPLACE-E01",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf2-workplace-risk"
+      ],
+      "blockIds": [
+        "common-lf2-workplace-ergonomics"
+      ]
+    },
+    {
+      "questionId": "LJ-LF2-WORKPLACE-E02",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf2-workplace-risk"
+      ],
+      "blockIds": [
+        "common-lf2-workplace-safety"
+      ]
+    },
+    {
+      "questionId": "LJ-LF2-WORKPLACE-E03",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf2-workplace-risk"
+      ],
+      "blockIds": [
+        "common-lf2-workplace-ergonomics",
+        "common-lf2-workplace-safety"
+      ]
+    },
+    {
+      "questionId": "LJ-LF2-WORKPLACE-E04",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf2-workplace-energy"
+      ],
+      "blockIds": [
+        "common-lf2-workplace-energy"
+      ]
+    },
+    {
+      "questionId": "LJ-LF2-WORKPLACE-E05",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf2-workplace-energy"
+      ],
+      "blockIds": [
+        "common-lf2-workplace-energy"
+      ]
+    },
+    {
+      "questionId": "LJ-LF2-WORKPLACE-E06",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf2-workplace-energy"
+      ],
+      "blockIds": [
+        "common-lf2-workplace-energy"
+      ]
+    },
+    {
+      "questionId": "LJ-LF2-WORKPLACE-E07",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf2-workplace-lifecycle"
+      ],
+      "blockIds": [
+        "common-lf2-workplace-lifecycle"
+      ]
+    },
+    {
+      "questionId": "LJ-LF2-WORKPLACE-E08",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf2-workplace-lifecycle"
+      ],
+      "blockIds": [
+        "common-lf2-workplace-lifecycle"
+      ]
+    }
+  ],
+  "interview": [
+    {
+      "id": "common-lf2-workplace-talk-risk",
+      "prompt": "Am Platz spiegeln sich Fenster im Monitor, und ein Kabel hat einen sichtbaren Schaden. Trenne die Maßnahmen und erkläre die Zuständigkeit.",
+      "objectiveIds": [
+        "common-lf2-workplace-risk"
+      ],
+      "blockIds": [
+        "common-lf2-workplace-ergonomics",
+        "common-lf2-workplace-safety"
+      ],
+      "keyPoints": [
+        "Nutzung des beschädigten Geräts stoppen und weitere Nutzung verhindern.",
+        "Befund melden und Fachperson einbeziehen.",
+        "Anordnung und Blendschutz ergonomisch verbessern."
+      ],
+      "acceptableAlternatives": [
+        "Andere geeignete Maßnahmen zur Verringerung von Reflexionen innerhalb betrieblicher Vorgaben."
+      ],
+      "misconceptions": [
+        "Normale Anzeige als Beweis elektrischer Sicherheit behandeln."
+      ],
+      "sampleAnswer": "Beim Kabelschaden wird die Nutzung gestoppt, das Gerät gegen Weiterbenutzung gesichert und der Befund zur fachlichen Klärung gemeldet. Es gibt keine eigene elektrische Reparatur. Für die Reflexionen werden Bildschirmaufstellung und Blendschutz angepasst.",
+      "followUp": "Welche Angaben gehören in die Mängelnotiz?"
+    },
+    {
+      "id": "common-lf2-workplace-talk-energy",
+      "prompt": "Vergleiche die vollständigen Plätze mit 60 W und 90 W bei jeweils 1600 Stunden. Erkläre Rechenweg, Unterschied und eine Grenze der Aussage.",
+      "objectiveIds": [
+        "common-lf2-workplace-energy"
+      ],
+      "blockIds": [
+        "common-lf2-workplace-energy"
+      ],
+      "keyPoints": [
+        "W durch 1000 teilen und mit Stunden multiplizieren.",
+        "96 und 144 kWh, Differenz 48 kWh berechnen.",
+        "Gleiche Systemgrenze und fehlende weitere Betriebsphasen beachten."
+      ],
+      "acceptableAlternatives": [
+        "Die Differenz direkt über 30 W × 1600 h / 1000 berechnen."
+      ],
+      "misconceptions": [
+        "Den Leistungsunterschied von 30 W unverändert als 30 kWh ausgeben."
+      ],
+      "sampleAnswer": "60 / 1000 × 1600 ergibt 96 kWh, 90 / 1000 × 1600 ergibt 144 kWh. Die Differenz ist 48 kWh. Das gilt für Rechner und beide Bildschirme zusammen im vorgegebenen Betrieb; andere Zustände müssen bei Bedarf zusätzlich berechnet werden.",
+      "followUp": "Wie ändert eine zusätzliche Bereitschaftsphase mit 5 W über 400 Stunden den ersten Wert?"
+    },
+    {
+      "id": "common-lf2-workplace-talk-lifecycle",
+      "prompt": "Begründe, wann ein vorhandener Monitor weitergenutzt werden kann, und beschreibe den Weg eines nicht mehr nutzbaren Rechners.",
+      "objectiveIds": [
+        "common-lf2-workplace-lifecycle"
+      ],
+      "blockIds": [
+        "common-lf2-workplace-lifecycle"
+      ],
+      "keyPoints": [
+        "Sicherheit, Eignung und fachlich geprüfte Reparaturoption betrachten.",
+        "Herstellung und Nutzungsdauer zusätzlich zum Strombedarf bedenken.",
+        "Zuständige Datenbehandlung und getrennte Entsorgung organisieren."
+      ],
+      "acceptableAlternatives": [
+        "Eine begründete Ersatzbeschaffung bei fehlender sicherer Reparatur oder fehlender Eignung."
+      ],
+      "misconceptions": [
+        "Ein ausgeschaltetes oder defektes Gerät als bereits datenfrei behandeln."
+      ],
+      "sampleAnswer": "Der Monitor bleibt bei bestätigter Sicherheit und Eignung mit passendem Ersatzteil nutzbar und kann eine Neuproduktion vermeiden. Beim ausgesonderten Rechner klärt die zuständige Stelle die Datenbehandlung; anschließend wird er über den abgestimmten Elektroaltgeräteweg abgegeben und dokumentiert.",
+      "followUp": "Welche Angaben brauchst du, bevor du eine genaue Umweltbilanz behaupten könntest?"
+    }
+  ],
+  "cards": [
+    {
+      "id": "common-lf2-workplace-card-ergonomics",
+      "front": "Was gehört zur ergonomischen Beurteilung?",
+      "back": "Stuhl, Tisch, Eingabegeräte und Anzeigen passend zur Person und Aufgabe einstellen; Lesbarkeit, Licht, Bewegungsraum und wechselnde Haltung berücksichtigen.",
+      "objectiveIds": [
+        "common-lf2-workplace-risk"
+      ],
+      "blockIds": [
+        "common-lf2-workplace-ergonomics"
+      ]
+    },
+    {
+      "id": "common-lf2-workplace-card-defect",
+      "front": "Wie reagierst du auf einen sichtbaren elektrischen Mangel?",
+      "back": "Nutzung stoppen, gegen Weiterbenutzung sichern, Befund melden und qualifizierte Fachperson einbeziehen. Keine elektrischen Arbeiten und kein Öffnen von Netzteilen.",
+      "objectiveIds": [
+        "common-lf2-workplace-risk"
+      ],
+      "blockIds": [
+        "common-lf2-workplace-safety"
+      ]
+    },
+    {
+      "id": "common-lf2-workplace-card-energy",
+      "front": "Wie werden Watt und Stunden in kWh umgerechnet?",
+      "back": "E in kWh = P in W / 1000 × t in h. Beispiel: 60 W × 1600 h / 1000 = 96 kWh.",
+      "objectiveIds": [
+        "common-lf2-workplace-energy"
+      ],
+      "blockIds": [
+        "common-lf2-workplace-energy"
+      ]
+    },
+    {
+      "id": "common-lf2-workplace-card-boundary",
+      "front": "Was macht einen Energievergleich fair?",
+      "back": "Dieselben Gerätebestandteile, Aufgaben und Zeiträume vergleichen. Unterschiedliche Betriebszustände getrennt berechnen und ihre Energiemengen addieren.",
+      "objectiveIds": [
+        "common-lf2-workplace-energy"
+      ],
+      "blockIds": [
+        "common-lf2-workplace-energy"
+      ]
+    },
+    {
+      "id": "common-lf2-workplace-card-repair",
+      "front": "Warum gehört Reparierbarkeit in die Beschaffungsentscheidung?",
+      "back": "Sichere, geeignete Weiternutzung kann Herstellungsaufwand vermeiden. Ersatzteile, Reparaturkosten, Nutzungsdauer und Softwareunterstützung mitbetrachten.",
+      "objectiveIds": [
+        "common-lf2-workplace-lifecycle"
+      ],
+      "blockIds": [
+        "common-lf2-workplace-lifecycle"
+      ]
+    },
+    {
+      "id": "common-lf2-workplace-card-disposal",
+      "front": "Was ist vor Weitergabe oder Entsorgung zu klären?",
+      "back": "Daten durch die zuständige Stelle sicher behandeln lassen; Elektrogeräte getrennt über einen abgestimmten Rücknahme- oder Entsorgungsweg abgeben und dokumentieren.",
+      "objectiveIds": [
+        "common-lf2-workplace-lifecycle"
+      ],
+      "blockIds": [
+        "common-lf2-workplace-lifecycle"
+      ]
+    }
+  ],
+  "review": {
+    "status": "reviewed",
+    "checkedAt": "2026-11-11"
+  }
+}

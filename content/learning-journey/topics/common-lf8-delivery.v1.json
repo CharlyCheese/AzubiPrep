@@ -1,0 +1,622 @@
+{
+  "schemaVersion": 1,
+  "id": "common-lf8-delivery",
+  "version": "1.0.0",
+  "title": "Datenbereitstellung testen und übergeben",
+  "fieldId": "LF8",
+  "scope": "common",
+  "prerequisites": [
+    "common-lf8-integrity"
+  ],
+  "sourceIds": [
+    "lf8-csv",
+    "lf8-json",
+    "lf8-xml",
+    "lf8-join",
+    "lf8-aggregate",
+    "lf8-constraints",
+    "lf8-transactions",
+    "lf8-http",
+    "lf8-rest",
+    "lf8-logging"
+  ],
+  "sources": [
+    {
+      "id": "lf8-csv",
+      "title": "RFC 4180: Common Format and MIME Type for CSV Files",
+      "url": "https://www.rfc-editor.org/rfc/rfc4180",
+      "checkedAt": "2026-11-16",
+      "note": "Informative Beschreibung des Kommaformats, Kopfzeilen und Maskierung geprüft; das jeweilige Austauschprofil muss gesondert vereinbart werden."
+    },
+    {
+      "id": "lf8-json",
+      "title": "RFC 8259: The JavaScript Object Notation (JSON) Data Interchange Format",
+      "url": "https://www.rfc-editor.org/rfc/rfc8259",
+      "checkedAt": "2026-11-16",
+      "note": "Syntax von Objekten, Arrays, Zahlen, Zeichenketten und null geprüft. Eigene Datensätze und Feldverträge sind didaktische Beispiele."
+    },
+    {
+      "id": "lf8-xml",
+      "title": "W3C: Extensible Markup Language (XML) 1.0, Fifth Edition",
+      "url": "https://www.w3.org/TR/xml/",
+      "checkedAt": "2026-11-16",
+      "note": "Wohlgeformte Elemente, Schachtelung und Entitätsreferenzen geprüft; die fachliche Bedeutung fehlender Werte folgt dem eigenen Austauschvertrag."
+    },
+    {
+      "id": "lf8-join",
+      "title": "PostgreSQL: Joins Between Tables",
+      "url": "https://www.postgresql.org/docs/current/tutorial-join.html",
+      "checkedAt": "2026-11-16",
+      "note": "Verknüpfungsbedingung und Verhalten von inneren und äußeren Joins geprüft. Kunden, Aufträge und Ergebnisse sind eigene synthetische Daten."
+    },
+    {
+      "id": "lf8-aggregate",
+      "title": "PostgreSQL: Aggregate Functions",
+      "url": "https://www.postgresql.org/docs/current/tutorial-agg.html",
+      "checkedAt": "2026-11-16",
+      "note": "Gruppierung sowie Anzahl und Summe geprüft. Die Unterrichtsrechnung benutzt fiktive ganze Eurobeträge."
+    },
+    {
+      "id": "lf8-constraints",
+      "title": "PostgreSQL: Constraints",
+      "url": "https://www.postgresql.org/docs/current/ddl-constraints.html",
+      "checkedAt": "2026-11-16",
+      "note": "Pflichtwerte, Prüfbedingungen, eindeutige Schlüssel und Fremdschlüssel geprüft; Feldgrenzen im Simulator sind eigene Vorgaben."
+    },
+    {
+      "id": "lf8-transactions",
+      "title": "PostgreSQL: Transactions",
+      "url": "https://www.postgresql.org/docs/current/tutorial-transactions.html",
+      "checkedAt": "2026-11-16",
+      "note": "Atomare Übernahme, COMMIT und ROLLBACK geprüft. Die lokale Übung veranschaulicht das Prinzip ohne echte Datenbanktransaktion."
+    },
+    {
+      "id": "lf8-http",
+      "title": "RFC 9110: HTTP Semantics",
+      "url": "https://www.rfc-editor.org/rfc/rfc9110.html",
+      "checkedAt": "2026-11-16",
+      "note": "POST, Inhaltstyp, HTTP-Status 200/201/400/409/422 und Idempotenz geprüft. Wiederholungsregeln anhand batchId sind ein eigener Anwendungsvertrag."
+    },
+    {
+      "id": "lf8-rest",
+      "title": "OWASP: REST Security Cheat Sheet",
+      "url": "https://cheatsheetseries.owasp.org/cheatsheets/REST_Security_Cheat_Sheet.html",
+      "checkedAt": "2026-11-16",
+      "note": "HTTPS, Zugriffskontrolle und Eingabevalidierung geprüft. Der Simulator stellt Schutzentscheidungen dar und baut keine Netzwerkverbindung auf."
+    },
+    {
+      "id": "lf8-logging",
+      "title": "OWASP: Logging Cheat Sheet",
+      "url": "https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html",
+      "checkedAt": "2026-11-16",
+      "note": "Nachvollziehbare Ereignisse und Ausschluss vertraulicher Inhalte aus Protokollen geprüft. Lokale Fehlermeldungen enthalten synthetische Angaben."
+    }
+  ],
+  "objectives": [
+    {
+      "id": "common-lf8-delivery-test",
+      "text": "Für eine Übertragung erfolgreiche, fehlerhafte und wiederholte Anfragen mit erwarteten Ergebnissen prüfen."
+    },
+    {
+      "id": "common-lf8-delivery-guide",
+      "text": "Eine kurze Nutzungsanleitung für die Bereitstellung erstellen und eine englische Schnittstellenangabe verständlich erläutern."
+    },
+    {
+      "id": "common-lf8-delivery-reflect",
+      "text": "Die gewählten Werkzeuge und die Dokumentation anhand der Zusammenarbeit und Kundenanforderungen beurteilen."
+    }
+  ],
+  "caseStudy": {
+    "title": "Mira erstellt einen regionalen Auftragsbericht",
+    "text": "Mira bereitet die Übergabe des durchgängigen Modellfalls vor. Zwei Kunden (1/Nord, 2/Süd) und fünf angelieferte Auftragszeilen führen nach Bereinigung zu drei Aufträgen und dem Bericht Nord 30/Süd 5 EUR. Die lokale Abschlussübung macht die Verarbeitung, Anfrage, Antwort und Empfängerwirkung sichtbar."
+  },
+  "blocks": [
+    {
+      "id": "common-lf8-delivery-test",
+      "title": "1. Erfolg, Fehler und Wiederholung mit Sollwerten prüfen",
+      "objectiveIds": [
+        "common-lf8-delivery-test"
+      ],
+      "sourceIds": [
+        "lf8-csv",
+        "lf8-json",
+        "lf8-xml",
+        "lf8-join",
+        "lf8-aggregate",
+        "lf8-constraints",
+        "lf8-transactions",
+        "lf8-http",
+        "lf8-rest",
+        "lf8-logging"
+      ],
+      "paragraphs": [
+        "Ein Prüfplan beschreibt Eingabe und Voraussetzungen, erwartete Antwort und erwarteten Zielbestand. Für den durchgängigen Fall müssen zunächst die Quellen, die Bereinigung, das Mapping und der Join stimmen. Die Rohzeilen sind 101/1/10, 102/1/20, 103/2/5, exakt nochmals 102/1/20 sowie 104/null/7. Eine Wiederholung wird entfernt, eine Zeile bleibt zur Klärung; drei gültige Aufträge ergeben Nord 30 und Süd 5 EUR.",
+        "Bereite vier Schnittstellenproben in festgelegter Reihenfolge vor. Erstens: gültiges JSON mit Nord als Text \"30\" statt Zahl 30 → 422, keine Übernahme. Zweitens: die korrigierte Lieferung demo-01 mit Nord 30 und Süd 5 → 201, genau eine neue Lieferung mit zwei Zeilen. Drittens: dieselbe Lieferung unverändert → 200, kein zusätzlicher Bestand. Viertens: dieselbe batchId mit Nord 31 → 409, die bestätigten Werte bleiben 30 und 5.",
+        "Der Inhalt der erfolgreichen Anfrage lautet {\"batchId\":\"demo-01\",\"rows\":[{\"region\":\"Nord\",\"total\":30},{\"region\":\"Süd\",\"total\":5}]}. Methode ist POST, Modellziel /reports, Inhaltstyp application/json. Nutze die freigegebene synthetische Senderrolle und die geschützte Transportwahl. Das Werkzeug baut keine Netzverbindung auf und verlangt keine echten Zugangsdaten.",
+        "Vergleiche tatsächlichen Status und Bestand mit deinen Sollwerten. Ein unerwartetes Ergebnis ist ein Befund und kein Anlass, die erwartete Zahl nachträglich passend zu ändern. Eine Gesamtsumme 35 reicht zudem nicht: Prüfe die Zuordnung 30 zu Nord und 5 zu Süd. Die Wiederholungsregel folgt aus diesem batchId-Vertrag, nicht aus einer allgemeinen Zusicherung für POST."
+      ],
+      "example": {
+        "title": "Eigener synthetischer Lernfall",
+        "text": "Prüfprotokoll: 422/leer; 201/demo-01 mit Nord 30 und Süd 5; 200/gleich; 409/gleich."
+      },
+      "misconception": {
+        "claim": "Wenn eine Anfrage einmal erfolgreich war, sind Fehler- und Wiederholungsfälle mitgeprüft.",
+        "correction": "Diese Fälle können andere Verarbeitungswege auslösen und brauchen eigene Eingaben und Bestandskontrollen."
+      },
+      "takeaway": "Prüfe jede Antwort zusammen mit ihrer Wirkung am Empfänger."
+    },
+    {
+      "id": "common-lf8-delivery-guide",
+      "title": "2. Die Bereitstellung verständlich anleiten",
+      "objectiveIds": [
+        "common-lf8-delivery-guide"
+      ],
+      "sourceIds": [
+        "lf8-csv",
+        "lf8-json",
+        "lf8-xml",
+        "lf8-join",
+        "lf8-aggregate",
+        "lf8-constraints",
+        "lf8-transactions",
+        "lf8-http",
+        "lf8-rest",
+        "lf8-logging"
+      ],
+      "paragraphs": [
+        "Eine kurze Anleitung nennt Zweck und Grenzen, Voraussetzungen, den gültigen Vertragsstand, Datenvorbereitung, ein korrektes Beispiel, Prüfschritte, Statusbedeutung und Zuständigkeiten. Für diesen Fall lautet der Zweck: Regionsbericht aus den freigegebenen, gültig zuordenbaren Modellaufträgen. Der fehlende Kundenbezug von 104 bleibt ein offener Punkt bei der Quelle.",
+        "Beschreibe die Felder ausdrücklich: batchId ist eine Zeichenkette mit 1 bis 40 Buchstaben a–z/A–Z, Ziffern, Unterstrichen oder Bindestrichen. rows enthält genau Nord und Süd einmal. Erlaubt sind oben genau batchId/rows, je Zeile genau region/total. total ist eine ganze Zahl von 0 bis 1000000 EUR. Zahlen wie 30 stehen in JSON ohne Anführungszeichen.",
+        "Die eigene englische Schnittstellenangabe lautet: Send one report per batch. Repeating identical content does not create a second report. Das bedeutet: Eine Lieferkennung bezeichnet einen Bericht; eine identische Wiederholung legt keinen zweiten an. Identisch meint hier gleiche Zuordnung der Regionswerte unabhängig von ihrer Reihenfolge. Ein anderer Inhalt unter derselben Kennung ist ein Konflikt. Dieser begrenzte Empfänger speichert pro Versuch höchstens einen Bericht; nach dem ersten Erfolg führt auch eine neue batchId zu 409 ohne Änderung. Für einen anderen Bericht muss ein neuer, bewusst zurückgesetzter Versuch beginnen.",
+        "Erkläre auch die Grenze einer Fehlermeldung: Unprocessable Content benennt bei 422 einen lesbaren, aber inhaltlich nicht akzeptierten Auftrag. 400 steht hier für ungültige JSON-Syntax; 409 für den Lieferkonflikt. Empfängerstand und Fehlergrund entscheiden über die nächste Handlung. Lea klärt Quellenfehler, Mira Mapping/Bericht und Tarek Empfängervertrag und Änderungen."
+      ],
+      "example": {
+        "title": "Eigener synthetischer Lernfall",
+        "text": "Anleitungssatz: Sende nach Prüfung demo-01 mit Nord 30/Süd 5. Kontrolliere 201 und beide Zielzeilen. Wiederhole identisch für 200 ohne Zuwachs; ändere bestätigte Lieferungen nicht still."
+      },
+      "misconception": {
+        "claim": "Eine Anleitung besteht ausreichend aus einem funktionierenden JSON-Beispiel.",
+        "correction": "Ohne Zweck, Voraussetzungen, Fehlerregeln, Prüfung und Zuständigkeiten bleibt die Nutzung unklar."
+      },
+      "takeaway": "Eine gute Anleitung macht auch Abweichungen und Grenzen bearbeitbar."
+    },
+    {
+      "id": "common-lf8-delivery-practice",
+      "title": "3. Die eigene Durchführung und Zusammenarbeit beurteilen",
+      "objectiveIds": [
+        "common-lf8-delivery-test",
+        "common-lf8-delivery-guide",
+        "common-lf8-delivery-reflect"
+      ],
+      "sourceIds": [
+        "lf8-csv",
+        "lf8-json",
+        "lf8-xml",
+        "lf8-join",
+        "lf8-aggregate",
+        "lf8-constraints",
+        "lf8-transactions",
+        "lf8-http",
+        "lf8-rest",
+        "lf8-logging"
+      ],
+      "paragraphs": [
+        "Die praktische Abschlussübung wird in der zweiten Reflexion nach der ersten abgeschlossen bearbeiteten Reflexion verfügbar. Gehe die Modellstufen in Reihenfolge durch: Datenqualität, Feldzuordnung, Verknüpfung und Gruppierung, Schnittstellenentscheidungen, Übertragungsproben und Übergabe. Nutze den angezeigten Ausgangsbestand und die bereits erklärten Regeln; es werden keine Dateien importiert.",
+        "Bestätige die Behandlung des exakten Duplikats und des fehlenden Kundenbezugs, das Mapping Auftrag/Kunde/Betrag zu orderId/customerId/amount und die Kundenverknüpfung über customerId. Prüfe danach die Regionsgruppierung mit Nord 30 und Süd 5. Entscheide dich für den vereinbarten JSON-Vertrag, die freigegebene Modellrolle und geschützten Transport. Erst dann bearbeitest du die tatsächlichen JSON-Anfragen im lokalen Werkzeug.",
+        "Führe die vier Proben 422 → 201 → 200 → 409 aus und kontrolliere Anfrage, Antwort und Empfängerbestand. Der Eingabetext ist auf 4096 Zeichen und ein Versuch auf 16 protokollierte Anfragen begrenzt. Für einen neuen Versuch gibt es bewusstes Zurücksetzen. Änderungen an noch offenen Eingaben erfordern neue Prüfung; erfolgreich abgeschlossene Schritte bleiben als Nachweis schreibgeschützt. Lies anschließend das Übergabeprotokoll und ergänze eine eigene Beobachtung und Begründung.",
+        "Beurteile Werkzeuge und Dokumentation anhand des Kundenbedarfs: Der Bericht muss je Region stimmen, keinen doppelten Eingang erzeugen und offene Quelldatenfehler sichtbar lassen. Das lokale Werkzeug erlaubt nachvollziehbare Fehlerproben ohne echte Daten. Es beweist keine produktive Transportverschlüsselung, Dauerhaftigkeit oder reale Anbindung. Die Anleitung muss den nächsten Beteiligten bei einer Fehlerprobe ohne Raten weiterhelfen.",
+        "Eine konkrete Verbesserung passt zu einem beobachteten Problem: Wenn der Zahlentyp verwechselt wurde, ergänze ein Gegenbeispiel 30 versus \"30\" in Anleitung und Prüfsatz. Benenne eine verantwortliche Rolle und eine gemeinsame Nachprüfung. Bestätige die eigene Durchführung erst nach erfolgreichen Modellprüfungen bewusst; eine Musterantwort ist kein Durchführungsnachweis."
+      ],
+      "example": {
+        "title": "Eigener synthetischer Lernfall",
+        "text": "Eigene Auswertung: Nord \"30\" ergab 422 ohne Teilübernahme. Nach Korrektur zeigte 201 beide Zeilen. Mira ergänzt den Typvergleich in die Anleitung und prüft ihn mit Tarek erneut."
+      },
+      "misconception": {
+        "claim": "Ein bestandener lokaler Lauf beweist die Eignung aller echten Systeme und Datenquellen.",
+        "correction": "Die Aussage gilt für das begrenzte synthetische Modell; reale Umgebung und Anforderungen benötigen eigene Prüfungen."
+      },
+      "takeaway": "Beurteile die Lösung an beobachteten Ergebnissen, Kundenbedarf und verständlicher Zusammenarbeit."
+    },
+    {
+      "id": "common-lf8-delivery-review",
+      "title": "4. Rückblick auf alle sechs Themen von LF8",
+      "objectiveIds": [
+        "common-lf8-delivery-test",
+        "common-lf8-delivery-guide",
+        "common-lf8-delivery-reflect"
+      ],
+      "sourceIds": [
+        "lf8-csv",
+        "lf8-json",
+        "lf8-xml",
+        "lf8-join",
+        "lf8-aggregate",
+        "lf8-constraints",
+        "lf8-transactions",
+        "lf8-http",
+        "lf8-rest",
+        "lf8-logging"
+      ],
+      "paragraphs": [
+        "Datenquellen und Datenqualität prüfen: Mira vergleicht Auftrags-CSV und Kunden-JSON nach Struktur, Zugriff, Nutzungsbefugnis und fachlichem Bezugsstand. Fünf Rohzeilen enthalten ein exaktes Duplikat von 102/1/20 und Auftrag 104/null/7 ohne Kundenbezug. Nach einmaligem Zählen des Duplikats und Quarantäne von 104 bleiben drei Aufträge mit 35 EUR. Der offene Quellenfehler bleibt dokumentiert.",
+        "CSV, JSON und XML zuordnen: Auftrag,Kunde,Betrag mit Datenzeile 101,1,10 entspricht {\"orderId\":101,\"customerId\":1,\"amount\":10} sowie <order><orderId>101</orderId><customerId>1</customerId><amount>10</amount></order>. Mapping ordnet Felder, Typen, ganze EUR und Fehlwerte zu. Eine leere Kundenangabe wird nicht erfunden; nach dem vereinbarten Profil steht sie als null oder fehlendes XML-Element und führt zur Klärung.",
+        "Daten verknüpfen und zusammenfassen: orders.customerId = customers.customerId verbindet die drei gültigen Aufträge mit eindeutigen Kunden. Nord enthält 101 und 102 mit 10 + 20 = 30 EUR, Süd 103 mit 5 EUR. GROUP BY region mit COUNT(*) und SUM(amount) liefert zwei Gruppen mit Anzahlen 2 und 1. Prüfe fehlende Partner, mehrfache Kundenschlüssel sowie die Folge 5 Rohzeilen → 3 gültige → 3 Joinzeilen → 2 Gruppen.",
+        "Daten über Schnittstellen austauschen: Der eigene Vertrag lautet POST /reports, application/json und batchId/rows mit region/total. Freigegebene synthetische Rolle und geschützter Modelltransport sind Voraussetzungen; keine echte Anmeldung und keine Netzverbindung werden ausgeführt. Sender und Empfänger stimmen Feld-, Typ- und Einheitenänderungen vor der Nutzung ab. Ein Nachweis verbindet Anfrage, Antwort und sichtbaren Zielbestand.",
+        "Datenübernahme absichern: Pflichtfelder, genaue Schlüssel, eindeutige Regionen, Ganzzahltyp und Bereich 0 bis 1000000 werden vor atomarer Übernahme geprüft. Ein Fehler in einer Regionszeile darf keinen halben Bericht erzeugen. Rechte, Transportschutz und datensparsame Fehlerprotokolle erfüllen verschiedene Aufgaben. Echte Datenbanktransaktionen können Änderungen mit COMMIT bestätigen oder mit ROLLBACK verwerfen; die lokale Übung zeigt das Prinzip.",
+        "Datenbereitstellung testen und übergeben: Die vier Modellproben liefern 422 ohne Übernahme, 201 mit Nord 30/Süd 5, 200 ohne doppelten Eingang und 409 ohne Änderung des bestätigten Inhalts. Die Anwendung erkennt Wiederholungen anhand batchId und Regionswerten; POST allein verspricht das nicht. Die englische Angabe zur identischen Wiederholung wird verständlich erklärt. Eine Anleitung nennt Grenzen und Zuständigkeiten; eine konkrete Verbesserung folgt aus eigener Beobachtung und dem Kundenbedarf."
+      ],
+      "example": {
+        "title": "Eigener synthetischer Lernfall",
+        "text": "Vollständige Übergabe: freigegebene Quellen → 5/1/1/3 Qualitätsnachweis → typgerechtes Mapping → Schlüsseljoin und Nord 30/Süd 5 → geschützte Modellentscheidung → vier Bestandsproben → Anleitung mit offenem Quellenpunkt."
+      },
+      "misconception": {
+        "claim": "Ein sauberer JSON-Text ist bereits die gesamte Datenbereitstellung.",
+        "correction": "Quelleneignung, Datenqualität, Zuordnung, fachliche Auswertung, Empfang und Übergabe bilden gemeinsam den vollständigen Weg."
+      },
+      "takeaway": "Der belastbare Bericht verbindet Datenherkunft, fachliche Rechnung, kontrollierten Empfang und nachvollziehbare Übergabe."
+    }
+  ],
+  "questionFile": "questions/common-lf8-delivery.v1.csv",
+  "quiz": {
+    "questionIds": [
+      "LJ-LF8-DELIVERY-Q01",
+      "LJ-LF8-DELIVERY-Q02",
+      "LJ-LF8-DELIVERY-Q03",
+      "LJ-LF8-DELIVERY-Q04",
+      "LJ-LF8-DELIVERY-Q05",
+      "LJ-LF8-DELIVERY-Q06"
+    ]
+  },
+  "exam": {
+    "questionIds": [
+      "LJ-LF8-DELIVERY-E01",
+      "LJ-LF8-DELIVERY-E02",
+      "LJ-LF8-DELIVERY-E03",
+      "LJ-LF8-DELIVERY-E04",
+      "LJ-LF8-DELIVERY-E05",
+      "LJ-LF8-DELIVERY-E06",
+      "LJ-LF8-DELIVERY-E07",
+      "LJ-LF8-DELIVERY-E08"
+    ],
+    "passPercent": 80,
+    "scoring": "all-or-nothing-per-question",
+    "timed": false
+  },
+  "questionLinks": [
+    {
+      "questionId": "LJ-LF8-DELIVERY-Q01",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf8-delivery-test"
+      ],
+      "blockIds": [
+        "common-lf8-delivery-test"
+      ]
+    },
+    {
+      "questionId": "LJ-LF8-DELIVERY-Q02",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf8-delivery-test"
+      ],
+      "blockIds": [
+        "common-lf8-delivery-test"
+      ]
+    },
+    {
+      "questionId": "LJ-LF8-DELIVERY-Q03",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf8-delivery-guide"
+      ],
+      "blockIds": [
+        "common-lf8-delivery-guide"
+      ]
+    },
+    {
+      "questionId": "LJ-LF8-DELIVERY-Q04",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf8-delivery-guide"
+      ],
+      "blockIds": [
+        "common-lf8-delivery-guide"
+      ]
+    },
+    {
+      "questionId": "LJ-LF8-DELIVERY-Q05",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf8-delivery-reflect"
+      ],
+      "blockIds": [
+        "common-lf8-delivery-practice"
+      ]
+    },
+    {
+      "questionId": "LJ-LF8-DELIVERY-Q06",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf8-delivery-reflect"
+      ],
+      "blockIds": [
+        "common-lf8-delivery-practice"
+      ]
+    },
+    {
+      "questionId": "LJ-LF8-DELIVERY-E01",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf8-delivery-test"
+      ],
+      "blockIds": [
+        "common-lf8-delivery-review"
+      ]
+    },
+    {
+      "questionId": "LJ-LF8-DELIVERY-E02",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf8-delivery-guide"
+      ],
+      "blockIds": [
+        "common-lf8-delivery-review"
+      ]
+    },
+    {
+      "questionId": "LJ-LF8-DELIVERY-E03",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf8-delivery-test"
+      ],
+      "blockIds": [
+        "common-lf8-delivery-review"
+      ]
+    },
+    {
+      "questionId": "LJ-LF8-DELIVERY-E04",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf8-delivery-guide"
+      ],
+      "blockIds": [
+        "common-lf8-delivery-review"
+      ]
+    },
+    {
+      "questionId": "LJ-LF8-DELIVERY-E05",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf8-delivery-test"
+      ],
+      "blockIds": [
+        "common-lf8-delivery-review"
+      ]
+    },
+    {
+      "questionId": "LJ-LF8-DELIVERY-E06",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf8-delivery-test"
+      ],
+      "blockIds": [
+        "common-lf8-delivery-review"
+      ]
+    },
+    {
+      "questionId": "LJ-LF8-DELIVERY-E07",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf8-delivery-guide"
+      ],
+      "blockIds": [
+        "common-lf8-delivery-guide",
+        "common-lf8-delivery-review"
+      ]
+    },
+    {
+      "questionId": "LJ-LF8-DELIVERY-E08",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf8-delivery-reflect"
+      ],
+      "blockIds": [
+        "common-lf8-delivery-practice",
+        "common-lf8-delivery-review"
+      ]
+    }
+  ],
+  "interview": [
+    {
+      "id": "common-lf8-delivery-talk-01",
+      "prompt": "Entwirf für demo-01 den Prüfplan mit vier Anfragen und jeweils erwarteter Empfängerwirkung.",
+      "objectiveIds": [
+        "common-lf8-delivery-test",
+        "common-lf8-delivery-guide"
+      ],
+      "blockIds": [
+        "common-lf8-delivery-test",
+        "common-lf8-delivery-guide"
+      ],
+      "keyPoints": [
+        "Ungültiger Typ → 422 ohne Übernahme.",
+        "Gültig → 201 mit Nord 30/Süd 5.",
+        "Identisch → 200 ohne Zuwachs; geändert → 409 ohne Änderung."
+      ],
+      "acceptableAlternatives": [
+        "Eine gleichwertige fachliche Erklärung mit nachvollziehbarer Begründung und passenden Fallwerten."
+      ],
+      "misconceptions": [
+        "Ein erfolgreicher Normalfall decke alle Wiederholungs- und Fehlerwege ab."
+      ],
+      "sampleAnswer": "Ich plane zuerst Nord als Text \"30\" bei sonst gültiger Struktur und erwarte 422 ohne neue Lieferung. Mit beiden Zahlen folgt 201 und der Bericht 30/5. Identisch wiederholt folgt 200 ohne Zuwachs. Mit Nord 31 unter derselben batchId folgt 409 und unverändert 30/5.",
+      "followUp": "Welcher Bestand würde einen Fehler der atomaren Übernahme zeigen?"
+    },
+    {
+      "id": "common-lf8-delivery-talk-02",
+      "prompt": "Bearbeite die lokale Datenbereitstellung bis zur geprüften Übergabe. Erkläre danach eine eigene Beobachtung aus den Anfragen und eine konkrete Verbesserung der Anleitung.",
+      "objectiveIds": [
+        "common-lf8-delivery-test",
+        "common-lf8-delivery-guide",
+        "common-lf8-delivery-reflect"
+      ],
+      "blockIds": [
+        "common-lf8-delivery-test",
+        "common-lf8-delivery-guide",
+        "common-lf8-delivery-practice"
+      ],
+      "keyPoints": [
+        "Datenqualität, Mapping, Schlüsseljoin und Regionssummen prüfen.",
+        "Schnittstellenentscheidungen mit freigegebener Modellrolle und geschütztem Transport treffen.",
+        "Vier tatsächliche JSON-Proben ausführen und Bestände abgleichen.",
+        "Übergabeprotokoll lesen und eigene Beobachtung samt Begründung festhalten.",
+        "Die erfolgreiche Durchführung bewusst selbst bestätigen."
+      ],
+      "acceptableAlternatives": [
+        "Eine gleichwertige fachliche Erklärung mit nachvollziehbarer Begründung und passenden Fallwerten."
+      ],
+      "misconceptions": [
+        "Eine vorbereitete Musterantwort sei ein Beleg für durchgeführte Modellprüfungen."
+      ],
+      "sampleAnswer": "Vorlage nach eigener Bearbeitung: Ich nenne eine von mir tatsächlich eingegebene Anfrage, ihren Status und die beobachtete Empfängerwirkung. Ich beschreibe, welche fachliche Regel sie geprüft hat und wie ich die Anleitung oder Zusammenarbeit verbessern würde. Diese Vorlage bestätigt keine Durchführung.",
+      "followUp": "Welche Empfängerbeobachtung hat dir den Unterschied zwischen Erfolg, Wiederholung und Konflikt gezeigt?",
+      "practice": {
+        "task": "Bearbeite den synthetischen Regionsbericht schrittweise in der lokalen Übung. Prüfe die Quellen und die fünf Rohzeilen: 101/1/10, 102/1/20, 103/2/5, exakt nochmals 102/1/20 und 104/null/7. Zähle die exakte Wiederholung einmal und stelle 104 mit Fehlergrund zurück; bestätige 5 Eingang, 1 Duplikat, 1 Quarantäne und 3 gültige Aufträge. Ordne Auftrag/Kunde/Betrag den Feldern orderId/customerId/amount als ganze Zahlen zu; die Einheit bleibt EUR, ein fehlender Kunde bleibt fehlend. Verbinde die Aufträge über customerId mit Kunden 1/Nord und 2/Süd. Gruppiere nach Region und prüfe Nord 30/Süd 5. Wähle den JSON-Vertrag POST /reports mit application/json, freigegebener synthetischer Senderrolle und geschütztem Modelltransport. Gib dann die Anfragen selbst im Werkzeug ein und löse die Übertragung aus: zuerst den vorbereiteten JSON-Text mit Nord total als Text \"30\" für 422 ohne Übernahme; dann {\"batchId\":\"demo-01\",\"rows\":[{\"region\":\"Nord\",\"total\":30},{\"region\":\"Süd\",\"total\":5}]} für 201 mit zwei gemeinsam übernommenen Zeilen; wiederhole dieselbe Lieferung für 200 ohne Zuwachs; ändere unter derselben batchId Nord auf 31 für 409 ohne Änderung. Der sichtbare Vertrag begrenzt batchId auf 1 bis 40 Buchstaben, Ziffern, Unterstriche oder Bindestriche und total auf ganze Zahlen von 0 bis 1000000 EUR. Genau die vorgesehenen Schlüssel und beide eindeutigen Regionen sind erforderlich. Der Empfänger speichert pro Versuch höchstens eine Lieferung; auch eine neue batchId wird nach dem ersten Erfolg mit 409 abgewiesen. Prüfe jeden Status und den jeweiligen Empfängerbestand. Beachte maximal 4096 Eingabezeichen und 16 protokollierte Anfragen je Versuch; ein neuer Versuch beginnt durch bewusstes Zurücksetzen. Änderungen an offenen Eingaben erfordern erneute Prüfung, abgeschlossene Schritte bleiben schreibgeschützt. Lies das Übergabeprotokoll, erläutere die englische Wiederholungsangabe und ergänze eine eigene Beobachtung sowie eine konkrete Verbesserung. Bestätige deine Durchführung erst nach erfolgreichen Prüfungen bewusst. Die Übung verwendet keine echten Daten, Tokens, Dateien oder Netzwerkverbindungen.",
+        "checklist": [
+          "Ich habe Quellenzweck und Qualitätsbilanz 5/1/1/3 mit offenem Kundenbezug 104 nachvollzogen.",
+          "Ich habe Feldzuordnung, Zahlentypen und unveränderte Einheit EUR geprüft.",
+          "Ich habe über customerId verknüpft und Nord 30 sowie Süd 5 als Regionssummen bestätigt.",
+          "Ich habe den vorgegebenen Vertrag, die freigegebene Modellrolle und geschützten Transport gewählt.",
+          "Ich habe die vier JSON-Proben 422/201/200/409 ausgeführt und den Empfängerbestand jeweils kontrolliert.",
+          "Ich habe das Übergabeprotokoll gelesen, die Wiederholungsregel erläutert und eine eigene Beobachtung mit Verbesserung begründet."
+        ],
+        "confirmation": "Ich bestätige, dass ich die lokale Datenbereitstellung selbst durch die Modellstufen geführt, die vier Übertragungsproben mit ihren Empfängerwirkungen geprüft und das Übergabeprotokoll gelesen habe. Meine Reflexion nennt eine eigene Beobachtung und begründete Verbesserung. Dies ist eine Selbstbestätigung der synthetischen Übung und kein Nachweis einer realen Datenübertragung."
+      }
+    },
+    {
+      "id": "common-lf8-delivery-talk-review",
+      "prompt": "Verbinde alle sechs LF8-Themen zu einer nachvollziehbaren Übergabe: Quellen, Formate, Abfrage, Schnittstelle, sichere Übernahme und Prüfung. Erläutere dabei die englische Wiederholungsangabe und beurteile Werkzeug und Anleitung.",
+      "objectiveIds": [
+        "common-lf8-delivery-test",
+        "common-lf8-delivery-guide",
+        "common-lf8-delivery-reflect"
+      ],
+      "blockIds": [
+        "common-lf8-delivery-review"
+      ],
+      "keyPoints": [
+        "Quellenfreigabe und Bezugsstand mit 5/1/1/3-Mengen erklären.",
+        "Typgerechtes Mapping und customerId-Join zu Nord 30/Süd 5 beschreiben.",
+        "Vertrag, Modellzugriff und atomare Validierung verbinden.",
+        "422/201/200/409 mit tatsächlichen Bestandswirkungen erklären.",
+        "Englische Angabe verständlich erläutern und Grenzen sowie Verbesserung benennen."
+      ],
+      "acceptableAlternatives": [
+        "Eine gleichwertige fachliche Erklärung mit nachvollziehbarer Begründung und passenden Fallwerten."
+      ],
+      "misconceptions": [
+        "Ein formal gültiger JSON-Text belege den gesamten Bereitstellungsweg."
+      ],
+      "sampleAnswer": "Die freigegebenen Quellen liefern fünf Zeilen. Ein Duplikat und ein ungeklärter Kundenbezug lassen drei gültige Aufträge übrig. Das Mapping erhält Zahlen und EUR; der customerId-Join und die Regionsgruppierung ergeben Nord 30/Süd 5. Der lokale Vertrag prüft Rolle, Transport und Inhalt vor gemeinsamer Übernahme. Fehler, Erfolg, Wiederholung und Konflikt müssen 422/201/200/409 mit den erwarteten Beständen zeigen. Die englische Angabe meint keinen zweiten Bericht bei identischer Lieferung. Ich beurteile die Anleitung danach, ob die nächste Person diese Proben und offene Punkte nachvollziehen kann; echte Anbindungen bleiben ungeprüft.",
+      "followUp": "Welche konkrete Änderung der Anleitung würdest du anhand deines eigenen Laufs gemeinsam überprüfen?"
+    }
+  ],
+  "cards": [
+    {
+      "id": "common-lf8-delivery-card-01",
+      "front": "Welche vier Proben verlangt der Abschluss?",
+      "back": "Fehlerhafter Inhalt mit 422, erste gültige Übernahme mit 201, identische Wiederholung mit 200 und geänderter Inhalt derselben Lieferung mit 409.",
+      "objectiveIds": [
+        "common-lf8-delivery-test"
+      ],
+      "blockIds": [
+        "common-lf8-delivery-test"
+      ]
+    },
+    {
+      "id": "common-lf8-delivery-card-02",
+      "front": "Welche Bestände gehören zu den vier Proben?",
+      "back": "Nach 422 keine neue Lieferung; nach 201 demo-01 mit Nord 30/Süd 5; nach 200 und 409 unverändert derselbe Bericht.",
+      "objectiveIds": [
+        "common-lf8-delivery-test"
+      ],
+      "blockIds": [
+        "common-lf8-delivery-test"
+      ]
+    },
+    {
+      "id": "common-lf8-delivery-card-03",
+      "front": "Was gehört in die kurze Nutzungsanleitung?",
+      "back": "Zweck/Grenzen, Voraussetzungen, Vertragsstand, Vorbereitung, gültiges Beispiel, Prüfschritte, Statusbedeutungen und Zuständigkeiten.",
+      "objectiveIds": [
+        "common-lf8-delivery-guide"
+      ],
+      "blockIds": [
+        "common-lf8-delivery-guide"
+      ]
+    },
+    {
+      "id": "common-lf8-delivery-card-04",
+      "front": "Wie erklärst du Repeating identical content does not create a second report?",
+      "back": "Eine identische Lieferung unter derselben batchId erzeugt keinen weiteren Bericht. Das ist eine konkrete Anwendungsregel, keine allgemeine POST-Eigenschaft.",
+      "objectiveIds": [
+        "common-lf8-delivery-guide"
+      ],
+      "blockIds": [
+        "common-lf8-delivery-guide"
+      ]
+    },
+    {
+      "id": "common-lf8-delivery-card-05",
+      "front": "Woran beurteilst du das Werkzeug?",
+      "back": "An richtigen Regionssummen, nachvollziehbaren Fehler- und Wiederholungsproben, sichtbarem Zielbestand und seinen Grenzen gegenüber echten Systemen.",
+      "objectiveIds": [
+        "common-lf8-delivery-reflect"
+      ],
+      "blockIds": [
+        "common-lf8-delivery-practice"
+      ]
+    },
+    {
+      "id": "common-lf8-delivery-card-06",
+      "front": "Wie wird eine Verbesserung der Übergabe konkret?",
+      "back": "Aus einem beobachteten Problem eine Änderung wie ein Typgegenbeispiel ableiten, eine verantwortliche Rolle benennen und die Wirkung gemeinsam nachprüfen.",
+      "objectiveIds": [
+        "common-lf8-delivery-reflect"
+      ],
+      "blockIds": [
+        "common-lf8-delivery-practice"
+      ]
+    }
+  ],
+  "review": {
+    "status": "reviewed",
+    "checkedAt": "2026-11-16"
+  },
+  "fieldReview": {
+    "fieldId": "LF8",
+    "topicIds": [
+      "common-lf8-sources",
+      "common-lf8-formats",
+      "common-lf8-queries",
+      "common-lf8-interfaces",
+      "common-lf8-integrity",
+      "common-lf8-delivery"
+    ],
+    "blockIds": [
+      "common-lf8-delivery-review"
+    ],
+    "interviewIds": [
+      "common-lf8-delivery-talk-review"
+    ],
+    "questionIds": [
+      "LJ-LF8-DELIVERY-E01",
+      "LJ-LF8-DELIVERY-E02",
+      "LJ-LF8-DELIVERY-E03",
+      "LJ-LF8-DELIVERY-E04",
+      "LJ-LF8-DELIVERY-E05",
+      "LJ-LF8-DELIVERY-E06",
+      "LJ-LF8-DELIVERY-E07",
+      "LJ-LF8-DELIVERY-E08"
+    ]
+  }
+}

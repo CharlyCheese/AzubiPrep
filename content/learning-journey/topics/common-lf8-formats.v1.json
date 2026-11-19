@@ -1,0 +1,491 @@
+{
+  "schemaVersion": 1,
+  "id": "common-lf8-formats",
+  "version": "1.0.0",
+  "title": "CSV, JSON und XML zuordnen",
+  "fieldId": "LF8",
+  "scope": "common",
+  "prerequisites": [
+    "common-lf8-sources",
+    "common-lf5-types"
+  ],
+  "sourceIds": [
+    "lf8-csv",
+    "lf8-json",
+    "lf8-xml",
+    "lf8-constraints"
+  ],
+  "sources": [
+    {
+      "id": "lf8-csv",
+      "title": "RFC 4180: Common Format and MIME Type for CSV Files",
+      "url": "https://www.rfc-editor.org/rfc/rfc4180",
+      "checkedAt": "2026-11-16",
+      "note": "Informative Beschreibung des Kommaformats, Kopfzeilen und Maskierung geprüft; das jeweilige Austauschprofil muss gesondert vereinbart werden."
+    },
+    {
+      "id": "lf8-json",
+      "title": "RFC 8259: The JavaScript Object Notation (JSON) Data Interchange Format",
+      "url": "https://www.rfc-editor.org/rfc/rfc8259",
+      "checkedAt": "2026-11-16",
+      "note": "Syntax von Objekten, Arrays, Zahlen, Zeichenketten und null geprüft. Eigene Datensätze und Feldverträge sind didaktische Beispiele."
+    },
+    {
+      "id": "lf8-xml",
+      "title": "W3C: Extensible Markup Language (XML) 1.0, Fifth Edition",
+      "url": "https://www.w3.org/TR/xml/",
+      "checkedAt": "2026-11-16",
+      "note": "Wohlgeformte Elemente, Schachtelung und Entitätsreferenzen geprüft; die fachliche Bedeutung fehlender Werte folgt dem eigenen Austauschvertrag."
+    },
+    {
+      "id": "lf8-constraints",
+      "title": "PostgreSQL: Constraints",
+      "url": "https://www.postgresql.org/docs/current/ddl-constraints.html",
+      "checkedAt": "2026-11-16",
+      "note": "Pflichtwerte, Prüfbedingungen, eindeutige Schlüssel und Fremdschlüssel geprüft; Feldgrenzen im Simulator sind eigene Vorgaben."
+    }
+  ],
+  "objectives": [
+    {
+      "id": "common-lf8-formats-read",
+      "text": "Denselben einfachen Datensatz in CSV, JSON und XML lesen und die Strukturunterschiede erklären."
+    },
+    {
+      "id": "common-lf8-formats-mapping",
+      "text": "Eine Feldzuordnung zwischen zwei Austauschformaten einschließlich Datentypen und fehlender Werte festlegen."
+    }
+  ],
+  "caseStudy": {
+    "title": "Mira erstellt einen regionalen Auftragsbericht",
+    "text": "Mira ordnet die freigegebenen Aufträge einem gemeinsamen Datenmodell zu. Die Zahlen sind fiktive ganze EUR-Beträge. Ein gültiger Beispielsatz lautet Auftrag 101, Kunde 1, Betrag 10. Fehlende Kundenbezüge bleiben als fehlend erkennbar und werden vor dem Bericht geklärt."
+  },
+  "blocks": [
+    {
+      "id": "common-lf8-formats-read",
+      "title": "1. Denselben Auftrag in drei Formen lesen",
+      "objectiveIds": [
+        "common-lf8-formats-read"
+      ],
+      "sourceIds": [
+        "lf8-csv",
+        "lf8-json",
+        "lf8-xml",
+        "lf8-constraints"
+      ],
+      "paragraphs": [
+        "CSV beschreibt im vereinbarten Profil eine Tabelle mit Kopfzeile und gleich aufgebauten Datensätzen. Unser Beispiel benutzt UTF-8 und Kommas als Trennzeichen: Auftrag,Kunde,Betrag\n101,1,10. Die Kopfzeile benennt die Spalten; die Datenzeile enthält denselben Auftrag, den wir gleich in JSON und XML betrachten. Andere CSV-Profile können etwa Semikolon als Trenner vereinbaren.",
+        "JSON zeigt Namen und Werte: {\"orderId\":101,\"customerId\":1,\"amount\":10}. Ein Objekt steht in geschweiften Klammern; Namen und Textwerte stehen in doppelten Anführungszeichen. Zahlen wie 10 stehen ohne Anführungszeichen. Eine Liste mehrerer Aufträge wird durch eckige Klammern als Array dargestellt.",
+        "XML beschreibt den gleichen Satz durch geschachtelte Elemente: <order><orderId>101</orderId><customerId>1</customerId><amount>10</amount></order>. Ein gemeinsames Wurzelelement kann mehrere order-Elemente enthalten. Start- und End-Tags müssen zueinander passen. Dass der Text 10 als Betrag und Zahl gilt, ergibt sich aus dem vereinbarten Schema beziehungsweise Vertrag."
+      ],
+      "example": {
+        "title": "Eigener synthetischer Lernfall",
+        "text": "CSV-Zeile 101,1,10, JSON-Objekt mit orderId/customerId/amount und XML-Element order beschreiben fachlich denselben Auftrag."
+      },
+      "misconception": {
+        "claim": "Der Wechsel zu JSON verändert die fachliche Bedeutung eines Betrags.",
+        "correction": "Format und fachliche Bedeutung sind getrennt; das Mapping erhält Identität, Typ und Einheit."
+      },
+      "takeaway": "Lies zuerst Struktur und Feldbedeutung, dann den Wert."
+    },
+    {
+      "id": "common-lf8-formats-syntax",
+      "title": "2. Trennzeichen, Typen und Sonderzeichen beachten",
+      "objectiveIds": [
+        "common-lf8-formats-read"
+      ],
+      "sourceIds": [
+        "lf8-csv",
+        "lf8-json",
+        "lf8-xml",
+        "lf8-constraints"
+      ],
+      "paragraphs": [
+        "Im beschriebenen CSV-Kommaprofil wird ein Text mit enthaltenem Komma in doppelte Anführungszeichen gesetzt, zum Beispiel \"Nord, Ost\". Ein Anführungszeichen innerhalb eines solchen Feldes wird verdoppelt. Die Anzahl der Spalten muss zum vereinbarten Aufbau passen. Ein einfaches Aufteilen an jedem Komma würde ein korrekt maskiertes Feld beschädigen.",
+        "In JSON sind 10 und \"10\" unterschiedliche Werte: eine Zahl und eine Zeichenkette. true, false und null werden kleingeschrieben; null ist weder die Zeichenkette \"null\" noch die Zahl 0. Ein abschließendes Komma nach dem letzten Feld ist in JSON nicht erlaubt. Eindeutige Objektnamen vermeiden mehrdeutige Auswertung.",
+        "In XML wird ein kaufmännisches Und im gewöhnlichen Text als &amp; geschrieben; < wird als &lt; dargestellt, wenn es Text und kein Beginn eines Tags sein soll. Wohlgeformte Syntax allein bestätigt keine fachliche Gültigkeit. <amount>zehn</amount> kann wohlgeformt sein und trotzdem den verlangten Zahlentyp verletzen."
+      ],
+      "example": {
+        "title": "Eigener synthetischer Lernfall",
+        "text": "{\"amount\":10} enthält eine Zahl; {\"amount\":\"10\"} enthält Text. Die spätere Schnittstelle akzeptiert für total eine ganze Zahl."
+      },
+      "misconception": {
+        "claim": "Ein syntaktisch gültiges Dokument enthält automatisch gültige Geschäftsdaten.",
+        "correction": "Parser prüfen den Aufbau; Typen, Pflichtwerte und Fachregeln brauchen zusätzliche Validierung."
+      },
+      "takeaway": "Syntaxprüfung und fachliche Validierung lösen unterschiedliche Aufgaben."
+    },
+    {
+      "id": "common-lf8-formats-mapping",
+      "title": "3. Feldzuordnung mit Typen und Fehlwerten festlegen",
+      "objectiveIds": [
+        "common-lf8-formats-mapping"
+      ],
+      "sourceIds": [
+        "lf8-csv",
+        "lf8-json",
+        "lf8-xml",
+        "lf8-constraints"
+      ],
+      "paragraphs": [
+        "Ein Mapping dokumentiert Quellfeld, Zielfeld, Typ, Umwandlung und Behandlung fehlender Werte. Für den CSV-Import gilt: Auftrag → orderId als positive ganze Zahl; Kunde → customerId als positive ganze Zahl; Betrag → amount als ganze Zahl von 0 bis 1000000 EUR. Die Kundenquelle liefert customerId und region. Eine explizite Zuordnung verhindert, dass die Reihenfolge zweier Spalten ihre Bedeutung vertauscht.",
+        "CSV-Felder und einfache XML-Elementtexte werden anhand dieses Vertrags geprüft und dann in die benötigten Zahlentypen überführt. Der Text 10 darf als Zahl 10 übernommen werden; der Text zehn wird nicht erraten. Ein leerer Wert in der CSV-Spalte Kunde wird im vereinbarten Import als fehlend, also null, markiert und zur Klärung gestellt.",
+        "Für den fehlenden Bezug von Auftrag 104 sind folgende Darstellungen nach unserem eigenen Profil gleichbedeutend: CSV 104,,7; JSON {\"orderId\":104,\"customerId\":null,\"amount\":7}; XML <order><orderId>104</orderId><amount>7</amount></order>. Das fehlende XML-Element bedeutet hier fehlend, weil der Vertrag es so festlegt. XML selbst schreibt diese Bedeutung nicht vor.",
+        "Ein fehlender Kunde wird nicht durch 0, eine leere Zeichenkette oder einen geratenen Kunden ersetzt. Bei einem unbekannten oder nicht passenden Wert dokumentierst du den Befund. Für reale Geldwerte wäre zusätzlich eine genaue Dezimal- oder Centregel nötig; hier sind ganze fiktive EUR ausdrücklich vereinbart."
+      ],
+      "example": {
+        "title": "Eigener synthetischer Lernfall",
+        "text": "Mappingzeile: Kunde → customerId; positive ganze Zahl; leer → null und Quarantäne. Betrag → amount; ganze EUR; keine Umrechnung ohne Vertrag."
+      },
+      "misconception": {
+        "claim": "Gleich benannte Felder haben in allen Quellen denselben Datentyp und dieselbe Einheit.",
+        "correction": "Auch gleiche Namen müssen auf Typ, Einheit und Fehlwertbedeutung geprüft werden."
+      },
+      "takeaway": "Ein Mapping ist ein fachlicher Vertrag, keine bloße Umbenennung."
+    },
+    {
+      "id": "common-lf8-formats-check",
+      "title": "4. Die Zuordnung an gültigen und fehlenden Werten prüfen",
+      "objectiveIds": [
+        "common-lf8-formats-read",
+        "common-lf8-formats-mapping"
+      ],
+      "sourceIds": [
+        "lf8-csv",
+        "lf8-json",
+        "lf8-xml",
+        "lf8-constraints"
+      ],
+      "paragraphs": [
+        "Prüfe das Mapping an einem gültigen Satz und mindestens einem Fehlerfall. Aus 101,1,10 muss {\"orderId\":101,\"customerId\":1,\"amount\":10} werden. Die Zahlen bleiben Zahlen, die Kundennummer bleibt 1 und die Einheit EUR bleibt erhalten. Die Anzeige eines lesbaren JSON-Textes beweist diese Eigenschaften noch nicht.",
+        "Beim Fehlwertfall 104,,7 muss die fehlende Kundennummer sichtbar bleiben. Der Satz wird später nicht mit einer Region verbunden, bevor die zuständige Quelle den Bezug klärt. Ein Test sollte außerdem falsch formatierte Zahlen erkennen, statt sie stillschweigend auf 0 zu setzen.",
+        "Die Formatwahl richtet sich nach dem vereinbarten Empfänger: CSV passt zum flachen Tabellenaustausch, JSON kann Objektlisten und Zahlen direkt ausdrücken, XML eignet sich für vertraglich definierte Elementstrukturen. Keines dieser Formate garantiert Datenqualität oder Vertraulichkeit. Im Abschlussmodell wird JSON gesendet, weil genau dieser Schnittstellenvertrag vorgesehen ist."
+      ],
+      "example": {
+        "title": "Eigener synthetischer Lernfall",
+        "text": "Gültig: 101,1,10 → Zahlentypen 101/1/10. Fehlend: 104,,7 → customerId null, Fehlerbestand statt geratenem Kunden."
+      },
+      "misconception": {
+        "claim": "Ein erfolgreicher Formatwechsel ist bereits ein vollständiger Integrationstest.",
+        "correction": "Auch Zuordnung, fachliche Beziehungen, Werte und später der Empfang müssen geprüft werden."
+      },
+      "takeaway": "Teste, ob Bedeutung und Fehlwerte den Formatwechsel überstehen."
+    }
+  ],
+  "questionFile": "questions/common-lf8-formats.v1.csv",
+  "quiz": {
+    "questionIds": [
+      "LJ-LF8-FORMATS-Q01",
+      "LJ-LF8-FORMATS-Q02",
+      "LJ-LF8-FORMATS-Q03",
+      "LJ-LF8-FORMATS-Q04",
+      "LJ-LF8-FORMATS-Q05",
+      "LJ-LF8-FORMATS-Q06"
+    ]
+  },
+  "exam": {
+    "questionIds": [
+      "LJ-LF8-FORMATS-E01",
+      "LJ-LF8-FORMATS-E02",
+      "LJ-LF8-FORMATS-E03",
+      "LJ-LF8-FORMATS-E04",
+      "LJ-LF8-FORMATS-E05",
+      "LJ-LF8-FORMATS-E06",
+      "LJ-LF8-FORMATS-E07",
+      "LJ-LF8-FORMATS-E08"
+    ],
+    "passPercent": 80,
+    "scoring": "all-or-nothing-per-question",
+    "timed": false
+  },
+  "questionLinks": [
+    {
+      "questionId": "LJ-LF8-FORMATS-Q01",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf8-formats-read"
+      ],
+      "blockIds": [
+        "common-lf8-formats-read"
+      ]
+    },
+    {
+      "questionId": "LJ-LF8-FORMATS-Q02",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf8-formats-read"
+      ],
+      "blockIds": [
+        "common-lf8-formats-read"
+      ]
+    },
+    {
+      "questionId": "LJ-LF8-FORMATS-Q03",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf8-formats-read"
+      ],
+      "blockIds": [
+        "common-lf8-formats-syntax"
+      ]
+    },
+    {
+      "questionId": "LJ-LF8-FORMATS-Q04",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf8-formats-mapping"
+      ],
+      "blockIds": [
+        "common-lf8-formats-mapping"
+      ]
+    },
+    {
+      "questionId": "LJ-LF8-FORMATS-Q05",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf8-formats-mapping"
+      ],
+      "blockIds": [
+        "common-lf8-formats-mapping"
+      ]
+    },
+    {
+      "questionId": "LJ-LF8-FORMATS-Q06",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf8-formats-read",
+        "common-lf8-formats-mapping"
+      ],
+      "blockIds": [
+        "common-lf8-formats-check"
+      ]
+    },
+    {
+      "questionId": "LJ-LF8-FORMATS-E01",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf8-formats-read"
+      ],
+      "blockIds": [
+        "common-lf8-formats-read"
+      ]
+    },
+    {
+      "questionId": "LJ-LF8-FORMATS-E02",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf8-formats-read"
+      ],
+      "blockIds": [
+        "common-lf8-formats-syntax"
+      ]
+    },
+    {
+      "questionId": "LJ-LF8-FORMATS-E03",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf8-formats-read"
+      ],
+      "blockIds": [
+        "common-lf8-formats-syntax"
+      ]
+    },
+    {
+      "questionId": "LJ-LF8-FORMATS-E04",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf8-formats-read"
+      ],
+      "blockIds": [
+        "common-lf8-formats-syntax"
+      ]
+    },
+    {
+      "questionId": "LJ-LF8-FORMATS-E05",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf8-formats-mapping"
+      ],
+      "blockIds": [
+        "common-lf8-formats-mapping"
+      ]
+    },
+    {
+      "questionId": "LJ-LF8-FORMATS-E06",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf8-formats-mapping"
+      ],
+      "blockIds": [
+        "common-lf8-formats-mapping"
+      ]
+    },
+    {
+      "questionId": "LJ-LF8-FORMATS-E07",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf8-formats-read",
+        "common-lf8-formats-mapping"
+      ],
+      "blockIds": [
+        "common-lf8-formats-check"
+      ]
+    },
+    {
+      "questionId": "LJ-LF8-FORMATS-E08",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf8-formats-mapping"
+      ],
+      "blockIds": [
+        "common-lf8-formats-mapping",
+        "common-lf8-formats-check"
+      ]
+    }
+  ],
+  "interview": [
+    {
+      "id": "common-lf8-formats-talk-01",
+      "prompt": "Erkläre Auftrag 101 in CSV, JSON und XML und beschreibe jeweils, wie Felder erkennbar sind.",
+      "objectiveIds": [
+        "common-lf8-formats-read"
+      ],
+      "blockIds": [
+        "common-lf8-formats-read",
+        "common-lf8-formats-syntax"
+      ],
+      "keyPoints": [
+        "CSV-Kopfzeile und Datenzeile unterscheiden.",
+        "JSON-Objekt mit Zahlentypen lesen.",
+        "XML-Elemente und passende Tags beschreiben."
+      ],
+      "acceptableAlternatives": [
+        "Eine gleichwertige fachliche Erklärung mit nachvollziehbarer Begründung und passenden Fallwerten."
+      ],
+      "misconceptions": [
+        "Ein Format entscheide bereits über die fachliche Richtigkeit."
+      ],
+      "sampleAnswer": "CSV verbindet 101,1,10 mit der Kopfzeile Auftrag,Kunde,Betrag. JSON benennt orderId, customerId und amount direkt und enthält Zahlen. XML ordnet denselben Inhalt Elementen zu; der Vertrag legt ihre Zahlentypen fest.",
+      "followUp": "Woran würdest du in JSON eine Zahl von einer Ziffernfolge als Text unterscheiden?"
+    },
+    {
+      "id": "common-lf8-formats-talk-02",
+      "prompt": "Lege das Mapping für Auftrag, Kunde und Betrag einschließlich Fehlwerten fest.",
+      "objectiveIds": [
+        "common-lf8-formats-mapping"
+      ],
+      "blockIds": [
+        "common-lf8-formats-mapping"
+      ],
+      "keyPoints": [
+        "Quell- und Zielfelder benennen.",
+        "Positive ganze IDs und ganze EUR vereinbaren.",
+        "Leeren Kundenwert als fehlend zur Klärung stellen."
+      ],
+      "acceptableAlternatives": [
+        "Eine gleichwertige fachliche Erklärung mit nachvollziehbarer Begründung und passenden Fallwerten."
+      ],
+      "misconceptions": [
+        "Ein Fehlwert dürfe ohne Beleg mit einem vorhandenen Kunden ersetzt werden."
+      ],
+      "sampleAnswer": "Auftrag wird orderId, Kunde wird customerId, Betrag wird amount. Ich prüfe Typ und Wertebereich vor der Übernahme. Die leere Kundenspalte wird null und führt zur Quarantäne; es gibt keine erfundene Kundennummer.",
+      "followUp": "Welche Regel fehlt, wenn eine weitere Quelle Beträge in Cent liefert?"
+    },
+    {
+      "id": "common-lf8-formats-talk-03",
+      "prompt": "Entwirf zwei kleine Prüfungen für das Mapping und begründe die Wahl des Zielformats.",
+      "objectiveIds": [
+        "common-lf8-formats-read",
+        "common-lf8-formats-mapping"
+      ],
+      "blockIds": [
+        "common-lf8-formats-check"
+      ],
+      "keyPoints": [
+        "101/1/10 unverändert als Zahlen nachweisen.",
+        "104 mit fehlendem Kunden als Fehlerfall erhalten.",
+        "JSON mit dem vorgegebenen Empfängervertrag begründen."
+      ],
+      "acceptableAlternatives": [
+        "Eine gleichwertige fachliche Erklärung mit nachvollziehbarer Begründung und passenden Fallwerten."
+      ],
+      "misconceptions": [
+        "Eine lesbare Ausgabedatei beweise ein richtiges Mapping."
+      ],
+      "sampleAnswer": "Ich vergleiche den gültigen Satz feldweise und prüfe die fehlende Kundennummer separat. Die Ausgabe muss die Bedeutung erhalten. JSON passt hier, weil der spätere Empfänger eine Objektliste mit Zahlen erwartet; die Formatwahl ersetzt keinen Qualitätstest.",
+      "followUp": "Welche Prüfung würde eine vertauschte Spalte aufdecken?"
+    }
+  ],
+  "cards": [
+    {
+      "id": "common-lf8-formats-card-01",
+      "front": "Wie zeigt das CSV-Beispiel seine Felder?",
+      "back": "Kopfzeile Auftrag,Kunde,Betrag und Datenzeile 101,1,10; Trennzeichen und Zeichencodierung sind vereinbart.",
+      "objectiveIds": [
+        "common-lf8-formats-read"
+      ],
+      "blockIds": [
+        "common-lf8-formats-read"
+      ]
+    },
+    {
+      "id": "common-lf8-formats-card-02",
+      "front": "Wie unterscheiden sich JSON und XML strukturell?",
+      "back": "JSON verwendet benannte Werte und Arrays; XML verwendet geschachtelte Elemente und Tags. Fachliche Regeln müssen dazu vereinbart sein.",
+      "objectiveIds": [
+        "common-lf8-formats-read"
+      ],
+      "blockIds": [
+        "common-lf8-formats-read"
+      ]
+    },
+    {
+      "id": "common-lf8-formats-card-03",
+      "front": "Was unterscheidet 10, \"10\" und null in JSON?",
+      "back": "Eine Zahl, eine Zeichenkette und ein expliziter Nullwert; ihre fachliche Zulässigkeit ergibt sich aus dem Vertrag.",
+      "objectiveIds": [
+        "common-lf8-formats-read"
+      ],
+      "blockIds": [
+        "common-lf8-formats-syntax"
+      ]
+    },
+    {
+      "id": "common-lf8-formats-card-04",
+      "front": "Was steht in einem Mapping?",
+      "back": "Quellfeld, Zielfeld, Datentyp, Einheit oder Umwandlung und Behandlung fehlender beziehungsweise ungültiger Werte.",
+      "objectiveIds": [
+        "common-lf8-formats-mapping"
+      ],
+      "blockIds": [
+        "common-lf8-formats-mapping"
+      ]
+    },
+    {
+      "id": "common-lf8-formats-card-05",
+      "front": "Wie wird ein leerer Kunde im Modell übertragen?",
+      "back": "CSV leer → JSON null; im XML-Profil fehlt customerId. Der Satz bleibt zur Klärung zurückgestellt.",
+      "objectiveIds": [
+        "common-lf8-formats-mapping"
+      ],
+      "blockIds": [
+        "common-lf8-formats-mapping"
+      ]
+    },
+    {
+      "id": "common-lf8-formats-card-06",
+      "front": "Welche zwei Mappingtests sind hier mindestens nötig?",
+      "back": "Den gültigen Satz 101/1/10 mit Typen und EUR prüfen sowie den fehlenden Kunden von 104 ohne erfundene Ergänzung erkennen.",
+      "objectiveIds": [
+        "common-lf8-formats-read",
+        "common-lf8-formats-mapping"
+      ],
+      "blockIds": [
+        "common-lf8-formats-check"
+      ]
+    }
+  ],
+  "review": {
+    "status": "reviewed",
+    "checkedAt": "2026-11-16"
+  }
+}

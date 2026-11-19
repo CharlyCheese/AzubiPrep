@@ -1,0 +1,467 @@
+{
+  "schemaVersion": 1,
+  "version": "1.0.0",
+  "id": "fiae-lf11a-data-access",
+  "title": "Fachlogik und Datenquellen verbinden",
+  "fieldId": "LF11a",
+  "scope": "specialization",
+  "prerequisites": [
+    "fiae-lf11a-algorithms",
+    "common-lf8-integrity"
+  ],
+  "objectives": [
+    {
+      "id": "fiae-lf11a-data-access-implement",
+      "text": "Eine fachliche Operation mit definiertem Datenzugriff in einer modularen Anwendung umsetzen."
+    },
+    {
+      "id": "fiae-lf11a-data-access-interface",
+      "text": "Die Schnittstelle mit Parametern, Rückgabewerten und möglichen Fehlern dokumentieren."
+    },
+    {
+      "id": "fiae-lf11a-data-access-atomic",
+      "text": "Bei zusammengehörigen Datenänderungen Konsistenzregeln und eine passende Transaktionsgrenze festlegen."
+    }
+  ],
+  "caseStudy": {
+    "title": "Welche Auskunft darf der Empfang nach dem Speichern geben?",
+    "text": "Die fiktive Werkstatt liest Auftragsstände und schließt offene Aufträge ab. Beim Abschließen verlangt sie neben dem neuen Status einen passenden Verlaufseintrag. Du trennst die reine Suche vom schreibenden Vorgang und legst fest, wann eine Erfolgsmeldung zulässig ist."
+  },
+  "sources": [
+    {
+      "id": "lf11a-python-sqlite",
+      "title": "Python Software Foundation: sqlite3",
+      "url": "https://docs.python.org/3/library/sqlite3.html",
+      "note": "Die Beispiele nutzen die dokumentierte Parameterbindung und das Abholen einzelner Ergebniszeilen mit sqlite3.",
+      "checkedAt": "2026-11-19"
+    },
+    {
+      "id": "lf11a-layers",
+      "title": "Microsoft: Common web application architectures",
+      "url": "https://learn.microsoft.com/en-us/dotnet/architecture/modern-web-apps-azure/common-web-application-architectures",
+      "note": "Die Gliederung von Oberfläche, Anwendungslogik und Infrastruktur sowie die Richtung ihrer Abhängigkeiten wurden am eigenen Fall konkretisiert.",
+      "checkedAt": "2026-11-19"
+    },
+    {
+      "id": "lf8-transactions",
+      "title": "PostgreSQL: Transactions",
+      "url": "https://www.postgresql.org/docs/current/tutorial-transactions.html",
+      "checkedAt": "2026-11-19",
+      "note": "Transaktionsgrenzen, gemeinsames Festschreiben und Rücksetzen anhand des Auftragswechsels eingeordnet."
+    }
+  ],
+  "sourceIds": [
+    "lf11a-python-sqlite",
+    "lf11a-layers",
+    "lf8-transactions"
+  ],
+  "blocks": [
+    {
+      "id": "fiae-lf11a-data-access-block-01",
+      "title": "1. Den Datenzugriff anschließen",
+      "objectiveIds": [
+        "fiae-lf11a-data-access-implement"
+      ],
+      "sourceIds": [
+        "lf11a-python-sqlite",
+        "lf11a-layers"
+      ],
+      "paragraphs": [
+        "Lege in einer leeren Testdatenbank eine Tabelle mit der Nummer als Primärschlüssel und einem verpflichtenden Statustext an. Der Adapter erhält Verbindung und Nummer, bindet die Nummer als Parameter und fordert eine einzelne Ergebniszeile an. Bei fehlender Zeile gibt fetchone() None zurück.",
+        "Löse den Statustext aus der ersten Spalte der Ergebniszeile. Der Suchdienst kann sein Ergebnis wie zuvor verarbeiten. Der Adapter kümmert sich um Zeilenformat und SQL. Verbindungs- oder Datenbankfehler laufen als eigener technischer Fehler weiter."
+      ],
+      "example": {
+        "title": "Ausführbare Probe in Python 3 mit sqlite3",
+        "text": "import sqlite3\ndb = sqlite3.connect(\":memory:\")\ndb.execute(\"CREATE TABLE tickets (id INTEGER PRIMARY KEY, status TEXT NOT NULL)\")\ndb.execute(\"INSERT INTO tickets VALUES (?, ?)\", (7, \"offen\"))\ndef read_status(db, number):\n    row = db.execute(\"SELECT status FROM tickets WHERE id = ?\", (number,)).fetchone()\n    return None if row is None else row[0]\nprint(read_status(db, 7), read_status(db, 8))\ndb.close()"
+      },
+      "misconception": {
+        "claim": "Eine gefundene Zeile mit einer Spalte ist schon der vereinbarte Statustext.",
+        "correction": "Der Adapter entnimmt den einzelnen Wert der Zeile, bevor er an den Suchdienst zurückgeht."
+      },
+      "takeaway": "Speicherdetails enden am Adapter. Sein Ergebnis hat das vereinbarte fachliche Format."
+    },
+    {
+      "id": "fiae-lf11a-data-access-block-02",
+      "title": "2. Die Schnittstelle so dokumentieren, dass sie aufrufbar ist",
+      "objectiveIds": [
+        "fiae-lf11a-data-access-interface"
+      ],
+      "sourceIds": [
+        "lf11a-python-sqlite"
+      ],
+      "paragraphs": [
+        "Notiere Zweck, Parametertypen, Voraussetzungen, Rückgaben, mögliche Fehler und Seiteneffekte. Für read_status ist die Verbindung bereits geöffnet und number eine fachlich geprüfte positive Ganzzahl. Der Aufrufer verwaltet die Lebensdauer der Verbindung.",
+        "Ein Text steht für einen Treffer, None für eine erfolgreiche Suche ohne Zeile. Bei einem technischen SQLite-Fehler wird eine Ausnahme der sqlite3-Fehlerfamilie weitergegeben. Der Adapter ändert keine Aufträge. Beschreibe auch den Fall ohne Treffer, damit er nicht als Störung behandelt wird."
+      ],
+      "example": {
+        "title": "Beispiele neben der Signatur",
+        "text": "read_status(db, 7) → „offen“, read_status(db, 8) → None bei freier Nummer 8. Ohne passende Tabelle scheitert die Operation technisch. Eine Statusmeldung „nicht gefunden“ wäre dann irreführend."
+      },
+      "misconception": {
+        "claim": "Zwei Beispielwerte ersetzen die Angabe der Vorbedingungen.",
+        "correction": "Ohne Typen und Zuständigkeit für die Verbindung kann der Aufrufer selbst bei gut gewählten Beispielen falsch liegen."
+      },
+      "takeaway": "Ein Rückgabevertrag macht beobachtbares Verhalten und Verantwortung ausdrücklich."
+    },
+    {
+      "id": "fiae-lf11a-data-access-block-03",
+      "title": "3. Status und Verlauf gemeinsam festschreiben",
+      "objectiveIds": [
+        "fiae-lf11a-data-access-atomic"
+      ],
+      "sourceIds": [
+        "lf8-transactions",
+        "lf11a-python-sqlite"
+      ],
+      "paragraphs": [
+        "Die Konsistenzregel lautet: Jeder erfolgreiche Übergang von „offen“ zu „fertig“ erzeugt genau einen zugehörigen Verlaufseintrag. Starte eine Transaktion auf einer Verbindung. Ändere mit einer Bedingung auf Nummer und bisherigen Status. Prüfe, ob genau eine Zeile geändert wurde.",
+        "Füge erst dann den Verlaufseintrag ein und bestätige beide Änderungen mit Commit. Scheitert ein Schritt oder wurde keine passende Zeile geändert, breche die Transaktion ab. Ein Rollback verwirft die bisherigen Änderungen dieser Transaktion. Eine technische Erfolgsmeldung erfolgt erst nach gelungenem Commit."
+      ],
+      "example": {
+        "title": "Ablauf für Auftrag 7",
+        "text": "BEGIN → UPDATE tickets SET status = 'fertig' WHERE id = ? AND status = 'offen' → genau eine Zeile? → INSERT in den Verlauf → COMMIT. Die Nummer wird gebunden. Bei Abweichung oder Fehler folgt ROLLBACK auf derselben Verbindung."
+      },
+      "misconception": {
+        "claim": "Ein Commit direkt nach dem Statuswechsel schützt den gesamten Abschluss.",
+        "correction": "Dann kann der neue Status trotz fehlendem Verlauf bestehen bleiben. Die gemeinsame Regel erfordert eine gemeinsame Grenze."
+      },
+      "takeaway": "Die Transaktionsgrenze umschließt alle Änderungen, die zusammen gelten müssen."
+    },
+    {
+      "id": "fiae-lf11a-data-access-block-04",
+      "title": "4. Wiederholte Aufrufe und Fehler am Ergebnis prüfen",
+      "objectiveIds": [
+        "fiae-lf11a-data-access-implement",
+        "fiae-lf11a-data-access-atomic"
+      ],
+      "sourceIds": [
+        "lf8-transactions"
+      ],
+      "paragraphs": [
+        "Eine zweite Abschlussanforderung kann denselben Auftrag betreffen. Die Bedingung im UPDATE koppelt den Übergang an den aktuellen Zustand im Speicher. Ist der Auftrag bereits fertig, ändert dieser Aufruf keine Zeile. Er darf deshalb keinen zweiten Verlaufseintrag schreiben. Bereits vorhandene Prüf- oder Reparaturvermerke bleiben erhalten. Zähle die neu hinzugekommenen Abschlussvermerke getrennt.",
+        "Prüfe zuerst einen vollständigen Erfolg, anschließend eine Wiederholung und einen Abbruch beim Verlaufsschritt in einem frischen Testfall. Vergleiche jeweils Status und Anzahl neuer Einträge im Speicher. Ein bloßer Blick auf die Bildschirmmeldung übersieht inkonsistente Teilergebnisse."
+      ],
+      "example": {
+        "title": "Erwartungen als Paare",
+        "text": "Ausgang (offen, 0 neue Einträge). Nach Erfolg (fertig, 1). Nach Wiederholung weiterhin (fertig, 1). Bei einem separaten Lauf ab (offen, 0) mit Fehler vor Commit bleibt (offen, 0)."
+      },
+      "misconception": {
+        "claim": "Die Wiederholung eines Abschlussbefehls braucht einen weiteren Abschlussvermerk.",
+        "correction": "Die Regel knüpft den Vermerk an den tatsächlich vollzogenen Zustandswechsel. Ein zweiter Aufruf allein erzeugt keinen zweiten Übergang."
+      },
+      "takeaway": "Prüfe die gespeicherten Nachbedingungen auch nach Abbruch und Wiederholung."
+    }
+  ],
+  "questionFile": "questions/fiae-lf11a-data-access.v1.csv",
+  "quiz": {
+    "questionIds": [
+      "LJ-LF11A-DATA-ACCESS-Q01",
+      "LJ-LF11A-DATA-ACCESS-Q02",
+      "LJ-LF11A-DATA-ACCESS-Q03",
+      "LJ-LF11A-DATA-ACCESS-Q04",
+      "LJ-LF11A-DATA-ACCESS-Q05",
+      "LJ-LF11A-DATA-ACCESS-Q06"
+    ]
+  },
+  "exam": {
+    "questionIds": [
+      "LJ-LF11A-DATA-ACCESS-E01",
+      "LJ-LF11A-DATA-ACCESS-E02",
+      "LJ-LF11A-DATA-ACCESS-E03",
+      "LJ-LF11A-DATA-ACCESS-E04",
+      "LJ-LF11A-DATA-ACCESS-E05",
+      "LJ-LF11A-DATA-ACCESS-E06",
+      "LJ-LF11A-DATA-ACCESS-E07",
+      "LJ-LF11A-DATA-ACCESS-E08"
+    ],
+    "passPercent": 80,
+    "scoring": "all-or-nothing-per-question",
+    "timed": false
+  },
+  "questionLinks": [
+    {
+      "questionId": "LJ-LF11A-DATA-ACCESS-Q01",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf11a-data-access-implement"
+      ],
+      "blockIds": [
+        "fiae-lf11a-data-access-block-01"
+      ]
+    },
+    {
+      "questionId": "LJ-LF11A-DATA-ACCESS-Q02",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf11a-data-access-implement"
+      ],
+      "blockIds": [
+        "fiae-lf11a-data-access-block-01"
+      ]
+    },
+    {
+      "questionId": "LJ-LF11A-DATA-ACCESS-Q03",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf11a-data-access-interface"
+      ],
+      "blockIds": [
+        "fiae-lf11a-data-access-block-02"
+      ]
+    },
+    {
+      "questionId": "LJ-LF11A-DATA-ACCESS-Q04",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf11a-data-access-interface"
+      ],
+      "blockIds": [
+        "fiae-lf11a-data-access-block-02"
+      ]
+    },
+    {
+      "questionId": "LJ-LF11A-DATA-ACCESS-Q05",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf11a-data-access-atomic"
+      ],
+      "blockIds": [
+        "fiae-lf11a-data-access-block-03"
+      ]
+    },
+    {
+      "questionId": "LJ-LF11A-DATA-ACCESS-Q06",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf11a-data-access-atomic"
+      ],
+      "blockIds": [
+        "fiae-lf11a-data-access-block-04"
+      ]
+    },
+    {
+      "questionId": "LJ-LF11A-DATA-ACCESS-E01",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf11a-data-access-implement"
+      ],
+      "blockIds": [
+        "fiae-lf11a-data-access-block-01"
+      ]
+    },
+    {
+      "questionId": "LJ-LF11A-DATA-ACCESS-E02",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf11a-data-access-interface"
+      ],
+      "blockIds": [
+        "fiae-lf11a-data-access-block-02"
+      ]
+    },
+    {
+      "questionId": "LJ-LF11A-DATA-ACCESS-E03",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf11a-data-access-atomic"
+      ],
+      "blockIds": [
+        "fiae-lf11a-data-access-block-03"
+      ]
+    },
+    {
+      "questionId": "LJ-LF11A-DATA-ACCESS-E04",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf11a-data-access-atomic"
+      ],
+      "blockIds": [
+        "fiae-lf11a-data-access-block-04"
+      ]
+    },
+    {
+      "questionId": "LJ-LF11A-DATA-ACCESS-E05",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf11a-data-access-interface"
+      ],
+      "blockIds": [
+        "fiae-lf11a-data-access-block-02"
+      ]
+    },
+    {
+      "questionId": "LJ-LF11A-DATA-ACCESS-E06",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf11a-data-access-atomic"
+      ],
+      "blockIds": [
+        "fiae-lf11a-data-access-block-03"
+      ]
+    },
+    {
+      "questionId": "LJ-LF11A-DATA-ACCESS-E07",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf11a-data-access-implement",
+        "fiae-lf11a-data-access-atomic"
+      ],
+      "blockIds": [
+        "fiae-lf11a-data-access-block-04"
+      ]
+    },
+    {
+      "questionId": "LJ-LF11A-DATA-ACCESS-E08",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf11a-data-access-implement"
+      ],
+      "blockIds": [
+        "fiae-lf11a-data-access-block-01"
+      ]
+    }
+  ],
+  "interview": [
+    {
+      "id": "fiae-lf11a-data-access-talk-01",
+      "prompt": "Lege den Weg von read_status(db, 7) bis zur Ausgabe im Beispieldatensatz dar.",
+      "objectiveIds": [
+        "fiae-lf11a-data-access-implement"
+      ],
+      "blockIds": [
+        "fiae-lf11a-data-access-block-01"
+      ],
+      "keyPoints": [
+        "Nummer binden und Zeile lesen.",
+        "Status aus der Zeile entnehmen."
+      ],
+      "acceptableAlternatives": [
+        "Eine gleichwertige benannte Parameterbindung ist möglich."
+      ],
+      "misconceptions": [
+        "Die Ausgabe müsse die ganze Zeile mit technischen Feldern enthalten."
+      ],
+      "sampleAnswer": "Die Abfrage bindet 7 an den Platzhalter. fetchone liefert die einzelne Zeile, row[0] enthält „offen“. Diesen Text gebe ich dem aufrufenden Dienst.",
+      "followUp": "Welchen Wert erhält er für die freie Nummer 8?"
+    },
+    {
+      "id": "fiae-lf11a-data-access-talk-02",
+      "prompt": "Dokumentiere den Lesezugriff für eine zweite Person einschließlich der zwei erfolglosen Fälle.",
+      "objectiveIds": [
+        "fiae-lf11a-data-access-interface"
+      ],
+      "blockIds": [
+        "fiae-lf11a-data-access-block-02"
+      ],
+      "keyPoints": [
+        "Verbindung und Nummer beschreiben.",
+        "Nichttreffer und technische Ausnahme trennen.",
+        "Seiteneffekte angeben."
+      ],
+      "acceptableAlternatives": [
+        "Ein Vertrag mit expliziten Ergebnistypen kann dieselbe Unterscheidung ausdrücken."
+      ],
+      "misconceptions": [
+        "Ein Verbindungsfehler bedeute, dass die Nummer frei sei."
+      ],
+      "sampleAnswer": "Die Verbindung ist geöffnet und bleibt beim Aufrufer. Der Adapter nimmt eine geprüfte Nummer und liefert Text oder bei fehlender Zeile None. Datenbankfehler werden weitergegeben. Er schreibt keine Aufträge.",
+      "followUp": "Welche Annahme erlaubt die Unterscheidung von Text und None?"
+    },
+    {
+      "id": "fiae-lf11a-data-access-talk-03",
+      "prompt": "Prüfe den Abschlussvorgang mit Wiederholung und einem Fehler im zweiten Schreibschritt.",
+      "objectiveIds": [
+        "fiae-lf11a-data-access-atomic"
+      ],
+      "blockIds": [
+        "fiae-lf11a-data-access-block-03",
+        "fiae-lf11a-data-access-block-04"
+      ],
+      "keyPoints": [
+        "Gemeinsame Transaktion benennen.",
+        "Bedingtes Update auswerten.",
+        "Beide gespeicherten Ergebnisse vergleichen."
+      ],
+      "acceptableAlternatives": [
+        "Ein Integrationstest mit lokaler Testdatenbank und denselben Sollpaaren ist geeignet."
+      ],
+      "misconceptions": [
+        "Eine grüne Meldung reiche zum Nachweis des Verlaufs aus."
+      ],
+      "sampleAnswer": "Nach dem ersten Commit erwarte ich „fertig“ und einen Eintrag. Die Wiederholung darf keinen ergänzen. Verhindere ich in einem frischen Fall das Speichern des Verlaufs, müssen nach Rollback „offen“ und null neue Einträge vorliegen.",
+      "followUp": "Was wäre nach einem zu frühen Commit anders?"
+    }
+  ],
+  "cards": [
+    {
+      "id": "fiae-lf11a-data-access-card-01",
+      "front": "Welchen Unterschied sieht der Adapter zwischen Zeile und Wert?",
+      "back": "fetchone liefert eine Zeile oder None. Im Trefferfall ist row[0] der ausgewählte Status.",
+      "objectiveIds": [
+        "fiae-lf11a-data-access-implement"
+      ],
+      "blockIds": [
+        "fiae-lf11a-data-access-block-01"
+      ]
+    },
+    {
+      "id": "fiae-lf11a-data-access-card-02",
+      "front": "Wie gelangt die Nummer in die SQLite-Abfrage?",
+      "back": "Die SQL-Anweisung enthält einen Platzhalter. Die Nummer wird als eigener Parameter übergeben.",
+      "objectiveIds": [
+        "fiae-lf11a-data-access-implement"
+      ],
+      "blockIds": [
+        "fiae-lf11a-data-access-block-01"
+      ]
+    },
+    {
+      "id": "fiae-lf11a-data-access-card-03",
+      "front": "Was gehört in den Vertrag einer Leseoperation?",
+      "back": "Voraussetzungen, Typen, Ergebnisse, technische Fehler, Seiteneffekte und Verantwortung für die Verbindung.",
+      "objectiveIds": [
+        "fiae-lf11a-data-access-interface"
+      ],
+      "blockIds": [
+        "fiae-lf11a-data-access-block-02"
+      ]
+    },
+    {
+      "id": "fiae-lf11a-data-access-card-04",
+      "front": "Was bedeutet None beim Statuszugriff?",
+      "back": "Eine erfolgreich ausgeführte Suche hat keinen Datensatz zu diesem Schlüssel gefunden.",
+      "objectiveIds": [
+        "fiae-lf11a-data-access-interface"
+      ],
+      "blockIds": [
+        "fiae-lf11a-data-access-block-02"
+      ]
+    },
+    {
+      "id": "fiae-lf11a-data-access-card-05",
+      "front": "Wo liegt die Transaktionsgrenze des Abschlusses?",
+      "back": "Vor dem bedingten Statuswechsel beginnt sie. Nach Verlaufseintrag und erfolgreichem Commit endet sie.",
+      "objectiveIds": [
+        "fiae-lf11a-data-access-atomic"
+      ],
+      "blockIds": [
+        "fiae-lf11a-data-access-block-03"
+      ]
+    },
+    {
+      "id": "fiae-lf11a-data-access-card-06",
+      "front": "Was belegt eine korrekte Wiederholung?",
+      "back": "Der fertige Status bleibt bestehen und es kommt kein zweiter Abschlussvermerk hinzu.",
+      "objectiveIds": [
+        "fiae-lf11a-data-access-atomic"
+      ],
+      "blockIds": [
+        "fiae-lf11a-data-access-block-04"
+      ]
+    }
+  ],
+  "review": {
+    "status": "reviewed",
+    "checkedAt": "2026-11-19"
+  }
+}

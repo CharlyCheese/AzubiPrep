@@ -1,0 +1,488 @@
+{
+  "schemaVersion": 1,
+  "id": "common-pm-costs",
+  "version": "1.0.0",
+  "title": "Projektkosten nachvollziehbar kalkulieren",
+  "fieldId": "PM",
+  "scope": "common",
+  "prerequisites": [
+    "common-pm-schedule"
+  ],
+  "sourceIds": [
+    "pm-ihk-cost-terms",
+    "pm-ihk-calculation"
+  ],
+  "sources": [
+    {
+      "id": "pm-ihk-cost-terms",
+      "title": "IHK München: Wertbegriffe und Kostenbegriffe",
+      "url": "https://www.ihk-muenchen.de/ratgeber/sachverstaendige/wertbegriffe-und-kostenbegriffe/",
+      "checkedAt": "2026-11-11",
+      "note": "Einzelkosten direkt zurechenbar, Gemeinkosten indirekt. Übernommen sind allgemeine Begriffe, keine bauspezifischen Rechts- oder Bewertungsregeln; IT-Zahlen und Zuschlagsmodell sind eigene Lernfälle."
+    },
+    {
+      "id": "pm-ihk-calculation",
+      "title": "IHK Darmstadt: Kalkulieren und mit Kennziffern überwachen",
+      "url": "https://www.ihk.de/darmstadt/produktmarken/beraten-und-informieren/festigung-wachstum/kaufmaennisches/kalkulation-3795552",
+      "checkedAt": "2026-11-11",
+      "note": "Stundensatz und Preisbildung mit getrennten Selbstkosten, Gewinn, Nachlässen und Umsatzsteuer geprüft. Verwendete IT-Beträge, 25-Prozent-Zuschlag und 19-Prozent-USt sind ausdrücklich vorgegebene Rechenannahmen; keine allgemeinen Lohnnebenkostensätze oder Verlustgarantie übernommen."
+    }
+  ],
+  "objectives": [
+    {
+      "id": "common-pm-costs-cost-types",
+      "text": "Direkte Kosten, Gemeinkosten und angebotene Preise im Projekt unterscheiden."
+    },
+    {
+      "id": "common-pm-costs-calculate",
+      "text": "Personalkosten, Gemeinkostenzuschlag und Gesamtkosten in einer Tabelle berechnen."
+    },
+    {
+      "id": "common-pm-costs-assumptions",
+      "text": "Einheiten, Bezugsgrößen und Annahmen einer Kostenkalkulation prüfen."
+    }
+  ],
+  "caseStudy": {
+    "title": "Nordlicht IT plant und prüft",
+    "text": "Der fiktive IT-Dienstleister Nordlicht IT kalkuliert ein Serviceticket-Portal. Der Übungsauftrag benötigt 80 Stunden. Vorgegeben sind 35 Euro direkte Personalkosten je Stunde, 400 Euro direkte Fremdkosten und 20 Prozent Gemeinkostenzuschlag auf die direkten Personalkosten. Alle Eurobeträge sind netto. Es sind erfundene Lernwerte, keine betrieblichen Buchdaten."
+  },
+  "blocks": [
+    {
+      "id": "common-pm-costs-types",
+      "title": "1. Kosten dem Auftrag zuordnen",
+      "objectiveIds": [
+        "common-pm-costs-cost-types"
+      ],
+      "sourceIds": [
+        "pm-ihk-cost-terms",
+        "pm-ihk-calculation"
+      ],
+      "paragraphs": [
+        "Projektkosten bewerten den für einen Auftrag eingesetzten Ressourcenverbrauch. Direkt zurechenbare Kosten heißen Einzelkosten: zum Beispiel erfasste Projektstunden oder eine eigens bestellte Fremdleistung. Gemeinkosten betreffen mehrere Aufträge, etwa gemeinsam genutzte Räume oder Verwaltung, und werden mit einem begründeten Schlüssel verteilt.",
+        "Der vorgegebene direkte Personalkostensatz von 35 Euro je Stunde enthält im Lernfall die direkten personalbezogenen Kosten, jedoch noch keine der später angesetzten Gemeinkosten. Er ist weder Nettolohn einer Person noch ein Verkaufspreis. Ein bereits als Vollkostensatz einschließlich derselben Gemeinkosten definierter Satz dürfte nicht nochmals den identischen Zuschlag erhalten.",
+        "Die Gesamtkosten des Auftrags einschließlich seines Gemeinkostenanteils nennen wir in diesem vereinfachten Modell Selbstkosten. Der angebotene Preis ist eine andere Größe: Er kann zusätzlich einen geplanten Gewinn enthalten. Ein Preisangebot des eigenen Betriebs beweist daher nicht, dass seine Kosten genau so hoch sind.",
+        "Die 400 Euro Fremdkosten werden in diesem Fall direkt zugeordnet. Ob eine Kostenart direkt zurechenbar ist, hängt vom betrachteten Auftrag und seiner Erfassung ab; die Bezeichnung Software oder Personal allein entscheidet das nicht."
+      ],
+      "example": {
+        "title": "Eigener Lernfall",
+        "text": "Eine nur für das Portal bestellte Konfiguration für 400 Euro ist direkt zurechenbar. Die anteilige Büromiete wird über den festgelegten Gemeinkostenschlüssel berücksichtigt."
+      },
+      "misconception": {
+        "claim": "Jeder Stundenpreis ist schon ein vollständiger Kostensatz.",
+        "correction": "Vor einer Rechnung klärst du, welche Bestandteile der Satz enthält und ob es sich um Kosten oder Verkaufspreis handelt."
+      },
+      "takeaway": "Ordne Kosten zu und prüfe den Inhalt eines Satzes vor dem Multiplizieren."
+    },
+    {
+      "id": "common-pm-costs-table",
+      "title": "2. Mit Zellbezügen eine Kostenrechnung aufbauen",
+      "objectiveIds": [
+        "common-pm-costs-calculate"
+      ],
+      "sourceIds": [
+        "pm-ihk-cost-terms",
+        "pm-ihk-calculation"
+      ],
+      "paragraphs": [
+        "In der eingebauten Tabelle bezeichnet B die Wertespalte, die Zahl die Zeile. B1 enthält 80 Stunden, B2 den Satz 35 Euro je Stunde, B3 die Fremdkosten 400 Euro und B4 den Zuschlag 20 Prozent. Trage in Prozentzeilen 20 ein, nicht 0,20. Die Formel berücksichtigt die Division durch 100.",
+        "B5 sind die Personalkosten: =B1*B2 ergibt 80 × 35 = 2.800 Euro. Das Gleichheitszeichen startet die Formel, der Stern bedeutet Multiplikation. Alternativ kannst du das berechnete Ergebnis als Zahl 2800 eintragen. Stunden mal Euro je Stunde ergibt Euro; die Einheit Stunde kürzt sich heraus.",
+        "B6 sind die Gemeinkosten: =B5*B4/100 ergibt 2.800 × 20 ÷ 100 = 560 Euro. Bezugsgröße sind laut Aufgabenstellung die Personalkosten, nicht Personalkosten plus Fremdkosten. Der Zuschlagssatz ist eine Rechenannahme und kein allgemein vorgeschriebener Satz.",
+        "B7 enthält die Selbstkosten: =B3+B5+B6 ergibt 400 + 2.800 + 560 = 3.760 Euro. Gleichwertig ist =SUMME(B3;B5:B6). Das Semikolon trennt Argumente; B5:B6 meint die beiden Zeilen B5 und B6. SUM ist ebenfalls möglich. =SUMME(B3:B6) wäre hier fachlich falsch, weil es die Prozentzahl in B4 als Eurobetrag mitaddieren würde.",
+        "Formeln verknüpfen Ergebnisse mit Eingaben. Erhöhst du B1 auf 90 Stunden, berechnet =B1*B2 in B5 nun 3.150 Euro, B6 wird 630 Euro und B7 4.180 Euro. Eingetragene Ergebniszahlen wie 2800 sind feste Werte und müssen von dir angepasst werden."
+      ],
+      "example": {
+        "title": "Eigener Lernfall",
+        "text": "Fülle B5 bis B7 mit Formeln oder den Zahlen 2800, 560 und 3760. Verändere danach die Stunden und beobachte, welche Werte von B1 abhängen."
+      },
+      "misconception": {
+        "claim": "Eine Summe über benachbarte Zeilen passt unabhängig von deren Einheiten.",
+        "correction": "Addiere die Eurobeträge B3, B5 und B6; der Prozentsatz B4 ist keine weitere Kostenposition."
+      },
+      "takeaway": "Zellbezüge halten die Rechenschritte und ihre Abhängigkeiten sichtbar."
+    },
+    {
+      "id": "common-pm-costs-check",
+      "title": "3. Eingaben, Rundung und Formelfehler prüfen",
+      "objectiveIds": [
+        "common-pm-costs-calculate",
+        "common-pm-costs-assumptions"
+      ],
+      "sourceIds": [
+        "pm-ihk-cost-terms",
+        "pm-ihk-calculation"
+      ],
+      "paragraphs": [
+        "Schreibe Zahlen ohne Tausendertrennzeichen und ohne angehängte Einheit in die Wertfelder: 3760 oder 35,5. Dezimalkomma und Dezimalpunkt sind möglich; verwende für Formelfunktionsargumente das Semikolon. Euro, Stunden und Prozent stehen an der Zeile und werden nicht als Text mitgerechnet. Für diese Lernhilfe ist vereinbart: Jede berechnete Geldposition wird auf zwei Nachkommastellen gerundet, bevor sie in die nächste Zeile eingeht. Prozentfaktoren und andere Verhältnisse werden nicht vorzeitig gekürzt.",
+        "Bei 2,5 Stunden zu 35,55 Euro ergibt die Multiplikation zunächst 88,875 Euro. Die Geldzeile verwendet =RUNDEN(B1*B2;2) und damit 88,88 Euro. RUNDEN(...;2) rundet auf zwei Nachkommastellen; ROUND ist gleichwertig. Die angezeigte Centzahl allein ändert einen noch ungerundeten Formelwert nicht. Deshalb rundest du die Geldposition ausdrücklich, bevor du auf ihr weiterrechnest. Die Rundungsvereinbarung gehört zur Aufgabenstellung.",
+        "Beginne die Fehlersuche bei leeren oder unpassenden Eingaben. Ein fehlender Kostensatz ist unbekannt und nicht dasselbe wie null Euro. Prüfe anschließend Zellbezug, Rechenzeichen, Klammern und Prozentbasis. =B5*20 wäre ein zwanzigfacher Betrag statt eines Zuschlags von 20 Prozent.",
+        "Ein Ergebnis darf nicht von sich selbst abhängen: =B7+1 in B7 erzeugt einen Kreisbezug. Auch B5 abhängig von B6 und B6 abhängig von B5 wäre ein Kreis. Division durch null liefert keine brauchbare Zahl; etwa =B5/B1 ist bei B1 = 0 nicht definiert. Behebe die Ursache, statt eine Fehlermeldung durch eine erfundene Zahl zu verdecken.",
+        "Die Tabelle ist eine zusätzliche Lernhilfe. Du darfst Zahlen oder unterstützte Formeln verwenden, Eingaben ändern und einen noch fehlerhaften Entwurf speichern. Der Tabellencheck erläutert die Rechnung; er ist keine weitere Pflichtphase und ersetzt den regulären Mini-Test nicht."
+      ],
+      "example": {
+        "title": "Eigener Lernfall",
+        "text": "B5 zeigt 2.800 Euro, B6 aber 56.000 Euro. Die Formel =B5*B4 vergisst /100. Korrekt ist =B5*B4/100 und damit 560 Euro."
+      },
+      "misconception": {
+        "claim": "Ein Rechnergebnis mit vielen Nachkommastellen beweist eine richtige Kalkulation.",
+        "correction": "Auch exakt gerechnete Formeln können falsche Zellen, falsche Prozentbasen oder doppelte Kosten enthalten."
+      },
+      "takeaway": "Prüfe erst Eingaben und Bezugsgrößen, dann Formeln und Rundung."
+    },
+    {
+      "id": "common-pm-costs-assumptions",
+      "title": "4. Eine nachvollziehbare Kostenaussage treffen",
+      "objectiveIds": [
+        "common-pm-costs-cost-types",
+        "common-pm-costs-assumptions"
+      ],
+      "sourceIds": [
+        "pm-ihk-cost-terms",
+        "pm-ihk-calculation"
+      ],
+      "paragraphs": [
+        "Halte Umfang, Schätzdatum, Stunden, Kostensatzinhalt, Fremdkosten und Zuschlagsbasis zusammen fest. Im Ausgangsfall gelten die 3.760 Euro für die beschriebenen 80 Stunden mit unverändertem Leistungsumfang. Eine spätere Erweiterung des Portals kann zusätzliche Stunden und Fremdkosten verursachen.",
+        "Unterscheide eine Planannahme von einem belegten Istwert. Das Team kann 80 Stunden begründet schätzen, aber die spätere Erfassung kann abweichen. Eine offen benannte Reserve für ein bestimmtes Risiko wird getrennt begründet; sie ist weder bereits verbrauchte Arbeitszeit noch ein verdeckter Gewinnaufschlag.",
+        "Prüfe Doppelzählungen: Bei einem vorgegebenen Vollkostensatz von 42 Euro je Stunde sind dieselben Gemeinkosten bereits enthalten. 80 × 42 + 400 ergibt ebenfalls 3.760 Euro. Ein weiterer Zuschlag von 20 Prozent auf diesen Vollkostensatz würde die enthaltenen Gemeinkosten erneut verrechnen.",
+        "Eine Sensitivitätsrechnung ändert gezielt eine Annahme. Bei 80 Stunden, 40 Euro direktem Satz, weiterhin 400 Euro Fremdkosten und 20 Prozent auf Personalkosten entstehen 3.200 + 640 + 400 = 4.240 Euro. Der Kostenanstieg von 480 Euro betrifft direkte Personalkosten und ihren Gemeinkostenanteil. Ein Kunde muss diesen Betrag nicht automatisch als Preis akzeptieren.",
+        "Ab diesem vierten Theorieblock kannst du die eingebaute Tabelle nutzen. Für beliebige eigene Eingaben lauten die centgenauen Musterformeln: B5 =RUNDEN(B1*B2;2), B6 =RUNDEN(B5*B4/100;2), B7 =RUNDEN(SUMME(B3;B5:B6);2). Jede berechnete Geldzeile wird damit vor der Weiterrechnung auf Cent gerundet. Im Ausgangsfall ergeben bereits die einfachen Einstiegsformeln dieselben ganzen Eurobeträge. Alternativ trägst du die jeweils centgenauen Ergebnisse als Zahlen ein. Der Tabellencheck bleibt eine freiwillige Lernhilfe."
+      ],
+      "example": {
+        "title": "Eigener Lernfall",
+        "text": "Das Team legt beide Rechnungen nebeneinander: 35 Euro direkter Satz plus 20 Prozent Gemeinkosten oder 42 Euro Vollkostensatz. Bei gleichem Inhalt führen beide Wege zu denselben Selbstkosten."
+      },
+      "misconception": {
+        "claim": "Ein genauer Planwert ist schon ein Beleg für später tatsächlich entstandene Kosten.",
+        "correction": "Eine Planung enthält Annahmen; erst erfasste Leistungen und zugeordnete Kosten erlauben den Istvergleich."
+      },
+      "takeaway": "Eine belastbare Zahl nennt ihren Umfang, ihre Einheit und ihre Annahmen."
+    }
+  ],
+  "questionFile": "questions/common-pm-costs.v1.csv",
+  "quiz": {
+    "questionIds": [
+      "LJ-PM-COSTS-Q01",
+      "LJ-PM-COSTS-Q02",
+      "LJ-PM-COSTS-Q03",
+      "LJ-PM-COSTS-Q04",
+      "LJ-PM-COSTS-Q05",
+      "LJ-PM-COSTS-Q06"
+    ]
+  },
+  "exam": {
+    "questionIds": [
+      "LJ-PM-COSTS-E01",
+      "LJ-PM-COSTS-E02",
+      "LJ-PM-COSTS-E03",
+      "LJ-PM-COSTS-E04",
+      "LJ-PM-COSTS-E05",
+      "LJ-PM-COSTS-E06",
+      "LJ-PM-COSTS-E07",
+      "LJ-PM-COSTS-E08"
+    ],
+    "passPercent": 80,
+    "scoring": "all-or-nothing-per-question",
+    "timed": false
+  },
+  "questionLinks": [
+    {
+      "questionId": "LJ-PM-COSTS-Q01",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-pm-costs-cost-types"
+      ],
+      "blockIds": [
+        "common-pm-costs-types"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-COSTS-Q02",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-pm-costs-calculate"
+      ],
+      "blockIds": [
+        "common-pm-costs-table"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-COSTS-Q03",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-pm-costs-calculate"
+      ],
+      "blockIds": [
+        "common-pm-costs-table"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-COSTS-Q04",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-pm-costs-calculate"
+      ],
+      "blockIds": [
+        "common-pm-costs-table"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-COSTS-Q05",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-pm-costs-assumptions"
+      ],
+      "blockIds": [
+        "common-pm-costs-check"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-COSTS-Q06",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-pm-costs-cost-types",
+        "common-pm-costs-assumptions"
+      ],
+      "blockIds": [
+        "common-pm-costs-types",
+        "common-pm-costs-assumptions"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-COSTS-E01",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-pm-costs-cost-types"
+      ],
+      "blockIds": [
+        "common-pm-costs-types"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-COSTS-E02",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-pm-costs-calculate"
+      ],
+      "blockIds": [
+        "common-pm-costs-table"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-COSTS-E03",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-pm-costs-calculate",
+        "common-pm-costs-assumptions"
+      ],
+      "blockIds": [
+        "common-pm-costs-table",
+        "common-pm-costs-check"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-COSTS-E04",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-pm-costs-calculate"
+      ],
+      "blockIds": [
+        "common-pm-costs-table"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-COSTS-E05",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-pm-costs-assumptions"
+      ],
+      "blockIds": [
+        "common-pm-costs-check"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-COSTS-E06",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-pm-costs-calculate",
+        "common-pm-costs-assumptions"
+      ],
+      "blockIds": [
+        "common-pm-costs-table",
+        "common-pm-costs-check"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-COSTS-E07",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-pm-costs-cost-types",
+        "common-pm-costs-assumptions"
+      ],
+      "blockIds": [
+        "common-pm-costs-assumptions"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-COSTS-E08",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-pm-costs-assumptions"
+      ],
+      "blockIds": [
+        "common-pm-costs-assumptions"
+      ]
+    }
+  ],
+  "interview": [
+    {
+      "id": "common-pm-costs-talk-1",
+      "prompt": "Ordne direkte Projektstunden, die eigens bestellte Fremdleistung und gemeinsam genutzte Büroräume ein. Warum ist ein angebotener Stundenpreis keine sichere Kostenangabe?",
+      "objectiveIds": [
+        "common-pm-costs-cost-types"
+      ],
+      "blockIds": [
+        "common-pm-costs-types"
+      ],
+      "keyPoints": [
+        "Direkte Stunden und auftragsspezifische Fremdleistung sind zurechenbar.",
+        "Gemeinsame Räume brauchen eine begründete Verteilung.",
+        "Verkaufspreis kann Gewinn enthalten; Inhalt des Kostensatzes prüfen."
+      ],
+      "acceptableAlternatives": [
+        "Sinngleiche fachliche Begründungen und gleichwertige Rechenwege sind möglich."
+      ],
+      "misconceptions": [
+        "Preis mit Kosten oder direktem Personalkostensatz mit Nettolohn gleichsetzen."
+      ],
+      "sampleAnswer": "Die Stunden und die spezielle Fremdleistung kann ich dem Portal zurechnen. Gemeinsame Räume verteile ich über einen Schlüssel. Ein Verkaufspreis kann Gewinn enthalten; ich brauche daher den tatsächlichen Inhalt des Kostensatzes.",
+      "followUp": "Welche Doppelzählung wäre bei einem Vollkostensatz möglich?"
+    },
+    {
+      "id": "common-pm-costs-talk-2",
+      "prompt": "Erläutere die Tabellenrechnung mit 80 Stunden, 35 Euro je Stunde, 400 Euro Fremdkosten und 20 Prozent auf Personalkosten. Nenne Formeln oder Zahlen für B5, B6 und B7 und erkläre den Bereich in SUMME.",
+      "objectiveIds": [
+        "common-pm-costs-calculate",
+        "common-pm-costs-assumptions"
+      ],
+      "blockIds": [
+        "common-pm-costs-table",
+        "common-pm-costs-check"
+      ],
+      "keyPoints": [
+        "B5 =B1*B2 ergibt 2800.",
+        "B6 =B5*B4/100 ergibt 560; B7 ergibt 3760.",
+        "SUMME(B3;B5:B6) addiert B3, B5 und B6; B4 ist Prozent.",
+        "Bei eigenen Eingaben mit weiteren Dezimalstellen jede berechnete Geldzeile mit RUNDEN(...;2) auf Cent runden, dann weiterrechnen."
+      ],
+      "acceptableAlternatives": [
+        "Sinngleiche fachliche Begründungen und gleichwertige Rechenwege sind möglich."
+      ],
+      "misconceptions": [
+        "Prozentzahl als Eurobetrag summieren oder 20 Prozent als Faktor 20 benutzen."
+      ],
+      "sampleAnswer": "B5 ist =B1*B2 und ergibt 2.800 Euro. In B6 rechne ich =B5*B4/100, also 560 Euro. B7 kann =SUMME(B3;B5:B6) sein: B5:B6 umfasst beide Zeilen und mit B3 sind es 3.760 Euro. Ich kann auch diese Ergebniszahlen eintragen. Für beliebige eigene Werte umschließe ich die Rechnung jeder Geldzeile mit RUNDEN(...;2), damit Centbeträge weiterverwendet werden.",
+      "followUp": "Was musst du bei einer Stundenänderung mit fest eingetragenen Ergebniszahlen tun?"
+    },
+    {
+      "id": "common-pm-costs-talk-3",
+      "prompt": "Prüfe einen Entwurf: B2 ist unbekannt, in B7 steht =B7+1, und jemand will zusätzlich Gemeinkosten auf einen Vollkostensatz aufschlagen. Beschreibe deine Korrekturschritte.",
+      "objectiveIds": [
+        "common-pm-costs-assumptions",
+        "common-pm-costs-cost-types"
+      ],
+      "blockIds": [
+        "common-pm-costs-check",
+        "common-pm-costs-assumptions"
+      ],
+      "keyPoints": [
+        "Unbekannten Kostensatz klären statt null setzen.",
+        "Kreisbezug durch Summe der passenden Kostenpositionen ersetzen.",
+        "Inhalt des Vollkostensatzes prüfen und identische Gemeinkosten nicht doppelt zählen."
+      ],
+      "acceptableAlternatives": [
+        "Sinngleiche fachliche Begründungen und gleichwertige Rechenwege sind möglich."
+      ],
+      "misconceptions": [
+        "Eine gültige Formel als Beweis einer fachlich richtigen Kostenbasis behandeln."
+      ],
+      "sampleAnswer": "Ich kläre zuerst den Satz und seine Bestandteile. Dann ersetze ich den Selbstbezug in B7 durch passende Kostenpositionen. Sind die Gemeinkosten schon im Vollkostensatz enthalten, addiere ich sie nicht erneut. Ich prüfe Euroeinheiten und runde jede berechnete Geldposition vor der Weiterrechnung auf Cent.",
+      "followUp": "Welche Planannahmen notierst du neben dem Ergebnis?"
+    }
+  ],
+  "cards": [
+    {
+      "id": "common-pm-costs-card-1",
+      "front": "Was unterscheidet Einzel- und Gemeinkosten?",
+      "back": "Einzelkosten sind dem Auftrag direkt zurechenbar. Gemeinkosten betreffen mehrere Aufträge und werden mit einem begründeten Schlüssel verteilt.",
+      "objectiveIds": [
+        "common-pm-costs-cost-types"
+      ],
+      "blockIds": [
+        "common-pm-costs-types"
+      ]
+    },
+    {
+      "id": "common-pm-costs-card-2",
+      "front": "Warum musst du den Inhalt eines Stundensatzes kennen?",
+      "back": "Direkter Kostensatz, Vollkostensatz, Lohn und Verkaufspreis sind verschiedene Größen. Bereits enthaltene Gemeinkosten dürfen nicht nochmals angesetzt werden.",
+      "objectiveIds": [
+        "common-pm-costs-cost-types"
+      ],
+      "blockIds": [
+        "common-pm-costs-types",
+        "common-pm-costs-assumptions"
+      ]
+    },
+    {
+      "id": "common-pm-costs-card-3",
+      "front": "Wie entstehen die Personalkosten im Tabellenfall?",
+      "back": "B5 =B1*B2: 80 Stunden × 35 Euro je Stunde = 2.800 Euro. Eine Zahleneingabe 2800 ist ebenfalls möglich. Bei eigenen Dezimalwerten verwendet die Tabelle =RUNDEN(B1*B2;2).",
+      "objectiveIds": [
+        "common-pm-costs-calculate"
+      ],
+      "blockIds": [
+        "common-pm-costs-table",
+        "common-pm-costs-check"
+      ]
+    },
+    {
+      "id": "common-pm-costs-card-4",
+      "front": "Welche Basis hat der 20-Prozent-Zuschlag?",
+      "back": "Die direkten Personalkosten von 2.800 Euro: B6 =B5*B4/100 ergibt 560 Euro. Die 400 Euro Fremdkosten sind nicht Teil dieser Basis. Für beliebige Eingaben rundet =RUNDEN(B5*B4/100;2) diese Geldzeile auf Cent.",
+      "objectiveIds": [
+        "common-pm-costs-calculate"
+      ],
+      "blockIds": [
+        "common-pm-costs-table",
+        "common-pm-costs-check"
+      ]
+    },
+    {
+      "id": "common-pm-costs-card-5",
+      "front": "Wie fasst du die drei Europositionen zusammen?",
+      "back": "B7 =SUMME(B3;B5:B6) oder =B3+B5+B6: 400 + 2.800 + 560 = 3.760 Euro. Die Prozentzahl in B4 wird nicht mitaddiert. Die centgenaue Musterformel lautet =RUNDEN(SUMME(B3;B5:B6);2).",
+      "objectiveIds": [
+        "common-pm-costs-calculate"
+      ],
+      "blockIds": [
+        "common-pm-costs-table",
+        "common-pm-costs-check"
+      ]
+    },
+    {
+      "id": "common-pm-costs-card-6",
+      "front": "Was prüfst du bei einem unplausiblen Ergebnis?",
+      "back": "Eingaben, Einheiten, Satzinhalt, Prozentbasis, Zellbezüge und Rundung. Fehlende Werte, Division durch null und Kreisbezüge müssen in ihrer Ursache geklärt werden. In der Lernhilfe wird jede berechnete Geldposition vor der Weiterrechnung auf Cent gerundet.",
+      "objectiveIds": [
+        "common-pm-costs-assumptions"
+      ],
+      "blockIds": [
+        "common-pm-costs-check",
+        "common-pm-costs-assumptions"
+      ]
+    }
+  ],
+  "review": {
+    "status": "reviewed",
+    "checkedAt": "2026-11-11"
+  }
+}

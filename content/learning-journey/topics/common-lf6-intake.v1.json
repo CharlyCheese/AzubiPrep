@@ -1,0 +1,478 @@
+{
+  "schemaVersion": 1,
+  "id": "common-lf6-intake",
+  "version": "1.0.0",
+  "title": "Serviceanfragen verständlich aufnehmen",
+  "fieldId": "LF6",
+  "scope": "common",
+  "prerequisites": [
+    "common-lf1-role",
+    "common-lf3-diagnosis"
+  ],
+  "sourceIds": [
+    "lf6-atlassian-response",
+    "lf6-atlassian-communication"
+  ],
+  "sources": [
+    {
+      "id": "lf6-atlassian-response",
+      "title": "Atlassian: How we respond to an incident",
+      "url": "https://www.atlassian.com/incident-management/handbook/incident-response",
+      "checkedAt": "2026-11-16",
+      "note": "Öffentliche Herstellerbeschreibung zu Aufnahme, Auswirkung, Eskalation, Diagnose, Wiederherstellung und Kommunikation geprüft. Eigene Rollen und Fallwerte sind fiktiv, keine verbindliche ITIL-Vorgabe."
+    },
+    {
+      "id": "lf6-atlassian-communication",
+      "title": "Atlassian: Incident communication templates and examples",
+      "url": "https://www.atlassian.com/incident-management/incident-communication/templates",
+      "checkedAt": "2026-11-16",
+      "note": "Öffentliche englische Herstellerbeispiele für Untersuchungsstand, betroffene Dienste und nächste Meldung geprüft. Englische Kurzmeldungen und Rückfragen im Inhalt sind eigene didaktische Formulierungen."
+    }
+  ],
+  "objectives": [
+    {
+      "id": "common-lf6-intake-questions",
+      "text": "Mit gezielten Rückfragen Symptom, betroffene Personen und bisherige Schritte einer Serviceanfrage erfassen."
+    },
+    {
+      "id": "common-lf6-intake-ticket",
+      "text": "Eine nachvollziehbare Fehlerbeschreibung mit den notwendigen Angaben in einem Musterticket festhalten."
+    }
+  ],
+  "caseStudy": {
+    "title": "Mira begleitet Radblick durch einen Servicefall",
+    "text": "Eigener fiktiver Lernfall: Eda arbeitet beim Versandbetrieb Radblick. Seit 09:05 können sie und drei Kolleginnen oder Kollegen keine Versandaufträge absenden; Lesen funktioniert. Mira nimmt die Meldung um 09:10 auf. Die Abholung ist um 10:00, eine freigegebene Ersatzlösung fehlt. Alle Namen, Zeiten, Texte und Belege sind erfunden."
+  },
+  "blocks": [
+    {
+      "id": "common-lf6-intake-symptom",
+      "title": "1. Das gewünschte Ergebnis vom beobachteten Fehler trennen",
+      "objectiveIds": [
+        "common-lf6-intake-questions"
+      ],
+      "sourceIds": [
+        "lf6-atlassian-response"
+      ],
+      "paragraphs": [
+        "Beginne mit der Aufgabe: Was wollte die betroffene Person erreichen, und welches Ergebnis hätte sie erwartet? Frage anschließend nach dem tatsächlichen Verhalten und dem genauen Wortlaut einer Meldung. Aus Portal kaputt wird dadurch etwa: Beim Absenden eines Versandauftrags erscheint Fehler 404; die Auftragsliste lässt sich öffnen. Ein Fehlercode ist ein Befund, noch keine Erklärung seiner Ursache.",
+        "Lass die Person den letzten erfolgreichen und den ersten fehlgeschlagenen Ablauf beschreiben. Halte Beginn, betroffenen Dienst, Gerät oder Arbeitsplatz und auslösenden Schritt fest. Wenn etwas unklar ist, kennzeichne es als unbekannt. Vermutungen wie Server ausgefallen werden nicht als gesicherter Befund übernommen.",
+        "Frage offen nach dem Ablauf und danach gezielt nach fehlenden Einzelheiten. Fasse in eigenen Worten zusammen und lass die Person korrigieren. So vermeidest du suggestive Rückfragen, die eine Ursache bereits vorgeben. Eine sichere, abgestimmte Wiederholung mit Übungsdaten kann helfen; riskante Wiederholungen echter Aufträge können dagegen Dubletten erzeugen."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Lernfall",
+        "text": "Mira fragt: Was geschieht beim Absenden, und können Sie die vorhandenen Aufträge weiterhin lesen? Eda nennt Fehler 404 und bestätigt den Lesezugriff."
+      },
+      "misconception": {
+        "claim": "Die erste Ursachenvermutung der meldenden Person gehört als Tatsache ins Ticket.",
+        "correction": "Eine Vermutung bleibt als Vermutung erkennbar, bis passende Tests sie stützen."
+      },
+      "takeaway": "Aufgabe, erwartetes Ergebnis und beobachtetes Verhalten getrennt erfragen."
+    },
+    {
+      "id": "common-lf6-intake-scope",
+      "title": "2. Betroffene Arbeit und bisherige Schritte erfassen",
+      "objectiveIds": [
+        "common-lf6-intake-questions"
+      ],
+      "sourceIds": [
+        "lf6-atlassian-response"
+      ],
+      "paragraphs": [
+        "Erfrage, wer betroffen ist und wie sich die Störung auf die Arbeit auswirkt. Eine Person mit einem Anzeigeproblem ist anders einzuordnen als eine blockierte Versandgruppe. Zähle bekannte Betroffene; fehlende Rückmeldungen belegen weder weitere Ausfälle noch deren Abwesenheit. Frage, ob dieselbe Funktion auf einem anderen freigegebenen Arbeitsplatz gelingt.",
+        "Für spätere Priorisierung brauchst du außerdem eine konkrete Frist und eine nutzbare Ersatzlösung. Radblick muss bis 10:00 Versandaufträge abgeben. Um 09:10 sind vier Personen beim Absenden blockiert und es gibt keine freigegebene Ersatzlösung. Diese Angaben begründen die Bedeutung des Falls, ohne bereits seine Ursache zu erklären.",
+        "Erfrage bisherige Schritte mit Ergebnis: Wurde neu angemeldet, ein anderer Arbeitsplatz verwendet oder eine Einstellung geändert? Notiere auch erfolglose Versuche. Dadurch muss das nächste Team die gleiche erfolglose Maßnahme nicht unbemerkt wiederholen. Erfrage nur benötigte Sachinformationen; Kennwörter und private Inhalte werden nicht in ein allgemeines Serviceticket übernommen."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Lernfall",
+        "text": "Eda hat die Seite neu geladen, ohne Erfolg. Mira notiert vier Betroffene, Beginn 09:05, Abholung 10:00 und keine freigegebene Ersatzlösung."
+      },
+      "misconception": {
+        "claim": "Eine laute Beschwerde ersetzt Angaben zur betrieblichen Auswirkung.",
+        "correction": "Tonfall kann Belastung zeigen; die Bearbeitung benötigt konkrete Betroffenheit, Frist und Ersatzmöglichkeiten."
+      },
+      "takeaway": "Betroffene, Auswirkung, Frist und bisherige Schritte bilden den Arbeitskontext."
+    },
+    {
+      "id": "common-lf6-intake-ticket",
+      "title": "3. Aus dem Gespräch ein nachvollziehbares Ticket machen",
+      "objectiveIds": [
+        "common-lf6-intake-ticket"
+      ],
+      "sourceIds": [
+        "lf6-atlassian-response",
+        "lf6-atlassian-communication"
+      ],
+      "paragraphs": [
+        "Ein Musterticket enthält eine eindeutige Kennung, Aufnahmezeit, meldende Kontaktrolle und Rückkanal, betroffenen Dienst oder Arbeitsplatz sowie eine kurze präzise Zusammenfassung. Im Beschreibungsteil folgen erwartetes und tatsächliches Ergebnis, Beginn, Umfang, Meldung und bisherige Schritte. Ergänze aktuelle Zuständigkeit und nächsten vereinbarten Kontakt. Die konkrete Feldliste hängt vom Betrieb ab.",
+        "Der Titel Versandgruppe: Absenden liefert 404 ist brauchbarer als Dringend!!!. Ein nachfolgendes Team kann damit nach Dienst, Funktion und Symptom suchen. Trenne im Text Angaben von Eda von selbst erhobenen Befunden. Zitiere eine kurze technische Meldung exakt und ergänze Kontext, statt ein ungefiltertes Bildschirmfoto voller fremder Daten zu übernehmen.",
+        "Notiere auch offene Fragen: Versionsstand noch zu prüfen ist ehrlicher als ein erfundener Wert. Spätere Diagnose und Änderungen werden mit Zeitpunkt ergänzt, sodass der Verlauf lesbar bleibt. Ein Ticket ist damit Arbeitsgrundlage und Übergabeprotokoll, keine bloße Ablage der ersten Nachricht."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Lernfall",
+        "text": "Musterticket R-106: Aufnahme 09:10; Eda/Versand; Absenden seit 09:05 mit 404, Lesen möglich; vier Betroffene; Neuladen erfolglos; Abholung 10:00; Ersatzlösung fehlt; Mira prüft den Umfang."
+      },
+      "misconception": {
+        "claim": "Ein kurzer Titel mit dem Wort dringend genügt als Übergabe.",
+        "correction": "Das Folgeteam benötigt reproduzierbaren Ablauf, Auswirkung, bereits geprüfte Schritte und offene Fragen."
+      },
+      "takeaway": "Ein Ticket macht den bekannten Stand und die nächste Aufgabe nachvollziehbar."
+    },
+    {
+      "id": "common-lf6-intake-handover",
+      "title": "4. Angaben rückbestätigen und geordnet übergeben",
+      "objectiveIds": [
+        "common-lf6-intake-questions",
+        "common-lf6-intake-ticket"
+      ],
+      "sourceIds": [
+        "lf6-atlassian-response",
+        "lf6-atlassian-communication"
+      ],
+      "paragraphs": [
+        "Lies die Kernaussagen vor der Übergabe zurück: betroffenes Arbeiten, Beginn, Umfang und bisheriger Versuch. Bitte um Korrektur, wenn deine Zusammenfassung nicht stimmt. Nenne Ticketkennung und vereinbarten Rückkanal. Ein nächster Meldetermin ist eine Kommunikationszusage und darf nicht stillschweigend als zugesagter Lösungszeitpunkt erscheinen.",
+        "Unterscheide Informationen, die sofort zur Bearbeitung erforderlich sind, von Details, die später erhoben werden können. Eine bestätigte blockierte Versandgruppe muss nicht auf eine perfekte Ursachenanalyse warten, bevor die Zuständigkeit geklärt wird. Ergänzungen werden anschließend zeitlich geordnet im gleichen Fall dokumentiert.",
+        "Bei der Übergabe nennt Mira den aktuellen Befund und die konkrete offene Aufgabe. Sam muss beispielsweise den Versionsstand vergleichen, weil Lesen funktioniert, Absenden aber scheitert. Die Aussage Netz kaputt würde ihn auf eine unbelegte Ursache festlegen. Gute Aufnahme spart Diagnosearbeit, ersetzt sie jedoch nicht."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Lernfall",
+        "text": "Mira bestätigt Eda: Vier Personen können seit 09:05 nicht absenden; ich habe R-106 aufgenommen und melde mich zum vereinbarten Zeitpunkt mit dem Bearbeitungsstand."
+      },
+      "misconception": {
+        "claim": "Eine Rückmeldung zum Bearbeitungsstand verspricht bereits die fertige Lösung.",
+        "correction": "Statusmeldung und Wiederherstellung sind verschiedene Zusagen; die Formulierung muss das erkennen lassen."
+      },
+      "takeaway": "Die meldende Person bestätigt den Sachverhalt; das Folgeteam erhält einen klaren nächsten Schritt."
+    }
+  ],
+  "questionFile": "questions/common-lf6-intake.v1.csv",
+  "quiz": {
+    "questionIds": [
+      "LJ-LF6-INTAKE-Q01",
+      "LJ-LF6-INTAKE-Q02",
+      "LJ-LF6-INTAKE-Q03",
+      "LJ-LF6-INTAKE-Q04",
+      "LJ-LF6-INTAKE-Q05",
+      "LJ-LF6-INTAKE-Q06"
+    ]
+  },
+  "exam": {
+    "questionIds": [
+      "LJ-LF6-INTAKE-E01",
+      "LJ-LF6-INTAKE-E02",
+      "LJ-LF6-INTAKE-E03",
+      "LJ-LF6-INTAKE-E04",
+      "LJ-LF6-INTAKE-E05",
+      "LJ-LF6-INTAKE-E06",
+      "LJ-LF6-INTAKE-E07",
+      "LJ-LF6-INTAKE-E08"
+    ],
+    "passPercent": 80,
+    "scoring": "all-or-nothing-per-question",
+    "timed": false
+  },
+  "questionLinks": [
+    {
+      "questionId": "LJ-LF6-INTAKE-Q01",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf6-intake-questions"
+      ],
+      "blockIds": [
+        "common-lf6-intake-symptom"
+      ]
+    },
+    {
+      "questionId": "LJ-LF6-INTAKE-Q02",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf6-intake-questions"
+      ],
+      "blockIds": [
+        "common-lf6-intake-scope"
+      ]
+    },
+    {
+      "questionId": "LJ-LF6-INTAKE-Q03",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf6-intake-questions",
+        "common-lf6-intake-ticket"
+      ],
+      "blockIds": [
+        "common-lf6-intake-scope",
+        "common-lf6-intake-ticket"
+      ]
+    },
+    {
+      "questionId": "LJ-LF6-INTAKE-Q04",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf6-intake-ticket"
+      ],
+      "blockIds": [
+        "common-lf6-intake-ticket"
+      ]
+    },
+    {
+      "questionId": "LJ-LF6-INTAKE-Q05",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf6-intake-ticket"
+      ],
+      "blockIds": [
+        "common-lf6-intake-ticket"
+      ]
+    },
+    {
+      "questionId": "LJ-LF6-INTAKE-Q06",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf6-intake-questions",
+        "common-lf6-intake-ticket"
+      ],
+      "blockIds": [
+        "common-lf6-intake-handover"
+      ]
+    },
+    {
+      "questionId": "LJ-LF6-INTAKE-E01",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf6-intake-questions"
+      ],
+      "blockIds": [
+        "common-lf6-intake-symptom"
+      ]
+    },
+    {
+      "questionId": "LJ-LF6-INTAKE-E02",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf6-intake-questions",
+        "common-lf6-intake-ticket"
+      ],
+      "blockIds": [
+        "common-lf6-intake-scope",
+        "common-lf6-intake-ticket"
+      ]
+    },
+    {
+      "questionId": "LJ-LF6-INTAKE-E03",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf6-intake-questions"
+      ],
+      "blockIds": [
+        "common-lf6-intake-scope"
+      ]
+    },
+    {
+      "questionId": "LJ-LF6-INTAKE-E04",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf6-intake-ticket"
+      ],
+      "blockIds": [
+        "common-lf6-intake-scope",
+        "common-lf6-intake-ticket"
+      ]
+    },
+    {
+      "questionId": "LJ-LF6-INTAKE-E05",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf6-intake-questions",
+        "common-lf6-intake-ticket"
+      ],
+      "blockIds": [
+        "common-lf6-intake-symptom",
+        "common-lf6-intake-ticket"
+      ]
+    },
+    {
+      "questionId": "LJ-LF6-INTAKE-E06",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf6-intake-ticket"
+      ],
+      "blockIds": [
+        "common-lf6-intake-ticket",
+        "common-lf6-intake-handover"
+      ]
+    },
+    {
+      "questionId": "LJ-LF6-INTAKE-E07",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf6-intake-ticket"
+      ],
+      "blockIds": [
+        "common-lf6-intake-handover"
+      ]
+    },
+    {
+      "questionId": "LJ-LF6-INTAKE-E08",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf6-intake-questions",
+        "common-lf6-intake-ticket"
+      ],
+      "blockIds": [
+        "common-lf6-intake-handover"
+      ]
+    }
+  ],
+  "interview": [
+    {
+      "id": "common-lf6-intake-talk-facts",
+      "prompt": "Welche Rückfragen machst du aus Edas Aussage Portal kaputt, und was weißt du danach noch nicht?",
+      "objectiveIds": [
+        "common-lf6-intake-questions"
+      ],
+      "blockIds": [
+        "common-lf6-intake-symptom",
+        "common-lf6-intake-scope"
+      ],
+      "keyPoints": [
+        "Gewünschte Aktion und beobachtete Meldung erfragen.",
+        "Beginn, Betroffene, Frist und Ersatzlösung klären.",
+        "Bisherige Schritte mit Ergebnis und offene Ursache trennen."
+      ],
+      "acceptableAlternatives": [
+        "Eine fachlich gleichwertige Erklärung mit passenden Befunden und nachvollziehbarer Begründung."
+      ],
+      "misconceptions": [
+        "Eine vermutete Ursache als gesichertes Ergebnis aufnehmen."
+      ],
+      "sampleAnswer": "Ich frage nach Aktion, Erwartung und Anzeige, nach Beginn, vier Betroffenen, Frist und Ersatzlösung. Neuladen blieb erfolglos. Damit ist der Arbeitsausfall beschrieben; die technische Ursache ist noch offen.",
+      "followUp": "Welche Rückfrage würdest du stellen, wenn Eda den Fehlertext nicht mehr kennt?"
+    },
+    {
+      "id": "common-lf6-intake-talk-ticket",
+      "prompt": "Formuliere ein kurzes Musterticket aus dem fiktiven Radblick-Fall und kennzeichne eine offene Frage.",
+      "objectiveIds": [
+        "common-lf6-intake-questions",
+        "common-lf6-intake-ticket"
+      ],
+      "blockIds": [
+        "common-lf6-intake-scope",
+        "common-lf6-intake-ticket"
+      ],
+      "keyPoints": [
+        "Aufnahme 09:10, Störung seit 09:05, Eda/Versand und Absenden benennen.",
+        "Vier Betroffene, Lesen möglich, 404, Neuladen erfolglos, 10:00-Frist und fehlende Ersatzlösung erfassen.",
+        "Versionsstand als offen und nächsten Bearbeitungsschritt kennzeichnen."
+      ],
+      "acceptableAlternatives": [
+        "Eine fachlich gleichwertige Erklärung mit passenden Befunden und nachvollziehbarer Begründung."
+      ],
+      "misconceptions": [
+        "Fehlende Werte aus der vermuteten Lösung übernehmen."
+      ],
+      "sampleAnswer": "R-106, 09:10: Eda meldet vier blockierte Versandarbeitsplätze seit 09:05. Absenden liefert 404, Lesen geht. Neuladen half nicht; Abholung 10:00, keine Ersatzlösung. Mira nimmt auf, Sam prüft den noch unbekannten Versionsstand.",
+      "followUp": "Welche Angabe könntest du weglassen, ohne eine unnötige private Information zu speichern?"
+    },
+    {
+      "id": "common-lf6-intake-talk-handover",
+      "prompt": "Erkläre, wie du die Aufnahme rückbestätigst und an Sam übergibst.",
+      "objectiveIds": [
+        "common-lf6-intake-questions",
+        "common-lf6-intake-ticket"
+      ],
+      "blockIds": [
+        "common-lf6-intake-ticket",
+        "common-lf6-intake-handover"
+      ],
+      "keyPoints": [
+        "Bekannte Fakten von Vermutungen und offenen Punkten trennen.",
+        "Eda Zusammenfassung korrigieren lassen.",
+        "Ticketkennung, Rückkanal und nächsten Statuskontakt benennen."
+      ],
+      "acceptableAlternatives": [
+        "Eine fachlich gleichwertige Erklärung mit passenden Befunden und nachvollziehbarer Begründung."
+      ],
+      "misconceptions": [
+        "Eine Statuszusage als garantierte Reparaturzeit formulieren."
+      ],
+      "sampleAnswer": "Ich fasse die blockierte Aktion, Beginn und vier Betroffene zusammen und lasse Eda korrigieren. Sam erhält R-106 mit erfolglosem Neuladen und offener Versionsprüfung. Eda erhält einen vereinbarten Statuskontakt, keine unbelegte Reparaturzusage.",
+      "followUp": "Was ergänzt du im Ticket, wenn Eda später eine fünfte betroffene Person bestätigt?"
+    }
+  ],
+  "cards": [
+    {
+      "id": "common-lf6-intake-card-01",
+      "front": "Welche drei Angaben konkretisieren ein Symptom?",
+      "back": "Gewünschte Aktion, erwartetes Ergebnis und tatsächlich beobachtetes Verhalten oder Meldung.",
+      "objectiveIds": [
+        "common-lf6-intake-questions"
+      ],
+      "blockIds": [
+        "common-lf6-intake-symptom"
+      ]
+    },
+    {
+      "id": "common-lf6-intake-card-02",
+      "front": "Wie wird eine unbestätigte Ursache notiert?",
+      "back": "Als Vermutung mit Herkunft; bekannte Beobachtungen und noch nötige Tests bleiben davon getrennt.",
+      "objectiveIds": [
+        "common-lf6-intake-questions",
+        "common-lf6-intake-ticket"
+      ],
+      "blockIds": [
+        "common-lf6-intake-symptom",
+        "common-lf6-intake-ticket"
+      ]
+    },
+    {
+      "id": "common-lf6-intake-card-03",
+      "front": "Welche Angaben beschreiben den Arbeitsausfall?",
+      "back": "Betroffene Personen und Tätigkeiten, Beginn, konkrete Frist sowie verfügbare freigegebene Ersatzlösungen.",
+      "objectiveIds": [
+        "common-lf6-intake-questions"
+      ],
+      "blockIds": [
+        "common-lf6-intake-scope"
+      ]
+    },
+    {
+      "id": "common-lf6-intake-card-04",
+      "front": "Warum bisherige Schritte mit Ergebnis aufnehmen?",
+      "back": "Damit das Folgeteam erfolgreiche und erfolglose Versuche erkennt und seine nächste Prüfung darauf aufbaut.",
+      "objectiveIds": [
+        "common-lf6-intake-questions",
+        "common-lf6-intake-ticket"
+      ],
+      "blockIds": [
+        "common-lf6-intake-scope",
+        "common-lf6-intake-ticket"
+      ]
+    },
+    {
+      "id": "common-lf6-intake-card-05",
+      "front": "Was macht ein Musterticket nachvollziehbar?",
+      "back": "Kennung, Zeit, Kontaktrolle, Dienst, Ablauf, Soll/Ist, Umfang, bisherige Schritte, offene Punkte und nächste Zuständigkeit.",
+      "objectiveIds": [
+        "common-lf6-intake-ticket"
+      ],
+      "blockIds": [
+        "common-lf6-intake-ticket"
+      ]
+    },
+    {
+      "id": "common-lf6-intake-card-06",
+      "front": "Wozu dient die Rückbestätigung am Gesprächsende?",
+      "back": "Sie korrigiert Missverständnisse und klärt Ticketkennung sowie nächsten Kontakt; eine Statusmeldung ist keine zugesagte Lösung.",
+      "objectiveIds": [
+        "common-lf6-intake-questions",
+        "common-lf6-intake-ticket"
+      ],
+      "blockIds": [
+        "common-lf6-intake-handover"
+      ]
+    }
+  ],
+  "review": {
+    "status": "reviewed",
+    "checkedAt": "2026-11-16"
+  }
+}

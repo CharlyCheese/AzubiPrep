@@ -1,0 +1,496 @@
+{
+  "schemaVersion": 1,
+  "version": "1.0.0",
+  "id": "common-lf9-security",
+  "title": "Dienste und Betrieb absichern",
+  "fieldId": "LF9",
+  "scope": "common",
+  "prerequisites": [
+    "common-lf9-services",
+    "common-lf4-measures"
+  ],
+  "objectives": [
+    {
+      "id": "common-lf9-security-access",
+      "text": "Einfache Zugriffs- und Firewallregeln aus einem vorgegebenen Nutzungskonzept ableiten."
+    },
+    {
+      "id": "common-lf9-security-continuity",
+      "text": "Datensicherung, Wiederherstellung und Redundanz als unterschiedliche Maßnahmen für einen Dienstausfall erklären."
+    },
+    {
+      "id": "common-lf9-security-updates",
+      "text": "Für eine Aktualisierung Prüfschritte, Zuständigkeit und Rückfallmöglichkeit festlegen."
+    }
+  ],
+  "sourceIds": [
+    "lf9-ms-network",
+    "lf9-ms-recovery",
+    "lf9-ms-redundancy",
+    "lf9-ms-deployment"
+  ],
+  "sources": [
+    {
+      "id": "lf9-ms-network",
+      "title": "Microsoft: Architecture strategies for networking and connectivity",
+      "url": "https://learn.microsoft.com/en-us/azure/well-architected/security/networking",
+      "note": "Öffentliche Herstellergrundlagen zu Segmentierung, Verkehrsbeziehungen und Filtern geprüft. Der begrenzte Netzplan und seine Freigaben sind fiktive Modellvorgaben.",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "lf9-ms-recovery",
+      "title": "Microsoft: Architecture strategies for disaster recovery",
+      "url": "https://learn.microsoft.com/en-us/azure/well-architected/reliability/disaster-recovery",
+      "note": "Sicherung, Wiederherstellungsplanung und erprobte Wiederherstellung geprüft. Ausfallgrenzen und Verfahren im Lernfall sind didaktische Vorgaben.",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "lf9-ms-redundancy",
+      "title": "Microsoft: Architecture strategies for designing for redundancy",
+      "url": "https://learn.microsoft.com/en-us/azure/well-architected/reliability/redundancy",
+      "note": "Redundanz und gemeinsame Fehlerquellen anhand öffentlicher Herstellerbeschreibung geprüft. Kein Verfügbarkeitsversprechen für den fiktiven Einserverfall.",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "lf9-ms-deployment",
+      "title": "Microsoft: Architecture strategies for safe deployment practices",
+      "url": "https://learn.microsoft.com/en-us/azure/well-architected/operational-excellence/safe-deployments",
+      "note": "Prüfung von Änderungen, Zuständigkeiten und Wiederherstellung eines bekannten funktionierenden Stands geprüft. Aktualisierungsplan im Lernfall ist selbst erstellt.",
+      "checkedAt": "2026-11-16"
+    }
+  ],
+  "caseStudy": {
+    "title": "Mira plant das Lernportal für Radblick",
+    "text": "Radblick erlaubt den Beschäftigten den Portaldienst, Gästen nicht. Mira ergänzt die Netzfunktion um überprüfte Regeln, einen Wiederherstellungsweg und eine kontrollierte Aktualisierung. Der lokale Fall bleibt eine begrenzte Simulation ohne Eingriffe in reale Geräte."
+  },
+  "blocks": [
+    {
+      "id": "common-lf9-security-access",
+      "title": "1. Zugriff aus dem Nutzungskonzept ableiten",
+      "objectiveIds": [
+        "common-lf9-security-access"
+      ],
+      "sourceIds": [
+        "lf9-ms-network",
+        "lf9-ms-recovery",
+        "lf9-ms-redundancy",
+        "lf9-ms-deployment"
+      ],
+      "paragraphs": [
+        "Schreibe eine erlaubte Verbindung als Quelle, Ziel, Transportprotokoll, Zielport und Aktion auf. Im Modell: Beschäftigtennetz 192.0.2.0/26 → Server 198.51.100.10, TCP443, erlauben. Für das Gästenetz 192.0.2.64/26 ist Portalzugriff nicht freigegeben. Nicht benötigter Zugriff auf diesen Dienst bleibt gesperrt.",
+        "Die DNS-Infrastruktur 203.0.113.53 ist für beide Clientgruppen erreichbar vorgegeben. DNS-Zugriff ist eine andere Verkehrsbeziehung als Zugriff auf die zurückgelieferte Portaladresse. Routing, Rückverkehr und die übrige Infrastruktur funktionieren im Modell; die angebotene Portalrichtlinie steuert den Zugriff auf diesen Dienst.",
+        "Prüfe nach der Regelwahl beide Seiten: Beschäftigtenzugriff muss funktionieren und Gästezugriff muss an der Richtlinie scheitern. Wenn der Dienst gestoppt ist, scheitern beide Aufrufe; das ist kein Nachweis einer funktionierenden Zugriffstrennung. Eine Regel mit Quelle 192.0.2.0/24 wäre zu weit, weil sie auch das Gästenetz umfasst."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Lernfall",
+        "text": "Passender Umfang: 192.0.2.0/26 → 198.51.100.10 TCP443. Zu weit: 192.0.2.0/24 → derselbe Dienst."
+      },
+      "misconception": {
+        "claim": "Gäste dürfen den Namen nicht auflösen, deshalb ist eine Portalsperre entbehrlich.",
+        "correction": "Die Zugriffsvorgabe wird am Dienst durchgesetzt; Namenskenntnis ist keine Berechtigung."
+      },
+      "takeaway": "Leite kleine, begründete Freigaben ab und prüfe erlaubte wie gesperrte Fälle."
+    },
+    {
+      "id": "common-lf9-security-continuity",
+      "title": "2. Sicherung, Wiederherstellung und Redundanz trennen",
+      "objectiveIds": [
+        "common-lf9-security-continuity"
+      ],
+      "sourceIds": [
+        "lf9-ms-network",
+        "lf9-ms-recovery",
+        "lf9-ms-redundancy",
+        "lf9-ms-deployment"
+      ],
+      "paragraphs": [
+        "Eine Datensicherung bewahrt einen geeigneten, getrennt geschützten Stand von Daten oder Konfiguration. Zur Wiederherstellung gehört, diesen Stand in einer geeigneten Umgebung zurückzuspielen und die benötigte Funktion zu prüfen. Ein vorhandenes Sicherungsarchiv bestätigt noch keinen erfolgreichen Wiederanlauf.",
+        "Redundanz stellt zusätzliche Komponenten oder Dienstinstanzen bereit, um Ausfälle abzufangen. Dafür müssen Umschaltung, Kapazität und Abhängigkeiten passen. Eine synchron replizierte Löschung kann auch die zweite Instanz betreffen; Redundanz ersetzt deshalb keine geeignete Sicherung früherer Stände.",
+        "Radblick sichert die geprüfte Portalkonfiguration und die benötigten Daten. In einer getrennten Wiederherstellungsprobe werden Stand, Wiederherstellungsdauer und Funktionsprüfung dokumentiert. Das vereinbarte Ziel von 60 Minuten gilt erst für den nachgewiesenen Prüfumfang als getestet. Ein zweiter Server wäre eine zusätzliche Betriebsentscheidung und ist im Einservermodell nicht vorhanden."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Lernfall",
+        "text": "Sicherung: geprüften Stand aufbewahren. Wiederherstellung: Stand zurückspielen und Dienst prüfen. Redundanz: zusätzliche betriebsfähige Instanz mit Umschaltweg."
+      },
+      "misconception": {
+        "claim": "Zwei synchron gehaltene Server ersetzen eine Sicherung gegen versehentliches Löschen.",
+        "correction": "Die Löschung kann repliziert werden; ein geschützter früherer Stand erfüllt eine andere Aufgabe."
+      },
+      "takeaway": "Kopie, erprobter Wiederanlauf und zusätzliche Betriebsreserve sind verschiedene Maßnahmen."
+    },
+    {
+      "id": "common-lf9-security-updates",
+      "title": "3. Eine Aktualisierung mit Rückfall planen",
+      "objectiveIds": [
+        "common-lf9-security-updates"
+      ],
+      "sourceIds": [
+        "lf9-ms-network",
+        "lf9-ms-recovery",
+        "lf9-ms-redundancy",
+        "lf9-ms-deployment"
+      ],
+      "paragraphs": [
+        "Lege vor der Aktualisierung Anlass, zuständige Rolle, Freigabe, Wartungszeit und Prüfschritte fest. Sichere den passenden Ausgangsstand und prüfe, wie sich Anwendung, Daten und Konfiguration bei Bedarf konsistent zurückführen lassen. Eine höhere Versionsnummer allein ist keine Erfolgskontrolle.",
+        "Im Lernfall setzt Sam nach Freigabe die Aktualisierung in der Übungsumgebung um. Vorher ist die bisher funktionierende Konfiguration gesichert. Danach werden Namensauflösung, Beschäftigtenzugriff, Gästesperre und die benötigte Portalhandlung erneut geprüft. Ein negativer Zugriffsfall gehört auch nach einer Änderung zur Kontrolle.",
+        "Definiere ein Abbruchkriterium und einen Rückfallweg: Wenn ein verbindlicher Prüfschritt fehlschlägt, stoppt die weitere Verteilung; Sam bewertet die Rückkehr zum geprüften Stand. Rückfall kann neue Fehler begrenzen, aber eine im alten Stand bestehende Schwachstelle bleibt dabei offen. Halte diese Grenze und die weitere Bearbeitung fest."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Lernfall",
+        "text": "Sam plant: Freigabe, Ausgangssicherung, Aktualisierung, Funktions- und Sperrprobe; bei Fehlern Verteilung anhalten und den geeigneten Rückfall prüfen."
+      },
+      "misconception": {
+        "claim": "Ein Rückfall auf den alten Stand beseitigt auch dessen bereits bekannte Schwachstellen.",
+        "correction": "Der alte Stand kann die Funktion wiederherstellen, während sein ursprünglicher Mangel weiter bearbeitet werden muss."
+      },
+      "takeaway": "Plane Verantwortung, Prüfung und Rückfall vor dem Eingriff."
+    },
+    {
+      "id": "common-lf9-security-verify",
+      "title": "4. Schutzmaßnahmen mit ihrem Zweck nachweisen",
+      "objectiveIds": [
+        "common-lf9-security-access",
+        "common-lf9-security-continuity",
+        "common-lf9-security-updates"
+      ],
+      "sourceIds": [
+        "lf9-ms-network",
+        "lf9-ms-recovery",
+        "lf9-ms-redundancy",
+        "lf9-ms-deployment"
+      ],
+      "paragraphs": [
+        "Führe zu jeder Schutzmaßnahme den passenden Nachweis: Zugriffsregeln durch positive und negative Probe, Sicherung durch lesbaren geeigneten Stand und erprobte Wiederherstellung, Redundanz durch kontrollierte Umschaltprüfung, Aktualisierung durch Prüfung des neuen Stands. Ein Erfolgssymbol ohne benannten Prüfgegenstand bleibt unklar.",
+        "Im Portalmodell wird eine versehentlich breite Freigabe durch den erfolgreichen Gästeaufruf erkennbar. Begrenze die Portalrichtlinie auf Beschäftigte und wiederhole beide Zugriffsproben. Wenn anschließend Beschäftigte zugreifen und Gäste an der Richtlinie scheitern, ist die betrachtete Trennung im Modell belegt.",
+        "Dokumentiere Zuständigkeit und offene Grenzen. Die Simulation kann Regeln und vorgegebene Störungsfälle prüfen; sie erstellt keinen produktiven Datensicherungsdienst und keine echte redundante Umgebung. Wiederherstellungs- und Redundanzentscheidungen werden begründet, ohne eine reale Ausfallgarantie zu behaupten."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Lernfall",
+        "text": "Ein Regeltest beweist die Portaltrennung im Modell; eine davon unabhängige Wiederherstellungsprobe wäre für das Zeitversprechen nötig."
+      },
+      "misconception": {
+        "claim": "Ein erfolgreicher Firewalltest beweist auch Sicherbarkeit und Wiederherstellungsdauer.",
+        "correction": "Jede Maßnahme benötigt einen zu ihrem Zweck passenden Nachweis."
+      },
+      "takeaway": "Verknüpfe jede Maßnahme mit ihrem Ziel und ihrer eigenen Erfolgskontrolle."
+    }
+  ],
+  "questionFile": "questions/common-lf9-security.v1.csv",
+  "quiz": {
+    "questionIds": [
+      "LJ-LF9-SECURITY-Q01",
+      "LJ-LF9-SECURITY-Q02",
+      "LJ-LF9-SECURITY-Q03",
+      "LJ-LF9-SECURITY-Q04",
+      "LJ-LF9-SECURITY-Q05",
+      "LJ-LF9-SECURITY-Q06"
+    ]
+  },
+  "exam": {
+    "questionIds": [
+      "LJ-LF9-SECURITY-E01",
+      "LJ-LF9-SECURITY-E02",
+      "LJ-LF9-SECURITY-E03",
+      "LJ-LF9-SECURITY-E04",
+      "LJ-LF9-SECURITY-E05",
+      "LJ-LF9-SECURITY-E06",
+      "LJ-LF9-SECURITY-E07",
+      "LJ-LF9-SECURITY-E08"
+    ],
+    "passPercent": 80,
+    "scoring": "all-or-nothing-per-question",
+    "timed": false
+  },
+  "questionLinks": [
+    {
+      "questionId": "LJ-LF9-SECURITY-Q01",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf9-security-access"
+      ],
+      "blockIds": [
+        "common-lf9-security-access"
+      ]
+    },
+    {
+      "questionId": "LJ-LF9-SECURITY-Q02",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf9-security-access"
+      ],
+      "blockIds": [
+        "common-lf9-security-access"
+      ]
+    },
+    {
+      "questionId": "LJ-LF9-SECURITY-Q03",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf9-security-continuity"
+      ],
+      "blockIds": [
+        "common-lf9-security-continuity"
+      ]
+    },
+    {
+      "questionId": "LJ-LF9-SECURITY-Q04",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf9-security-continuity"
+      ],
+      "blockIds": [
+        "common-lf9-security-continuity"
+      ]
+    },
+    {
+      "questionId": "LJ-LF9-SECURITY-Q05",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf9-security-updates"
+      ],
+      "blockIds": [
+        "common-lf9-security-updates"
+      ]
+    },
+    {
+      "questionId": "LJ-LF9-SECURITY-Q06",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf9-security-updates"
+      ],
+      "blockIds": [
+        "common-lf9-security-updates"
+      ]
+    },
+    {
+      "questionId": "LJ-LF9-SECURITY-E01",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf9-security-access"
+      ],
+      "blockIds": [
+        "common-lf9-security-access"
+      ]
+    },
+    {
+      "questionId": "LJ-LF9-SECURITY-E02",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf9-security-access"
+      ],
+      "blockIds": [
+        "common-lf9-security-access",
+        "common-lf9-security-verify"
+      ]
+    },
+    {
+      "questionId": "LJ-LF9-SECURITY-E03",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf9-security-access"
+      ],
+      "blockIds": [
+        "common-lf9-security-verify"
+      ]
+    },
+    {
+      "questionId": "LJ-LF9-SECURITY-E04",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf9-security-continuity"
+      ],
+      "blockIds": [
+        "common-lf9-security-continuity"
+      ]
+    },
+    {
+      "questionId": "LJ-LF9-SECURITY-E05",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf9-security-continuity"
+      ],
+      "blockIds": [
+        "common-lf9-security-continuity"
+      ]
+    },
+    {
+      "questionId": "LJ-LF9-SECURITY-E06",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf9-security-continuity"
+      ],
+      "blockIds": [
+        "common-lf9-security-continuity",
+        "common-lf9-security-verify"
+      ]
+    },
+    {
+      "questionId": "LJ-LF9-SECURITY-E07",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf9-security-updates"
+      ],
+      "blockIds": [
+        "common-lf9-security-updates"
+      ]
+    },
+    {
+      "questionId": "LJ-LF9-SECURITY-E08",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf9-security-updates"
+      ],
+      "blockIds": [
+        "common-lf9-security-updates",
+        "common-lf9-security-verify"
+      ]
+    }
+  ],
+  "interview": [
+    {
+      "id": "common-lf9-security-talk-access",
+      "prompt": "Leite die Portalregel aus dem Nutzungskonzept ab und erläutere ihre Prüfung.",
+      "objectiveIds": [
+        "common-lf9-security-access"
+      ],
+      "blockIds": [
+        "common-lf9-security-access",
+        "common-lf9-security-verify"
+      ],
+      "keyPoints": [
+        "Quelle /26 statt zu weitem /24 wählen.",
+        "Ziel 198.51.100.10, TCP443 und erlaubte Aktion nennen.",
+        "Positive Beschäftigtenprobe und richtlinienbedingte Gästeablehnung prüfen."
+      ],
+      "acceptableAlternatives": [
+        "Eine fachlich gleichwertige Begründung mit passenden Modellannahmen und überprüfbaren Belegen."
+      ],
+      "misconceptions": [
+        "Zwei gescheiterte Aufrufe bei gestopptem Dienst als erfolgreiche Trennung werten."
+      ],
+      "sampleAnswer": "Ich erlaube dem Beschäftigtennetz 192.0.2.0/26 TCP443 zum Portal. Gäste sind nicht freigegeben. Danach müssen Beschäftigte den laufenden Dienst erreichen, während die Gästeprobe an der Richtlinie scheitert.",
+      "followUp": "Weshalb ist funktionierendes DNS für Gäste kein Widerspruch?"
+    },
+    {
+      "id": "common-lf9-security-talk-continuity",
+      "prompt": "Erkläre an drei unterschiedlichen Maßnahmen Sicherung, Wiederherstellung und Redundanz.",
+      "objectiveIds": [
+        "common-lf9-security-continuity"
+      ],
+      "blockIds": [
+        "common-lf9-security-continuity",
+        "common-lf9-security-verify"
+      ],
+      "keyPoints": [
+        "Geschützten früheren Stand als Sicherung nennen.",
+        "Zurückspielen und Funktion prüfen als Wiederherstellung beschreiben.",
+        "Zusätzliche Instanz mit Umschaltung als Redundanz einordnen."
+      ],
+      "acceptableAlternatives": [
+        "Eine fachlich gleichwertige Begründung mit passenden Modellannahmen und überprüfbaren Belegen."
+      ],
+      "misconceptions": [
+        "Replikation als Schutz vor jeder versehentlichen Löschung ausgeben."
+      ],
+      "sampleAnswer": "Eine Sicherung bewahrt einen früheren Stand. Eine Wiederherstellungsprobe spielt ihn zurück und prüft Funktion und Dauer. Ein zweiter Server mit Umschaltung kann den Betrieb stützen; replizierte Löschungen bleiben trotzdem möglich.",
+      "followUp": "Welchen Nachweis braucht das vereinbarte 60-Minuten-Ziel?"
+    },
+    {
+      "id": "common-lf9-security-talk-updates",
+      "prompt": "Plane eine Aktualisierung mit Sam und erkläre, wie du Erfolg und Rückfall begrenzt.",
+      "objectiveIds": [
+        "common-lf9-security-updates"
+      ],
+      "blockIds": [
+        "common-lf9-security-updates",
+        "common-lf9-security-verify"
+      ],
+      "keyPoints": [
+        "Freigabe, Zuständigkeit und Sicherung vorsehen.",
+        "Funktion und Zugriffstrennung nach der Änderung prüfen.",
+        "Bei Fehlern Verteilung stoppen, Rückfall und alte Schwachstelle beachten."
+      ],
+      "acceptableAlternatives": [
+        "Eine fachlich gleichwertige Begründung mit passenden Modellannahmen und überprüfbaren Belegen."
+      ],
+      "misconceptions": [
+        "Die neue Versionsnummer als ausreichende Abnahme ansehen."
+      ],
+      "sampleAnswer": "Sam aktualisiert nach Freigabe mit gesichertem Ausgangsstand. Anschließend prüft er DNS, Portalhandlung und Gästesperre. Bei Fehlern stoppt die Verteilung; der geeignete Rückfall kann helfen, lässt einen alten Mangel aber offen.",
+      "followUp": "Welche Angaben würdest du für die nächste zuständige Person festhalten?"
+    }
+  ],
+  "cards": [
+    {
+      "id": "common-lf9-security-card-01",
+      "front": "Welche Regel beschreibt den erlaubten Portalzugriff?",
+      "back": "192.0.2.0/26 als Quelle → 198.51.100.10, TCP443, erlauben; Gäste aus 192.0.2.64/26 sind nicht freigegeben.",
+      "objectiveIds": [
+        "common-lf9-security-access"
+      ],
+      "blockIds": [
+        "common-lf9-security-access"
+      ]
+    },
+    {
+      "id": "common-lf9-security-card-02",
+      "front": "Warum reichen zwei fehlgeschlagene Aufrufe nicht für die Gästesperre?",
+      "back": "Ein gestoppter Dienst kann beide abweisen. Beschäftigte müssen erfolgreich sein und Gäste an der Richtlinie scheitern.",
+      "objectiveIds": [
+        "common-lf9-security-access"
+      ],
+      "blockIds": [
+        "common-lf9-security-access",
+        "common-lf9-security-verify"
+      ]
+    },
+    {
+      "id": "common-lf9-security-card-03",
+      "front": "Sicherung und Wiederherstellung: Was ist der Unterschied?",
+      "back": "Sicherung bewahrt einen geeigneten Stand; Wiederherstellung spielt ihn zurück und prüft die benötigte Funktion.",
+      "objectiveIds": [
+        "common-lf9-security-continuity"
+      ],
+      "blockIds": [
+        "common-lf9-security-continuity"
+      ]
+    },
+    {
+      "id": "common-lf9-security-card-04",
+      "front": "Was kann Redundanz nicht ersetzen?",
+      "back": "Geschützte frühere Sicherungsstände, etwa bei replizierter Löschung; Umschaltung und gemeinsame Fehlerquellen bleiben zu prüfen.",
+      "objectiveIds": [
+        "common-lf9-security-continuity"
+      ],
+      "blockIds": [
+        "common-lf9-security-continuity"
+      ]
+    },
+    {
+      "id": "common-lf9-security-card-05",
+      "front": "Was wird vor dem Update vorbereitet?",
+      "back": "Freigabe, verantwortliche Rolle, Wartungszeit, geeignete Sicherung, Prüfkriterien und ein nutzbarer Rückfallweg.",
+      "objectiveIds": [
+        "common-lf9-security-updates"
+      ],
+      "blockIds": [
+        "common-lf9-security-updates"
+      ]
+    },
+    {
+      "id": "common-lf9-security-card-06",
+      "front": "Welche Grenze hat der Rückfall auf einen alten Stand?",
+      "back": "Er kann neue Nebenwirkungen begrenzen, während eine dort bereits bestehende Schwachstelle weiterhin offen bleibt.",
+      "objectiveIds": [
+        "common-lf9-security-updates"
+      ],
+      "blockIds": [
+        "common-lf9-security-updates"
+      ]
+    }
+  ],
+  "review": {
+    "status": "reviewed",
+    "checkedAt": "2026-11-16"
+  }
+}

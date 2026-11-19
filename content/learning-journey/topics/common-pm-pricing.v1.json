@@ -1,0 +1,488 @@
+{
+  "schemaVersion": 1,
+  "id": "common-pm-pricing",
+  "version": "1.0.0",
+  "title": "Verkaufspreis, Gewinn und Marge",
+  "fieldId": "PM",
+  "scope": "common",
+  "prerequisites": [
+    "common-pm-costs"
+  ],
+  "sourceIds": [
+    "pm-ihk-calculation",
+    "pm-ihk-profit-margin"
+  ],
+  "sources": [
+    {
+      "id": "pm-ihk-calculation",
+      "title": "IHK Darmstadt: Kalkulieren und mit Kennziffern überwachen",
+      "url": "https://www.ihk.de/darmstadt/produktmarken/beraten-und-informieren/festigung-wachstum/kaufmaennisches/kalkulation-3795552",
+      "checkedAt": "2026-11-11",
+      "note": "Stundensatz und Preisbildung mit getrennten Selbstkosten, Gewinn, Nachlässen und Umsatzsteuer geprüft. Verwendete IT-Beträge, 25-Prozent-Zuschlag und 19-Prozent-USt sind ausdrücklich vorgegebene Rechenannahmen; keine allgemeinen Lohnnebenkostensätze oder Verlustgarantie übernommen."
+    },
+    {
+      "id": "pm-ihk-profit-margin",
+      "title": "IHK Niederbayern: Früherkennung und Krisenvorbeugung",
+      "url": "https://www.ihk-niederbayern.de/beratung-und-service/fuer-ihr-unternehmen/unternehmen-in-schwierigkeiten/frueherkennung-und-krisenvorbeugung/",
+      "checkedAt": "2026-11-11",
+      "note": "Kennzahl Umsatzrendite als Gewinn vor Steuern geteilt durch Umsatz geprüft. Hier ausdrücklich auf das vereinfachte Auftragsmodell angewandt; keine branchenspezifischen Sollwerte oder Kreditkennzahlen übernommen."
+    }
+  ],
+  "objectives": [
+    {
+      "id": "common-pm-pricing-markup",
+      "text": "Aus Selbstkosten und Gewinnaufschlag einen Nettoverkaufspreis berechnen."
+    },
+    {
+      "id": "common-pm-pricing-margin",
+      "text": "Gewinnaufschlag und Gewinnmarge anhand ihrer Bezugsgrößen unterscheiden."
+    },
+    {
+      "id": "common-pm-pricing-price",
+      "text": "Umsatzsteuer, Nachlässe und Verkaufspreis in einem vorgegebenen Modell sauber trennen."
+    }
+  ],
+  "caseStudy": {
+    "title": "Nordlicht IT plant und prüft",
+    "text": "Nordlicht IT hat für das fiktive Portal Selbstkosten von 3.760 Euro ermittelt. Für diese Übung gelten ein Gewinnaufschlag von 25 Prozent auf die Selbstkosten und eine vorgegebene Umsatzsteuer von 19 Prozent. Die eingebaute Tabelle rechnet ohne Nachlässe. Weitere Rabatt- und Skontofälle werden getrennt erklärt; es geht um ein Lernmodell, nicht um eine reale Steuer- oder Preisberatung."
+  },
+  "blocks": [
+    {
+      "id": "common-pm-pricing-markup",
+      "title": "1. Von Selbstkosten zum Nettoangebot",
+      "objectiveIds": [
+        "common-pm-pricing-markup"
+      ],
+      "sourceIds": [
+        "pm-ihk-calculation"
+      ],
+      "paragraphs": [
+        "Selbstkosten umfassen die dem Auftrag zugerechneten direkten und indirekten Kosten. Im Modell sind es 3.760 Euro. Ein Gewinnaufschlag von 25 Prozent bedeutet: Der geplante Gewinn wird auf die Selbstkosten bezogen. Gewinnbetrag = Selbstkosten × Zuschlagssatz ÷ 100.",
+        "In der Tabelle steht B1 für 3760, B2 für 25 und B3 für den später verwendeten Umsatzsteuersatz 19. B4 =B1*B2/100 ergibt 940 Euro geplanten Gewinn. B5 =B1+B4 ergibt den Nettoverkaufspreis 4.700 Euro. Ebenso ist =B1*(1+B2/100) möglich. Du kannst in Ergebnisfelder auch die Zahlen 940 und 4700 eintragen.",
+        "Die Rückprobe lautet: Nettoverkaufspreis minus Selbstkosten = geplantes Auftragsergebnis vor Ertragsteuern. 4.700 − 3.760 = 940 Euro. Dieses vereinfachte Ergebnis setzt voraus, dass der Auftrag zu diesem Nettoerlös verkauft wird und die tatsächlichen Kosten der Planung entsprechen. Ein geplantes Angebot ist noch kein vereinnahmter Gewinn.",
+        "Kostenorientierte Kalkulation zeigt einen begründeten Zielpreis. Ob Kunden die Leistung zu diesem Preis kaufen, hängt auch von Nutzen, Alternativen und Marktbedingungen ab. Geringere Nettoerlöse oder höhere tatsächliche Kosten verringern das Ergebnis; eine Rechnung garantiert keinen Auftrag."
+      ],
+      "example": {
+        "title": "Eigener Lernfall",
+        "text": "Bei 2.000 Euro Selbstkosten und 10 Prozent Aufschlag beträgt der geplante Gewinn 200 Euro und der Nettoverkaufspreis 2.200 Euro."
+      },
+      "misconception": {
+        "claim": "25 Prozent Gewinnaufschlag bedeutet, dass 25 Prozent des Verkaufspreises Gewinn sind.",
+        "correction": "Der Aufschlag bezieht sich auf die Kosten; für den Gewinnanteil am Erlös brauchst du eine andere Bezugsgröße."
+      },
+      "takeaway": "Berechne den Aufschlag aus den Selbstkosten und addiere erst danach den Gewinn."
+    },
+    {
+      "id": "common-pm-pricing-margin",
+      "title": "2. Aufschlag und Marge unterscheiden",
+      "objectiveIds": [
+        "common-pm-pricing-markup",
+        "common-pm-pricing-margin"
+      ],
+      "sourceIds": [
+        "pm-ihk-profit-margin",
+        "pm-ihk-calculation"
+      ],
+      "paragraphs": [
+        "Hier bezeichnet Gewinnmarge den geplanten Gewinn vor Ertragsteuern als Anteil am Nettoerlös des Auftrags. Marge in Prozent = Gewinn ÷ Nettoerlös × 100. Sie darf nicht mit einem Deckungsbeitrag verwechselt werden, bei dem zunächst nur variable Kosten abgezogen werden.",
+        "Im Tabellenfall ist B6 =B4/B5*100. 940 ÷ 4.700 × 100 ergibt 20 Prozent Marge. Derselbe Gewinnbetrag von 940 Euro entspricht einem Aufschlag von 25 Prozent auf 3.760 Euro Kosten und einer Marge von 20 Prozent auf 4.700 Euro Nettoerlös. Die Prozentwerte unterscheiden sich wegen des Nenners.",
+        "Ist stattdessen eine Zielmarge von 25 Prozent des Nettoerlöses vorgegeben, dürfen die Kosten 75 Prozent dieses Erlöses ausmachen. Bei 3.760 Euro Selbstkosten wäre der Nettozielpreis 3.760 ÷ 0,75 = 5.013,333… Euro, gerundet 5.013,33 Euro. Einfach 25 Prozent auf die Kosten zu addieren erfüllt diese andere Vorgabe nicht.",
+        "Ein Gegenbeispiel mit kleineren Zahlen: 80 Euro Kosten und 100 Euro Nettoerlös ergeben 20 Euro Gewinn. 20 ÷ 80 × 100 = 25 Prozent Aufschlag, aber 20 ÷ 100 × 100 = 20 Prozent Marge. Marge und Aufschlag müssen jeweils mit ihrer Bezugsgröße benannt werden.",
+        "Eine Marge mit Nettoerlös null ist wegen der Division durch null nicht definiert. Bei negativem Ergebnis kann eine negative Marge entstehen; sie wird nicht dadurch positiv, dass ein ursprünglich höherer Planpreis im Angebot stand."
+      ],
+      "example": {
+        "title": "Eigener Lernfall",
+        "text": "Ein Auftrag bringt bei 3.760 Euro Kosten tatsächlich 4.000 Euro netto. Das Ergebnis beträgt 240 Euro, die Marge 240 ÷ 4.000 × 100 = 6 Prozent."
+      },
+      "misconception": {
+        "claim": "Aufschlag und Marge sind austauschbare Bezeichnungen für dieselbe Prozentzahl.",
+        "correction": "Beide können denselben Eurogewinn beschreiben, verwenden aber Kosten beziehungsweise Nettoerlös als Basis."
+      },
+      "takeaway": "Frage bei jedem Prozentsatz: Anteil wovon?"
+    },
+    {
+      "id": "common-pm-pricing-vat",
+      "title": "3. Netto, Umsatzsteuer und Brutto trennen",
+      "objectiveIds": [
+        "common-pm-pricing-price"
+      ],
+      "sourceIds": [
+        "pm-ihk-calculation"
+      ],
+      "paragraphs": [
+        "Nettoverkaufspreis und Bruttobetrag sind zu unterscheiden. Für die Übung ist 19 Prozent Umsatzsteuer vorgegeben. Dieser Satz wird hier nicht aus einer realen Leistung oder einem Steuerstatus abgeleitet. Umsatzsteuerbetrag = Nettoverkaufspreis × 19 ÷ 100; Brutto = Nettoverkaufspreis + Umsatzsteuer.",
+        "In B7 steht =B5*B3/100. 4.700 × 19 ÷ 100 = 893 Euro. B8 =B5+B7 ergibt 5.593 Euro Brutto. Alternativ sind die Ergebniszahlen 893 und 5593 möglich. Umsatzsteuer ist in diesem Modell kein Gewinn; die 893 Euro werden nicht auf den geplanten Gewinn von 940 Euro aufgeschlagen.",
+        "Für die Rückrechnung aus Brutto wird durch den Faktor 1,19 geteilt: 5.593 ÷ 1,19 = 4.700 Euro netto. Vom Brutto 19 Prozent abzuziehen wäre falsch, denn die 19 Prozent beziehen sich auf Netto. Die enthaltene Umsatzsteuer ist Brutto minus Netto.",
+        "Die Kosten- und Gewinnrechnung nutzt durchgehend Nettowerte und ein Ergebnis vor Ertragsteuern. Sie berechnet weder reale Vorsteuer noch eine Steuerschuld oder persönlichen Nachsteuergewinn. Es wäre inkonsistent, 5.593 Euro Brutto mit 3.760 Euro Nettokosten zu vergleichen und die Differenz als Gewinn zu melden.",
+        "In Formeln sind Dezimalpunkt und Dezimalkomma möglich, zum Beispiel =5593/1,19. Schreibe keine Tausenderpunkte oder Währungszeichen in Zahlenfelder. Für diese Tabelle wird jede berechnete Geldposition auf Cent gerundet, bevor die nächste Zeile auf sie zugreift. Prozentfaktoren und die Marge werden dagegen nicht vorzeitig gerundet. Die vereinbarte Geldrundung kann bei eigenen Werten den Unterschied zwischen bloßer Anzeige und tatsächlich weiterverwendetem Formelwert ausmachen."
+      ],
+      "example": {
+        "title": "Eigener Lernfall",
+        "text": "Ein weiterer vorgegebener Fall mit 1.000 Euro netto und 19 Prozent Umsatzsteuer ergibt 190 Euro Steuerbetrag und 1.190 Euro brutto."
+      },
+      "misconception": {
+        "claim": "Umsatzsteuer erhöht den Gewinn, weil sie auf der Rechnung zusätzlich bezahlt wird.",
+        "correction": "Der zusätzliche Bruttobetrag ist im Modell separat erfasste Umsatzsteuer und kein Auftragsergebnis."
+      },
+      "takeaway": "Kosten und Ergebnis vergleichst du netto; Umsatzsteuer führt zum Bruttobetrag."
+    },
+    {
+      "id": "common-pm-pricing-discounts",
+      "title": "4. Nachlässe mit ihrer richtigen Basis rechnen",
+      "objectiveIds": [
+        "common-pm-pricing-markup",
+        "common-pm-pricing-margin",
+        "common-pm-pricing-price"
+      ],
+      "sourceIds": [
+        "pm-ihk-calculation",
+        "pm-ihk-profit-margin"
+      ],
+      "paragraphs": [
+        "Rabatt ist ein vereinbarter Preisnachlass, etwa vom Listenpreis. Skonto ist ein Nachlass für eine vereinbarte Zahlungsbedingung, beispielsweise Zahlung innerhalb einer bestimmten Frist. Verwende die in der Aufgabe ausdrücklich genannte Basis und Reihenfolge. Die Tabelle dieses Themas enthält keine Nachlasszeilen; die folgenden Fälle kannst du mit der Rechenhilfe nachvollziehen.",
+        "Eigenständiger Fall: 5.000 Euro Nettolistenpreis, zuerst 10 Prozent Rabatt darauf, danach 2 Prozent Skonto auf den bereits rabattierten Nettobetrag bei fristgerechter Zahlung. Rabatt: 500 Euro; danach 4.500 Euro. Skonto: 4.500 × 2/100 = 90 Euro; verbleibender Nettoerlös 4.410 Euro. Die beiden Prozentsätze werden nicht zu 12 Prozent derselben Basis addiert.",
+        "Bei unveränderten Selbstkosten von 3.760 Euro wäre das Ergebnis dieses Nachlassfalls 4.410 − 3.760 = 650 Euro. Die Marge wäre 650 ÷ 4.410 × 100 ≈ 14,74 Prozent. Ein Nachlass senkt den Erlös, ohne dadurch bereits angefallene Kosten zu vermindern. Im hier festgelegten Modell wird Umsatzsteuer erst auf den verbleibenden Nettobetrag berechnet: 837,90 Euro bei 19 Prozent, Brutto 5.247,90 Euro.",
+        "Bei der Rückwärtsrechnung muss der Preis vor dem Nachlass die größere Basis bilden. Sollen nach 20 Prozent Rabatt noch 1.000 Euro netto bleiben, ist der Ausgangspreis 1.000 ÷ 0,80 = 1.250 Euro. Ein Aufschlag von 20 Prozent auf 1.000 ergäbe 1.200 Euro, nach Rabatt davon aber nur 960 Euro.",
+        "Prüfe im Angebot, ob Nachlässe bereits eingeplant sind und wann sie gelten. Dokumentiere Selbstkosten, Zuschlags- oder Margenziel, Nettoerlös nach Nachlässen und die vorgegebene Steuerberechnung. Der optionale Tabellencheck prüft Rechenschritte; er ist keine zusätzliche Abschlussbedingung und belegt keinen realen Gewinn.",
+        "Ab diesem vierten Theorieblock ist die Tabelle verfügbar. Ihre centgenauen Geldformeln sind B4 =RUNDEN(B1*B2/100;2), B5 =RUNDEN(SUMME(B1;B4);2), B7 =RUNDEN(B5*B3/100;2) und B8 =RUNDEN(SUMME(B5;B7);2). ROUND ist gleichwertig; die 2 gibt zwei Nachkommastellen vor. B6 bleibt =B4/B5*100 und nutzt die centgenauen Geldbeträge ohne zusätzliche Rundung des Verhältnisses. Die Basistabelle berechnet weiterhin keine Nachlässe."
+      ],
+      "example": {
+        "title": "Eigener Lernfall",
+        "text": "Die Rechenhilfe kann =5000*(1-10/100)*(1-2/100) auswerten. Das Ergebnis 4410 gehört zum eigenständigen Rabattfall und ersetzt nicht unbemerkt die 4700 aus der Basistabelle."
+      },
+      "misconception": {
+        "claim": "Zehn Prozent Rabatt und zwei Prozent Skonto entsprechen stets zwölf Prozent Nachlass.",
+        "correction": "Bei aufeinanderfolgenden Abzügen hat Skonto hier die kleinere, bereits rabattierte Basis; insgesamt sinkt 5.000 auf 4.410 Euro."
+      },
+      "takeaway": "Benenne Basis und Reihenfolge der Nachlässe, bevor du rechnest."
+    }
+  ],
+  "questionFile": "questions/common-pm-pricing.v1.csv",
+  "quiz": {
+    "questionIds": [
+      "LJ-PM-PRICING-Q01",
+      "LJ-PM-PRICING-Q02",
+      "LJ-PM-PRICING-Q03",
+      "LJ-PM-PRICING-Q04",
+      "LJ-PM-PRICING-Q05",
+      "LJ-PM-PRICING-Q06"
+    ]
+  },
+  "exam": {
+    "questionIds": [
+      "LJ-PM-PRICING-E01",
+      "LJ-PM-PRICING-E02",
+      "LJ-PM-PRICING-E03",
+      "LJ-PM-PRICING-E04",
+      "LJ-PM-PRICING-E05",
+      "LJ-PM-PRICING-E06",
+      "LJ-PM-PRICING-E07",
+      "LJ-PM-PRICING-E08"
+    ],
+    "passPercent": 80,
+    "scoring": "all-or-nothing-per-question",
+    "timed": false
+  },
+  "questionLinks": [
+    {
+      "questionId": "LJ-PM-PRICING-Q01",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-pm-pricing-markup"
+      ],
+      "blockIds": [
+        "common-pm-pricing-markup"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-PRICING-Q02",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-pm-pricing-markup"
+      ],
+      "blockIds": [
+        "common-pm-pricing-markup"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-PRICING-Q03",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-pm-pricing-margin"
+      ],
+      "blockIds": [
+        "common-pm-pricing-margin"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-PRICING-Q04",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-pm-pricing-price"
+      ],
+      "blockIds": [
+        "common-pm-pricing-vat"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-PRICING-Q05",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-pm-pricing-price"
+      ],
+      "blockIds": [
+        "common-pm-pricing-discounts"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-PRICING-Q06",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-pm-pricing-margin",
+        "common-pm-pricing-price"
+      ],
+      "blockIds": [
+        "common-pm-pricing-vat",
+        "common-pm-pricing-margin"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-PRICING-E01",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-pm-pricing-markup"
+      ],
+      "blockIds": [
+        "common-pm-pricing-markup"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-PRICING-E02",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-pm-pricing-markup",
+        "common-pm-pricing-margin"
+      ],
+      "blockIds": [
+        "common-pm-pricing-margin"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-PRICING-E03",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-pm-pricing-markup",
+        "common-pm-pricing-margin"
+      ],
+      "blockIds": [
+        "common-pm-pricing-margin"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-PRICING-E04",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-pm-pricing-price"
+      ],
+      "blockIds": [
+        "common-pm-pricing-vat"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-PRICING-E05",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-pm-pricing-price"
+      ],
+      "blockIds": [
+        "common-pm-pricing-discounts"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-PRICING-E06",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-pm-pricing-price",
+        "common-pm-pricing-markup"
+      ],
+      "blockIds": [
+        "common-pm-pricing-discounts"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-PRICING-E07",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-pm-pricing-margin",
+        "common-pm-pricing-markup"
+      ],
+      "blockIds": [
+        "common-pm-pricing-margin"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-PRICING-E08",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-pm-pricing-price",
+        "common-pm-pricing-margin"
+      ],
+      "blockIds": [
+        "common-pm-pricing-discounts"
+      ]
+    }
+  ],
+  "interview": [
+    {
+      "id": "common-pm-pricing-talk-1",
+      "prompt": "Erkläre mit 3.760 Euro Selbstkosten und 25 Prozent Gewinnaufschlag die Werte 940 Euro, 4.700 Euro und 20 Prozent. Warum sind Aufschlag und Marge verschieden?",
+      "objectiveIds": [
+        "common-pm-pricing-markup",
+        "common-pm-pricing-margin"
+      ],
+      "blockIds": [
+        "common-pm-pricing-markup",
+        "common-pm-pricing-margin",
+        "common-pm-pricing-discounts"
+      ],
+      "keyPoints": [
+        "940 Euro Gewinn aus 25 Prozent auf Kosten.",
+        "4.700 Euro Nettoverkaufspreis aus Kosten plus Gewinn.",
+        "940/4.700 ergibt 20 Prozent Marge; anderer Nenner.",
+        "Für eigene Tabelleneingaben jede Geldzeile auf Cent runden; die Marge bleibt ein ungerundetes Verhältnis."
+      ],
+      "acceptableAlternatives": [
+        "Sinngleiche fachliche Begründungen und gleichwertige Rechenwege sind möglich."
+      ],
+      "misconceptions": [
+        "Beide Prozentsätze wegen gleichen Eurogewinns gleichsetzen."
+      ],
+      "sampleAnswer": "25 Prozent von 3.760 sind 940 Euro. Zusammen ergeben sie 4.700 Euro netto. Die 940 Euro sind 20 Prozent dieser 4.700 Euro. Aufschlag bezieht sich auf Kosten, Marge auf den Nettoerlös. In der Tabelle runde ich jede berechnete Geldzeile mit RUNDEN(...;2), bevor sie weiterverwendet wird. Die Marge bleibt ein Verhältnis ohne solche Zwischenrundung.",
+      "followUp": "Wie würdest du stattdessen einen Nettozielpreis für 25 Prozent Marge ermitteln?"
+    },
+    {
+      "id": "common-pm-pricing-talk-2",
+      "prompt": "Beschreibe den Weg von 4.700 Euro netto zu Brutto bei vorgegebenen 19 Prozent Umsatzsteuer und die Rückrechnung. Was darfst du daraus nicht als Gewinn melden?",
+      "objectiveIds": [
+        "common-pm-pricing-price"
+      ],
+      "blockIds": [
+        "common-pm-pricing-vat"
+      ],
+      "keyPoints": [
+        "893 Euro Umsatzsteuer, 5.593 Euro Brutto.",
+        "Rückrechnung Brutto/1,19.",
+        "Umsatzsteuer nicht zu 940 Euro Gewinn addieren."
+      ],
+      "acceptableAlternatives": [
+        "Sinngleiche fachliche Begründungen und gleichwertige Rechenwege sind möglich."
+      ],
+      "misconceptions": [
+        "Bruttoerlös mit Nettokosten zu einem Gewinn vergleichen."
+      ],
+      "sampleAnswer": "4.700 mal 0,19 sind 893 Euro, zusammen 5.593 Euro brutto. Zurück teile ich durch 1,19. Die Umsatzsteuer bleibt getrennt vom Modellgewinn, und die Rechnung ermittelt keine persönliche Steuerschuld.",
+      "followUp": "Welche falsche Bezugsgröße steckt im Abziehen von 19 Prozent vom Brutto?"
+    },
+    {
+      "id": "common-pm-pricing-talk-3",
+      "prompt": "Rechne den getrennten Nachlassfall: 5.000 Euro Nettoliste, 10 Prozent Rabatt, danach 2 Prozent Skonto auf den rabattierten Betrag, Selbstkosten 3.760 Euro. Nenne den Nettoerlös, das Ergebnis und die ungefähre Marge.",
+      "objectiveIds": [
+        "common-pm-pricing-markup",
+        "common-pm-pricing-margin",
+        "common-pm-pricing-price"
+      ],
+      "blockIds": [
+        "common-pm-pricing-discounts"
+      ],
+      "keyPoints": [
+        "4.500 Euro nach Rabatt, Skonto 90 Euro, Nettoerlös 4.410 Euro.",
+        "Ergebnis 650 Euro.",
+        "Marge 650/4.410 × 100 ≈ 14,74 Prozent."
+      ],
+      "acceptableAlternatives": [
+        "Sinngleiche fachliche Begründungen und gleichwertige Rechenwege sind möglich."
+      ],
+      "misconceptions": [
+        "Nachlässe auf verschiedene Basen addieren oder Kosten durch Rabatt unverändert mitmindern."
+      ],
+      "sampleAnswer": "Ich ziehe zuerst 500 Euro Rabatt ab. Zwei Prozent von 4.500 sind 90 Euro, also bleiben 4.410 Euro netto. Nach 3.760 Euro Kosten beträgt das Ergebnis 650 Euro und die Marge etwa 14,74 Prozent. Umsatzsteuer ist davon getrennt.",
+      "followUp": "Wie verändert ein Nachlass den Gewinn, wenn die Kosten unverändert bleiben?"
+    }
+  ],
+  "cards": [
+    {
+      "id": "common-pm-pricing-card-1",
+      "front": "Wie rechnest du den Gewinnaufschlag?",
+      "back": "Selbstkosten × Zuschlagssatz/100. Im Fall 3.760 × 25/100 = 940 Euro geplanter Gewinn.",
+      "objectiveIds": [
+        "common-pm-pricing-markup"
+      ],
+      "blockIds": [
+        "common-pm-pricing-markup"
+      ]
+    },
+    {
+      "id": "common-pm-pricing-card-2",
+      "front": "Welche Formel ergibt den Nettoverkaufspreis?",
+      "back": "Selbstkosten + geplanter Gewinn. B5 =B1+B4 ergibt 4.700 Euro, sofern keine Nachlässe angesetzt sind. Bei eigenen Eingaben verwendet die centgenaue Musterformel =RUNDEN(SUMME(B1;B4);2).",
+      "objectiveIds": [
+        "common-pm-pricing-markup"
+      ],
+      "blockIds": [
+        "common-pm-pricing-markup",
+        "common-pm-pricing-discounts"
+      ]
+    },
+    {
+      "id": "common-pm-pricing-card-3",
+      "front": "Welche Basis hat die Gewinnmarge im Modell?",
+      "back": "Der Nettoerlös: Gewinn/Nettoerlös × 100. 940/4.700 × 100 = 20 Prozent; der Aufschlag auf Kosten beträgt dagegen 25 Prozent.",
+      "objectiveIds": [
+        "common-pm-pricing-margin"
+      ],
+      "blockIds": [
+        "common-pm-pricing-margin"
+      ]
+    },
+    {
+      "id": "common-pm-pricing-card-4",
+      "front": "Wie trennst du Netto, Umsatzsteuer und Brutto?",
+      "back": "Bei vorgegebenen 19 Prozent: 4.700 Euro netto + 893 Euro Umsatzsteuer = 5.593 Euro brutto. Umsatzsteuer ist im Modell kein Gewinn. In der Tabelle werden berechnete Geldzeilen mit RUNDEN(...;2) vor der Weiterrechnung auf Cent gerundet.",
+      "objectiveIds": [
+        "common-pm-pricing-price"
+      ],
+      "blockIds": [
+        "common-pm-pricing-vat",
+        "common-pm-pricing-discounts"
+      ]
+    },
+    {
+      "id": "common-pm-pricing-card-5",
+      "front": "Wie werden 10 Prozent Rabatt und danach 2 Prozent Skonto gerechnet?",
+      "back": "Im Beispiel: 5.000 × 0,90 = 4.500 Euro; danach 4.500 × 0,98 = 4.410 Euro. Die Prozentsätze haben verschiedene Basen.",
+      "objectiveIds": [
+        "common-pm-pricing-price"
+      ],
+      "blockIds": [
+        "common-pm-pricing-discounts"
+      ]
+    },
+    {
+      "id": "common-pm-pricing-card-6",
+      "front": "Warum genügt ein geplanter Gewinnaufschlag nicht als Erfolgsnachweis?",
+      "back": "Tatsächlicher Nettoerlös nach Nachlässen minus tatsächliche Selbstkosten bestimmt das Ergebnis des Modells. Kostenänderungen und Nachlässe können den geplanten Gewinn verringern.",
+      "objectiveIds": [
+        "common-pm-pricing-markup",
+        "common-pm-pricing-margin",
+        "common-pm-pricing-price"
+      ],
+      "blockIds": [
+        "common-pm-pricing-discounts"
+      ]
+    }
+  ],
+  "review": {
+    "status": "reviewed",
+    "checkedAt": "2026-11-11"
+  }
+}

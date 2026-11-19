@@ -1,0 +1,531 @@
+{
+  "schemaVersion": 1,
+  "id": "common-wiso-social-security",
+  "version": "1.0.0",
+  "title": "Soziale Sicherung und Vorsorge",
+  "fieldId": "WISO",
+  "scope": "common",
+  "prerequisites": [
+    "common-wiso-employment"
+  ],
+  "sourceIds": [
+    "kmk-wiso-2021",
+    "sgb1-wiso",
+    "sgb5-solidarity",
+    "sgb5-contribution-base",
+    "sgb11-benefits",
+    "sgb7-accident",
+    "sgb3-unemployment",
+    "sgg-objection",
+    "vz-insurance-advice"
+  ],
+  "sources": [
+    {
+      "id": "kmk-wiso-2021",
+      "title": "KMK-Qualifikationsprofil Wirtschafts- und Sozialkunde vom 17.06.2021",
+      "url": "https://www.kmk.org/fileadmin/Dateien/veroeffentlichungen_beschluesse/2021/2021_06_17-Berufsschule-Unterricht-Wirtschafts-Sozialkunde.pdf",
+      "checkedAt": "2026-11-11",
+      "note": "Öffentliches KMK-Qualifikationsprofil: curricularer Bezug. Erklärungen, Fälle und Aufgaben eigenständig formuliert."
+    },
+    {
+      "id": "sgb1-wiso",
+      "title": "SGB I – soziale Rechte, Beratung und Leistungsträger",
+      "url": "https://www.gesetze-im-internet.de/sgb_1/BJNR030150975.html",
+      "checkedAt": "2026-11-11",
+      "note": "Insbesondere §§ 4, 14, 19, 21, 21a, 22 und 23: Leistungsbereiche, Beratung und zuständige Träger."
+    },
+    {
+      "id": "sgb5-solidarity",
+      "title": "SGB V § 1 – Solidarität und Eigenverantwortung",
+      "url": "https://www.gesetze-im-internet.de/sgb_5/__1.html",
+      "checkedAt": "2026-11-11",
+      "note": "Solidargemeinschaft und Aufgaben der gesetzlichen Krankenversicherung."
+    },
+    {
+      "id": "sgb5-contribution-base",
+      "title": "SGB V § 223 – Beitragspflicht und beitragspflichtige Einnahmen",
+      "url": "https://www.gesetze-im-internet.de/sgb_5/__223.html",
+      "checkedAt": "2026-11-11",
+      "note": "Einnahmenbezogene Beiträge bis zur Beitragsbemessungsgrenze; keine aktuellen Beträge übernommen."
+    },
+    {
+      "id": "sgb11-benefits",
+      "title": "SGB XI § 4 – Art und Umfang der Leistungen",
+      "url": "https://www.gesetze-im-internet.de/sgb_11/__4.html",
+      "checkedAt": "2026-11-11",
+      "note": "Pflegeleistungen nach gesetzlichen Voraussetzungen und begrenztem Umfang; keine Vollkostengarantie."
+    },
+    {
+      "id": "sgb7-accident",
+      "title": "SGB VII § 8 – Arbeitsunfall",
+      "url": "https://www.gesetze-im-internet.de/sgb_7/__8.html",
+      "checkedAt": "2026-11-11",
+      "note": "Unfall infolge versicherter Tätigkeit und versicherter Wege; Einzelfallprüfung erforderlich."
+    },
+    {
+      "id": "sgb3-unemployment",
+      "title": "SGB III § 137 – Anspruchsvoraussetzungen bei Arbeitslosigkeit",
+      "url": "https://www.gesetze-im-internet.de/sgb_3/__137.html",
+      "checkedAt": "2026-11-11",
+      "note": "Arbeitslosigkeit, Arbeitslosmeldung und Anwartschaft; keine Leistungsgarantie aus Beitragszahlung allein."
+    },
+    {
+      "id": "sgg-objection",
+      "title": "Sozialgerichtsgesetz § 84 – Widerspruch",
+      "url": "https://www.gesetze-im-internet.de/sgg/__84.html",
+      "checkedAt": "2026-11-11",
+      "note": "Regelfrist ein Monat bei Bekanntgabe im Inland, Formanforderungen und gesetzliche Sonderfälle."
+    },
+    {
+      "id": "vz-insurance-advice",
+      "title": "Verbraucherzentrale Berlin – Versicherungsberatung",
+      "url": "https://www.verbraucherzentrale-berlin.de/beratungsangebote/versicherungsberatung-15474",
+      "checkedAt": "2026-11-11",
+      "note": "Primärquelle des Beratungsanbieters über anbieterunabhängige Bedarfsberatung; Verfügbarkeit und Kosten vor Ort prüfen."
+    }
+  ],
+  "objectives": [
+    {
+      "id": "common-wiso-social-security-branches",
+      "text": "Lebensrisiken den Zweigen der gesetzlichen Sozialversicherung zuordnen."
+    },
+    {
+      "id": "common-wiso-social-security-principles",
+      "text": "Versicherungsprinzip, Solidarprinzip und Grenzen der Absicherung an einfachen Fällen erklären."
+    },
+    {
+      "id": "common-wiso-social-security-advice",
+      "text": "Für einen Leistungsstreit oder zusätzlichen Vorsorgebedarf eine geeignete Informations- oder Beratungsstelle auswählen."
+    }
+  ],
+  "caseStudy": {
+    "title": "Absicherung für verschiedene Lebenslagen",
+    "text": "Im erfundenen Team Knotenpunkt vergleichen Lea und Mira fünf Lebenslagen: Krankheit, Pflegebedarf, Arbeitsunfall, Alter und Arbeitslosigkeit. Sie sollen die passende gesetzliche Versicherung und Anlaufstelle bestimmen, ohne aus einem Stichwort schon einen Leistungsanspruch zu versprechen. Alle Fälle sind erfunden; der rechtliche Rahmen ist Deutschland, geprüft am 11.11.2026."
+  },
+  "blocks": [
+    {
+      "id": "common-wiso-social-security-branches",
+      "title": "1. Fünf Zweige, unterschiedliche Risiken",
+      "objectiveIds": [
+        "common-wiso-social-security-branches"
+      ],
+      "sourceIds": [
+        "sgb1-wiso",
+        "sgb7-accident",
+        "sgb11-benefits"
+      ],
+      "paragraphs": [
+        "Die fünf klassischen Zweige sind Kranken-, Pflege-, Renten-, Unfall- und Arbeitslosenversicherung. Sie sichern unterschiedliche Lebensrisiken nach gesetzlichen Voraussetzungen ab. Die Zuordnung eines Risikos erklärt den zuständigen Bereich, sie beweist noch keinen individuellen Leistungsanspruch.",
+        "Die gesetzliche Krankenversicherung betrifft insbesondere Vorbeugung, Behandlung von Krankheiten und unter Voraussetzungen Krankengeld. Ansprechpartner ist die Krankenkasse. Die soziale Pflegeversicherung betrifft längerfristigen Pflegebedarf und entsprechende Unterstützung. Ansprechpartner ist die Pflegekasse, die bei der Krankenkasse eingerichtet ist.",
+        "Die gesetzliche Rentenversicherung betrifft Alter sowie unter Voraussetzungen verminderte Erwerbsfähigkeit und Hinterbliebene. Für Fragen zu Versicherungsverlauf und Rentenansprüchen ist der zuständige Rentenversicherungsträger, häufig die Deutsche Rentenversicherung, passend. Rentenversicherung ist damit mehr als eine Alterszahlung.",
+        "Die gesetzliche Unfallversicherung betrifft Arbeitsunfälle, Berufskrankheiten und versicherte Wegeunfälle. Träger sind etwa Berufsgenossenschaften und Unfallkassen. Ein Arbeitsunfall setzt einen Zusammenhang mit einer versicherten Tätigkeit voraus. Ein privater Freizeitunfall wird nicht schon durch eine bestehende Beschäftigung zum Arbeitsunfall.",
+        "Die Arbeitslosenversicherung ist Teil der Arbeitsförderung. Leistungen wie Arbeitslosengeld sowie Beratung und Vermittlung gehören zur Agentur für Arbeit. Arbeitslosengeld ist von anderen, bedarfsabhängigen Sicherungsleistungen zu unterscheiden."
+      ],
+      "example": {
+        "title": "Zwei verschiedene gesundheitliche Risiken",
+        "text": "Für die Behandlung einer gewöhnlichen Erkrankung fragt Lea ihre Krankenkasse. Bei einem Unfall während einer versicherten betrieblichen Tätigkeit wird der zuständige Unfallversicherungsträger einbezogen. Die konkrete Anerkennung bleibt eine Prüfung des Einzelfalls."
+      },
+      "misconception": {
+        "claim": "Für alle Gesundheitsprobleme ist allein die Rentenversicherung zuständig.",
+        "correction": "Krankheit, Pflegebedarf und Arbeitsunfall gehören zu unterschiedlichen Leistungsbereichen; die konkrete Zuständigkeit ist zu klären."
+      },
+      "takeaway": "Ordne Risiko, Versicherungszweig und Träger gemeinsam zu."
+    },
+    {
+      "id": "common-wiso-social-security-principles",
+      "title": "2. Versicherungs- und Solidarprinzip",
+      "objectiveIds": [
+        "common-wiso-social-security-principles"
+      ],
+      "sourceIds": [
+        "sgb1-wiso",
+        "sgb5-solidarity",
+        "sgb5-contribution-base"
+      ],
+      "paragraphs": [
+        "Das Versicherungsprinzip verbindet Absicherung mit einem gesetzlich bestimmten Versicherungsverhältnis. Viele Versicherte und ihre Arbeitgeber finanzieren durch Beiträge einen gemeinsamen Schutz. Bei Eintritt eines versicherten Risikos werden Leistungen nach den jeweiligen gesetzlichen Voraussetzungen erbracht. Die Beiträge sind kein frei auszahlbares persönliches Sparkonto.",
+        "Das Solidarprinzip zeigt sich besonders in der gesetzlichen Krankenversicherung: Beiträge orientieren sich bei Beschäftigten am beitragspflichtigen Einkommen bis zu gesetzlichen Grenzen. Behandlung richtet sich nach dem gesetzlich gedeckten medizinischen Bedarf und nicht danach, wie viel eine einzelne Person bisher eingezahlt hat. Gesunde tragen damit die Versorgung Erkrankter mit.",
+        "Solidarität bedeutet nicht identische Leistungen in allen Zweigen. Geldleistungen können an früheres Einkommen und Versicherungszeiten anknüpfen. In der Rentenversicherung spielt der Versicherungsverlauf eine Rolle. Versicherungs- und Solidarprinzip ergänzen sich, anstatt alle Leistungsregeln durch denselben Betrag zu ersetzen.",
+        "Von Sozialversicherungsbeiträgen sind Steuern zu unterscheiden. Steuern finanzieren allgemeine öffentliche Aufgaben und auch staatliche Zuschüsse; Beiträge sind dem jeweiligen Sicherungsbereich zugeordnet. Das gesamte soziale Sicherungssystem umfasst zusätzlich steuerfinanzierte Leistungen."
+      ],
+      "example": {
+        "title": "Keine persönliche Beitragskasse",
+        "text": "Lea hat bisher wenig Behandlung gebraucht. Daraus entsteht kein Anspruch, ihre Krankenversicherungsbeiträge als ungenutztes Guthaben zurückzuholen. Die Beiträge tragen die gemeinschaftliche Absicherung."
+      },
+      "misconception": {
+        "claim": "Eine teure Behandlung ist nur bis zur Höhe der bisher gezahlten Beiträge gedeckt.",
+        "correction": "Für gesetzliche Krankenbehandlung sind gesetzlicher Leistungsumfang und medizinischer Bedarf maßgeblich, nicht ein persönliches Beitragsguthaben."
+      },
+      "takeaway": "Gemeinschaftliche Finanzierung und gesetzliche Leistungsbedingungen ersetzen ein persönliches Sparkonto."
+    },
+    {
+      "id": "common-wiso-social-security-limits",
+      "title": "3. Leistungen haben Voraussetzungen und Grenzen",
+      "objectiveIds": [
+        "common-wiso-social-security-principles",
+        "common-wiso-social-security-branches"
+      ],
+      "sourceIds": [
+        "sgb11-benefits",
+        "sgb3-unemployment",
+        "sgb7-accident"
+      ],
+      "paragraphs": [
+        "Bevor ein Anspruch beurteilt wird, sind Versicherung, versichertes Risiko, weitere Voraussetzungen und Leistungsumfang zu prüfen. Bei Arbeitslosengeld nennt § 137 SGB III unter anderem Arbeitslosigkeit, Arbeitslosmeldung bei der Agentur für Arbeit und erfüllte Anwartschaft. Eine frühere Beitragszahlung allein reicht nicht für eine Zusage.",
+        "Die Pflegeversicherung ist keine Vollkostenversicherung. Art und Umfang richten sich nach gesetzlichen Regeln, Pflegebedarf und Versorgungsform. Eigenanteile können verbleiben; bei stationärer Pflege betrifft das unter anderem Unterkunft und Verpflegung. Eine Leistungsbewilligung besagt daher nicht, dass jede Rechnung übernommen wird.",
+        "Die gesetzliche Unfallversicherung schützt im Zusammenhang mit versicherten Tätigkeiten und bestimmten Wegen. Ein privater Einkauf auf einem Umweg oder eine Freizeitaktivität muss gesondert eingeordnet werden. Entscheidend ist der rechtliche Zusammenhang, nicht der bloße Umstand, dass die Person beschäftigt ist.",
+        "Zusätzliche Vorsorge kann Lücken verringern, hat aber selbst Kosten, Ausschlüsse und Bedingungen. Zuerst werden vorhandener Schutz, finanzielle Tragfähigkeit und existenzielle Risiken geprüft. Ein bestimmter Vertrag ist nicht für alle Menschen passend; ein Leistungsversprechen ohne Kenntnis der Bedingungen ist keine belastbare Beratung."
+      ],
+      "example": {
+        "title": "Pflegekosten prüfen",
+        "text": "Eine bewilligte Pflegeleistung deckt im fiktiven Fall einen Teil der Kosten. Mira prüft verbleibende Eigenanteile und Beratungsangebote, statt aus der Bewilligung eine vollständige Kostenzusage abzuleiten."
+      },
+      "misconception": {
+        "claim": "Wer Beiträge bezahlt, erhält beim passenden Stichwort die gewünschte Leistung.",
+        "correction": "Die Leistung hängt von gesetzlichen Voraussetzungen und Umfang ab. Beitragszahlung ersetzt diese Prüfung nicht."
+      },
+      "takeaway": "Risiko zuordnen, Anspruchsvoraussetzungen prüfen und verbleibende Lücken benennen."
+    },
+    {
+      "id": "common-wiso-social-security-advice",
+      "title": "4. Information, Widerspruch und Vorsorgeberatung",
+      "objectiveIds": [
+        "common-wiso-social-security-advice"
+      ],
+      "sourceIds": [
+        "sgb1-wiso",
+        "sgg-objection",
+        "vz-insurance-advice"
+      ],
+      "paragraphs": [
+        "Nach § 14 SGB I beraten die zuständigen Leistungsträger über Rechte und Pflichten. Bei Krankenversicherungsleistungen ist die Krankenkasse die erste passende Stelle, bei Pflege die Pflegekasse, bei Rentenfragen der Rentenversicherungsträger und bei Arbeitslosengeld die Agentur für Arbeit. Für Arbeitsunfälle ist der zuständige Unfallversicherungsträger zuständig.",
+        "Bei einem ablehnenden Bescheid liest Lea Begründung und Rechtsbehelfsbelehrung, notiert die Bekanntgabe und sichert Unterlagen. Im sozialrechtlichen Widerspruchsverfahren gilt im Regelfall bei Bekanntgabe im Inland eine Monatsfrist (§ 84 SGG). Vorgeschriebene Form und Sonderfälle müssen geprüft werden; eine beiläufige Nachfrage ersetzt keinen fristgerechten Widerspruch.",
+        "Bleibt der Streit bestehen, kann nach dem vorgesehenen Vorverfahren der Sozialrechtsweg in Betracht kommen. Fachkundige sozialrechtliche Beratung hilft, Verfahren und Fristen zu klären. Ein Widerspruch garantiert keinen Erfolg; er ermöglicht die Überprüfung des Bescheids.",
+        "Für zusätzlichen privaten Versicherungsbedarf eignet sich eine anbieterunabhängige Verbraucherberatung, etwa eine Verbraucherzentrale. Bei einer Altersvorsorgefrage klärt Lea zunächst ihre gesetzlichen Ansprüche mit dem Rentenversicherungsträger und dann zusätzlichen Bedarf. Beratungsumfang, Kosten und Terminangebot werden vorab geprüft. Die gesetzliche Krankenkasse entscheidet nicht über die Qualität aller privaten Vorsorgeprodukte."
+      ],
+      "example": {
+        "title": "Eine Ablehnung bearbeiten",
+        "text": "Die Krankenkasse lehnt einen beantragten Leistungsanspruch schriftlich ab. Lea sammelt Bescheid und Nachweise, prüft die Rechtsbehelfsbelehrung und sucht rechtzeitig Unterstützung. Sie wartet nicht auf ein unverbindliches Rückrufversprechen, wenn dadurch die Frist verstreichen könnte."
+      },
+      "misconception": {
+        "claim": "Ein Beratungsgespräch verlängert die Widerspruchsfrist von selbst.",
+        "correction": "Die Frist bleibt gesondert zu beachten. Beratung und formgerechter Rechtsbehelf sind verschiedene Schritte."
+      },
+      "takeaway": "Wähle den zuständigen Träger, sichere Fristen und nutze für Zusatzvorsorge passende unabhängige Beratung."
+    }
+  ],
+  "questionFile": "questions/common-wiso-social-security.v1.csv",
+  "quiz": {
+    "questionIds": [
+      "LJ-WISO-SOCIAL-SECURITY-Q01",
+      "LJ-WISO-SOCIAL-SECURITY-Q02",
+      "LJ-WISO-SOCIAL-SECURITY-Q03",
+      "LJ-WISO-SOCIAL-SECURITY-Q04",
+      "LJ-WISO-SOCIAL-SECURITY-Q05",
+      "LJ-WISO-SOCIAL-SECURITY-Q06"
+    ]
+  },
+  "exam": {
+    "questionIds": [
+      "LJ-WISO-SOCIAL-SECURITY-E01",
+      "LJ-WISO-SOCIAL-SECURITY-E02",
+      "LJ-WISO-SOCIAL-SECURITY-E03",
+      "LJ-WISO-SOCIAL-SECURITY-E04",
+      "LJ-WISO-SOCIAL-SECURITY-E05",
+      "LJ-WISO-SOCIAL-SECURITY-E06",
+      "LJ-WISO-SOCIAL-SECURITY-E07",
+      "LJ-WISO-SOCIAL-SECURITY-E08"
+    ],
+    "passPercent": 80,
+    "scoring": "all-or-nothing-per-question",
+    "timed": false
+  },
+  "questionLinks": [
+    {
+      "questionId": "LJ-WISO-SOCIAL-SECURITY-Q01",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-wiso-social-security-branches"
+      ],
+      "blockIds": [
+        "common-wiso-social-security-branches"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-SOCIAL-SECURITY-Q02",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-wiso-social-security-branches"
+      ],
+      "blockIds": [
+        "common-wiso-social-security-branches"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-SOCIAL-SECURITY-Q03",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-wiso-social-security-principles"
+      ],
+      "blockIds": [
+        "common-wiso-social-security-principles"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-SOCIAL-SECURITY-Q04",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-wiso-social-security-principles"
+      ],
+      "blockIds": [
+        "common-wiso-social-security-limits"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-SOCIAL-SECURITY-Q05",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-wiso-social-security-advice"
+      ],
+      "blockIds": [
+        "common-wiso-social-security-advice"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-SOCIAL-SECURITY-Q06",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-wiso-social-security-advice"
+      ],
+      "blockIds": [
+        "common-wiso-social-security-advice"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-SOCIAL-SECURITY-E01",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-wiso-social-security-branches"
+      ],
+      "blockIds": [
+        "common-wiso-social-security-branches"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-SOCIAL-SECURITY-E02",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-wiso-social-security-branches"
+      ],
+      "blockIds": [
+        "common-wiso-social-security-branches",
+        "common-wiso-social-security-limits"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-SOCIAL-SECURITY-E03",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-wiso-social-security-branches"
+      ],
+      "blockIds": [
+        "common-wiso-social-security-branches"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-SOCIAL-SECURITY-E04",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-wiso-social-security-principles"
+      ],
+      "blockIds": [
+        "common-wiso-social-security-principles"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-SOCIAL-SECURITY-E05",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-wiso-social-security-principles"
+      ],
+      "blockIds": [
+        "common-wiso-social-security-limits"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-SOCIAL-SECURITY-E06",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-wiso-social-security-principles"
+      ],
+      "blockIds": [
+        "common-wiso-social-security-branches",
+        "common-wiso-social-security-limits"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-SOCIAL-SECURITY-E07",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-wiso-social-security-advice"
+      ],
+      "blockIds": [
+        "common-wiso-social-security-advice"
+      ]
+    },
+    {
+      "questionId": "LJ-WISO-SOCIAL-SECURITY-E08",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-wiso-social-security-advice"
+      ],
+      "blockIds": [
+        "common-wiso-social-security-advice"
+      ]
+    }
+  ],
+  "interview": [
+    {
+      "id": "common-wiso-social-security-talk-1",
+      "prompt": "Ordne Krankheit, Pflegebedarf, Alter, Arbeitsunfall und Arbeitslosigkeit jeweils Versicherungszweig und Anlaufstelle zu.",
+      "objectiveIds": [
+        "common-wiso-social-security-branches"
+      ],
+      "blockIds": [
+        "common-wiso-social-security-branches"
+      ],
+      "keyPoints": [
+        "Krankenkasse und Pflegekasse unterscheiden.",
+        "Rentenversicherung für Alter; Unfallversicherungsträger für Arbeitsunfall.",
+        "Agentur für Arbeit für Arbeitslosigkeit und Arbeitsvermittlung."
+      ],
+      "acceptableAlternatives": [
+        "Berufsgenossenschaft oder Unfallkasse als Beispiel zulässig, konkrete Zuständigkeit hängt vom Fall ab."
+      ],
+      "misconceptions": [
+        "Aus der Zuordnung schon einen bewilligten Anspruch ableiten."
+      ],
+      "sampleAnswer": "Krankheit gehört zur Krankenversicherung und Krankenkasse, Pflege zur Pflegeversicherung und Pflegekasse. Alter betrifft die Rentenversicherung. Arbeitsunfälle prüft der Unfallversicherungsträger; bei Arbeitslosigkeit berät die Agentur für Arbeit.",
+      "followUp": "Welche weiteren Voraussetzungen könnten vor einer Leistungsbewilligung zu prüfen sein?"
+    },
+    {
+      "id": "common-wiso-social-security-talk-2",
+      "prompt": "Warum ist die gesetzliche Krankenversicherung kein persönliches Sparkonto? Erkläre Versicherung, Solidarität und eine Grenze der Absicherung.",
+      "objectiveIds": [
+        "common-wiso-social-security-principles"
+      ],
+      "blockIds": [
+        "common-wiso-social-security-principles",
+        "common-wiso-social-security-limits"
+      ],
+      "keyPoints": [
+        "Versicherungsverhältnis und gesetzliche Voraussetzungen nennen.",
+        "Gemeinsame Finanzierung, Einkommen und medizinischen Bedarf unterscheiden.",
+        "Leistungsgrenzen und verbleibende Eigenanteile am Pflegebeispiel erläutern."
+      ],
+      "acceptableAlternatives": [
+        "Andere erklärte Grenzen wie Voraussetzungen des Arbeitslosengelds sind passend."
+      ],
+      "misconceptions": [
+        "Gleiche Geldleistung in allen Zweigen oder unbegrenzte Kostendeckung behaupten."
+      ],
+      "sampleAnswer": "Beiträge sichern gemeinsam Risiken ab. Krankenbehandlung richtet sich nach gesetzlichem Umfang und Bedarf, nicht nach einem Beitragsguthaben. Trotzdem gibt es Grenzen: Pflegeleistungen decken nicht automatisch alle Kosten.",
+      "followUp": "Wieso sind frühere Beiträge allein kein ausreichender Nachweis eines Anspruchs auf Arbeitslosengeld?"
+    },
+    {
+      "id": "common-wiso-social-security-talk-3",
+      "prompt": "Lea erhält einen ablehnenden Kassenbescheid und überlegt zugleich private Zusatzvorsorge. Wie trennt sie Leistungsstreit und Bedarfsberatung?",
+      "objectiveIds": [
+        "common-wiso-social-security-advice"
+      ],
+      "blockIds": [
+        "common-wiso-social-security-advice"
+      ],
+      "keyPoints": [
+        "Bescheid, Begründung, Bekanntgabe und Rechtsbehelfsbelehrung prüfen.",
+        "Form und Regelfrist des Widerspruchs sichern, fachkundige Hilfe nutzen.",
+        "Für privaten Zusatzbedarf anbieterunabhängige Beratung auswählen."
+      ],
+      "acceptableAlternatives": [
+        "Sozialrechtsweg nach vorgesehenem Vorverfahren als Möglichkeit nennen."
+      ],
+      "misconceptions": [
+        "Beratungsgespräch als automatische Fristverlängerung behandeln."
+      ],
+      "sampleAnswer": "Für den Bescheid sichert Lea Unterlagen und Widerspruchsfrist und holt Hilfe zum Sozialrecht. Die Monatsfrist im Regelfall wartet nicht auf ein Beratungsgespräch. Privaten Zusatzbedarf prüft sie gesondert, etwa mit der Verbraucherzentrale.",
+      "followUp": "Welche Unterlagen würdest du zur jeweiligen Beratung mitnehmen?"
+    }
+  ],
+  "cards": [
+    {
+      "id": "common-wiso-social-security-card-1",
+      "front": "Welche fünf Zweige gehören zur gesetzlichen Sozialversicherung?",
+      "back": "Kranken-, Pflege-, Renten-, Unfall- und Arbeitslosenversicherung. Das Risiko weist auf einen Bereich hin, ersetzt aber keine Prüfung des Leistungsanspruchs.",
+      "objectiveIds": [
+        "common-wiso-social-security-branches"
+      ],
+      "blockIds": [
+        "common-wiso-social-security-branches"
+      ]
+    },
+    {
+      "id": "common-wiso-social-security-card-2",
+      "front": "Welche Stellen helfen bei den fünf Risiken?",
+      "back": "Krankenkasse bei Krankheit, Pflegekasse bei Pflegebedarf, Rentenversicherungsträger bei Rentenfragen, Unfallversicherungsträger bei Arbeitsunfällen und Agentur für Arbeit bei Arbeitslosengeld.",
+      "objectiveIds": [
+        "common-wiso-social-security-branches"
+      ],
+      "blockIds": [
+        "common-wiso-social-security-branches"
+      ]
+    },
+    {
+      "id": "common-wiso-social-security-card-3",
+      "front": "Wie unterscheiden sich Versicherungsprinzip und persönliches Sparen?",
+      "back": "Ein Versicherungsverhältnis bietet gemeinschaftlichen Schutz nach gesetzlichen Bedingungen. Beiträge sind kein frei auszahlbares persönliches Guthaben.",
+      "objectiveIds": [
+        "common-wiso-social-security-principles"
+      ],
+      "blockIds": [
+        "common-wiso-social-security-principles"
+      ]
+    },
+    {
+      "id": "common-wiso-social-security-card-4",
+      "front": "Warum ist die Pflegeversicherung keine Vollkostenversicherung?",
+      "back": "Leistungen richten sich nach gesetzlichen Voraussetzungen und Umfang. Eigenanteile können verbleiben, etwa für Unterkunft und Verpflegung bei stationärer Pflege.",
+      "objectiveIds": [
+        "common-wiso-social-security-principles"
+      ],
+      "blockIds": [
+        "common-wiso-social-security-limits"
+      ]
+    },
+    {
+      "id": "common-wiso-social-security-card-5",
+      "front": "Was ist bei einem ablehnenden Sozialleistungsbescheid wichtig?",
+      "back": "Begründung und Rechtsbehelfsbelehrung lesen, Bekanntgabe dokumentieren, Form und Frist sichern. Für Widerspruch gilt bei Bekanntgabe im Inland im Regelfall ein Monat. Beratung ersetzt den Rechtsbehelf nicht.",
+      "objectiveIds": [
+        "common-wiso-social-security-advice"
+      ],
+      "blockIds": [
+        "common-wiso-social-security-advice"
+      ]
+    },
+    {
+      "id": "common-wiso-social-security-card-6",
+      "front": "Wo lässt sich zusätzlicher privater Vorsorgebedarf prüfen?",
+      "back": "Zunächst bestehende gesetzliche Ansprüche beim zuständigen Träger klären. Zusatzbedarf anbieterunabhängig prüfen lassen, etwa bei einer Verbraucherzentrale; Umfang und Kosten vorher erfragen.",
+      "objectiveIds": [
+        "common-wiso-social-security-advice"
+      ],
+      "blockIds": [
+        "common-wiso-social-security-advice"
+      ]
+    }
+  ],
+  "review": {
+    "status": "reviewed",
+    "checkedAt": "2026-11-11"
+  }
+}

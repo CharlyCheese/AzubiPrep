@@ -1,0 +1,484 @@
+{
+  "schemaVersion": 1,
+  "id": "common-pm-feasibility",
+  "version": "1.0.0",
+  "title": "Wirtschaftlichkeit und Gewinnschwelle",
+  "fieldId": "PM",
+  "scope": "common",
+  "prerequisites": [
+    "common-pm-pricing"
+  ],
+  "sourceIds": [
+    "pm-stmelf-break-even",
+    "pm-lfu-payback"
+  ],
+  "sources": [
+    {
+      "id": "pm-stmelf-break-even",
+      "title": "Bayerisches Staatsministerium: Die Gewinnschwelle kennen",
+      "url": "https://www.stmelf.bayern.de/kohw/dienstleistungen/unternehmen-rentabel",
+      "checkedAt": "2026-11-11",
+      "note": "Seite vom 25.09.2026: fixe/variable Kosten, Deckungsbeitrag und Fixkosten geteilt durch Stückdeckungsbeitrag. Eigene exakte Lernzahlen; nichtganzzahlige Schwellen werden nachvollziehbar auf ganze verkaufbare Einheiten aufgerundet."
+    },
+    {
+      "id": "pm-lfu-payback",
+      "title": "Bayerisches Landesamt für Umwelt: Wirtschaftlichkeit von Energieeffizienz-Maßnahmen",
+      "url": "https://www.umweltpakt.bayern.de/energie_klima/fachwissen/363/wirtschaftlichkeit-energieeffizienz-massnahmen",
+      "checkedAt": "2026-11-11",
+      "note": "Einfache Amortisation als Investition im Verhältnis zu gleichmäßigen jährlichen Rückflüssen und begrenzte Aussagekraft geprüft. Eigener IT-Lernfall ohne Zinsen, Restwert oder Zahlungsprognose; Kapitalrückfluss nicht mit Gewinn gleichgesetzt."
+    }
+  ],
+  "objectives": [
+    {
+      "id": "common-pm-feasibility-contribution",
+      "text": "Deckungsbeitrag von Gewinn unterscheiden und ein vereinfachtes Ergebnis berechnen."
+    },
+    {
+      "id": "common-pm-feasibility-break-even",
+      "text": "Eine Gewinnschwelle aus Fixkosten, Preis und variablen Stückkosten bestimmen."
+    },
+    {
+      "id": "common-pm-feasibility-payback",
+      "text": "Eine einfache Amortisationszeit berechnen und die Grenzen des Modells erklären."
+    }
+  ],
+  "caseStudy": {
+    "title": "Nordlicht IT plant und prüft",
+    "text": "Nordlicht IT prüft zwei getrennte Lernrechnungen. Für ein standardisiertes Servicepaket gelten pro betrachteter Periode 12.000 Euro Fixkosten, 150 Euro Nettoerlös und 90 Euro variable Kosten je verkauftem Stück sowie 250 verkaufte Stück. Daneben wird eine Investition von 6.000 Euro mit gleichmäßigen jährlichen Nettorückflüssen von 3.000 Euro betrachtet. Die Zahlen sind erfunden; der Rückfluss ist kein aus dem Serviceergebnis abgeleiteter Gewinn."
+  },
+  "blocks": [
+    {
+      "id": "common-pm-feasibility-contribution",
+      "title": "1. Deckungsbeitrag und Periodenergebnis berechnen",
+      "objectiveIds": [
+        "common-pm-feasibility-contribution"
+      ],
+      "sourceIds": [
+        "pm-stmelf-break-even"
+      ],
+      "paragraphs": [
+        "Fixkosten bleiben im betrachteten Zeitraum und Mengenbereich unabhängig von der verkauften Menge, zum Beispiel eine feste Grundmiete. Variable Kosten ändern sich mit der Menge. Im einfachen Modell bleiben die variablen Stückkosten konstant; ihre Gesamtsumme ist Stückkosten × Menge. Außerhalb des betrachteten Bereichs können zusätzliche Kapazitäten neue Fixkosten auslösen.",
+        "Direkt oder indirekt zurechenbar und fix oder variabel sind verschiedene Einteilungen. Direkt/indirekt fragt nach der Zuordnung zum Auftrag. Fix/variabel fragt nach der Veränderung bei anderer Menge. Aus dem Wort Personalkosten allein folgt keine eindeutige Zuordnung in beide Systeme.",
+        "Stückdeckungsbeitrag = Netto-Stückpreis − variable Stückkosten. Von 150 Euro Nettoerlös bleiben nach 90 Euro variablen Kosten 60 Euro je Stück zur Deckung der Fixkosten. Dieser Betrag ist noch nicht der Stückgewinn, denn die Fixkosten sind noch nicht berücksichtigt.",
+        "Bei 250 verkauften Stück ergibt sich ein Gesamtdeckungsbeitrag von 250 × 60 = 15.000 Euro. Nach 12.000 Euro Fixkosten bleibt das Periodenergebnis 3.000 Euro. Gleichwertige Kontrolle: Umsatz 37.500 Euro minus variable Gesamtkosten 22.500 Euro minus Fixkosten 12.000 Euro ergibt ebenfalls 3.000 Euro.",
+        "Das Modell betrachtet eine einzige Leistung mit gleichbleibendem Netto-Stückpreis und variablen Stückkosten. Produzierte und verkaufte Menge werden gleichgesetzt, Lageränderungen und weitere Ergebnispositionen bleiben ausgeklammert. Ein positives rechnerisches Ergebnis sagt noch nicht, wann Kunden bezahlen."
+      ],
+      "example": {
+        "title": "Eigener Lernfall",
+        "text": "Bei 100 verkauften Stück entstehen 6.000 Euro Deckungsbeitrag. Das Periodenergebnis ist trotzdem −6.000 Euro, weil 12.000 Euro Fixkosten abzuziehen sind."
+      },
+      "misconception": {
+        "claim": "Ein positiver Deckungsbeitrag bedeutet bereits Gewinn.",
+        "correction": "Er trägt zunächst zur Fixkostendeckung bei. Erst nach Abzug der Fixkosten erhältst du das Periodenergebnis."
+      },
+      "takeaway": "Deckungsbeitrag deckt Fixkosten; der verbleibende Rest ist das Modellergebnis."
+    },
+    {
+      "id": "common-pm-feasibility-break-even",
+      "title": "2. Die Gewinnschwelle richtig interpretieren",
+      "objectiveIds": [
+        "common-pm-feasibility-break-even",
+        "common-pm-feasibility-contribution"
+      ],
+      "sourceIds": [
+        "pm-stmelf-break-even"
+      ],
+      "paragraphs": [
+        "An der Gewinnschwelle sind Gesamterlös und Gesamtkosten gleich groß; das Ergebnis ist null. Bei positivem Stückdeckungsbeitrag gilt: Gewinnschwellenmenge = Fixkosten ÷ Stückdeckungsbeitrag. Mit 12.000 ÷ 60 entstehen 200 Stück. 200 × 60 deckt die 12.000 Euro Fixkosten genau.",
+        "Bei ganzen verkaufbaren Einheiten ist 200 hier die kleinste Menge ohne Verlust. Für einen positiven Gewinn ist bei unveränderten Annahmen mindestens ein weiteres Stück erforderlich: 201 Stück ergeben 60 Euro Gewinn. Unterhalb der Schwelle entsteht Verlust, obwohl jedes Stück einen positiven Deckungsbeitrag hat.",
+        "Bei 12.010 Euro Fixkosten und weiterhin 60 Euro Stückdeckungsbeitrag liegt die rechnerische Schwelle bei 200,1666… Stück. Für tatsächlich ganze Stück muss auf 201 aufgerundet werden: 200 Stück ergeben −10 Euro, 201 Stück +50 Euro. Kaufmännisches Abrunden auf 200 würde die Fixkosten nicht decken.",
+        "Bei positiven Fixkosten und Stückdeckungsbeitrag null gibt es keine endliche Menge, die diese Fixkosten deckt. Bei negativem Stückdeckungsbeitrag vergrößert jedes weitere Stück sogar den Verlust. Die Division darf dann nicht als wirtschaftlich nutzbare Gewinnschwelle interpretiert werden.",
+        "Prüfe neben der Rechnung, ob genügend Nachfrage und Kapazität für die Schwellenmenge bestehen. Ein rechnerischer Wert beweist keine Verkäufe. Ändern sich Preis, variable Stückkosten oder Fixkosten, muss die Schwelle neu berechnet werden."
+      ],
+      "example": {
+        "title": "Eigener Lernfall",
+        "text": "Sinkt bei 12.000 Euro Fixkosten und 90 Euro variablen Stückkosten der Netto-Stückpreis auf 130 Euro, bleiben 40 Euro Stückdeckungsbeitrag. Die Gewinnschwelle steigt auf 300 Stück."
+      },
+      "misconception": {
+        "claim": "Eine Gewinnschwelle von 200 Stück bedeutet 200 Euro Gewinn.",
+        "correction": "200 ist hier eine Menge. Bei genau 200 Stück ist das Ergebnis null."
+      },
+      "takeaway": "Erst Formel, Einheit und Modellgrenzen zusammen erklären die Gewinnschwelle."
+    },
+    {
+      "id": "common-pm-feasibility-payback",
+      "title": "3. Einfache Amortisation als Rückflussdauer verstehen",
+      "objectiveIds": [
+        "common-pm-feasibility-payback"
+      ],
+      "sourceIds": [
+        "pm-lfu-payback"
+      ],
+      "paragraphs": [
+        "Die einfache Amortisationsrechnung fragt, nach welcher Zeit die anfängliche Investitionsauszahlung durch Nettorückflüsse ausgeglichen wird. Ein Nettorückfluss ist hier ein zahlungswirksamer Überschuss nach den zugehörigen laufenden Auszahlungen. Er ist nicht mit Umsatz, Stückdeckungsbeitrag oder buchhalterischem Gewinn gleichzusetzen.",
+        "Bei gleichmäßigen positiven jährlichen Nettorückflüssen gilt im vorgegebenen Modell: Amortisationszeit = Investitionsauszahlung ÷ jährlicher Nettorückfluss. 6.000 Euro ÷ 3.000 Euro pro Jahr = 2 Jahre. Euro geteilt durch Euro je Jahr ergibt Jahre. Die Rückflüsse werden als gleichmäßig über die Zeit anfallend angenommen.",
+        "Die 6.000 Euro Investition und 3.000 Euro jährlicher Rückfluss sind gesonderte Eingaben. Dass das Servicebeispiel zufällig ebenfalls 3.000 Euro Periodenergebnis ergibt, macht dieses Ergebnis nicht zum Zahlungsrückfluss der Investition. Beide Rechnungen beantworten verschiedene Fragen.",
+        "Die Rechnung enthält keine Zinsen, Abzinsung, Restwerte oder schwankenden Rückflüsse. Sie beurteilt nicht die gesamte Lebensdauer: Zwei Investitionen mit gleicher Rückflussdauer können danach ganz unterschiedliche Überschüsse erwirtschaften. Die Nutzungsdauer und Unsicherheit der Rückflüsse sind deshalb zusätzlich zu prüfen.",
+        "Bei einem Rückfluss von null lässt sich keine endliche Amortisationsdauer berechnen; bei dauerhaft negativem Rückfluss wird die positive Anfangsauszahlung in diesem Modell nicht aufgeholt. Auch ein berechneter Wert von zwei Jahren ist keine Zusage, dass die erwarteten Zahlungen eintreten. Bei ungleichmäßigen Jahresrückflüssen muss der zeitliche Verlauf betrachtet werden, statt die einfache Formel ungeprüft zu verwenden."
+      ],
+      "example": {
+        "title": "Eigener Lernfall",
+        "text": "Wären bei unveränderter Investition 2.000 Euro jährlicher Nettorückfluss vorgegeben, betrüge die einfache Amortisationszeit 3 Jahre. Diese Annahmen müssen über den nötigen Zeitraum tragfähig sein."
+      },
+      "misconception": {
+        "claim": "Zwei Jahre Amortisationszeit beweisen den größten Gewinn über die gesamte Nutzungsdauer.",
+        "correction": "Die Kennzahl beschreibt den Rückfluss der Anfangsauszahlung im Modell und bewertet spätere Überschüsse nicht."
+      },
+      "takeaway": "Amortisation ist eine Zeitangabe zum Kapitalrückfluss, kein Gewinnversprechen."
+    },
+    {
+      "id": "common-pm-feasibility-table",
+      "title": "4. Wirtschaftlichkeit in der Rechenhilfe prüfen",
+      "objectiveIds": [
+        "common-pm-feasibility-contribution",
+        "common-pm-feasibility-break-even",
+        "common-pm-feasibility-payback"
+      ],
+      "sourceIds": [
+        "pm-stmelf-break-even",
+        "pm-lfu-payback"
+      ],
+      "paragraphs": [
+        "Ab diesem vierten Theorieblock ist die eingebaute Tabelle verfügbar. Ihre Eingaben sind B1 Fixkosten 12000, B2 Netto-Stückpreis 150, B3 variable Stückkosten 90, B4 verkaufte Menge 250, B5 Investition 6000 und B6 jährlicher Nettorückfluss 3000. Die beiden Rechenmodelle bleiben fachlich getrennt, obwohl sie in einer Tabelle stehen.",
+        "B7 =B2-B3 ergibt 60 Euro Stückdeckungsbeitrag. B8 =B1/B7 ergibt die exakte rechnerische Gewinnschwelle 200 Stück. B9 =B4*B7-B1 ergibt 3.000 Euro Periodenergebnis. B10 =B5/B6 ergibt 2 Jahre einfache Amortisation. Gleichwertige Ergebniszahlen 60, 200, 3000 und 2 sind möglich; bei geänderten Eingaben musst du feste Ergebniszahlen selbst aktualisieren.",
+        "Formeln beginnen mit =. Stern und Schrägstrich bedeuten Multiplikation und Division, Klammern steuern die Reihenfolge. Dezimalzahlen können Komma oder Punkt verwenden; schreibe keine Tausendertrennzeichen oder Einheiten ins Feld. Bei eigenen Eingaben gelten die Musterformeln B7 =RUNDEN(B2-B3;2) und B9 =RUNDEN(B4*B7-B1;2): Jede berechnete Geldposition wird vor der Weiterrechnung auf Cent gerundet, ROUND ist gleichwertig. B8 =B1/B7 und B10 =B5/B6 bleiben dagegen genaue Verhältnisse. Die Anzeige der rechnerischen Gewinnschwelle ist eine gerundete Näherung. Nach Rechnung prüfen wird zusätzlich die kleinste ganze Menge ohne Verlust genannt; dafür wird der intern ungerundete Quotient bei Bedarf zur nächsten ganzen Zahl aufgerundet.",
+        "Prüfe einen Fehler von den Eingaben her: Stimmt die Periode der Fixkosten zur Menge? Sind Preis und variable Kosten beide netto je Stück? Hat der Rückfluss wirklich die Einheit Euro pro Jahr? Ist B7 positiv? Für =B1/B7 ist B7 = 0 ein Divisionsfehler; B7 < 0 ergibt keine nutzbare Schwelle zur Deckung positiver Fixkosten. Für B10 muss B6 positiv sein. Bei der Tabellenprüfung muss auch der auf Cent gerundete Stückdeckungsbeitrag positiv sein, damit eine endliche Schwelle berechnet werden kann.",
+        "Eine Formel mit Bezug auf die eigene Ergebniszelle verursacht einen Kreisbezug. Fehlende Eingaben sind nicht automatisch null. Die Prüfung zeigt Rechen- und Modellfehler, aber keine gesicherte Marktprognose. Du kannst auch fehlerhafte Entwürfe speichern; die Tabelle ist eine freiwillige Lernhilfe und keine zusätzliche Pflichtphase vor dem Mini-Test."
+      ],
+      "example": {
+        "title": "Eigener Lernfall",
+        "text": "Ändere B2 auf 130. Der Stückdeckungsbeitrag fällt auf 40 Euro, die Schwelle steigt auf 300 Stück und bei 250 Stück entsteht ein Ergebnis von −2.000 Euro. Die separat vorgegebenen Amortisationswerte bleiben dadurch unverändert."
+      },
+      "misconception": {
+        "claim": "Alle Ergebnisse der Tabelle müssen sich ändern, sobald irgendeine Eingabe verändert wird.",
+        "correction": "Eine Formel hängt von ihren verwendeten Eingaben ab. Der Stückpreis beeinflusst hier nicht den separat vorgegebenen Investitionsrückfluss."
+      },
+      "takeaway": "Verknüpfe jede Ergebniszeile mit ihrer eigenen fachlichen Grundlage."
+    }
+  ],
+  "questionFile": "questions/common-pm-feasibility.v1.csv",
+  "quiz": {
+    "questionIds": [
+      "LJ-PM-FEASIBILITY-Q01",
+      "LJ-PM-FEASIBILITY-Q02",
+      "LJ-PM-FEASIBILITY-Q03",
+      "LJ-PM-FEASIBILITY-Q04",
+      "LJ-PM-FEASIBILITY-Q05",
+      "LJ-PM-FEASIBILITY-Q06"
+    ]
+  },
+  "exam": {
+    "questionIds": [
+      "LJ-PM-FEASIBILITY-E01",
+      "LJ-PM-FEASIBILITY-E02",
+      "LJ-PM-FEASIBILITY-E03",
+      "LJ-PM-FEASIBILITY-E04",
+      "LJ-PM-FEASIBILITY-E05",
+      "LJ-PM-FEASIBILITY-E06",
+      "LJ-PM-FEASIBILITY-E07",
+      "LJ-PM-FEASIBILITY-E08"
+    ],
+    "passPercent": 80,
+    "scoring": "all-or-nothing-per-question",
+    "timed": false
+  },
+  "questionLinks": [
+    {
+      "questionId": "LJ-PM-FEASIBILITY-Q01",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-pm-feasibility-contribution"
+      ],
+      "blockIds": [
+        "common-pm-feasibility-contribution"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-FEASIBILITY-Q02",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-pm-feasibility-contribution"
+      ],
+      "blockIds": [
+        "common-pm-feasibility-contribution"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-FEASIBILITY-Q03",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-pm-feasibility-break-even"
+      ],
+      "blockIds": [
+        "common-pm-feasibility-break-even"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-FEASIBILITY-Q04",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-pm-feasibility-break-even"
+      ],
+      "blockIds": [
+        "common-pm-feasibility-break-even"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-FEASIBILITY-Q05",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-pm-feasibility-payback"
+      ],
+      "blockIds": [
+        "common-pm-feasibility-payback"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-FEASIBILITY-Q06",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-pm-feasibility-payback"
+      ],
+      "blockIds": [
+        "common-pm-feasibility-payback"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-FEASIBILITY-E01",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-pm-feasibility-contribution"
+      ],
+      "blockIds": [
+        "common-pm-feasibility-contribution"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-FEASIBILITY-E02",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-pm-feasibility-break-even",
+        "common-pm-feasibility-contribution"
+      ],
+      "blockIds": [
+        "common-pm-feasibility-break-even",
+        "common-pm-feasibility-table"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-FEASIBILITY-E03",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-pm-feasibility-break-even"
+      ],
+      "blockIds": [
+        "common-pm-feasibility-break-even"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-FEASIBILITY-E04",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-pm-feasibility-break-even",
+        "common-pm-feasibility-contribution"
+      ],
+      "blockIds": [
+        "common-pm-feasibility-break-even"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-FEASIBILITY-E05",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-pm-feasibility-payback"
+      ],
+      "blockIds": [
+        "common-pm-feasibility-payback"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-FEASIBILITY-E06",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-pm-feasibility-payback",
+        "common-pm-feasibility-contribution"
+      ],
+      "blockIds": [
+        "common-pm-feasibility-payback",
+        "common-pm-feasibility-table"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-FEASIBILITY-E07",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-pm-feasibility-contribution",
+        "common-pm-feasibility-break-even"
+      ],
+      "blockIds": [
+        "common-pm-feasibility-contribution",
+        "common-pm-feasibility-table"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-FEASIBILITY-E08",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-pm-feasibility-payback"
+      ],
+      "blockIds": [
+        "common-pm-feasibility-payback",
+        "common-pm-feasibility-table"
+      ]
+    }
+  ],
+  "interview": [
+    {
+      "id": "common-pm-feasibility-talk-1",
+      "prompt": "Rechne für 250 verkaufte Stück mit 150 Euro Netto-Stückpreis, 90 Euro variablen Stückkosten und 12.000 Euro Fixkosten den Deckungsbeitrag und das Ergebnis.",
+      "objectiveIds": [
+        "common-pm-feasibility-contribution"
+      ],
+      "blockIds": [
+        "common-pm-feasibility-contribution"
+      ],
+      "keyPoints": [
+        "Stückdeckungsbeitrag 60 Euro.",
+        "Gesamtdeckungsbeitrag 15.000 Euro.",
+        "Periodenergebnis 3.000 Euro nach Fixkosten."
+      ],
+      "acceptableAlternatives": [
+        "Sinngleiche fachliche Begründungen und gleichwertige Rechenwege sind möglich."
+      ],
+      "misconceptions": [
+        "Stückdeckungsbeitrag oder Gesamtdeckungsbeitrag als fertigen Gewinn bezeichnen."
+      ],
+      "sampleAnswer": "150 minus 90 ergibt 60 Euro je Stück. 250 Stück ergeben 15.000 Euro Deckungsbeitrag. Nach 12.000 Euro Fixkosten sind es 3.000 Euro Ergebnis. Der Deckungsbeitrag selbst ist noch kein Gewinn.",
+      "followUp": "Welche andere Rechnung über Umsatz und Gesamtkosten dient als Gegenprobe?"
+    },
+    {
+      "id": "common-pm-feasibility-talk-2",
+      "prompt": "Erkläre die Schwelle bei 12.000 Euro Fixkosten und 60 Euro Stückdeckungsbeitrag. Was ändert sich bei Fixkosten von 12.010 Euro und was bei Stückdeckungsbeitrag null?",
+      "objectiveIds": [
+        "common-pm-feasibility-break-even"
+      ],
+      "blockIds": [
+        "common-pm-feasibility-break-even",
+        "common-pm-feasibility-table"
+      ],
+      "keyPoints": [
+        "12.000/60 = 200 Stück mit Ergebnis null.",
+        "12.010/60 = 200,1666…; ganze Stück auf 201 aufrunden.",
+        "Bei positiven Fixkosten und DB null keine endliche Schwelle.",
+        "In der Tabelle erst den Stückdeckungsbeitrag als Geldzeile auf Cent runden; die daraus gebildete Schwelle zunächst ohne Ganzzahlrundung betrachten."
+      ],
+      "acceptableAlternatives": [
+        "Sinngleiche fachliche Begründungen und gleichwertige Rechenwege sind möglich."
+      ],
+      "misconceptions": [
+        "Menge mit Eurogewinn verwechseln oder eine negative Schwelle als sinnvolle Verkaufsmenge behandeln."
+      ],
+      "sampleAnswer": "Im Ausgangsfall decken 200 Stück genau die Fixkosten. Bei 12.010 Euro reichen 200 Stück noch nicht; ich brauche 201 ganze Stück. Ist der Deckungsbeitrag null, bringt zusätzliche Menge keinen Beitrag zur Deckung der positiven Fixkosten. Die Tabelle verwendet einen auf Cent gerundeten Stückdeckungsbeitrag und rechnet die Schwelle intern ohne Verhältnisrundung. Die Anzeige ist eine Näherung; nach Rechnung prüfen wird zusätzlich die kleinste ganze Menge ohne Verlust genannt.",
+      "followUp": "Warum reicht kaufmännisches Runden auf die nächste ganze Zahl hier nicht?"
+    },
+    {
+      "id": "common-pm-feasibility-talk-3",
+      "prompt": "Interpretiere 6.000 Euro Investition und 3.000 Euro gleichmäßigen jährlichen Nettorückfluss. Nenne Ergebnis, Einheit und zwei Grenzen der Aussage.",
+      "objectiveIds": [
+        "common-pm-feasibility-payback"
+      ],
+      "blockIds": [
+        "common-pm-feasibility-payback",
+        "common-pm-feasibility-table"
+      ],
+      "keyPoints": [
+        "2 Jahre einfache Rückflussdauer.",
+        "Nettorückfluss ist Zahlungsüberschuss, nicht automatisch Gewinn.",
+        "Keine Zinsen oder gesamten späteren Überschüsse; Unsicherheit und Nutzungsdauer bleiben zu prüfen."
+      ],
+      "acceptableAlternatives": [
+        "Sinngleiche fachliche Begründungen und gleichwertige Rechenwege sind möglich."
+      ],
+      "misconceptions": [
+        "Gewinn, Umsatz und Nettorückfluss gleichsetzen oder die Dauer als sichere Zusage nennen."
+      ],
+      "sampleAnswer": "6.000 geteilt durch 3.000 Euro pro Jahr sind zwei Jahre. Die Rechnung setzt gleichmäßige positive Zahlungsüberschüsse voraus. Sie berücksichtigt keine Zinsen und bewertet spätere Überschüsse nicht. Deshalb ist sie weder eine Gewinnberechnung noch eine Garantie.",
+      "followUp": "Was müsste bei ungleichmäßigen Rückflüssen zusätzlich betrachtet werden?"
+    }
+  ],
+  "cards": [
+    {
+      "id": "common-pm-feasibility-card-1",
+      "front": "Wie berechnest du den Stückdeckungsbeitrag?",
+      "back": "Netto-Stückpreis minus variable Stückkosten. 150 − 90 = 60 Euro je Stück zur Deckung der Fixkosten. Bei eigenen Eingaben verwendet die Tabelle =RUNDEN(B2-B3;2), bevor dieser Betrag weiterverwendet wird.",
+      "objectiveIds": [
+        "common-pm-feasibility-contribution"
+      ],
+      "blockIds": [
+        "common-pm-feasibility-contribution",
+        "common-pm-feasibility-table"
+      ]
+    },
+    {
+      "id": "common-pm-feasibility-card-2",
+      "front": "Wie wird aus dem Deckungsbeitrag ein Periodenergebnis?",
+      "back": "Menge × Stückdeckungsbeitrag − Fixkosten. 250 × 60 − 12.000 = 3.000 Euro. Die Tabellenformel =RUNDEN(B4*B7-B1;2) rundet das Ergebnis auf Cent.",
+      "objectiveIds": [
+        "common-pm-feasibility-contribution"
+      ],
+      "blockIds": [
+        "common-pm-feasibility-contribution",
+        "common-pm-feasibility-table"
+      ]
+    },
+    {
+      "id": "common-pm-feasibility-card-3",
+      "front": "Welche Formel liefert die Gewinnschwelle?",
+      "back": "Bei positivem Stückdeckungsbeitrag: Fixkosten/Stückdeckungsbeitrag. 12.000/60 = 200 Stück; dort ist das Ergebnis null.",
+      "objectiveIds": [
+        "common-pm-feasibility-break-even"
+      ],
+      "blockIds": [
+        "common-pm-feasibility-break-even"
+      ]
+    },
+    {
+      "id": "common-pm-feasibility-card-4",
+      "front": "Was gilt für ganze Stück und nichtpositive Deckungsbeiträge?",
+      "back": "Eine nichtganzzahlige Schwelle für ganze verkaufbare Einheiten aufrunden. Bei positiven Fixkosten und DB ≤ 0 gibt es keine endliche Menge zur Kostendeckung.",
+      "objectiveIds": [
+        "common-pm-feasibility-break-even"
+      ],
+      "blockIds": [
+        "common-pm-feasibility-break-even"
+      ]
+    },
+    {
+      "id": "common-pm-feasibility-card-5",
+      "front": "Wie lautet die einfache Amortisationsrechnung?",
+      "back": "Investitionsauszahlung/gleichmäßiger jährlicher Nettorückfluss. 6.000 Euro/(3.000 Euro/Jahr) = 2 Jahre.",
+      "objectiveIds": [
+        "common-pm-feasibility-payback"
+      ],
+      "blockIds": [
+        "common-pm-feasibility-payback"
+      ]
+    },
+    {
+      "id": "common-pm-feasibility-card-6",
+      "front": "Warum ersetzt die Amortisationsdauer keine gesamte Wirtschaftlichkeitsprüfung?",
+      "back": "Sie erfasst die Rückflussdauer unter Annahmen, aber keine Zinsen, unsicheren Zahlungsfolgen oder alle späteren Überschüsse. Nettorückfluss ist außerdem nicht gleich Gewinn.",
+      "objectiveIds": [
+        "common-pm-feasibility-payback"
+      ],
+      "blockIds": [
+        "common-pm-feasibility-payback",
+        "common-pm-feasibility-table"
+      ]
+    }
+  ],
+  "review": {
+    "status": "reviewed",
+    "checkedAt": "2026-11-11"
+  }
+}

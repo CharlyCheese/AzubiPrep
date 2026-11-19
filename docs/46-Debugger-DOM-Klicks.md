@@ -113,3 +113,12 @@ FE-054 ergänzt optionale eigene [CSS-Gestaltung im Debugger](47-Debugger-CSS.md
 Mit CSS wird nur ein gesonderter skriptloser Rahmen gestaltet; die oben genannten
 CSS-Ausschlüsse beschreiben den ursprünglichen FE-052-Umfang. Formular-/weitere
 DOM-APIs bleiben eigene Stufen.
+
+FE-055 ergänzt anschließend [Texteingaben und Formulare](48-Debugger-Formulare.md)
+mit input/change/submit. Die obigen Formularausschlüsse beschreiben FE-052;
+weitere Feldtypen und DOM-Erzeugung bleiben separat. Das gemeinsame 64er-Budget
+zählt in FE-055 jedes modellierte Ereignis, nicht nur Vorschauklicks.
+
+FE-056 ergänzt [dynamische Elemente](49-Debugger-Elemente.md) einschließlich
+Einfügen/Entfernen mit identischen privaten Handles. Das128er-Knotenbudget zählt
+nun alle gehaltenen Elemente und Textblätter, auch in abgetrennten Teilbäumen.

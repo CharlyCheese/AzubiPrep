@@ -1,0 +1,466 @@
+{
+  "schemaVersion": 1,
+  "id": "common-lf2-requirements",
+  "version": "1.0.0",
+  "title": "Kundenwünsche als prüfbare Anforderungen",
+  "fieldId": "LF2",
+  "scope": "common",
+  "prerequisites": [
+    "common-lf1-role"
+  ],
+  "sourceIds": [
+    "pm-hzd-preparation",
+    "ec-pm2-artefacts"
+  ],
+  "sources": [
+    {
+      "id": "pm-hzd-preparation",
+      "title": "Hessen ZPM: Projektvorbereitung",
+      "url": "https://hzd-zpm.hessen.de/vorgehensmodell/projektvorbereitung",
+      "checkedAt": "2026-11-11",
+      "note": "Öffentliche HTML-Seite am Abrufdatum geprüft: Anfrage analysieren, Umfeld und Lösungsansätze abstimmen. Rollen, Termine und Arbeitsplatzanforderungen des Falls sind eigene fiktive Vorgaben."
+    },
+    {
+      "id": "ec-pm2-artefacts",
+      "title": "Europäische Kommission: PM²-Artefakte",
+      "url": "https://pm2.europa.eu/pm2-artefacts_en",
+      "checkedAt": "2026-11-11",
+      "note": "Öffentliche HTML-Übersicht zu Projektauftrag, Arbeitsplan, Beteiligten und Abnahmeplanung geprüft. Keine Vorlagen kopiert; vereinfachter eigener Ausstattungsauftrag."
+    }
+  ],
+  "objectives": [
+    {
+      "id": "common-lf2-requirements-clarify",
+      "text": "Aus einem Gespräch offene Fragen und messbare Anforderungen an einen Arbeitsplatz ableiten."
+    },
+    {
+      "id": "common-lf2-requirements-plan",
+      "text": "Für einen kleinen Ausstattungsauftrag Arbeitsschritte, Zuständigkeiten und Termine abstimmen."
+    }
+  ],
+  "caseStudy": {
+    "title": "Knotenpunkt stattet Radblick aus",
+    "text": "Der fiktive Servicebetrieb Knotenpunkt richtet für Radblick einen Büroplatz ein. Mira ist Auszubildende, Sam betreut die Technik und Eda den Einkauf. Radblick möchte Tickets und Wissensartikel gleichzeitig bearbeiten. Alle Namen, Termine und technischen Vorgaben sind erfunden; echte Kundendaten werden nicht verwendet."
+  },
+  "blocks": [
+    {
+      "id": "common-lf2-requirements-needs",
+      "title": "1. Hinter dem Wunsch die Aufgabe klären",
+      "objectiveIds": [
+        "common-lf2-requirements-clarify"
+      ],
+      "sourceIds": [
+        "pm-hzd-preparation"
+      ],
+      "paragraphs": [
+        "„Ich brauche einen schnellen Rechner“ ist ein Wunsch, aber noch kein überprüfbarer Bedarf. Frage nach den Arbeitsschritten, gleichzeitig genutzten Anwendungen, Zahl der Bildschirme, vorhandenen Geräten und besonderen Bedienanforderungen. Eine offene Frage lässt die Person den Ablauf beschreiben.",
+        "Mira fragt: „Welche Informationen müssen Sie bei der Ticketbearbeitung gleichzeitig sehen?“ Radblick nennt Ticketportal und Wissenssuche. Erst danach klärt Mira Einzelheiten: zwei Bildschirme, vorhandene Anschlüsse, benötigte Software, Budgetrahmen und Übergabetermin.",
+        "Trenne bekannte Angaben, offene Fragen und Annahmen im Gesprächsprotokoll. „Die vorhandenen Bildschirme besitzen passende Eingänge“ bleibt eine Annahme, bis die technischen Angaben vorliegen. Ein Produktname beantwortet noch nicht, welche Aufgabe erfüllt werden soll.",
+        "Fasse das verstandene Ergebnis in eigenen Worten zusammen und lasse die zuständige Person es bestätigen. Dabei werden auch Zugänglichkeit, benötigte Unterstützung und betriebliche Vorgaben geklärt; sensible echte Daten sind für diesen Lernfall nicht erforderlich."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Übungsfall",
+        "text": "Mira notiert als offene Frage die Eingänge der beiden vorhandenen Bildschirme, statt aus deren Alter auf HDMI zu schließen."
+      },
+      "misconception": {
+        "claim": "Eine erste Produktidee ist bereits eine bestätigte Anforderung.",
+        "correction": "Erst Aufgabe, Rahmen und noch unbekannte Bedingungen klären; danach Lösungen vergleichen."
+      },
+      "takeaway": "Frage nach der Arbeit und kennzeichne Unbekanntes, bevor du Geräte auswählst."
+    },
+    {
+      "id": "common-lf2-requirements-criteria",
+      "title": "2. Wünsche in Prüfkriterien übersetzen",
+      "objectiveIds": [
+        "common-lf2-requirements-clarify"
+      ],
+      "sourceIds": [
+        "pm-hzd-preparation",
+        "ec-pm2-artefacts"
+      ],
+      "paragraphs": [
+        "Eine prüfbare Anforderung benennt Eigenschaft oder Funktion, Zielwert und Prüfbedingung. „Zwei unabhängige Bildschirme zeigen beim vereinbarten Test gleichzeitig Ticketportal und Wissenssuche“ ist genauer als „große Arbeitsfläche“. Das Abnahmekriterium beschreibt, wie das Ergebnis beurteilt wird.",
+        "Für unseren erfundenen Auftrag werden mindestens 16 GB Arbeitsspeicher, 512 GB SSD und zwei gleichzeitig nutzbare digitale Bildschirmausgänge als Muss-Kriterien festgelegt. Ein freigegebener Browser, ein Standardkonto, bereitgestellte Updates und zwei eingerichtete Bildschirme gehören ebenfalls dazu. Diese Zahlen sind Fallvorgaben, keine allgemeine Mindestempfehlung für Bürocomputer.",
+        "Ein Muss-Kriterium ist für die Freigabe erforderlich. Ein Wunsch wie ein besonders kleines Gehäuse kann bei erfüllten Muss-Kriterien die Auswahl verbessern. Eine hohe Punktzahl bei Wünschen gleicht ein fehlendes Muss-Kriterium nicht aus, solange der Auftrag unverändert gilt.",
+        "Soll ein Tempo geprüft werden, muss der Test die konkrete Aufgabe, Testdaten und Bedingungen festlegen. Beispiel: Bis Freitag öffnet ein freigegebener Browser die lokale synthetische Testseite in höchstens drei Sekunden unter den vereinbarten Testbedingungen. Daraus folgt keine zugesicherte Antwortzeit des späteren Online-Portals."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Übungsfall",
+        "text": "Zwei angeschlossene Bildschirme reichen für das Beispiel erst dann, wenn verschiedene Inhalte gleichzeitig angezeigt werden können."
+      },
+      "misconception": {
+        "claim": "Das Wort „schnell“ beschreibt schon eine messbare Eigenschaft.",
+        "correction": "Eine Messung braucht Aufgabe, Zielwert und festgelegte Bedingungen."
+      },
+      "takeaway": "Lege Muss-Kriterien und passende Nachweise gemeinsam fest."
+    },
+    {
+      "id": "common-lf2-requirements-schedule",
+      "title": "3. Schritte, Verantwortung und Termine verbinden",
+      "objectiveIds": [
+        "common-lf2-requirements-plan"
+      ],
+      "sourceIds": [
+        "ec-pm2-artefacts"
+      ],
+      "paragraphs": [
+        "Ein kleiner Arbeitsplan enthält Arbeitsschritt, verantwortliche Person, benötigte Vorleistung, Termin und erwartetes Ergebnis. Bedarf bestätigen, passende Ausstattung auswählen, Beschaffung freigeben, Lieferung prüfen, Einrichtung testen und Übergabe durchführen bilden einen nachvollziehbaren Ablauf.",
+        "Im fiktiven Wochenplan bestätigt Radblick montags die Anforderungen. Sam prüft dienstags die technische Auswahl. Eda bestellt nach Freigabe; als bestätigter Liefertermin gilt Donnerstagvormittag. Mira richtet unter Sams Betreuung donnerstags nach der Eingangsprüfung ein. Radblick und Sam führen freitags den vereinbarten Abnahmetest durch.",
+        "Eine Abhängigkeit bedeutet: Ein Schritt benötigt das Ergebnis eines anderen. Die Einrichtung setzt verfügbare und geprüfte Geräte voraus. Die Abnahme braucht die eingerichteten Funktionen. Zwei Aufgaben dürfen parallel laufen, wenn ihre Voraussetzungen und zuständigen Personen verfügbar sind.",
+        "Zuständigkeit ist keine pauschale Vollmacht: Mira dokumentiert und meldet Abweichungen. Sam beurteilt technische Fragen, Eda bearbeitet die Beschaffung. Radblick bestätigt Anforderungen und Änderungen des Auftrags. Bestell- und Freigaberechte richten sich im Fall nach dieser Vereinbarung."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Übungsfall",
+        "text": "Die kurze Anleitung kann vorbereitet werden, während Eda die Lieferbestätigung klärt. Der Funktionstest wartet auf den eingerichteten Platz."
+      },
+      "misconception": {
+        "claim": "Ein Terminplan besteht aus einer sortierten Liste von Tätigkeiten.",
+        "correction": "Ohne Verantwortung, Voraussetzungen und prüfbare Ergebnisse bleibt die Liste schwer ausführbar."
+      },
+      "takeaway": "Plane den nächsten Schritt mit seiner Vorleistung und einer zuständigen Person."
+    },
+    {
+      "id": "common-lf2-requirements-changes",
+      "title": "4. Offene Punkte und Änderungen abstimmen",
+      "objectiveIds": [
+        "common-lf2-requirements-clarify",
+        "common-lf2-requirements-plan"
+      ],
+      "sourceIds": [
+        "pm-hzd-preparation",
+        "ec-pm2-artefacts"
+      ],
+      "paragraphs": [
+        "Ein offener Punkt bekommt eine zuständige Person und einen Klärungstermin. Beispiel: Sam bestätigt bis Dienstag die benötigten Bildschirmanschlüsse. Unbestätigte Angaben dürfen nicht als bereits erfüllte Anforderungen im Auftrag stehen.",
+        "Meldet der Lieferant Freitag statt Donnerstag, ist die Einrichtung am Donnerstag nicht mehr abgesichert. Eda klärt die Lieferung, Sam prüft eine passende freigegebene Alternative und Radblick entscheidet mit dem Team über die Auswirkungen auf den Übergabetermin.",
+        "Ein zusätzlicher Scanner am Mittwoch ist ein Änderungswunsch. Kläre benötigte Funktion, Kompatibilität, Kosten, Aufwand und Terminfolgen und hole die vereinbarte Entscheidung ein. Dokumentiere die bestätigte Fassung, damit Einkauf, Technik und Kunde denselben Auftrag verwenden.",
+        "Zur Übergabe wird der tatsächliche Zustand mit den bestätigten Kriterien verglichen. Ein noch fehlender Nachweis bleibt offen. Die Dokumentation enthält Ergebnis, Abweichung, zuständige Person und nächsten Termin; sie ersetzt den Funktionstest nicht."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Übungsfall",
+        "text": "Der Kunde wünscht einen Scanner. Mira erfasst den Wunsch und lässt Folgen sowie Freigabe klären, bevor der Einkauf den Auftrag erweitert."
+      },
+      "misconception": {
+        "claim": "Eine mündliche Zusatzidee ändert den freigegebenen Auftrag ohne weitere Abstimmung.",
+        "correction": "Änderungswünsche brauchen geklärte Folgen und eine nachvollziehbare Entscheidung."
+      },
+      "takeaway": "Halte Annahmen, bestätigte Anforderungen und spätere Änderungen auseinander."
+    }
+  ],
+  "questionFile": "questions/common-lf2-requirements.v1.csv",
+  "quiz": {
+    "questionIds": [
+      "LJ-LF2-REQUIREMENTS-Q01",
+      "LJ-LF2-REQUIREMENTS-Q02",
+      "LJ-LF2-REQUIREMENTS-Q03",
+      "LJ-LF2-REQUIREMENTS-Q04",
+      "LJ-LF2-REQUIREMENTS-Q05",
+      "LJ-LF2-REQUIREMENTS-Q06"
+    ]
+  },
+  "exam": {
+    "questionIds": [
+      "LJ-LF2-REQUIREMENTS-E01",
+      "LJ-LF2-REQUIREMENTS-E02",
+      "LJ-LF2-REQUIREMENTS-E03",
+      "LJ-LF2-REQUIREMENTS-E04",
+      "LJ-LF2-REQUIREMENTS-E05",
+      "LJ-LF2-REQUIREMENTS-E06",
+      "LJ-LF2-REQUIREMENTS-E07",
+      "LJ-LF2-REQUIREMENTS-E08"
+    ],
+    "passPercent": 80,
+    "scoring": "all-or-nothing-per-question",
+    "timed": false
+  },
+  "questionLinks": [
+    {
+      "questionId": "LJ-LF2-REQUIREMENTS-Q01",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf2-requirements-clarify"
+      ],
+      "blockIds": [
+        "common-lf2-requirements-needs"
+      ]
+    },
+    {
+      "questionId": "LJ-LF2-REQUIREMENTS-Q02",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf2-requirements-clarify"
+      ],
+      "blockIds": [
+        "common-lf2-requirements-criteria"
+      ]
+    },
+    {
+      "questionId": "LJ-LF2-REQUIREMENTS-Q03",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf2-requirements-clarify"
+      ],
+      "blockIds": [
+        "common-lf2-requirements-criteria"
+      ]
+    },
+    {
+      "questionId": "LJ-LF2-REQUIREMENTS-Q04",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf2-requirements-plan"
+      ],
+      "blockIds": [
+        "common-lf2-requirements-schedule"
+      ]
+    },
+    {
+      "questionId": "LJ-LF2-REQUIREMENTS-Q05",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf2-requirements-plan"
+      ],
+      "blockIds": [
+        "common-lf2-requirements-schedule"
+      ]
+    },
+    {
+      "questionId": "LJ-LF2-REQUIREMENTS-Q06",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf2-requirements-plan"
+      ],
+      "blockIds": [
+        "common-lf2-requirements-changes"
+      ]
+    },
+    {
+      "questionId": "LJ-LF2-REQUIREMENTS-E01",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf2-requirements-clarify"
+      ],
+      "blockIds": [
+        "common-lf2-requirements-needs"
+      ]
+    },
+    {
+      "questionId": "LJ-LF2-REQUIREMENTS-E02",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf2-requirements-clarify"
+      ],
+      "blockIds": [
+        "common-lf2-requirements-criteria"
+      ]
+    },
+    {
+      "questionId": "LJ-LF2-REQUIREMENTS-E03",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf2-requirements-clarify"
+      ],
+      "blockIds": [
+        "common-lf2-requirements-criteria"
+      ]
+    },
+    {
+      "questionId": "LJ-LF2-REQUIREMENTS-E04",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf2-requirements-clarify"
+      ],
+      "blockIds": [
+        "common-lf2-requirements-criteria"
+      ]
+    },
+    {
+      "questionId": "LJ-LF2-REQUIREMENTS-E05",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf2-requirements-plan"
+      ],
+      "blockIds": [
+        "common-lf2-requirements-schedule"
+      ]
+    },
+    {
+      "questionId": "LJ-LF2-REQUIREMENTS-E06",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf2-requirements-plan"
+      ],
+      "blockIds": [
+        "common-lf2-requirements-schedule"
+      ]
+    },
+    {
+      "questionId": "LJ-LF2-REQUIREMENTS-E07",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf2-requirements-clarify",
+        "common-lf2-requirements-plan"
+      ],
+      "blockIds": [
+        "common-lf2-requirements-changes"
+      ]
+    },
+    {
+      "questionId": "LJ-LF2-REQUIREMENTS-E08",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf2-requirements-plan"
+      ],
+      "blockIds": [
+        "common-lf2-requirements-changes"
+      ]
+    }
+  ],
+  "interview": [
+    {
+      "id": "common-lf2-requirements-talk-clarify",
+      "prompt": "Formuliere zwei offene Fragen zu „Ich brauche einen schnellen Arbeitsplatz“ und daraus ein messbares Kriterium für Radblick.",
+      "objectiveIds": [
+        "common-lf2-requirements-clarify"
+      ],
+      "blockIds": [
+        "common-lf2-requirements-needs",
+        "common-lf2-requirements-criteria"
+      ],
+      "keyPoints": [
+        "Arbeitsablauf und gleichzeitige Inhalte klären.",
+        "Bekanntes von Annahmen unterscheiden.",
+        "Eine beobachtbare Funktion als Kriterium formulieren."
+      ],
+      "acceptableAlternatives": [
+        "Andere aufgabenbezogene Fragen mit einem ausdrücklich fiktiven Prüfkriterium."
+      ],
+      "misconceptions": [
+        "Ein Produktmodell als vollständige Bedarfsklärung nennen."
+      ],
+      "sampleAnswer": "Ich frage, bei welchen Schritten Wartezeiten auftreten und welche Informationen gleichzeitig benötigt werden. Für Radblick vereinbaren wir: Ticketportal und Wissenssuche sind beim Test auf zwei unabhängigen Bildschirmen sichtbar. Fehlende Anschlussdaten bleiben offen.",
+      "followUp": "Wie würdest du die noch fehlenden Anschlussdaten festhalten?"
+    },
+    {
+      "id": "common-lf2-requirements-talk-plan",
+      "prompt": "Beschreibe drei aufeinander aufbauende Schritte vom bestätigten Bedarf bis zum Funktionstest und nenne die zuständigen Rollen.",
+      "objectiveIds": [
+        "common-lf2-requirements-plan"
+      ],
+      "blockIds": [
+        "common-lf2-requirements-schedule"
+      ],
+      "keyPoints": [
+        "Technische Prüfung vor freigegebener Beschaffung.",
+        "Geprüfte Lieferung vor Einrichtung.",
+        "Einrichtung als Voraussetzung des Funktionstests."
+      ],
+      "acceptableAlternatives": [
+        "Ein ausführlicherer Ablauf mit denselben Abhängigkeiten und Zuständigkeiten."
+      ],
+      "misconceptions": [
+        "Bestellvorbereitung mit technischer Freigabe gleichsetzen."
+      ],
+      "sampleAnswer": "Sam prüft die Auswahl. Eda beschafft nach Freigabe und klärt die Lieferung. Nach Eingangsprüfung richtet Mira unter Betreuung ein; Sam und Radblick prüfen die vereinbarten Funktionen. Jeder Schritt erhält einen Termin und ein Ergebnis.",
+      "followUp": "Welche Aufgabe lässt sich unabhängig von der Lieferung vorbereiten?"
+    },
+    {
+      "id": "common-lf2-requirements-talk-change",
+      "prompt": "Radblick wünscht kurz vor Lieferung einen Scanner. Erläutere, welche Angaben und Entscheidung für eine nachvollziehbare Änderung fehlen.",
+      "objectiveIds": [
+        "common-lf2-requirements-clarify",
+        "common-lf2-requirements-plan"
+      ],
+      "blockIds": [
+        "common-lf2-requirements-changes",
+        "common-lf2-requirements-criteria"
+      ],
+      "keyPoints": [
+        "Gewünschte Scannerfunktion klären.",
+        "Kompatibilität, Kosten, Aufwand und Terminfolgen prüfen.",
+        "Zuständige Entscheidung und gemeinsame Auftragsfassung festhalten."
+      ],
+      "acceptableAlternatives": [
+        "Eine begründete spätere Erweiterung nach derselben Folgenprüfung."
+      ],
+      "misconceptions": [
+        "Zusatzwünsche ohne Freigabe als zugesagte Leistung behandeln."
+      ],
+      "sampleAnswer": "Mira klärt die benötigte Scannerfunktion. Sam prüft Technik und Aufwand, Eda die Beschaffung. Radblick entscheidet auf Grundlage der Folgen über den erweiterten Auftrag. Die bestätigte Fassung geht an alle Beteiligten.",
+      "followUp": "Was bleibt offen, solange keine Entscheidung vorliegt?"
+    }
+  ],
+  "cards": [
+    {
+      "id": "common-lf2-requirements-card-question",
+      "front": "Welche Frage klärt den Bedarf hinter „schneller“?",
+      "back": "Frage nach konkreten Arbeitsschritten, Wartezeiten und gleichzeitig benötigten Anwendungen. Halte fehlende Angaben als offene Fragen fest.",
+      "objectiveIds": [
+        "common-lf2-requirements-clarify"
+      ],
+      "blockIds": [
+        "common-lf2-requirements-needs"
+      ]
+    },
+    {
+      "id": "common-lf2-requirements-card-criterion",
+      "front": "Woraus besteht ein prüfbares Arbeitsplatzkriterium?",
+      "back": "Aus einer konkreten Eigenschaft oder Funktion, einem Zielwert und Prüfbedingungen, etwa zwei gleichzeitig unabhängig nutzbaren Anzeigen.",
+      "objectiveIds": [
+        "common-lf2-requirements-clarify"
+      ],
+      "blockIds": [
+        "common-lf2-requirements-criteria"
+      ]
+    },
+    {
+      "id": "common-lf2-requirements-card-must",
+      "front": "Kann ein erfüllter Wunsch ein fehlendes Muss-Kriterium ausgleichen?",
+      "back": "Beim unveränderten Auftrag nicht. Erst Muss-Kriterien prüfen; Wünsche helfen anschließend beim Vergleich geeigneter Lösungen.",
+      "objectiveIds": [
+        "common-lf2-requirements-clarify"
+      ],
+      "blockIds": [
+        "common-lf2-requirements-criteria"
+      ]
+    },
+    {
+      "id": "common-lf2-requirements-card-plan",
+      "front": "Welche Angaben braucht ein Arbeitsschritt im Plan?",
+      "back": "Tätigkeit, verantwortliche Person, benötigte Vorleistung, Termin und erwartetes Ergebnis.",
+      "objectiveIds": [
+        "common-lf2-requirements-plan"
+      ],
+      "blockIds": [
+        "common-lf2-requirements-schedule"
+      ]
+    },
+    {
+      "id": "common-lf2-requirements-card-dependency",
+      "front": "Welche Voraussetzung hat die Einrichtung?",
+      "back": "Verfügbare und geprüfte Geräte. Der anschließende Funktionstest setzt wiederum die eingerichteten Funktionen voraus.",
+      "objectiveIds": [
+        "common-lf2-requirements-plan"
+      ],
+      "blockIds": [
+        "common-lf2-requirements-schedule"
+      ]
+    },
+    {
+      "id": "common-lf2-requirements-card-change",
+      "front": "Wie wird ein zusätzlicher Ausstattungswunsch bearbeitet?",
+      "back": "Bedarf und Folgen für Technik, Kosten und Termine klären, zuständig entscheiden lassen und die bestätigte Auftragsfassung dokumentieren.",
+      "objectiveIds": [
+        "common-lf2-requirements-clarify",
+        "common-lf2-requirements-plan"
+      ],
+      "blockIds": [
+        "common-lf2-requirements-changes"
+      ]
+    }
+  ],
+  "review": {
+    "status": "reviewed",
+    "checkedAt": "2026-11-11"
+  }
+}

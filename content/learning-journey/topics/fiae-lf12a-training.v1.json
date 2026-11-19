@@ -1,0 +1,476 @@
+{
+  "schemaVersion": 1,
+  "version": "1.0.0",
+  "id": "fiae-lf12a-training",
+  "title": "Anwendung übergeben und Nutzer einweisen",
+  "fieldId": "LF12a",
+  "scope": "specialization",
+  "prerequisites": [
+    "fiae-lf12a-acceptance"
+  ],
+  "objectives": [
+    {
+      "id": "fiae-lf12a-training-guide",
+      "text": "Für eine typische Nutzeraufgabe eine verständliche Anleitung und eine kurze praktische Einweisung vorbereiten."
+    },
+    {
+      "id": "fiae-lf12a-training-handover",
+      "text": "Produkt, benötigte Dokumentation und Betriebsinformationen geordnet an die zuständigen Personen übergeben."
+    },
+    {
+      "id": "fiae-lf12a-training-support",
+      "text": "Offene Fragen und den vereinbarten Weg für weitere Unterstützung festhalten."
+    }
+  ],
+  "caseStudy": {
+    "title": "Die Frühschicht übernimmt die Ticketannahme",
+    "text": "Die Werkstattleitung hat die Funktionsprüfungen von R2 gesehen. Jetzt soll die Schicht selbst einen Reparaturauftrag anlegen. Parallel übernimmt die IT den geprüften Stand mit Unterlagen und vereinbartem Unterstützungsweg."
+  },
+  "sourceIds": [
+    "kmk-fachinformatiker-2019",
+    "lf12a-gds-usability",
+    "ec-pm2-artefacts",
+    "lf12a-ms-testing"
+  ],
+  "sources": [
+    {
+      "id": "kmk-fachinformatiker-2019",
+      "title": "KMK-Rahmenlehrplan Fachinformatiker/Fachinformatikerin vom 13.12.2019",
+      "url": "https://www.kmk.org/fileadmin/Dateien/pdf/Bildung/BeruflicheBildung/rlp/Fachinformatiker_19-12-13_EL.pdf",
+      "checkedAt": "2026-11-19",
+      "note": "LF12a und Einordnung der vorherigen Lernfelder im öffentlichen Rahmenlehrplan geprüft. Fall, Schwellen und Übungsbewertung sind eigene Lernbeispiele."
+    },
+    {
+      "id": "lf12a-gds-usability",
+      "title": "Government Digital Service: Usability benchmarking a website or whole service",
+      "url": "https://www.gov.uk/service-manual/measuring-success/usability-benchmarking-a-website-or-whole-service",
+      "checkedAt": "2026-11-19",
+      "note": "Aufgabenbasierte Beobachtung, Erfolgsquote und Bearbeitungsdauer geprüft. Schulungsaufträge und Schwellen sind eigene Beispiele."
+    },
+    {
+      "id": "ec-pm2-artefacts",
+      "title": "Europäische Kommission: PM²-Artefakte",
+      "url": "https://pm2.europa.eu/pm2-artefacts_en",
+      "checkedAt": "2026-11-19",
+      "note": "Artefakte zu Auftrag, Arbeitsplan, Änderung, Abnahme, Übergang und Projektabschluss geprüft. Die Werkstattunterlagen und Entscheidungen im Beispiel sind selbst erstellt."
+    },
+    {
+      "id": "lf12a-ms-testing",
+      "title": "Microsoft: Architecture strategies for testing",
+      "url": "https://learn.microsoft.com/en-us/azure/well-architected/operational-excellence/testing",
+      "checkedAt": "2026-11-19",
+      "note": "Prüfebenen, Benutzerabläufe, Teststände und Prüfumgebungen geprüft. Fälle und Ergebnisse der Reparaturwerkstatt sind erfunden."
+    }
+  ],
+  "blocks": [
+    {
+      "id": "fiae-lf12a-training-block-1",
+      "title": "1. Eine Aufgabe vom Start bis zum Erfolg erklären",
+      "objectiveIds": [
+        "fiae-lf12a-training-guide"
+      ],
+      "sourceIds": [
+        "kmk-fachinformatiker-2019",
+        "lf12a-gds-usability"
+      ],
+      "paragraphs": [
+        "Schreibe für die Annahme eine kurze Anleitung aus ihrer Perspektive. Nenne Einstieg und Voraussetzung, dann pro Schritt Handlung und sichtbare Rückmeldung. Im Übungsstand öffnest du die Erfassung, trägst G-17 und „Lagergeräusch“ ein, speicherst, notierst die ausgegebene Ticketkennung und öffnest diese Kennung erneut. Vergleiche Gerätekennung und Fehlerbeschreibung.",
+        "Beschreibe auch eine typische Unterbrechung. Fehlt die Gerätekennung, lies den Hinweis, ergänze das Feld und speichere erneut. Prüfe nach dem gültigen Speichern die zurückgegebene Kennung, bevor du den Auftrag neu anlegst. Die Lernenden brauchen Zugang und einen synthetischen Fall, an dem sie selbst handeln können."
+      ],
+      "example": {
+        "title": "Aus dem Werkstattprojekt",
+        "text": "Die Anleitung endet mit dem sichtbaren Ergebnis „Nach erneutem Öffnen steht G-17 mit Lagergeräusch im Ticket“. So kann die Schicht eigenständig feststellen, ob sie das Ziel erreicht hat."
+      },
+      "misconception": {
+        "claim": "Eine Tastenfolge mit „fertig“ am Ende reicht als überprüfbare Anleitung.",
+        "correction": "Das beobachtbare Arbeitsergebnis ermöglicht die eigene Erfolgskontrolle."
+      },
+      "takeaway": "Führe die Nutzerrolle mit Handlungen, Rückmeldungen und einem Weg aus typischen Fehlern."
+    },
+    {
+      "id": "fiae-lf12a-training-block-2",
+      "title": "2. Einweisen und die Eigenaufgabe beobachten",
+      "objectiveIds": [
+        "fiae-lf12a-training-guide"
+      ],
+      "sourceIds": [
+        "lf12a-gds-usability"
+      ],
+      "paragraphs": [
+        "Zeige einen ersten Auftrag und sprich deine Entscheidungen beim Bearbeiten aus. Für die Eigenaufgabe bekommen die vier Übungspersonen einen vergleichbaren neuen Fall, etwa G-18 mit „Riemen locker“. Jede führt die Erfassung samt Wiederabruf selbst aus. Stelle den Startzustand für jeden Versuch wieder her und protokolliere korrektes Ergebnis, benötigte Hilfe und Dauer getrennt.",
+        "Für das vereinbarte Ziel zählen mindestens drei von vier korrekten eigenständigen Durchläufen bis einschließlich 120 Sekunden. Hilfestellung ist in der Lernphase sinnvoll. Ein angeleiteter Versuch zählt für diese Eigenaufgabe nicht als selbstständiger Erfolg. Nach Erläuterung kann ein weiterer Versuch mit eigener Kennzeichnung folgen."
+      ],
+      "example": {
+        "title": "Aus dem Werkstattprojekt",
+        "text": "Die erste S1-Reihe an Tag 5 enthält vier korrekte Versuche in 85, 104, 113 und 125 Sekunden. Der 113-Sekunden-Versuch brauchte einen Tipp. Also sind zwei der vier Versuche für das Kriterium erfolgreich. Die Schicht übt den Rücksprung zum Ticket und wiederholt die Prüfung getrennt."
+      },
+      "misconception": {
+        "claim": "Die kürzeste Zeit der Gruppe reicht für das vereinbarte Schulungsziel.",
+        "correction": "Die Zahl korrekter, selbstständiger Einzelversuche innerhalb der Grenze bestimmt das Ergebnis."
+      },
+      "takeaway": "Halte gemeinsame Vorführung, Übungsphase und beobachteten Eigenversuch auseinander."
+    },
+    {
+      "id": "fiae-lf12a-training-block-3",
+      "title": "3. Ein geordnetes Paket an den Betrieb übergeben",
+      "objectiveIds": [
+        "fiae-lf12a-training-handover"
+      ],
+      "sourceIds": [
+        "ec-pm2-artefacts",
+        "lf12a-ms-testing"
+      ],
+      "paragraphs": [
+        "Liste die tatsächlich übergebenen Teile auf. Im Modell erhält die IT den bezeichneten Stand R2, Hinweise zum Einrichten, benötigte Rollen, einen Funktionscheck mit erfundenen Daten, die Testprotokolle und bekannte Grenzen. Lege fest, wie die IT bei einer fehlerhaften Änderung zum zuletzt funktionierenden Stand zurückkehrt und den Erfolg prüft. Zugangsdaten laufen über den betrieblich vorgesehenen geschützten Weg.",
+        "Die Annahme erhält die zur Version passende Kurzanleitung und einen Kontaktweg. Die IT bestätigt als Empfängerin, dass sie die Unterlagen öffnen und den vereinbarten Start- und Funktionscheck im Übungsstand ausführen kann. Die beiden Gruppen brauchen unterschiedliche Ausschnitte derselben Freigabe."
+      ],
+      "example": {
+        "title": "Aus dem Werkstattprojekt",
+        "text": "Im Übergabeblatt steht „R2, Dokument D2, Prüfliste F1/F2, offenes S1-Protokoll, empfangen durch Betriebsrolle“. Eine Anleitung zum älteren R1 mit anderer Beschriftung muss vor der Übergabe abgeglichen werden."
+      },
+      "misconception": {
+        "claim": "Der Versand einer Datei bestätigt die erfolgreiche Übernahme durch den Betrieb.",
+        "correction": "Eine Empfangsbestätigung und der vereinbarte Funktionscheck machen die Übernahme nachvollziehbar."
+      },
+      "takeaway": "Verknüpfe Produkt, Dokumentation, Grenzen und Empfänger mit demselben geprüften Stand."
+    },
+    {
+      "id": "fiae-lf12a-training-block-4",
+      "title": "4. Unterstützung nach dem Übergabetermin organisieren",
+      "objectiveIds": [
+        "fiae-lf12a-training-handover",
+        "fiae-lf12a-training-support"
+      ],
+      "sourceIds": [
+        "ec-pm2-artefacts"
+      ],
+      "paragraphs": [
+        "Vereinbare einen erreichbaren Meldeweg und die Rückmeldung. Hier nimmt der interne Servicedesk während der Werkstattschicht Meldungen entgegen und bestätigt ihren Eingang innerhalb von vier Arbeitsstunden. Dies ist eine vereinbarte Reaktionsfrist. Eine Fertigstellung innerhalb dieser Zeit wurde im Modell nicht zugesagt.",
+        "Eine verwertbare Meldung enthält Zeitpunkt, Stand, betroffenen Arbeitsschritt, erwartetes und beobachtetes Ergebnis sowie Auswirkung. Verwende erfundene Kennungen in Übungsbelegen. Der Servicedesk ordnet die Frage zu, nennt den nächsten Rückmeldezeitpunkt und führt sie bis zur bestätigten Antwort oder Nachprüfung."
+      ],
+      "example": {
+        "title": "Aus dem Werkstattprojekt",
+        "text": "Die Frühschicht fragt, wie sich ein vorhandenes Ticket nach versehentlichem Schließen wieder öffnen lässt. Der Servicedesk verweist auf die notierte Kennung, ergänzt die Anleitung und lässt den Schritt durch die Schicht nachspielen."
+      },
+      "misconception": {
+        "claim": "Mit einer schnellen Eingangsbestätigung ist auch die Lösung der Anfrage nachgewiesen.",
+        "correction": "Die Rückmeldung bestätigt die Aufnahme. Die fachliche Antwort beziehungsweise der Nachtest schließt den Vorgang."
+      },
+      "takeaway": "Halte für offene Fragen Empfänger, Auswirkung, Frist und Schließbedingung fest."
+    }
+  ],
+  "questionFile": "questions/fiae-lf12a-training.v1.csv",
+  "quiz": {
+    "questionIds": [
+      "LJ-LF12A-TRAINING-Q01",
+      "LJ-LF12A-TRAINING-Q02",
+      "LJ-LF12A-TRAINING-Q03",
+      "LJ-LF12A-TRAINING-Q04",
+      "LJ-LF12A-TRAINING-Q05",
+      "LJ-LF12A-TRAINING-Q06"
+    ]
+  },
+  "exam": {
+    "questionIds": [
+      "LJ-LF12A-TRAINING-E01",
+      "LJ-LF12A-TRAINING-E02",
+      "LJ-LF12A-TRAINING-E03",
+      "LJ-LF12A-TRAINING-E04",
+      "LJ-LF12A-TRAINING-E05",
+      "LJ-LF12A-TRAINING-E06",
+      "LJ-LF12A-TRAINING-E07",
+      "LJ-LF12A-TRAINING-E08"
+    ],
+    "passPercent": 80,
+    "scoring": "all-or-nothing-per-question",
+    "timed": false
+  },
+  "questionLinks": [
+    {
+      "questionId": "LJ-LF12A-TRAINING-Q01",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf12a-training-guide"
+      ],
+      "blockIds": [
+        "fiae-lf12a-training-block-1"
+      ]
+    },
+    {
+      "questionId": "LJ-LF12A-TRAINING-Q02",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf12a-training-guide"
+      ],
+      "blockIds": [
+        "fiae-lf12a-training-block-2"
+      ]
+    },
+    {
+      "questionId": "LJ-LF12A-TRAINING-Q03",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf12a-training-handover"
+      ],
+      "blockIds": [
+        "fiae-lf12a-training-block-3"
+      ]
+    },
+    {
+      "questionId": "LJ-LF12A-TRAINING-Q04",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf12a-training-handover"
+      ],
+      "blockIds": [
+        "fiae-lf12a-training-block-3"
+      ]
+    },
+    {
+      "questionId": "LJ-LF12A-TRAINING-Q05",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf12a-training-support"
+      ],
+      "blockIds": [
+        "fiae-lf12a-training-block-4"
+      ]
+    },
+    {
+      "questionId": "LJ-LF12A-TRAINING-Q06",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf12a-training-support"
+      ],
+      "blockIds": [
+        "fiae-lf12a-training-block-4"
+      ]
+    },
+    {
+      "questionId": "LJ-LF12A-TRAINING-E01",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf12a-training-guide"
+      ],
+      "blockIds": [
+        "fiae-lf12a-training-block-2"
+      ]
+    },
+    {
+      "questionId": "LJ-LF12A-TRAINING-E02",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf12a-training-guide"
+      ],
+      "blockIds": [
+        "fiae-lf12a-training-block-1"
+      ]
+    },
+    {
+      "questionId": "LJ-LF12A-TRAINING-E03",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf12a-training-handover"
+      ],
+      "blockIds": [
+        "fiae-lf12a-training-block-3"
+      ]
+    },
+    {
+      "questionId": "LJ-LF12A-TRAINING-E04",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf12a-training-support"
+      ],
+      "blockIds": [
+        "fiae-lf12a-training-block-4"
+      ]
+    },
+    {
+      "questionId": "LJ-LF12A-TRAINING-E05",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf12a-training-handover"
+      ],
+      "blockIds": [
+        "fiae-lf12a-training-block-3"
+      ]
+    },
+    {
+      "questionId": "LJ-LF12A-TRAINING-E06",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf12a-training-guide"
+      ],
+      "blockIds": [
+        "fiae-lf12a-training-block-2"
+      ]
+    },
+    {
+      "questionId": "LJ-LF12A-TRAINING-E07",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf12a-training-support"
+      ],
+      "blockIds": [
+        "fiae-lf12a-training-block-4"
+      ]
+    },
+    {
+      "questionId": "LJ-LF12A-TRAINING-E08",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf12a-training-handover",
+        "fiae-lf12a-training-support"
+      ],
+      "blockIds": [
+        "fiae-lf12a-training-block-3",
+        "fiae-lf12a-training-block-4"
+      ]
+    }
+  ],
+  "interview": [
+    {
+      "id": "fiae-lf12a-training-talk-1",
+      "prompt": "Erkläre einer neuen Person, wie sie den Erfolg ihrer Reparaturmeldung selbst prüft.",
+      "objectiveIds": [
+        "fiae-lf12a-training-guide"
+      ],
+      "blockIds": [
+        "fiae-lf12a-training-block-1",
+        "fiae-lf12a-training-block-2"
+      ],
+      "keyPoints": [
+        "Eigene Testdaten eingeben und speichern.",
+        "Erzeugte Kennung erneut öffnen.",
+        "Werte vergleichen, anschließend selbst üben lassen."
+      ],
+      "acceptableAlternatives": [
+        "Eine bebilderte Kurzkarte mit demselben Arbeitsziel ist gleichwertig."
+      ],
+      "misconceptions": [
+        "Die sichtbare Speicherbestätigung mit dem Wiederabruf verwechseln."
+      ],
+      "sampleAnswer": "Gib G-17 und die Störung ein. Notiere die ausgegebene Kennung und öffne sie erneut. Vergleiche die Werte mit deinem Auftrag. Anschließend probierst du den Ablauf mit einem zweiten Gerät ohne Hilfestellung.",
+      "followUp": "Was machst du, wenn kein Ticket erzeugt wurde?"
+    },
+    {
+      "id": "fiae-lf12a-training-talk-2",
+      "prompt": "Was lässt du die IT bei der Übergabe selbst nachvollziehen?",
+      "objectiveIds": [
+        "fiae-lf12a-training-handover"
+      ],
+      "blockIds": [
+        "fiae-lf12a-training-block-3"
+      ],
+      "keyPoints": [
+        "Version und Anleitung aufeinander beziehen.",
+        "Einrichten und Funktionscheck ausführen.",
+        "Empfang und Grenzen festhalten."
+      ],
+      "acceptableAlternatives": [
+        "Ein dokumentierter Probelauf im vereinbarten internen Übungsstand genügt ebenfalls."
+      ],
+      "misconceptions": [
+        "Eine Versandbestätigung als Funktionsbeleg behandeln."
+      ],
+      "sampleAnswer": "Die IT gleicht R2 mit dem technischen Blatt ab, richtet den Stand ein und öffnet einen synthetischen Auftrag erneut. Das Ergebnis und offene Punkte kommen ins Empfangsprotokoll.",
+      "followUp": "Woran würde die IT eine veraltete Anleitung erkennen?"
+    },
+    {
+      "id": "fiae-lf12a-training-talk-3",
+      "prompt": "Formuliere eine hilfreiche Supportmeldung und den Weg zur Schließung.",
+      "objectiveIds": [
+        "fiae-lf12a-training-support"
+      ],
+      "blockIds": [
+        "fiae-lf12a-training-block-4"
+      ],
+      "keyPoints": [
+        "Ablauf, Soll, Ist und Auswirkung nennen.",
+        "Reaktionsfrist von Lösungszeit trennen.",
+        "Rückprobe mit der Schicht vereinbaren."
+      ],
+      "acceptableAlternatives": [
+        "Eine Meldemaske mit denselben Angaben eignet sich ebenfalls."
+      ],
+      "misconceptions": [
+        "Aus vier Arbeitsstunden Reaktionszeit einen verbindlichen Behebungstermin ableiten."
+      ],
+      "sampleAnswer": "An R2 rufe ich die Ticketnummer 17 zum Modellgerät G-17 auf. Ich erwarte die gespeicherte Störung und sehe eine leere Trefferliste. Die Annahme kann den Fall nicht weitergeben. Der Servicedesk bestätigt den Eingang und nennt den nächsten Rückmeldezeitpunkt. Nach der Erklärung wiederholen wir den Schritt.",
+      "followUp": "Welche Angabe würde helfen, einen Bedienfehler vom falschen Versionsstand zu unterscheiden?"
+    }
+  ],
+  "cards": [
+    {
+      "id": "fiae-lf12a-training-card-01",
+      "front": "Was braucht die Annahme für eine selbst überprüfbare Kurzanleitung?",
+      "back": "Startvoraussetzung, Handlungsschritte, sichtbare Ergebnisse und Hilfen bei einer typischen Fehleingabe.",
+      "objectiveIds": [
+        "fiae-lf12a-training-guide"
+      ],
+      "blockIds": [
+        "fiae-lf12a-training-block-1"
+      ]
+    },
+    {
+      "id": "fiae-lf12a-training-card-02",
+      "front": "Wann zählt ein Übungsversuch im Werkstattfall als Erfolg?",
+      "back": "Der korrekte Auftrag wird ohne Hilfe innerhalb von höchstens 120 Sekunden erfasst und wieder geöffnet.",
+      "objectiveIds": [
+        "fiae-lf12a-training-guide"
+      ],
+      "blockIds": [
+        "fiae-lf12a-training-block-2"
+      ]
+    },
+    {
+      "id": "fiae-lf12a-training-card-03",
+      "front": "Welchen Stand nennt die Übergabe?",
+      "back": "Die konkrete ausgelieferte Version zusammen mit den zugehörigen Dokumenten und Prüfergebnissen.",
+      "objectiveIds": [
+        "fiae-lf12a-training-handover"
+      ],
+      "blockIds": [
+        "fiae-lf12a-training-block-3"
+      ]
+    },
+    {
+      "id": "fiae-lf12a-training-card-04",
+      "front": "Wie bestätigt die IT die praktische Übernahme?",
+      "back": "Sie prüft den Zugriff auf die Materialien und führt den vereinbarten Funktionscheck aus.",
+      "objectiveIds": [
+        "fiae-lf12a-training-handover"
+      ],
+      "blockIds": [
+        "fiae-lf12a-training-block-3"
+      ]
+    },
+    {
+      "id": "fiae-lf12a-training-card-05",
+      "front": "Was bezeichnet die vierstündige Reaktionsfrist?",
+      "back": "Die Zeit für die Eingangsbestätigung in Arbeitsstunden. Die Behebung erhält einen gesonderten Status.",
+      "objectiveIds": [
+        "fiae-lf12a-training-support"
+      ],
+      "blockIds": [
+        "fiae-lf12a-training-block-4"
+      ]
+    },
+    {
+      "id": "fiae-lf12a-training-card-06",
+      "front": "Wie wird eine beantwortete Bedienfrage überprüft?",
+      "back": "Die betroffene Rolle spielt den erläuterten Schritt nach und bestätigt, ob das Problem gelöst ist.",
+      "objectiveIds": [
+        "fiae-lf12a-training-support"
+      ],
+      "blockIds": [
+        "fiae-lf12a-training-block-4"
+      ]
+    }
+  ],
+  "review": {
+    "status": "reviewed",
+    "checkedAt": "2026-11-19"
+  }
+}

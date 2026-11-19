@@ -1,0 +1,467 @@
+{
+  "schemaVersion": 1,
+  "version": "1.0.0",
+  "id": "fiae-lf10a-usability",
+  "title": "Bedienbarkeit und Funktion testen",
+  "fieldId": "LF10a",
+  "scope": "specialization",
+  "prerequisites": [
+    "fiae-lf10a-forms",
+    "common-lf5-testing"
+  ],
+  "objectives": [
+    {
+      "id": "fiae-lf10a-usability-tasks",
+      "text": "Einen kurzen Nutzertest mit konkreter Aufgabe und beobachtbaren Erfolgskriterien vorbereiten."
+    },
+    {
+      "id": "fiae-lf10a-usability-evaluate",
+      "text": "Funktionsfehler und Bedienprobleme aus Testergebnissen unterscheiden und Verbesserungen priorisieren."
+    }
+  ],
+  "sourceIds": [
+    "kmk-fachinformatiker-2019",
+    "lf10a-gds-testing",
+    "lf10a-gds-prototypes"
+  ],
+  "sources": [
+    {
+      "id": "kmk-fachinformatiker-2019",
+      "title": "KMK-Rahmenlehrplan Fachinformatiker/Fachinformatikerin vom 13.12.2019",
+      "url": "https://www.kmk.org/fileadmin/Dateien/pdf/Bildung/BeruflicheBildung/rlp/Fachinformatiker_19-12-13_EL.pdf",
+      "checkedAt": "2026-11-19",
+      "note": "Lernfeld 10a, Seite 21 des Rahmenlehrplans, verbindet Prozessmodellierung, Oberflächengestaltung, Tests und Wirtschaftlichkeit."
+    },
+    {
+      "id": "lf10a-gds-testing",
+      "title": "Government Digital Service: Using moderated usability testing",
+      "url": "https://www.gov.uk/service-manual/user-research/using-moderated-usability-testing",
+      "note": "Aufgaben mit offenem Lösungsweg stellen und Verhalten bei der Durchführung beobachten.",
+      "checkedAt": "2026-11-19"
+    },
+    {
+      "id": "lf10a-gds-prototypes",
+      "title": "Government Digital Service: Making prototypes",
+      "url": "https://www.gov.uk/service-manual/design/making-prototypes",
+      "note": "Prototyptiefe nach Fragestellung wählen und Entwürfe im Team erproben.",
+      "checkedAt": "2026-11-19"
+    }
+  ],
+  "caseStudy": {
+    "title": "Wird der Auftrag wirklich gefunden?",
+    "text": "Ein Werkstattteam erprobt die vorbereitete Reparaturmaske. In einem Durchlauf sucht die Annahme die funktionierende Schaltfläche lange. In einem anderen bestätigt die App den Auftrag, aber er fehlt in der für die Prüfung vorgesehenen Ticketliste. Du planst einen kurzen Test und untersuchst beide Befunde."
+  },
+  "blocks": [
+    {
+      "id": "fiae-lf10a-usability-tasks",
+      "title": "1. Eine Aufgabe ohne vorweggenommenen Bedienweg stellen",
+      "objectiveIds": [
+        "fiae-lf10a-usability-tasks"
+      ],
+      "sourceIds": [
+        "lf10a-gds-testing"
+      ],
+      "paragraphs": [
+        "Lege die Frage fest, bevor du jemanden einlädst. Hier soll eine Person aus der Annahme einen Defekt melden und danach die Kennung für eine Rückfrage nennen. Wähle möglichst jemanden, der diese Aufgabe im Alltag übernehmen könnte. Verwende eigens erfundene Daten und einen definierten Ausgangsstand.",
+        "Formuliere den Arbeitsauftrag als Situation mit Ziel. „Der Einzug am Gerät G-17 klemmt. Melde den Defekt für die Werkstatt und nenne uns die Kennung.“ Damit sind Eingabedaten und Ziel bekannt. Die Person entscheidet selbst, wo sie anfängt und welche Aktion sie auslöst. Klickanweisungen würden gerade die Suche verdecken, die du beobachten willst."
+      ],
+      "example": {
+        "title": "Ein Probelauf vor dem Termin",
+        "text": "Setze den Teststand auf einen leeren Eingang zurück. Gib einem Kollegen die Aufgabenkarte und prüfe, ob er die benötigten Daten hat. Entferne den Satz „Klicke rechts unten“, bevor du die Karte der Testperson gibst."
+      },
+      "misconception": {
+        "claim": "Ein Nutzertest wird zuverlässiger, wenn alle Klicks im Auftrag stehen.",
+        "correction": "Eine solche Anleitung prüft das Nachmachen. Für die eigenständige Bedienbarkeit muss die Person den Weg selbst finden."
+      },
+      "takeaway": "Beschreibe das Ziel so klar, dass die Person ihren eigenen Weg dorthin wählen kann."
+    },
+    {
+      "id": "fiae-lf10a-usability-observe",
+      "title": "2. Erfolg und Hilfen nachvollziehbar erfassen",
+      "objectiveIds": [
+        "fiae-lf10a-usability-tasks"
+      ],
+      "sourceIds": [
+        "lf10a-gds-testing"
+      ],
+      "paragraphs": [
+        "Vereinbare vorab, woran du Erfolg erkennst: genau ein Ticket mit G-17 und passendem Symptom ist im Prüfbestand, die Person nennt dessen Kennung ohne Hilfe. Eine Zielzeit kannst du separat auswerten und Start und Ende der Messung festlegen. Ein schneller Abbruch ist kein schneller Erfolg.",
+        "Protokolliere relevante Handlungen, sichtbares Ergebnis und erhaltene Hinweise der Moderation. Liefert die Moderation einen Tipp, kennzeichne den Versuch als „mit Hilfe“. Eine anschließende Frage wie „Was hast du hier erwartet?“ kann die Beobachtung ergänzen. Unterstelle der Person keine Absicht, die sie nicht geäußert hat."
+      ],
+      "example": {
+        "title": "Ergebnis einer Beispielrunde",
+        "text": "Die Person findet die Taste nach 45 Sekunden. Ein passender Datensatz ist vorhanden, die Kennung wird ohne Tipp genannt. Damit ist das funktionale Ziel erreicht. Die lange Suche bleibt ein eigener Hinweis auf Bedienaufwand."
+      },
+      "misconception": {
+        "claim": "Ein freundliches Urteil am Ende beweist, dass die Aufgabe gelang.",
+        "correction": "Zufriedenheit ist eine weitere Information. Den Aufgabenerfolg prüfst du an Handlungen und vereinbartem Ergebnis."
+      },
+      "takeaway": "Halte selbstständigen Erfolg, Erfolg mit Hilfe und Abbruch unterscheidbar fest."
+    },
+    {
+      "id": "fiae-lf10a-usability-diagnose",
+      "title": "3. Befunde nachprüfen und einordnen",
+      "objectiveIds": [
+        "fiae-lf10a-usability-evaluate"
+      ],
+      "sourceIds": [
+        "kmk-fachinformatiker-2019",
+        "lf10a-gds-testing"
+      ],
+      "paragraphs": [
+        "Ein Funktionsfehler liegt vor, wenn ein erwartetes Systemergebnis unter den vereinbarten Bedingungen ausbleibt. Eine lange Suche trotz korrekt arbeitender Funktion ist ein Bedienproblem. Beide können gleichzeitig auftreten. Die beobachtete Wirkung und ihre vermutete Ursache gehören getrennt ins Protokoll.",
+        "Prüfe einen auffälligen Fall unter denselben Bedingungen nach. Bei einer fehlenden Meldung kontrollierst du den Prüfbestand mit derselben Ticketkennung und ohne aktiven Listenfilter. Bei einer langen Suche beobachtest du, ob die Aktion nach dem Auffinden tatsächlich das richtige Ergebnis erzeugt. Kannst du die Ursache noch nicht unterscheiden, halte sie offen."
+      ],
+      "example": {
+        "title": "Zwei Protokollzeilen",
+        "text": "A: Nach bestätigter Anlage fehlt R-41 auch im ungefilterten Prüfbestand. Der erwartete Auftrag ist dort nicht auffindbar. Ob Speichern, Abruf oder Anzeige fehlerhaft sind, klärst du mit einem unabhängigen Prüfnachweis. B: Die Person sucht „Weiter“ lange, danach entsteht genau ein richtiger Auftrag. Hier funktioniert die Anlage, aber Benennung oder Platzierung erschweren das Finden."
+      },
+      "misconception": {
+        "claim": "Ein Abbruch beweist bereits einen Speicherfehler.",
+        "correction": "Der Abbruch kann viele Ursachen haben. Überprüfe Datenstand, sichtbare Schritte und Reproduzierbarkeit."
+      },
+      "takeaway": "Trenne die beobachtete Abweichung von der Erklärung, die noch zu prüfen ist."
+    },
+    {
+      "id": "fiae-lf10a-usability-prioritize",
+      "title": "4. Nachwirkung, Häufigkeit und Aufwand abwägen",
+      "objectiveIds": [
+        "fiae-lf10a-usability-evaluate"
+      ],
+      "sourceIds": [
+        "lf10a-gds-testing",
+        "lf10a-gds-prototypes"
+      ],
+      "paragraphs": [
+        "Ordne Probleme danach, welche Aufgaben sie verhindern oder erschweren und bei wie vielen beobachteten Versuchen sie vorkommen. Ein verlorener Auftrag kann schwerer wiegen als ein oft geäußerter Wunsch zur Farbe. Eine kleine Gruppe liefert konkrete Hinweise, aber keine verlässliche Prozentprognose für den gesamten Betrieb.",
+        "Wähle eine begrenzte Änderung und formuliere ihren Nachtest. Nach einer Korrektur der Anlage muss das richtige Ticket im Bestand nachweisbar sein. Nach einer Umbenennung ist relevant, ob vergleichbare Personen die Aktion mit identischer Aufgabe ohne Hilfe finden. Notiere die geprüfte Version, damit ein alter Befund nicht versehentlich der neuen Fassung zugerechnet wird."
+      ],
+      "example": {
+        "title": "Reihenfolge für einen Nachmittag",
+        "text": "Behebe zuerst den nachgewiesenen Auftragsverlust und erprobe die Anlage mit frischen Testdaten. Plane dann „Reparatur melden“ als neue Benennung und wiederhole die Suchaufgabe. Ein Farbwunsch ohne Einfluss auf Lesbarkeit oder Bedienung bleibt vorerst zurückgestellt."
+      },
+      "misconception": {
+        "claim": "Die häufigste Nennung bestimmt immer die nächste Änderung.",
+        "correction": "Auswirkung und fachliches Risiko können einen selteneren Befund dringlicher machen."
+      },
+      "takeaway": "Eine Priorität braucht einen Grund und ein Kriterium für die Nachprüfung."
+    }
+  ],
+  "questionFile": "questions/fiae-lf10a-usability.v1.csv",
+  "quiz": {
+    "questionIds": [
+      "LJ-LF10A-USABILITY-Q01",
+      "LJ-LF10A-USABILITY-Q02",
+      "LJ-LF10A-USABILITY-Q03",
+      "LJ-LF10A-USABILITY-Q04",
+      "LJ-LF10A-USABILITY-Q05",
+      "LJ-LF10A-USABILITY-Q06"
+    ]
+  },
+  "exam": {
+    "questionIds": [
+      "LJ-LF10A-USABILITY-E01",
+      "LJ-LF10A-USABILITY-E02",
+      "LJ-LF10A-USABILITY-E03",
+      "LJ-LF10A-USABILITY-E04",
+      "LJ-LF10A-USABILITY-E05",
+      "LJ-LF10A-USABILITY-E06",
+      "LJ-LF10A-USABILITY-E07",
+      "LJ-LF10A-USABILITY-E08"
+    ],
+    "passPercent": 80,
+    "scoring": "all-or-nothing-per-question",
+    "timed": false
+  },
+  "questionLinks": [
+    {
+      "questionId": "LJ-LF10A-USABILITY-Q01",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf10a-usability-tasks"
+      ],
+      "blockIds": [
+        "fiae-lf10a-usability-tasks"
+      ]
+    },
+    {
+      "questionId": "LJ-LF10A-USABILITY-Q02",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf10a-usability-tasks"
+      ],
+      "blockIds": [
+        "fiae-lf10a-usability-observe"
+      ]
+    },
+    {
+      "questionId": "LJ-LF10A-USABILITY-Q03",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf10a-usability-tasks"
+      ],
+      "blockIds": [
+        "fiae-lf10a-usability-observe"
+      ]
+    },
+    {
+      "questionId": "LJ-LF10A-USABILITY-Q04",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf10a-usability-evaluate"
+      ],
+      "blockIds": [
+        "fiae-lf10a-usability-diagnose"
+      ]
+    },
+    {
+      "questionId": "LJ-LF10A-USABILITY-Q05",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf10a-usability-evaluate"
+      ],
+      "blockIds": [
+        "fiae-lf10a-usability-diagnose"
+      ]
+    },
+    {
+      "questionId": "LJ-LF10A-USABILITY-Q06",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf10a-usability-evaluate"
+      ],
+      "blockIds": [
+        "fiae-lf10a-usability-prioritize"
+      ]
+    },
+    {
+      "questionId": "LJ-LF10A-USABILITY-E01",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf10a-usability-tasks"
+      ],
+      "blockIds": [
+        "fiae-lf10a-usability-tasks"
+      ]
+    },
+    {
+      "questionId": "LJ-LF10A-USABILITY-E02",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf10a-usability-tasks"
+      ],
+      "blockIds": [
+        "fiae-lf10a-usability-observe"
+      ]
+    },
+    {
+      "questionId": "LJ-LF10A-USABILITY-E03",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf10a-usability-tasks"
+      ],
+      "blockIds": [
+        "fiae-lf10a-usability-observe"
+      ]
+    },
+    {
+      "questionId": "LJ-LF10A-USABILITY-E04",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf10a-usability-evaluate"
+      ],
+      "blockIds": [
+        "fiae-lf10a-usability-diagnose"
+      ]
+    },
+    {
+      "questionId": "LJ-LF10A-USABILITY-E05",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf10a-usability-evaluate"
+      ],
+      "blockIds": [
+        "fiae-lf10a-usability-prioritize"
+      ]
+    },
+    {
+      "questionId": "LJ-LF10A-USABILITY-E06",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf10a-usability-evaluate"
+      ],
+      "blockIds": [
+        "fiae-lf10a-usability-prioritize"
+      ]
+    },
+    {
+      "questionId": "LJ-LF10A-USABILITY-E07",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf10a-usability-tasks",
+        "fiae-lf10a-usability-evaluate"
+      ],
+      "blockIds": [
+        "fiae-lf10a-usability-observe",
+        "fiae-lf10a-usability-prioritize"
+      ]
+    },
+    {
+      "questionId": "LJ-LF10A-USABILITY-E08",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf10a-usability-evaluate"
+      ],
+      "blockIds": [
+        "fiae-lf10a-usability-diagnose",
+        "fiae-lf10a-usability-prioritize"
+      ]
+    }
+  ],
+  "interview": [
+    {
+      "id": "fiae-lf10a-usability-talk-1",
+      "prompt": "Wie bereitest du einen kurzen Test für die Annahme vor, wenn dich gerade die Auffindbarkeit des Sendens interessiert?",
+      "objectiveIds": [
+        "fiae-lf10a-usability-tasks"
+      ],
+      "blockIds": [
+        "fiae-lf10a-usability-tasks",
+        "fiae-lf10a-usability-observe"
+      ],
+      "keyPoints": [
+        "Passende Rolle und synthetische Daten wählen.",
+        "Ziel ohne Klickanleitung stellen.",
+        "Erfolg und Umgang mit Hilfe vorab festlegen."
+      ],
+      "acceptableAlternatives": [
+        "Eine vergleichbare erfundene Gerätenummer mit eindeutigem Symptom eignet sich ebenso."
+      ],
+      "misconceptions": [
+        "Eine geführte Klickfolge nimmt der Erprobung die Suchentscheidung ab."
+      ],
+      "sampleAnswer": "Ich stelle einen leeren Testbestand bereit und lasse die Person den Defekt an G-17 melden. Gelungen ist die Aufgabe, wenn ein richtiger Auftrag entsteht und dessen Nummer ohne Tipp genannt wird.",
+      "followUp": "Wie notierst du den Versuch, wenn du auf die Schaltfläche zeigst?"
+    },
+    {
+      "id": "fiae-lf10a-usability-talk-2",
+      "prompt": "Wie untersuchst du den Unterschied zwischen einem fehlenden Ticket und einer langen Suche nach der Aktion?",
+      "objectiveIds": [
+        "fiae-lf10a-usability-evaluate"
+      ],
+      "blockIds": [
+        "fiae-lf10a-usability-diagnose"
+      ],
+      "keyPoints": [
+        "Erwarteten und tatsächlichen Zustand vergleichen.",
+        "Filter, Kennung und Prüfdaten kontrollieren.",
+        "Suchverhalten getrennt von der Speicherfunktion protokollieren."
+      ],
+      "acceptableAlternatives": [
+        "Ein verlässlicher anderer Prüfnachweis des gespeicherten Datensatzes kann die Listenansicht ergänzen."
+      ],
+      "misconceptions": [
+        "Eine langsame Bedienung beweist keine defekte Anlage."
+      ],
+      "sampleAnswer": "Ich prüfe den passenden Auftrag im ungefilterten Bestand. Fehlt er nach bestätigter Anlage, ist das ein Funktionsbefund. Entsteht er korrekt, nachdem die Person lange gesucht hat, untersuche ich Wortwahl und Platzierung.",
+      "followUp": "Was würdest du festhalten, wenn die Ursache noch offen ist?"
+    },
+    {
+      "id": "fiae-lf10a-usability-talk-3",
+      "prompt": "Wie priorisierst du einen verlorenen Auftrag gegenüber einem Farbwunsch und planst einen aussagekräftigen Nachtest?",
+      "objectiveIds": [
+        "fiae-lf10a-usability-tasks",
+        "fiae-lf10a-usability-evaluate"
+      ],
+      "blockIds": [
+        "fiae-lf10a-usability-observe",
+        "fiae-lf10a-usability-prioritize"
+      ],
+      "keyPoints": [
+        "Auswirkung auf die Kernaufgabe benennen.",
+        "Neue Version und identische Kriterien festlegen.",
+        "Reale Beobachtung statt vermutetem Erfolg dokumentieren."
+      ],
+      "acceptableAlternatives": [
+        "Ein Farbproblem, das die Lesbarkeit blockiert, bekommt eine andere Priorität als ein ästhetischer Wunsch."
+      ],
+      "misconceptions": [
+        "Eine abgearbeitete Änderung im Plan ist noch kein erfolgreicher Nachtest."
+      ],
+      "sampleAnswer": "Der Auftragsverlust gefährdet den Reparaturprozess. Nach der Korrektur melde ich einen neuen Defekt und suche genau dessen Kennung. Den reinen Farbwunsch bearbeite ich später.",
+      "followUp": "Welcher zusätzliche Nachtest wäre bei einer geänderten Beschriftung sinnvoll?"
+    }
+  ],
+  "cards": [
+    {
+      "id": "fiae-lf10a-usability-card-01",
+      "front": "Woran erkennst du eine neutrale Testaufgabe?",
+      "back": "Sie nennt Situation, Testdaten und Ziel, ohne den Weg durch die Oberfläche vorzugeben.",
+      "objectiveIds": [
+        "fiae-lf10a-usability-tasks"
+      ],
+      "blockIds": [
+        "fiae-lf10a-usability-tasks"
+      ]
+    },
+    {
+      "id": "fiae-lf10a-usability-card-02",
+      "front": "Was gehört in ein beobachtbares Erfolgskriterium?",
+      "back": "Ein sichtbares oder prüfbares Ergebnis, etwa einen passenden Datensatz und die korrekt genannte Kennung ohne Tipp.",
+      "objectiveIds": [
+        "fiae-lf10a-usability-tasks"
+      ],
+      "blockIds": [
+        "fiae-lf10a-usability-observe"
+      ]
+    },
+    {
+      "id": "fiae-lf10a-usability-card-03",
+      "front": "Wie behandelst du eine Hilfe der Moderation?",
+      "back": "Halte Art und Zeitpunkt fest und kennzeichne einen danach gelungenen Versuch als Erfolg mit Hilfe.",
+      "objectiveIds": [
+        "fiae-lf10a-usability-tasks"
+      ],
+      "blockIds": [
+        "fiae-lf10a-usability-observe"
+      ]
+    },
+    {
+      "id": "fiae-lf10a-usability-card-04",
+      "front": "Wann ist eine lange Suche ein Bedienbefund?",
+      "back": "Wenn die Person die Aktion schwer findet und sie nach dem Auffinden das vereinbarte Ergebnis liefert.",
+      "objectiveIds": [
+        "fiae-lf10a-usability-evaluate"
+      ],
+      "blockIds": [
+        "fiae-lf10a-usability-diagnose"
+      ]
+    },
+    {
+      "id": "fiae-lf10a-usability-card-05",
+      "front": "Wie prüfst du einen vermeintlichen Auftragsverlust?",
+      "back": "Prüfbedingungen, angezeigte Kennung, ungefilterten Bestand und erwartetes Ergebnis vergleichen.",
+      "objectiveIds": [
+        "fiae-lf10a-usability-evaluate"
+      ],
+      "blockIds": [
+        "fiae-lf10a-usability-diagnose"
+      ]
+    },
+    {
+      "id": "fiae-lf10a-usability-card-06",
+      "front": "Was sagt „zwei von vier benötigten Hilfe“?",
+      "back": "In diesen vier Versuchen war zweimal Hilfe nötig. Daraus folgt keine genaue Quote für alle Beschäftigten.",
+      "objectiveIds": [
+        "fiae-lf10a-usability-evaluate"
+      ],
+      "blockIds": [
+        "fiae-lf10a-usability-prioritize"
+      ]
+    }
+  ],
+  "review": {
+    "status": "reviewed",
+    "checkedAt": "2026-11-19"
+  }
+}

@@ -1,0 +1,471 @@
+{
+  "schemaVersion": 1,
+  "id": "common-lf5-objects",
+  "version": "1.0.0",
+  "title": "Objekte und einfache Beziehungen",
+  "fieldId": "LF5",
+  "scope": "common",
+  "prerequisites": [
+    "common-lf5-functions"
+  ],
+  "sourceIds": [
+    "lf5-mdn-functions",
+    "lf5-mdn-objects",
+    "lf5-mdn-classes"
+  ],
+  "sources": [
+    {
+      "id": "lf5-mdn-functions",
+      "title": "MDN: Functions",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Functions",
+      "note": "Funktionsdefinition, Parameter, Argumente und Rückgabewerte geprüft.",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "lf5-mdn-objects",
+      "title": "MDN: Working with objects",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Working_with_objects",
+      "note": "Eigenschaften, Methoden und Punktzugriff geprüft. Alle Objekte und Beziehungen sind eigene Lehrbeispiele.",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "lf5-mdn-classes",
+      "title": "MDN: Using classes",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_classes",
+      "note": "class, constructor, new, this und Instanzmethoden geprüft; Vererbung wird nicht vorgezogen.",
+      "checkedAt": "2026-11-16"
+    }
+  ],
+  "objectives": [
+    {
+      "id": "common-lf5-objects-model",
+      "text": "Aus einem kleinen Anwendungsfall Objekte mit passenden Attributen und Methoden ableiten."
+    },
+    {
+      "id": "common-lf5-objects-instances",
+      "text": "Eine Klasse von ihren einzelnen Objekten unterscheiden und eine einfache Objektbeziehung erklären."
+    }
+  ],
+  "caseStudy": {
+    "title": "Mira beschreibt Materialien als Objekte",
+    "text": "Radblick verwaltet verschiedene Materialien. Mira modelliert ihre Eigenschaften und eine kleine Bestandsmethode. Eine zusätzliche Ausleihe verweist im Lehrbeispiel auf ein Material; echte personenbezogene Ausleihdaten werden nicht verwendet."
+  },
+  "blocks": [
+    {
+      "id": "common-lf5-objects-model",
+      "title": "1. Eigenschaften und Verhalten unterscheiden",
+      "objectiveIds": [
+        "common-lf5-objects-model"
+      ],
+      "sourceIds": [
+        "lf5-mdn-objects"
+      ],
+      "paragraphs": [
+        "Ein Objekt fasst zusammengehörige Daten und Verhalten zusammen. Für ein Material passen die Attribute id, name und quantity: Kennung, Bezeichnung und Stückzahl. Eine Methode beschreibt eine Tätigkeit des Objekts, zum Beispiel die Frage, ob eine angeforderte Menge verfügbar ist.",
+        "Ein einfaches JavaScript-Objekt lässt sich so notieren: const item = { id: 1, name: 'Kabel', quantity: 8 };. Die geschweiften Klammern enthalten Eigenschaften mit Namen und Wert, getrennt durch Kommas. item.quantity liest über den Punkt die Menge 8.",
+        "Leite Attribute und Methoden aus dem Auftrag ab. Eine Postleitzahl passt hier nicht zum Materialbestand. hasStock(requested) beschreibt eine Bestandsfrage; quantity beschreibt einen Zustand. Ein Feldname sollte nicht zugleich eine völlig andere Tätigkeit meinen."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Übungsfall",
+        "text": "Für eine Maus sind id = 2, name = 'Maus' und quantity = 2 plausible Attribute. hasStock(1) ist ein Methodenaufruf."
+      },
+      "misconception": {
+        "claim": "Eine Methode ist einfach ein anderes Wort für einen gespeicherten Zahlenwert.",
+        "correction": "Eine Methode ist eine zu einem Objekt gehörende Funktion; ein Attribut hält einen Wert."
+      },
+      "takeaway": "Modelliere Zustand als Attribute und fachliche Tätigkeiten als Methoden."
+    },
+    {
+      "id": "common-lf5-objects-class",
+      "title": "2. Klasse und einzelne Instanzen",
+      "objectiveIds": [
+        "common-lf5-objects-instances"
+      ],
+      "sourceIds": [
+        "lf5-mdn-classes"
+      ],
+      "paragraphs": [
+        "Eine Klasse beschreibt einen gemeinsamen Aufbau und Methoden für ihre Instanzen. class Material { constructor(id, name, quantity) { this.id = id; this.name = name; this.quantity = quantity; } } ist eine einfache JavaScript-Klasse.",
+        "constructor wird beim Erzeugen einer Instanz verwendet. this bezeichnet hier das neu erzeugte Objekt. Mit const cable = new Material(1, 'Kabel', 8); und const mouse = new Material(2, 'Maus', 2); entstehen zwei verschiedene Instanzen derselben Klasse.",
+        "Material ist die Klasse; cable und mouse verweisen auf konkrete Objekte. Ihre Attributnamen passen zur gleichen Beschreibung, ihre Werte können verschieden sein. Eine Änderung von mouse.quantity verändert nicht von selbst die eigene quantity-Eigenschaft des getrennt erzeugten cable-Objekts."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Übungsfall",
+        "text": "Zwei neue Material-Objekte können denselben Namen haben und trotzdem verschiedene Kennungen und Mengen besitzen."
+      },
+      "misconception": {
+        "claim": "Eine Klasse ist schon genau das eine Material mit der Kennung 1.",
+        "correction": "Die Klasse beschreibt den gemeinsamen Aufbau; new erzeugt jeweils eine konkrete Instanz."
+      },
+      "takeaway": "Trenne die Bauvorschrift von den einzelnen Objekten mit ihren eigenen Werten."
+    },
+    {
+      "id": "common-lf5-objects-method",
+      "title": "3. Eine Methode zum passenden Zustand",
+      "objectiveIds": [
+        "common-lf5-objects-model"
+      ],
+      "sourceIds": [
+        "lf5-mdn-objects",
+        "lf5-mdn-classes"
+      ],
+      "paragraphs": [
+        "Innerhalb der Klasse kann nach dem constructor die Methode hasStock(requested) { return requested <= this.quantity; } stehen. Sie liest die Menge der angesprochenen Instanz. Dieses kurze Lehrbeispiel setzt gültige ganze Mengen voraus; die vollständige Eingabeprüfung aus available bleibt als eigener Vertrag bekannt.",
+        "cable.hasStock(3) ruft die Methode am Kabelobjekt auf. Bei cable.quantity = 8 ergibt sich true. mouse.hasStock(3) kann bei mouse.quantity = 2 false ergeben, obwohl dieselbe Methodenbeschreibung verwendet wird.",
+        "Der Aufruf ist eine Bestandsfrage und ändert noch nichts. Aus einem wahren Ergebnis folgt keine Buchung. Beschreibe daher zu jeder Methode Eingaben, Ergebnis und mögliche Zustandsänderungen. Die Musterfunktion available prüft zwei Werte; eine Instanzmethode kann einen davon aus dem Objekt lesen."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Übungsfall",
+        "text": "hasStock an cable mit Anforderung 8 prüft 8 <= 8 und liefert true. quantity bleibt 8."
+      },
+      "misconception": {
+        "claim": "Gleiche Methodennamen müssen an allen Instanzen denselben Wert liefern.",
+        "correction": "Die Methode verwendet auch den Zustand der jeweiligen Instanz und die übergebene Anforderung."
+      },
+      "takeaway": "Eine Methode gehört zum Objekt, ihr Ergebnis hängt von dessen Zustand und den Eingaben ab."
+    },
+    {
+      "id": "common-lf5-objects-relation",
+      "title": "4. Eine einfache Beziehung erklären",
+      "objectiveIds": [
+        "common-lf5-objects-instances",
+        "common-lf5-objects-model"
+      ],
+      "sourceIds": [
+        "lf5-mdn-objects",
+        "lf5-mdn-classes"
+      ],
+      "paragraphs": [
+        "Eine Ausleihe und ein Material sind verschiedene fachliche Objekte. Im kleinen Modell bezieht sich eine Ausleihe auf genau ein Material, während ein Material in mehreren Ausleihen vorkommen kann. Diese Vorgabe ist eine einfache 1:n-Beziehung, gesprochen eins zu viele.",
+        "Ein Objekt kann eine Referenz auf ein anderes halten: const loan = { id: 10, material: cable, requested: 2 };. loan.material.quantity liest die Menge des referenzierten Kabelobjekts. Die Referenz ist nicht automatisch eine unabhängige Kopie des Materials.",
+        "Die Beziehung kann in einer späteren Tabelle mit einer Materialkennung abgebildet werden. In diesem Abschnitt genügt die Bedeutung: Welche Ausleihe gehört zu welchem Material? Ein freier Materialname reicht bei gleichen Namen nicht als verlässliche Zuordnung. Zusätzliche Klassenhierarchien werden für diesen kleinen Auftrag nicht benötigt."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Übungsfall",
+        "text": "Zwei Ausleihen mit verschiedenen Kennungen können auf dasselbe Materialobjekt cable verweisen."
+      },
+      "misconception": {
+        "claim": "Eine Referenz auf cable erzeugt von selbst einen zweiten unabhängigen Kabelbestand.",
+        "correction": "Die Referenz verweist auf dasselbe Objekt. Eine Kopie müsste gezielt erzeugt werden."
+      },
+      "takeaway": "Erkläre Richtung und Anzahl einer Beziehung sowie die Identität des referenzierten Objekts."
+    }
+  ],
+  "questionFile": "questions/common-lf5-objects.v1.csv",
+  "quiz": {
+    "questionIds": [
+      "LJ-LF5-OBJECTS-Q01",
+      "LJ-LF5-OBJECTS-Q02",
+      "LJ-LF5-OBJECTS-Q03",
+      "LJ-LF5-OBJECTS-Q04",
+      "LJ-LF5-OBJECTS-Q05",
+      "LJ-LF5-OBJECTS-Q06"
+    ]
+  },
+  "exam": {
+    "questionIds": [
+      "LJ-LF5-OBJECTS-E01",
+      "LJ-LF5-OBJECTS-E02",
+      "LJ-LF5-OBJECTS-E03",
+      "LJ-LF5-OBJECTS-E04",
+      "LJ-LF5-OBJECTS-E05",
+      "LJ-LF5-OBJECTS-E06",
+      "LJ-LF5-OBJECTS-E07",
+      "LJ-LF5-OBJECTS-E08"
+    ],
+    "passPercent": 80,
+    "scoring": "all-or-nothing-per-question",
+    "timed": false
+  },
+  "questionLinks": [
+    {
+      "questionId": "LJ-LF5-OBJECTS-Q01",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf5-objects-model"
+      ],
+      "blockIds": [
+        "common-lf5-objects-model"
+      ]
+    },
+    {
+      "questionId": "LJ-LF5-OBJECTS-Q02",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf5-objects-model"
+      ],
+      "blockIds": [
+        "common-lf5-objects-model"
+      ]
+    },
+    {
+      "questionId": "LJ-LF5-OBJECTS-Q03",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf5-objects-instances"
+      ],
+      "blockIds": [
+        "common-lf5-objects-class"
+      ]
+    },
+    {
+      "questionId": "LJ-LF5-OBJECTS-Q04",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf5-objects-model"
+      ],
+      "blockIds": [
+        "common-lf5-objects-method"
+      ]
+    },
+    {
+      "questionId": "LJ-LF5-OBJECTS-Q05",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf5-objects-instances"
+      ],
+      "blockIds": [
+        "common-lf5-objects-relation"
+      ]
+    },
+    {
+      "questionId": "LJ-LF5-OBJECTS-Q06",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf5-objects-instances"
+      ],
+      "blockIds": [
+        "common-lf5-objects-relation"
+      ]
+    },
+    {
+      "questionId": "LJ-LF5-OBJECTS-E01",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf5-objects-model"
+      ],
+      "blockIds": [
+        "common-lf5-objects-model"
+      ]
+    },
+    {
+      "questionId": "LJ-LF5-OBJECTS-E02",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf5-objects-instances"
+      ],
+      "blockIds": [
+        "common-lf5-objects-class"
+      ]
+    },
+    {
+      "questionId": "LJ-LF5-OBJECTS-E03",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf5-objects-instances"
+      ],
+      "blockIds": [
+        "common-lf5-objects-class"
+      ]
+    },
+    {
+      "questionId": "LJ-LF5-OBJECTS-E04",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf5-objects-model"
+      ],
+      "blockIds": [
+        "common-lf5-objects-method"
+      ]
+    },
+    {
+      "questionId": "LJ-LF5-OBJECTS-E05",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf5-objects-model"
+      ],
+      "blockIds": [
+        "common-lf5-objects-method"
+      ]
+    },
+    {
+      "questionId": "LJ-LF5-OBJECTS-E06",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf5-objects-instances"
+      ],
+      "blockIds": [
+        "common-lf5-objects-relation"
+      ]
+    },
+    {
+      "questionId": "LJ-LF5-OBJECTS-E07",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf5-objects-model",
+        "common-lf5-objects-instances"
+      ],
+      "blockIds": [
+        "common-lf5-objects-relation"
+      ]
+    },
+    {
+      "questionId": "LJ-LF5-OBJECTS-E08",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf5-objects-model",
+        "common-lf5-objects-instances"
+      ],
+      "blockIds": [
+        "common-lf5-objects-model",
+        "common-lf5-objects-class"
+      ]
+    }
+  ],
+  "interview": [
+    {
+      "id": "common-lf5-objects-talk-1",
+      "prompt": "Leite für einen Materialbestand sinnvolle Attribute und eine Methode ab.",
+      "objectiveIds": [
+        "common-lf5-objects-model"
+      ],
+      "blockIds": [
+        "common-lf5-objects-model",
+        "common-lf5-objects-method"
+      ],
+      "keyPoints": [
+        "id, name, quantity als Zustand nennen.",
+        "Bestandsfrage als Methode benennen.",
+        "Rückgabe von Buchung unterscheiden."
+      ],
+      "acceptableAlternatives": [
+        "Eine fachlich gleichwertige Erklärung mit passenden eigenen Beispielen."
+      ],
+      "misconceptions": [
+        "Eine Methode ist einfach ein anderes Wort für einen gespeicherten Zahlenwert."
+      ],
+      "sampleAnswer": "Ein Material hat id, name und quantity. Die Methode hasStock(requested) vergleicht einen gültigen Wunsch mit der Objektmenge und liefert einen Wahrheitswert. Sie ändert die Menge in diesem Beispiel nicht.",
+      "followUp": "Welche Eingabevoraussetzung hat die verkürzte Methode?"
+    },
+    {
+      "id": "common-lf5-objects-talk-2",
+      "prompt": "Erkläre Material, cable und mouse anhand zweier new-Aufrufe.",
+      "objectiveIds": [
+        "common-lf5-objects-instances"
+      ],
+      "blockIds": [
+        "common-lf5-objects-class"
+      ],
+      "keyPoints": [
+        "Klasse als gemeinsame Beschreibung erklären.",
+        "Zwei eigenständige Instanzen nennen.",
+        "Eigene Werte trotz gleicher Attributnamen darstellen."
+      ],
+      "acceptableAlternatives": [
+        "Eine fachlich gleichwertige Erklärung mit passenden eigenen Beispielen."
+      ],
+      "misconceptions": [
+        "Eine Klasse ist schon genau das eine Material mit der Kennung 1."
+      ],
+      "sampleAnswer": "Material ist die Klasse. cable und mouse sind zwei getrennt erzeugte Instanzen. Beide haben eine quantity, aber cable kann 8 und mouse 2 enthalten. Eine Änderung an mouse.quantity ändert die eigene Eigenschaft von cable nicht.",
+      "followUp": "Welche Aufgabe haben constructor und this dabei?"
+    },
+    {
+      "id": "common-lf5-objects-talk-3",
+      "prompt": "Erkläre die Beziehung zwischen Material und Ausleihe und die Bedeutung einer Referenz.",
+      "objectiveIds": [
+        "common-lf5-objects-model",
+        "common-lf5-objects-instances"
+      ],
+      "blockIds": [
+        "common-lf5-objects-relation"
+      ],
+      "keyPoints": [
+        "1:n gemäß Fallvorgabe darstellen.",
+        "Ein Material pro Ausleihe zuordnen.",
+        "Referenz von Kopie unterscheiden."
+      ],
+      "acceptableAlternatives": [
+        "Eine fachlich gleichwertige Erklärung mit passenden eigenen Beispielen."
+      ],
+      "misconceptions": [
+        "Eine Referenz auf cable erzeugt von selbst einen zweiten unabhängigen Kabelbestand."
+      ],
+      "sampleAnswer": "Mehrere Ausleihen können dasselbe Material betreffen; jede Ausleihe betrifft hier eines. loan.material kann auf cable verweisen. Das erzeugt keinen zweiten Bestand, sondern erreicht dasselbe Objekt. Die Kennung hilft später bei der tabellarischen Zuordnung.",
+      "followUp": "Warum ist der Materialname bei gleichen Bezeichnungen ungeeignet als Kennung?"
+    }
+  ],
+  "cards": [
+    {
+      "id": "common-lf5-objects-card-1",
+      "front": "Was sind Attribute und Methoden?",
+      "back": "Attribute halten Werte eines Objekts; Methoden sind zugehörige Funktionen für dessen Verhalten.",
+      "objectiveIds": [
+        "common-lf5-objects-model"
+      ],
+      "blockIds": [
+        "common-lf5-objects-model"
+      ]
+    },
+    {
+      "id": "common-lf5-objects-card-2",
+      "front": "Wie liest du die quantity-Eigenschaft von item?",
+      "back": "Mit item.quantity über den Punktzugriff.",
+      "objectiveIds": [
+        "common-lf5-objects-model"
+      ],
+      "blockIds": [
+        "common-lf5-objects-model"
+      ]
+    },
+    {
+      "id": "common-lf5-objects-card-3",
+      "front": "Wie unterscheiden sich Klasse und Instanz?",
+      "back": "Die Klasse beschreibt Aufbau und Methoden; eine Instanz ist ein konkretes damit erzeugtes Objekt.",
+      "objectiveIds": [
+        "common-lf5-objects-instances"
+      ],
+      "blockIds": [
+        "common-lf5-objects-class"
+      ]
+    },
+    {
+      "id": "common-lf5-objects-card-4",
+      "front": "Was macht new Material(...)?",
+      "back": "Es erzeugt eine neue Instanz; der constructor belegt mit this die Eigenschaften dieses Objekts.",
+      "objectiveIds": [
+        "common-lf5-objects-instances"
+      ],
+      "blockIds": [
+        "common-lf5-objects-class"
+      ]
+    },
+    {
+      "id": "common-lf5-objects-card-5",
+      "front": "Warum kann dieselbe Methode unterschiedliche Ergebnisse liefern?",
+      "back": "Sie kann verschiedene Eingaben und den jeweiligen Zustand der angesprochenen Instanz verwenden.",
+      "objectiveIds": [
+        "common-lf5-objects-model"
+      ],
+      "blockIds": [
+        "common-lf5-objects-method"
+      ]
+    },
+    {
+      "id": "common-lf5-objects-card-6",
+      "front": "Was bedeutet die Beziehung Material 1:n Ausleihe?",
+      "back": "Ein Material kann mehreren Ausleihen zugeordnet sein; eine Ausleihe betrifft im Modell genau ein Material.",
+      "objectiveIds": [
+        "common-lf5-objects-instances"
+      ],
+      "blockIds": [
+        "common-lf5-objects-relation"
+      ]
+    }
+  ],
+  "review": {
+    "status": "reviewed",
+    "checkedAt": "2026-11-16"
+  }
+}
+

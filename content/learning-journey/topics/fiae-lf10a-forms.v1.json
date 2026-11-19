@@ -1,0 +1,484 @@
+{
+  "schemaVersion": 1,
+  "version": "1.0.0",
+  "id": "fiae-lf10a-forms",
+  "title": "Zugängliche Eingaben und klare Rückmeldungen",
+  "fieldId": "LF10a",
+  "scope": "specialization",
+  "prerequisites": [
+    "fiae-lf10a-layout",
+    "common-lf4-privacy"
+  ],
+  "objectives": [
+    {
+      "id": "fiae-lf10a-forms-access",
+      "text": "Eingabefelder mit verständlichen Beschriftungen, Tastaturbedienung und sichtbarem Fokus gestalten."
+    },
+    {
+      "id": "fiae-lf10a-forms-validation",
+      "text": "Fehlende oder ungültige Eingaben mit konkreten Fehlermeldungen und Korrekturmöglichkeiten behandeln."
+    },
+    {
+      "id": "fiae-lf10a-forms-privacy",
+      "text": "Für einen beschriebenen Zweck unnötige Eingaben erkennen und eine datensparsame Gestaltung vorschlagen."
+    }
+  ],
+  "sourceIds": [
+    "kmk-fachinformatiker-2019",
+    "lf10a-wai-forms",
+    "lf10a-wai-focus",
+    "lf10a-ec-privacy"
+  ],
+  "sources": [
+    {
+      "id": "kmk-fachinformatiker-2019",
+      "title": "KMK-Rahmenlehrplan Fachinformatiker/Fachinformatikerin vom 13.12.2019",
+      "url": "https://www.kmk.org/fileadmin/Dateien/pdf/Bildung/BeruflicheBildung/rlp/Fachinformatiker_19-12-13_EL.pdf",
+      "checkedAt": "2026-11-19",
+      "note": "Lernfeld 10a, Seite 21 des Rahmenlehrplans, verbindet Prozessmodellierung, Oberflächengestaltung, Tests und Wirtschaftlichkeit."
+    },
+    {
+      "id": "lf10a-wai-forms",
+      "title": "W3C WAI: Forms Tutorial",
+      "url": "https://www.w3.org/WAI/tutorials/forms/",
+      "note": "Beschriftung, Eingabehilfen, Validierung und Rückmeldungen zu Formularen.",
+      "checkedAt": "2026-11-19"
+    },
+    {
+      "id": "lf10a-wai-focus",
+      "title": "W3C WAI: Understanding SC 2.4.7 Focus Visible",
+      "url": "https://www.w3.org/WAI/WCAG22/Understanding/focus-visible.html",
+      "note": "Erkennbare Fokusposition beim Bedienen mit der Tastatur.",
+      "checkedAt": "2026-11-19"
+    },
+    {
+      "id": "lf10a-ec-privacy",
+      "title": "Europäische Kommission: Principles of personal data processing under the GDPR",
+      "url": "https://commission.europa.eu/law/law-topic/data-protection/information-business-and-organisations/principles-gdpr_en",
+      "note": "Datenminimierung nach Artikel 5 Absatz 1 Buchstabe c und Zweckbindung bei der Gestaltung der Reparaturmeldung.",
+      "checkedAt": "2026-11-19"
+    }
+  ],
+  "caseStudy": {
+    "title": "Eine Meldung ohne Maus korrigieren",
+    "text": "Die Annahme trägt „Einzug klemmt“ ein und vergisst die Gerätekennung. Im Entwurf färbt sich der Rand rot, aber nach dem Tippen verschwinden die Feldnamen. Der interne Betrieb braucht für die Reparatur Gerät und Symptom. Rückfragen laufen über den Schalter."
+  },
+  "blocks": [
+    {
+      "id": "fiae-lf10a-forms-access",
+      "title": "1. Beschriften und per Tastatur bedienen",
+      "objectiveIds": [
+        "fiae-lf10a-forms-access"
+      ],
+      "sourceIds": [
+        "lf10a-wai-forms",
+        "lf10a-wai-focus"
+      ],
+      "paragraphs": [
+        "Ein dauerhaft sichtbares Label benennt die erwartete Angabe. Bei HTML verweist das for des Labels auf die eindeutige id des Eingabefeldes. Ein Platzhalter darf ein Beispiel liefern, verschwindet aber beim Tippen. Formuliere benötigte Formate und Pflichtangaben so, dass sie schon vor der Eingabe erkennbar sind.",
+        "Native Eingaben und Schaltflächen bringen Tastaturverhalten mit. Gehe mit Tab vorwärts und mit Umschalt+Tab zurück. Ein sichtbarer Fokusring zeigt, welches Element die nächste Eingabe erhält. Prüfe diese Anzeige auch auf dem Hintergrund der Fehlerdarstellung. Das Antippen eines korrekt verbundenen Textlabels setzt bei einem Textfeld den Fokus auf das Feld."
+      ],
+      "example": {
+        "title": "Gerätefeld einrichten",
+        "text": "Schreibe „Gerätekennung (Pflichtfeld)“ in ein label mit for=\"geraet\", gib dem input id=\"geraet\" und required. Nenne das Format als bleibenden Hinweis: G, Bindestrich, zwei Ziffern. Tippe G-17 ein und prüfe, ob das Label weiterhin lesbar und der Fokus sichtbar ist."
+      },
+      "misconception": {
+        "claim": "Ein einmal sichtbarer Platzhalter reicht als Beschriftung.",
+        "correction": "Nach dem ersten Zeichen verschwindet er. Das zugeordnete Label bleibt sichtbar und liefert dem Feld einen zugänglichen Namen."
+      },
+      "takeaway": "Prüfe Name, Zuordnung und Fokus am tatsächlich bedienten Element."
+    },
+    {
+      "id": "fiae-lf10a-forms-validation",
+      "title": "2. Bei der Korrektur helfen",
+      "objectiveIds": [
+        "fiae-lf10a-forms-validation"
+      ],
+      "sourceIds": [
+        "lf10a-wai-forms"
+      ],
+      "paragraphs": [
+        "Prüfe zuerst, ob das Pflichtfeld gefüllt ist, dann das vereinbarte Format. In diesem Modell ist die Gerätekennung genau G, Bindestrich und zwei Ziffern. „Bitte Gerätekennung eintragen“ passt zur leeren Eingabe. Für G17 hilft „Bitte Gerätekennung im Format G-17 eingeben“.",
+        "Zeige die Meldung als Text beim Feld. Eine Farbe kann sie ergänzen. Verknüpfe Fehler und Feld zum Beispiel über aria-describedby und kennzeichne ein fehlerhaftes Feld mit aria-invalid=\"true\". Bei der Abgabe hilft der Fokus am ersten fehlerhaften Feld oder eine erreichbare Fehlerübersicht mit Feldlinks. Behalte richtige Angaben und entferne überholte Fehlermeldungen nach der Korrektur."
+      ],
+      "example": {
+        "title": "Eine Reparaturrunde",
+        "text": "Gib G17 und ein gültiges Symptom ein. Sende ab, lies den Formathinweis und korrigiere zu G-17. Das Symptom bleibt stehen. Nach erneuter erfolgreicher Prüfung soll die alte Meldung verschwinden. Eine tatsächliche Anlage darf erst nach bestätigter Speicherung angezeigt werden."
+      },
+      "misconception": {
+        "claim": "Ein roter Rahmen erklärt die notwendige Korrektur.",
+        "correction": "Ein Text nennt Feld und Abhilfe. Der rote Rahmen allein erklärt weder das erwartete Format noch die Bedeutung für Menschen, die die Farbe nicht unterscheiden."
+      },
+      "takeaway": "Unterscheide fehlend und falsch formatiert und biete einen verständlichen Rückweg."
+    },
+    {
+      "id": "fiae-lf10a-forms-privacy",
+      "title": "3. Datenumfang aus dem Zweck ableiten",
+      "objectiveIds": [
+        "fiae-lf10a-forms-privacy"
+      ],
+      "sourceIds": [
+        "lf10a-ec-privacy",
+        "lf10a-wai-forms"
+      ],
+      "paragraphs": [
+        "Schreibe für jedes gewünschte Feld auf, welche Tätigkeit es ermöglicht. Der Lernbetrieb ordnet G-17 einem Werkstattgerät zu und beschreibt den beobachteten Defekt. Die Rückfrage läuft über die interne Annahme. Eine private Rufnummer und die Wohnadresse der meldenden Person sind für diesen Ablauf entbehrlich.",
+        "Datenminimierung gilt schon beim Entwurf. Ein optionales Feld kann weiterhin unnötige personenbezogene Angaben sammeln. Wenn im Freitext der Satz „Beschreibe die Störung am Gerät“ genügt, fordere dort keine Personengeschichte an. Prüfe den tatsächlichen Datenfluss: Ein verborgenes Feld kann noch übertragen werden. Entferne entbehrliche Angaben aus Maske und Übertragung."
+      ],
+      "example": {
+        "title": "Vom Wunsch zur Feldentscheidung",
+        "text": "Die Werkstatt wünscht eine private Telefonnummer „für alle Fälle“. Gehe eine Rückfrage durch: Die Werkstatt kann ihre Rückfrage mit der Ticketkennung an den Schalter richten. Streiche das private Feld und prüfe am Entwurf, welche Angaben beim Senden übergeben werden."
+      },
+      "misconception": {
+        "claim": "Freiwillige private Angaben erfüllen von selbst das Ziel der Datenminimierung.",
+        "correction": "Prüfe die Erforderlichkeit für den festgelegten Zweck, auch bei freiwilligen Eingaben."
+      },
+      "takeaway": "Begründe jede Angabe mit dem Zweck des Auftrags und verwende erfundene Daten zum Testen."
+    },
+    {
+      "id": "fiae-lf10a-forms-check",
+      "title": "4. Erfolg, Fehler und Daten gemeinsam prüfen",
+      "objectiveIds": [
+        "fiae-lf10a-forms-access",
+        "fiae-lf10a-forms-validation",
+        "fiae-lf10a-forms-privacy"
+      ],
+      "sourceIds": [
+        "lf10a-wai-forms",
+        "lf10a-wai-focus",
+        "lf10a-ec-privacy"
+      ],
+      "paragraphs": [
+        "Lege synthetische Fälle an, ohne echte Beschäftigten- oder Gerätedaten zu verwenden. Starte einmal leer und einmal mit falschem Format. Nutze für einen dritten Versuch G-17 und „Einzug klemmt“. Prüfe den Erfolg über die bestätigte Kennung. Bei einem lokalen Übungsprototyp darf die Anzeige ein ausdrücklich simuliertes Ergebnis sein.",
+        "Gehe in jedem Versuch den erwarteten Weg mit der Tastatur. Notiere, welches Feld fokussiert wird, was die Meldung erklärt und welche Angaben erhalten bleiben. Kontrolliere die sichtbaren und zur Verarbeitung vorgesehenen Daten anhand des vereinbarten Zwecks. Ein schöner Bildschirmabzug enthält weder die Tastaturfolge noch den übertragenen Datensatz."
+      ],
+      "example": {
+        "title": "Drei Proben mit unterschiedlichen Ergebnissen",
+        "text": "Im ersten Versuch fehlt das Gerät, im zweiten der Bindestrich, im dritten passen die Angaben. Halte zu jedem Fall Soll und Ist fest. Vergleiche dann die vorgesehenen Felder der Übergabe mit Gerät und Symptom. Ein privat belegtes Zusatzfeld wäre ein eigener Befund."
+      },
+      "misconception": {
+        "claim": "Ein gültiger Musterauftrag deckt alle Eingabeprobleme ab.",
+        "correction": "Leerwert, abweichendes Format und gültige Eingabe führen zu verschiedenen Zuständen und brauchen je einen Versuch."
+      },
+      "takeaway": "Prüfe die Bedienhandlung und die betroffenen Daten mit demselben konkreten Auftrag."
+    }
+  ],
+  "questionFile": "questions/fiae-lf10a-forms.v1.csv",
+  "quiz": {
+    "questionIds": [
+      "LJ-LF10A-FORMS-Q01",
+      "LJ-LF10A-FORMS-Q02",
+      "LJ-LF10A-FORMS-Q03",
+      "LJ-LF10A-FORMS-Q04",
+      "LJ-LF10A-FORMS-Q05",
+      "LJ-LF10A-FORMS-Q06"
+    ]
+  },
+  "exam": {
+    "questionIds": [
+      "LJ-LF10A-FORMS-E01",
+      "LJ-LF10A-FORMS-E02",
+      "LJ-LF10A-FORMS-E03",
+      "LJ-LF10A-FORMS-E04",
+      "LJ-LF10A-FORMS-E05",
+      "LJ-LF10A-FORMS-E06",
+      "LJ-LF10A-FORMS-E07",
+      "LJ-LF10A-FORMS-E08"
+    ],
+    "passPercent": 80,
+    "scoring": "all-or-nothing-per-question",
+    "timed": false
+  },
+  "questionLinks": [
+    {
+      "questionId": "LJ-LF10A-FORMS-Q01",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf10a-forms-access"
+      ],
+      "blockIds": [
+        "fiae-lf10a-forms-access"
+      ]
+    },
+    {
+      "questionId": "LJ-LF10A-FORMS-Q02",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf10a-forms-access"
+      ],
+      "blockIds": [
+        "fiae-lf10a-forms-access"
+      ]
+    },
+    {
+      "questionId": "LJ-LF10A-FORMS-Q03",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf10a-forms-validation"
+      ],
+      "blockIds": [
+        "fiae-lf10a-forms-validation"
+      ]
+    },
+    {
+      "questionId": "LJ-LF10A-FORMS-Q04",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf10a-forms-validation"
+      ],
+      "blockIds": [
+        "fiae-lf10a-forms-validation"
+      ]
+    },
+    {
+      "questionId": "LJ-LF10A-FORMS-Q05",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf10a-forms-privacy"
+      ],
+      "blockIds": [
+        "fiae-lf10a-forms-privacy"
+      ]
+    },
+    {
+      "questionId": "LJ-LF10A-FORMS-Q06",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf10a-forms-privacy"
+      ],
+      "blockIds": [
+        "fiae-lf10a-forms-privacy"
+      ]
+    },
+    {
+      "questionId": "LJ-LF10A-FORMS-E01",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf10a-forms-access"
+      ],
+      "blockIds": [
+        "fiae-lf10a-forms-access"
+      ]
+    },
+    {
+      "questionId": "LJ-LF10A-FORMS-E02",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf10a-forms-access"
+      ],
+      "blockIds": [
+        "fiae-lf10a-forms-access",
+        "fiae-lf10a-forms-check"
+      ]
+    },
+    {
+      "questionId": "LJ-LF10A-FORMS-E03",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf10a-forms-validation"
+      ],
+      "blockIds": [
+        "fiae-lf10a-forms-validation"
+      ]
+    },
+    {
+      "questionId": "LJ-LF10A-FORMS-E04",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf10a-forms-validation"
+      ],
+      "blockIds": [
+        "fiae-lf10a-forms-validation",
+        "fiae-lf10a-forms-check"
+      ]
+    },
+    {
+      "questionId": "LJ-LF10A-FORMS-E05",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf10a-forms-privacy"
+      ],
+      "blockIds": [
+        "fiae-lf10a-forms-privacy"
+      ]
+    },
+    {
+      "questionId": "LJ-LF10A-FORMS-E06",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf10a-forms-privacy"
+      ],
+      "blockIds": [
+        "fiae-lf10a-forms-privacy",
+        "fiae-lf10a-forms-check"
+      ]
+    },
+    {
+      "questionId": "LJ-LF10A-FORMS-E07",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf10a-forms-access",
+        "fiae-lf10a-forms-validation"
+      ],
+      "blockIds": [
+        "fiae-lf10a-forms-validation",
+        "fiae-lf10a-forms-check"
+      ]
+    },
+    {
+      "questionId": "LJ-LF10A-FORMS-E08",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf10a-forms-privacy"
+      ],
+      "blockIds": [
+        "fiae-lf10a-forms-privacy"
+      ]
+    }
+  ],
+  "interview": [
+    {
+      "id": "fiae-lf10a-forms-talk-1",
+      "prompt": "Erkläre an einem Gerätefeld, wie die Annahme es auch nach der Eingabe erkennt und ohne Maus bedient.",
+      "objectiveIds": [
+        "fiae-lf10a-forms-access"
+      ],
+      "blockIds": [
+        "fiae-lf10a-forms-access"
+      ],
+      "keyPoints": [
+        "Sichtbares Label dauerhaft anzeigen.",
+        "for und id passend verbinden.",
+        "Tastaturfolge und erkennbaren Fokus testen."
+      ],
+      "acceptableAlternatives": [
+        "Umschließen des Textfelds mit einem korrekt beschrifteten label kann die Zuordnung ebenfalls herstellen."
+      ],
+      "misconceptions": [
+        "Ein Platzhalter allein ist keine bleibende Feldbezeichnung."
+      ],
+      "sampleAnswer": "Mein Label nennt „Gerätekennung (Pflichtfeld)“ und verweist auf das Feld. Nach G-17 bleibt der Name stehen. Ich prüfe den Fokus vorwärts und rückwärts und aktiviere die Schaltfläche mit der Tastatur.",
+      "followUp": "Woran würdest du eine vertauschte Label-Zuordnung erkennen?"
+    },
+    {
+      "id": "fiae-lf10a-forms-talk-2",
+      "prompt": "Welche Proben unterscheiden eine fehlende Kennung von einem Formatfehler?",
+      "objectiveIds": [
+        "fiae-lf10a-forms-validation"
+      ],
+      "blockIds": [
+        "fiae-lf10a-forms-validation",
+        "fiae-lf10a-forms-check"
+      ],
+      "keyPoints": [
+        "Leerwert und G17 getrennt absenden.",
+        "Text, Feldbezug und erhaltenes Symptom prüfen.",
+        "G-17 nachtragen und gültigen Abschluss prüfen."
+      ],
+      "acceptableAlternatives": [
+        "Eine verlinkte Fehlerliste kann zusammen mit dem Feldhinweis den Korrekturweg eröffnen."
+      ],
+      "misconceptions": [
+        "Gleichlautende Systemcodes erklären der Annahme nicht, was sie korrigieren soll."
+      ],
+      "sampleAnswer": "Ich prüfe einmal ohne Kennung und einmal mit G17. Die Hinweise müssen sich auf die jeweils nötige Eingabe beziehen. Das Symptom bleibt. Nach der Korrektur verschwindet der alte Fehler.",
+      "followUp": "Welche Meldung erwartest du konkret für G17?"
+    },
+    {
+      "id": "fiae-lf10a-forms-talk-3",
+      "prompt": "Eine private Rufnummer soll für Rückfragen in der Maske bleiben. Wie beurteilst du das im gegebenen Betrieb?",
+      "objectiveIds": [
+        "fiae-lf10a-forms-privacy"
+      ],
+      "blockIds": [
+        "fiae-lf10a-forms-privacy",
+        "fiae-lf10a-forms-check"
+      ],
+      "keyPoints": [
+        "Zweck der Rückfrage klären.",
+        "Vorhandenen internen Weg über die Annahme einbeziehen.",
+        "Entbehrliches Feld auch aus der Übertragung entfernen."
+      ],
+      "acceptableAlternatives": [
+        "Ein interner Rückfragekanal pro Schalter kann bei entsprechendem Bedarf dokumentiert werden."
+      ],
+      "misconceptions": [
+        "„Optional“ rechtfertigt keine Sammlung für einen unbestimmten Zweck."
+      ],
+      "sampleAnswer": "Der Schalter kann die Rückfrage über die Ticketkennung zuordnen. Für den beschriebenen Zweck braucht die Werkstatt daher keine private Rufnummer. Ich entferne das Feld und kontrolliere die übergebenen Angaben.",
+      "followUp": "Warum reicht es hier nicht, das Feld optisch zu verstecken?"
+    }
+  ],
+  "cards": [
+    {
+      "id": "fiae-lf10a-forms-card-01",
+      "front": "Wie verbindest du in HTML ein sichtbares Label mit dem Gerätefeld?",
+      "back": "Der for-Wert des Labels entspricht der eindeutigen id des Eingabefelds.",
+      "objectiveIds": [
+        "fiae-lf10a-forms-access"
+      ],
+      "blockIds": [
+        "fiae-lf10a-forms-access"
+      ]
+    },
+    {
+      "id": "fiae-lf10a-forms-card-02",
+      "front": "Was verrät der sichtbare Tastaturfokus?",
+      "back": "Welches Element gerade die Tastatureingabe erhält, auch wenn die Maus an anderer Stelle steht.",
+      "objectiveIds": [
+        "fiae-lf10a-forms-access"
+      ],
+      "blockIds": [
+        "fiae-lf10a-forms-access"
+      ]
+    },
+    {
+      "id": "fiae-lf10a-forms-card-03",
+      "front": "Welche Meldung hilft bei G17 im vereinbarten Format G-17?",
+      "back": "„Bitte Gerätekennung im Format G-17 eingeben.“ Das richtige Symptom bleibt erhalten.",
+      "objectiveIds": [
+        "fiae-lf10a-forms-validation"
+      ],
+      "blockIds": [
+        "fiae-lf10a-forms-validation"
+      ]
+    },
+    {
+      "id": "fiae-lf10a-forms-card-04",
+      "front": "Wie verknüpfst du einen Fehlertext technisch mit dem Feld?",
+      "back": "Beispielsweise über aria-describedby mit der ID des Fehlertexts. aria-invalid kennzeichnet den ungültigen Zustand.",
+      "objectiveIds": [
+        "fiae-lf10a-forms-validation"
+      ],
+      "blockIds": [
+        "fiae-lf10a-forms-validation"
+      ]
+    },
+    {
+      "id": "fiae-lf10a-forms-card-05",
+      "front": "Welche Frage entscheidet über ein zusätzliches Datenfeld?",
+      "back": "Welche konkrete Aufgabe des festgelegten Reparaturprozesses benötigt genau diese Angabe?",
+      "objectiveIds": [
+        "fiae-lf10a-forms-privacy"
+      ],
+      "blockIds": [
+        "fiae-lf10a-forms-privacy"
+      ]
+    },
+    {
+      "id": "fiae-lf10a-forms-card-06",
+      "front": "Was prüfst du nach dem Entfernen eines unnötigen privaten Feldes?",
+      "back": "Die Angabe darf weder in der Eingabemaske erfragt noch als versteckter Wert übertragen werden.",
+      "objectiveIds": [
+        "fiae-lf10a-forms-privacy"
+      ],
+      "blockIds": [
+        "fiae-lf10a-forms-check"
+      ]
+    }
+  ],
+  "review": {
+    "status": "reviewed",
+    "checkedAt": "2026-11-19"
+  }
+}

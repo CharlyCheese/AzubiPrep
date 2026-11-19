@@ -1,0 +1,481 @@
+{
+  "schemaVersion": 1,
+  "id": "common-lf4-privacy",
+  "title": "Personenbezogene Daten verantwortungsvoll behandeln",
+  "fieldId": "LF4",
+  "scope": "common",
+  "prerequisites": [
+    "common-lf4-assets"
+  ],
+  "objectives": [
+    {
+      "id": "common-lf4-privacy-identify",
+      "text": "In einem Beispiel personenbezogene Daten und den Zweck ihrer Verarbeitung erkennen."
+    },
+    {
+      "id": "common-lf4-privacy-principles",
+      "text": "Datenminimierung, Zweckbindung und geregelte Zugriffe auf einen einfachen Verarbeitungsvorgang anwenden."
+    },
+    {
+      "id": "common-lf4-privacy-clarify",
+      "text": "Bei unklarer Verarbeitungsbefugnis den offenen Punkt beschreiben und die zuständige betriebliche Stelle einbeziehen."
+    }
+  ],
+  "version": "1.0.0",
+  "sourceIds": [
+    "lf4-eu-gdpr",
+    "lf4-nist-confidentiality",
+    "lf4-nist-security-policy"
+  ],
+  "sources": [
+    {
+      "id": "lf4-eu-gdpr",
+      "title": "EUR-Lex: Datenschutz-Grundverordnung, konsolidierte geltende Fassung",
+      "url": "https://eur-lex.europa.eu/legal-content/DE/TXT/?uri=CELEX:02016R0679-20160504",
+      "checkedAt": "2026-11-16",
+      "note": "Öffentliche HTML-Fassung mit Status In Kraft und Verweis auf aktuelle Fassung geprüft: Art. 4, 5, 6, 29, 32 und 39. Keine konkrete Rechtsgrundlage für reale Fälle wird behauptet. Namen, Regeln und Daten des Lernfalls sind synthetisch."
+    },
+    {
+      "id": "lf4-nist-confidentiality",
+      "title": "NIST CSRC Glossar: Vertraulichkeit",
+      "url": "https://csrc.nist.gov/glossary/term/confidentiality",
+      "checkedAt": "2026-11-16",
+      "note": "Begriff der Beschränkung unbefugter Offenlegung geprüft."
+    },
+    {
+      "id": "lf4-nist-security-policy",
+      "title": "NIST CSRC Glossar: Sicherheitsregeln",
+      "url": "https://csrc.nist.gov/glossary/term/security_policy",
+      "checkedAt": "2026-11-16",
+      "note": "Organisatorische Regeln zum Umgang mit schützenswerten Informationen geprüft. Die Radblick-Leitlinie ist erfunden."
+    }
+  ],
+  "caseStudy": {
+    "title": "Mira schützt den Servicearbeitsplatz bei Radblick",
+    "text": "Eigener fiktiver Lernfall: Radblick bearbeitet Serviceanfragen. Mira lernt unter Anleitung von Sam aus der IT und Eda als Serviceverantwortlicher. Alle Personen, Daten, Regeln und Schadensannahmen sind erfunden. Mira bearbeitet synthetische Tickets. Der festgelegte Zweck im Fall lautet Serviceanfragen aufnehmen, bearbeiten und hierzu zurückmelden. Ein neuer Marketingexport gehört nicht zur bisherigen Freigabe."
+  },
+  "blocks": [
+    {
+      "id": "common-lf4-privacy-identify",
+      "title": "1. Personenbezug und Zweck erkennen",
+      "objectiveIds": [
+        "common-lf4-privacy-identify"
+      ],
+      "sourceIds": [
+        "lf4-eu-gdpr"
+      ],
+      "paragraphs": [
+        "Personenbezogen sind Informationen über einen erkennbaren oder identifizierbaren Menschen. Ein Name ist ein deutliches Beispiel. Auch eine Ticketnummer kann Personenbezug haben, wenn sie über eine Zuordnung zum meldenden Menschen führt. Berufliche Kontaktdaten verlieren diesen Bezug nicht dadurch, dass sie bei der Arbeit verwendet werden.",
+        "Prüfe den Fall in zwei Schritten: Welche Information bezieht sich auf wen? Wofür wird sie gebraucht? Im Radblick-Ticket stehen eine erfundene Kontaktperson, ihr dienstlicher Rückrufkontakt, das zugeordnete Gerät und eine Fehlerbeschreibung. Gemeinsam dienen sie der Servicebearbeitung und Rückmeldung. Eine allgemeine Geräteanleitung ohne Personenbezug ist davon zu unterscheiden.",
+        "Der Zweck beschreibt die beabsichtigte Tätigkeit, nicht bloß den Speicherort. Auf dem Server speichern ist kein aussagekräftiger Verarbeitungszweck. Die Beispiele enthalten synthetische Personen; für deine Übung übernimmst du keine echten Namen, Telefonnummern oder privaten Texte."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Lernfall",
+        "text": "Eine Kennung K-17 bleibt im Fall personenbezogen, wenn Eda sie in der Kontaktliste einer Person zuordnen kann."
+      },
+      "misconception": {
+        "claim": "Eine Nummer statt eines Namens ist immer anonym.",
+        "correction": "Eine vorhandene Zuordnung kann den Menschen weiterhin identifizierbar machen."
+      },
+      "takeaway": "Prüfe die Zuordnung zur Person und den konkreten Arbeitszweck."
+    },
+    {
+      "id": "common-lf4-privacy-principles",
+      "title": "2. Zweck und Datenumfang begrenzen",
+      "objectiveIds": [
+        "common-lf4-privacy-principles"
+      ],
+      "sourceIds": [
+        "lf4-eu-gdpr",
+        "lf4-nist-confidentiality"
+      ],
+      "paragraphs": [
+        "Die DSGVO verlangt unter anderem einen festgelegten zulässigen Zweck, einen dafür notwendigen Datenumfang und angemessenen Schutz vor unbefugtem Zugriff. Ein nützlicher Arbeitsauftrag allein beantwortet noch nicht, auf welcher Rechtsgrundlage verarbeitet werden darf. Diese Grundlage muss für den tatsächlichen Fall passen; eine Einwilligung ist eine mögliche, aber nicht die einzige Grundlage.",
+        "Die freigegebene Radblick-Aufnahme benötigt im Lernfall Kontaktname, dienstlichen Rückrufkontakt, betroffenes Gerät und eine sachliche Fehlerbeschreibung. Ein privater Reiseplan, persönliche Familienangaben oder die gesamte Mailbox werden dafür nicht benötigt. Mira übernimmt den Fehler, nicht die beiläufig erzählte private Geschichte. Das setzt Datenminimierung im konkreten Fall um.",
+        "Zugriffe richten sich nach Aufgabe und freigegebener Rolle. Das zuständige Serviceteam erhält die nötigen Ticketdaten; eine andere Abteilung erhält daraus keine pauschale Leseberechtigung. Weiterverwendung für Werbung wird als neuer Zweck geprüft. Die vorhandene technische Exportfunktion ist dafür kein Nachweis einer Befugnis."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Lernfall",
+        "text": "Für den Rückruf reicht der freigegebene dienstliche Kontakt; die private Anschrift wird im vorgegebenen Fernservicefall nicht benötigt."
+      },
+      "misconception": {
+        "claim": "Was technisch exportiert werden kann, darf für weitere Zwecke genutzt werden.",
+        "correction": "Technische Möglichkeit, Zweck und rechtliche Befugnis sind getrennt zu prüfen."
+      },
+      "takeaway": "Erfasse den nötigen Inhalt und öffne ihn für die passende Aufgabe."
+    },
+    {
+      "id": "common-lf4-privacy-clarify",
+      "title": "3. Unklare Befugnis gezielt klären",
+      "objectiveIds": [
+        "common-lf4-privacy-clarify"
+      ],
+      "sourceIds": [
+        "lf4-eu-gdpr",
+        "lf4-nist-security-policy"
+      ],
+      "paragraphs": [
+        "Eine fremde Abteilung bittet Mira um alle Kontaktadressen für eine Kampagne. Die bisherige Arbeitsanweisung deckt diesen Zweck nicht ab. Mira gibt den angefragten Export nicht frei, sondern beschreibt die Unklarheit: Welche Daten, welcher neue Zweck, welche Empfänger und welche Befugnis sind vorgesehen?",
+        "Im fiktiven Radblick-Verfahren ist Eda die zuständige Serviceverantwortliche. Sie klärt den betrieblichen Auftrag; die Datenschutz-Ansprechperson wird zur rechtlichen Prüfung einbezogen. Sam kann anschließend eine freigegebene technische Lösung umsetzen. Ein Datenschutzbeauftragter berät und überwacht im Rahmen seiner Aufgaben; er übernimmt dadurch nicht die Verantwortung des Unternehmens für die Verarbeitung.",
+        "Mira dokumentiert die Anfrage und den offenen Punkt ohne eine unnötige Kopie der angefragten Daten. Auch mündliche Dringlichkeit ersetzt die Klärung nicht. Nach der Entscheidung arbeitet sie im freigegebenen Umfang. Sie wählt weder selbst eine passende klingende Rechtsgrundlage noch bestellt sie vorsorglich überall Einwilligungen."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Lernfall",
+        "text": "Klärnotiz: Marketing möchte Kontakte aus Servicetickets; anderer Zweck und Empfänger, Freigabe und Grundlage offen; Eda und Datenschutz-Ansprechperson einbeziehen."
+      },
+      "misconception": {
+        "claim": "Eine erfolgreiche Anmeldung ist die Freigabe für jeden weiteren Datenzweck.",
+        "correction": "Anmeldung zeigt einen Zugang, aber nicht die Befugnis für den konkreten Export."
+      },
+      "takeaway": "Formuliere den offenen Punkt so, dass die zuständige Stelle entscheiden kann."
+    },
+    {
+      "id": "common-lf4-privacy-case",
+      "title": "4. Eine datensparsame Servicebearbeitung durchgehen",
+      "objectiveIds": [
+        "common-lf4-privacy-identify",
+        "common-lf4-privacy-principles",
+        "common-lf4-privacy-clarify"
+      ],
+      "sourceIds": [
+        "lf4-eu-gdpr",
+        "lf4-nist-confidentiality",
+        "lf4-nist-security-policy"
+      ],
+      "paragraphs": [
+        "Mira liest das synthetische Ticket: Kontakt K-17 meldet einen Ausfall an Gerät G-3. Sie erkennt den Personenbezug über die Kontaktliste. Als Zweck notiert sie die Bearbeitung des gemeldeten Gerätefehlers mit Rückmeldung. Sie nutzt die freigegebenen Servicefelder und vermeidet zusätzliche private Angaben.",
+        "Vor einer Weitergabe klärt sie Aufgabe und Empfänger. Eine technische Fachgruppe erhält im Fall die für ihre freigegebene Diagnose benötigten Angaben. Ein großer Export an eine neue Abteilung wird nicht mit dieser Diagnoseweitergabe gleichgesetzt. Fehlt die Vorgabe, bleibt genau diese neue Weitergabe zur Klärung offen.",
+        "Für die Aufbewahrung benutzt Mira die betriebliche Regel. Ein geschlossenes Ticket bedeutet nicht, dass beliebige private Kopien zulässig wären; zugleich ist die konkrete Löschentscheidung nicht ohne die geltenden Fristen zu treffen. Sie meldet fehlende Vorgaben an Eda. Im Protokoll genügen Fallkennung, Zweck und Entscheidung, ohne unnötige Kontaktinhalte zu wiederholen."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Lernfall",
+        "text": "Die Notiz K-17, Servicezweck, benötigte Gerätedaten, freigegebene Fachgruppe und offene Exportfrage zeigt die Entscheidung ohne eine neue Kontaktliste anzulegen."
+      },
+      "misconception": {
+        "claim": "Datensparsamkeit bedeutet, dass ein Servicevorgang gar keinen Kontakt enthalten darf.",
+        "correction": "Erforderliche Daten sind zulässig, wenn Zweck, Befugnis und Regeln passen; unnötige Angaben werden vermieden."
+      },
+      "takeaway": "Personenbezug erkennen, nötig begrenzen und offene Befugnis klären."
+    }
+  ],
+  "questionFile": "questions/common-lf4-privacy.v1.csv",
+  "quiz": {
+    "questionIds": [
+      "LJ-LF4-PRIVACY-Q01",
+      "LJ-LF4-PRIVACY-Q02",
+      "LJ-LF4-PRIVACY-Q03",
+      "LJ-LF4-PRIVACY-Q04",
+      "LJ-LF4-PRIVACY-Q05",
+      "LJ-LF4-PRIVACY-Q06"
+    ]
+  },
+  "exam": {
+    "questionIds": [
+      "LJ-LF4-PRIVACY-E01",
+      "LJ-LF4-PRIVACY-E02",
+      "LJ-LF4-PRIVACY-E03",
+      "LJ-LF4-PRIVACY-E04",
+      "LJ-LF4-PRIVACY-E05",
+      "LJ-LF4-PRIVACY-E06",
+      "LJ-LF4-PRIVACY-E07",
+      "LJ-LF4-PRIVACY-E08"
+    ],
+    "passPercent": 80,
+    "scoring": "all-or-nothing-per-question",
+    "timed": false
+  },
+  "questionLinks": [
+    {
+      "questionId": "LJ-LF4-PRIVACY-Q01",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf4-privacy-identify"
+      ],
+      "blockIds": [
+        "common-lf4-privacy-identify"
+      ]
+    },
+    {
+      "questionId": "LJ-LF4-PRIVACY-Q02",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf4-privacy-identify"
+      ],
+      "blockIds": [
+        "common-lf4-privacy-identify"
+      ]
+    },
+    {
+      "questionId": "LJ-LF4-PRIVACY-Q03",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf4-privacy-principles"
+      ],
+      "blockIds": [
+        "common-lf4-privacy-principles"
+      ]
+    },
+    {
+      "questionId": "LJ-LF4-PRIVACY-Q04",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf4-privacy-principles"
+      ],
+      "blockIds": [
+        "common-lf4-privacy-principles"
+      ]
+    },
+    {
+      "questionId": "LJ-LF4-PRIVACY-Q05",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf4-privacy-clarify"
+      ],
+      "blockIds": [
+        "common-lf4-privacy-clarify"
+      ]
+    },
+    {
+      "questionId": "LJ-LF4-PRIVACY-Q06",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf4-privacy-clarify"
+      ],
+      "blockIds": [
+        "common-lf4-privacy-clarify",
+        "common-lf4-privacy-case"
+      ]
+    },
+    {
+      "questionId": "LJ-LF4-PRIVACY-E01",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf4-privacy-identify"
+      ],
+      "blockIds": [
+        "common-lf4-privacy-identify"
+      ]
+    },
+    {
+      "questionId": "LJ-LF4-PRIVACY-E02",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf4-privacy-identify"
+      ],
+      "blockIds": [
+        "common-lf4-privacy-identify",
+        "common-lf4-privacy-case"
+      ]
+    },
+    {
+      "questionId": "LJ-LF4-PRIVACY-E03",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf4-privacy-principles"
+      ],
+      "blockIds": [
+        "common-lf4-privacy-principles",
+        "common-lf4-privacy-case"
+      ]
+    },
+    {
+      "questionId": "LJ-LF4-PRIVACY-E04",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf4-privacy-principles"
+      ],
+      "blockIds": [
+        "common-lf4-privacy-principles"
+      ]
+    },
+    {
+      "questionId": "LJ-LF4-PRIVACY-E05",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf4-privacy-clarify"
+      ],
+      "blockIds": [
+        "common-lf4-privacy-clarify"
+      ]
+    },
+    {
+      "questionId": "LJ-LF4-PRIVACY-E06",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf4-privacy-clarify"
+      ],
+      "blockIds": [
+        "common-lf4-privacy-clarify"
+      ]
+    },
+    {
+      "questionId": "LJ-LF4-PRIVACY-E07",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf4-privacy-principles",
+        "common-lf4-privacy-clarify"
+      ],
+      "blockIds": [
+        "common-lf4-privacy-principles",
+        "common-lf4-privacy-clarify"
+      ]
+    },
+    {
+      "questionId": "LJ-LF4-PRIVACY-E08",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf4-privacy-principles",
+        "common-lf4-privacy-clarify"
+      ],
+      "blockIds": [
+        "common-lf4-privacy-case"
+      ]
+    }
+  ],
+  "interview": [
+    {
+      "id": "common-lf4-privacy-talk-identify",
+      "prompt": "Erkläre den Personenbezug von K-17 und nenne den konkreten Zweck im Servicefall.",
+      "objectiveIds": [
+        "common-lf4-privacy-identify"
+      ],
+      "blockIds": [
+        "common-lf4-privacy-identify"
+      ],
+      "keyPoints": [
+        "Zuordnung zu einer Person erläutern.",
+        "Beruflichen Kontakt als personenbezogen erkennen.",
+        "Servicebearbeitung und Rückmeldung als Zweck nennen."
+      ],
+      "acceptableAlternatives": [
+        "Eine fachlich gleichwertige, anhand der Fallvorgaben begründete Erklärung."
+      ],
+      "misconceptions": [
+        "Kennung mit Anonymität verwechseln."
+      ],
+      "sampleAnswer": "K-17 kann über die Kontaktliste einer Person zugeordnet werden. Der dienstliche Kontext ändert daran nichts. Wir nutzen die nötigen Daten, um den Gerätefehler zu bearbeiten und die Person zurückzurufen.",
+      "followUp": "Warum ist Speichern auf dem Server keine ausreichende Zweckbeschreibung?"
+    },
+    {
+      "id": "common-lf4-privacy-talk-principles",
+      "prompt": "Begründe die freigegebenen Servicefelder und den Zugriff einer zuständigen Fachgruppe.",
+      "objectiveIds": [
+        "common-lf4-privacy-principles"
+      ],
+      "blockIds": [
+        "common-lf4-privacy-principles",
+        "common-lf4-privacy-case"
+      ],
+      "keyPoints": [
+        "Notwendige Kontakt-, Geräte- und Fehlerdaten nennen.",
+        "Sachfremde private Angaben weglassen.",
+        "Empfänger und Umfang an der freigegebenen Aufgabe ausrichten."
+      ],
+      "acceptableAlternatives": [
+        "Eine fachlich gleichwertige, anhand der Fallvorgaben begründete Erklärung."
+      ],
+      "misconceptions": [
+        "Den vorhandenen Datenbestand als Freigabe weiterer Zwecke ansehen."
+      ],
+      "sampleAnswer": "Für den Fall brauche ich den dienstlichen Kontakt, das Gerät und die sachliche Störung. Private Familienangaben lasse ich weg. Eine freigegebene Fachgruppe erhält die für ihre Diagnose nötigen Daten, nicht deshalb den gesamten Bestand.",
+      "followUp": "Was ändert sich bei einer geplanten Werbenutzung?"
+    },
+    {
+      "id": "common-lf4-privacy-talk-clarify",
+      "prompt": "Formuliere eine Klärung für den Marketingexport, ohne die Kontakte bereits zu kopieren.",
+      "objectiveIds": [
+        "common-lf4-privacy-clarify"
+      ],
+      "blockIds": [
+        "common-lf4-privacy-clarify",
+        "common-lf4-privacy-case"
+      ],
+      "keyPoints": [
+        "Neuen Zweck, Datenumfang und Empfänger nennen.",
+        "Fehlende Befugnis festhalten.",
+        "Serviceverantwortliche und Datenschutz-Ansprechperson einbeziehen."
+      ],
+      "acceptableAlternatives": [
+        "Eine fachlich gleichwertige, anhand der Fallvorgaben begründete Erklärung."
+      ],
+      "misconceptions": [
+        "Eine Anmeldung oder technische Exportrolle als rechtliche Freigabe werten."
+      ],
+      "sampleAnswer": "Die Marketingabteilung bittet um Servicekontakte für eine Kampagne. Diese Nutzung ist von meiner bisherigen Anweisung nicht gedeckt. Ich halte Datenkategorien und Empfänger fest und lasse Eda mit der Datenschutz-Ansprechperson Zweck und Befugnis klären.",
+      "followUp": "Welche Rolle hat Sam nach einer dokumentierten Freigabe?"
+    }
+  ],
+  "cards": [
+    {
+      "id": "common-lf4-privacy-card-person",
+      "front": "Wann hat eine Ticketkennung Personenbezug?",
+      "back": "Wenn sie direkt oder über weitere Informationen einer natürlichen Person zugeordnet werden kann.",
+      "objectiveIds": [
+        "common-lf4-privacy-identify"
+      ],
+      "blockIds": [
+        "common-lf4-privacy-identify"
+      ]
+    },
+    {
+      "id": "common-lf4-privacy-card-purpose",
+      "front": "Welchen Zweck hat die Verarbeitung im Radblick-Fall?",
+      "back": "Serviceanfragen bearbeiten und den zugehörigen Kontakt zum Gerätefehler zurückmelden. Ein Speicherort beschreibt noch keinen Zweck.",
+      "objectiveIds": [
+        "common-lf4-privacy-identify"
+      ],
+      "blockIds": [
+        "common-lf4-privacy-identify"
+      ]
+    },
+    {
+      "id": "common-lf4-privacy-card-minimize",
+      "front": "Wie begrenzt Mira den Datenumfang?",
+      "back": "Sie erfasst die nötigen Kontakt-, Geräte- und Fehlerangaben; sachfremde private Angaben gehören nicht dazu.",
+      "objectiveIds": [
+        "common-lf4-privacy-principles"
+      ],
+      "blockIds": [
+        "common-lf4-privacy-principles"
+      ]
+    },
+    {
+      "id": "common-lf4-privacy-card-access",
+      "front": "Wie werden Zugriffe begründet?",
+      "back": "Mit der freigegebenen Aufgabe, zuständigen Rolle und dem dafür nötigen Datenumfang; technische Erreichbarkeit genügt nicht.",
+      "objectiveIds": [
+        "common-lf4-privacy-principles"
+      ],
+      "blockIds": [
+        "common-lf4-privacy-principles",
+        "common-lf4-privacy-case"
+      ]
+    },
+    {
+      "id": "common-lf4-privacy-card-clarify",
+      "front": "Was gehört in eine Klärung der Befugnis?",
+      "back": "Geplanter Zweck, betroffene Daten, Empfänger, offener Punkt und zuständige Stelle; keine vorsorgliche Kopie der Daten.",
+      "objectiveIds": [
+        "common-lf4-privacy-clarify"
+      ],
+      "blockIds": [
+        "common-lf4-privacy-clarify"
+      ]
+    },
+    {
+      "id": "common-lf4-privacy-card-roles",
+      "front": "Wer entscheidet und wer unterstützt im Fall?",
+      "back": "Eda klärt den betrieblichen Auftrag mit der Datenschutz-Ansprechperson. Das Unternehmen bleibt verantwortlich; Sam setzt freigegebene Technik um.",
+      "objectiveIds": [
+        "common-lf4-privacy-clarify"
+      ],
+      "blockIds": [
+        "common-lf4-privacy-clarify"
+      ]
+    }
+  ],
+  "review": {
+    "status": "reviewed",
+    "checkedAt": "2026-11-16"
+  }
+}

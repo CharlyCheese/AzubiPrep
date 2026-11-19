@@ -1,0 +1,485 @@
+{
+  "schemaVersion": 1,
+  "id": "common-lf2-hardware",
+  "version": "1.0.0",
+  "title": "Hardware nach Einsatzzweck auswählen",
+  "fieldId": "LF2",
+  "scope": "common",
+  "prerequisites": [
+    "common-lf2-requirements"
+  ],
+  "sourceIds": [
+    "lf2-ibm-hardware",
+    "lf2-ms-memory",
+    "lf2-ms-displays",
+    "lf2-msi-usbc"
+  ],
+  "sources": [
+    {
+      "id": "lf2-ibm-hardware",
+      "title": "IBM: What is computer hardware?",
+      "url": "https://www.ibm.com/think/topics/hardware",
+      "checkedAt": "2026-11-11",
+      "note": "Öffentliche HTML-Erklärung zu CPU, RAM, Massenspeicher sowie Ein- und Ausgabe geprüft. Sämtliche Geräte, Kapazitäten und Testergebnisse im Lernfall sind frei erfunden."
+    },
+    {
+      "id": "lf2-ms-memory",
+      "title": "Microsoft: All about computer memory",
+      "url": "https://support.microsoft.com/en-US/Windows/experience/compatibility/all-about-computer-memory",
+      "checkedAt": "2026-11-11",
+      "note": "HTML-Erklärung zur flüchtigen Arbeitsspeicherung und Abgrenzung vom Massenspeicher geprüft. Herstellerempfehlungen zu Kapazitäten werden nicht als allgemeine Anforderungen übernommen."
+    },
+    {
+      "id": "lf2-ms-displays",
+      "title": "Microsoft: How to use multiple monitors in Windows",
+      "url": "https://support.microsoft.com/en-us/windows/hardware/display-graphics/how-to-use-multiple-monitors-in-windows",
+      "checkedAt": "2026-11-11",
+      "note": "Öffentliche HTML-Anleitung geprüft: Verbinden, Anordnung sowie Unterschied zwischen gespiegelter und erweiterter Anzeige. Lernfall ist systemneutral und führt keine echte Änderung aus."
+    },
+    {
+      "id": "lf2-msi-usbc",
+      "title": "MSI: USB Type-C Port",
+      "url": "https://www.msi.com/faq/faq-2125",
+      "checkedAt": "2026-11-11",
+      "note": "Öffentliche Hersteller-FAQ geprüft: Steckerform allein belegt keine Videoausgabe; Gerätespezifikation, Kabel und Adapter müssen die Funktion unterstützen. Keine konkrete Kaufempfehlung."
+    }
+  ],
+  "objectives": [
+    {
+      "id": "common-lf2-hardware-parts",
+      "text": "Die Aufgaben von Prozessor, Arbeitsspeicher, Massenspeicher und Peripherie im Arbeitsplatz erklären."
+    },
+    {
+      "id": "common-lf2-hardware-fit",
+      "text": "Anhand vorgegebener Datenblätter die Leistung und Kompatibilität zweier Ausstattungen beurteilen."
+    }
+  ],
+  "caseStudy": {
+    "title": "Knotenpunkt stattet Radblick aus",
+    "text": "Knotenpunkt vergleicht für Radblick zwei erfundene Geräte für Ticketportal und Wissenssuche. Mira liest vorgegebene Datenblätter und lässt Sam die Auswahl prüfen. Modellnamen, Daten und Leistungstests sind didaktische Vorgaben, keine Aussagen über kaufbare Produkte."
+  },
+  "blocks": [
+    {
+      "id": "common-lf2-hardware-components",
+      "title": "1. Bauteile und ihre Aufgaben",
+      "objectiveIds": [
+        "common-lf2-hardware-parts"
+      ],
+      "sourceIds": [
+        "lf2-ibm-hardware",
+        "lf2-ms-memory"
+      ],
+      "paragraphs": [
+        "Hardware bezeichnet die körperlichen Teile eines Computers. Die CPU (central processing unit, Prozessor) führt Programmbefehle und Berechnungen aus. RAM (random access memory, Arbeitsspeicher) hält aktuell benötigte Programme und Daten für schnellen Zugriff bereit.",
+        "RAM ist flüchtig: Sein Inhalt bleibt beim Ausschalten nicht erhalten. Die SSD (solid-state drive) gehört zum Massenspeicher und bewahrt gespeicherte Dateien auch ohne Strom. Eine größere SSD ersetzt daher nicht fehlenden RAM. Umgekehrt ist ungespeicherter Text im RAM noch keine dauerhaft gespeicherte Datei.",
+        "Peripherie erweitert Ein- und Ausgabe: Tastatur und Maus erfassen Eingaben, ein Monitor zeigt Ergebnisse an, ein Scanner liest Vorlagen ein. Die Grafikeinheit erzeugt die Bildausgabe. Bei einem Touchscreen sind Ein- und Ausgabe in einem Gerät verbunden.",
+        "Datenblätter verwenden häufig englische Wörter: processor = Prozessor, memory = Arbeitsspeicher, storage = Massenspeicher, display outputs = Bildschirmausgänge. „Memory 16 GB / storage 512 GB SSD“ beschreibt zwei unterschiedliche Speicheraufgaben."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Übungsfall",
+        "text": "Mira tippt eine Notiz über die Tastatur ein. CPU und RAM verarbeiten die Anwendung; erst das Speichern legt die Datei auf dem Massenspeicher ab."
+      },
+      "misconception": {
+        "claim": "512 GB SSD machen 8 GB RAM rechnerisch zu 520 GB Arbeitsspeicher.",
+        "correction": "RAM und SSD erfüllen verschiedene Aufgaben und werden nicht zu einer RAM-Kapazität addiert."
+      },
+      "takeaway": "Ordne Rechnen, Arbeitsdaten, gespeicherte Dateien und Ein-/Ausgabe unterschiedlichen Bauteilen zu."
+    },
+    {
+      "id": "common-lf2-hardware-datasheets",
+      "title": "2. Fiktive Datenblätter gegen den Bedarf lesen",
+      "objectiveIds": [
+        "common-lf2-hardware-parts",
+        "common-lf2-hardware-fit"
+      ],
+      "sourceIds": [
+        "lf2-ibm-hardware"
+      ],
+      "paragraphs": [
+        "Radblick verlangt im Fall mindestens 16 GB RAM, 512 GB SSD und zwei gleichzeitig nutzbare digitale Bildschirmausgänge. Diese vereinbarten Mindestwerte gelten für die Aufgabe; aus dem Wort „Büro“ allein folgt keine universelle passende Ausstattung.",
+        "Die erfundene Auswahl lautet: Modell Büro A hat processor P4, memory 16 GB, storage 512 GB SSD, display outputs 1 × HDMI + 1 × DisplayPort. Laut fiktivem Datenblatt sind beide Ausgänge gleichzeitig mit unterschiedlichen Inhalten bei je 1920 × 1080 und 60 Hz nutzbar. Modell Büro B hat processor P6, memory 8 GB, storage 1024 GB SSD, display outputs 1 × HDMI; sein zusätzlicher USB-C-Anschluss überträgt laut Datenblatt Daten ohne Video.",
+        "Die Aufgabenleistung wird getrennt von den Kapazitäten geprüft: Im identischen fiktiven Test benötigt A 2,4 Sekunden und B 2,0 Sekunden für die vereinbarte Aufgabe. Beide unterschreiten den vorgegebenen Grenzwert von drei Sekunden. Trotzdem erfüllt B weder den RAM-Bedarf noch die geforderte Bildausgabe.",
+        "GB bezeichnet hier Speicherkapazität, Hz die Zahl der Bildaktualisierungen je Sekunde. Höhere Kapazität oder eine kleinere Testzeit in einem Bereich gleicht ein anderes verfehltes Muss-Kriterium nicht aus. Für diesen unveränderten Auftrag ist A geeignet, B nicht."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Übungsfall",
+        "text": "B bearbeitet die Testaufgabe schneller und hat mehr SSD-Speicher. A erfüllt trotzdem als einziges der beiden Datenblätter alle vorgegebenen Muss-Kriterien."
+      },
+      "misconception": {
+        "claim": "Das Gerät mit dem schnellsten Einzeltest ist für den Auftrag am besten geeignet.",
+        "correction": "Aufgabenleistung und alle Muss-Kriterien sind zusammen zu prüfen; der Test ersetzt RAM- und Anschlussprüfung nicht."
+      },
+      "takeaway": "Vergleiche die angegebenen Eigenschaften mit denselben bestätigten Kriterien."
+    },
+    {
+      "id": "common-lf2-hardware-connections",
+      "title": "3. Anschlüsse und gleichzeitige Bildausgabe prüfen",
+      "objectiveIds": [
+        "common-lf2-hardware-fit"
+      ],
+      "sourceIds": [
+        "lf2-msi-usbc",
+        "lf2-ms-displays"
+      ],
+      "paragraphs": [
+        "Kompatibilität bedeutet hier, dass Gerät, Bildschirm, Verbindung und Software zusammen die geforderte Funktion unterstützen. Ein passender Stecker allein ist kein Funktionsnachweis. Prüfe Ein- und Ausgänge, Kabel beziehungsweise freigegebene Adapter und die unterstützte Auflösung und Bildrate.",
+        "HDMI und DisplayPort sind digitale Bildschnittstellen. USB-C beschreibt zunächst die Steckerform. Ob ein Anschluss Video ausgibt, steht in der Gerätespezifikation. Auch Kabel, Dock oder Adapter müssen die benötigte Übertragung unterstützen; eine USB-C-Buchse ist kein verlässlicher Ersatz für einen nachgewiesenen Bildausgang.",
+        "Für Büro A gibt der Fall zwei vorhandene Monitore vor: beide haben DisplayPort-Eingang, einer zusätzlich HDMI-Eingang. Beide Monitore unterstützen an den genannten Eingängen 1920 × 1080 bei 60 Hz. Geeignete HDMI- und DisplayPort-Kabel für diese Auflösung und Bildrate liegen vor. Damit lässt sich jeder Monitor an einen passenden Ausgang anschließen; der Datenblattnachweis bestätigt zwei gleichzeitige Anzeigen.",
+        "Für Ticketportal und Wissenssuche wird eine erweiterte Arbeitsfläche gebraucht: unterschiedliche Inhalte auf beiden Bildschirmen. Spiegeln zeigt dagegen denselben Inhalt. Zwei Buchsen oder zwei angeschlossene Monitore belegen die gewünschte unabhängige Anzeige noch nicht ohne Funktionsangabe und Prüfung."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Übungsfall",
+        "text": "Der HDMI-Ausgang von A verbindet den Monitor mit HDMI-Eingang, DisplayPort den zweiten. Anschließend wird die erweiterte Anzeige geprüft."
+      },
+      "misconception": {
+        "claim": "Jeder USB-C-Anschluss kann einen zweiten Bildschirm betreiben.",
+        "correction": "Steckerform und unterstützte Funktion sind verschieden; Video muss für den gesamten Verbindungsweg belegt sein."
+      },
+      "takeaway": "Prüfe den ganzen Verbindungsweg und die benötigte gleichzeitige Anzeige."
+    },
+    {
+      "id": "common-lf2-hardware-evidence",
+      "title": "4. Eignung begründen statt Zahlen raten",
+      "objectiveIds": [
+        "common-lf2-hardware-parts",
+        "common-lf2-hardware-fit"
+      ],
+      "sourceIds": [
+        "lf2-ibm-hardware",
+        "lf2-msi-usbc",
+        "lf2-ms-displays"
+      ],
+      "paragraphs": [
+        "Eine kurze Entscheidung nennt Anforderung, belegte Datenblattangabe, Prüfergebnis und offene Punkte. Für A sind RAM und SSD groß genug, zwei unabhängige Ausgänge bestätigt und die Testzeit unter drei Sekunden. B scheidet im unveränderten Fall trotz größerer SSD aus.",
+        "Aus einer Taktangabe in GHz oder der Kernzahl allein lässt sich die Leistung verschiedener Prozessoren nicht sicher vergleichen. Architektur, Software und Aufgabenart spielen mit. Ein gleicher, nachvollziehbarer Anwendungstest ist für die konkret geprüfte Aufgabe aussagekräftiger; er beweist nicht die Leistung in jeder anderen Aufgabe.",
+        "Fehlt beispielsweise die Angabe zur gleichzeitigen Bildausgabe, ist sie vor Freigabe beim Hersteller oder der zuständigen technischen Stelle zu klären. „Vermutlich passend“ bleibt ein offener Punkt. Änderungen wie eine RAM-Erweiterung sind erst nach bestätigter technischer Möglichkeit und Auftragsfreigabe Teil der Lösung.",
+        "Dieser Lernfall liest Datenblätter und prüft ein Modell. Er verlangt keine Arbeiten am geöffneten Computer oder Netzteil. Auffällige oder beschädigte Geräte werden nicht für einen Versuch weiterbetrieben; Nutzung stoppen, zuständige Person informieren und fachlich klären lassen."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Übungsfall",
+        "text": "Miras Begründung für A nennt 16 GB RAM, 512 GB SSD, zwei bestätigte Anzeigen und 2,4 Sekunden im vereinbarten Test."
+      },
+      "misconception": {
+        "claim": "Eine höhere GHz-Zahl garantiert die bessere Eignung in jeder Anwendung.",
+        "correction": "Leistung braucht Aufgabenbezug; Kompatibilität und Kapazität sind zusätzlich zu prüfen."
+      },
+      "takeaway": "Begründe die Auswahl mit belegten Angaben und kennzeichne fehlende Nachweise."
+    }
+  ],
+  "questionFile": "questions/common-lf2-hardware.v1.csv",
+  "quiz": {
+    "questionIds": [
+      "LJ-LF2-HARDWARE-Q01",
+      "LJ-LF2-HARDWARE-Q02",
+      "LJ-LF2-HARDWARE-Q03",
+      "LJ-LF2-HARDWARE-Q04",
+      "LJ-LF2-HARDWARE-Q05",
+      "LJ-LF2-HARDWARE-Q06"
+    ]
+  },
+  "exam": {
+    "questionIds": [
+      "LJ-LF2-HARDWARE-E01",
+      "LJ-LF2-HARDWARE-E02",
+      "LJ-LF2-HARDWARE-E03",
+      "LJ-LF2-HARDWARE-E04",
+      "LJ-LF2-HARDWARE-E05",
+      "LJ-LF2-HARDWARE-E06",
+      "LJ-LF2-HARDWARE-E07",
+      "LJ-LF2-HARDWARE-E08"
+    ],
+    "passPercent": 80,
+    "scoring": "all-or-nothing-per-question",
+    "timed": false
+  },
+  "questionLinks": [
+    {
+      "questionId": "LJ-LF2-HARDWARE-Q01",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf2-hardware-parts"
+      ],
+      "blockIds": [
+        "common-lf2-hardware-components"
+      ]
+    },
+    {
+      "questionId": "LJ-LF2-HARDWARE-Q02",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf2-hardware-parts"
+      ],
+      "blockIds": [
+        "common-lf2-hardware-components"
+      ]
+    },
+    {
+      "questionId": "LJ-LF2-HARDWARE-Q03",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf2-hardware-parts"
+      ],
+      "blockIds": [
+        "common-lf2-hardware-components"
+      ]
+    },
+    {
+      "questionId": "LJ-LF2-HARDWARE-Q04",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf2-hardware-fit"
+      ],
+      "blockIds": [
+        "common-lf2-hardware-datasheets"
+      ]
+    },
+    {
+      "questionId": "LJ-LF2-HARDWARE-Q05",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf2-hardware-fit"
+      ],
+      "blockIds": [
+        "common-lf2-hardware-connections"
+      ]
+    },
+    {
+      "questionId": "LJ-LF2-HARDWARE-Q06",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf2-hardware-fit"
+      ],
+      "blockIds": [
+        "common-lf2-hardware-connections"
+      ]
+    },
+    {
+      "questionId": "LJ-LF2-HARDWARE-E01",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf2-hardware-parts"
+      ],
+      "blockIds": [
+        "common-lf2-hardware-components"
+      ]
+    },
+    {
+      "questionId": "LJ-LF2-HARDWARE-E02",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf2-hardware-parts"
+      ],
+      "blockIds": [
+        "common-lf2-hardware-components"
+      ]
+    },
+    {
+      "questionId": "LJ-LF2-HARDWARE-E03",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf2-hardware-parts"
+      ],
+      "blockIds": [
+        "common-lf2-hardware-components"
+      ]
+    },
+    {
+      "questionId": "LJ-LF2-HARDWARE-E04",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf2-hardware-fit"
+      ],
+      "blockIds": [
+        "common-lf2-hardware-datasheets",
+        "common-lf2-hardware-connections"
+      ]
+    },
+    {
+      "questionId": "LJ-LF2-HARDWARE-E05",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf2-hardware-fit"
+      ],
+      "blockIds": [
+        "common-lf2-hardware-datasheets"
+      ]
+    },
+    {
+      "questionId": "LJ-LF2-HARDWARE-E06",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf2-hardware-fit"
+      ],
+      "blockIds": [
+        "common-lf2-hardware-connections"
+      ]
+    },
+    {
+      "questionId": "LJ-LF2-HARDWARE-E07",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf2-hardware-fit"
+      ],
+      "blockIds": [
+        "common-lf2-hardware-evidence"
+      ]
+    },
+    {
+      "questionId": "LJ-LF2-HARDWARE-E08",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf2-hardware-fit"
+      ],
+      "blockIds": [
+        "common-lf2-hardware-evidence",
+        "common-lf2-hardware-connections"
+      ]
+    }
+  ],
+  "interview": [
+    {
+      "id": "common-lf2-hardware-talk-parts",
+      "prompt": "Erkläre den Weg einer getippten und gespeicherten Notiz mit Tastatur, CPU, RAM, SSD und Monitor.",
+      "objectiveIds": [
+        "common-lf2-hardware-parts"
+      ],
+      "blockIds": [
+        "common-lf2-hardware-components"
+      ],
+      "keyPoints": [
+        "Tastatur als Eingabe und Monitor als Ausgabe nennen.",
+        "CPU verarbeitet Befehle, RAM hält Arbeitsdaten.",
+        "Gespeicherte Datei bleibt auf dem Massenspeicher."
+      ],
+      "acceptableAlternatives": [
+        "Eine andere einfache Anwendung mit denselben Bauteilaufgaben."
+      ],
+      "misconceptions": [
+        "RAM als stromlos dauerhafte Dateiablage erklären."
+      ],
+      "sampleAnswer": "Die Tastatur liefert Eingaben. Die CPU verarbeitet die Befehle der Anwendung mit Daten im RAM. Der Monitor zeigt den Text. Beim Speichern wird die Datei auf der SSD abgelegt und bleibt dort nach dem Ausschalten erhalten.",
+      "followUp": "Was fehlt, wenn der Text noch nicht gespeichert wurde?"
+    },
+    {
+      "id": "common-lf2-hardware-talk-selection",
+      "prompt": "Begründe mit den vorgegebenen Daten die Wahl zwischen Büro A und Büro B, obwohl B im Test schneller ist.",
+      "objectiveIds": [
+        "common-lf2-hardware-fit"
+      ],
+      "blockIds": [
+        "common-lf2-hardware-datasheets",
+        "common-lf2-hardware-evidence"
+      ],
+      "keyPoints": [
+        "16 GB RAM und 512 GB SSD als Mindestwerte anwenden.",
+        "Zwei unabhängige Ausgänge verlangen.",
+        "Testzeit von anderen Muss-Kriterien trennen."
+      ],
+      "acceptableAlternatives": [
+        "Eine bedingte andere Lösung nach ausdrücklich bestätigter Aufrüstung und Auftragsänderung."
+      ],
+      "misconceptions": [
+        "Die schnellere Einzelmessung als Ersatz für alle Mindestwerte nutzen."
+      ],
+      "sampleAnswer": "A erfüllt 16 GB RAM, 512 GB SSD, zwei unabhängige Ausgänge und den Grenzwert von drei Sekunden. B ist im Test schneller, hat jedoch nur 8 GB RAM und einen Bildausgang. Deshalb passt B nicht zum unveränderten Auftrag.",
+      "followUp": "Welche Nachweise bräuchtest du vor einer vorgeschlagenen Aufrüstung?"
+    },
+    {
+      "id": "common-lf2-hardware-talk-compatibility",
+      "prompt": "Eine USB-C-Buchse soll den zweiten Bildschirm versorgen. Beschreibe, welche Nachweise und welchen Funktionstest du dafür brauchst.",
+      "objectiveIds": [
+        "common-lf2-hardware-fit"
+      ],
+      "blockIds": [
+        "common-lf2-hardware-connections",
+        "common-lf2-hardware-evidence"
+      ],
+      "keyPoints": [
+        "Videoausgabe des Geräts prüfen.",
+        "Kabel, Adapter und Bildschirmeingang passend belegen.",
+        "Unabhängige gleichzeitige Anzeige testen."
+      ],
+      "acceptableAlternatives": [
+        "Ein anderer belegter digitaler Verbindungsweg mit derselben Funktion."
+      ],
+      "misconceptions": [
+        "Aus der Form der Buchse auf Videoausgabe schließen."
+      ],
+      "sampleAnswer": "Ich kläre die Videoausgabe laut Spezifikation sowie die Unterstützung durch Kabel oder Adapter und den Monitoreingang. Danach prüfe ich zwei unterschiedliche Inhalte gleichzeitig. Eine USB-C-Form oder gespiegelte Anzeige allein genügt nicht.",
+      "followUp": "Wie notierst du eine noch fehlende Spezifikationsangabe?"
+    }
+  ],
+  "cards": [
+    {
+      "id": "common-lf2-hardware-card-cpu",
+      "front": "Was macht die CPU?",
+      "back": "Der Prozessor führt Programmbefehle und Berechnungen aus. Seine Eignung ist mit Bezug auf die benötigte Aufgabe zu prüfen.",
+      "objectiveIds": [
+        "common-lf2-hardware-parts"
+      ],
+      "blockIds": [
+        "common-lf2-hardware-components"
+      ]
+    },
+    {
+      "id": "common-lf2-hardware-card-memory",
+      "front": "Wie unterscheiden sich memory und storage?",
+      "back": "Memory bezeichnet hier flüchtigen RAM für Arbeitsdaten. Storage bezeichnet Massenspeicher wie eine SSD für gespeicherte Dateien.",
+      "objectiveIds": [
+        "common-lf2-hardware-parts"
+      ],
+      "blockIds": [
+        "common-lf2-hardware-components"
+      ]
+    },
+    {
+      "id": "common-lf2-hardware-card-periphery",
+      "front": "Welche Aufgaben haben Tastatur, Monitor und Scanner?",
+      "back": "Tastatur und Scanner erfassen Eingaben, der Monitor zeigt Ausgaben. Sie gehören zur Peripherie.",
+      "objectiveIds": [
+        "common-lf2-hardware-parts"
+      ],
+      "blockIds": [
+        "common-lf2-hardware-components"
+      ]
+    },
+    {
+      "id": "common-lf2-hardware-card-fit",
+      "front": "Warum passt Büro B trotz schnellerer Testzeit nicht?",
+      "back": "8 GB RAM und ein Bildausgang unterschreiten die vereinbarten Muss-Kriterien. Mehr SSD-Speicher gleicht das nicht aus.",
+      "objectiveIds": [
+        "common-lf2-hardware-fit"
+      ],
+      "blockIds": [
+        "common-lf2-hardware-datasheets"
+      ]
+    },
+    {
+      "id": "common-lf2-hardware-card-usbc",
+      "front": "Belegt USB-C eine Bildausgabe?",
+      "back": "Die Steckerform allein nicht. Gerätespezifikation, Kabel oder Adapter und Monitoreingang müssen die benötigte Funktion unterstützen.",
+      "objectiveIds": [
+        "common-lf2-hardware-fit"
+      ],
+      "blockIds": [
+        "common-lf2-hardware-connections"
+      ]
+    },
+    {
+      "id": "common-lf2-hardware-card-test",
+      "front": "Wie wird unabhängige Bildausgabe nachgewiesen?",
+      "back": "Datenblattangaben zur gleichzeitigen Nutzung prüfen und verschiedene Inhalte auf beiden Bildschirmen testen. Spiegeln genügt nicht.",
+      "objectiveIds": [
+        "common-lf2-hardware-fit"
+      ],
+      "blockIds": [
+        "common-lf2-hardware-connections",
+        "common-lf2-hardware-evidence"
+      ]
+    }
+  ],
+  "review": {
+    "status": "reviewed",
+    "checkedAt": "2026-11-11"
+  }
+}

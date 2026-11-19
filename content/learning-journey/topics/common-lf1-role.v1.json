@@ -1,0 +1,188 @@
+{
+  "schemaVersion": 1,
+  "id": "common-lf1-role",
+  "version": "1.0.0",
+  "title": "Unternehmen, Kunden und die eigene Rolle",
+  "fieldId": "LF1",
+  "scope": "common",
+  "prerequisites": [],
+  "sourceIds": ["kmk-fachinformatiker-2019", "fiausbv-annex", "bbig-13"],
+  "sources": [
+    {
+      "id": "kmk-fachinformatiker-2019",
+      "title": "KMK-Rahmenlehrplan Fachinformatiker/Fachinformatikerin vom 13.12.2019",
+      "url": "https://www.kmk.org/fileadmin/Dateien/pdf/Bildung/BeruflicheBildung/rlp/Fachinformatiker_19-12-13_EL.pdf",
+      "checkedAt": "2026-11-10",
+      "note": "Lernfeld 1, gedruckte Seite 12: Leistungsschwerpunkte, Kundenbeziehungen und eigene Rolle. Curriculare Einordnung, kein Text- oder Fallvorbild."
+    },
+    {
+      "id": "fiausbv-annex",
+      "title": "Fachinformatikerausbildungsverordnung – Ausbildungsrahmenplan",
+      "url": "https://www.gesetze-im-internet.de/fiausbv/anlage.html",
+      "checkedAt": "2026-11-10",
+      "note": "Abschnitt A, Nummern 1, 2, 5 und 7: Aufträge abstimmen, Kundenbedarf ermitteln, Zielerreichung prüfen und Ergebnisse übergeben. Die konkreten Abläufe und Beispiele sind eigene didaktische Fälle."
+    },
+    {
+      "id": "bbig-13",
+      "title": "Berufsbildungsgesetz § 13 – Verhalten während der Berufsausbildung",
+      "url": "https://www.gesetze-im-internet.de/bbig_2005/__13.html",
+      "checkedAt": "2026-11-10",
+      "note": "Hintergrund der sorgfältigen Arbeit innerhalb der Ausbildung. Der Abschnitt erläutert vereinbarte Aufgaben im fiktiven Fall und ersetzt kein gesondertes Kapitel zu Rechten, Pflichten oder Vollmachten."
+    }
+  ],
+  "objectives": [
+    {"id": "common-lf1-role-value", "text": "Leistung und Kundennutzen an einem einfachen IT-Auftrag unterscheiden."},
+    {"id": "common-lf1-role-team", "text": "Beteiligte und ihre Rollen in einem einfachen Auftrag erklären."},
+    {"id": "common-lf1-role-responsibility", "text": "Eigene Zuständigkeit beachten und bei unklaren Aufträgen gezielt nachfragen."}
+  ],
+  "caseStudy": {
+    "title": "Ein übersichtlicher Reparaturstatus",
+    "text": "Unser Beispiel ist frei erfunden: Der IT-Dienstleister Knotenpunkt unterstützt den Fahrradladen Radblick. Dessen Inhaberin Lea möchte, dass das Reparaturteam schneller Auskunft zum Stand einer Reparatur geben kann. Bislang liegen die Informationen auf verschiedenen Zetteln. Sam koordiniert den Auftrag bei Knotenpunkt. Mira beginnt dort ihre IT-Ausbildung und bearbeitet eine klar begrenzte Übungsaufgabe. Du musst dafür weder programmieren noch etwas über Fahrradreparaturen wissen. Wir betrachten zuerst, welchen Zweck der Auftrag hat und wie die Beteiligten zusammenarbeiten."
+  },
+  "blocks": [
+    {
+      "id": "common-lf1-role-services",
+      "title": "1. Was leistet das Unternehmen?",
+      "objectiveIds": ["common-lf1-role-value"],
+      "sourceIds": ["kmk-fachinformatiker-2019"],
+      "paragraphs": [
+        "Ein Unternehmen bietet Leistungen an: Es kann beispielsweise Waren verkaufen, Software entwickeln oder Geräte einrichten. Im IT-Alltag kommen solche Leistungen häufig zusammen. Ein verkaufter Computer ist ein Produkt. Seine Einrichtung und eine Einweisung sind Dienstleistungen. Für diesen Einstieg reicht die Frage: Was liefert oder erledigt das Unternehmen konkret?",
+        "Knotenpunkt richtet im Beispiel eine kleine Statusseite ein und erklärt dem Reparaturteam die Bedienung. Das sind Leistungen des IT-Dienstleisters. Radblick bietet seinerseits Fahrradreparaturen an. Mit dem IT-Auftrag soll die Auskunft über diese Reparaturen leichter werden.",
+        "Die Leistung ist nicht dasselbe wie der Kundennutzen. Leistung beschreibt, was geliefert oder getan wird. Nutzen beschreibt die Verbesserung, die der Kunde dadurch erreichen möchte. Eine Statusseite einzurichten ist eine Leistung. Weniger nach Zetteln suchen zu müssen ist ein möglicher Nutzen. Ob dieser Nutzen wirklich eintritt, muss sich bei der Verwendung zeigen."
+      ],
+      "example": {
+        "title": "Zwei Blickrichtungen auf denselben Auftrag",
+        "text": "Sam sagt: Wir richten eine gemeinsame Statusseite ein. Damit beschreibt Sam die Leistung. Lea sagt: Mein Team soll den Reparaturstand finden, ohne erst in mehreren Ablagen zu suchen. Damit beschreibt Lea den gewünschten Nutzen. Beide Aussagen gehören zum Auftrag, beantworten aber unterschiedliche Fragen."
+      },
+      "misconception": {
+        "claim": "Wenn ein neues Programm geliefert wurde, ist der Kundennutzen bereits nachgewiesen.",
+        "correction": "Die Lieferung belegt zunächst eine erbrachte Leistung. Erst die passende Verwendung zeigt, ob sie das Problem des Kunden tatsächlich verbessert."
+      },
+      "takeaway": "Leistung: Was liefern oder tun wir? Kundennutzen: Was wird für den Kunden dadurch besser?"
+    },
+    {
+      "id": "common-lf1-role-needs",
+      "title": "2. Vom Kundenwunsch zu einer prüfbaren Aufgabe",
+      "objectiveIds": ["common-lf1-role-value"],
+      "sourceIds": ["fiausbv-annex"],
+      "paragraphs": [
+        "Ein Kundenwunsch ist oft noch ungenau. Eine Aussage wie Wir brauchen eine bessere Übersicht nennt eine Richtung, aber noch keine fertige Aufgabe. Frage zuerst nach der Tätigkeit und dem Problem: Wer sucht welche Information? Was ist dabei mühsam? Welche Verbesserung soll erreicht werden? Die Auswahl eines Programms kommt danach.",
+        "Eine Anforderung beschreibt konkret, was eine Lösung leisten soll oder welche Bedingung sie erfüllen muss. Für unsere Übung vereinbaren Lea und Sam: Zu jedem fiktiven Reparaturauftrag wird genau einer der Texte angenommen, in Arbeit oder abholbereit angezeigt. Die Einträge sollen auf einer gemeinsamen Seite stehen. Damit lässt sich an Beispieldaten prüfen, was erwartet wird.",
+        "Ein Prüfmerkmal hilft beim Vergleichen von Erwartung und Ergebnis. Zeigt der Übungsauftrag 17 den vorgesehenen Text abholbereit? ist überprüfbar. Die Seite soll irgendwie moderner sein lässt offen, woran ein passendes Ergebnis erkannt wird. Später wird mit dem Reparaturteam zusätzlich geprüft, ob die Übersicht im Arbeitsablauf hilft. Ein richtig angezeigter Testeintrag allein beweist noch keine Zeitersparnis im ganzen Betrieb."
+      ],
+      "example": {
+        "title": "Erst das Problem verstehen",
+        "text": "Lea schlägt zunächst ein neues Programm vor. Sam fragt, welche Auskünfte das Team gerade mühsam zusammensuchen muss. Lea beschreibt den Reparaturstand. Erst jetzt können beide überlegen, welche Darstellung dieses Problem löst. Eine neue Farbe oder ein zusätzlicher Computer wären noch keine Begründung dafür, dass der Reparaturstand leichter gefunden wird."
+      },
+      "misconception": {
+        "claim": "Der zuerst genannte Lösungsvorschlag ist bereits die vollständige Beschreibung des Kundenbedarfs.",
+        "correction": "Hinter einem Lösungsvorschlag steht ein gewünschtes Ergebnis. Dieses Ergebnis und die Bedingungen sollten geklärt werden, bevor die Umsetzung festgelegt wird."
+      },
+      "takeaway": "Kläre Problem und gewünschte Verbesserung. Formuliere dann eine Aufgabe, deren Ergebnis du an vereinbarten Merkmalen prüfen kannst."
+    },
+    {
+      "id": "common-lf1-role-collaboration",
+      "title": "3. Wer übernimmt welche Rolle?",
+      "objectiveIds": ["common-lf1-role-team"],
+      "sourceIds": ["kmk-fachinformatiker-2019", "fiausbv-annex"],
+      "paragraphs": [
+        "Eine Rolle beschreibt die Aufgabe einer Person in einem bestimmten Zusammenhang. Im Beispiel beauftragt Lea den IT-Dienstleister und klärt mit Sam die Ziele. Das Reparaturteam soll die Statusseite im Alltag verwenden. Diese Nutzer können aus eigener Arbeitserfahrung erklären, welche Informationen sie benötigen. Auftraggeber und Nutzer können unterschiedliche Personen sein. Eine Person kann aber auch beide Rollen übernehmen.",
+        "Sam koordiniert bei Knotenpunkt die Arbeit: Ziele abstimmen, Teilaufgaben verteilen und offene Entscheidungen zusammenführen. Mira bekommt eine Übungsaufgabe: drei vorgegebene Statusanzeigen mit fiktiven Daten prüfen und Beobachtungen notieren. Das Reparaturteam gibt später Rückmeldung zur Alltagstauglichkeit. Diese Aufteilung gehört zu unserem Fall. Andere Betriebe können Aufgaben anders verteilen.",
+        "Bei einer Übergabe braucht die nächste Person genügend Informationen zum Weiterarbeiten. Dazu gehören die Teilaufgabe, das erwartete Ergebnis, der erreichte Stand und offene Fragen. Für Miras Rückmeldung ist zum Beispiel wichtig, welchen Eintrag sie geprüft hat, was erscheinen sollte und was tatsächlich erschien. So kann Sam die Beobachtung nachvollziehen und den nächsten Arbeitsschritt abstimmen."
+      ],
+      "example": {
+        "title": "Rollen erklären eine Zusammenarbeit",
+        "text": "Lea: Ich beauftrage die Übersicht und bespreche das Ziel. Reparaturteam: Wir werden die Übersicht verwenden und erklären unseren Arbeitsablauf. Sam: Ich koordiniere die Umsetzung bei Knotenpunkt. Mira: Ich prüfe die vereinbarten Übungsfälle und melde das Ergebnis. Die Rollen beschreiben Beiträge zum Auftrag, keine Rangliste wertvoller und weniger wertvoller Menschen."
+      },
+      "misconception": {
+        "claim": "Wer einen Auftrag erteilt, muss das Ergebnis später auch selbst täglich benutzen.",
+        "correction": "Beauftragen und Benutzen sind unterschiedliche Rollen. Sie können bei derselben Person liegen, müssen es aber nicht."
+      },
+      "takeaway": "Kläre, wer beauftragt, wer das Ergebnis nutzt, wer die Arbeit abstimmt und welche Teilaufgabe du selbst übernimmst."
+    },
+    {
+      "id": "common-lf1-role-clarify",
+      "title": "4. Selbstständig arbeiten und gezielt nachfragen",
+      "objectiveIds": ["common-lf1-role-responsibility"],
+      "sourceIds": ["kmk-fachinformatiker-2019", "bbig-13"],
+      "paragraphs": [
+        "Selbstständig arbeiten heißt, eine verstandene und vereinbarte Aufgabe sorgfältig zu erledigen. Du musst nicht jeden bekannten Arbeitsschritt erneut genehmigen lassen. Gleichzeitig solltest du Unklarheiten und die Grenzen deiner Aufgabe erkennen. Im Beispiel darf Mira vorgegebene Übungsfälle wiederholen und Beobachtungen notieren. Änderungen an echten Kundendaten und Zusagen zu Terminen gehören nicht zu ihrer vereinbarten Aufgabe.",
+        "Eine hilfreiche Rückfrage nennt, was bereits klar ist und welche Information noch fehlt. Statt Was soll ich machen? könnte Mira fragen: Ich soll die Statusanzeige prüfen. Welche drei Einträge soll ich verwenden und welcher Text wird jeweils erwartet? Fehlen Ziel, Beispieldaten oder Prüfkriterien, ist eine solche Frage sinnvoller als eine Vermutung.",
+        "Taucht ein neuer Wunsch außerhalb der Aufgabe auf, hält Mira ihn fest und klärt ihn mit Sam, bevor sie etwas zusagt oder verändert. Ein Wunsch des Kunden erweitert nicht von selbst ihren vereinbarten Handlungsspielraum. Wenn Sam ihr eine weitere Aufgabe erklärt und ausdrücklich überträgt, kann sich dieser Spielraum ändern. Das ist von einer selbst vorgenommenen Erweiterung zu unterscheiden.",
+        "Auch ein Fehler ist eine wichtige Beobachtung. Mira meldet sachlich: Beim Übungseintrag 17 sollte abholbereit stehen, angezeigt wurde in Arbeit. Ich habe es mit denselben Beispieldaten erneut geprüft. So wird der Fehler bearbeitbar. Einen unklaren Befund zu verschweigen, als erledigt zu melden oder ohne Auftrag echte Daten zu ändern hilft dem Team nicht."
+      ],
+      "example": {
+        "title": "Eine konkrete Rückfrage",
+        "text": "Lea bittet Mira während der Übung, gleich einen echten Reparatureintrag zu ändern. Mira antwortet: Ich bearbeite gerade die Übungsfälle. Die Änderung am echten Eintrag stimme ich zuerst mit Sam ab. Innerhalb ihrer Übungsaufgabe kann sie derweil mit den freigegebenen Beispieldaten weiterarbeiten. Sie bleibt hilfsbereit, ohne einen ungeklärten Auftrag zu übernehmen."
+      },
+      "misconception": {
+        "claim": "Nachfragen zeigt fehlende Selbstständigkeit; deshalb sollte ich die Absicht möglichst selbst erraten.",
+        "correction": "Gezielte Rückfragen helfen, eine Aufgabe korrekt zu verstehen. Selbstständigkeit zeigt sich anschließend auch darin, vereinbarte Schritte auszuführen und Ergebnisse nachvollziehbar zurückzumelden."
+      },
+      "takeaway": "Verstandene Aufgaben sorgfältig ausführen, konkrete Lücken klären, Grenzen beachten und Beobachtungen nachvollziehbar melden."
+    }
+  ],
+  "questionFile": "questions/common-lf1-role.v1.csv",
+  "quiz": {"questionIds": ["LJ-LF1-ROLE-Q01", "LJ-LF1-ROLE-Q02", "LJ-LF1-ROLE-Q03", "LJ-LF1-ROLE-Q04", "LJ-LF1-ROLE-Q05", "LJ-LF1-ROLE-Q06"]},
+  "exam": {"questionIds": ["LJ-LF1-ROLE-E01", "LJ-LF1-ROLE-E02", "LJ-LF1-ROLE-E03", "LJ-LF1-ROLE-E04", "LJ-LF1-ROLE-E05", "LJ-LF1-ROLE-E06", "LJ-LF1-ROLE-E07", "LJ-LF1-ROLE-E08"], "passPercent": 80, "scoring": "all-or-nothing-per-question", "timed": false},
+  "questionLinks": [
+    {"questionId": "LJ-LF1-ROLE-Q01", "phase": "quiz", "objectiveIds": ["common-lf1-role-value"], "blockIds": ["common-lf1-role-services"]},
+    {"questionId": "LJ-LF1-ROLE-Q02", "phase": "quiz", "objectiveIds": ["common-lf1-role-value"], "blockIds": ["common-lf1-role-needs"]},
+    {"questionId": "LJ-LF1-ROLE-Q03", "phase": "quiz", "objectiveIds": ["common-lf1-role-team"], "blockIds": ["common-lf1-role-collaboration"]},
+    {"questionId": "LJ-LF1-ROLE-Q04", "phase": "quiz", "objectiveIds": ["common-lf1-role-team"], "blockIds": ["common-lf1-role-collaboration"]},
+    {"questionId": "LJ-LF1-ROLE-Q05", "phase": "quiz", "objectiveIds": ["common-lf1-role-responsibility"], "blockIds": ["common-lf1-role-clarify"]},
+    {"questionId": "LJ-LF1-ROLE-Q06", "phase": "quiz", "objectiveIds": ["common-lf1-role-responsibility"], "blockIds": ["common-lf1-role-clarify"]},
+    {"questionId": "LJ-LF1-ROLE-E01", "phase": "exam", "objectiveIds": ["common-lf1-role-value"], "blockIds": ["common-lf1-role-services"]},
+    {"questionId": "LJ-LF1-ROLE-E02", "phase": "exam", "objectiveIds": ["common-lf1-role-value"], "blockIds": ["common-lf1-role-needs"]},
+    {"questionId": "LJ-LF1-ROLE-E03", "phase": "exam", "objectiveIds": ["common-lf1-role-team"], "blockIds": ["common-lf1-role-collaboration"]},
+    {"questionId": "LJ-LF1-ROLE-E04", "phase": "exam", "objectiveIds": ["common-lf1-role-team"], "blockIds": ["common-lf1-role-collaboration"]},
+    {"questionId": "LJ-LF1-ROLE-E05", "phase": "exam", "objectiveIds": ["common-lf1-role-responsibility"], "blockIds": ["common-lf1-role-clarify"]},
+    {"questionId": "LJ-LF1-ROLE-E06", "phase": "exam", "objectiveIds": ["common-lf1-role-responsibility"], "blockIds": ["common-lf1-role-clarify"]},
+    {"questionId": "LJ-LF1-ROLE-E07", "phase": "exam", "objectiveIds": ["common-lf1-role-responsibility"], "blockIds": ["common-lf1-role-clarify"]},
+    {"questionId": "LJ-LF1-ROLE-E08", "phase": "exam", "objectiveIds": ["common-lf1-role-value"], "blockIds": ["common-lf1-role-services", "common-lf1-role-needs"]}
+  ],
+  "interview": [
+    {
+      "id": "common-lf1-role-talk-value",
+      "prompt": "Erkläre einer neuen Kollegin den Auftrag bei Radblick: Was liefert Knotenpunkt und welche Verbesserung erhofft sich der Fahrradladen? Warum ist das nicht dieselbe Aussage?",
+      "objectiveIds": ["common-lf1-role-value"],
+      "blockIds": ["common-lf1-role-services", "common-lf1-role-needs"],
+      "keyPoints": ["Leistung konkret benennen, etwa Statusseite einrichten und Bedienung erklären.", "Gewünschten Nutzen benennen, etwa Reparaturstände leichter finden und Auskunft erleichtern.", "Lieferung und erhoffte Wirkung unterscheiden: Ob die Wirkung eintritt, muss bei der Nutzung geprüft werden."],
+      "acceptableAlternatives": ["Andere eigene Wörter wie gemeinsame Übersicht statt Statusseite oder weniger Suchaufwand statt leichter finden sind gleichwertig.", "Ein anderes korrekt erklärtes IT-Beispiel ist akzeptabel, wenn die Unterscheidung anschließend auf Radblick übertragen wird."],
+      "misconceptions": ["Leistung und Nutzen als dasselbe behandeln.", "Eine neue Software oder eine neue Farbe schon als Nachweis für eine Verbesserung ansehen."],
+      "sampleAnswer": "Knotenpunkt richtet die Statusseite ein und erklärt ihre Verwendung. Das ist die Leistung. Radblick möchte Reparaturstände ohne langes Suchen finden. Das ist der gewünschte Nutzen. Ob das gelingt, zeigt erst die Arbeit mit der Übersicht.",
+      "followUp": "Woran könnte das Reparaturteam bei einer Erprobung erkennen, ob die Übersicht im Alltag hilft?"
+    },
+    {
+      "id": "common-lf1-role-talk-team",
+      "prompt": "Beschreibe die Rollen von Lea, dem Reparaturteam, Sam und Mira im Beispiel. Können Auftraggeber und Nutzer auch dieselbe Person sein?",
+      "objectiveIds": ["common-lf1-role-team"],
+      "blockIds": ["common-lf1-role-collaboration"],
+      "keyPoints": ["Lea beauftragt und klärt das Ziel, das Reparaturteam nutzt die Übersicht im Alltag.", "Sam koordiniert bei Knotenpunkt, Mira bearbeitet die vereinbarte Übungsaufgabe und meldet Beobachtungen.", "Auftraggeber und Nutzer sind Rollen, die getrennt oder bei derselben Person liegen können."],
+      "acceptableAlternatives": ["Bestellerin, Auftraggeberin oder Kundin sind für Leas Rolle im beschriebenen Auftrag verständliche Bezeichnungen.", "Koordinieren darf etwa mit Aufgaben abstimmen und den Überblick behalten erklärt werden. Die Beispielnamen müssen nicht fehlerfrei wiederholt werden, wenn die Zuordnung fachlich klar ist."],
+      "misconceptions": ["Auftraggeber und Nutzer müssen immer identisch sein.", "Mira entscheidet allein über den gesamten Kundenauftrag, weil sie eine Teilaufgabe bearbeitet."],
+      "sampleAnswer": "Lea bestellt die Lösung, das Reparaturteam arbeitet später damit. Sam stimmt die Umsetzung ab. Mira prüft die Übungsfälle. Wenn Lea die Seite selbst nutzen würde, wäre sie zugleich Auftraggeberin und Nutzerin.",
+      "followUp": "Welche Information sollte Mira bei der Übergabe nennen, damit Sam ihre Beobachtung nachvollziehen kann?"
+    },
+    {
+      "id": "common-lf1-role-talk-responsibility",
+      "prompt": "Du sollst eine Übungsanzeige prüfen, kennst aber die erwarteten Texte noch nicht. Zusätzlich bittet der Kunde um eine Änderung an echten Daten, die nicht zu deiner Aufgabe gehört. Wie gehst du vor?",
+      "objectiveIds": ["common-lf1-role-responsibility"],
+      "blockIds": ["common-lf1-role-clarify"],
+      "keyPoints": ["Gezielt nach Beispieldaten und erwarteten Anzeigen fragen, statt sie zu erraten.", "Den zusätzlichen Wunsch festhalten und vor der Änderung mit der zuständigen anleitenden Person abstimmen.", "Die verstandenen und vereinbarten Übungsschritte sorgfältig ausführen und das Ergebnis nachvollziehbar melden."],
+      "acceptableAlternatives": ["Ausbilder, zuständige Kollegin oder Teamkoordination sind als Ansprechperson passend, wenn ihre Zuständigkeit im jeweiligen Fall erklärt wird.", "Eine begründete Pause der betroffenen Aufgabe bis zur Klärung ist genauso zulässig wie das Weiterarbeiten an einer anderen bereits geklärten Teilaufgabe."],
+      "misconceptions": ["Der Kundenwunsch allein erweitert den eigenen vereinbarten Auftrag.", "Nachfragen bedeutet, dass man grundsätzlich nicht selbstständig arbeitet.", "Ein unklarer oder fehlerhafter Befund sollte bis zum Abschluss verschwiegen werden."],
+      "sampleAnswer": "Ich frage, welche Einträge und erwarteten Texte ich prüfen soll. Die Änderung an echten Daten bespreche ich erst mit meiner zuständigen Anleitung. Die geklärten Übungsfälle kann ich ausführen und danach Erwartung, tatsächliche Anzeige und offene Fragen zurückmelden.",
+      "followUp": "Formuliere eine konkrete Rückfrage, die klar macht, was du bereits verstanden hast und was noch fehlt."
+    }
+  ],
+  "cards": [
+    {"id": "common-lf1-role-card-service", "front": "Was unterscheidet Leistung und Kundennutzen?", "back": "Leistung beschreibt, was geliefert oder erledigt wird. Kundennutzen beschreibt die gewünschte Verbesserung dadurch. Beispiel: Statusseite einrichten → Reparaturstände leichter finden.", "objectiveIds": ["common-lf1-role-value"], "blockIds": ["common-lf1-role-services"]},
+    {"id": "common-lf1-role-card-requirement", "front": "Was macht eine Anforderung für eine Prüfung hilfreich?", "back": "Sie beschreibt konkret ein erwartetes Ergebnis oder eine Bedingung. Beispiel: Der Übungseintrag 17 zeigt abholbereit. So lassen sich Erwartung und tatsächliche Anzeige vergleichen.", "objectiveIds": ["common-lf1-role-value"], "blockIds": ["common-lf1-role-needs"]},
+    {"id": "common-lf1-role-card-roles", "front": "Müssen Auftraggeber und Nutzer dieselbe Person sein?", "back": "Nein. Beauftragen und Benutzen sind verschiedene Rollen. Sie können auf verschiedene Personen verteilt sein oder bei derselben Person liegen.", "objectiveIds": ["common-lf1-role-team"], "blockIds": ["common-lf1-role-collaboration"]},
+    {"id": "common-lf1-role-card-handover", "front": "Welche Angaben helfen bei der Übergabe einer Teilaufgabe?", "back": "Nenne Aufgabe, erwartetes Ergebnis, erreichten Stand und offene Fragen. Bei einem Anzeigefehler helfen der konkrete Eintrag sowie erwarteter und tatsächlicher Text.", "objectiveIds": ["common-lf1-role-team"], "blockIds": ["common-lf1-role-collaboration"]},
+    {"id": "common-lf1-role-card-question", "front": "Wie formulierst du eine hilfreiche Rückfrage?", "back": "Sage, was du verstanden hast und welche konkrete Information fehlt. Beispiel: Ich soll die Anzeige prüfen. Welche Einträge und erwarteten Texte soll ich verwenden?", "objectiveIds": ["common-lf1-role-responsibility"], "blockIds": ["common-lf1-role-clarify"]},
+    {"id": "common-lf1-role-card-scope", "front": "Was tust du bei einem zusätzlichen Wunsch außerhalb deiner vereinbarten Aufgabe?", "back": "Den Wunsch festhalten und vor Zusage oder Änderung mit der zuständigen Person abstimmen. Bereits geklärte Schritte innerhalb deines Auftrags kannst du selbstständig bearbeiten.", "objectiveIds": ["common-lf1-role-responsibility"], "blockIds": ["common-lf1-role-clarify"]}
+  ],
+  "review": {"status": "reviewed", "checkedAt": "2026-11-10"}
+}

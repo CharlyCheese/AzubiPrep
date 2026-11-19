@@ -1,0 +1,518 @@
+{
+  "schemaVersion": 1,
+  "id": "common-lf2-procurement",
+  "version": "1.0.0",
+  "title": "Angebot erstellen und Beschaffung verfolgen",
+  "fieldId": "LF2",
+  "scope": "common",
+  "prerequisites": [
+    "common-lf2-comparison",
+    "common-wiso-consumer"
+  ],
+  "sourceIds": [
+    "pm-ihk-calculation",
+    "ec-pm2-artefacts",
+    "lf2-hgb-377",
+    "lf2-bgb-437",
+    "lf2-bgb-439",
+    "lf2-bgb-286",
+    "lf2-ni-safety"
+  ],
+  "sources": [
+    {
+      "id": "pm-ihk-calculation",
+      "title": "IHK Darmstadt: Kalkulieren und mit Kennziffern überwachen",
+      "url": "https://www.ihk.de/darmstadt/produktmarken/beraten-und-informieren/festigung-wachstum/kaufmaennisches/kalkulation-3795552",
+      "checkedAt": "2026-11-11",
+      "note": "Öffentliche HTML-Kalkulation mit Selbstkosten, Gewinn, Nachlässen und Umsatzsteuer geprüft. Eigene Rechenfälle mit ausdrücklich vorgegebenen Bezugsgrößen und Steuersatz; keine realen Marktpreise oder allgemeingültigen Zuschläge."
+    },
+    {
+      "id": "ec-pm2-artefacts",
+      "title": "Europäische Kommission: PM²-Artefakte",
+      "url": "https://pm2.europa.eu/pm2-artefacts_en",
+      "checkedAt": "2026-11-11",
+      "note": "HTML-Übersicht zu Anforderungen, Arbeitsplanung, Abnahme, Übergang und Abschluss geprüft. Lernprotokoll, Beispiele und Modellübung eigenständig formuliert, keine Vorlagendownloads."
+    },
+    {
+      "id": "lf2-hgb-377",
+      "title": "Bundesrecht: § 377 HGB – Untersuchung und Mängelanzeige",
+      "url": "https://www.gesetze-im-internet.de/hgb/__377.html",
+      "checkedAt": "2026-11-11",
+      "note": "Beiderseitiges Handelsgeschäft als Voraussetzung, Untersuchung und Anzeige erkennbarer sowie später entdeckter Mängel geprüft. Keine pauschale Stundenfrist oder Übertragung auf private Verbraucherkäufe."
+    },
+    {
+      "id": "lf2-bgb-437",
+      "title": "Bundesrecht: § 437 BGB – Rechte des Käufers bei Mängeln",
+      "url": "https://www.gesetze-im-internet.de/bgb/__437.html",
+      "checkedAt": "2026-11-11",
+      "note": "Rechte bei Mängeln mit ihren jeweiligen gesetzlichen Voraussetzungen geprüft; keine ungeprüfte Sofortzusage von Rücktritt oder Schadensersatz."
+    },
+    {
+      "id": "lf2-bgb-439",
+      "title": "Bundesrecht: § 439 BGB – Nacherfüllung",
+      "url": "https://www.gesetze-im-internet.juris.de/bgb/__439.html",
+      "checkedAt": "2026-11-11",
+      "note": "Amtliche Fassung über juris erreichbar: Beseitigung des Mangels oder mangelfreie Ersatzlieferung sowie mögliche Beschränkungen. Keine gleichzeitige Zusage beider Leistungsarten."
+    },
+    {
+      "id": "lf2-bgb-286",
+      "title": "Bundesrecht: § 286 BGB – Verzug des Schuldners",
+      "url": "https://www.gesetze-im-internet.de/bgb/__286.html",
+      "checkedAt": "2026-11-11",
+      "note": "Fälligkeit, Mahnung und gesetzliche Ausnahmen sowie Vertretenmüssen geprüft. Lieferverzögerung wird im Lernfall dokumentiert und zur rechtlichen Prüfung weitergegeben."
+    },
+    {
+      "id": "lf2-ni-safety",
+      "title": "Bildungsportal Niedersachsen: Prüfpflichtige Anlagen und Einrichtungen",
+      "url": "https://bildungsportal-niedersachsen.de/aug/arbeitsschutz-organisation/pruefpflichtige-anlagen",
+      "checkedAt": "2026-11-11",
+      "note": "Öffentliche Hinweise zur Meldung erkannter Mängel und zum Entzug defekter Geräte aus der Nutzung geprüft. Schulische Zuständigkeiten und Prüfintervalle werden nicht auf den fiktiven Betrieb übertragen."
+    }
+  ],
+  "objectives": [
+    {
+      "id": "common-lf2-procurement-offer",
+      "text": "Aus Einkaufskosten und vorgegebenen Zuschlägen ein nachvollziehbares Kundenangebot berechnen."
+    },
+    {
+      "id": "common-lf2-procurement-order",
+      "text": "Bestellung, Wareneingang und Rechnung einem Beschaffungsablauf zuordnen."
+    },
+    {
+      "id": "common-lf2-procurement-deviation",
+      "text": "Bei einer mangelhaften oder verspäteten Lieferung den Sachverhalt dokumentieren und die zuständige Stelle einbeziehen."
+    }
+  ],
+  "caseStudy": {
+    "title": "Knotenpunkt stattet Radblick aus",
+    "text": "Eigener fiktiver Lernfall: Knotenpunkt richtet für Radblick einen Büroplatz für Ticketportal und Wissenssuche ein. Mira bearbeitet den Auftrag unter Sams Anleitung, Eda begleitet den Einkauf. Geräte, Preise, Zeiten und Lizenzbedingungen sind vorgegebene Lernannahmen, keine Marktangebote."
+  },
+  "blocks": [
+    {
+      "id": "common-lf2-procurement-calculation",
+      "title": "1. Aus Einkauf und Aufwand Selbstkosten bilden",
+      "objectiveIds": [
+        "common-lf2-procurement-offer"
+      ],
+      "sourceIds": [
+        "pm-ihk-calculation"
+      ],
+      "paragraphs": [
+        "Die Kalkulation knüpft an Projektmanagement an: Unterscheide auftragsbezogene Kosten, Gemeinkosten, Gewinnaufschlag und Umsatzsteuer. Der Bezugspreis aus dem Liefervergleich ist eine Eingangsgröße für den eigenen Auftrag, noch kein Verkaufspreis an Radblick. Eine Einkaufsrechnung darf nicht zusätzlich mit denselben schon enthaltenen Bezugskosten belastet werden.",
+        "Vorgegebener eigener Lernfall: Das passende Gerätepaket kostet Knotenpunkt einschließlich Bezugskosten 800,00 Euro netto. Für Einrichtung und Übergabe sind vier Stunden mit 40,00 Euro direkten Kosten pro Stunde geplant: 160,00 Euro. Der vereinbarte Gemeinkostenzuschlag beträgt 10 Prozent auf die Summe aus Einkauf und direkten Arbeitskosten: 10 Prozent von 960,00 Euro = 96,00 Euro.",
+        "Damit ergeben sich Selbstkosten von 800 + 160 + 96 = 1.056,00 Euro. Die Bezugsgröße des Zuschlags ist ausdrücklich 960 Euro. Wäre stattdessen ein Zuschlag auf Personalkosten oder ein Vollkostensatz vereinbart, ergäbe sich eine andere Rechnung. Übernimm keinen Prozentsatz ohne seine Bezugsgröße.",
+        "Für den Lernfall werden alle Geldzeilen vor der Weiterrechnung auf Cent gerundet. Kostenangaben und Stundensatz sind fiktiv und dienen der Übung. Eine Kalkulation sollte Annahmen und Leistungsumfang zeigen, damit die spätere Nachkalkulation auf derselben Grundlage möglich ist."
+      ],
+      "example": {
+        "title": "Eigener Lernfall",
+        "text": "Mira schreibt Einkauf 800 €, direkte Arbeit 4 × 40 € = 160 € und Gemeinkosten 10 % × 960 € = 96 € in getrennte Zeilen."
+      },
+      "misconception": {
+        "claim": "Der Einkaufspreis ist bereits der vollständige Aufwand für den eingerichteten Arbeitsplatz.",
+        "correction": "Die eigenen Arbeits- und Gemeinkosten gehören zusätzlich in die vereinbarte Kalkulation."
+      },
+      "takeaway": "Bezugsgrößen und enthaltene Kosten sichtbar halten, bevor Zuschläge gerechnet werden."
+    },
+    {
+      "id": "common-lf2-procurement-offer",
+      "title": "2. Ein nachvollziehbares Kundenangebot erstellen",
+      "objectiveIds": [
+        "common-lf2-procurement-offer"
+      ],
+      "sourceIds": [
+        "pm-ihk-calculation"
+      ],
+      "paragraphs": [
+        "Auf die Selbstkosten von 1.056,00 Euro kommt im Lernfall ein vorgegebener Gewinnaufschlag von 20 Prozent: 211,20 Euro. Der Nettoangebotspreis beträgt damit 1.267,20 Euro. Der Aufschlag bezieht sich auf Selbstkosten, nicht auf den späteren Nettoerlös. Der gleiche Gewinn entspricht deshalb einer Marge von 211,20 ÷ 1.267,20 ≈ 16,67 Prozent.",
+        "Für diese Rechenaufgabe sind 19 Prozent Umsatzsteuer vorgegeben. 1.267,20 × 0,19 = 240,768 Euro, auf Cent gerundet 240,77 Euro. Brutto sind 1.507,97 Euro. Umsatzsteuer ist im Lernmodell kein Gewinn. Dies ist eine Übungsannahme, keine Aussage, dass jeder reale Auftrag denselben Steuersatz hat.",
+        "Das eigene Angebot nennt Empfänger, Angebotsdatum und Kennung, genaue Ausstattung und Leistung, Mengen, Nettoeinzel- und Gesamtpreise, Steuerbetrag, Bruttopreis, Gültigkeit, abgestimmten Leistungs- beziehungsweise Liefertermin und Zahlungsbedingungen. Einrichtung, Funktionstest und Einweisung werden als enthaltene Leistungen beschrieben. Nicht angebotene Zusatzarbeiten dürfen nicht still als zugesagt gelten.",
+        "Im Hauptfall sind keine Kundennachlässe eingeplant. Würde Radblick nachträglich 10 Prozent Nachlass erhalten, sinkt der Nettoerlös auf 1.140,48 Euro und das vereinfachte Ergebnis bei unveränderten Kosten auf 84,48 Euro. Ein Rabatt wird daher vor Zusage freigegeben. Wer einen gewünschten Erlös trotz eines Rabatts kalkuliert, teilt durch den verbleibenden Faktor, zum Beispiel durch 0,90 bei 10 Prozent; bloßes Aufschlagen von 10 Prozent gleicht den Rabatt nicht aus."
+      ],
+      "example": {
+        "title": "Eigener Lernfall",
+        "text": "Das Angebot umfasst Gerätepaket, vier geplante Einrichtungsstunden, Funktionstest und Einweisung zu 1.267,20 € netto. Eine zusätzliche Datenübernahme muss gesondert geklärt werden."
+      },
+      "misconception": {
+        "claim": "20 Prozent Gewinnaufschlag bedeuten 20 Prozent Marge auf den Verkaufspreis.",
+        "correction": "Aufschlag und Marge haben verschiedene Bezugsgrößen: Selbstkosten beziehungsweise Nettoerlös."
+      },
+      "takeaway": "Ein Angebot verbindet klare Leistung mit transparentem Netto-, Steuer- und Bruttopreis."
+    },
+    {
+      "id": "common-lf2-procurement-process",
+      "title": "3. Bestellung, Wareneingang und Rechnung verbinden",
+      "objectiveIds": [
+        "common-lf2-procurement-order"
+      ],
+      "sourceIds": [
+        "ec-pm2-artefacts",
+        "lf2-hgb-377"
+      ],
+      "paragraphs": [
+        "Nach der internen und kundenseitigen Freigabe bestellt Eda das ausgewählte Paket bei dem freigegebenen Lieferanten. Die Bestellung nennt Artikel und zugesagte Merkmale, Menge, Preis und Bedingungen, Lieferadresse, Termin sowie eine eindeutige Bestellnummer. Mira darf vorbereiten und prüfen; verbindliche Erklärungen bleiben bei den dafür befugten Personen.",
+        "Eine Auftragsbestätigung wird mit der Bestellung abgeglichen. Stimmen Modell, Menge, Preis oder Termin nicht überein, klärt Eda die Abweichung, bevor sich das Team darauf verlässt. Im Lernablauf bildet eine dokumentierte Freigabe die Grundlage der Beschaffung. Der genaue rechtliche Vertragsschluss hängt von den Erklärungen und Bedingungen des Einzelfalls ab.",
+        "Beim Wareneingang werden Lieferung und Bestellung zugeordnet, Anzahl, Modell, Zubehör und erkennbare Schäden geprüft und das Ergebnis mit Datum festgehalten. Der Lieferschein begleitet die Ware; er beweist für sich genommen weder die Fehlerfreiheit noch die vollständige Erfüllung. Funktionstests erfolgen nach dem vorgesehenen sicheren Prüfablauf.",
+        "Vor Zahlungsfreigabe wird die Rechnung gegen Bestellung und dokumentierten Wareneingang geprüft: vereinbarte Preise, Mengen, Nachlässe und tatsächlich gelieferte Positionen müssen zusammenpassen. Ein plausibler Rechnungsbetrag ersetzt keine Mengenprüfung. Eda klärt Abweichungen und veranlasst anschließend die berechtigte Freigabe nach dem betrieblichen Verfahren.",
+        "Im ausdrücklich beiderseitigen Handelsgeschäft kann § 377 HGB eine unverzügliche Untersuchung und Anzeige von Mängeln verlangen, soweit die Untersuchung im ordnungsgemäßen Geschäftsgang möglich ist. Verdeckte Mängel sind nach Entdeckung unverzüglich anzuzeigen. Das ist keine pauschale Regel für jeden Unternehmenskauf und keine Übertragung auf private Verbraucherkäufe."
+      ],
+      "example": {
+        "title": "Eigener Lernfall",
+        "text": "Bestellt sind zwei Bildschirme, angekommen ist einer, berechnet werden zwei. Mira dokumentiert die Differenz, Eda klärt die fehlende Position vor der Rechnungsfreigabe."
+      },
+      "misconception": {
+        "claim": "Eine passende Bestellnummer macht eine Rechnung sachlich richtig.",
+        "correction": "Die Nummer ordnet den Vorgang zu; Mengen, Preise und Lieferung müssen trotzdem abgeglichen werden."
+      },
+      "takeaway": "Bestellung, tatsächliche Lieferung und Rechnung müssen nachvollziehbar zusammenpassen."
+    },
+    {
+      "id": "common-lf2-procurement-deviations",
+      "title": "4. Abweichungen belegen und zuständig bearbeiten lassen",
+      "objectiveIds": [
+        "common-lf2-procurement-deviation"
+      ],
+      "sourceIds": [
+        "lf2-hgb-377",
+        "lf2-bgb-437",
+        "lf2-bgb-439",
+        "lf2-bgb-286",
+        "lf2-ni-safety"
+      ],
+      "paragraphs": [
+        "Bei einem beschädigten, falschen oder nicht funktionierenden Gerät dokumentiert Mira Bestellnummer, Sollzustand, beobachtete Abweichung, Menge, Zeitpunkt und geeignete Nachweise. Mit Testdaten wird so viel geprüft, wie sicher und freigegeben ist. Ein Gerät mit erkennbar beschädigter Netzleitung wird nicht eingeschaltet. Sam und Eda erhalten den Vorgang unverzüglich über den vorgesehenen Weg.",
+        "Eda veranlasst die konkrete Mängelanzeige gegenüber dem Lieferanten. Eine interne Notiz allein ist keine Anzeige an den Verkäufer. Bei einer mangelhaften Kaufsache kommen gesetzliche Mängelrechte in Betracht; Nacherfüllung bedeutet Beseitigung des Mangels oder Lieferung einer mangelfreien Sache. Voraussetzungen, Wahlmöglichkeiten und mögliche Beschränkungen werden von der zuständigen Stelle geprüft.",
+        "Mira sagt weder sofortige Vertragsauflösung noch einen bestimmten Schadensersatzbetrag zu. Weitere Rechte haben eigene Voraussetzungen. Die organisatorisch richtige Erstreaktion ist ein belastbarer Sachverhalt mit rechtzeitiger Weitergabe, Termin und zuständiger Person. Ein schriftlich dokumentierter Lieferantenkontakt bleibt mit dem Bestellvorgang verknüpft.",
+        "Bei verspäteter Lieferung werden zugesagter Termin, aktuelle Lieferauskunft, Auswirkungen auf Radblick und bisherige Kontakte notiert. Eda klärt mit dem Lieferanten einen belastbaren Stand, Sam stimmt den Einrichtungsplan ab. Fälligkeit, Mahnung, gesetzliche Ausnahmen etwa bei kalendermäßig bestimmter Leistung sowie Vertretenmüssen können für Verzug relevant sein. Verspätung rechtfertigt keine pauschale Aussage über sämtliche Rechtsfolgen.",
+        "Die Übung beschreibt eine geschäftliche Beschaffung. Verbraucherrechte aus einem privaten Kauf werden nicht ungeprüft übertragen. Besonders die kaufmännische Untersuchungs- und Rügeobliegenheit setzt den beschriebenen Anwendungsfall voraus. Für eine konkrete Entscheidung werden Vertrag, Rollen und Sachverhalt durch die verantwortliche Stelle geprüft."
+      ],
+      "example": {
+        "title": "Eigener Lernfall",
+        "text": "Statt Gerät kaputt hält Mira fest: Bestellung 24, Bildschirm 2 von 2, Gehäuse gebrochen, bei Eingang am Dienstag dokumentiert, nicht in Betrieb genommen; Eda übernimmt den Lieferantenkontakt."
+      },
+      "misconception": {
+        "claim": "Ein verspäteter Liefertermin erlaubt Mira sofort einen beliebigen Betrag von der Rechnung abzuziehen.",
+        "correction": "Abweichung, rechtliche Voraussetzungen und Befugnisse müssen geprüft werden; eigenmächtige Zusagen sind kein geregelter Beschaffungsablauf."
+      },
+      "takeaway": "Konkrete Nachweise und rechtzeitige Zuständigkeit sichern die Bearbeitung von Mängeln und Verzögerungen."
+    }
+  ],
+  "questionFile": "questions/common-lf2-procurement.v1.csv",
+  "quiz": {
+    "questionIds": [
+      "LJ-LF2-PROCUREMENT-Q01",
+      "LJ-LF2-PROCUREMENT-Q02",
+      "LJ-LF2-PROCUREMENT-Q03",
+      "LJ-LF2-PROCUREMENT-Q04",
+      "LJ-LF2-PROCUREMENT-Q05",
+      "LJ-LF2-PROCUREMENT-Q06"
+    ]
+  },
+  "exam": {
+    "questionIds": [
+      "LJ-LF2-PROCUREMENT-E01",
+      "LJ-LF2-PROCUREMENT-E02",
+      "LJ-LF2-PROCUREMENT-E03",
+      "LJ-LF2-PROCUREMENT-E04",
+      "LJ-LF2-PROCUREMENT-E05",
+      "LJ-LF2-PROCUREMENT-E06",
+      "LJ-LF2-PROCUREMENT-E07",
+      "LJ-LF2-PROCUREMENT-E08"
+    ],
+    "passPercent": 80,
+    "scoring": "all-or-nothing-per-question",
+    "timed": false
+  },
+  "questionLinks": [
+    {
+      "questionId": "LJ-LF2-PROCUREMENT-Q01",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf2-procurement-offer"
+      ],
+      "blockIds": [
+        "common-lf2-procurement-calculation"
+      ]
+    },
+    {
+      "questionId": "LJ-LF2-PROCUREMENT-Q02",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf2-procurement-offer"
+      ],
+      "blockIds": [
+        "common-lf2-procurement-offer"
+      ]
+    },
+    {
+      "questionId": "LJ-LF2-PROCUREMENT-Q03",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf2-procurement-order"
+      ],
+      "blockIds": [
+        "common-lf2-procurement-process"
+      ]
+    },
+    {
+      "questionId": "LJ-LF2-PROCUREMENT-Q04",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf2-procurement-order"
+      ],
+      "blockIds": [
+        "common-lf2-procurement-process"
+      ]
+    },
+    {
+      "questionId": "LJ-LF2-PROCUREMENT-Q05",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf2-procurement-deviation"
+      ],
+      "blockIds": [
+        "common-lf2-procurement-deviations"
+      ]
+    },
+    {
+      "questionId": "LJ-LF2-PROCUREMENT-Q06",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf2-procurement-deviation"
+      ],
+      "blockIds": [
+        "common-lf2-procurement-deviations"
+      ]
+    },
+    {
+      "questionId": "LJ-LF2-PROCUREMENT-E01",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf2-procurement-offer"
+      ],
+      "blockIds": [
+        "common-lf2-procurement-calculation"
+      ]
+    },
+    {
+      "questionId": "LJ-LF2-PROCUREMENT-E02",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf2-procurement-offer"
+      ],
+      "blockIds": [
+        "common-lf2-procurement-offer"
+      ]
+    },
+    {
+      "questionId": "LJ-LF2-PROCUREMENT-E03",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf2-procurement-offer"
+      ],
+      "blockIds": [
+        "common-lf2-procurement-offer"
+      ]
+    },
+    {
+      "questionId": "LJ-LF2-PROCUREMENT-E04",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf2-procurement-order"
+      ],
+      "blockIds": [
+        "common-lf2-procurement-process"
+      ]
+    },
+    {
+      "questionId": "LJ-LF2-PROCUREMENT-E05",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf2-procurement-order"
+      ],
+      "blockIds": [
+        "common-lf2-procurement-process"
+      ]
+    },
+    {
+      "questionId": "LJ-LF2-PROCUREMENT-E06",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf2-procurement-deviation"
+      ],
+      "blockIds": [
+        "common-lf2-procurement-deviations"
+      ]
+    },
+    {
+      "questionId": "LJ-LF2-PROCUREMENT-E07",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf2-procurement-deviation"
+      ],
+      "blockIds": [
+        "common-lf2-procurement-deviations",
+        "common-lf2-procurement-process"
+      ]
+    },
+    {
+      "questionId": "LJ-LF2-PROCUREMENT-E08",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf2-procurement-deviation"
+      ],
+      "blockIds": [
+        "common-lf2-procurement-deviations"
+      ]
+    }
+  ],
+  "interview": [
+    {
+      "id": "common-lf2-procurement-talk-offer",
+      "prompt": "Rechne aus 800 € Einkauf, vier Stunden zu 40 €, 10 % Gemeinkosten auf Einkauf plus direkte Arbeit, 20 % Gewinn auf Selbstkosten und vorgegebenen 19 % Umsatzsteuer ein Angebot. Nenne den Leistungsumfang.",
+      "objectiveIds": [
+        "common-lf2-procurement-offer"
+      ],
+      "blockIds": [
+        "common-lf2-procurement-calculation",
+        "common-lf2-procurement-offer"
+      ],
+      "keyPoints": [
+        "160 Euro direkte Arbeit, 96 Euro Gemeinkosten, 1.056 Euro Selbstkosten.",
+        "211,20 Euro Gewinnaufschlag, 1.267,20 Euro netto.",
+        "240,77 Euro Steuer und 1.507,97 Euro brutto, Cent-Rundung erläutern.",
+        "Gerätepaket, Einrichtung, Funktionstest und Einweisung genau abgrenzen."
+      ],
+      "acceptableAlternatives": [
+        "Eine gleichwertige Rechnungstabelle mit benannten Bezugsgrößen."
+      ],
+      "misconceptions": [
+        "Umsatzsteuer als Gewinn rechnen.",
+        "Gemeinkosten ohne Beachtung der vorgegebenen Bezugsgröße aufschlagen."
+      ],
+      "sampleAnswer": "Die direkten Arbeitskosten betragen 160 Euro. Auf 960 Euro fallen 96 Euro Gemeinkosten an, also 1.056 Euro Selbstkosten. Mit 20 Prozent Gewinn ergeben sich 1.267,20 Euro netto. Die gerundete Steuer ist 240,77 Euro, brutto 1.507,97 Euro. Ich beschreibe Gerätepaket, Einrichtung, Prüfung und Einweisung sowie Termin und Zahlungsbedingungen.",
+      "followUp": "Wie würde ein nachträglicher Rabatt bei gleichbleibenden Kosten auf das Ergebnis wirken?"
+    },
+    {
+      "id": "common-lf2-procurement-talk-process",
+      "prompt": "Du begleitest Eda von der freigegebenen Bestellung bis zur Rechnung. Beschreibe die Dokumente und deinen Umgang mit zwei bestellten, aber nur einem gelieferten Bildschirm.",
+      "objectiveIds": [
+        "common-lf2-procurement-order"
+      ],
+      "blockIds": [
+        "common-lf2-procurement-process"
+      ],
+      "keyPoints": [
+        "Bestellung mit Ausstattung, Menge, Preis, Termin und Bestellnummer.",
+        "Auftragsbestätigung abgleichen, Wareneingang tatsächlich prüfen und protokollieren.",
+        "Rechnung gegen Bestellung und tatsächlichen Eingang prüfen, Mengendifferenz vor Freigabe klären."
+      ],
+      "acceptableAlternatives": [
+        "Ein Wareneingangsprotokoll oder dokumentierte Eingangsbuchung mit denselben Angaben."
+      ],
+      "misconceptions": [
+        "Die Rechnungsmenge als tatsächlichen Wareneingang übernehmen."
+      ],
+      "sampleAnswer": "Ich gleiche die Bestätigung mit der Bestellung ab. Am Eingang notiere ich einen statt zwei Bildschirmen und die passende Bestellnummer. Eine Rechnung über zwei Stück geht mit diesem Hinweis an Eda. Sie klärt die offene Lieferung beziehungsweise Rechnung, bevor die sachliche Freigabe erfolgt.",
+      "followUp": "Welche Angaben helfen, einen fehlenden Bildschirm von einem falsch gelieferten Modell zu unterscheiden?"
+    },
+    {
+      "id": "common-lf2-procurement-talk-deviation",
+      "prompt": "Ein Bildschirm hat eine sichtbare Beschädigung, ein zweiter Auftrag ist verspätet. Beschreibe für beide Fälle Nachweise, Zuständigkeit und Grenzen deiner Zusagen. Unterscheide das beiderseitige Handelsgeschäft vom privaten Verbraucherkauf.",
+      "objectiveIds": [
+        "common-lf2-procurement-deviation",
+        "common-lf2-procurement-order"
+      ],
+      "blockIds": [
+        "common-lf2-procurement-process",
+        "common-lf2-procurement-deviations"
+      ],
+      "keyPoints": [
+        "Bestellbezug, Soll/Ist, Zeitpunkt, sichere Nachweise und Auswirkungen festhalten.",
+        "Sam und Eda rechtzeitig informieren, Anzeige beziehungsweise Lieferantenkontakt veranlassen.",
+        "Mängelrechte oder Verzug nicht pauschal zusagen; Voraussetzungen zuständig prüfen.",
+        "§ 377 HGB setzt das beiderseitige Handelsgeschäft voraus, interne Meldung ersetzt keine Verkäuferanzeige."
+      ],
+      "acceptableAlternatives": [
+        "Getrennte Vorgangsnotizen für Mangel und Lieferverzögerung."
+      ],
+      "misconceptions": [
+        "Eine beliebige eigenmächtige Rechnungskürzung als Standardlösung nennen.",
+        "Kaufmännische Rügeobliegenheit auf private Käufer übertragen."
+      ],
+      "sampleAnswer": "Den Schaden beschreibe ich konkret mit Bestellnummer und Zeitpunkt. Sam klärt sichere weitere Prüfung, Eda den Lieferantenkontakt und mögliche Nacherfüllung. Beim Lieferverzug notiere ich Termin, aktuelle Auskunft und Auswirkungen. Ich verspreche keine Entschädigung. Die kaufmännische Untersuchungs- und Rügeobliegenheit bespreche ich für den beiderseitigen Handelskauf, nicht als Regel für private Käufe.",
+      "followUp": "Warum reicht eine interne Notiz nicht aus, um eine Mängelanzeige gegenüber dem Verkäufer zu belegen?"
+    }
+  ],
+  "cards": [
+    {
+      "id": "common-lf2-procurement-card-costs",
+      "front": "Welche Kostenbasis ergibt sich im Beschaffungsfall vor Gewinn?",
+      "back": "800 € Einkauf + 160 € direkte Arbeit + 96 € Gemeinkosten = 1.056 € Selbstkosten. Der 10-Prozent-Zuschlag bezieht sich auf 960 € Einkauf plus direkte Arbeit.",
+      "objectiveIds": [
+        "common-lf2-procurement-offer"
+      ],
+      "blockIds": [
+        "common-lf2-procurement-calculation"
+      ]
+    },
+    {
+      "id": "common-lf2-procurement-card-price",
+      "front": "Wie wird aus 1.056 € Selbstkosten das vorgegebene Bruttoangebot?",
+      "back": "20 % Gewinnaufschlag ergibt 1.267,20 € netto. Vorgegebene 19 % Steuer sind gerundet 240,77 €; brutto 1.507,97 €. Steuer ist kein Gewinn.",
+      "objectiveIds": [
+        "common-lf2-procurement-offer"
+      ],
+      "blockIds": [
+        "common-lf2-procurement-offer"
+      ]
+    },
+    {
+      "id": "common-lf2-procurement-card-documents",
+      "front": "Welche Dokumente verknüpft die Beschaffung?",
+      "back": "Freigegebene Bestellung, abgeglichene Auftragsbestätigung, dokumentierter Wareneingang mit Lieferschein und geprüfte Rechnung. Bestellnummern helfen bei der Zuordnung.",
+      "objectiveIds": [
+        "common-lf2-procurement-order"
+      ],
+      "blockIds": [
+        "common-lf2-procurement-process"
+      ]
+    },
+    {
+      "id": "common-lf2-procurement-card-invoice",
+      "front": "Was prüfst du vor der sachlichen Rechnungsfreigabe?",
+      "back": "Mengen, Preise, Nachlässe und tatsächliche Lieferung gegen Bestellung und Wareneingang abgleichen. Eine passende Nummer allein beweist keine richtige Rechnung.",
+      "objectiveIds": [
+        "common-lf2-procurement-order"
+      ],
+      "blockIds": [
+        "common-lf2-procurement-process"
+      ]
+    },
+    {
+      "id": "common-lf2-procurement-card-defect",
+      "front": "Wie meldest du eine mangelhafte Lieferung im Rollenrahmen?",
+      "back": "Bestellbezug, Soll/Ist, Menge, Zeitpunkt und sichere Nachweise dokumentieren. Sam und Eda einbeziehen; die zuständige Stelle veranlasst rechtzeitige Anzeige und prüft Nacherfüllung.",
+      "objectiveIds": [
+        "common-lf2-procurement-deviation"
+      ],
+      "blockIds": [
+        "common-lf2-procurement-deviations"
+      ]
+    },
+    {
+      "id": "common-lf2-procurement-card-delay",
+      "front": "Was gehört in die Bearbeitung einer verspäteten Lieferung?",
+      "back": "Zugesagter Termin, aktuelle Auskunft, Auswirkungen und Kontakte. Zuständige Personen prüfen Maßnahmen und rechtliche Voraussetzungen, statt ungeprüft Entschädigung zuzusagen.",
+      "objectiveIds": [
+        "common-lf2-procurement-deviation"
+      ],
+      "blockIds": [
+        "common-lf2-procurement-deviations"
+      ]
+    }
+  ],
+  "review": {
+    "status": "reviewed",
+    "checkedAt": "2026-11-11"
+  }
+}

@@ -1,0 +1,494 @@
+{
+  "schemaVersion": 1,
+  "id": "common-lf4-assets",
+  "title": "Schutzobjekte, Bedrohungen und Schäden",
+  "fieldId": "LF4",
+  "scope": "common",
+  "prerequisites": [
+    "common-lf4-goals"
+  ],
+  "objectives": [
+    {
+      "id": "common-lf4-assets-inventory",
+      "text": "Daten, Anwendungen, Geräte und Räume eines kleinen Arbeitsbereichs als Schutzobjekte erfassen."
+    },
+    {
+      "id": "common-lf4-assets-scenario",
+      "text": "Bedrohung, Schwachstelle und mögliche Schadensfolge in einem konkreten Szenario unterscheiden."
+    },
+    {
+      "id": "common-lf4-assets-dependence",
+      "text": "Eine Abhängigkeit zwischen Geschäftsablauf, Anwendung und Infrastruktur darstellen."
+    }
+  ],
+  "version": "1.0.0",
+  "sourceIds": [
+    "lf4-nist-asset",
+    "lf4-nist-threat",
+    "lf4-nist-vulnerability",
+    "lf4-nist-impact"
+  ],
+  "sources": [
+    {
+      "id": "lf4-nist-asset",
+      "title": "NIST CSRC Glossar: Schutzobjekt",
+      "url": "https://csrc.nist.gov/glossary/term/asset",
+      "checkedAt": "2026-11-16",
+      "note": "Materielle und immaterielle Werte und Bezug zu Geschäftsaufgaben geprüft."
+    },
+    {
+      "id": "lf4-nist-threat",
+      "title": "NIST CSRC Glossar: Bedrohung",
+      "url": "https://csrc.nist.gov/glossary/term/threat",
+      "checkedAt": "2026-11-16",
+      "note": "Schadensfähige Ereignisse und Umstände geprüft."
+    },
+    {
+      "id": "lf4-nist-vulnerability",
+      "title": "NIST CSRC Glossar: Schwachstelle",
+      "url": "https://csrc.nist.gov/glossary/term/vulnerability",
+      "checkedAt": "2026-11-16",
+      "note": "Ausnutzbare oder auslösbare Schwächen in Systemen und Verfahren geprüft."
+    },
+    {
+      "id": "lf4-nist-impact",
+      "title": "NIST CSRC Glossar: Schadensauswirkung",
+      "url": "https://csrc.nist.gov/glossary/term/impact",
+      "checkedAt": "2026-11-16",
+      "note": "Mögliche Auswirkungen auf Betrieb, Werte und Menschen geprüft. Die konkreten Kategorien und Schwellen sind eigene fiktive Lernvorgaben."
+    }
+  ],
+  "caseStudy": {
+    "title": "Mira schützt den Servicearbeitsplatz bei Radblick",
+    "text": "Eigener fiktiver Lernfall: Radblick bearbeitet Serviceanfragen. Mira lernt unter Anleitung von Sam aus der IT und Eda als Serviceverantwortlicher. Alle Personen, Daten, Regeln und Schadensannahmen sind erfunden. Für die Serviceaufnahme erstellt Mira ein kleines Verzeichnis der benötigten Informationen, Anwendungen, Geräte und Räume."
+  },
+  "blocks": [
+    {
+      "id": "common-lf4-assets-inventory",
+      "title": "1. Schutzobjekte vom Arbeitsablauf aus erfassen",
+      "objectiveIds": [
+        "common-lf4-assets-inventory"
+      ],
+      "sourceIds": [
+        "lf4-nist-asset"
+      ],
+      "paragraphs": [
+        "Ein Schutzobjekt ist etwas, das für die Aufgabe einen Wert hat und dessen Beeinträchtigung Folgen haben kann. Starte beim Ablauf Serviceanfrage bearbeiten. Welche Informationen liest oder schreibt Eda? Welche Anwendung nutzt sie? Auf welchen Geräten und in welchem Raum findet die Arbeit statt?",
+        "Das fiktive Verzeichnis enthält Ticketdaten mit Kontakt, Gerät und Fehlermeldung; die Ticketanwendung; Serviceclient, Server und Netzverbindung; den Büroraum mit seiner Stromversorgung. Eine Papierliste des Ersatzablaufs ist ebenfalls ein Informationsträger. Ein Geräteverzeichnis allein würde daher Teile des Arbeitsbereichs übersehen.",
+        "Erfasse je Objekt eine eindeutige Bezeichnung, Art, Zweck, Ort oder Dienstbezug und zuständige Rolle. Beispiel: Ticketanwendung, Softwaredienst, Bearbeitung von Serviceaufträgen, Serverdienst T1, Verantwortung Serviceleitung und technische Betreuung Sam. Zugangsdaten gehören nicht in das Verzeichnis."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Lernfall",
+        "text": "Mira trennt Ticketdaten als Informationen, Ticketanwendung als Software, Client als Gerät und Servicebüro als Raum."
+      },
+      "misconception": {
+        "claim": "Schutzobjekte sind die gekauften Computer.",
+        "correction": "Auch Daten, Anwendungen, Räume und andere benötigte Werte müssen zum abgegrenzten Arbeitsbereich passen."
+      },
+      "takeaway": "Der Ablauf bestimmt, was in das Verzeichnis gehört."
+    },
+    {
+      "id": "common-lf4-assets-scenario",
+      "title": "2. Bedrohung, Schwachstelle und Schaden trennen",
+      "objectiveIds": [
+        "common-lf4-assets-scenario"
+      ],
+      "sourceIds": [
+        "lf4-nist-threat",
+        "lf4-nist-vulnerability",
+        "lf4-nist-impact"
+      ],
+      "paragraphs": [
+        "Eine Bedrohung beschreibt ein Ereignis oder einen Umstand, der Schaden verursachen kann: Eine unberechtigte Person könnte ein Ticket lesen, Wasser könnte ein Gerät treffen, eine Datei könnte versehentlich überschrieben werden. Absicht ist dafür keine Voraussetzung.",
+        "Eine Schwachstelle erleichtert das schädliche Ereignis oder seine Wirkung. Beispiele sind ein unbeaufsichtigter entsperrter Bildschirm, eine ungeschützte Änderungsfunktion oder fehlende geeignete Ersatzmöglichkeiten. Die Schadensfolge beschreibt dagegen, was die Beeinträchtigung für Betroffene oder Arbeit bedeutet: Kundeninformationen werden bekannt, falsche Arbeit wird beauftragt oder die Aufnahme stockt.",
+        "Schreibe eine nachvollziehbare Kette. Im eigenen Fall: Eine Besucherin könnte mitlesen (Bedrohung); das Ticket bleibt auf dem unbeaufsichtigten Bildschirm offen (Schwachstelle); vertrauliche Kundenvorgänge werden Unbefugten bekannt und Vertrauen geht verloren (Schadensfolge). Ob dies bereits geschehen ist, wird gesondert als Befund festgehalten."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Lernfall",
+        "text": "Wassereintritt ist ein mögliches Ereignis; ungeschützte Technik unter einer undichten Leitung ist eine Schwäche; ausgefallene Serviceaufnahme ist eine Folge."
+      },
+      "misconception": {
+        "claim": "Eine Bedrohung bezeichnet immer eine angreifende Person.",
+        "correction": "Auch Fehlbedienung, technische Defekte und Umweltereignisse können die Aufgabe beeinträchtigen."
+      },
+      "takeaway": "Ereignis, begünstigende Schwäche und Folge sind verschiedene Aussagen."
+    },
+    {
+      "id": "common-lf4-assets-dependence",
+      "title": "3. Die Abhängigkeit sichtbar machen",
+      "objectiveIds": [
+        "common-lf4-assets-dependence"
+      ],
+      "sourceIds": [
+        "lf4-nist-asset",
+        "lf4-nist-impact"
+      ],
+      "paragraphs": [
+        "Eine Abhängigkeit erklärt, warum ein Objekt für einen Ablauf benötigt wird. Lies einen Pfeil als braucht: Servicebearbeitung → Ticketanwendung → Server, Netz und Client → passende Stromversorgung und Arbeitsumgebung. Die letzte Stufe kann mehrere vorherige Objekte versorgen; ein Pfeilbild muss keine reine Linie sein.",
+        "Fällt der Client aus, kann Eda den Dienst vielleicht an einem freigegebenen Ersatzclient nutzen. Fällt der zentrale Server aus, hilft ein zweiter Client allein nicht. Deshalb notierst du nicht nur die Verbindung, sondern auch Grenzen und Ersatzmöglichkeiten. Im Lernfall existiert ein freigegebener Papierablauf für bis zu vier Stunden.",
+        "Auch eine gemeinsam genutzte Infrastruktur verdient Aufmerksamkeit: Ein Netzgerät kann mehrere Arbeitsplätze gleichzeitig treffen. Umgekehrt sind zwei Geräte nicht unabhängig, wenn sie dieselbe Stromversorgung benötigen. Behaupte eine Ausweichmöglichkeit erst, wenn sie im Fall vorgegeben oder praktisch nachgewiesen ist."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Lernfall",
+        "text": "Ein zweiter Client am selben ausgefallenen Server ändert die Serverabhängigkeit nicht. Ein Papierablauf kann bestimmte Aufnahmeschritte zeitweise ersetzen."
+      },
+      "misconception": {
+        "claim": "Mehr Geräte bedeuten unabhängige Ersatzmöglichkeiten.",
+        "correction": "Gemeinsame Dienste, Netze und Stromversorgung können beide Geräte zugleich betreffen."
+      },
+      "takeaway": "Notiere, was wovon abhängt und welche Ersatzgrenze belegt ist."
+    },
+    {
+      "id": "common-lf4-assets-record",
+      "title": "4. Ein kleines Verzeichnis mit Szenario verbinden",
+      "objectiveIds": [
+        "common-lf4-assets-inventory",
+        "common-lf4-assets-scenario",
+        "common-lf4-assets-dependence"
+      ],
+      "sourceIds": [
+        "lf4-nist-asset",
+        "lf4-nist-threat",
+        "lf4-nist-vulnerability",
+        "lf4-nist-impact"
+      ],
+      "paragraphs": [
+        "Mira begrenzt ihre Untersuchung auf den Servicearbeitsplatz und den dafür benötigten Ticketdienst. Sie führt Informationen, Anwendung, Geräte und Raum auf und verbindet sie mit der Aufgabe. Unbekannte externe Abhängigkeiten kennzeichnet sie als offene Frage, statt Annahmen als Bestand auszugeben.",
+        "Zu einer Zeile ergänzt sie ein Schadensszenario: Ticketdaten; mögliche unbefugte Einsicht; offen gebliebener Bildschirm als Schwäche; Kundenvertrauen beeinträchtigt. Zu einer anderen Zeile nennt sie den zentralen Server und einen denkbaren Ausfall mit unterbrochener Bearbeitung. Das Verzeichnis ist keine Liste behaupteter tatsächlicher Vorfälle.",
+        "Die spätere Einstufung nutzt diese Angaben. Objekt, Nutzungszweck, betroffene Personen, Abhängigkeiten, Ersatzweg und Annahmen müssen daher verständlich sein. Sam kann die Infrastrukturangaben prüfen, Eda die Bedeutung für die Servicearbeit. Das macht die Bewertung nachvollziehbar und korrigierbar."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Lernfall",
+        "text": "Ein Eintrag verbindet Ticketdienst, Serviceaufnahme, Server-/Netzabhängigkeit, benannte Zuständigkeit und offene Frage zur Ersatzdauer."
+      },
+      "misconception": {
+        "claim": "Ein gut gefülltes Verzeichnis ersetzt die Begründung der Abhängigkeiten.",
+        "correction": "Namen und Stückzahlen erklären noch nicht, welche Aufgabe bei einem Ausfall betroffen ist."
+      },
+      "takeaway": "Bestand und Szenario sollen die spätere Bewertung tragen."
+    }
+  ],
+  "questionFile": "questions/common-lf4-assets.v1.csv",
+  "quiz": {
+    "questionIds": [
+      "LJ-LF4-ASSETS-Q01",
+      "LJ-LF4-ASSETS-Q02",
+      "LJ-LF4-ASSETS-Q03",
+      "LJ-LF4-ASSETS-Q04",
+      "LJ-LF4-ASSETS-Q05",
+      "LJ-LF4-ASSETS-Q06"
+    ]
+  },
+  "exam": {
+    "questionIds": [
+      "LJ-LF4-ASSETS-E01",
+      "LJ-LF4-ASSETS-E02",
+      "LJ-LF4-ASSETS-E03",
+      "LJ-LF4-ASSETS-E04",
+      "LJ-LF4-ASSETS-E05",
+      "LJ-LF4-ASSETS-E06",
+      "LJ-LF4-ASSETS-E07",
+      "LJ-LF4-ASSETS-E08"
+    ],
+    "passPercent": 80,
+    "scoring": "all-or-nothing-per-question",
+    "timed": false
+  },
+  "questionLinks": [
+    {
+      "questionId": "LJ-LF4-ASSETS-Q01",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf4-assets-inventory"
+      ],
+      "blockIds": [
+        "common-lf4-assets-inventory"
+      ]
+    },
+    {
+      "questionId": "LJ-LF4-ASSETS-Q02",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf4-assets-inventory"
+      ],
+      "blockIds": [
+        "common-lf4-assets-inventory",
+        "common-lf4-assets-record"
+      ]
+    },
+    {
+      "questionId": "LJ-LF4-ASSETS-Q03",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf4-assets-scenario"
+      ],
+      "blockIds": [
+        "common-lf4-assets-scenario"
+      ]
+    },
+    {
+      "questionId": "LJ-LF4-ASSETS-Q04",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf4-assets-scenario"
+      ],
+      "blockIds": [
+        "common-lf4-assets-scenario"
+      ]
+    },
+    {
+      "questionId": "LJ-LF4-ASSETS-Q05",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf4-assets-dependence"
+      ],
+      "blockIds": [
+        "common-lf4-assets-dependence"
+      ]
+    },
+    {
+      "questionId": "LJ-LF4-ASSETS-Q06",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf4-assets-dependence"
+      ],
+      "blockIds": [
+        "common-lf4-assets-dependence",
+        "common-lf4-assets-record"
+      ]
+    },
+    {
+      "questionId": "LJ-LF4-ASSETS-E01",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf4-assets-inventory"
+      ],
+      "blockIds": [
+        "common-lf4-assets-inventory"
+      ]
+    },
+    {
+      "questionId": "LJ-LF4-ASSETS-E02",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf4-assets-inventory"
+      ],
+      "blockIds": [
+        "common-lf4-assets-inventory",
+        "common-lf4-assets-record"
+      ]
+    },
+    {
+      "questionId": "LJ-LF4-ASSETS-E03",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf4-assets-scenario"
+      ],
+      "blockIds": [
+        "common-lf4-assets-scenario"
+      ]
+    },
+    {
+      "questionId": "LJ-LF4-ASSETS-E04",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf4-assets-scenario"
+      ],
+      "blockIds": [
+        "common-lf4-assets-scenario"
+      ]
+    },
+    {
+      "questionId": "LJ-LF4-ASSETS-E05",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf4-assets-scenario"
+      ],
+      "blockIds": [
+        "common-lf4-assets-scenario",
+        "common-lf4-assets-record"
+      ]
+    },
+    {
+      "questionId": "LJ-LF4-ASSETS-E06",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf4-assets-dependence"
+      ],
+      "blockIds": [
+        "common-lf4-assets-dependence"
+      ]
+    },
+    {
+      "questionId": "LJ-LF4-ASSETS-E07",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf4-assets-inventory",
+        "common-lf4-assets-dependence"
+      ],
+      "blockIds": [
+        "common-lf4-assets-dependence",
+        "common-lf4-assets-record"
+      ]
+    },
+    {
+      "questionId": "LJ-LF4-ASSETS-E08",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf4-assets-dependence"
+      ],
+      "blockIds": [
+        "common-lf4-assets-dependence",
+        "common-lf4-assets-record"
+      ]
+    }
+  ],
+  "interview": [
+    {
+      "id": "common-lf4-assets-talk-inventory",
+      "prompt": "Erstelle mündlich ein Verzeichnis für den fiktiven Servicearbeitsplatz mit vier Arten von Schutzobjekten.",
+      "objectiveIds": [
+        "common-lf4-assets-inventory"
+      ],
+      "blockIds": [
+        "common-lf4-assets-inventory",
+        "common-lf4-assets-record"
+      ],
+      "keyPoints": [
+        "Daten und Anwendung getrennt nennen.",
+        "Geräte und Raum berücksichtigen.",
+        "Zweck und zuständige Rolle ergänzen."
+      ],
+      "acceptableAlternatives": [
+        "Eine fachlich gleichwertige, anhand der Fallvorgaben begründete Erklärung."
+      ],
+      "misconceptions": [
+        "Ein Inventar der Hardware mit dem gesamten Untersuchungsbereich gleichsetzen."
+      ],
+      "sampleAnswer": "Ich erfasse Ticketdaten, Ticketanwendung, Client und Server sowie das Servicebüro. Zu jedem Eintrag nenne ich Zweck, Bezug zum Ablauf und zuständige Rolle. Die Papierliste des Ersatzablaufs ergänze ich als Informationsträger.",
+      "followUp": "Welche Lücke bliebe bei einer reinen Geräteliste?"
+    },
+    {
+      "id": "common-lf4-assets-talk-scenario",
+      "prompt": "Beschreibe ein Szenario am offenen Bildschirm und trenne Bedrohung, Schwachstelle und Schadensfolge.",
+      "objectiveIds": [
+        "common-lf4-assets-scenario"
+      ],
+      "blockIds": [
+        "common-lf4-assets-scenario",
+        "common-lf4-assets-record"
+      ],
+      "keyPoints": [
+        "Mögliches Mitlesen als Ereignis benennen.",
+        "Entsperrten unbeaufsichtigten Bildschirm als Schwäche erklären.",
+        "Offenlegung und Kundenwirkung als Folge nennen."
+      ],
+      "acceptableAlternatives": [
+        "Eine fachlich gleichwertige, anhand der Fallvorgaben begründete Erklärung."
+      ],
+      "misconceptions": [
+        "Möglichkeit und bereits nachgewiesenen Vorfall vermischen."
+      ],
+      "sampleAnswer": "Eine unberechtigte Person könnte mitlesen. Das offene Ticket am unbeaufsichtigten Bildschirm erleichtert es. Als Folge werden Kundenvorgänge bekannt und das Vertrauen kann leiden. Ob dies tatsächlich passiert ist, ist eine getrennte Frage.",
+      "followUp": "Wie würde sich das Szenario bei einer versehentlichen Änderung unterscheiden?"
+    },
+    {
+      "id": "common-lf4-assets-talk-dependence",
+      "prompt": "Erkläre die Abhängigkeit vom Geschäftsablauf bis zur Infrastruktur und bewerte den zweiten Client.",
+      "objectiveIds": [
+        "common-lf4-assets-dependence"
+      ],
+      "blockIds": [
+        "common-lf4-assets-dependence",
+        "common-lf4-assets-record"
+      ],
+      "keyPoints": [
+        "Serviceaufnahme mit Ticketdienst verbinden.",
+        "Server, Netz, Client und Versorgung benennen.",
+        "Gemeinsamen Server und begrenzten Papierersatz berücksichtigen."
+      ],
+      "acceptableAlternatives": [
+        "Eine fachlich gleichwertige, anhand der Fallvorgaben begründete Erklärung."
+      ],
+      "misconceptions": [
+        "Einen zweiten Client ohne Prüfung als unabhängigen Ersatz bewerten."
+      ],
+      "sampleAnswer": "Die Serviceaufnahme benötigt den Ticketdienst. Dieser braucht Server, Netz und Client mit Versorgung. Ein zweiter Client hilft nicht gegen den gemeinsamen Serverausfall. Der Papierablauf ersetzt bestimmte Aufnahmeschritte bis vier Stunden.",
+      "followUp": "Welche Annahme müsstest du bei einem längeren Ausfall neu prüfen?"
+    }
+  ],
+  "cards": [
+    {
+      "id": "common-lf4-assets-card-types",
+      "front": "Welche vier Objektarten gehören zum kleinen Arbeitsbereich?",
+      "back": "Informationen, Anwendungen, Geräte und Räume; zum Beispiel Ticketdaten, Ticketdienst, Client und Servicebüro.",
+      "objectiveIds": [
+        "common-lf4-assets-inventory"
+      ],
+      "blockIds": [
+        "common-lf4-assets-inventory"
+      ]
+    },
+    {
+      "id": "common-lf4-assets-card-record",
+      "front": "Welche Angaben verbinden ein Objekt mit der Arbeit?",
+      "back": "Eindeutige Bezeichnung, Art, Zweck, Ort oder Dienstbezug, zuständige Rolle und benötigte Abhängigkeiten.",
+      "objectiveIds": [
+        "common-lf4-assets-inventory"
+      ],
+      "blockIds": [
+        "common-lf4-assets-inventory",
+        "common-lf4-assets-record"
+      ]
+    },
+    {
+      "id": "common-lf4-assets-card-threat",
+      "front": "Was unterscheidet Bedrohung und Schwachstelle?",
+      "back": "Die Bedrohung ist das mögliche schädliche Ereignis; die Schwachstelle begünstigt es oder seine Wirkung.",
+      "objectiveIds": [
+        "common-lf4-assets-scenario"
+      ],
+      "blockIds": [
+        "common-lf4-assets-scenario"
+      ]
+    },
+    {
+      "id": "common-lf4-assets-card-damage",
+      "front": "Was nennt eine Schadensfolge?",
+      "back": "Die nachteilige Wirkung, etwa bekannt gewordene Kundendaten, falsche Einsätze oder unterbrochene Aufnahme.",
+      "objectiveIds": [
+        "common-lf4-assets-scenario"
+      ],
+      "blockIds": [
+        "common-lf4-assets-scenario"
+      ]
+    },
+    {
+      "id": "common-lf4-assets-card-chain",
+      "front": "Wie liest du eine Abhängigkeitskette?",
+      "back": "Servicebearbeitung benötigt Ticketanwendung; diese benötigt Server, Netz und Client mit passender Versorgung.",
+      "objectiveIds": [
+        "common-lf4-assets-dependence"
+      ],
+      "blockIds": [
+        "common-lf4-assets-dependence"
+      ]
+    },
+    {
+      "id": "common-lf4-assets-card-fallback",
+      "front": "Wann ist ein Ersatzweg belastbar beschrieben?",
+      "back": "Wenn Funktion, Abhängigkeiten und zeitliche Grenze bekannt sind. Ein zweiter Client hilft nicht gegen den gemeinsamen Serverausfall.",
+      "objectiveIds": [
+        "common-lf4-assets-dependence"
+      ],
+      "blockIds": [
+        "common-lf4-assets-dependence",
+        "common-lf4-assets-record"
+      ]
+    }
+  ],
+  "review": {
+    "status": "reviewed",
+    "checkedAt": "2026-11-16"
+  }
+}

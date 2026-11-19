@@ -100,3 +100,7 @@ Die ausführlichen Ergebnisse sind im [FE-054-Brief](agent-briefs/FE-054-debugge
 
 Technische Referenzen: [HTML-iframe/Sandbox](https://html.spec.whatwg.org/multipage/iframe-embed-object.html#attr-iframe-sandbox),
 [CSSOM replaceSync](https://drafts.csswg.org/cssom/#dom-cssstylesheet-replacesync).
+
+Die Folgestufe FE-055 ergänzt [Texteingaben und Modellformulare](48-Debugger-Formulare.md)
+innerhalb derselben Abschirmung. Native Formularaktionen bleiben gesperrt;
+die oben beschriebenen allgemeinen Formularausschlüsse beziehen sich auf FE-054.

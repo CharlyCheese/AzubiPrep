@@ -3,7 +3,7 @@
 // - API-GET-Antworten: Network-first mit Cache-Fallback (Inhalte offline verfügbar)
 // - Nicht-GET-/POST-Requests: nur Netzwerk (kein Caching)
 
-const VERSION = 'azubiprep-v45'; // v45 (OPS-042): schnellere Debugzustände und mobile Umbrüche
+const VERSION = 'azubiprep-v68'; // FE-079: vollständige FIAE-Lernreise
 const APP_SHELL = [
   '/',
   '/index.html',
@@ -42,7 +42,7 @@ self.addEventListener('fetch', (event) => {
   if (url.origin !== self.location.origin) return;
 
   // Modellstatus und Lernhilfe niemals als Offline-Antwort zwischenspeichern.
-  if (url.pathname.startsWith('/api/ai/')) return;
+  if (url.pathname.startsWith('/api/ai/') || url.pathname.startsWith('/api/journey/')) return;
 
   // API-Antworten: Network-first, Fallback auf Cache
   if (url.pathname.startsWith('/api/')) {

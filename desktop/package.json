@@ -1,7 +1,7 @@
 {
   "name": "azubiprep-desktop",
   "private": true,
-  "version": "0.1.4",
+  "version": "0.1.5",
   "author": "Sven Weyers",
   "description": "AzubiPrep als installierbare Windows-Desktop-App (Electron-Hülle um das bestehende React-Frontend + Node/Express-Backend).",
   "main": "main.js",
@@ -10,7 +10,7 @@
     "prepare:electron": "node scripts/prepare-electron.cjs",
     "predist": "npm run prepare:electron",
     "dist": "node scripts/build-desktop.cjs",
-    "test:desktop": "node --test test/desktop-package.test.cjs test/pilot-runtime.test.cjs test/electron-setup.test.cjs",
+    "test:desktop": "node --test test/desktop-package.test.cjs test/pilot-runtime.test.cjs test/electron-setup.test.cjs test/journey-storage.test.cjs",
     "predist:web": "npm run prepare:electron",
     "dist:web": "node scripts/build-web.cjs",
     "test:web": "node --test test/web-runtime.test.cjs"
@@ -30,6 +30,7 @@
       "main.js",
       "preload.cjs",
       "pilot-runtime.cjs",
+      "journey-storage.cjs",
       "pilot-inspector.cjs",
       "js-pilot.cjs",
       "js-pilot-fixtures.cjs",

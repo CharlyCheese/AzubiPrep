@@ -2,9 +2,11 @@ import { JS15_EXERCISES } from './js15-exercises.js';
 import { JS16_EXERCISES } from './js16-exercises.js';
 import { JS17_EXERCISES } from './js17-exercises.js';
 import { JS18_EXERCISES } from './js18-exercises.js';
+import { JOURNEY_EXERCISES } from './journey-exercise.js';
 // Fixed trusted guest probes. No probe source or input values arrive from IPC,
 // editor text or imports. Every probe itself executes only inside QuickJS.
 export const JS_EXERCISES = {
+  ...JOURNEY_EXERCISES,
   ...JS15_EXERCISES,
   ...JS16_EXERCISES,
   ...JS17_EXERCISES,

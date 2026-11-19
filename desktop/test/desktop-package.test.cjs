@@ -16,14 +16,19 @@ test('Desktopdistribution schließt .env-Dateien in allen Ressourcen aus', () =>
   const libraries = pkg.build.extraResources.find((resource) => resource.to === 'backend/node_modules');
   assert.equal(libraries.from, '../backend/node_modules');
   assert.ok(libraries.filter.includes('**/*'));
+  const web = require('../web-builder.json');
+  const webLibraries = web.extraResources.find(resource => resource.to === 'backend/node_modules');
+  assert.equal(webLibraries?.from, '../backend/node_modules');
+  assert.ok(webLibraries.filter.includes('**/*'));
+  assert.ok(!web.extraResources.find(resource => resource.to === 'backend').filter.includes('node_modules/**/*'));
 });
 
 test('Desktopversion und Lockmetadaten passen zusammen und behalten Desktop-Einstieg', () => {
-  assert.equal(pkg.version, '0.1.4');
+  assert.equal(pkg.version, '0.1.5');
   assert.equal(lock.version, pkg.version);
   assert.equal(lock.packages[''].version, pkg.version);
   assert.equal(pkg.main, 'main.js');
-  assert.deepEqual(pkg.build.files, ['main.js', 'preload.cjs', 'pilot-runtime.cjs', 'pilot-inspector.cjs', 'js-pilot.cjs', 'js-pilot-fixtures.cjs', 'package.json']);
+  assert.deepEqual(pkg.build.files, ['main.js', 'preload.cjs', 'pilot-runtime.cjs', 'journey-storage.cjs', 'pilot-inspector.cjs', 'js-pilot.cjs', 'js-pilot-fixtures.cjs', 'package.json']);
   assert.equal(pkg.devDependencies.electron, '45.2.0');
   assert.equal(pkg.scripts.dist, 'node scripts/build-desktop.cjs');
   assert.equal(pkg.scripts['prepare:electron'], 'node scripts/prepare-electron.cjs');

@@ -1,0 +1,490 @@
+{
+  "schemaVersion": 1,
+  "id": "common-lf8-queries",
+  "version": "1.0.0",
+  "title": "Daten verknüpfen und zusammenfassen",
+  "fieldId": "LF8",
+  "scope": "common",
+  "prerequisites": [
+    "common-lf8-formats",
+    "common-lf5-sql"
+  ],
+  "sourceIds": [
+    "lf8-join",
+    "lf8-aggregate",
+    "lf8-constraints"
+  ],
+  "sources": [
+    {
+      "id": "lf8-join",
+      "title": "PostgreSQL: Joins Between Tables",
+      "url": "https://www.postgresql.org/docs/current/tutorial-join.html",
+      "checkedAt": "2026-11-16",
+      "note": "Verknüpfungsbedingung und Verhalten von inneren und äußeren Joins geprüft. Kunden, Aufträge und Ergebnisse sind eigene synthetische Daten."
+    },
+    {
+      "id": "lf8-aggregate",
+      "title": "PostgreSQL: Aggregate Functions",
+      "url": "https://www.postgresql.org/docs/current/tutorial-agg.html",
+      "checkedAt": "2026-11-16",
+      "note": "Gruppierung sowie Anzahl und Summe geprüft. Die Unterrichtsrechnung benutzt fiktive ganze Eurobeträge."
+    },
+    {
+      "id": "lf8-constraints",
+      "title": "PostgreSQL: Constraints",
+      "url": "https://www.postgresql.org/docs/current/ddl-constraints.html",
+      "checkedAt": "2026-11-16",
+      "note": "Pflichtwerte, Prüfbedingungen, eindeutige Schlüssel und Fremdschlüssel geprüft; Feldgrenzen im Simulator sind eigene Vorgaben."
+    }
+  ],
+  "objectives": [
+    {
+      "id": "common-lf8-queries-join",
+      "text": "Zusammengehörige Daten aus zwei Tabellen über geeignete Schlüssel abfragen."
+    },
+    {
+      "id": "common-lf8-queries-aggregate",
+      "text": "Für einen einfachen Bericht Gruppen bilden und Anzahl oder Summe berechnen."
+    },
+    {
+      "id": "common-lf8-queries-check",
+      "text": "Das Abfrageergebnis auf fehlende beziehungsweise durch Verknüpfung vervielfachte Datensätze prüfen."
+    }
+  ],
+  "caseStudy": {
+    "title": "Mira erstellt einen regionalen Auftragsbericht",
+    "text": "Mira verwendet den bereinigten Modellbestand: Kunden (1, Nord), (2, Süd); Aufträge (101, 1, 10), (102, 1, 20), (103, 2, 5). Nach dem Ausschluss der exakten Wiederholung und des ungeklärten Auftrags 104 sollen Anzahl und ganze EUR-Beträge je Region nachvollziehbar berechnet werden."
+  },
+  "blocks": [
+    {
+      "id": "common-lf8-queries-join",
+      "title": "1. Zusammengehörige Zeilen über Schlüssel verbinden",
+      "objectiveIds": [
+        "common-lf8-queries-join"
+      ],
+      "sourceIds": [
+        "lf8-join",
+        "lf8-aggregate",
+        "lf8-constraints"
+      ],
+      "paragraphs": [
+        "Ein Join kombiniert Zeilen aus Tabellen, wenn die festgelegte Bedingung passt. customers.customerId ist im Kundenbestand eindeutig; orders.customerId verweist auf diesen Schlüssel. Deshalb lautet die Verknüpfung orders.customerId = customers.customerId. Die Position einer Zeile und die Auftragsnummer sind dafür keine passenden Ersatzschlüssel.",
+        "Eine passende Abfrage des bereinigten Bestands lautet: SELECT o.orderId, c.region, o.amount FROM orders o JOIN customers c ON o.customerId = c.customerId; Dabei sind o und c kurze Tabellennamen für die Abfrage. Das Ergebnis enthält 101/Nord/10, 102/Nord/20 und 103/Süd/5.",
+        "Der innere Join liefert passende Paare. Ein Auftrag ohne passenden Kunden würde dort fehlen. Im Lernfall wurde 104 bereits zur Klärung zurückgestellt; sein Fehlen im Bericht ist dokumentiert. Ein Join selbst beweist weder eine vollständige Rohdatenübernahme noch die Richtigkeit des Kundenbestands."
+      ],
+      "example": {
+        "title": "Eigener synthetischer Lernfall",
+        "text": "Die Aufträge 101 und 102 tragen beide customerId 1 und werden deshalb beide der Region Nord zugeordnet."
+      },
+      "misconception": {
+        "claim": "Zwei Tabellen werden zuverlässig über ihre aktuelle Zeilenreihenfolge verbunden.",
+        "correction": "Die Reihenfolge kann sich ändern; die fachlich passenden Schlüssel bestimmen die Beziehung."
+      },
+      "takeaway": "Verbinde über die Bedeutung der Schlüssel, nicht über die Darstellung."
+    },
+    {
+      "id": "common-lf8-queries-aggregate",
+      "title": "2. Gruppen und Summen bilden",
+      "objectiveIds": [
+        "common-lf8-queries-aggregate"
+      ],
+      "sourceIds": [
+        "lf8-join",
+        "lf8-aggregate",
+        "lf8-constraints"
+      ],
+      "paragraphs": [
+        "GROUP BY fasst Zeilen mit gleichen Gruppierungswerten zusammen. Die Abfrage SELECT c.region, COUNT(*) AS orderCount, SUM(o.amount) AS total FROM orders o JOIN customers c ON o.customerId = c.customerId GROUP BY c.region; liefert pro Region eine Ergebniszeile. COUNT(*) zählt die verbundenen Aufträge, SUM addiert deren Beträge.",
+        "Für Nord gehören 101 mit 10 EUR und 102 mit 20 EUR in dieselbe Gruppe: Anzahl 2, Summe 30 EUR. Für Süd ergibt 103: Anzahl 1, Summe 5 EUR. Beide Gruppen zusammen enthalten drei Aufträge und 35 EUR. Die Zahl der Berichtzeilen ist zwei, nicht drei.",
+        "COUNT(*) und SUM(amount) beantworten verschiedene Fragen. Anzahl von Aufträgen ist keine Geldsumme. Auch zwei verschiedene Aufträge mit gleichem Betrag zählen beide; SUM(DISTINCT amount) würde gleiche Beträge nur einmal addieren und wäre für den Auftragsumsatz im Allgemeinen falsch.",
+        "Die fachliche Gruppierung erfolgt hier nach Region. Gruppierst du stattdessen nach orderId, entsteht eine Zeile pro Auftrag. Gruppierst du nach customerId, entsteht ein Kundenbericht; er kann zufällig dieselben Werte liefern, wenn jede Region genau einen Kunden hat, erfüllt aber einen anderen Vertrag."
+      ],
+      "example": {
+        "title": "Eigener synthetischer Lernfall",
+        "text": "Bericht: Nord – 2 Aufträge – 30 EUR; Süd – 1 Auftrag – 5 EUR. Kontrolle: 2 + 1 = 3, 30 + 5 = 35."
+      },
+      "misconception": {
+        "claim": "Die Anzahl der Gruppen entspricht immer der Anzahl der Eingangszeilen.",
+        "correction": "Mehrere Aufträge können in dieselbe Gruppe fallen; hier werden drei Zeilen zu zwei Gruppen."
+      },
+      "takeaway": "Bestimme zuerst die Berichtsfrage und danach Gruppenschlüssel und Aggregat."
+    },
+    {
+      "id": "common-lf8-queries-check",
+      "title": "3. Fehlende und vervielfachte Ergebnisse erkennen",
+      "objectiveIds": [
+        "common-lf8-queries-check",
+        "common-lf8-queries-join"
+      ],
+      "sourceIds": [
+        "lf8-join",
+        "lf8-aggregate",
+        "lf8-constraints"
+      ],
+      "paragraphs": [
+        "Kontrolliere nach einem Join Zeilenzahl, Schlüssel und Summen. Aus drei bereinigten Aufträgen mit eindeutigen Kundenbezügen erwarten wir hier drei verbundene Zeilen. Die zwei Aufträge desselben Kunden sind kein Fehler: Sie sind zwei verschiedene Auftragsnummern.",
+        "Wenn customerId 1 im Kundenbestand versehentlich zweimal vorkommt, findet jeder der zwei Nord-Aufträge zwei Partner. Der Join liefert dann fünf Zeilen: vier für Nord und eine für Süd. Die Summen werden Nord 60 und Süd 5, obwohl drei Aufträge eingingen. Eine Eindeutigkeitsprüfung des Kundenschlüssels deckt die Ursache auf.",
+        "Ein LEFT JOIN kann bei der Fehlersuche alle linken Aufträge erhalten und fehlende Kunden als leere rechte Felder sichtbar machen: SELECT o.orderId FROM orders o LEFT JOIN customers c ON o.customerId = c.customerId WHERE c.customerId IS NULL; Er erfindet keinen fehlenden Kunden. Gegen den noch nicht bereinigten Bestand würde so der fehlende Bezug von 104 auffallen.",
+        "Ein CROSS JOIN paart jede linke mit jeder rechten Zeile. Bei drei Aufträgen und zwei Kunden wären das sechs Kombinationen. Für den Regionsbericht fehlt darin die fachliche Verknüpfung. Große Ergebnismengen dürfen daher nicht ungeprüft als zusätzlicher Umsatz interpretiert werden."
+      ],
+      "example": {
+        "title": "Eigener synthetischer Lernfall",
+        "text": "Soll: 3 verbundene Zeilen. Kunden-ID 1 doppelt: 5 Zeilen und 65 EUR. Ungezieltes Kreuzprodukt: 6 Zeilen."
+      },
+      "misconception": {
+        "claim": "Mehr Ergebniszeilen nach einem Join bedeuten mehr vorhandene Aufträge.",
+        "correction": "Eine mehrfache passende Schlüsselzeile kann denselben Auftrag mehrfach im Ergebnis erscheinen lassen."
+      },
+      "takeaway": "Prüfe Kardinalität und Schlüssel, bevor du Summen freigibst."
+    },
+    {
+      "id": "common-lf8-queries-reconcile",
+      "title": "4. Bericht mit dem bereinigten Bestand abstimmen",
+      "objectiveIds": [
+        "common-lf8-queries-join",
+        "common-lf8-queries-aggregate",
+        "common-lf8-queries-check"
+      ],
+      "sourceIds": [
+        "lf8-join",
+        "lf8-aggregate",
+        "lf8-constraints"
+      ],
+      "paragraphs": [
+        "Die vollständige Prüfkette beginnt vor dem Join: fünf Rohzeilen, eine exakte Wiederholung, eine Quarantäne, drei verwendbare Aufträge. Nach der Verknüpfung sind weiterhin drei Aufträge vorhanden. Nach der Gruppierung stehen zwei Regionszeilen mit Nord 30 und Süd 5. Diese Zahlen gehören zu unterschiedlichen Verarbeitungsschritten.",
+        "Vergleiche nicht nur die Gesamtsumme, sondern auch die Zuordnung einzelner Aufträge und die Regionensummen. Ein versehentlich vertauschter Kundenbezug kann die Gesamtsumme 35 erhalten und trotzdem die falsche Region belasten. Eine passende Gesamtsumme allein ist daher kein ausreichender Zuordnungsnachweis.",
+        "Halte Abfragebedingung, eindeutigen Kundenschlüssel, Gruppierung, Sollwerte und ausgeschlossene Zeilen fest. Die nächsten Schritte brauchen das Ergebnis in einer vereinbarten Datenstruktur. SQL-Darstellung und Schnittstellenformat sind verschiedene Ebenen: Aus dem geprüften Ergebnis werden später zwei JSON-Zeilen mit region und total."
+      ],
+      "example": {
+        "title": "Eigener synthetischer Lernfall",
+        "text": "Prüfkette: Roh 5 → gültig 3 → Join 3 → Gruppen 2; Nord 30, Süd 5; Quarantäne 104 bleibt dokumentiert."
+      },
+      "misconception": {
+        "claim": "Eine unveränderte Gesamtsumme schließt einen Zuordnungsfehler aus.",
+        "correction": "Falsche Regionszuordnungen können sich in der Gesamtsumme verbergen."
+      },
+      "takeaway": "Stimme Mengen, Beziehungen und Gruppenergebnisse gemeinsam ab."
+    }
+  ],
+  "questionFile": "questions/common-lf8-queries.v1.csv",
+  "quiz": {
+    "questionIds": [
+      "LJ-LF8-QUERIES-Q01",
+      "LJ-LF8-QUERIES-Q02",
+      "LJ-LF8-QUERIES-Q03",
+      "LJ-LF8-QUERIES-Q04",
+      "LJ-LF8-QUERIES-Q05",
+      "LJ-LF8-QUERIES-Q06"
+    ]
+  },
+  "exam": {
+    "questionIds": [
+      "LJ-LF8-QUERIES-E01",
+      "LJ-LF8-QUERIES-E02",
+      "LJ-LF8-QUERIES-E03",
+      "LJ-LF8-QUERIES-E04",
+      "LJ-LF8-QUERIES-E05",
+      "LJ-LF8-QUERIES-E06",
+      "LJ-LF8-QUERIES-E07",
+      "LJ-LF8-QUERIES-E08"
+    ],
+    "passPercent": 80,
+    "scoring": "all-or-nothing-per-question",
+    "timed": false
+  },
+  "questionLinks": [
+    {
+      "questionId": "LJ-LF8-QUERIES-Q01",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf8-queries-join"
+      ],
+      "blockIds": [
+        "common-lf8-queries-join"
+      ]
+    },
+    {
+      "questionId": "LJ-LF8-QUERIES-Q02",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf8-queries-join"
+      ],
+      "blockIds": [
+        "common-lf8-queries-join"
+      ]
+    },
+    {
+      "questionId": "LJ-LF8-QUERIES-Q03",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf8-queries-aggregate"
+      ],
+      "blockIds": [
+        "common-lf8-queries-aggregate"
+      ]
+    },
+    {
+      "questionId": "LJ-LF8-QUERIES-Q04",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf8-queries-aggregate"
+      ],
+      "blockIds": [
+        "common-lf8-queries-aggregate"
+      ]
+    },
+    {
+      "questionId": "LJ-LF8-QUERIES-Q05",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf8-queries-check"
+      ],
+      "blockIds": [
+        "common-lf8-queries-check"
+      ]
+    },
+    {
+      "questionId": "LJ-LF8-QUERIES-Q06",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf8-queries-check"
+      ],
+      "blockIds": [
+        "common-lf8-queries-reconcile"
+      ]
+    },
+    {
+      "questionId": "LJ-LF8-QUERIES-E01",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf8-queries-join"
+      ],
+      "blockIds": [
+        "common-lf8-queries-join"
+      ]
+    },
+    {
+      "questionId": "LJ-LF8-QUERIES-E02",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf8-queries-aggregate"
+      ],
+      "blockIds": [
+        "common-lf8-queries-aggregate"
+      ]
+    },
+    {
+      "questionId": "LJ-LF8-QUERIES-E03",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf8-queries-aggregate"
+      ],
+      "blockIds": [
+        "common-lf8-queries-aggregate"
+      ]
+    },
+    {
+      "questionId": "LJ-LF8-QUERIES-E04",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf8-queries-aggregate"
+      ],
+      "blockIds": [
+        "common-lf8-queries-aggregate"
+      ]
+    },
+    {
+      "questionId": "LJ-LF8-QUERIES-E05",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf8-queries-check"
+      ],
+      "blockIds": [
+        "common-lf8-queries-check"
+      ]
+    },
+    {
+      "questionId": "LJ-LF8-QUERIES-E06",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf8-queries-check"
+      ],
+      "blockIds": [
+        "common-lf8-queries-check"
+      ]
+    },
+    {
+      "questionId": "LJ-LF8-QUERIES-E07",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf8-queries-join",
+        "common-lf8-queries-check"
+      ],
+      "blockIds": [
+        "common-lf8-queries-check",
+        "common-lf8-queries-reconcile"
+      ]
+    },
+    {
+      "questionId": "LJ-LF8-QUERIES-E08",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf8-queries-aggregate",
+        "common-lf8-queries-check"
+      ],
+      "blockIds": [
+        "common-lf8-queries-reconcile"
+      ]
+    }
+  ],
+  "interview": [
+    {
+      "id": "common-lf8-queries-talk-01",
+      "prompt": "Erkläre den Join anhand von Auftrag 102 und begründe den gewählten Schlüssel.",
+      "objectiveIds": [
+        "common-lf8-queries-join"
+      ],
+      "blockIds": [
+        "common-lf8-queries-join"
+      ],
+      "keyPoints": [
+        "customerId 1 verbindet Auftrag 102 mit Nord.",
+        "Kundenschlüssel muss eindeutig sein.",
+        "Position und orderId sind kein Ersatz für die Kundenbeziehung."
+      ],
+      "acceptableAlternatives": [
+        "Eine gleichwertige fachliche Erklärung mit nachvollziehbarer Begründung und passenden Fallwerten."
+      ],
+      "misconceptions": [
+        "Die Zeilenreihenfolge sei eine stabile Beziehung."
+      ],
+      "sampleAnswer": "102 hat customerId 1. Der eindeutige Kundensatz 1 nennt Nord. Ich verbinde deshalb o.customerId mit c.customerId und erhalte für 102 den Betrag 20 in Nord.",
+      "followUp": "Was würde eine zweite Kundenzeile mit customerId 1 verändern?"
+    },
+    {
+      "id": "common-lf8-queries-talk-02",
+      "prompt": "Berechne Anzahl und Summe je Region und beschreibe die benötigte Gruppierung.",
+      "objectiveIds": [
+        "common-lf8-queries-aggregate"
+      ],
+      "blockIds": [
+        "common-lf8-queries-aggregate"
+      ],
+      "keyPoints": [
+        "Nord: zwei Aufträge, 30 EUR.",
+        "Süd: ein Auftrag, 5 EUR.",
+        "GROUP BY region, COUNT(*) und SUM(amount) unterscheiden."
+      ],
+      "acceptableAlternatives": [
+        "Eine gleichwertige fachliche Erklärung mit nachvollziehbarer Begründung und passenden Fallwerten."
+      ],
+      "misconceptions": [
+        "Anzahl und Betragssumme seien dieselbe Kennzahl."
+      ],
+      "sampleAnswer": "Ich gruppiere die verbundenen Zeilen nach Region. Nord enthält 10 und 20 und ergibt Anzahl 2 und Summe 30. Süd enthält 5 und ergibt Anzahl 1 und Summe 5. Es entstehen zwei Berichtzeilen.",
+      "followUp": "Warum ist SUM(DISTINCT amount) kein allgemeiner Ersatz für eine saubere Duplikatprüfung?"
+    },
+    {
+      "id": "common-lf8-queries-talk-03",
+      "prompt": "Beschreibe eine Kontrolle auf verlorene und vervielfachte Aufträge einschließlich der Gesamtmengen.",
+      "objectiveIds": [
+        "common-lf8-queries-join",
+        "common-lf8-queries-aggregate",
+        "common-lf8-queries-check"
+      ],
+      "blockIds": [
+        "common-lf8-queries-check",
+        "common-lf8-queries-reconcile"
+      ],
+      "keyPoints": [
+        "Drei gültige Aufträge und drei Joinzeilen erwarten.",
+        "Fehlende Partner mit LEFT JOIN und fehlendem rechten Schlüssel suchen.",
+        "Mehrfachpartner und Regionensummen prüfen."
+      ],
+      "acceptableAlternatives": [
+        "Eine gleichwertige fachliche Erklärung mit nachvollziehbarer Begründung und passenden Fallwerten."
+      ],
+      "misconceptions": [
+        "Eine Gesamtsumme ohne Schlüsselprüfung beweise korrekte Zuordnung."
+      ],
+      "sampleAnswer": "Ich gleiche 5 Rohzeilen, 1 Duplikat, 1 Quarantäne und 3 gültige Aufträge ab. Der Join muss drei Zeilen liefern, die Aggregation zwei Gruppen mit 30 und 5. Abweichungen untersuche ich auf fehlende Kunden und doppelte Kundenschlüssel; auch jede Regionszuordnung prüfe ich.",
+      "followUp": "Welche Fehlerart könnte bei korrekter Gesamtsumme 35 verborgen bleiben?"
+    }
+  ],
+  "cards": [
+    {
+      "id": "common-lf8-queries-card-01",
+      "front": "Welche Schlüssel verbinden orders und customers?",
+      "back": "orders.customerId = customers.customerId; der Kundenschlüssel ist eindeutig, mehrere Aufträge je Kunde sind erlaubt.",
+      "objectiveIds": [
+        "common-lf8-queries-join"
+      ],
+      "blockIds": [
+        "common-lf8-queries-join"
+      ]
+    },
+    {
+      "id": "common-lf8-queries-card-02",
+      "front": "Was liefert der innere Join ohne passenden Partner?",
+      "back": "Für die nicht passende linke Zeile entsteht kein Ergebnis. Fehlende Bezüge müssen gesondert erkannt und behandelt werden.",
+      "objectiveIds": [
+        "common-lf8-queries-join",
+        "common-lf8-queries-check"
+      ],
+      "blockIds": [
+        "common-lf8-queries-join",
+        "common-lf8-queries-check"
+      ]
+    },
+    {
+      "id": "common-lf8-queries-card-03",
+      "front": "Was ergeben die Regionsgruppen?",
+      "back": "Nord: 2 Aufträge und 30 EUR. Süd: 1 Auftrag und 5 EUR. Zusammen 3 Aufträge und 35 EUR.",
+      "objectiveIds": [
+        "common-lf8-queries-aggregate"
+      ],
+      "blockIds": [
+        "common-lf8-queries-aggregate"
+      ]
+    },
+    {
+      "id": "common-lf8-queries-card-04",
+      "front": "Was unterscheidet COUNT(*) und SUM(amount)?",
+      "back": "COUNT(*) zählt Ergebniszeilen innerhalb einer Gruppe; SUM(amount) addiert deren Beträge.",
+      "objectiveIds": [
+        "common-lf8-queries-aggregate"
+      ],
+      "blockIds": [
+        "common-lf8-queries-aggregate"
+      ]
+    },
+    {
+      "id": "common-lf8-queries-card-05",
+      "front": "Was bewirkt Kunde 1 zweimal im Kundenbestand?",
+      "back": "Beide Nord-Aufträge finden je zwei Partner; der Join wächst auf 5 Zeilen und Nord wird fälschlich zu 60 EUR.",
+      "objectiveIds": [
+        "common-lf8-queries-check"
+      ],
+      "blockIds": [
+        "common-lf8-queries-check"
+      ]
+    },
+    {
+      "id": "common-lf8-queries-card-06",
+      "front": "Welche Kontrollen gehören zur Berichtsfreigabe?",
+      "back": "Mengen pro Verarbeitungsschritt, eindeutige Schlüssel, fehlende Partner, einzelne Regionszuordnungen und Gruppensummen abgleichen.",
+      "objectiveIds": [
+        "common-lf8-queries-join",
+        "common-lf8-queries-aggregate",
+        "common-lf8-queries-check"
+      ],
+      "blockIds": [
+        "common-lf8-queries-reconcile"
+      ]
+    }
+  ],
+  "review": {
+    "status": "reviewed",
+    "checkedAt": "2026-11-16"
+  }
+}

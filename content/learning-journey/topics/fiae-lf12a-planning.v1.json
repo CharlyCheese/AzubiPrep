@@ -1,0 +1,458 @@
+{
+  "schemaVersion": 1,
+  "version": "1.0.0",
+  "id": "fiae-lf12a-planning",
+  "title": "Arbeitspakete, Termine und Risiken planen",
+  "fieldId": "LF12a",
+  "scope": "specialization",
+  "prerequisites": [
+    "fiae-lf12a-alternatives"
+  ],
+  "objectives": [
+    {
+      "id": "fiae-lf12a-planning-schedule",
+      "text": "Ein Projekt in Arbeitspakete mit Verantwortlichen, Abhängigkeiten und Meilensteinen gliedern."
+    },
+    {
+      "id": "fiae-lf12a-planning-resources",
+      "text": "Aufwand, verfügbare Personen und technische Mittel in einem einfachen Terminplan abstimmen."
+    },
+    {
+      "id": "fiae-lf12a-planning-risk",
+      "text": "Für ein wesentliches Projektrisiko eine Gegenmaßnahme und für Änderungen einen Abstimmungsweg festlegen."
+    }
+  ],
+  "caseStudy": {
+    "title": "Vier halbe Tage für den Pilotauftrag",
+    "text": "Variante A ist freigegeben. Die Entwicklerin hat an vier aufeinanderfolgenden Arbeitstagen jeweils vier Stunden. IT und Annahme übernehmen die vereinbarten Mitwirkungen in eigenen Zeitfenstern. Jetzt braucht die Werkstatt einen ausführbaren Plan."
+  },
+  "sourceIds": [
+    "ec-pm2-artefacts"
+  ],
+  "sources": [
+    {
+      "id": "ec-pm2-artefacts",
+      "title": "Europäische Kommission: PM²-Artefakte",
+      "url": "https://pm2.europa.eu/pm2-artefacts_en",
+      "checkedAt": "2026-11-19",
+      "note": "Artefakte zu Auftrag, Arbeitsplan, Änderung, Abnahme, Übergang und Projektabschluss geprüft. Die Werkstattunterlagen und Entscheidungen im Beispiel sind selbst erstellt."
+    }
+  ],
+  "blocks": [
+    {
+      "id": "fiae-lf12a-planning-block-1",
+      "title": "1. Arbeitspakete über ihr Ergebnis beschreiben",
+      "objectiveIds": [
+        "fiae-lf12a-planning-schedule"
+      ],
+      "sourceIds": [
+        "ec-pm2-artefacts"
+      ],
+      "paragraphs": [
+        "Zerlege die 16 Stunden in überprüfbare Ergebnisse. P1 klärt und fixiert den Musterfall (2 h). P2 verbindet Maske und Ticketlogik (6 h). P3 prüft die Integration (4 h). P4 erstellt Kurzanleitung, führt Einweisung und Übergabe durch (4 h). Für jedes Paket stehen Ergebnis, verantwortliche Rolle, Eingang und Abschlussbedingung im Plan.",
+        "P2 beginnt nach dem abgestimmten Musterfall. P3 braucht einen integrierten Stand. Für den geplanten Abschlussgang P4 wird der geprüfte Stand vorausgesetzt. Die Entwicklerin verantwortet diese Pakete, IT und Schicht wirken zu vereinbarten Terminen mit. Ein Meilenstein markiert ein erreichtes Ergebnis ohne eigene Bearbeitungsdauer."
+      ],
+      "example": {
+        "title": "Aus dem Werkstattprojekt",
+        "text": "„Integration bereit zur Prüfung“ liegt nach P2. „Integration prüfen, vier Stunden“ ist das anschließende Arbeitspaket. In der Übersicht stehen somit Arbeit und erreichter Zustand an unterschiedlichen Stellen."
+      },
+      "misconception": {
+        "claim": "Ein Meilenstein belegt bereits die darin vorgesehenen Arbeitsstunden.",
+        "correction": "Die Stunden werden den Paketen zugeordnet. Ein Meilenstein markiert den Zeitpunkt eines überprüfbaren Zustands."
+      },
+      "takeaway": "Nenne für jedes Paket ein prüfbares Ergebnis und seine Voraussetzungen."
+    },
+    {
+      "id": "fiae-lf12a-planning-block-2",
+      "title": "2. Aus Arbeitsstunden Kalendertage bilden",
+      "objectiveIds": [
+        "fiae-lf12a-planning-resources"
+      ],
+      "sourceIds": [
+        "ec-pm2-artefacts"
+      ],
+      "paragraphs": [
+        "Trage die vier Stunden Verfügbarkeit je Tag ein und belege sie in Abhängigkeitsreihenfolge. Tag 1 enthält P1 (2 h) und den Beginn von P2 (2 h). Tag 2 beendet P2 (4 h). Tag 3 gehört P3, Tag 4 P4. Die Planung verbraucht 16 von 16 verfügbaren Stunden.",
+        "Ergänze die technischen und personellen Voraussetzungen. Die integrierte Testumgebung muss an Tag 3 bereitstehen. Die Einweisung an Tag 4 braucht Personal aus der Annahme. Eine zweite Person verkürzt ein Paket nur, wenn die Arbeit teilbar und die Person mitsamt benötigten Mitteln verfügbar ist."
+      ],
+      "example": {
+        "title": "Aus dem Werkstattprojekt",
+        "text": "Kann die Entwicklerin an Tag 3 lediglich zwei Stunden arbeiten, fehlen zwei Stunden Kapazität für die geplanten vier Tage. Eine Terminverschiebung oder zusätzliche geeignete Kapazität ist mit der Leitung zu klären."
+      },
+      "misconception": {
+        "claim": "Ein freier Termin im Kalender bedeutet, dass jede benötigte Person verfügbar ist.",
+        "correction": "Prüfe die Kapazität jeder Rolle sowie Testzugang, Raum und Geräte passend zum Paket."
+      },
+      "takeaway": "Erst mit Kapazitäten, Abhängigkeiten und verfügbaren Mitteln wird der Terminplan ausführbar."
+    },
+    {
+      "id": "fiae-lf12a-planning-block-3",
+      "title": "3. Risiko, eingetretenes Problem und Änderung trennen",
+      "objectiveIds": [
+        "fiae-lf12a-planning-risk"
+      ],
+      "sourceIds": [
+        "ec-pm2-artefacts"
+      ],
+      "paragraphs": [
+        "Ein Risiko ist ein mögliches Ereignis mit Auswirkung. Beschreibe Auslöser, mögliche Folge, vorbeugende Maßnahme, verantwortliche Rolle und Reaktion im Eintrittsfall. Beispiel: Fehlt an Tag 3 die Testumgebung, verschiebt sich P3. Die IT bestätigt die Bereitstellung bis Tag 1, probiert den Zugang an Tag 2 vor P3 erneut aus und reserviert ersatzweise eine zweite freigegebene Übungsumgebung.",
+        "Ist die vorgesehene Umgebung an Tag 3 ausgefallen, dokumentiere den Befund als eingetretenes Problem und entscheide über die vorbereitete Reaktion. Ein gewünschter neuer Funktionsumfang durchläuft einen anderen Weg. Schätze die Auswirkung auf Zeit, Kosten und Ergebnis und hole die Entscheidung der Leitung ein."
+      ],
+      "example": {
+        "title": "Aus dem Werkstattprojekt",
+        "text": "Die Annahme wünscht einen Fotoanhang. Die Entwicklerin erfasst den Wunsch, schätzt Anpassung und Prüfung und legt Verschiebung oder gesonderten Auftrag zur Entscheidung vor. Der bestätigte Grundplan bleibt als Vergleich erhalten."
+      },
+      "misconception": {
+        "claim": "Die Aufnahme ins Risikoregister genehmigt bereits die spätere Zusatzfunktion.",
+        "correction": "Ein Risikoeintrag steuert Ungewissheit, ein Änderungsentscheid genehmigt den neuen Umfang."
+      },
+      "takeaway": "Vereinbare im Voraus, wer bei einem Risiko reagiert und wer Änderungen freigibt."
+    },
+    {
+      "id": "fiae-lf12a-planning-block-4",
+      "title": "4. Den Plan mit den Beteiligten durchspielen",
+      "objectiveIds": [
+        "fiae-lf12a-planning-schedule",
+        "fiae-lf12a-planning-resources",
+        "fiae-lf12a-planning-risk"
+      ],
+      "sourceIds": [
+        "ec-pm2-artefacts"
+      ],
+      "paragraphs": [
+        "Lies die geplante Folge aus Sicht der Werkstatt. Wer gibt den Musterfall frei? Wann ist der integrierte Stand verfügbar? Wann sind IT und vier Übungsplätze erreichbar? Kennzeichne den Stand als Ausgangsplan. Halte später Soll und neu erwartetes Ende nebeneinander.",
+        "Prüfe eine konkrete Abweichung. Sind am dritten Tag zwei statt vier Stunden verfügbar und kann niemand übernehmen, rückt bei unveränderter Reihenfolge ein Teil von P4 auf den nächsten verfügbaren Tag. Ein Bericht soll die Ursache, das betroffene Paket und einen Entscheidungsvorschlag enthalten."
+      ],
+      "example": {
+        "title": "Aus dem Werkstattprojekt",
+        "text": "Der Plan setzt voraus, dass P2 am Ende von Tag 2 fertig ist und die IT den Zugang bestätigt. Die Leitung sieht nun, dass zwei fehlende Prüfstunden in einem voll belegten Plan nicht durch bloßes Verschieben innerhalb derselben 16 Plätze verschwinden."
+      },
+      "misconception": {
+        "claim": "Ein neuer Endtermin macht den ersten Plan entbehrlich.",
+        "correction": "Die ursprüngliche Zusage erlaubt erst den späteren Vergleich von Soll, Ist und Ursache."
+      },
+      "takeaway": "Spiele den Engpass mit tatsächlichen Ressourcen durch, bevor du einen Termin zusagst."
+    }
+  ],
+  "questionFile": "questions/fiae-lf12a-planning.v1.csv",
+  "quiz": {
+    "questionIds": [
+      "LJ-LF12A-PLANNING-Q01",
+      "LJ-LF12A-PLANNING-Q02",
+      "LJ-LF12A-PLANNING-Q03",
+      "LJ-LF12A-PLANNING-Q04",
+      "LJ-LF12A-PLANNING-Q05",
+      "LJ-LF12A-PLANNING-Q06"
+    ]
+  },
+  "exam": {
+    "questionIds": [
+      "LJ-LF12A-PLANNING-E01",
+      "LJ-LF12A-PLANNING-E02",
+      "LJ-LF12A-PLANNING-E03",
+      "LJ-LF12A-PLANNING-E04",
+      "LJ-LF12A-PLANNING-E05",
+      "LJ-LF12A-PLANNING-E06",
+      "LJ-LF12A-PLANNING-E07",
+      "LJ-LF12A-PLANNING-E08"
+    ],
+    "passPercent": 80,
+    "scoring": "all-or-nothing-per-question",
+    "timed": false
+  },
+  "questionLinks": [
+    {
+      "questionId": "LJ-LF12A-PLANNING-Q01",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf12a-planning-schedule"
+      ],
+      "blockIds": [
+        "fiae-lf12a-planning-block-1"
+      ]
+    },
+    {
+      "questionId": "LJ-LF12A-PLANNING-Q02",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf12a-planning-schedule"
+      ],
+      "blockIds": [
+        "fiae-lf12a-planning-block-1"
+      ]
+    },
+    {
+      "questionId": "LJ-LF12A-PLANNING-Q03",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf12a-planning-resources"
+      ],
+      "blockIds": [
+        "fiae-lf12a-planning-block-2"
+      ]
+    },
+    {
+      "questionId": "LJ-LF12A-PLANNING-Q04",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf12a-planning-resources"
+      ],
+      "blockIds": [
+        "fiae-lf12a-planning-block-2"
+      ]
+    },
+    {
+      "questionId": "LJ-LF12A-PLANNING-Q05",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf12a-planning-risk"
+      ],
+      "blockIds": [
+        "fiae-lf12a-planning-block-3"
+      ]
+    },
+    {
+      "questionId": "LJ-LF12A-PLANNING-Q06",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf12a-planning-risk"
+      ],
+      "blockIds": [
+        "fiae-lf12a-planning-block-3"
+      ]
+    },
+    {
+      "questionId": "LJ-LF12A-PLANNING-E01",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf12a-planning-schedule"
+      ],
+      "blockIds": [
+        "fiae-lf12a-planning-block-1",
+        "fiae-lf12a-planning-block-4"
+      ]
+    },
+    {
+      "questionId": "LJ-LF12A-PLANNING-E02",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf12a-planning-resources"
+      ],
+      "blockIds": [
+        "fiae-lf12a-planning-block-2",
+        "fiae-lf12a-planning-block-4"
+      ]
+    },
+    {
+      "questionId": "LJ-LF12A-PLANNING-E03",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf12a-planning-risk"
+      ],
+      "blockIds": [
+        "fiae-lf12a-planning-block-3"
+      ]
+    },
+    {
+      "questionId": "LJ-LF12A-PLANNING-E04",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf12a-planning-schedule"
+      ],
+      "blockIds": [
+        "fiae-lf12a-planning-block-1"
+      ]
+    },
+    {
+      "questionId": "LJ-LF12A-PLANNING-E05",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf12a-planning-resources"
+      ],
+      "blockIds": [
+        "fiae-lf12a-planning-block-2"
+      ]
+    },
+    {
+      "questionId": "LJ-LF12A-PLANNING-E06",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf12a-planning-risk"
+      ],
+      "blockIds": [
+        "fiae-lf12a-planning-block-3",
+        "fiae-lf12a-planning-block-4"
+      ]
+    },
+    {
+      "questionId": "LJ-LF12A-PLANNING-E07",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf12a-planning-schedule",
+        "fiae-lf12a-planning-resources"
+      ],
+      "blockIds": [
+        "fiae-lf12a-planning-block-2",
+        "fiae-lf12a-planning-block-4"
+      ]
+    },
+    {
+      "questionId": "LJ-LF12A-PLANNING-E08",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf12a-planning-risk"
+      ],
+      "blockIds": [
+        "fiae-lf12a-planning-block-3",
+        "fiae-lf12a-planning-block-4"
+      ]
+    }
+  ],
+  "interview": [
+    {
+      "id": "fiae-lf12a-planning-talk-1",
+      "prompt": "Zerlege den Weg vom Musterfall bis zur Einweisung in prüfbare Zwischenergebnisse.",
+      "objectiveIds": [
+        "fiae-lf12a-planning-schedule"
+      ],
+      "blockIds": [
+        "fiae-lf12a-planning-block-1"
+      ],
+      "keyPoints": [
+        "Musterfall bestätigt.",
+        "Stand integriert und geprüft.",
+        "Anleitung und Einweisung übergeben."
+      ],
+      "acceptableAlternatives": [
+        "Ein Ablaufdiagramm mit benannten Ergebnissen erfüllt dasselbe Ziel."
+      ],
+      "misconceptions": [
+        "Bearbeitungsdauer als erreichter Meilenstein deuten."
+      ],
+      "sampleAnswer": "Der Musterfall gibt P2 eine eindeutige Eingabe. Der integrierte Stand geht in die Prüfung. Erst die gesicherten Ergebnisse bilden die Grundlage für Anleitung und Einweisung.",
+      "followUp": "Woran erkennt die Annahme, dass der Integrationstest beginnen kann?"
+    },
+    {
+      "id": "fiae-lf12a-planning-talk-2",
+      "prompt": "Erkläre der Leitung den Unterschied zwischen 16 Stunden Aufwand und vier Tagen Dauer.",
+      "objectiveIds": [
+        "fiae-lf12a-planning-resources"
+      ],
+      "blockIds": [
+        "fiae-lf12a-planning-block-2",
+        "fiae-lf12a-planning-block-4"
+      ],
+      "keyPoints": [
+        "Vier Stunden täglich verfügbar.",
+        "P1 bis P4 belegen die 16 Stunden.",
+        "Ein Ausfall berührt den Endtermin."
+      ],
+      "acceptableAlternatives": [
+        "Eine Belegungstabelle nach Tagen und Rollen ist gleichwertig."
+      ],
+      "misconceptions": [
+        "Aus 16 Stunden ohne Kapazitätsannahme zwei Kalendertage ableiten."
+      ],
+      "sampleAnswer": "Die Entwicklerin steht pro Tag vier Stunden zur Verfügung. Nach Plan sollen Musterfall und Integration am Ende des zweiten Arbeitstags fertig sein. Tag drei ist für die Prüfung reserviert und Tag vier für den Abschluss. Es gibt keinen freien Stundenplatz.",
+      "followUp": "Was ändert sich, wenn die IT den Testzugang erst an Tag vier bereitstellt?"
+    },
+    {
+      "id": "fiae-lf12a-planning-talk-3",
+      "prompt": "Formuliere einen Risikoeintrag und den separaten Entscheidungsweg für eine neue Funktion.",
+      "objectiveIds": [
+        "fiae-lf12a-planning-risk"
+      ],
+      "blockIds": [
+        "fiae-lf12a-planning-block-3",
+        "fiae-lf12a-planning-block-4"
+      ],
+      "keyPoints": [
+        "Risiko, Auswirkung und Rolle angeben.",
+        "Vorbeugende Maßnahme und Reaktion nennen.",
+        "Änderung bewerten und freigeben lassen."
+      ],
+      "acceptableAlternatives": [
+        "Ein separates Risiko- und Entscheidungsprotokoll kann die beiden Wege abbilden."
+      ],
+      "misconceptions": [
+        "Den möglichen Ausfall als bereits eingetreten berichten."
+      ],
+      "sampleAnswer": "Fehlt der Zugang, verschiebt sich P3. Die IT prüft ihn am Vortag und reserviert Ersatz. Der Fotoanhang ist ein Kundenwunsch. Ich schätze seine Folgen und lasse die Leitung über diesen Mehrumfang entscheiden.",
+      "followUp": "An welcher Beobachtung würdest du erkennen, dass das Risiko eingetreten ist?"
+    }
+  ],
+  "cards": [
+    {
+      "id": "fiae-lf12a-planning-card-01",
+      "front": "Wodurch ist ein Arbeitspaket abgrenzbar?",
+      "back": "Ergebnis, verantwortliche Rolle, Eingang, Aufwand und Abschlussbedingung sind benannt.",
+      "objectiveIds": [
+        "fiae-lf12a-planning-schedule"
+      ],
+      "blockIds": [
+        "fiae-lf12a-planning-block-1"
+      ]
+    },
+    {
+      "id": "fiae-lf12a-planning-card-02",
+      "front": "Welcher Meilenstein verbindet P2 und P3?",
+      "back": "Ein integrierter, für die Prüfung verfügbarer Stand liegt vor.",
+      "objectiveIds": [
+        "fiae-lf12a-planning-schedule"
+      ],
+      "blockIds": [
+        "fiae-lf12a-planning-block-1"
+      ]
+    },
+    {
+      "id": "fiae-lf12a-planning-card-03",
+      "front": "Warum verteilen sich 16 Stunden Aufwand hier auf vier Arbeitstage?",
+      "back": "Die Entwicklerin hat je Arbeitstag vier Stunden Kapazität.",
+      "objectiveIds": [
+        "fiae-lf12a-planning-resources"
+      ],
+      "blockIds": [
+        "fiae-lf12a-planning-block-2"
+      ]
+    },
+    {
+      "id": "fiae-lf12a-planning-card-04",
+      "front": "Was zeigt ein Engpass von zwei Stunden bei einem voll belegten Plan?",
+      "back": "Unveränderter Umfang und Termin erfordern passende zusätzliche Kapazität. Andernfalls muss die Leitung den Termin anpassen.",
+      "objectiveIds": [
+        "fiae-lf12a-planning-resources"
+      ],
+      "blockIds": [
+        "fiae-lf12a-planning-block-2",
+        "fiae-lf12a-planning-block-4"
+      ]
+    },
+    {
+      "id": "fiae-lf12a-planning-card-05",
+      "front": "Was gehört neben der Risikobeschreibung in den Plan?",
+      "back": "Auswirkung, frühe Gegenmaßnahme, zuständige Rolle und Reaktion im Eintrittsfall.",
+      "objectiveIds": [
+        "fiae-lf12a-planning-risk"
+      ],
+      "blockIds": [
+        "fiae-lf12a-planning-block-3"
+      ]
+    },
+    {
+      "id": "fiae-lf12a-planning-card-06",
+      "front": "Was passiert mit dem ersten Plan nach einer Änderung?",
+      "back": "Der ursprüngliche Stand bleibt als Vergleich erhalten. Änderung, Entscheidung und aktualisierte Prognose kommen hinzu.",
+      "objectiveIds": [
+        "fiae-lf12a-planning-risk"
+      ],
+      "blockIds": [
+        "fiae-lf12a-planning-block-3",
+        "fiae-lf12a-planning-block-4"
+      ]
+    }
+  ],
+  "review": {
+    "status": "reviewed",
+    "checkedAt": "2026-11-19"
+  }
+}

@@ -1,0 +1,482 @@
+{
+  "schemaVersion": 1,
+  "id": "common-lf5-types",
+  "version": "1.0.0",
+  "title": "Variablen, Datentypen und Ausdrücke",
+  "fieldId": "LF5",
+  "scope": "common",
+  "prerequisites": [
+    "common-lf5-requirements"
+  ],
+  "sourceIds": [
+    "lf5-mdn-types",
+    "lf5-mdn-number",
+    "lf5-mdn-integer",
+    "lf5-mdn-operators"
+  ],
+  "sources": [
+    {
+      "id": "lf5-mdn-types",
+      "title": "MDN: Grammar and types",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Grammar_and_types",
+      "note": "JavaScript-Deklarationen, Grundtypen und Literale geprüft. Eigene kleine Beispiele verwenden let und const.",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "lf5-mdn-number",
+      "title": "MDN: Number",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number",
+      "note": "Binäre Zahlendarstellung und Grenzen exakter Ganzzahlen geprüft. Eurobeträge werden im begrenzten Lernfall als ganze Centwerte geführt.",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "lf5-mdn-integer",
+      "title": "MDN: Number.isInteger()",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/isInteger",
+      "note": "Ganzzahlprüfung einschließlich Ablehnung von Zahlentexten und Nachkommawerten geprüft; Grenze 0 bis 1000 ist eine eigene Modellvorgabe.",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "lf5-mdn-operators",
+      "title": "MDN: Expressions and operators",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Expressions_and_operators",
+      "note": "Zuweisung, Rechenoperatoren, Vergleiche und logische Verknüpfungen geprüft.",
+      "checkedAt": "2026-11-16"
+    }
+  ],
+  "objectives": [
+    {
+      "id": "common-lf5-types-choose",
+      "text": "Für Text, Zählwerte, Beträge und Wahrheitswerte passende Datentypen in einer vorgegebenen Sprache wählen."
+    },
+    {
+      "id": "common-lf5-types-trace",
+      "text": "Werte einfacher Variablenzuweisungen und Ausdrücke Schritt für Schritt bestimmen."
+    }
+  ],
+  "caseStudy": {
+    "title": "Mira gibt Materialdaten passende Werte",
+    "text": "Die fiktive Materialliste verwendet englische Feldnamen im Code. Mira arbeitet durchgehend mit JavaScript. Eine Mengenzahl ist ein anderer Wert als ein gleich aussehender Text; Geldbeispiele nennen Euro und Cent ausdrücklich."
+  },
+  "blocks": [
+    {
+      "id": "common-lf5-types-values",
+      "title": "1. Texte, Zahlen und Wahrheitswerte",
+      "objectiveIds": [
+        "common-lf5-types-choose"
+      ],
+      "sourceIds": [
+        "lf5-mdn-types",
+        "lf5-mdn-integer"
+      ],
+      "paragraphs": [
+        "Ein Wert hat in JavaScript einen Typ. Der Text 'Kabel' ist ein string, die Stückzahl 8 ein number und die Aussage true ein boolean. Strings stehen in Anführungszeichen. Die Zahl 8 und der Text '8' sehen ähnlich aus, erfüllen aber verschiedene Verträge.",
+        "JavaScript verwendet für gewöhnliche ganze Zahlen und Nachkommazahlen denselben Typ number. Eine Bestandsmenge muss zusätzlich fachlich ganzzahlig sein. Number.isInteger(8) liefert true; Number.isInteger(1.5) und Number.isInteger('8') liefern false. Diese Prüfung wandelt Text nicht in Zahlen um.",
+        "null ist ein besonderer Wert für eine ausdrücklich vereinbarte fehlende oder ungültige Antwort. Im späteren Vertrag available bedeutet null ungültige Eingabe, false bedeutet gültige Eingabe mit zu wenig Bestand. Diese Bedeutungen legt unsere Anwendung fest; sie sind nicht für jede Funktion vorgeschrieben."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Übungsfall",
+        "text": "name = 'Maus' beschreibt Text, quantity = 2 eine Zahl und inStock = true eine Ja/Nein-Aussage."
+      },
+      "misconception": {
+        "claim": "Eine Zahl in Anführungszeichen ist für jede Berechnung gleichwertig mit einer Zahl ohne Anführungszeichen.",
+        "correction": "'8' ist Text. Eine Funktion kann Zahlentexte nach ihrem Vertrag ablehnen."
+      },
+      "takeaway": "Wähle Typ und fachlichen Wertebereich zusammen."
+    },
+    {
+      "id": "common-lf5-types-money",
+      "title": "2. Beträge und Einheiten eindeutig halten",
+      "objectiveIds": [
+        "common-lf5-types-choose"
+      ],
+      "sourceIds": [
+        "lf5-mdn-number"
+      ],
+      "paragraphs": [
+        "Für den begrenzten Lernfall speichern wir Geld als ganze Centwerte: 12,50 Euro entsprechen 1250 Cent. Der JavaScript-Name priceCents macht die Einheit sichtbar. const priceCents = 1250; deklariert eine Bindung mit diesem Zahlenwert.",
+        "JavaScript-number arbeitet binär. Nicht jeder Dezimalbruch lässt sich exakt darstellen; etwa kann 0.1 + 0.2 von 0.3 abweichen. Die kleinen ganzzahligen Centwerte und ihre hier verwendeten Summen liegen weit innerhalb des exakt darstellbaren Ganzzahlbereichs.",
+        "Zwei Artikel zu 1250 Cent ergeben 2500 Cent, also 25,00 Euro. Erst zur Anzeige teilen wir durch 100 und kennzeichnen Euro. Dieses Modell ersetzt keine umfassende Geldlogik mit beliebigen Rundungs- und Steuerregeln. quantity bleibt eine Stückzahl und darf nicht als Centwert gelesen werden."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Übungsfall",
+        "text": "const unitCents = 199; const totalCents = 3 * unitCents; ergibt 597 Cent, also 5,97 Euro."
+      },
+      "misconception": {
+        "claim": "Die Zahl 1250 kann ohne Einheitenangabe sicher als 1250 Euro verstanden werden.",
+        "correction": "Im Feld priceCents sind 1250 genau 12,50 Euro. Einheit und Name gehören zum Vertrag."
+      },
+      "takeaway": "Nenne bei Beträgen die Einheit und rechne im Beispiel mit kleinen ganzen Centwerten."
+    },
+    {
+      "id": "common-lf5-types-assign",
+      "title": "3. Zuweisungen schrittweise verfolgen",
+      "objectiveIds": [
+        "common-lf5-types-trace"
+      ],
+      "sourceIds": [
+        "lf5-mdn-types",
+        "lf5-mdn-operators"
+      ],
+      "paragraphs": [
+        "let quantity = 8; legt eine veränderbare Variable an. quantity = quantity - 3; liest rechts zunächst den alten Wert 8, berechnet 5 und weist links 5 zu. Das Zeichen = weist zu; es ist in JavaScript kein Gleichheitsvergleich.",
+        "const requested = 3; legt eine Bindung an, der später kein neuer Wert zugewiesen werden darf. Für einen laufend veränderten Zähler verwenden wir let. Schreibe sinnvolle englische Namen und schließe Anweisungen im Beispiel mit Semikolon ab.",
+        "Rechenausdrücke folgen ihrer Reihenfolge und Klammerung. 2 + 3 * 4 ergibt 14, (2 + 3) * 4 ergibt 20. Mit let total = 0; total = total + 2; total = total + 5; entstehen nacheinander 0, 2 und 7."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Übungsfall",
+        "text": "let quantity = 10; quantity = quantity - 4; quantity = quantity + 1; endet bei 7."
+      },
+      "misconception": {
+        "claim": "Eine Zuweisung quantity = quantity - 3 ist ein mathematischer Widerspruch.",
+        "correction": "Die rechte Seite verwendet den bisherigen Wert; die linke Seite erhält anschließend das Ergebnis."
+      },
+      "takeaway": "Lies zuerst rechts, rechne aus und aktualisiere dann die linke Variable."
+    },
+    {
+      "id": "common-lf5-types-compare",
+      "title": "4. Ausdrücke liefern auch Ja oder Nein",
+      "objectiveIds": [
+        "common-lf5-types-choose",
+        "common-lf5-types-trace"
+      ],
+      "sourceIds": [
+        "lf5-mdn-operators",
+        "lf5-mdn-integer"
+      ],
+      "paragraphs": [
+        "Vergleiche ergeben Wahrheitswerte: 3 < 5 ist true, 5 <= 5 ist true und 5 > 8 ist false. <= bedeutet kleiner oder gleich. === prüft strikte Gleichheit ohne Typumwandlung; 3 === '3' ist false. Verwechsle === nicht mit der Zuweisung =.",
+        "Für Bedingungen kombinieren wir Wahrheitswerte: ! kehrt true und false um, || bedeutet logisches Oder und && logisches Und. Bei den hier betrachteten booleschen Teilausdrücken ist A || B wahr, wenn wenigstens eine Bedingung wahr ist; A && B verlangt beide.",
+        "Die spätere Mengenprüfung nutzt !Number.isInteger(quantity) || quantity < 0 || quantity > 1000. Bei quantity = -1 ist die mittlere Bedingung wahr, also wird eine ungültige Eingabe erkannt. Bei 8 sind alle drei Bedingungen false. Die Werte 0 und 1000 gehören zum gültigen Bereich."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Übungsfall",
+        "text": "const enough = 4 <= 4; speichert true. !Number.isInteger('4') ergibt ebenfalls true, aber als Hinweis auf ungültigen Text."
+      },
+      "misconception": {
+        "claim": "false und null bedeuten im Bestandsvertrag dasselbe.",
+        "correction": "false ist ein gültiges Nein zur Verfügbarkeit; null kennzeichnet eine ungültige Eingabe."
+      },
+      "takeaway": "Trenne Zuweisung, Vergleich und die Bedeutung eines Fehlerwerts."
+    }
+  ],
+  "questionFile": "questions/common-lf5-types.v1.csv",
+  "quiz": {
+    "questionIds": [
+      "LJ-LF5-TYPES-Q01",
+      "LJ-LF5-TYPES-Q02",
+      "LJ-LF5-TYPES-Q03",
+      "LJ-LF5-TYPES-Q04",
+      "LJ-LF5-TYPES-Q05",
+      "LJ-LF5-TYPES-Q06"
+    ]
+  },
+  "exam": {
+    "questionIds": [
+      "LJ-LF5-TYPES-E01",
+      "LJ-LF5-TYPES-E02",
+      "LJ-LF5-TYPES-E03",
+      "LJ-LF5-TYPES-E04",
+      "LJ-LF5-TYPES-E05",
+      "LJ-LF5-TYPES-E06",
+      "LJ-LF5-TYPES-E07",
+      "LJ-LF5-TYPES-E08"
+    ],
+    "passPercent": 80,
+    "scoring": "all-or-nothing-per-question",
+    "timed": false
+  },
+  "questionLinks": [
+    {
+      "questionId": "LJ-LF5-TYPES-Q01",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf5-types-choose"
+      ],
+      "blockIds": [
+        "common-lf5-types-values"
+      ]
+    },
+    {
+      "questionId": "LJ-LF5-TYPES-Q02",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf5-types-choose"
+      ],
+      "blockIds": [
+        "common-lf5-types-values"
+      ]
+    },
+    {
+      "questionId": "LJ-LF5-TYPES-Q03",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf5-types-choose"
+      ],
+      "blockIds": [
+        "common-lf5-types-money"
+      ]
+    },
+    {
+      "questionId": "LJ-LF5-TYPES-Q04",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf5-types-trace"
+      ],
+      "blockIds": [
+        "common-lf5-types-assign"
+      ]
+    },
+    {
+      "questionId": "LJ-LF5-TYPES-Q05",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf5-types-trace"
+      ],
+      "blockIds": [
+        "common-lf5-types-assign"
+      ]
+    },
+    {
+      "questionId": "LJ-LF5-TYPES-Q06",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf5-types-trace",
+        "common-lf5-types-choose"
+      ],
+      "blockIds": [
+        "common-lf5-types-compare"
+      ]
+    },
+    {
+      "questionId": "LJ-LF5-TYPES-E01",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf5-types-choose"
+      ],
+      "blockIds": [
+        "common-lf5-types-values"
+      ]
+    },
+    {
+      "questionId": "LJ-LF5-TYPES-E02",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf5-types-choose"
+      ],
+      "blockIds": [
+        "common-lf5-types-money"
+      ]
+    },
+    {
+      "questionId": "LJ-LF5-TYPES-E03",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf5-types-trace"
+      ],
+      "blockIds": [
+        "common-lf5-types-assign"
+      ]
+    },
+    {
+      "questionId": "LJ-LF5-TYPES-E04",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf5-types-trace"
+      ],
+      "blockIds": [
+        "common-lf5-types-assign"
+      ]
+    },
+    {
+      "questionId": "LJ-LF5-TYPES-E05",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf5-types-trace"
+      ],
+      "blockIds": [
+        "common-lf5-types-compare"
+      ]
+    },
+    {
+      "questionId": "LJ-LF5-TYPES-E06",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf5-types-choose",
+        "common-lf5-types-trace"
+      ],
+      "blockIds": [
+        "common-lf5-types-compare"
+      ]
+    },
+    {
+      "questionId": "LJ-LF5-TYPES-E07",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf5-types-choose"
+      ],
+      "blockIds": [
+        "common-lf5-types-money"
+      ]
+    },
+    {
+      "questionId": "LJ-LF5-TYPES-E08",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf5-types-choose",
+        "common-lf5-types-trace"
+      ],
+      "blockIds": [
+        "common-lf5-types-values",
+        "common-lf5-types-compare"
+      ]
+    }
+  ],
+  "interview": [
+    {
+      "id": "common-lf5-types-talk-1",
+      "prompt": "Ordne Name, Stückzahl, Betrag und Verfügbarkeitsaussage passenden JavaScript-Werten zu.",
+      "objectiveIds": [
+        "common-lf5-types-choose"
+      ],
+      "blockIds": [
+        "common-lf5-types-values",
+        "common-lf5-types-money"
+      ],
+      "keyPoints": [
+        "Text, number und boolean unterscheiden.",
+        "Cent als Einheit für den Betrag nennen.",
+        "Ganzzahlbereich für Stückzahlen ergänzen."
+      ],
+      "acceptableAlternatives": [
+        "Eine fachlich gleichwertige Erklärung mit passenden eigenen Beispielen."
+      ],
+      "misconceptions": [
+        "Eine Zahl in Anführungszeichen ist für jede Berechnung gleichwertig mit einer Zahl ohne Anführungszeichen."
+      ],
+      "sampleAnswer": "Der Name ist 'Kabel', die Menge die Zahl 8 und die Verfügbarkeit true oder false. 12,50 Euro speichere ich hier als 1250 Cent. Stückzahlen prüfe ich zusätzlich auf Ganzzahligkeit und 0 bis 1000.",
+      "followUp": "Warum genügt der Typ number allein nicht für eine gültige Stückzahl?"
+    },
+    {
+      "id": "common-lf5-types-talk-2",
+      "prompt": "Verfolge let total = 2; total = total + 3; total = total * 4; und erkläre =.",
+      "objectiveIds": [
+        "common-lf5-types-trace"
+      ],
+      "blockIds": [
+        "common-lf5-types-assign"
+      ],
+      "keyPoints": [
+        "Werte 2, 5, 20 in Reihenfolge bestimmen.",
+        "Rechte Seite vor der Zuweisung berechnen.",
+        "Zuweisung von Vergleich trennen."
+      ],
+      "acceptableAlternatives": [
+        "Eine fachlich gleichwertige Erklärung mit passenden eigenen Beispielen."
+      ],
+      "misconceptions": [
+        "Eine Zuweisung quantity = quantity - 3 ist ein mathematischer Widerspruch."
+      ],
+      "sampleAnswer": "total startet bei 2. Rechts wird 2 + 3 berechnet und 5 zugewiesen. Danach wird 5 mal 4 zu 20. Das Zeichen = ersetzt den Wert der Variablen, es prüft keine Gleichheit.",
+      "followUp": "Wie unterscheidet sich das Ergebnis von total = 2 + 3 * 4?"
+    },
+    {
+      "id": "common-lf5-types-talk-3",
+      "prompt": "Erkläre an Menge 0, Text '3' und Menge -1 die spätere Gültigkeitsprüfung.",
+      "objectiveIds": [
+        "common-lf5-types-choose",
+        "common-lf5-types-trace"
+      ],
+      "blockIds": [
+        "common-lf5-types-values",
+        "common-lf5-types-compare"
+      ],
+      "keyPoints": [
+        "0 als gültige ganze Menge erkennen.",
+        "Zahlentext bei Number.isInteger ablehnen.",
+        "Negativen Wert durch Bereichsvergleich ablehnen."
+      ],
+      "acceptableAlternatives": [
+        "Eine fachlich gleichwertige Erklärung mit passenden eigenen Beispielen."
+      ],
+      "misconceptions": [
+        "Eine Zahl in Anführungszeichen ist für jede Berechnung gleichwertig mit einer Zahl ohne Anführungszeichen."
+      ],
+      "sampleAnswer": "0 ist ganzzahlig und liegt im Bereich. '3' ist Text und besteht Number.isInteger nicht. -1 ist zwar ganzzahlig, verletzt aber die untere Grenze. Das Oder verbindet die verschiedenen Fehlerbedingungen.",
+      "followUp": "Warum sind null und false im späteren Funktionsvertrag nicht austauschbar?"
+    }
+  ],
+  "cards": [
+    {
+      "id": "common-lf5-types-card-1",
+      "front": "Welche Grundtypen verwenden die Beispiele?",
+      "back": "string für Text, number für Zahlen und boolean für true oder false; null dient als vereinbartes Fehlerergebnis.",
+      "objectiveIds": [
+        "common-lf5-types-choose"
+      ],
+      "blockIds": [
+        "common-lf5-types-values"
+      ]
+    },
+    {
+      "id": "common-lf5-types-card-2",
+      "front": "Was prüft Number.isInteger(value)?",
+      "back": "Ob value ein ganzzahliger Zahlenwert ist. Text '3' und 1.5 ergeben false.",
+      "objectiveIds": [
+        "common-lf5-types-choose"
+      ],
+      "blockIds": [
+        "common-lf5-types-values"
+      ]
+    },
+    {
+      "id": "common-lf5-types-card-3",
+      "front": "Wie werden 4,75 Euro im Centmodell gespeichert?",
+      "back": "Als number 475 im Feld mit Einheit Cent, beispielsweise priceCents.",
+      "objectiveIds": [
+        "common-lf5-types-choose"
+      ],
+      "blockIds": [
+        "common-lf5-types-money"
+      ]
+    },
+    {
+      "id": "common-lf5-types-card-4",
+      "front": "Wie liest du count = count + 1;?",
+      "back": "Bisherigen Wert rechts lesen, 1 addieren, Ergebnis links zuweisen.",
+      "objectiveIds": [
+        "common-lf5-types-trace"
+      ],
+      "blockIds": [
+        "common-lf5-types-assign"
+      ]
+    },
+    {
+      "id": "common-lf5-types-card-5",
+      "front": "Was ist der Unterschied zwischen = und ===?",
+      "back": "= weist einen Wert zu; === vergleicht ohne Typumwandlung und liefert true oder false.",
+      "objectiveIds": [
+        "common-lf5-types-trace"
+      ],
+      "blockIds": [
+        "common-lf5-types-compare"
+      ]
+    },
+    {
+      "id": "common-lf5-types-card-6",
+      "front": "Was bedeuten <=, ! und ||?",
+      "back": "<=: kleiner oder gleich. !: booleschen Wert umkehren. ||: Bei booleschen Bedingungen genügt eine wahre Bedingung.",
+      "objectiveIds": [
+        "common-lf5-types-trace"
+      ],
+      "blockIds": [
+        "common-lf5-types-compare"
+      ]
+    }
+  ],
+  "review": {
+    "status": "reviewed",
+    "checkedAt": "2026-11-16"
+  }
+}
+

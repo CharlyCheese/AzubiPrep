@@ -1,0 +1,501 @@
+{
+  "schemaVersion": 1,
+  "id": "common-lf8-interfaces",
+  "version": "1.0.0",
+  "title": "Daten über Schnittstellen austauschen",
+  "fieldId": "LF8",
+  "scope": "common",
+  "prerequisites": [
+    "common-lf8-queries",
+    "common-lf3-services",
+    "common-lf5-functions"
+  ],
+  "sourceIds": [
+    "lf8-http",
+    "lf8-json",
+    "lf8-rest",
+    "lf8-logging"
+  ],
+  "sources": [
+    {
+      "id": "lf8-http",
+      "title": "RFC 9110: HTTP Semantics",
+      "url": "https://www.rfc-editor.org/rfc/rfc9110.html",
+      "checkedAt": "2026-11-16",
+      "note": "POST, Inhaltstyp, HTTP-Status 200/201/400/409/422 und Idempotenz geprüft. Wiederholungsregeln anhand batchId sind ein eigener Anwendungsvertrag."
+    },
+    {
+      "id": "lf8-json",
+      "title": "RFC 8259: The JavaScript Object Notation (JSON) Data Interchange Format",
+      "url": "https://www.rfc-editor.org/rfc/rfc8259",
+      "checkedAt": "2026-11-16",
+      "note": "Syntax von Objekten, Arrays, Zahlen, Zeichenketten und null geprüft. Eigene Datensätze und Feldverträge sind didaktische Beispiele."
+    },
+    {
+      "id": "lf8-rest",
+      "title": "OWASP: REST Security Cheat Sheet",
+      "url": "https://cheatsheetseries.owasp.org/cheatsheets/REST_Security_Cheat_Sheet.html",
+      "checkedAt": "2026-11-16",
+      "note": "HTTPS, Zugriffskontrolle und Eingabevalidierung geprüft. Der Simulator stellt Schutzentscheidungen dar und baut keine Netzwerkverbindung auf."
+    },
+    {
+      "id": "lf8-logging",
+      "title": "OWASP: Logging Cheat Sheet",
+      "url": "https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html",
+      "checkedAt": "2026-11-16",
+      "note": "Nachvollziehbare Ereignisse und Ausschluss vertraulicher Inhalte aus Protokollen geprüft. Lokale Fehlermeldungen enthalten synthetische Angaben."
+    }
+  ],
+  "objectives": [
+    {
+      "id": "common-lf8-interfaces-contract",
+      "text": "Aus einer einfachen Schnittstellenbeschreibung Anfrage, Antwort, Authentifizierung und mögliche Fehler ableiten."
+    },
+    {
+      "id": "common-lf8-interfaces-transfer",
+      "text": "Einen kleinen Datenaustausch mit einem vorgegebenen Werkzeug umsetzen und den Empfang prüfen."
+    },
+    {
+      "id": "common-lf8-interfaces-team",
+      "text": "Für eine arbeitsteilige Bereitstellung Zuständigkeiten und Schnittstellenänderungen nachvollziehbar abstimmen."
+    }
+  ],
+  "caseStudy": {
+    "title": "Mira erstellt einen regionalen Auftragsbericht",
+    "text": "Mira übergibt den geprüften Bericht Nord 30 EUR und Süd 5 EUR an einen begrenzten lokalen Empfänger. Sender und Empfänger sind synthetische Rollen. Das Modell stellt eine HTTP-artige Schnittstelle dar, ohne echte Netzwerkverbindung, Tokens oder Quellenimporte."
+  },
+  "blocks": [
+    {
+      "id": "common-lf8-interfaces-contract",
+      "title": "1. Einen Schnittstellenvertrag lesen",
+      "objectiveIds": [
+        "common-lf8-interfaces-contract"
+      ],
+      "sourceIds": [
+        "lf8-http",
+        "lf8-json",
+        "lf8-rest",
+        "lf8-logging"
+      ],
+      "paragraphs": [
+        "Eine Schnittstellenbeschreibung nennt Methode und Ziel, Inhaltstyp, Datenfelder und Antwortbedeutung sowie Identitätsprüfung, Befugnisse und Fehlerverhalten. Der Lernvertrag lautet POST /reports mit Content-Type application/json. POST fordert hier die Verarbeitung eines Berichts an. Die Adresse ist ein lokaler Modellname und keine Aufforderung, einen externen Server anzusprechen.",
+        "Die Anfrage lautet: {\"batchId\":\"demo-01\",\"rows\":[{\"region\":\"Nord\",\"total\":30},{\"region\":\"Süd\",\"total\":5}]}. batchId kennzeichnet die Lieferung; rows ist eine Liste von genau zwei Zeilen mit region und total. Jede Region Nord und Süd erscheint genau einmal. total ist eine ganze Zahl von 0 bis 1000000 in EUR. Auf oberster Ebene sind genau batchId und rows erlaubt; je Zeile genau region und total.",
+        "batchId enthält 1 bis 40 Zeichen aus a–z, A–Z, 0–9, Unterstrich und Bindestrich. Namen und Textwerte brauchen JSON-Anführungszeichen. Ein JSON-Zahlwert 30 ist zulässig, der Text \"30\" erfüllt den vereinbarten Zahlentyp nicht. Der Eingabetext im Modell ist auf 4096 Zeichen begrenzt.",
+        "Authentifizierung fragt, welche Identität zugreift; Autorisierung, welche Handlung sie ausführen darf. Hier wählst du eine freigegebene synthetische Senderrolle und geschützten Transport. Es werden keine echten Zugangsdaten eingegeben. Das Modell kennzeichnet nicht freigegebenen Zugriff mit 401 und ungeschützten Transport mit 426. Diese vereinfachten Entscheidungen und Codes sind Übungsvorgaben, keine reale Anmeldung oder TLS-Aushandlung."
+      ],
+      "example": {
+        "title": "Eigener synthetischer Lernfall",
+        "text": "Anfrage: POST /reports; Typ application/json; Lieferung demo-01; Zeilen Nord/30 und Süd/5; freigegebene Senderrolle und geschützter Modelltransport."
+      },
+      "misconception": {
+        "claim": "Die Kenntnis einer Schnittstellenadresse beinhaltet das Recht zum Schreiben.",
+        "correction": "Identität und erlaubte Aktion werden gesondert geprüft; die Adresse beschreibt nur das Ziel."
+      },
+      "takeaway": "Lies Anfrage, Antwort, Zugriff und Fehlerregeln gemeinsam."
+    },
+    {
+      "id": "common-lf8-interfaces-transfer",
+      "title": "2. Anfrage senden und Empfang nachweisen",
+      "objectiveIds": [
+        "common-lf8-interfaces-transfer",
+        "common-lf8-interfaces-contract"
+      ],
+      "sourceIds": [
+        "lf8-http",
+        "lf8-json",
+        "lf8-rest",
+        "lf8-logging"
+      ],
+      "paragraphs": [
+        "Im vorgegebenen Werkzeug gibst du den JSON-Text ein und löst die lokale Übertragung aus. Das Werkzeug zeigt Anfrage, Antwort und Empfängerbestand getrennt. Prüfe vor dem Senden Methode, Ziel, Inhaltstyp, Freigabe und Transportwahl. Die Praxis im Abschlussthema führt dich durch die Verarbeitungsschritte bis zu dieser Übertragung.",
+        "Bei einer erstmaligen gültigen Lieferung antwortet der Modellempfänger mit 201 und übernimmt beide Regionszeilen zusammen. Der Empfangsbeleg ist der sichtbare Bestand für die batchId mit Nord 30 und Süd 5. Eine erfolgreiche Textprüfung oder ein Klick auf Senden allein bestätigt den Empfang noch nicht.",
+        "Das Modell führt höchstens 16 protokollierte Anfragen pro Versuch. Danach beginnt ein weiterer Versuch mit bewusstem Zurücksetzen. Beobachte insbesondere die Bestandsänderung: Vor dem ersten Erfolg fehlt demo-01; danach gibt es genau diese Lieferung mit zwei Regionszeilen. Spätere identische Wiederholungen dürfen keine zweite Lieferung erzeugen.",
+        "Zum Prüfprotokoll gehören die gewählte Anfrage, erwarteter Status, tatsächlicher Status und Empfängerstand. Notiere Auffälligkeiten als Befund. Dass die Darstellung einer Anfrage syntaktisch korrekt aussieht, beweist weder fachliche Richtigkeit der Summen noch eine vollständige Übernahme."
+      ],
+      "example": {
+        "title": "Eigener synthetischer Lernfall",
+        "text": "Nach der ersten gültigen Sendung: Status 201; demo-01 im Empfänger; zwei Zeilen Nord 30 und Süd 5."
+      },
+      "misconception": {
+        "claim": "Die Schaltfläche Senden beweist bereits einen erfolgreichen Empfang.",
+        "correction": "Der bestätigte Status und der passende Empfängerbestand bilden den Übertragungsnachweis."
+      },
+      "takeaway": "Prüfe das Ergebnis am Ziel, nicht allein die Aktion am Sender."
+    },
+    {
+      "id": "common-lf8-interfaces-errors",
+      "title": "3. Fehler und Wiederholungen gemäß Vertrag unterscheiden",
+      "objectiveIds": [
+        "common-lf8-interfaces-contract",
+        "common-lf8-interfaces-transfer"
+      ],
+      "sourceIds": [
+        "lf8-http",
+        "lf8-json",
+        "lf8-rest",
+        "lf8-logging"
+      ],
+      "paragraphs": [
+        "Ungültige JSON-Syntax wird mit 400 zurückgewiesen. Bei lesbarem JSON, das Typen oder andere Inhaltsregeln verletzt, lautet der Modellstatus 422. Beispiel: total als Text \"30\" statt Zahl 30. Fehler verändern den Empfängerbestand nicht; es wird auch keine erste gültige Zeile einer insgesamt ungültigen Lieferung übernommen.",
+        "Für eine bereits angenommene batchId mit denselben Regionswerten antwortet das Modell mit 200 und fügt nichts hinzu. Die Reihenfolge von Nord und Süd ist dabei bedeutungslos, weil die Zeilen zum Vergleich nach Region normalisiert werden. Verwendet dieselbe batchId andere Werte, folgt 409 als Konflikt; die alte Lieferung bleibt unverändert. Der begrenzte Empfänger speichert pro Versuch höchstens eine Lieferung. Auch eine andere batchId wird nach dem ersten Erfolg mit 409 abgewiesen. Erst ein bewusst zurückgesetzter Versuch beginnt wieder mit leerem Empfänger.",
+        "Diese Wiederholbarkeit wird vom Anwendungsvertrag anhand batchId und Inhalt hergestellt. POST ist dadurch nicht als HTTP-Methode generell idempotent. Ohne eine solche dokumentierte Regel kann ein erneutes POST einen zweiten Vorgang auslösen. Nach unklarem Ergebnis musst du den vereinbarten Empfängernachweis beziehungsweise Wiederholungsmechanismus nutzen.",
+        "Der spätere Praxislauf prüft nach dem vorbereiteten Bericht nacheinander einen lesbaren, aber ungültigen Inhalt mit 422, den gültigen Inhalt mit 201, dieselbe Lieferung mit 200 und einen geänderten Inhalt unter derselben batchId mit 409. Vergleiche bei jedem Schritt den Bestand vor und nach der Anfrage."
+      ],
+      "example": {
+        "title": "Eigener synthetischer Lernfall",
+        "text": "demo-01 unverändert erneut → 200 und dieselben zwei Zeilen; demo-01 mit Nord 31 → 409 und weiterhin Nord 30/Süd 5."
+      },
+      "misconception": {
+        "claim": "Jedes POST kann beliebig wiederholt werden, ohne einen weiteren Vorgang auszulösen.",
+        "correction": "Eine sichere Wiederholung braucht einen passenden Anwendungsvertrag; hier leistet das die Lieferungserkennung."
+      },
+      "takeaway": "Status und Bestand müssen zur konkreten Wiederholungsregel passen."
+    },
+    {
+      "id": "common-lf8-interfaces-team",
+      "title": "4. Änderungen und Zuständigkeiten abstimmen",
+      "objectiveIds": [
+        "common-lf8-interfaces-team"
+      ],
+      "sourceIds": [
+        "lf8-http",
+        "lf8-json",
+        "lf8-rest",
+        "lf8-logging"
+      ],
+      "paragraphs": [
+        "Für arbeitsteilige Bereitstellung braucht jeder Übergang eine verantwortliche Rolle. Im Fall prüft Lea die Quellqualität, Mira Mapping und Bericht und Tarek den Empfängervertrag. Gemeinsam legen sie Testdaten, Sollwerte, Fehlerfälle und einen Freigabestand fest. Bei einem fehlenden Kundenbezug geht die Rückfrage an die Quelle statt an die Formatumwandlung.",
+        "Eine Umbenennung von total in amount oder der Wechsel von EUR zu Cent verändert die Vereinbarung. Der Sender darf dies nicht einseitig ausrollen, während der Empfänger die alte Form erwartet. Dokumentiere vorgeschlagene Änderung, betroffene Felder, Datentyp und Einheit, Zeitpunkt, Verantwortliche und gemeinsame Tests. Stimme einen kompatiblen Übergang oder eine neue Vertragsversion ab.",
+        "Eine Übergabenotiz verlinkt die gültige Beschreibung und nennt Ansprechpartner, Voraussetzungen, gültige Beispielanfrage, Statusbedeutung und die Prüfung am Ziel. Vertrauliche Zugangsdaten gehören weder in eine solche Anleitung noch in Fehlerprotokolle. Im Modell reichen synthetische Rollen und Lieferkennungen.",
+        "Verständliche Kommunikation benennt Unsicherheit: Empfang noch nicht bestätigt ist präziser als fertig, wenn nur die Anfrage erstellt wurde. Bei 409 prüfen Sender und Empfänger, ob dieselbe Lieferung irrtümlich mit geändertem Inhalt verschickt wurde. Ein neuer fachlicher Bericht braucht eine abgestimmte neue Lieferung, keinen stillen Austausch bereits bestätigter Daten."
+      ],
+      "example": {
+        "title": "Eigener synthetischer Lernfall",
+        "text": "Änderungsvorschlag: total künftig in Cent. Mira und Tarek vereinbaren Version, Umstellung und gemeinsame Sollwerte vor einer produktiven Nutzung."
+      },
+      "misconception": {
+        "claim": "Ein Feld kann umbenannt werden, solange der neue Name verständlicher klingt.",
+        "correction": "Auch eine verständliche Änderung kann den Empfänger brechen; Vertrag und Umstellung müssen abgestimmt werden."
+      },
+      "takeaway": "Klare Verantwortungen und getestete Vertragsänderungen sichern die Zusammenarbeit."
+    }
+  ],
+  "questionFile": "questions/common-lf8-interfaces.v1.csv",
+  "quiz": {
+    "questionIds": [
+      "LJ-LF8-INTERFACES-Q01",
+      "LJ-LF8-INTERFACES-Q02",
+      "LJ-LF8-INTERFACES-Q03",
+      "LJ-LF8-INTERFACES-Q04",
+      "LJ-LF8-INTERFACES-Q05",
+      "LJ-LF8-INTERFACES-Q06"
+    ]
+  },
+  "exam": {
+    "questionIds": [
+      "LJ-LF8-INTERFACES-E01",
+      "LJ-LF8-INTERFACES-E02",
+      "LJ-LF8-INTERFACES-E03",
+      "LJ-LF8-INTERFACES-E04",
+      "LJ-LF8-INTERFACES-E05",
+      "LJ-LF8-INTERFACES-E06",
+      "LJ-LF8-INTERFACES-E07",
+      "LJ-LF8-INTERFACES-E08"
+    ],
+    "passPercent": 80,
+    "scoring": "all-or-nothing-per-question",
+    "timed": false
+  },
+  "questionLinks": [
+    {
+      "questionId": "LJ-LF8-INTERFACES-Q01",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf8-interfaces-contract"
+      ],
+      "blockIds": [
+        "common-lf8-interfaces-contract"
+      ]
+    },
+    {
+      "questionId": "LJ-LF8-INTERFACES-Q02",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf8-interfaces-contract"
+      ],
+      "blockIds": [
+        "common-lf8-interfaces-contract"
+      ]
+    },
+    {
+      "questionId": "LJ-LF8-INTERFACES-Q03",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf8-interfaces-transfer"
+      ],
+      "blockIds": [
+        "common-lf8-interfaces-transfer"
+      ]
+    },
+    {
+      "questionId": "LJ-LF8-INTERFACES-Q04",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf8-interfaces-transfer"
+      ],
+      "blockIds": [
+        "common-lf8-interfaces-errors"
+      ]
+    },
+    {
+      "questionId": "LJ-LF8-INTERFACES-Q05",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf8-interfaces-team"
+      ],
+      "blockIds": [
+        "common-lf8-interfaces-team"
+      ]
+    },
+    {
+      "questionId": "LJ-LF8-INTERFACES-Q06",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf8-interfaces-team"
+      ],
+      "blockIds": [
+        "common-lf8-interfaces-team"
+      ]
+    },
+    {
+      "questionId": "LJ-LF8-INTERFACES-E01",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf8-interfaces-contract"
+      ],
+      "blockIds": [
+        "common-lf8-interfaces-contract"
+      ]
+    },
+    {
+      "questionId": "LJ-LF8-INTERFACES-E02",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf8-interfaces-contract"
+      ],
+      "blockIds": [
+        "common-lf8-interfaces-contract"
+      ]
+    },
+    {
+      "questionId": "LJ-LF8-INTERFACES-E03",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf8-interfaces-contract",
+        "common-lf8-interfaces-transfer"
+      ],
+      "blockIds": [
+        "common-lf8-interfaces-errors"
+      ]
+    },
+    {
+      "questionId": "LJ-LF8-INTERFACES-E04",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf8-interfaces-transfer"
+      ],
+      "blockIds": [
+        "common-lf8-interfaces-errors"
+      ]
+    },
+    {
+      "questionId": "LJ-LF8-INTERFACES-E05",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf8-interfaces-contract",
+        "common-lf8-interfaces-transfer"
+      ],
+      "blockIds": [
+        "common-lf8-interfaces-errors"
+      ]
+    },
+    {
+      "questionId": "LJ-LF8-INTERFACES-E06",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf8-interfaces-transfer"
+      ],
+      "blockIds": [
+        "common-lf8-interfaces-transfer",
+        "common-lf8-interfaces-errors"
+      ]
+    },
+    {
+      "questionId": "LJ-LF8-INTERFACES-E07",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf8-interfaces-team"
+      ],
+      "blockIds": [
+        "common-lf8-interfaces-team"
+      ]
+    },
+    {
+      "questionId": "LJ-LF8-INTERFACES-E08",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf8-interfaces-team"
+      ],
+      "blockIds": [
+        "common-lf8-interfaces-team"
+      ]
+    }
+  ],
+  "interview": [
+    {
+      "id": "common-lf8-interfaces-talk-01",
+      "prompt": "Lies den lokalen Vertrag und erläutere Anfrage, Antwort und Zugriffsentscheidung.",
+      "objectiveIds": [
+        "common-lf8-interfaces-contract"
+      ],
+      "blockIds": [
+        "common-lf8-interfaces-contract",
+        "common-lf8-interfaces-errors"
+      ],
+      "keyPoints": [
+        "POST /reports und application/json nennen.",
+        "batchId und zwei eindeutige Regionszeilen mit Ganzzahlen erklären.",
+        "Synthetische Freigabe, geschützter Transport und Statusbedeutung unterscheiden."
+      ],
+      "acceptableAlternatives": [
+        "Eine gleichwertige fachliche Erklärung mit nachvollziehbarer Begründung und passenden Fallwerten."
+      ],
+      "misconceptions": [
+        "Die Modellrolle sei ein echtes Zugangstoken."
+      ],
+      "sampleAnswer": "POST /reports verarbeitet den JSON-Bericht. batchId kennzeichnet die Lieferung; rows enthält Nord und Süd jeweils einmal mit ganzzahligem total. Ich wähle die freigegebene Modellrolle und geschützten Transport. 201 bedeutet hier neue Übernahme, Fehler verändern nichts.",
+      "followUp": "Welche zusätzliche Information brauchst du bei einer bisher unbekannten realen Schnittstelle?"
+    },
+    {
+      "id": "common-lf8-interfaces-talk-02",
+      "prompt": "Beschreibe, wie du mit dem vorgesehenen Werkzeug eine Übertragung nachweist und eine Wiederholung prüfst.",
+      "objectiveIds": [
+        "common-lf8-interfaces-transfer"
+      ],
+      "blockIds": [
+        "common-lf8-interfaces-transfer",
+        "common-lf8-interfaces-errors"
+      ],
+      "keyPoints": [
+        "Anfrage bewusst auslösen.",
+        "Antwort mit Sollstatus und Empfängerbestand abgleichen.",
+        "Identische Wiederholung ohne weitere Lieferung nachweisen."
+      ],
+      "acceptableAlternatives": [
+        "Eine gleichwertige fachliche Erklärung mit nachvollziehbarer Begründung und passenden Fallwerten."
+      ],
+      "misconceptions": [
+        "Ein Klick oder eine lokale Syntaxprüfung sei ein Empfangsbeleg."
+      ],
+      "sampleAnswer": "Ich sende die JSON-Anfrage und kontrolliere 201 sowie demo-01 mit Nord 30 und Süd 5 am Ziel. Bei identischer Wiederholung erwarte ich 200 und denselben Bestand. Das setzt den beschriebenen batchId-Vertrag voraus.",
+      "followUp": "Wie wäre ein abweichender Betrag unter derselben batchId zu behandeln?"
+    },
+    {
+      "id": "common-lf8-interfaces-talk-03",
+      "prompt": "Stimme eine vorgeschlagene Änderung der Betragsfelder mit dem anderen Team ab.",
+      "objectiveIds": [
+        "common-lf8-interfaces-team"
+      ],
+      "blockIds": [
+        "common-lf8-interfaces-team"
+      ],
+      "keyPoints": [
+        "Betroffene Felder, Typ und Einheit nennen.",
+        "Sender- und Empfängerrollen beteiligen.",
+        "Vertragsstand, Übergang und gemeinsame Tests festhalten."
+      ],
+      "acceptableAlternatives": [
+        "Eine gleichwertige fachliche Erklärung mit nachvollziehbarer Begründung und passenden Fallwerten."
+      ],
+      "misconceptions": [
+        "Ein verständlicher neuer Feldname sei ohne Absprache kompatibel."
+      ],
+      "sampleAnswer": "Mira und Tarek halten fest, was sich an total, Einheit und Validierung ändern soll. Sie vereinbaren eine Version beziehungsweise einen kompatiblen Übergang und testen gültige, ungültige und wiederholte Lieferungen gemeinsam. Die Anleitung nennt den gültigen Stand und Ansprechpartner.",
+      "followUp": "Wer klärt unabhängig davon den fehlenden Kundenbezug in der Quelle?"
+    }
+  ],
+  "cards": [
+    {
+      "id": "common-lf8-interfaces-card-01",
+      "front": "Was muss ein Schnittstellenvertrag beschreiben?",
+      "back": "Methode/Ziel, Inhaltstyp und Felder, Zugriffsvoraussetzungen, Antworten, Fehler und Regeln für Wiederholungen.",
+      "objectiveIds": [
+        "common-lf8-interfaces-contract"
+      ],
+      "blockIds": [
+        "common-lf8-interfaces-contract"
+      ]
+    },
+    {
+      "id": "common-lf8-interfaces-card-02",
+      "front": "Was bedeuten Authentifizierung und Autorisierung?",
+      "back": "Authentifizierung prüft die Identität; Autorisierung die erlaubte Handlung. Die Übung verwendet synthetische Rollen ohne echte Zugangsdaten.",
+      "objectiveIds": [
+        "common-lf8-interfaces-contract"
+      ],
+      "blockIds": [
+        "common-lf8-interfaces-contract"
+      ]
+    },
+    {
+      "id": "common-lf8-interfaces-card-03",
+      "front": "Wie weist du die erste Übernahme nach?",
+      "back": "Anfrage senden, 201 prüfen und im Empfänger demo-01 mit Nord 30 und Süd 5 finden.",
+      "objectiveIds": [
+        "common-lf8-interfaces-transfer"
+      ],
+      "blockIds": [
+        "common-lf8-interfaces-transfer"
+      ]
+    },
+    {
+      "id": "common-lf8-interfaces-card-04",
+      "front": "Welche Antwort erhält eine identische Wiederholung?",
+      "back": "200 ohne zusätzlichen Bestand; gleiche batchId und nach Region verglichener Inhalt werden wiedererkannt.",
+      "objectiveIds": [
+        "common-lf8-interfaces-contract",
+        "common-lf8-interfaces-transfer"
+      ],
+      "blockIds": [
+        "common-lf8-interfaces-errors"
+      ]
+    },
+    {
+      "id": "common-lf8-interfaces-card-05",
+      "front": "Was ist bei gleicher batchId und anderem Inhalt zu erwarten?",
+      "back": "409 als Konflikt; der bereits bestätigte Bestand bleibt unverändert.",
+      "objectiveIds": [
+        "common-lf8-interfaces-contract",
+        "common-lf8-interfaces-transfer"
+      ],
+      "blockIds": [
+        "common-lf8-interfaces-errors"
+      ]
+    },
+    {
+      "id": "common-lf8-interfaces-card-06",
+      "front": "Was braucht eine abgestimmte Schnittstellenänderung?",
+      "back": "Betroffene Felder/Typen/Einheiten, Verantwortliche beider Seiten, Vertragsversion oder Übergang, Termin und gemeinsame Tests.",
+      "objectiveIds": [
+        "common-lf8-interfaces-team"
+      ],
+      "blockIds": [
+        "common-lf8-interfaces-team"
+      ]
+    }
+  ],
+  "review": {
+    "status": "reviewed",
+    "checkedAt": "2026-11-16"
+  }
+}

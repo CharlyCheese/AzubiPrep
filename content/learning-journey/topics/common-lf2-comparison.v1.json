@@ -1,0 +1,470 @@
+{
+  "schemaVersion": 1,
+  "id": "common-lf2-comparison",
+  "version": "1.0.0",
+  "title": "Produkte und Lieferangebote vergleichen",
+  "fieldId": "LF2",
+  "scope": "common",
+  "prerequisites": [
+    "common-lf2-software",
+    "common-lf2-workplace"
+  ],
+  "sourceIds": [
+    "lf2-bmf-nutzwert",
+    "pm-ihk-calculation"
+  ],
+  "sources": [
+    {
+      "id": "lf2-bmf-nutzwert",
+      "title": "BMF: Arbeitsanleitung Wirtschaftlichkeitsuntersuchungen – Nutzwertanalyse",
+      "url": "https://www.gesetze-bayern.de/Content/Document/VVBayHO-NN118?view=Print",
+      "checkedAt": "2026-11-11",
+      "note": "Amtliche Veröffentlichung der Arbeitsanleitung: Kriterien, Gewichtung, einheitlicher Bewertungsmaßstab und Teilnutzen. Übertragen wird die Methode, keine Vergaberechtsregel. Alle Geräte, Punktwerte und Preise sind eigene fiktive Lernannahmen."
+    },
+    {
+      "id": "pm-ihk-calculation",
+      "title": "IHK Darmstadt: Kalkulieren und mit Kennziffern überwachen",
+      "url": "https://www.ihk.de/darmstadt/produktmarken/beraten-und-informieren/festigung-wachstum/kaufmaennisches/kalkulation-3795552",
+      "checkedAt": "2026-11-11",
+      "note": "Öffentliche HTML-Kalkulation mit Selbstkosten, Gewinn, Nachlässen und Umsatzsteuer geprüft. Eigene Rechenfälle mit ausdrücklich vorgegebenen Bezugsgrößen und Steuersatz; keine realen Marktpreise oder allgemeingültigen Zuschläge."
+    }
+  ],
+  "objectives": [
+    {
+      "id": "common-lf2-comparison-criteria",
+      "text": "Technische Angaben auch aus einem kurzen englischen Datenblatt in eine gewichtete Vergleichsmatrix übertragen."
+    },
+    {
+      "id": "common-lf2-comparison-cost",
+      "text": "Zwei Lieferangebote mit vorgegebenen Rabatten, Bezugskosten und Lieferbedingungen vergleichen."
+    }
+  ],
+  "caseStudy": {
+    "title": "Knotenpunkt stattet Radblick aus",
+    "text": "Eigener fiktiver Lernfall: Knotenpunkt richtet für Radblick einen Büroplatz für Ticketportal und Wissenssuche ein. Mira bearbeitet den Auftrag unter Sams Anleitung, Eda begleitet den Einkauf. Geräte, Preise, Zeiten und Lizenzbedingungen sind vorgegebene Lernannahmen, keine Marktangebote."
+  },
+  "blocks": [
+    {
+      "id": "common-lf2-comparison-data",
+      "title": "1. Datenblätter lesen und Musskriterien prüfen",
+      "objectiveIds": [
+        "common-lf2-comparison-criteria"
+      ],
+      "sourceIds": [
+        "lf2-bmf-nutzwert"
+      ],
+      "paragraphs": [
+        "Aus dem abgestimmten Bedarf entsteht zuerst eine Mussliste. Radblick benötigt mindestens 16 GB RAM, 512 GB SSD und zwei digitale Ausgänge, die zwei Bildschirme gleichzeitig mit getrennten Inhalten unterstützen. Softwarefreigabe, passende Anschlüsse und zugesagte Lieferfrist gehören ebenfalls zur Prüfung. Eine fehlende Pflichtfunktion lässt sich nicht durch viele Komfortpunkte ausgleichen.",
+        "Kurzes eigenes englisches Datenblatt für Modell Büro Basis: Memory: 16 GB RAM. Storage: 512 GB SSD. Display outputs: 2 digital ports, supporting two independent displays at the same time. Memory meint Arbeitsspeicher für laufende Programme. Storage meint dauerhaften Massenspeicher. Display outputs sind Bildschirmausgänge; independent displays bedeutet hier getrennte Bildinhalte.",
+        "Modell Büro Plus hat im fiktiven Datenblatt 32 GB RAM, 1 TB SSD und ebenfalls zwei digitale Ausgänge für unabhängige gleichzeitige Anzeigen. Modell Kompakt bietet 8 GB RAM, 256 GB SSD und einen Bildschirmausgang. Büro Basis und Büro Plus bestehen die vorgegebenen Mindestwerte; Kompakt scheidet aus. Mehr SSD-Speicher ersetzt fehlenden RAM nicht.",
+        "Übertrage Werte mit Einheit und Beleg in dieselben Spalten: Modell, RAM, SSD, Ausgänge, gleichzeitige Anzeigen, Mussprüfung. Sind Angaben wie zwei Anschlüsse ohne gleichzeitige Nutzung unklar, frage vor der Auswahl nach. Ein abgebildeter Anschluss oder eine Werbeaussage ersetzt kein bestätigtes Kompatibilitätsmerkmal."
+      ],
+      "example": {
+        "title": "Eigener Lernfall",
+        "text": "Büro Basis erfüllt mit 16 GB/512 GB/zwei unabhängigen Anzeigen den Bedarf. Eine unbekannte Bedeutung von display outputs wird geklärt, bevor Mira Punkte verteilt."
+      },
+      "misconception": {
+        "claim": "Ein hoher Komfortwert kann einen fehlenden zweiten Bildschirmausgang ausgleichen.",
+        "correction": "Ein unerfülltes Musskriterium schließt die unveränderte Variante aus."
+      },
+      "takeaway": "Erst Daten übersetzen und Pflichtbedarf prüfen, danach geeignete Varianten bewerten."
+    },
+    {
+      "id": "common-lf2-comparison-matrix",
+      "title": "2. Geeignete Varianten mit gleicher Skala bewerten",
+      "objectiveIds": [
+        "common-lf2-comparison-criteria"
+      ],
+      "sourceIds": [
+        "lf2-bmf-nutzwert"
+      ],
+      "paragraphs": [
+        "Die Nutzwertmatrix macht die Auswahl anhand vorher vereinbarter Kriterien nachvollziehbar. In diesem eigenen Modell werden nur Büro Basis und Büro Plus bewertet. Reparaturzugang erhält 60 Prozent Gewicht, Speicherreserve 40 Prozent. Zusammen sind das 100 Prozent. Preis und Liefertermin werden getrennt betrachtet, damit dieselbe Eigenschaft nicht unbemerkt doppelt zählt.",
+        "Die Skala reicht in diesem Beispiel von 1 bis 5 Punkten; mehr bedeutet bessere Erfüllung. Reparaturzugang: 5 Punkte für den dokumentierten Austausch von RAM und SSD, 3 für SSD-Austausch, 1 für keinen dokumentierten Austauschweg. Speicherreserve: 5 Punkte bei mindestens 32 GB RAM und 1 TB SSD, 3 bei 16 GB und 512 GB. Geräte unterhalb des Pflichtbedarfs wurden bereits ausgeschlossen.",
+        "Die fiktiven Wartungsangaben erlauben bei Büro Basis den Austausch von RAM und SSD, bei Büro Plus den SSD-Austausch. Deshalb erhält Büro Basis 5 und 3 Punkte, Büro Plus 3 und 5 Punkte. Gewichte als Dezimalzahlen ergeben Büro Basis: 0,60 × 5 + 0,40 × 3 = 4,2 Punkte. Büro Plus: 0,60 × 3 + 0,40 × 5 = 3,8 Punkte. Büro Basis liegt unter diesen Annahmen vorn.",
+        "Gewichte, Skala und Datengrundlage werden vor der Auswertung festgelegt. Bei 40 Prozent Reparaturzugang und 60 Prozent Reserve würde Büro Plus mit 4,2 vor Büro Basis mit 3,8 liegen. Das zeigt die Abhängigkeit von den Kundenzielen. Eine Änderung braucht eine nachvollziehbare Begründung, nicht den Wunsch, ein Lieblingsgerät gewinnen zu lassen."
+      ],
+      "example": {
+        "title": "Eigener Lernfall",
+        "text": "Mira schreibt bei Büro Basis neben 5 Punkten Reparaturzugang die fiktive Wartungsangabe RAM und SSD austauschbar. So ist die Bewertung auch für Sam prüfbar."
+      },
+      "misconception": {
+        "claim": "Ein Nutzwert von 4,2 beweist, dass ein Gerät für jeden Betrieb das beste ist.",
+        "correction": "Das Ergebnis gilt für die vereinbarten Kriterien, Gewichte und belegten Bewertungen."
+      },
+      "takeaway": "Gewicht mal Bewertung ergibt den Teilnutzen; die Summe begründet eine Entscheidung unter benannten Annahmen."
+    },
+    {
+      "id": "common-lf2-comparison-costs",
+      "title": "3. Einkaufspreise auf denselben Bezug bringen",
+      "objectiveIds": [
+        "common-lf2-comparison-cost"
+      ],
+      "sourceIds": [
+        "pm-ihk-calculation"
+      ],
+      "paragraphs": [
+        "Für den Preisvergleich müssen Menge, Ausstattung, enthaltene Leistungen, Steuerbasis, Lieferort und Zahlungsannahmen gleich sein. Hier werden zwei fiktive Lieferangebote für dasselbe Gerät und denselben Leistungsumfang netto verglichen. Alle Bezugskosten sind angegeben. Umsatzsteuer wird nicht mit einem Nettopreis vermischt.",
+        "Angebot A: 1.000,00 Euro Listenpreis, 10 Prozent Rabatt auf die Liste, danach 2 Prozent Skonto auf den rabattierten Warenpreis bei Zahlung innerhalb von zehn Tagen; 30,00 Euro Bezugskosten ohne Rabatt oder Skonto. Rechnung: 1.000 − 100 = 900 Euro Zieleinkaufspreis. 900 − 18 = 882 Euro Bareinkaufspreis. Mit Bezugskosten: 912 Euro Bezugspreis.",
+        "Angebot B: 910,00 Euro Warenpreis ohne Rabatt und ohne Skonto, Bezugskosten eingeschlossen. Zahlung innerhalb von 30 Tagen. Ist die frühe Zahlung für A tatsächlich gesichert, ist B mit 910 Euro um 2 Euro günstiger. Kann Knotenpunkt die Skontofrist von A nicht einhalten, kostet A 900 + 30 = 930 Euro; B ist dann 20 Euro günstiger.",
+        "Rabatt und Skonto werden nicht als 12 Prozent vom Listenpreis abgezogen. Ihre Bezugsgrößen sind verschieden. Bezugskosten wie die hier vorgegebenen Versandkosten kommen nach den vereinbarten Abzügen hinzu. Ob Versand selbst skontierbar wäre, müsste ein anderes Angebot ausdrücklich festlegen. Die frühe Zahlung braucht verfügbare Mittel und eine abgestimmte Rechnungsfreigabe."
+      ],
+      "example": {
+        "title": "Eigener Lernfall",
+        "text": "Bei A spart rechtzeitige Zahlung 18 Euro, nicht 20 Euro. Die ausgewiesene Bemessungsgrundlage ist 900 Euro nach Rabatt."
+      },
+      "misconception": {
+        "claim": "Zehn Prozent Rabatt und zwei Prozent Skonto ergeben zwölf Prozent Nachlass auf die Liste.",
+        "correction": "Hier wird Skonto auf den bereits rabattierten Betrag berechnet: 1.000 × 0,90 × 0,98."
+      },
+      "takeaway": "Rechne Nachlässe in der vereinbarten Reihenfolge und addiere die tatsächlich anfallenden Bezugskosten."
+    },
+    {
+      "id": "common-lf2-comparison-decision",
+      "title": "4. Kosten, Termin und Leistung gemeinsam begründen",
+      "objectiveIds": [
+        "common-lf2-comparison-criteria",
+        "common-lf2-comparison-cost"
+      ],
+      "sourceIds": [
+        "lf2-bmf-nutzwert",
+        "pm-ihk-calculation"
+      ],
+      "paragraphs": [
+        "Produktvergleich und Lieferantenvergleich sind zwei getrennte Entscheidungen: Zuerst wird ein geeignetes Gerät ausgewählt, dann ein vergleichbares Lieferangebot dafür. Die Nutzwerte für Büro Basis und Büro Plus aus Block 2 sind daher nicht die Namen der beiden Lieferangebote aus Block 3. In einer Dokumentation benennst du Modell und Lieferant getrennt.",
+        "Ein günstiger Bezugspreis hilft nicht, wenn die vereinbarte Lieferfrist nicht erfüllt wird. Im zusätzlichen Terminfall braucht Radblick das Gerät spätestens Freitag. Lieferant Rot bestätigt Donnerstag, Lieferant Blau erst Montag. Bei unverändertem Muss-Termin bleibt Blau ungeeignet, auch wenn sein Angebot günstiger ist. Eine Terminänderung muss Radblick vor der Entscheidung ausdrücklich freigeben.",
+        "Notiere die Grundlage: Mussprüfung und offene Angaben, gewählte Gewichtung mit Punkten, vollständige Preisrechnung, Liefertermin, Zahlungsfrist und Entscheidung durch die zuständige Person. Zusatzleistungen wie Einrichtung oder längerer Service werden sichtbar abgeglichen. Ein Angebot mit Einrichtung ist ohne Anpassung des Umfangs nicht mit reiner Gerätelieferung gleichzusetzen.",
+        "Im Ergebnis kann ein teurerer Lieferant begründet gewählt werden, wenn er die benötigte Leistung und den bestätigten Termin erfüllt. Begründe dann den Mehrpreis mit konkreten Kriterien. Ändern sich Daten oder Bedingungen, aktualisiere Vergleich und Freigabe vor der Bestellung."
+      ],
+      "example": {
+        "title": "Eigener Lernfall",
+        "text": "Sam erhält eine Übersicht mit Modell, 4,2 Nutzwertpunkten, Bezugspreis, bestätigtem Termin und einer offenen Rückfrage zum Serviceumfang."
+      },
+      "misconception": {
+        "claim": "Die kleinste Zahl unter dem Angebot reicht als Beschaffungsbegründung.",
+        "correction": "Preis, Umfang und verbindliche Anforderungen müssen auf derselben Grundlage bewertet werden."
+      },
+      "takeaway": "Eine Empfehlung zeigt passende Leistung, vergleichbare Gesamtkosten und erfüllbare Bedingungen."
+    }
+  ],
+  "questionFile": "questions/common-lf2-comparison.v1.csv",
+  "quiz": {
+    "questionIds": [
+      "LJ-LF2-COMPARISON-Q01",
+      "LJ-LF2-COMPARISON-Q02",
+      "LJ-LF2-COMPARISON-Q03",
+      "LJ-LF2-COMPARISON-Q04",
+      "LJ-LF2-COMPARISON-Q05",
+      "LJ-LF2-COMPARISON-Q06"
+    ]
+  },
+  "exam": {
+    "questionIds": [
+      "LJ-LF2-COMPARISON-E01",
+      "LJ-LF2-COMPARISON-E02",
+      "LJ-LF2-COMPARISON-E03",
+      "LJ-LF2-COMPARISON-E04",
+      "LJ-LF2-COMPARISON-E05",
+      "LJ-LF2-COMPARISON-E06",
+      "LJ-LF2-COMPARISON-E07",
+      "LJ-LF2-COMPARISON-E08"
+    ],
+    "passPercent": 80,
+    "scoring": "all-or-nothing-per-question",
+    "timed": false
+  },
+  "questionLinks": [
+    {
+      "questionId": "LJ-LF2-COMPARISON-Q01",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf2-comparison-criteria"
+      ],
+      "blockIds": [
+        "common-lf2-comparison-data"
+      ]
+    },
+    {
+      "questionId": "LJ-LF2-COMPARISON-Q02",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf2-comparison-criteria"
+      ],
+      "blockIds": [
+        "common-lf2-comparison-data"
+      ]
+    },
+    {
+      "questionId": "LJ-LF2-COMPARISON-Q03",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf2-comparison-criteria"
+      ],
+      "blockIds": [
+        "common-lf2-comparison-matrix"
+      ]
+    },
+    {
+      "questionId": "LJ-LF2-COMPARISON-Q04",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf2-comparison-cost"
+      ],
+      "blockIds": [
+        "common-lf2-comparison-costs"
+      ]
+    },
+    {
+      "questionId": "LJ-LF2-COMPARISON-Q05",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf2-comparison-cost"
+      ],
+      "blockIds": [
+        "common-lf2-comparison-costs"
+      ]
+    },
+    {
+      "questionId": "LJ-LF2-COMPARISON-Q06",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf2-comparison-cost"
+      ],
+      "blockIds": [
+        "common-lf2-comparison-decision"
+      ]
+    },
+    {
+      "questionId": "LJ-LF2-COMPARISON-E01",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf2-comparison-criteria"
+      ],
+      "blockIds": [
+        "common-lf2-comparison-data"
+      ]
+    },
+    {
+      "questionId": "LJ-LF2-COMPARISON-E02",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf2-comparison-criteria"
+      ],
+      "blockIds": [
+        "common-lf2-comparison-data"
+      ]
+    },
+    {
+      "questionId": "LJ-LF2-COMPARISON-E03",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf2-comparison-criteria"
+      ],
+      "blockIds": [
+        "common-lf2-comparison-matrix"
+      ]
+    },
+    {
+      "questionId": "LJ-LF2-COMPARISON-E04",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf2-comparison-criteria"
+      ],
+      "blockIds": [
+        "common-lf2-comparison-matrix"
+      ]
+    },
+    {
+      "questionId": "LJ-LF2-COMPARISON-E05",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf2-comparison-cost"
+      ],
+      "blockIds": [
+        "common-lf2-comparison-costs"
+      ]
+    },
+    {
+      "questionId": "LJ-LF2-COMPARISON-E06",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf2-comparison-cost"
+      ],
+      "blockIds": [
+        "common-lf2-comparison-costs"
+      ]
+    },
+    {
+      "questionId": "LJ-LF2-COMPARISON-E07",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf2-comparison-cost"
+      ],
+      "blockIds": [
+        "common-lf2-comparison-costs",
+        "common-lf2-comparison-decision"
+      ]
+    },
+    {
+      "questionId": "LJ-LF2-COMPARISON-E08",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf2-comparison-criteria",
+        "common-lf2-comparison-cost"
+      ],
+      "blockIds": [
+        "common-lf2-comparison-decision"
+      ]
+    }
+  ],
+  "interview": [
+    {
+      "id": "common-lf2-comparison-talk-data",
+      "prompt": "Übertrage das englische Datenblatt von Büro Basis in deutsche Vergleichsspalten. Begründe die Mussprüfung und rechne den Nutzwert mit 60 % Reparaturzugang und 40 % Reserve.",
+      "objectiveIds": [
+        "common-lf2-comparison-criteria"
+      ],
+      "blockIds": [
+        "common-lf2-comparison-data",
+        "common-lf2-comparison-matrix"
+      ],
+      "keyPoints": [
+        "Memory = 16 GB RAM, storage = 512 GB SSD, zwei unabhängige gleichzeitige Anzeigen.",
+        "Mindestwerte bestehen, unklare Anschlusskompatibilität vor Entscheidung klären.",
+        "5 und 3 Punkte ergeben 4,2 bei offen gelegter Skala."
+      ],
+      "acceptableAlternatives": [
+        "Gleichwertige Tabelle oder mündlich geordnete Darstellung mit Einheiten."
+      ],
+      "misconceptions": [
+        "SSD-Speicher mit RAM verrechnen.",
+        "Gewichte nach persönlichem Modellwunsch festlegen."
+      ],
+      "sampleAnswer": "Ich notiere 16 GB RAM, 512 GB SSD und zwei digitale Ausgänge für getrennte gleichzeitige Anzeigen. Damit erfüllt Büro Basis die angegebenen Musswerte. Für belegten RAM- und SSD-Austausch erhält Büro Basis 5 Punkte, für die Mindestreserve 3. 0,6 × 5 + 0,4 × 3 = 4,2.",
+      "followUp": "Welche Rückfrage stellst du, wenn im Datenblatt zwei Ports ohne Aussage zur gleichzeitigen Nutzung stehen?"
+    },
+    {
+      "id": "common-lf2-comparison-talk-costs",
+      "prompt": "Vergleiche die fiktiven Lieferangebote A und B aus Block 3. Erläutere Rabatt, Skontobasis, Bezugskosten und die Auswirkung einer verpassten Skontofrist.",
+      "objectiveIds": [
+        "common-lf2-comparison-cost"
+      ],
+      "blockIds": [
+        "common-lf2-comparison-costs"
+      ],
+      "keyPoints": [
+        "A: 1.000 − 100 − 18 + 30 = 912 Euro bei genutztem Skonto.",
+        "B: 910 Euro einschließlich Bezugskosten, somit 2 Euro günstiger.",
+        "Ohne Skonto kostet A 930 Euro, B ist dann 20 Euro günstiger."
+      ],
+      "acceptableAlternatives": [
+        "Schrittweise Multiplikation mit 0,90 und 0,98 statt Abzug einzelner Eurobeträge."
+      ],
+      "misconceptions": [
+        "12 Prozent vom Listenpreis abziehen.",
+        "Die 30 Euro Versand trotz Vorgabe skontieren."
+      ],
+      "sampleAnswer": "Der Rabatt senkt A auf 900 Euro. Skonto sind 2 Prozent davon, also 18 Euro. Mit 30 Euro Bezugskosten kostet A 912 Euro; B kostet 910 Euro. Ist die frühe Zahlung nicht gesichert, setze ich für A 930 Euro an und halte die Zahlungsannahme sichtbar fest.",
+      "followUp": "Welche Kostenbasis würdest du verwenden, solange die Buchhaltung die frühe Zahlung noch nicht bestätigt hat?"
+    },
+    {
+      "id": "common-lf2-comparison-talk-decision",
+      "prompt": "Formuliere eine Beschaffungsempfehlung: Dein gewähltes Modell besteht die Mussprüfung. Zwei Lieferanten haben unterschiedliche Preise, Leistungen und Termine. Welche Angaben und offenen Fragen gehören in deine Begründung?",
+      "objectiveIds": [
+        "common-lf2-comparison-criteria",
+        "common-lf2-comparison-cost"
+      ],
+      "blockIds": [
+        "common-lf2-comparison-matrix",
+        "common-lf2-comparison-decision"
+      ],
+      "keyPoints": [
+        "Modellwahl mit belegten Kriterien, Gewichtung und Ergebnis begründen.",
+        "Gleiche Menge, Ausstattung, Steuerbasis und Leistungsumfang herstellen.",
+        "Bezugspreis, Zahlungsannahmen und bestätigten Muss-Termin nennen, offene Punkte zuordnen."
+      ],
+      "acceptableAlternatives": [
+        "Begründete Auswahl eines teureren fristgerechten Angebots."
+      ],
+      "misconceptions": [
+        "Nutzwert oder Listenpreis als alleinige Entscheidungsgrundlage behandeln."
+      ],
+      "sampleAnswer": "Ich nenne das passende Modell und begründe seine Bewertung. Für die Lieferanten rechne ich denselben Leistungsumfang netto einschließlich Bezugskosten und realistischer Zahlungsfrist. Einen unpassenden Liefertermin kennzeichne ich als Abweichung und lasse eine mögliche Änderung vor Bestellung freigeben.",
+      "followUp": "Welchen Teil deiner Empfehlung müsstest du neu prüfen, wenn eine Einrichtungspauschale hinzukommt?"
+    }
+  ],
+  "cards": [
+    {
+      "id": "common-lf2-comparison-card-english",
+      "front": "Was bedeuten memory, storage und independent displays im Datenblatt?",
+      "back": "Memory = RAM für laufende Programme, storage = dauerhafter Massenspeicher, independent displays = getrennte Bildinhalte. Gleichzeitige Nutzung und Anschlusskompatibilität ausdrücklich prüfen.",
+      "objectiveIds": [
+        "common-lf2-comparison-criteria"
+      ],
+      "blockIds": [
+        "common-lf2-comparison-data"
+      ]
+    },
+    {
+      "id": "common-lf2-comparison-card-must",
+      "front": "Wann findet die Mussprüfung im Produktvergleich statt?",
+      "back": "Vor der Nutzwertwertung. Varianten unter dem Pflichtbedarf scheiden aus oder brauchen eine ausdrücklich freigegebene Auftragsänderung. Komfortpunkte gleichen kein fehlendes Mussmerkmal aus.",
+      "objectiveIds": [
+        "common-lf2-comparison-criteria"
+      ],
+      "blockIds": [
+        "common-lf2-comparison-data"
+      ]
+    },
+    {
+      "id": "common-lf2-comparison-card-matrix",
+      "front": "Wie berechnest du den Nutzwert bei 60 % × 5 Punkten und 40 % × 3 Punkten?",
+      "back": "0,60 × 5 + 0,40 × 3 = 4,2 Punkte. Gewichte, gleiche Skala und Belege werden vor der Bewertung festgelegt.",
+      "objectiveIds": [
+        "common-lf2-comparison-criteria"
+      ],
+      "blockIds": [
+        "common-lf2-comparison-matrix"
+      ]
+    },
+    {
+      "id": "common-lf2-comparison-card-discount",
+      "front": "Wie rechnest du 1.000 € Liste, 10 % Rabatt, 2 % Skonto und 30 € nicht skontierbare Bezugskosten?",
+      "back": "1.000 × 0,90 = 900; 900 × 0,98 = 882; 882 + 30 = 912 Euro netto. Skonto setzt fristgerechte Zahlung voraus.",
+      "objectiveIds": [
+        "common-lf2-comparison-cost"
+      ],
+      "blockIds": [
+        "common-lf2-comparison-costs"
+      ]
+    },
+    {
+      "id": "common-lf2-comparison-card-terms",
+      "front": "Welche Bedingungen müssen Lieferangebote vergleichbar machen?",
+      "back": "Gleiche Menge, Ausstattung, Leistungsumfang, Steuerbasis und Lieferort; Bezugskosten, Zahlungsfrist, Skontovoraussetzungen und verbindlichen Liefertermin offenlegen.",
+      "objectiveIds": [
+        "common-lf2-comparison-cost"
+      ],
+      "blockIds": [
+        "common-lf2-comparison-costs",
+        "common-lf2-comparison-decision"
+      ]
+    },
+    {
+      "id": "common-lf2-comparison-card-recommend",
+      "front": "Was gehört zu einer begründeten Auswahlempfehlung?",
+      "back": "Erfüllte Musswerte, bewertete Kriterien mit Gewichtung, vollständiger Bezugspreis, passende Termine und Leistungen sowie offene Punkte und zuständige Freigabe.",
+      "objectiveIds": [
+        "common-lf2-comparison-criteria",
+        "common-lf2-comparison-cost"
+      ],
+      "blockIds": [
+        "common-lf2-comparison-decision"
+      ]
+    }
+  ],
+  "review": {
+    "status": "reviewed",
+    "checkedAt": "2026-11-11"
+  }
+}

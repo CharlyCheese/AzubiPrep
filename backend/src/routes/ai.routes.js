@@ -44,5 +44,8 @@ export function buildAiRoutes(store, service, rag = createRagService()) {
   router.use(rateLimiter({ maxProMinute: 20, keyPrefix: 'ai:' }));
   router.get('/status', handle((req, signal) => service.status(signal, req.query.provider || 'qwen')));
   router.post('/help', handle((req, signal) => service.help(req.body, store, signal)));
+  router.post('/journey/start', handle(req => service.journey.start(req.body)));
+  router.post('/journey/turn', handle((req, signal) => service.journey.turn(req.body, signal)));
+  router.post('/journey/end', handle(req => service.journey.end(req.body)));
   return router;
 }

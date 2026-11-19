@@ -1,0 +1,488 @@
+{
+  "schemaVersion": 1,
+  "id": "common-lf5-sql",
+  "version": "1.0.0",
+  "title": "Einfache Datenbankabfragen und Änderungen",
+  "fieldId": "LF5",
+  "scope": "common",
+  "prerequisites": [
+    "common-lf5-storage"
+  ],
+  "sourceIds": [
+    "lf5-pg-select",
+    "lf5-pg-insert",
+    "lf5-pg-update",
+    "lf5-pg-delete"
+  ],
+  "sources": [
+    {
+      "id": "lf5-pg-select",
+      "title": "PostgreSQL: Querying a Table",
+      "url": "https://www.postgresql.org/docs/current/tutorial-select.html",
+      "note": "SELECT, WHERE und ORDER BY geprüft. Das Übungsmodell bildet ausgewählte Operationen nach und führt kein freies SQL aus.",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "lf5-pg-insert",
+      "title": "PostgreSQL: Populating a Table With Rows",
+      "url": "https://www.postgresql.org/docs/current/tutorial-populate.html",
+      "note": "INSERT mit expliziter Spaltenliste und zugehörigen Werten geprüft.",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "lf5-pg-update",
+      "title": "PostgreSQL: Updates",
+      "url": "https://www.postgresql.org/docs/current/tutorial-update.html",
+      "note": "UPDATE, SET und gezielte Auswahl mit WHERE geprüft.",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "lf5-pg-delete",
+      "title": "PostgreSQL: Deletions",
+      "url": "https://www.postgresql.org/docs/current/tutorial-delete.html",
+      "note": "DELETE mit und ohne WHERE geprüft; Modelloperationen verwenden begrenzte synthetische Zeilen.",
+      "checkedAt": "2026-11-16"
+    }
+  ],
+  "objectives": [
+    {
+      "id": "common-lf5-sql-read",
+      "text": "Mit SELECT, WHERE und ORDER BY die für eine Aufgabe benötigten Datensätze aus einer Tabelle abfragen."
+    },
+    {
+      "id": "common-lf5-sql-change",
+      "text": "Einfügen, Ändern und Löschen von Datensätzen an einem vorbereiteten Übungsbestand gezielt ausführen."
+    },
+    {
+      "id": "common-lf5-sql-protect",
+      "text": "Vor einer Datenänderung anhand ihrer Auswahlbedingung prüfen, welche Datensätze betroffen sind."
+    }
+  ],
+  "caseStudy": {
+    "title": "Mira liest und ändert einen synthetischen Bestand",
+    "text": "Der vorbereitete Bestand stocks hat die Spalten id, name und quantity. Am Anfang stehen 1/Kabel/8, 2/Maus/2 und 3/Adapter/0 darin. Die Beispiele sind eigene Übungsdaten. Im Abschluss zeigt eine geführte lokale Übung SQL an und bildet festgelegte Operationen nach."
+  },
+  "blocks": [
+    {
+      "id": "common-lf5-sql-read",
+      "title": "1. Spalten auswählen, Zeilen filtern, Ergebnis sortieren",
+      "objectiveIds": [
+        "common-lf5-sql-read"
+      ],
+      "sourceIds": [
+        "lf5-pg-select"
+      ],
+      "paragraphs": [
+        "SELECT liest Daten. SELECT id, name, quantity FROM stocks; fordert die drei genannten Spalten aus stocks an. Die Spaltenliste legt fest, was gezeigt wird; FROM nennt die Tabelle. Diese Abfrage verändert keine Bestandsmenge.",
+        "WHERE wählt Zeilen über eine Bedingung aus. SELECT id, name, quantity FROM stocks WHERE quantity < 3; liefert aus dem Ausgangsbestand Maus mit 2 und Adapter mit 0. Kabel mit 8 erfüllt die Bedingung nicht. Das SQL-Zeichen = prüft in einer WHERE-Bedingung Gleichheit; es ist dort keine JavaScript-Zuweisung.",
+        "ORDER BY name ASC sortiert das Abfrageergebnis aufsteigend nach Namen. Die vollständige Abfrage SELECT id, name, quantity FROM stocks WHERE quantity < 3 ORDER BY name ASC; zeigt Adapter vor Maus. Ohne ORDER BY ist keine bestimmte Ergebnisreihenfolge zugesichert. Die Sortierung des Ergebnisses verändert keine Kennungen."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Übungsfall",
+        "text": "SELECT name FROM stocks WHERE id = 2; zeigt im Ausgangsbestand den Namen Maus."
+      },
+      "misconception": {
+        "claim": "WHERE bestimmt die angezeigten Spalten und SELECT filtert die Zeilen.",
+        "correction": "SELECT nennt die Ergebnisspalten; WHERE schränkt die ausgewählten Zeilen ein."
+      },
+      "takeaway": "Trenne Spaltenauswahl, Zeilenfilter und Ergebnissortierung."
+    },
+    {
+      "id": "common-lf5-sql-insert",
+      "title": "2. Einen Datensatz mit INSERT ergänzen",
+      "objectiveIds": [
+        "common-lf5-sql-change"
+      ],
+      "sourceIds": [
+        "lf5-pg-insert"
+      ],
+      "paragraphs": [
+        "INSERT fügt eine Zeile hinzu. INSERT INTO stocks (id, name, quantity) VALUES (4, 'Tastatur', 5); ordnet die Werte der angegebenen Spaltenliste zu: id 4, Name Tastatur, Menge 5. Der Text steht in einfachen Anführungszeichen.",
+        "Vor dem Einfügen prüfen wir die Regeln: id 4 ist im Ausgangsbestand frei, der Name ist passend und 5 ist eine ganze Menge im Bereich 0 bis 1000. Ein Einfügen ersetzt nicht die vorhandene Zeile mit id 2. Eine schon belegte Primärschlüsselkennung wäre kein zulässiger neuer Datensatz.",
+        "Im begrenzten Abschlussmodell wird diese Operation über feste Eingabefelder vorbereitet. Die sichtbare SQL-Darstellung erklärt ihre Bedeutung; sie ist kein Zugang zu einem echten Datenbankserver und kein freier SQL-Editor. Das Modell zeigt anschließend den entstandenen Datensatz."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Übungsfall",
+        "text": "Nach dem Einfügen sind vier Materialien vorhanden, darunter zusätzlich 4/Tastatur/5."
+      },
+      "misconception": {
+        "claim": "INSERT mit einer neuen Kennung korrigiert automatisch die Menge eines vorhandenen Materials.",
+        "correction": "INSERT ergänzt eine Zeile. Für das Ändern einer vorhandenen Zeile dient UPDATE."
+      },
+      "takeaway": "Ordne beim Einfügen Werte und Spalten eindeutig zu."
+    },
+    {
+      "id": "common-lf5-sql-change",
+      "title": "3. Vorhandene Zeilen ändern und löschen",
+      "objectiveIds": [
+        "common-lf5-sql-change",
+        "common-lf5-sql-protect"
+      ],
+      "sourceIds": [
+        "lf5-pg-update",
+        "lf5-pg-delete"
+      ],
+      "paragraphs": [
+        "UPDATE verändert passende vorhandene Zeilen. UPDATE stocks SET quantity = 6 WHERE id = 2; setzt im Modell die Menge der Maus auf 6. SET nennt die neue Zuweisung, WHERE begrenzt die betroffenen Zeilen. Name und Kennung bleiben bei dieser Anweisung erhalten.",
+        "DELETE FROM stocks WHERE id = 3; entfernt den Datensatz mit id 3, also den Adapter. Die Spaltenstruktur der Tabelle bleibt bestehen. Löschen einer Zeile ist etwas anderes als quantity auf 0 zu setzen: Bei Menge 0 existiert das Material weiterhin.",
+        "Ohne WHERE würde UPDATE stocks SET quantity = 6; alle vorhandenen Zeilen ändern; DELETE FROM stocks; würde alle Zeilen entfernen. Eine syntaktisch gültige Anweisung kann daher einen viel größeren Umfang haben als beabsichtigt. Nutze eine geprüfte Auswahlbedingung."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Übungsfall",
+        "text": "Nach Insert 4/Tastatur/5, Update id 2 auf 6 und Delete id 3 verbleiben Kabel 8, Maus 6 und Tastatur 5."
+      },
+      "misconception": {
+        "claim": "Ein fehlendes WHERE beschränkt UPDATE oder DELETE auf die erste Zeile.",
+        "correction": "Ohne Bedingung erfasst die Anweisung alle Zeilen der Tabelle."
+      },
+      "takeaway": "Gezielte Änderungen brauchen eine passende und vorher geprüfte Auswahl."
+    },
+    {
+      "id": "common-lf5-sql-preview",
+      "title": "4. Auswahl vor Änderung prüfen und danach vergleichen",
+      "objectiveIds": [
+        "common-lf5-sql-protect",
+        "common-lf5-sql-read",
+        "common-lf5-sql-change"
+      ],
+      "sourceIds": [
+        "lf5-pg-select",
+        "lf5-pg-update",
+        "lf5-pg-delete"
+      ],
+      "paragraphs": [
+        "Vor UPDATE oder DELETE lesen wir dieselbe Auswahl mit SELECT. Vor der Änderung der Maus lautet die Vorschau SELECT id, name, quantity FROM stocks WHERE id = 2;. Mira erwartet genau 2/Maus/2. Erst dann passt die Bedingung zum Auftrag, die Maus auf 6 zu setzen.",
+        "Vor DELETE FROM stocks WHERE id = 3; erwartet die Auswahl die Adapterzeile. Wenn statt einer erwarteten Zeile mehrere oder keine erscheinen, wird die Anweisung geprüft und noch nicht als passende Änderung gewertet. Nach der Operation kontrollieren wir sowohl die Zielzeile als auch unveränderte Nachbarzeilen.",
+        "Die Übung führt Auswahl und Änderung in einem festen lokalen Modell aus. In einer echten Mehrbenutzeranwendung kann sich ein Bestand zwischen Vorschau und Änderung ändern; die Vorschau allein ist daher keine vollständige Absicherung paralleler Zugriffe. Hier geht es um das Verständnis des Wirkungsumfangs am vorbereiteten Bestand."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Übungsfall",
+        "text": "Eine Vorschau mit WHERE quantity < 3 trifft im Ausgangsbestand zwei Zeilen. Das wäre für eine ausschließlich geplante Mauskorrektur zu weit gefasst."
+      },
+      "misconception": {
+        "claim": "Eine erfolgreich angezeigte SQL-Zeile beweist schon, dass die fachlich richtigen Datensätze betroffen sind.",
+        "correction": "Die Bedingung muss gegen die konkreten Zielzeilen geprüft werden; Erfolg der Ausführung allein reicht nicht."
+      },
+      "takeaway": "Prüfe Zielmenge vor der Änderung und Sollzustand danach."
+    }
+  ],
+  "questionFile": "questions/common-lf5-sql.v1.csv",
+  "quiz": {
+    "questionIds": [
+      "LJ-LF5-SQL-Q01",
+      "LJ-LF5-SQL-Q02",
+      "LJ-LF5-SQL-Q03",
+      "LJ-LF5-SQL-Q04",
+      "LJ-LF5-SQL-Q05",
+      "LJ-LF5-SQL-Q06"
+    ]
+  },
+  "exam": {
+    "questionIds": [
+      "LJ-LF5-SQL-E01",
+      "LJ-LF5-SQL-E02",
+      "LJ-LF5-SQL-E03",
+      "LJ-LF5-SQL-E04",
+      "LJ-LF5-SQL-E05",
+      "LJ-LF5-SQL-E06",
+      "LJ-LF5-SQL-E07",
+      "LJ-LF5-SQL-E08"
+    ],
+    "passPercent": 80,
+    "scoring": "all-or-nothing-per-question",
+    "timed": false
+  },
+  "questionLinks": [
+    {
+      "questionId": "LJ-LF5-SQL-Q01",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf5-sql-read"
+      ],
+      "blockIds": [
+        "common-lf5-sql-read"
+      ]
+    },
+    {
+      "questionId": "LJ-LF5-SQL-Q02",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf5-sql-read"
+      ],
+      "blockIds": [
+        "common-lf5-sql-read"
+      ]
+    },
+    {
+      "questionId": "LJ-LF5-SQL-Q03",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf5-sql-change"
+      ],
+      "blockIds": [
+        "common-lf5-sql-insert"
+      ]
+    },
+    {
+      "questionId": "LJ-LF5-SQL-Q04",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf5-sql-change"
+      ],
+      "blockIds": [
+        "common-lf5-sql-change"
+      ]
+    },
+    {
+      "questionId": "LJ-LF5-SQL-Q05",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf5-sql-protect"
+      ],
+      "blockIds": [
+        "common-lf5-sql-preview"
+      ]
+    },
+    {
+      "questionId": "LJ-LF5-SQL-Q06",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf5-sql-protect"
+      ],
+      "blockIds": [
+        "common-lf5-sql-change",
+        "common-lf5-sql-preview"
+      ]
+    },
+    {
+      "questionId": "LJ-LF5-SQL-E01",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf5-sql-read"
+      ],
+      "blockIds": [
+        "common-lf5-sql-read"
+      ]
+    },
+    {
+      "questionId": "LJ-LF5-SQL-E02",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf5-sql-read"
+      ],
+      "blockIds": [
+        "common-lf5-sql-read"
+      ]
+    },
+    {
+      "questionId": "LJ-LF5-SQL-E03",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf5-sql-change"
+      ],
+      "blockIds": [
+        "common-lf5-sql-insert"
+      ]
+    },
+    {
+      "questionId": "LJ-LF5-SQL-E04",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf5-sql-change"
+      ],
+      "blockIds": [
+        "common-lf5-sql-change"
+      ]
+    },
+    {
+      "questionId": "LJ-LF5-SQL-E05",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf5-sql-protect"
+      ],
+      "blockIds": [
+        "common-lf5-sql-change"
+      ]
+    },
+    {
+      "questionId": "LJ-LF5-SQL-E06",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf5-sql-protect"
+      ],
+      "blockIds": [
+        "common-lf5-sql-preview"
+      ]
+    },
+    {
+      "questionId": "LJ-LF5-SQL-E07",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf5-sql-read",
+        "common-lf5-sql-change"
+      ],
+      "blockIds": [
+        "common-lf5-sql-insert",
+        "common-lf5-sql-change",
+        "common-lf5-sql-preview"
+      ]
+    },
+    {
+      "questionId": "LJ-LF5-SQL-E08",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf5-sql-protect"
+      ],
+      "blockIds": [
+        "common-lf5-sql-preview"
+      ]
+    }
+  ],
+  "interview": [
+    {
+      "id": "common-lf5-sql-talk-1",
+      "prompt": "Erkläre SELECT, WHERE und ORDER BY anhand der Materialien mit quantity < 3.",
+      "objectiveIds": [
+        "common-lf5-sql-read"
+      ],
+      "blockIds": [
+        "common-lf5-sql-read"
+      ],
+      "keyPoints": [
+        "Ergebnisspalten und Tabelle nennen.",
+        "Maus und Adapter auswählen.",
+        "Aufsteigende Namensreihenfolge Adapter, Maus erklären."
+      ],
+      "acceptableAlternatives": [
+        "Eine fachlich gleichwertige Erklärung mit passenden eigenen Beispielen."
+      ],
+      "misconceptions": [
+        "WHERE bestimmt die angezeigten Spalten und SELECT filtert die Zeilen."
+      ],
+      "sampleAnswer": "SELECT nennt die Spalten id, name und quantity aus stocks. WHERE quantity < 3 lässt Maus und Adapter übrig. ORDER BY name ASC zeigt Adapter vor Maus. Die Daten werden dabei nicht verändert.",
+      "followUp": "Warum ist ohne ORDER BY keine gewünschte Reihenfolge sicher?"
+    },
+    {
+      "id": "common-lf5-sql-talk-2",
+      "prompt": "Beschreibe die Wirkung von INSERT, UPDATE und DELETE am vorbereiteten Bestand.",
+      "objectiveIds": [
+        "common-lf5-sql-change"
+      ],
+      "blockIds": [
+        "common-lf5-sql-insert",
+        "common-lf5-sql-change"
+      ],
+      "keyPoints": [
+        "Neue Zeile von bestehender Änderung trennen.",
+        "Gezielte Kennung bei UPDATE und DELETE nennen.",
+        "Zeilenlöschung von Menge 0 unterscheiden."
+      ],
+      "acceptableAlternatives": [
+        "Eine fachlich gleichwertige Erklärung mit passenden eigenen Beispielen."
+      ],
+      "misconceptions": [
+        "INSERT mit einer neuen Kennung korrigiert automatisch die Menge eines vorhandenen Materials."
+      ],
+      "sampleAnswer": "INSERT ergänzt id 4 Tastatur mit 5. UPDATE mit id 2 setzt die Maus auf 6. DELETE mit id 3 entfernt den Adapterdatensatz. Die Kabelzeile bleibt unverändert. Menge 0 würde einen vorhandenen Artikel kennzeichnen, nicht seine Löschung.",
+      "followUp": "Welche Rolle spielt WHERE bei den letzten beiden Operationen?"
+    },
+    {
+      "id": "common-lf5-sql-talk-3",
+      "prompt": "Plane den Nachweis für eine gezielte Mauskorrektur.",
+      "objectiveIds": [
+        "common-lf5-sql-protect",
+        "common-lf5-sql-read",
+        "common-lf5-sql-change"
+      ],
+      "blockIds": [
+        "common-lf5-sql-preview"
+      ],
+      "keyPoints": [
+        "Gleiche Bedingung für Vorschau und Änderung nutzen.",
+        "Erwartete einzelne Zeile abgleichen.",
+        "Zielwert und unveränderte Nachbarzeilen nachprüfen."
+      ],
+      "acceptableAlternatives": [
+        "Eine fachlich gleichwertige Erklärung mit passenden eigenen Beispielen."
+      ],
+      "misconceptions": [
+        "Eine erfolgreich angezeigte SQL-Zeile beweist schon, dass die fachlich richtigen Datensätze betroffen sind."
+      ],
+      "sampleAnswer": "Vor der Änderung lese ich id 2 und erwarte Maus mit 2. Erst mit passender Auswahl setze ich quantity auf 6. Danach kontrolliere ich Maus 6 und die unveränderten anderen Zeilen. Das beweist den Ablauf am Modellbestand, keine Absicherung echter paralleler Zugriffe.",
+      "followUp": "Was tust du, wenn die Vorschau zwei Zeilen statt einer zeigt?"
+    }
+  ],
+  "cards": [
+    {
+      "id": "common-lf5-sql-card-1",
+      "front": "Welche Aufgaben haben SELECT, WHERE und ORDER BY?",
+      "back": "SELECT wählt Spalten, WHERE filtert Zeilen, ORDER BY sortiert das Ergebnis.",
+      "objectiveIds": [
+        "common-lf5-sql-read"
+      ],
+      "blockIds": [
+        "common-lf5-sql-read"
+      ]
+    },
+    {
+      "id": "common-lf5-sql-card-2",
+      "front": "Was liefert quantity < 3 bei Kabel 8, Maus 2 und Adapter 0?",
+      "back": "Maus und Adapter; mit ORDER BY name ASC steht Adapter vor Maus.",
+      "objectiveIds": [
+        "common-lf5-sql-read"
+      ],
+      "blockIds": [
+        "common-lf5-sql-read"
+      ]
+    },
+    {
+      "id": "common-lf5-sql-card-3",
+      "front": "Wozu dient INSERT?",
+      "back": "Zum Einfügen einer neuen Zeile; Werte werden der angegebenen Spaltenliste zugeordnet.",
+      "objectiveIds": [
+        "common-lf5-sql-change"
+      ],
+      "blockIds": [
+        "common-lf5-sql-insert"
+      ]
+    },
+    {
+      "id": "common-lf5-sql-card-4",
+      "front": "Wozu dienen UPDATE und DELETE?",
+      "back": "UPDATE ändert passende bestehende Zeilen, DELETE entfernt passende Zeilen.",
+      "objectiveIds": [
+        "common-lf5-sql-change"
+      ],
+      "blockIds": [
+        "common-lf5-sql-change"
+      ]
+    },
+    {
+      "id": "common-lf5-sql-card-5",
+      "front": "Was passiert ohne WHERE bei UPDATE oder DELETE?",
+      "back": "Die jeweilige Änderung oder Löschung betrifft alle vorhandenen Zeilen der Tabelle.",
+      "objectiveIds": [
+        "common-lf5-sql-protect"
+      ],
+      "blockIds": [
+        "common-lf5-sql-change"
+      ]
+    },
+    {
+      "id": "common-lf5-sql-card-6",
+      "front": "Was gehört vor und nach eine gezielte Änderung?",
+      "back": "Vorher SELECT mit derselben Bedingung gegen den Auftrag prüfen; danach Zielzustand und unveränderte Zeilen vergleichen.",
+      "objectiveIds": [
+        "common-lf5-sql-protect"
+      ],
+      "blockIds": [
+        "common-lf5-sql-preview"
+      ]
+    }
+  ],
+  "review": {
+    "status": "reviewed",
+    "checkedAt": "2026-11-16"
+  }
+}
+

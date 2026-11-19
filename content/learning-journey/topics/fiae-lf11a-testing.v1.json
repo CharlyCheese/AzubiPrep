@@ -1,0 +1,474 @@
+{
+  "schemaVersion": 1,
+  "version": "1.0.0",
+  "id": "fiae-lf11a-testing",
+  "title": "Automatisierte Tests für Komponenten",
+  "fieldId": "LF11a",
+  "scope": "specialization",
+  "prerequisites": [
+    "fiae-lf11a-security",
+    "common-lf5-testing"
+  ],
+  "objectives": [
+    {
+      "id": "fiae-lf11a-testing-unit",
+      "text": "Für eine fachliche Funktion automatisierte Tests mit Normal-, Grenz- und Fehlerfällen erstellen."
+    },
+    {
+      "id": "fiae-lf11a-testing-integration",
+      "text": "Einen Integrationstest für das Zusammenwirken von Komponenten von einem isolierten Modultest unterscheiden."
+    },
+    {
+      "id": "fiae-lf11a-testing-evidence",
+      "text": "Testergebnisse mit Akzeptanzkriterien abgleichen und eine notwendige Überarbeitung begründen."
+    }
+  ],
+  "caseStudy": {
+    "title": "Welche Probe hätte die abgewiesene Nummer 1 entdeckt?",
+    "text": "Der Empfang meldet, dass sich der erste Reparaturauftrag nicht suchen lässt. Im Übungsbestand hat Nummer 1 den Status „neu“ und Nummer 7 den Status „offen“. Erlaubt sind echte Ganzzahlen von 1 bis einschließlich 9999. Du schreibst automatisierte Prüfungen für die Fachfunktion und für ihre Speicheranbindung."
+  },
+  "sources": [
+    {
+      "id": "lf11a-python-tests",
+      "title": "Python Software Foundation: unittest",
+      "url": "https://docs.python.org/3/library/unittest.html",
+      "note": "Automatisierte Prüfungen von Rückgabewerten und erwarteten Ausnahmen beziehen sich auf die Python-Standardbibliothek.",
+      "checkedAt": "2026-11-19"
+    },
+    {
+      "id": "lf5-ms-testing",
+      "title": "Microsoft: Best practices for writing unit tests",
+      "url": "https://learn.microsoft.com/en-us/dotnet/core/testing/unit-testing-best-practices",
+      "note": "Isolierte Tests, lesbare Anordnung der Prüfschritte und aussagekräftige Erwartungen wurden am eigenen Auftrag konkretisiert.",
+      "checkedAt": "2026-11-19"
+    },
+    {
+      "id": "lf11a-python-sqlite",
+      "title": "Python Software Foundation: sqlite3",
+      "url": "https://docs.python.org/3/library/sqlite3.html",
+      "note": "Die Beispiele nutzen die dokumentierte Parameterbindung und das Abholen einzelner Ergebniszeilen mit sqlite3.",
+      "checkedAt": "2026-11-19"
+    },
+    {
+      "id": "lf5-nasa-requirements",
+      "title": "NASA: Requirements Management",
+      "url": "https://www.nasa.gov/reference/6-2-requirements-management/",
+      "note": "Anforderungen nachvollziehbar zuordnen und Änderungen an ihren Nachweisen verfolgen. Beispiele und Prüfdaten sind erfunden.",
+      "checkedAt": "2026-11-19"
+    }
+  ],
+  "sourceIds": [
+    "lf11a-python-tests",
+    "lf5-ms-testing",
+    "lf11a-python-sqlite",
+    "lf5-nasa-requirements"
+  ],
+  "blocks": [
+    {
+      "id": "fiae-lf11a-testing-block-01",
+      "title": "1. Normal-, Grenz- und Fehlerfälle festlegen",
+      "objectiveIds": [
+        "fiae-lf11a-testing-unit"
+      ],
+      "sourceIds": [
+        "lf11a-python-tests",
+        "lf5-ms-testing"
+      ],
+      "paragraphs": [
+        "Leite das Soll aus dem Vertrag ab, bevor du den Code liest. 7 ist ein gewöhnlicher Treffer. 1 und 9999 sind gültige Randwerte. Die Werte 0 und 10000 liegen unmittelbar außerhalb. Eine zulässige freie Nummer ist ein fachlicher Nichttreffer, eine unzulässige Eingabe muss als ValueError enden.",
+        "Lege einen frischen kleinen Bestand an, führe genau die betrachtete Aktion aus und vergleiche das Ergebnis mit dem Soll. In Python prüft assertEqual eine erwartete Gleichheit, assertIsNone den fehlenden Treffer und assertRaises die erwartete Ausnahme. Ein Testname sollte Bedingung und erwartete Wirkung erkennbar machen."
+      ],
+      "example": {
+        "title": "Prüftabelle für die neue Funktion",
+        "text": "Bestand {1: „neu“, 7: „offen“, 9999: „fertig“}. 7 → „offen“. 1 → „neu“. 9999 → „fertig“. 8 → None. 0 → ValueError. 10000 → ValueError. Jeder Fall hat ein eigenes erwartetes Ergebnis."
+      },
+      "misconception": {
+        "claim": "Eine freie gültige Nummer ist derselbe Fehler wie eine unzulässige.",
+        "correction": "Eine gültige Suche kann ohne Treffer enden. Ein Eingabefehler soll die Suche verhindern."
+      },
+      "takeaway": "Prüfe beide Seiten einer Grenze und unterscheide ungültige Eingabe von regulärem Fehlen."
+    },
+    {
+      "id": "fiae-lf11a-testing-block-02",
+      "title": "2. Die Fachfunktion mit einem Ersatz isolieren",
+      "objectiveIds": [
+        "fiae-lf11a-testing-unit"
+      ],
+      "sourceIds": [
+        "lf11a-python-tests"
+      ],
+      "paragraphs": [
+        "Gib der Fachfunktion eine Lesefunktion als Parameter. Im Modultest stellt ein Wörterbuch die Antworten bereit. Der Test ist damit unabhängig von Datenbankzustand, Netzwerk und Oberfläche. Die Prüfung erwartet einen klar beschriebenen Wert oder eine definierte Ausnahme.",
+        "Speichere den folgenden vollständigen Ausschnitt als probe.py und führe python probe.py mit Python 3 aus. Der Testläufer meldet die ausgeführten Fälle. Ändere zum Vergleich die Untergrenze im Code von 1 auf 2. Die Probe für Nummer 1 muss fehlschlagen. Stelle danach die vereinbarte Grenze wieder her."
+      ],
+      "example": {
+        "title": "Lauffähiger Modultest",
+        "text": "import unittest\n\ndef lookup(number, read):\n    if type(number) is not int or not 1 <= number <= 9999:\n        raise ValueError(\"ungültige Nummer\")\n    return read(number)\n\nclass SearchTest(unittest.TestCase):\n    def test_existing(self):\n        self.assertEqual(lookup(7, {7: \"offen\"}.get), \"offen\")\n\n    def test_lower_boundary(self):\n        self.assertEqual(lookup(1, {1: \"neu\"}.get), \"neu\")\n\n    def test_invalid(self):\n        with self.assertRaises(ValueError):\n            lookup(0, {}.get)\n\nif __name__ == \"__main__\":\n    unittest.main()"
+      },
+      "misconception": {
+        "claim": "Ein automatisierter Test muss den gesamten Anwendungsstart auslösen.",
+        "correction": "Eine Fachfunktion kann direkt mit kontrollierten Eingaben und einem Ersatz geprüft werden."
+      },
+      "takeaway": "Ein kleiner isolierter Test zeigt bei einer Abweichung schnell, welche fachliche Erwartung verletzt ist."
+    },
+    {
+      "id": "fiae-lf11a-testing-block-03",
+      "title": "3. Die Verbindung zwischen Dienst und Adapter testen",
+      "objectiveIds": [
+        "fiae-lf11a-testing-integration"
+      ],
+      "sourceIds": [
+        "lf5-ms-testing",
+        "lf11a-python-sqlite"
+      ],
+      "paragraphs": [
+        "Ein Integrationstest übt die echten Komponenten an ihrer Grenze. Lege eine frische temporäre SQLite-Datenbank mit dem erwarteten Schema an, füge den Auftrag 7 mit „offen“ ein und verbinde den Dienst mit dem echten Adapter. Prüfe die Ausgabe für 7 und eine freie Nummer.",
+        "Hier können Fehler sichtbar werden, die ein Wörterbuch verdeckt. Beispiele sind ein falscher Spaltenname, eine nicht gebundene Nummer oder ein Adapter, der eine Zeile anstelle von Text liefert. Ein Integrationstest kann lokal im Arbeitsspeicher laufen. Maßgeblich ist, was zusammenwirkt."
+      ],
+      "example": {
+        "title": "Zwei verschieden tiefe Proben",
+        "text": "lookup(7, {7: \"offen\"}.get) prüft die Fachfunktion isoliert. lookup(7, lambda n: read_status(db, n)) durchläuft mit echter temporärer Tabelle, echtem Adapter und Fachfunktion die Komponentengrenze."
+      },
+      "misconception": {
+        "claim": "Ein Test mit lokaler Datenbank sei wegen der kurzen Laufzeit ein Modultest.",
+        "correction": "Die beteiligten echten Komponenten bestimmen den Umfang, unabhängig von Ort und Laufzeit."
+      },
+      "takeaway": "Ergänze den isolierten Fachtest durch einen Integrationsfall für das vereinbarte Speicherformat."
+    },
+    {
+      "id": "fiae-lf11a-testing-block-04",
+      "title": "4. Eine Abweichung bis zum erneuten Nachweis verfolgen",
+      "objectiveIds": [
+        "fiae-lf11a-testing-evidence"
+      ],
+      "sourceIds": [
+        "lf5-nasa-requirements",
+        "lf11a-python-tests",
+        "lf5-ms-testing"
+      ],
+      "paragraphs": [
+        "Vergleiche Ist und Soll fallweise. Liefert das Programm bei 1 einen Fehler, obwohl 1 gültig ist, prüfe zuerst Vertragsstand und verwendeten Testbestand. Ist die Grenze bestätigt, ändere die Fachfunktion und sichere die Erwartung durch eine dauerhaft wiederholbare Probe.",
+        "Führe danach den zuvor fehlgeschlagenen Fall und die benachbarten sowie bestehenden Fälle am geänderten Stand aus. Notiere Kriterium, Stand, Eingabe, Soll, Ist und Ergebnis. Ein bestandener Modultest belegt für sich weder korrekte Speicherung noch die Ausgabe im Terminal."
+      ],
+      "example": {
+        "title": "Vorher und nachher",
+        "text": "Stand A bei 1: erwartet „neu“, beobachtet ValueError. Ursache im Beispiel: Untergrenze 2. Stand B nach Korrektur auf 1: „neu“. Die Gegenprobe 0 muss weiterhin ValueError auslösen. Danach läuft der bestehende Testsatz erneut."
+      },
+      "misconception": {
+        "claim": "Eine rote Probe wird grün, wenn man das Soll dem Programm anpasst.",
+        "correction": "Das akzeptierte Kriterium bestimmt die Erwartung. Ein geänderter Vertrag benötigt eine fachliche Entscheidung und darauf abgestimmte Nachweise."
+      },
+      "takeaway": "Halte den Fehler durch einen aussagekräftigen Test fest und belege die Korrektur am neuen Stand."
+    }
+  ],
+  "questionFile": "questions/fiae-lf11a-testing.v1.csv",
+  "quiz": {
+    "questionIds": [
+      "LJ-LF11A-TESTING-Q01",
+      "LJ-LF11A-TESTING-Q02",
+      "LJ-LF11A-TESTING-Q03",
+      "LJ-LF11A-TESTING-Q04",
+      "LJ-LF11A-TESTING-Q05",
+      "LJ-LF11A-TESTING-Q06"
+    ]
+  },
+  "exam": {
+    "questionIds": [
+      "LJ-LF11A-TESTING-E01",
+      "LJ-LF11A-TESTING-E02",
+      "LJ-LF11A-TESTING-E03",
+      "LJ-LF11A-TESTING-E04",
+      "LJ-LF11A-TESTING-E05",
+      "LJ-LF11A-TESTING-E06",
+      "LJ-LF11A-TESTING-E07",
+      "LJ-LF11A-TESTING-E08"
+    ],
+    "passPercent": 80,
+    "scoring": "all-or-nothing-per-question",
+    "timed": false
+  },
+  "questionLinks": [
+    {
+      "questionId": "LJ-LF11A-TESTING-Q01",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf11a-testing-unit"
+      ],
+      "blockIds": [
+        "fiae-lf11a-testing-block-01"
+      ]
+    },
+    {
+      "questionId": "LJ-LF11A-TESTING-Q02",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf11a-testing-unit"
+      ],
+      "blockIds": [
+        "fiae-lf11a-testing-block-01"
+      ]
+    },
+    {
+      "questionId": "LJ-LF11A-TESTING-Q03",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf11a-testing-unit"
+      ],
+      "blockIds": [
+        "fiae-lf11a-testing-block-02"
+      ]
+    },
+    {
+      "questionId": "LJ-LF11A-TESTING-Q04",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf11a-testing-integration"
+      ],
+      "blockIds": [
+        "fiae-lf11a-testing-block-03"
+      ]
+    },
+    {
+      "questionId": "LJ-LF11A-TESTING-Q05",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf11a-testing-integration"
+      ],
+      "blockIds": [
+        "fiae-lf11a-testing-block-03"
+      ]
+    },
+    {
+      "questionId": "LJ-LF11A-TESTING-Q06",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf11a-testing-evidence"
+      ],
+      "blockIds": [
+        "fiae-lf11a-testing-block-04"
+      ]
+    },
+    {
+      "questionId": "LJ-LF11A-TESTING-E01",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf11a-testing-unit"
+      ],
+      "blockIds": [
+        "fiae-lf11a-testing-block-01"
+      ]
+    },
+    {
+      "questionId": "LJ-LF11A-TESTING-E02",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf11a-testing-unit"
+      ],
+      "blockIds": [
+        "fiae-lf11a-testing-block-02"
+      ]
+    },
+    {
+      "questionId": "LJ-LF11A-TESTING-E03",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf11a-testing-integration"
+      ],
+      "blockIds": [
+        "fiae-lf11a-testing-block-03"
+      ]
+    },
+    {
+      "questionId": "LJ-LF11A-TESTING-E04",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf11a-testing-evidence"
+      ],
+      "blockIds": [
+        "fiae-lf11a-testing-block-04"
+      ]
+    },
+    {
+      "questionId": "LJ-LF11A-TESTING-E05",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf11a-testing-unit"
+      ],
+      "blockIds": [
+        "fiae-lf11a-testing-block-01"
+      ]
+    },
+    {
+      "questionId": "LJ-LF11A-TESTING-E06",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf11a-testing-integration"
+      ],
+      "blockIds": [
+        "fiae-lf11a-testing-block-03"
+      ]
+    },
+    {
+      "questionId": "LJ-LF11A-TESTING-E07",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf11a-testing-evidence"
+      ],
+      "blockIds": [
+        "fiae-lf11a-testing-block-04"
+      ]
+    },
+    {
+      "questionId": "LJ-LF11A-TESTING-E08",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf11a-testing-evidence"
+      ],
+      "blockIds": [
+        "fiae-lf11a-testing-block-04"
+      ]
+    }
+  ],
+  "interview": [
+    {
+      "id": "fiae-lf11a-testing-talk-01",
+      "prompt": "Schreibe einen Prüfplan für 7, 1 und 0. Welche Erwartung prüfst du jeweils?",
+      "objectiveIds": [
+        "fiae-lf11a-testing-unit"
+      ],
+      "blockIds": [
+        "fiae-lf11a-testing-block-01",
+        "fiae-lf11a-testing-block-02"
+      ],
+      "keyPoints": [
+        "Treffer und Grenztreffer mit festem Bestand.",
+        "Fehler als definierte Ausnahme prüfen."
+      ],
+      "acceptableAlternatives": [
+        "Ein anderer zulässiger mittlerer Trefferwert ist für den Normalfall gleichwertig."
+      ],
+      "misconceptions": [
+        "Eine beliebige Konsolenausgabe belege den Erfolg aller drei Fälle."
+      ],
+      "sampleAnswer": "Ich bereite 7 mit „offen“ und 1 mit „neu“ vor, vergleiche die Rückgaben mit genau diesen Texten und erwarte bei 0 ValueError. Jeder Fall nennt zuerst sein Soll.",
+      "followUp": "Welche weitere Probe sichert die obere Grenze?"
+    },
+    {
+      "id": "fiae-lf11a-testing-talk-02",
+      "prompt": "Entwirf eine Probe, die einen falschen Spaltennamen im echten Adapter aufdeckt.",
+      "objectiveIds": [
+        "fiae-lf11a-testing-integration"
+      ],
+      "blockIds": [
+        "fiae-lf11a-testing-block-03"
+      ],
+      "keyPoints": [
+        "Kleine frische Tabelle mit vereinbartem Schema.",
+        "Fachfunktion und echten Adapter verbinden.",
+        "Erwarteten Text prüfen."
+      ],
+      "acceptableAlternatives": [
+        "Eine temporäre Datei statt einer In-Memory-Datenbank eignet sich ebenfalls."
+      ],
+      "misconceptions": [
+        "Ein Wörterbuch könne einen falschen SQL-Spaltennamen erkennen."
+      ],
+      "sampleAnswer": "Ich erzeuge die Testtabelle, füge 7 mit „offen“ ein und rufe den Suchdienst mit dem tatsächlichen Datenbankadapter auf. Ein falscher Spaltenname führt dann zu einem technischen Fehler statt zum erwarteten Text.",
+      "followUp": "Weshalb brauchst du dafür keine Produktivdaten?"
+    },
+    {
+      "id": "fiae-lf11a-testing-talk-03",
+      "prompt": "Begründe die gezielte Überarbeitung anhand des Fehlers an der Untergrenze.",
+      "objectiveIds": [
+        "fiae-lf11a-testing-evidence"
+      ],
+      "blockIds": [
+        "fiae-lf11a-testing-block-04"
+      ],
+      "keyPoints": [
+        "Kriterium, Stand und beobachtete Abweichung nennen.",
+        "Korrektur und Gegenprobe festhalten."
+      ],
+      "acceptableAlternatives": [
+        "Wenn die Regel unklar ist, kann zuerst der fachliche Auftrag geklärt werden."
+      ],
+      "misconceptions": [
+        "Der fehlgeschlagene Test müsse gelöscht werden."
+      ],
+      "sampleAnswer": "Am Stand A wird 1 trotz gültigem Vertrag abgewiesen. Ich sichere den Fall mit einem Test, ändere die Grenze und prüfe am Stand B 1, 0 sowie die bisherigen Fälle. Das Ergebnis protokolliere ich pro Erwartung.",
+      "followUp": "Was bleibt nach bestandenen Modultests zusätzlich zu prüfen?"
+    }
+  ],
+  "cards": [
+    {
+      "id": "fiae-lf11a-testing-card-01",
+      "front": "Was ist ein Grenzfall für die Nummernsuche?",
+      "back": "Ein Wert auf oder unmittelbar neben einer zulässigen Grenze, etwa 9999 und 10000.",
+      "objectiveIds": [
+        "fiae-lf11a-testing-unit"
+      ],
+      "blockIds": [
+        "fiae-lf11a-testing-block-01"
+      ]
+    },
+    {
+      "id": "fiae-lf11a-testing-card-02",
+      "front": "Wie prüfst du einen gewünschten ValueError?",
+      "back": "Führe den Aufruf im Kontext assertRaises(ValueError) aus. Fehlt die Ausnahme, schlägt die Probe fehl.",
+      "objectiveIds": [
+        "fiae-lf11a-testing-unit"
+      ],
+      "blockIds": [
+        "fiae-lf11a-testing-block-02"
+      ]
+    },
+    {
+      "id": "fiae-lf11a-testing-card-03",
+      "front": "Wozu dient ein kleiner definierter Testbestand?",
+      "back": "Eingaben und Sollwerte sind reproduzierbar und hängen nicht vom Tagesbestand der Werkstatt ab.",
+      "objectiveIds": [
+        "fiae-lf11a-testing-unit"
+      ],
+      "blockIds": [
+        "fiae-lf11a-testing-block-02"
+      ]
+    },
+    {
+      "id": "fiae-lf11a-testing-card-04",
+      "front": "Wie unterscheidet sich der Integrationstest von der isolierten Probe?",
+      "back": "Integration nutzt mehrere echte Komponenten zusammen. Die isolierte Probe ersetzt den Speicher durch kontrollierte Antworten.",
+      "objectiveIds": [
+        "fiae-lf11a-testing-integration"
+      ],
+      "blockIds": [
+        "fiae-lf11a-testing-block-03"
+      ]
+    },
+    {
+      "id": "fiae-lf11a-testing-card-05",
+      "front": "Welche Daten gehören zum Fehlernachweis?",
+      "back": "Kriterium, geprüfter Stand, Eingabe, Soll, beobachtetes Ist und Bewertung.",
+      "objectiveIds": [
+        "fiae-lf11a-testing-evidence"
+      ],
+      "blockIds": [
+        "fiae-lf11a-testing-block-04"
+      ]
+    },
+    {
+      "id": "fiae-lf11a-testing-card-06",
+      "front": "Was prüfst du nach einer Änderung an der Untergrenze?",
+      "back": "Den bisherigen Fehlerfall, den angrenzenden ungültigen Wert sowie die bestehenden betroffenen Tests.",
+      "objectiveIds": [
+        "fiae-lf11a-testing-evidence"
+      ],
+      "blockIds": [
+        "fiae-lf11a-testing-block-04"
+      ]
+    }
+  ],
+  "review": {
+    "status": "reviewed",
+    "checkedAt": "2026-11-19"
+  }
+}

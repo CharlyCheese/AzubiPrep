@@ -1,3 +1,4 @@
+import { checkFetchFixtures } from './debugger-fetch.js';
 import { checkDebugProject } from './debugger-project.js';
 import { validDOMTree } from './debugger-dom.js';
 export const DEBUG_LIMITS = Object.freeze({
@@ -26,10 +27,11 @@ export const debugSourceLines = source => source.split(/\r\n|[\n\r\u2028\u2029]/
 export function validDebugId(value) { return typeof value === 'string' && /^[a-zA-Z0-9_-]{1,80}$/.test(value); }
 
 export function validateDebugArtifact(artifact, limits) {
+  if(artifact?.typesChecked!==undefined&&artifact.typesChecked!==true)throw new Error('Ungültiger Typprüfstatus.');
   const module = artifact?.mode === 'module';
   if (artifact?.mode !== undefined && !module) throw new Error('Ungültiger Debugmodus.');
   if (module) {
-    const project = checkDebugProject({ schema: 1, mode: 'module', entry: artifact.name, files: artifact.sources });
+    const project = checkDebugProject({ schema: 1, mode: 'module', entry: artifact.name, files: artifact.sources, ...(artifact.react?{react:true}:{}) });
     if (!artifact.modules || typeof artifact.modules !== 'object' || Array.isArray(artifact.modules) || Object.keys(artifact.modules).length !== Object.keys(project.files).length || Object.keys(project.files).some(name => typeof artifact.modules[name] !== 'string') || Object.keys(artifact.modules).some(name => !Object.hasOwn(project.files, name)) || artifact.code !== artifact.modules[artifact.name]) throw new Error('Ungültige Modulquellen.');
     if (Object.values(artifact.modules).reduce((sum, code) => sum + encodedSize(code), 0) > limits.generatedBytes || Object.values(project.files).reduce((sum, source) => sum + encodedSize(source), 0) > limits.sourceBytes || !artifact.stats || artifact.stats.nodes > limits.astNodes) throw new Error('Projektgrenze erreicht.');
     if (!Number.isSafeInteger(artifact.stats.nodes) || artifact.stats.nodes < 1 || Object.values(project.files).reduce((sum, source) => sum + debugSourceLines(source).length, 0) > limits.sourceLines) throw new Error('Ungültige Projektgröße.');
@@ -48,8 +50,10 @@ export function validateDebugArtifact(artifact, limits) {
   }
   if (module && artifact.points.filter(point => point.end).length !== 1) throw new Error('Ungültiges Modulende.');
   if (module && artifact.functions.some(item => item.id > 0 && !Object.hasOwn(artifact.sources, item.file))) throw new Error('Ungültige Funktionsdatei.');
+  if(artifact.react!==undefined&&(artifact.react!==true||!artifact.dom))throw new Error('Ungültiges React-Programm.');
   if(artifact.dom&&(!module||!validDOMTree(artifact.dom.tree)||!Number.isSafeInteger(artifact.dom.eventPoint)||!artifact.points[artifact.dom.eventPoint]?.synthetic||artifact.points[artifact.dom.eventPoint].kind!=='context'||artifact.points[artifact.dom.eventPoint].functionId!==0||artifact.points[artifact.dom.eventPoint].scopes.length))throw new Error('Ungültiges DOM-Programm.');
   if(artifact.points.some(point=>point.synthetic&&(!artifact.dom||point.id!==artifact.dom.eventPoint)))throw new Error('Ungültiger Ereigniscaller.');
+  if(artifact.fixtures!==undefined){if(!artifact.dom)throw new Error('Übungsantworten benötigen HTML-/Ereignismodus.');checkFetchFixtures(artifact.fixtures);}
   return artifact;
 }
 
@@ -67,6 +71,11 @@ export function validateDebugSnapshot(snapshot, point, limits, artifact) {
     previous = frame.id;
   }
   const top = snapshot.frames.at(-1);
+  if(snapshot.waiting!==undefined){
+    if(!Array.isArray(snapshot.waiting)||snapshot.waiting.length+snapshot.frames.length>limits.frames)return false;
+    const ids=new Set(snapshot.frames.map(frame=>frame.id));
+    for(const frame of snapshot.waiting){const meta=artifact?.points[frame?.point];if(!frame||!Number.isSafeInteger(frame.id)||frame.id<=0||frame.id>limits.checkpointHits||ids.has(frame.id)||!meta||frame.functionId<=0||meta.functionId!==frame.functionId)return false;ids.add(frame.id);}
+  }
   return point.kind !== 'context' && top.point === point.id && top.functionId === point.functionId && JSON.stringify(snapshot.scopes) === JSON.stringify(top.scopes);
 }
 
@@ -76,7 +85,7 @@ export function validateDebugSnapshot(snapshot, point, limits, artifact) {
 export function installDebugger(pause, emit, limits) {
   const stringify = JSON.stringify;
   const slice = Function.prototype.call.bind(String.prototype.slice);
-  const string = String, is = Object.is;
+  const string = String, is = Object.is, trim = String.prototype.trim;
   const object = Object, descriptor = Object.getOwnPropertyDescriptor, define = Object.defineProperty;
   const has = Reflect.has, set = Reflect.set, ownProperty = Object.hasOwn;
   const ErrorClass = Error, TypeErrorClass = TypeError;
@@ -93,14 +102,21 @@ export function installDebugger(pause, emit, limits) {
   const callbackMethods = Object.freeze({ map: Array.prototype.map, filter: Array.prototype.filter,
     forEach: Array.prototype.forEach, some: Array.prototype.some, every: Array.prototype.every,
     find: Array.prototype.find, reduce: Array.prototype.reduce });
-  const callbacks = new WeakSet(), weakAdd = WeakSet.prototype.add, weakHas = WeakSet.prototype.has;
+  const callbacks = new WeakSet(), asyncFunctions = new WeakSet(), weakAdd = WeakSet.prototype.add, weakHas = WeakSet.prototype.has;
   const primitiveKey = Symbol.toPrimitive;
   const registered = value => typeof value === 'function' && apply(weakHas, callbacks, [value]);
   const forbiddenKeys = new Set(['__proto__', 'prototype', 'constructor', 'toString', 'valueOf', 'toJSON', '__defineGetter__', '__defineSetter__', '__lookupGetter__', '__lookupSetter__']);
-  let hits = 0, nextFrame = 0, fatal = '', dom = null;
+  let hits = 0, nextFrame = 0, fatal = '', dom = null, storage = null, data = null, timers = null, promises = null, requests = null, react = null, reactEntry = null;
   const abort = text => { if (!fatal) fatal = text; throw new ErrorClass(fatal); };
   const guard = () => { if (fatal) throw new ErrorClass(fatal); };
   const frames = [{ id: 0, functionId: 0, point: null, scopes: [] }];
+  const suspended = new Map(), invocations = [];
+  function invokeFunction(fn,args,target){
+    const call={frame:null};invocations.push(call);
+    try{const result=apply(fn,target,args);if(promises){promises.trackReturn(result);if(call.frame)call.frame.promise=result;}return result;}
+    catch(error){if(promises)promises.reportFailure(error);throw error;}
+    finally{invocations.pop();}
+  }
   const format = value => {
     if (value === null) return { type: 'null', display: 'null' };
     if (typeof value === 'string') return { type: 'string', display: slice(value, 0, limits.valueChars) + (value.length > limits.valueChars ? '…' : '') };
@@ -114,10 +130,11 @@ export function installDebugger(pause, emit, limits) {
   } }), writable: false, configurable: false });
   const checkpoint = (point, scopes) => {
     guard();
+    react?.publish();
     if (++hits > limits.checkpointHits) abort('Kontrollpunktgrenze erreicht.');
     const current = frames[frames.length - 1]; current.point = point; current.scopes = scopes;
     const views = frames.map(frame => ({ id: frame.id, functionId: frame.functionId, point: frame.point, scopes: frame.scopes.map(scope => ({ id: scope[0], values: [] })) }));
-    const result = { point, frames: views, scopes: views[views.length - 1].scopes, truncated: false };
+    const result = { point, frames: views, scopes: views[views.length - 1].scopes, truncated: false, ...(suspended.size?{waiting:[...suspended.values()].map(frame=>({id:frame.id,functionId:frame.functionId,point:frame.point}))}:{}) };
     let units = stringify(result).length;
     if (units > limits.snapshotUnits - 128) abort('Zustandsgrenze erreicht.');
     const truncate = () => { if (!result.truncated) { result.truncated = true; units--; } };
@@ -139,11 +156,28 @@ export function installDebugger(pause, emit, limits) {
     }
     return pause(stringify(result));
   };
-  checkpoint.enter = function(functionId) {
+  checkpoint.enter = function(functionId,isAsync=false) {
     guard();
-    if (frames.length >= limits.frames || ++nextFrame > limits.checkpointHits) abort('Aufrufgrenze erreicht.');
-    const frame = { id: nextFrame, functionId, point: null, scopes: [] }; frames.push(frame); return frame.id;
+    if (frames.length+suspended.size >= limits.frames || ++nextFrame > limits.checkpointHits) abort('Aufrufgrenze erreicht.');
+    const frame = { id: nextFrame, functionId, point: null, scopes: [] }; frames.push(frame);
+    if(isAsync&&invocations.length)invocations[invocations.length-1].frame=frame;
+    return frame.id;
   };
+  checkpoint.activate = id => {
+    if(frames[frames.length-1].id===id)return;
+    const frame=suspended.get(id);if(!frame)abort('Ausgesetzter Aufruf fehlt.');
+    suspended.delete(id);frames.push(frame);
+  };
+  checkpoint.suspend = (id,point,scopes,value) => {
+    guard();if(!promises||frames[frames.length-1].id!==id)abort('Await-Aufrufzustand ungültig.');
+    promises.awaitValue(value);
+    const frame=frames.pop();frame.point=point;frame.scopes=scopes;suspended.set(id,frame);return value;
+  };
+  checkpoint.resume = (id,value) => {checkpoint.activate(id);guard();return value;};
+  checkpoint.asyncProgress = (id,depth) => {const frame=frames[frames.length-1];if(frame.id!==id)abort('Async-Ablaufzustand ungültig.');if(frame.returns)for(const key of frame.returns.keys())if(key>=depth)frame.returns.delete(key);};
+  checkpoint.asyncReturn = (id,depth,value) => {guard();const frame=frames[frames.length-1];if(frame.id!==id)abort('Async-Rückgabezustand ungültig.');if(!frame.returns)frame.returns=new Map();frame.returns.set(depth,value);return value;};
+  checkpoint.asyncFailure = error => {frames[frames.length-1].failed=true;promises.reportFailure(error);};
+  checkpoint.finishAsync = id => {const frame=frames[frames.length-1];if(frame.id!==id)abort('Async-Abschlusszustand ungültig.');if(!frame.failed&&frame.returns?.size){const depth=Math.max(...frame.returns.keys());promises.adopt(frame.returns.get(depth),frame.promise);}};
   checkpoint.leave = function(id) {
     if (frames.length <= 1 || frames[frames.length - 1].id !== id) throw new ErrorClass('Ungültige Aufrufkette.');
     frames.pop();
@@ -153,7 +187,7 @@ export function installDebugger(pause, emit, limits) {
     const current = frames[frames.length - 1]; current.point = point; current.scopes = scopes;
     if (typeof fn !== 'function') throw new TypeErrorClass('Dieser Wert ist keine Funktion.');
     if (!registered(fn)) abort('Nur instrumentierte Funktionen sind aufrufbar.');
-    return fn(...args);
+    return invokeFunction(fn,args,undefined);
   };
   checkpoint.ref = function(target, key, strict) {
     guard();
@@ -162,7 +196,12 @@ export function installDebugger(pause, emit, limits) {
     if (typeof key === 'object' && key !== null || typeof key === 'function' || typeof key === 'symbol') abort('Objektschlüssel noch nicht unterstützt.');
     key = string(key);
     if (key.startsWith('__azubi_dbg') || forbiddenKeys.has(key)) abort('Dieser Datenzugriff ist nicht unterstützt.');
+    if(react?.has(target))return react.ref(target,key,strict);
+    if(requests?.has(target))return requests.ref(target,key,strict);
     if(dom?.has(target))return dom.ref(target,key,strict);
+    if(storage?.has(target))return storage.ref(key);
+    if(data?.has(target))return data.ref(target,key);
+    if(promises?.has(target))return promises.ref(target,key);
     const nativeError = target !== null && typeof target === 'object' && apply(isPrototypeOf, errorPrototype, [target]);
     if (nativeError) {
       if (key !== 'name' && key !== 'message') abort('Bei Fehlern sind nur name und message lesbar.');
@@ -199,7 +238,7 @@ export function installDebugger(pause, emit, limits) {
     const method = arrayMethods[name];
     return (...args) => apply(method, target, args);
   };
-  checkpoint.allowCallback = function(fn) {
+  checkpoint.allowCallback = function(fn,isAsync=false) {
     guard();
     if (typeof fn !== 'function') abort('Ungültiger instrumentierter Callback.');
     if (!registered(fn)) {
@@ -209,16 +248,28 @@ export function installDebugger(pause, emit, limits) {
       define(fn, primitiveKey, { value: () => abort('Funktionswerte sind nicht als Text oder Zahl verwendbar.') });
       apply(weakAdd, callbacks, [fn]);
     }
+    if(isAsync)apply(weakAdd,asyncFunctions,[fn]);
     return fn;
   };
   checkpoint.bound = function(point, scopes, target, key) {
     guard();
+    if(requests?.has(target)){const method=requests.bound(target,key);return(...args)=>{const current=frames[frames.length-1];current.point=point;current.scopes=scopes;guard();return method(...args);};}
+    if(promises?.has(target)){
+      const method=promises.bound(target,key);return(...args)=>{const current=frames[frames.length-1];current.point=point;current.scopes=scopes;guard();return method(...args);};
+    }
+    if(data?.has(target)){
+      const method=data.bound(target,key);return(...args)=>{const current=frames[frames.length-1];current.point=point;current.scopes=scopes;guard();return method(...args);};
+    }
+    if(storage?.has(target)){
+      const method=storage.bound(key);return(...args)=>{const current=frames[frames.length-1];current.point=point;current.scopes=scopes;guard();return method(...args);};
+    }
     if(dom?.has(target)){
       if(key.startsWith('__azubi_dbg')||forbiddenKeys.has(key))abort('Dieser DOM-Aufruf ist nicht unterstützt.');
       const method=dom.bound(target,key);return(...args)=>{const current=frames[frames.length-1];current.point=point;current.scopes=scopes;guard();return method(...args);};
     }
     let fn, native = false, callback = false;
-    if (isArray(target) && !descriptor(target, key) && ownProperty(arrayMethods, key)) { fn = arrayMethods[key]; native = true; }
+    if (typeof target === 'string' && key === 'trim') { fn = trim; native = true; }
+    else if (isArray(target) && !descriptor(target, key) && ownProperty(arrayMethods, key)) { fn = arrayMethods[key]; native = true; }
     else if (isArray(target) && !descriptor(target, key) && ownProperty(callbackMethods, key)) { fn = callbackMethods[key]; native = true; callback = true; }
     else fn = checkpoint.ref(target, key, false).value;
     return (...args) => {
@@ -226,7 +277,8 @@ export function installDebugger(pause, emit, limits) {
       guard();
       if ((!native && typeof fn !== 'function') || (callback && typeof args[0] !== 'function')) throw new TypeErrorClass('Dieser Wert ist keine Funktion.');
       if ((!native && !registered(fn)) || (callback && !registered(args[0]))) abort('Nur instrumentierte Funktionen sind aufrufbar.');
-      return apply(fn, target, args);
+      if(callback&&apply(weakHas,asyncFunctions,[args[0]]))promises.deny('Asynchrone Array-Callbacks sind noch nicht freigegeben.');
+      return native?apply(fn,target,args):invokeFunction(fn,args,target);
     };
   };
   checkpoint.callbackMethod = function(point, scopes, target, name) {
@@ -236,6 +288,7 @@ export function installDebugger(pause, emit, limits) {
     return (...args) => {
       guard();
       if (!registered(args[0])) abort('Nur instrumentierte Callbacks werden unterstützt.');
+      if (apply(weakHas,asyncFunctions,[args[0]])) promises.deny('Asynchrone Array-Callbacks sind noch nicht freigegeben.');
       const current = frames[frames.length - 1]; current.point = point; current.scopes = scopes;
       return apply(method, target, args);
     };
@@ -243,9 +296,33 @@ export function installDebugger(pause, emit, limits) {
   checkpoint.guard = guard;
   checkpoint.abort = abort;
   checkpoint.registered = registered;
-  checkpoint.invoke = (fn,args,target) => {guard();if(!registered(fn))abort('Nur registrierte Ereignisfunktionen sind erlaubt.');return apply(fn,target,args);};
+  checkpoint.isAsync = fn => apply(weakHas,asyncFunctions,[fn]);
+  checkpoint.attachReact = model => {react=model;};
+  checkpoint.reactBinding = name => {guard();if(!react)abort('React ist hier nicht freigegeben.');return react.binding(name);};
+  checkpoint.createElement = (...args) => {guard();if(!react)abort('React ist hier nicht freigegeben.');return react.createElement(...args);};
+  checkpoint.setReactEntry = fn => {guard();if(!react||reactEntry||!registered(fn)||checkpoint.isAsync(fn))abort('Ungültige React-Einstiegsfunktion.');reactEntry=fn;};
+  checkpoint.mountReact = point => {guard();if(!react||!reactEntry||frames.length!==1)abort('Ungültiger React-Start.');react.mount(reactEntry,point);};
+  checkpoint.flushReact = () => {guard();if(!react||frames.length!==1)abort('Ungültiger React-Arbeitszustand.');return react.flush();};
+  checkpoint.publishReact = () => {guard();react.publish();};
+  checkpoint.unmountReact = point => {guard();if(!react||frames.length!==1)abort('Ungültiger React-Abschluss.');react.unmount(point);};
+  checkpoint.invoke = (fn,args,target) => {guard();if(!registered(fn))abort('Nur registrierte Ereignisfunktionen sind erlaubt.');return invokeFunction(fn,args,target);};
   checkpoint.attachDOM = model => {dom=model;define(globalThis,'document',{value:model.document,writable:false,configurable:false});};
-  checkpoint.dispatchDOM = (id,point) => {guard();if(!dom||frames.length!==1)abort('Ereigniszustand ungültig.');frames[0].point=point;frames[0].scopes=[];dom.dispatch(id);};
+  checkpoint.attachStorage = model => {storage=model;define(globalThis,'localStorage',{value:model.handle,writable:false,configurable:false});};
+  checkpoint.attachData = model => {data=model;};
+  checkpoint.attachTimers = model => {timers=model;};
+  checkpoint.attachPromises = model => {promises=model;};
+  checkpoint.promise = (point,scopes,args) => {guard();if(!promises)abort('Promises sind hier nicht freigegeben.');const current=frames[frames.length-1];current.point=point;current.scopes=scopes;return promises.construct(args);};
+  checkpoint.prepareJob = point => {guard();if(frames.length!==1)abort('Promise-Aufrufkette nicht abgeschlossen.');frames[0].point=point;frames[0].scopes=[];};
+  checkpoint.timer = (point,scopes,name,args) => {guard();if(!timers)abort('Timer sind nur im HTML-/Ereignismodus verfügbar.');const current=frames[frames.length-1];current.point=point;current.scopes=scopes;return timers.call(name,args);};
+  checkpoint.attachFetch = (factory,emit,bounds,fixtures) => {requests=factory(checkpoint,emit,bounds,fixtures,promises,{parse:data.bound(data.globals.JSON,'parse')});};
+  checkpoint.fetch = (point,scopes,args) => {guard();if(!requests)abort('Übungsanfragen benötigen HTML-/Ereignismodus.');const current=frames[frames.length-1];current.point=point;current.scopes=scopes;return requests.call(args);};
+  checkpoint.abortController = args => {guard();if(!requests)abort('AbortController benötigt HTML-/Ereignismodus.');return requests.construct(args);};
+  checkpoint.dispatchFetch = (id,point) => {guard();if(!requests||frames.length!==1)abort('Anfragezustand ungültig.');frames[0].point=point;frames[0].scopes=[];requests.dispatch(id);};
+  checkpoint.dispatchTimer = (id,point) => {guard();if(!timers||frames.length!==1)abort('Timerzustand ungültig.');frames[0].point=point;frames[0].scopes=[];timers.dispatch(id);};
+  checkpoint.builtin = name => {guard();if(name==='Promise'&&promises)return promises.handle;if(!data||!ownProperty(data.globals,name))abort('Diese Datenfunktion ist nicht freigegeben.');return data.globals[name];};
+  checkpoint.opaque = value => !!(react?.has(value)||dom?.has(value)||storage?.has(value)||data?.has(value)||promises?.has(value)||requests?.has(value));
+  checkpoint.dispatchDOM = (event,point) => {guard();if(react){if(frames.length!==1)abort('Ungültiger React-Ereigniszustand.');react.dispatch(event,point);return;}if(!dom||frames.length!==1)abort('Ereigniszustand ungültig.');frames[0].point=point;frames[0].scopes=[];dom.dispatch(event.id,event.type,event.values);};
+  checkpoint.failureReason = () => fatal;
   checkpoint.failure = function(error) {
     guard();
     // QuickJS resource exceptions can be caught by JS. Classify them before

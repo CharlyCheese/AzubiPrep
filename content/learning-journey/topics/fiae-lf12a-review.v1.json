@@ -1,0 +1,571 @@
+{
+  "schemaVersion": 1,
+  "version": "1.0.0",
+  "id": "fiae-lf12a-review",
+  "title": "Projekt und Ergebnis auswerten",
+  "fieldId": "LF12a",
+  "scope": "specialization",
+  "prerequisites": [
+    "fiae-lf12a-training",
+    "fiae-lf10a-value"
+  ],
+  "objectives": [
+    {
+      "id": "fiae-lf12a-review-compare",
+      "text": "Geplante und tatsächliche Ziele, Termine und Kosten gegenüberstellen und Abweichungen erklären."
+    },
+    {
+      "id": "fiae-lf12a-review-quality",
+      "text": "Die Lösung anhand vereinbarter Anforderungen an Verlässlichkeit, Erweiterbarkeit und Skalierbarkeit bei wachsender Nutzung oder Datenmenge beurteilen."
+    },
+    {
+      "id": "fiae-lf12a-review-learn",
+      "text": "Aus Kundenrückmeldung und Projektverlauf konkrete Verbesserungen für einen nächsten Auftrag ableiten."
+    }
+  ],
+  "caseStudy": {
+    "title": "Das Abschlussgespräch der Werkstatt",
+    "text": "Im Pilotprojekt hat die interne Werkstatt den Weg vom Maskenentwurf über die Ticketfunktion bis zur Übergabe durchlaufen. Die Leitung möchte wissen, welche Ziele die Belege tragen, warum der Abschluss später lag und was die nächste Schicht besser machen kann."
+  },
+  "sourceIds": [
+    "ec-pm2-artefacts",
+    "pm-ihk-calculation",
+    "lf12a-ms-testing",
+    "lf12a-ms-performance",
+    "lf12a-gds-usability",
+    "kmk-fachinformatiker-2019"
+  ],
+  "sources": [
+    {
+      "id": "ec-pm2-artefacts",
+      "title": "Europäische Kommission: PM²-Artefakte",
+      "url": "https://pm2.europa.eu/pm2-artefacts_en",
+      "checkedAt": "2026-11-19",
+      "note": "Artefakte zu Auftrag, Arbeitsplan, Änderung, Abnahme, Übergang und Projektabschluss geprüft. Die Werkstattunterlagen und Entscheidungen im Beispiel sind selbst erstellt."
+    },
+    {
+      "id": "pm-ihk-calculation",
+      "title": "IHK Darmstadt: Kalkulieren und mit Kennziffern überwachen",
+      "url": "https://www.ihk.de/darmstadt/produktmarken/beraten-und-informieren/festigung-wachstum/kaufmaennisches/kalkulation-3795552",
+      "checkedAt": "2026-11-19",
+      "note": "Öffentliche Erläuterung zur Kalkulation mit Arbeitsstunden und Kostensätzen geprüft. Beträge und Vergleichsbedingungen sind eigene Fallannahmen."
+    },
+    {
+      "id": "lf12a-ms-testing",
+      "title": "Microsoft: Architecture strategies for testing",
+      "url": "https://learn.microsoft.com/en-us/azure/well-architected/operational-excellence/testing",
+      "checkedAt": "2026-11-19",
+      "note": "Prüfebenen, Benutzerabläufe, Teststände und Prüfumgebungen geprüft. Fälle und Ergebnisse der Reparaturwerkstatt sind erfunden."
+    },
+    {
+      "id": "lf12a-ms-performance",
+      "title": "Microsoft: Architecture strategies for performance testing",
+      "url": "https://learn.microsoft.com/en-us/azure/well-architected/performance-efficiency/performance-test",
+      "checkedAt": "2026-11-19",
+      "note": "Vergleich von Laststufen und Messbedingungen geprüft. Zahlen, Grenzwerte und Messergebnisse sind fiktiv."
+    },
+    {
+      "id": "lf12a-gds-usability",
+      "title": "Government Digital Service: Usability benchmarking a website or whole service",
+      "url": "https://www.gov.uk/service-manual/measuring-success/usability-benchmarking-a-website-or-whole-service",
+      "checkedAt": "2026-11-19",
+      "note": "Aufgabenbasierte Beobachtung, Erfolgsquote und Bearbeitungsdauer geprüft. Schulungsaufträge und Schwellen sind eigene Beispiele."
+    },
+    {
+      "id": "kmk-fachinformatiker-2019",
+      "title": "KMK-Rahmenlehrplan Fachinformatiker/Fachinformatikerin vom 13.12.2019",
+      "url": "https://www.kmk.org/fileadmin/Dateien/pdf/Bildung/BeruflicheBildung/rlp/Fachinformatiker_19-12-13_EL.pdf",
+      "checkedAt": "2026-11-19",
+      "note": "LF12a und Einordnung der vorherigen Lernfelder im öffentlichen Rahmenlehrplan geprüft. Fall, Schwellen und Übungsbewertung sind eigene Lernbeispiele."
+    }
+  ],
+  "blocks": [
+    {
+      "id": "fiae-lf12a-review-block-1",
+      "title": "1. Soll, Ist und Ursache zeilenweise vergleichen",
+      "objectiveIds": [
+        "fiae-lf12a-review-compare"
+      ],
+      "sourceIds": [
+        "ec-pm2-artefacts",
+        "pm-ihk-calculation",
+        "lf12a-gds-usability"
+      ],
+      "paragraphs": [
+        "Hole die bestätigte Ausgangsplanung und das Abschlussprotokoll. Vergleiche dieselben Größen mit gleicher Einheit. Geplant waren 16 Stunden zu 50 Euro plus 40 Euro einmalig, also 840 Euro, mit Abschluss an Arbeitstag 4. Tatsächlich waren es 18 Stunden zum gleichen Satz plus 40 Euro, also 940 Euro, mit Abschluss an Arbeitstag 5. Die Abweichungen betragen +2 Arbeitsstunden, +100 Euro und +1 Arbeitstag. Bezogen auf 840 Euro sind das rund +11,9 Prozent Kostenabweichung.",
+        "Erkläre die Ursache mit einem konkreten Vorgang. Die Nacharbeit für den Abruffehler samt Nachtest brauchte die zusätzlichen zwei Stunden. Der Fotoanhang blieb zurückgestellt und hat keine Iststunden ausgelöst. In der Zielzeile stehen drei bestandene Funktions- und Schulungskriterien, sofern die zugehörigen Belege tatsächlich vorhanden sind. Gleiche getrennt Zielerreichung, Aufwand, Endtermin und Kosten ab.",
+        "Eine Kostenüberschreitung allein entscheidet noch nicht, ob sich die Lösung wirtschaftlich lohnt. Für eine Modellrechnung nimmt die Werkstatt 60 Aufträge je Monat an. Spart die Annahme je Auftrag zwei Minuten, ergibt das zwei Arbeitsstunden monatlich. Bei 50 Euro je Stunde entspricht die frei werdende Kapazität rechnerisch 100 Euro pro Monat. 940 Euro Pilotkosten wären damit nach 9,4 Monaten gedeckt, wenn die Annahmen eintreten, die Zeit wirtschaftlich nutzbar ist und keine Folgekosten anfallen. Prüfe im Betrieb Fallzahl, Zeitgewinn und laufende Pflege, bevor du eine Einsparung zusagst."
+      ],
+      "example": {
+        "title": "Aus dem Werkstattprojekt",
+        "text": "Die abschließende S1-Wiederholung an Tag 5 liefert vier korrekte eigenständige Durchgänge in 84, 96, 112 und 126 Sekunden. Drei erfüllen die Grenze. Bewahre die erste Schulungsreihe und den gekennzeichneten neuen Nachweis getrennt auf."
+      },
+      "misconception": {
+        "claim": "Ein späterer Abschluss bedeutet, dass auch die fachlichen Ziele verfehlt sind.",
+        "correction": "Termin, Aufwand und Funktionskriterien haben verschiedene Bewertungsgrundlagen. Lege zu jeder Zeile den passenden Beleg."
+      },
+      "takeaway": "Beziehe Prozentabweichungen auf den vereinbarten Ausgangswert und ergänze die Ursache."
+    },
+    {
+      "id": "fiae-lf12a-review-block-2",
+      "title": "2. Qualität mit drei verschiedenen Proben bewerten",
+      "objectiveIds": [
+        "fiae-lf12a-review-quality"
+      ],
+      "sourceIds": [
+        "lf12a-ms-testing",
+        "lf12a-ms-performance"
+      ],
+      "paragraphs": [
+        "Verlässlichkeit im Pilot bedeutet, dass ein bestätigter Auftrag nach erneutem Öffnen dieselben Werte liefert. Führe diese Probe mit bekannten Fällen wiederholt am bezeichneten Stand durch. Ein Fehler wird mit Bedingung und Wirkung festgehalten. Eine kleine fehlerfreie Reihe belegt die getesteten Fälle. Weitergehende Zusagen zur Verfügbarkeit benötigen eigene Nachweise.",
+        "Erweiterbarkeit betrifft die Kosten und Nebenwirkungen einer Änderung. Im Modell liegt die Eingaberegel in einer gemeinsamen Fachfunktion. Ergänze in einer Kopie eine neue erlaubte Fehlerkategorie. Prüfe einen neuen und einen bisherigen Fall und dokumentiere, welche Stellen du ändern musstest. Wenige begrenzte Änderungen sind ein Indiz für eine wartbare Erweiterung.",
+        "Skalierbarkeit betrifft das Verhalten bei wachsender Nutzung oder Datenmenge. Vergleiche denselben Abruf in derselben Übungsumgebung bei 100 und 1.000 erfundenen Tickets unter je fünf gleichzeitigen Nutzungen. Vorgabe: mindestens 95 von 100 Abrufen je Stufe in höchstens zwei Sekunden und kein fachlich falscher Treffer. Bei 100 Tickets gelingen 99 rechtzeitig und korrekt, bei 1.000 nur 91 rechtzeitig, alle Antworten sind korrekt. Die hohe Stufe verfehlt das Zeitziel. Datenumfang und gleichzeitige Nutzung gehören zum Befund."
+      ],
+      "example": {
+        "title": "Aus dem Werkstattprojekt",
+        "text": "Nach einem abgewiesenen Änderungsversuch zeigt ein erlaubter Wiederabruf für dieses Ticket denselben Status. Das belegt die Rollenprobe an diesem Auftrag. Einen Wachstumstest ersetzt sie nicht. Bei einer Wiederholung vergleichst du dieselben Bedingungen und änderst jeweils den untersuchten Faktor."
+      },
+      "misconception": {
+        "claim": "Ein bestandener Funktionstest zeigt die Leistung bei größerem Datenvolumen.",
+        "correction": "Für die Leistungsaussage brauchst du Laststufen, ein vorher festgelegtes Ziel und vergleichbare Ergebnisse je Stufe."
+      },
+      "takeaway": "Nenne zu jeder Qualitätsaussage ihr Kriterium, die tatsächlich geprüften Bedingungen und ihre Reichweite."
+    },
+    {
+      "id": "fiae-lf12a-review-block-3",
+      "title": "3. Rückmeldung in eine überprüfbare Verbesserung übersetzen",
+      "objectiveIds": [
+        "fiae-lf12a-review-learn"
+      ],
+      "sourceIds": [
+        "ec-pm2-artefacts",
+        "lf12a-gds-usability"
+      ],
+      "paragraphs": [
+        "Frage die Schicht nach einem konkreten Arbeitsschritt. „Die Kennung ging beim Wechsel zur Liste verloren“ ist verwertbarer als „die App ist ungewohnt“. Unterscheide Beobachtung, vermutete Ursache und vorgeschlagene Maßnahme. Eine einzelne Rückmeldung zeigt eine Spur, ihre Häufigkeit bleibt offen.",
+        "Stelle Alternativen gegenüber. Eine besser sichtbare Kennung am Speicherabschluss könnte den Wiederabruf erleichtern. Eine zusätzliche Kurzübung wäre bei fehlender Routine günstiger. Prüfe mit der Schicht, wo der Ablauf abbricht. Vereinbare für die gewählte Änderung eine verantwortliche Rolle, einen Termin und eine gleichartige Wiederholungsprobe."
+      ],
+      "example": {
+        "title": "Aus dem Werkstattprojekt",
+        "text": "Die Annahme findet die Kennung nach dem Seitenwechsel schlecht. Die Entwicklerin ergänzt in einer Kopie einen sichtbaren Verweis auf das gerade gespeicherte Ticket. Die Schichtleitung wiederholt in der nächsten Übungsrunde denselben Aufgabentyp und zählt korrekte selbstständige Abrufe. Erst die neue Beobachtung entscheidet über den Nutzen."
+      },
+      "misconception": {
+        "claim": "Ein Verbesserungsvorschlag im Abschlussbericht ist bereits eine wirksame Verbesserung.",
+        "correction": "Ein überprüfbarer Folgeauftrag verbindet Befund und vermutete Ursache mit einer Maßnahme und einer späteren Erfolgskontrolle."
+      },
+      "takeaway": "Leite aus einer belegten Beobachtung einen begrenzten nächsten Schritt mit Rückprobe ab."
+    },
+    {
+      "id": "fiae-lf12a-review-block-4",
+      "title": "4. Vom Kundenauftrag bis zur Übergabe zurückblicken",
+      "objectiveIds": [
+        "fiae-lf12a-review-compare",
+        "fiae-lf12a-review-quality",
+        "fiae-lf12a-review-learn"
+      ],
+      "sourceIds": [
+        "kmk-fachinformatiker-2019",
+        "ec-pm2-artefacts",
+        "lf12a-ms-testing",
+        "lf12a-ms-performance",
+        "lf12a-gds-usability"
+      ],
+      "paragraphs": [
+        "Beginne den LF12a-Rückblick mit dem Auftrag. Die Annahme wollte einmal erfassen und über die Kennung wieder öffnen. Rechnungsdruck war ausgegrenzt. F1 prüft Speichern und Wiederabruf, F2 fehlende Gerätekennung mit Hinweis und unverändertem Bestand. S1 prüft die Eigenaufgabe an vier Personen. Für die Variantenentscheidung standen A mit eigener Pflege (840 Euro) und B mit vorhandenem Modul (880 Euro) gegenüber. Bewertung von Bedienpassung, Datenbedarf und Rollen ergänzt den Kostenvergleich.",
+        "Der Arbeitsplan verteilte 16 Stunden auf Musterfall (2), Integration (6), Prüfung (4) und Anleitung, Einweisung und Übergabe (4). Für die Auswahl von A sprach die anpassbare Maske. Ein fehlender Testzugang war ein Risiko mit früher Zugangsprobe. In der Umsetzung führte ein falscher Wiederabruf zu zwei Stunden Mehrarbeit. Der getrennte Wunsch nach einem Fotoanhang wurde zurückgestellt. Sichere den alten Befund und die Nachproben am korrigierten Stand, damit die Leitung den veränderten Termin und das Ergebnis nachvollziehen kann.",
+        "Zur Abnahme zeigst du F1 und F2 mit Stand, Soll, Ist und Belegen. Zu einer offenen Probe gehören Zuständigkeit und Termin. Die IT erhält R2, passende Betriebsunterlagen und einen Funktionscheck. Die Annahme erhält eine Anleitung, führt S1 selbst aus und meldet Fragen über den Servicedesk. Die erste S1-Reihe an Tag 5 ergibt zwei gültige Erfolge. Nach einer weiteren Übung bestehen drei von vier Personen die separat dokumentierte Wiederholung. Die Leitung sieht beide Reihen ein und übernimmt den vereinbarten Pilotumfang. Im Abschlussbericht stehen 940 statt 840 Euro, Tag 5 statt Tag 4 und die belegten Leistungen. Die langsame hohe Laststufe ist ein eigener Befund für eine Entscheidung über die Ausweitung. Meldet die Schicht nach der Übergabe falsche Abrufwerte, prüft die IT den gemeldeten Fall am bezeichneten Stand. Nach einer Korrektur wiederholt die Schicht den Abruf mit dem bekannten Sollwert. Für die wirtschaftliche Bewertung erfasst die Werkstatt neben den Pilotkosten die tatsächlichen Fallzahlen, eingesparte Erfassungszeit und laufende Pflege. Eine Schätzung für eine nicht umgesetzte Alternative ist kein Istwert.",
+        "Verknüpfe den Befund mit Alternativen. Ein Verweis auf die gespeicherte Kennung kann die Bedienung erleichtern. Eine zusätzliche Übungsrunde kostet Zeit, braucht aber keine Softwareänderung. Ein Leistungstest bei mehr Datensätzen beantwortet wiederum eine andere Frage. Platziere Verantwortung, Termin und Erfolgskriterium bei der jeweils passenden Maßnahme.",
+        "Die Lernzielübersicht beginnt bei LF1 mit Auftrag, Betriebsrollen und verständlicher Präsentation. WISO hilft dir, Verantwortung und wirtschaftliche Folgen einzuordnen. Im Projektmanagement kalkulierst du, planst Kapazitäten und steuerst Änderungen. LF2 und LF3 liefern Arbeitsplatz und Netzzugang. LF4 liefert Schutzbedarf und Datensparsamkeit. In LF5 prüfst du Software und Datenhaltung, in LF6 bearbeitest du Servicemeldungen. LF7 verbindet Geräte, Messwerte und Software am Beispiel eines technischen Systems. LF8 ordnet den Datenaustausch zwischen Systemen, LF9 den Betrieb der benötigten Netze und Dienste.",
+        "LF10a macht aus einem Bedarf eine bedienbare und bewertete Maske. LF11a setzt die Ticketfunktion mit Daten, Fachregeln, Tests und versioniertem Stand um. LF12a führt beides durch Auftrag, Variantenentscheidung, Planung, Umsetzung, Abnahme, Einweisung und Auswertung zusammen. Wenn alle Themen bestanden sind, ist der FIAE-Lernpfad in AzubiPrep abgeschlossen. Der ausgewiesene Stand beschreibt die absolvierten Kursthemen und selbst bestätigten Übungen. Eine allein gespielte Übergaberolle hältst du als Simulation fest. Für einen nächsten Auftrag kannst du eine empfangende Person selbst prüfen lassen und deren Rückmeldung auswerten. Einen anerkannten Berufsabschluss erwirbt man im dafür vorgesehenen Ausbildungs- und Prüfungsverfahren."
+      ],
+      "example": {
+        "title": "Aus dem Werkstattprojekt",
+        "text": "Für das Abschlussgespräch legt die Werkstatt Auftrag, Vergleich A/B, Plan, Arbeitsstände, Prüfprotokoll, Einweisungs- und Übergabeblatt sowie den nächsten Verbesserungsversuch nebeneinander. Aus dem tatsächlich geprüften Umfang erklärt sie, was bei mehr Daten noch erprobt werden muss."
+      },
+      "misconception": {
+        "claim": "Mit dem Bestehen des letzten Themenquiz ist ein anerkannter FIAE-Berufsabschluss erworben.",
+        "correction": "AzubiPrep dokumentiert den Abschluss des Lernpfads nach allen bestandenen Themen. Die berufliche Qualifikation wird im vorgesehenen Ausbildungs- und Prüfungsverfahren festgestellt."
+      },
+      "takeaway": "Zeige die Kette aus Kundenbedarf, Entwickeln, Nachweisen und Lernen am eigenen Arbeitsprodukt."
+    }
+  ],
+  "questionFile": "questions/fiae-lf12a-review.v1.csv",
+  "quiz": {
+    "questionIds": [
+      "LJ-LF12A-REVIEW-Q01",
+      "LJ-LF12A-REVIEW-Q02",
+      "LJ-LF12A-REVIEW-Q03",
+      "LJ-LF12A-REVIEW-Q04",
+      "LJ-LF12A-REVIEW-Q05",
+      "LJ-LF12A-REVIEW-Q06"
+    ]
+  },
+  "exam": {
+    "questionIds": [
+      "LJ-LF12A-REVIEW-E01",
+      "LJ-LF12A-REVIEW-E02",
+      "LJ-LF12A-REVIEW-E03",
+      "LJ-LF12A-REVIEW-E04",
+      "LJ-LF12A-REVIEW-E05",
+      "LJ-LF12A-REVIEW-E06",
+      "LJ-LF12A-REVIEW-E07",
+      "LJ-LF12A-REVIEW-E08"
+    ],
+    "passPercent": 80,
+    "scoring": "all-or-nothing-per-question",
+    "timed": false
+  },
+  "questionLinks": [
+    {
+      "questionId": "LJ-LF12A-REVIEW-Q01",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf12a-review-compare"
+      ],
+      "blockIds": [
+        "fiae-lf12a-review-block-1"
+      ]
+    },
+    {
+      "questionId": "LJ-LF12A-REVIEW-Q02",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf12a-review-compare"
+      ],
+      "blockIds": [
+        "fiae-lf12a-review-block-1"
+      ]
+    },
+    {
+      "questionId": "LJ-LF12A-REVIEW-Q03",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf12a-review-quality"
+      ],
+      "blockIds": [
+        "fiae-lf12a-review-block-2"
+      ]
+    },
+    {
+      "questionId": "LJ-LF12A-REVIEW-Q04",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf12a-review-quality"
+      ],
+      "blockIds": [
+        "fiae-lf12a-review-block-2"
+      ]
+    },
+    {
+      "questionId": "LJ-LF12A-REVIEW-Q05",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf12a-review-learn"
+      ],
+      "blockIds": [
+        "fiae-lf12a-review-block-3"
+      ]
+    },
+    {
+      "questionId": "LJ-LF12A-REVIEW-Q06",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf12a-review-learn"
+      ],
+      "blockIds": [
+        "fiae-lf12a-review-block-3"
+      ]
+    },
+    {
+      "questionId": "LJ-LF12A-REVIEW-E01",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf12a-review-compare"
+      ],
+      "blockIds": [
+        "fiae-lf12a-review-block-4"
+      ]
+    },
+    {
+      "questionId": "LJ-LF12A-REVIEW-E02",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf12a-review-compare"
+      ],
+      "blockIds": [
+        "fiae-lf12a-review-block-1",
+        "fiae-lf12a-review-block-4"
+      ]
+    },
+    {
+      "questionId": "LJ-LF12A-REVIEW-E03",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf12a-review-compare"
+      ],
+      "blockIds": [
+        "fiae-lf12a-review-block-1",
+        "fiae-lf12a-review-block-4"
+      ]
+    },
+    {
+      "questionId": "LJ-LF12A-REVIEW-E04",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf12a-review-quality"
+      ],
+      "blockIds": [
+        "fiae-lf12a-review-block-2",
+        "fiae-lf12a-review-block-4"
+      ]
+    },
+    {
+      "questionId": "LJ-LF12A-REVIEW-E05",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf12a-review-compare"
+      ],
+      "blockIds": [
+        "fiae-lf12a-review-block-4"
+      ]
+    },
+    {
+      "questionId": "LJ-LF12A-REVIEW-E06",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf12a-review-quality",
+        "fiae-lf12a-review-learn"
+      ],
+      "blockIds": [
+        "fiae-lf12a-review-block-2",
+        "fiae-lf12a-review-block-3",
+        "fiae-lf12a-review-block-4"
+      ]
+    },
+    {
+      "questionId": "LJ-LF12A-REVIEW-E07",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf12a-review-quality",
+        "fiae-lf12a-review-learn"
+      ],
+      "blockIds": [
+        "fiae-lf12a-review-block-2",
+        "fiae-lf12a-review-block-3",
+        "fiae-lf12a-review-block-4"
+      ]
+    },
+    {
+      "questionId": "LJ-LF12A-REVIEW-E08",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf12a-review-learn"
+      ],
+      "blockIds": [
+        "fiae-lf12a-review-block-3",
+        "fiae-lf12a-review-block-4"
+      ]
+    }
+  ],
+  "interview": [
+    {
+      "id": "fiae-lf12a-review-talk-1",
+      "prompt": "Bewerte Kosten und Qualität des Piloten anhand konkreter Belege.",
+      "objectiveIds": [
+        "fiae-lf12a-review-compare",
+        "fiae-lf12a-review-quality"
+      ],
+      "blockIds": [
+        "fiae-lf12a-review-block-1",
+        "fiae-lf12a-review-block-2"
+      ],
+      "keyPoints": [
+        "16 und 18 Stunden sowie 840 und 940 Euro vergleichen.",
+        "Mehrbedarf und späteren Termin auf den Abruffehler zurückführen.",
+        "Verlässlichkeit, Änderung und Last getrennt beurteilen."
+      ],
+      "acceptableAlternatives": [
+        "Eine Tabelle mit Soll, Ist, Abweichung, Ursache und Beleg pro Kriterium eignet sich ebenfalls."
+      ],
+      "misconceptions": [
+        "Die Korrektheit des Ticketinhalts als Beleg der Geschwindigkeit bei Wachstum behandeln."
+      ],
+      "sampleAnswer": "Zwei zusätzliche Stunden für Korrektur und Nachtest erklären 100 Euro Mehrkosten und den Abschluss am fünften Tag. Der Abruf stimmt danach in den geprüften Fällen. Für Erweiterbarkeit prüfe ich Änderungen und alte Fälle. 91 von 100 schnellen Abrufen verfehlen auf der hohen Stufe das Ziel von 95.",
+      "followUp": "Welche Messbedingungen müssen bei einer neuen Lastprobe gleich bleiben?"
+    },
+    {
+      "id": "fiae-lf12a-review-talk-2",
+      "prompt": "Führe dein kleines Werkstatt-Kundenprojekt außerhalb der Lernreise selbst durch. Zeige deine Arbeitsstände, berechne deinen Soll-Ist-Unterschied und begründe, was du übergibst und als Nächstes ändern würdest.",
+      "objectiveIds": [
+        "fiae-lf12a-review-compare",
+        "fiae-lf12a-review-quality",
+        "fiae-lf12a-review-learn"
+      ],
+      "blockIds": [
+        "fiae-lf12a-review-block-1",
+        "fiae-lf12a-review-block-2",
+        "fiae-lf12a-review-block-3",
+        "fiae-lf12a-review-block-4"
+      ],
+      "keyPoints": [
+        "Auftrag, Kriterien, zwei Varianten und Ausgangsplan erstellen.",
+        "Eigene lauffähige oder ausführbare Modelllösung umsetzen und Variantenentscheidung festhalten.",
+        "Positiv- und Negativfall prüfen, Befund und Nachtest dokumentieren.",
+        "Zeit, Kosten und Zielerreichung aus eigener Arbeit vergleichen.",
+        "Übergabe, Rückmeldung, Qualitätsgrenzen und nächste Verbesserung begründen."
+      ],
+      "acceptableAlternatives": [
+        "Ein lokales Tabellenmodell oder eine kleine eigene Anwendung ist geeignet, wenn Speichern, Wiederabruf und ungültige Eingabe tatsächlich ausprobiert werden können. Eine allein bearbeitete Rollenprobe als solche kennzeichnen."
+      ],
+      "misconceptions": [
+        "Musterzahlen, fiktive Kundenunterschriften oder fremde Prüfergebnisse als eigene Praxis ausgeben."
+      ],
+      "sampleAnswer": "Gerüst für meinen eigenen Bericht: Meine ursprüngliche Zusage war … Mein erster selbst beobachteter Befund am Stand … lautete … Ich änderte … und prüfte erneut mit … In Aufwand und Termin ergab sich … Bei der Übergabe konnte ich … belegen. Die Alternative … blieb offen, weil … Im nächsten Versuch ändere und prüfe ich …",
+      "followUp": "An welchem deiner Belege kann eine andere Person deine Entscheidung und ihre Grenze nachprüfen?",
+      "practice": {
+        "task": "Bearbeite außerhalb der App ein eigenes kleines Projekt für die fiktive Reparaturannahme. Verwende erfundene Geräte und Fehler. Deine Arbeitsprodukte bleiben lokal. In der Reflexion beschreibst du die tatsächlich ausgeführten Schritte und verweist auf deine Belege.\n\n1. Kläre mit der Auftraggeberrolle das Problem, den Lieferumfang und zwei bis drei überprüfbare Kriterien. Arbeitest du allein, kennzeichne Kunden- und Nutzerperspektive als gespielte Rollen. Vergleiche zwei Varianten nach Nutzen, Aufwand, Risiken, Datenbedarf und Zugriffsrechten. Halte deine Wahl in einem kurzen internen Angebot mit Leistungen und kalkulierten Kosten fest.\n\n2. Lege vor der Umsetzung Pakete, Stunden, Kostensatz, Mittel und Termine fest. Nutze deine LF10a-Maske und LF11a-Fachfunktion, sofern vorhanden. Alternativ baue ein lokales Tabellenmodell mit Erfassungszeile, Prüfung auf leere Gerätekennung und einem nach Ticketnummer abrufbaren Bestand.\n\n3. Führe einen gültigen Auftrag und einen abgewiesenen Versuch selbst aus. Notiere Stand, Soll, Ist und Beleg. Ändere eine Stelle in deiner Lösung und prüfe danach einen betroffenen und einen bisher gültigen Fall. Untersuche Verlässlichkeit durch wiederholten Abruf und Erweiterbarkeit durch eine kleine Ergänzung in einer Kopie.\n\n4. Vergleiche den Abruf bei zwei Größen deines synthetischen Bestands unter gleichen Bedingungen, sofern dein Modell das zulässt. Halte sonst fest, welche Messung offen ist. Vergleiche nach Abschluss deine tatsächlichen mit deinen geplanten Stunden, Kosten, Terminen und Zielen. Auch eine Nullabweichung ist ein Ergebnis. Ordne die Kosten dem beobachteten oder erwarteten Nutzen zu und kennzeichne Annahmen.\n\n5. Weise die Nutzerrolle am Musterfall ein und lasse sie einen vergleichbaren Fall selbst lösen. Übergib Stand, Anleitung, Prüfnachweise und offene Punkte. Arbeitest du allein, spiele Empfang und Rückfrage durch und benenne, welche Beobachtung an echten Nutzenden noch fehlt.\n\n6. Halte die Rückmeldung oder eigene Beobachtung fest. Vergleiche zwei mögliche Verbesserungen. Wähle eine aus und vereinbare für den nächsten Versuch eine verantwortliche Rolle, einen Termin und ein messbares Erfolgskriterium.",
+        "checklist": [
+          "Ich habe Auftrag, Umfang, Kriterien, zwei Lösungsvarianten, Auswahl und meinen Ausgangsplan vor der Umsetzung festgehalten.",
+          "Ich habe meinen eigenen Arbeitsstand erstellt, einen gültigen und einen ungültigen Fall ausgeführt und die Ergebnisse mit Stand und Sollwert notiert.",
+          "Ich habe eine eigene Änderung, den ursprünglichen Befund und die Nachprobe dokumentiert sowie Verlässlichkeit, Erweiterbarkeit und Grenzen bei wachsender Datenmenge bewertet.",
+          "Ich habe Ist und Plan für Ziele, Termine und Kosten verglichen. Ich habe die Ursache für eine Abweichung oder für die Einhaltung des Plans erklärt und den erwarteten oder beobachteten Nutzen eingeordnet.",
+          "Ich habe eine Einweisung und Übergabe mit Anleitung, Prüfnachweisen und offenen Punkten durchgeführt oder als eigenständige Rollenprobe nachvollzogen.",
+          "Ich habe anhand einer Rückmeldung oder eigenen Beobachtung zwei Verbesserungen verglichen und für den nächsten Versuch Rolle, Termin und Erfolgskriterium festgelegt."
+        ],
+        "confirmation": "Ich bestätige bewusst, dass ich dieses Modellprojekt selbst außerhalb der Lernreise bearbeitet, meine Belege ausgewertet und die Übergabe nachvollzogen habe. Meine Reflexion nennt die von mir tatsächlich ausgeführten Schritte und kennzeichnet simulierte Rollen und offene Prüfungen."
+      }
+    },
+    {
+      "id": "fiae-lf12a-review-talk-3",
+      "prompt": "Erzähle den Weg durch alle sieben LF12a-Themen und ordne deine belegten Lernergebnisse im ganzen FIAE-Pfad ein.",
+      "objectiveIds": [
+        "fiae-lf12a-review-compare",
+        "fiae-lf12a-review-quality",
+        "fiae-lf12a-review-learn"
+      ],
+      "blockIds": [
+        "fiae-lf12a-review-block-4"
+      ],
+      "keyPoints": [
+        "Auftrag, Grenzen und Kriterien erklären.",
+        "Varianten und Rechnung begründen.",
+        "Plan, Engpass und Änderungsentscheidung zeigen.",
+        "Umsetzung, Abnahme, Einweisung und Übergabe unterscheiden.",
+        "Ziel- und Kostenvergleich, Qualitätsgrenze und Verbesserung nennen.",
+        "Gemeinsame Grundlagen, WISO, Projektmanagement, LF10a-Maske, LF11a-Funktion und LF12a-Projekt zuordnen.",
+        "Kursabschluss und anerkannte berufliche Qualifikation auseinanderhalten."
+      ],
+      "acceptableAlternatives": [
+        "Eine kommentierte Mappe der Arbeitsergebnisse oder ein kurzer mündlicher Bericht mit Verweisen auf die Belege ist geeignet."
+      ],
+      "misconceptions": [
+        "Die absolvierte Modellaufgabe als Nachweis umfassender beruflicher Befähigung ausgeben."
+      ],
+      "sampleAnswer": "Wir haben den Kernauftrag und seine Grenzen bestätigt und A gegen B kalkuliert. Der Plan enthielt vier Pakete vom Musterfall bis zur Übergabe. In P2 brauchten Korrektur und Nachtest zwei zusätzliche Stunden. Die Leitung übernahm anhand der Belege, die Schicht übte und die IT erhielt R2. Gegenüber der Zusage lagen wir einen Arbeitstag und 100 Euro darüber. Vor mehr Nutzung folgt eine Lastnachprüfung. Aus LF1 bis LF9 nutze ich Rollen, Systeme, Daten, Schutz und Service, aus WISO und Projektmanagement die wirtschaftliche Einordnung und Steuerung. Maske aus LF10a und Fachfunktion aus LF11a wurden in LF12a zum Kundenprojekt. Mein Lernstand bezeichnet den absolvierten Kurs.",
+      "followUp": "Welcher Nachweis wäre für eine geplante Ausweitung deiner Lösung noch zu erbringen?"
+    }
+  ],
+  "cards": [
+    {
+      "id": "fiae-lf12a-review-card-01",
+      "front": "Wie weist du die Kostenabweichung des Werkstattpiloten aus?",
+      "back": "940 Euro Ist minus 840 Euro Soll = 100 Euro Mehrkosten. 100 geteilt durch 840 entspricht rund 11,9 Prozent.",
+      "objectiveIds": [
+        "fiae-lf12a-review-compare"
+      ],
+      "blockIds": [
+        "fiae-lf12a-review-block-1"
+      ]
+    },
+    {
+      "id": "fiae-lf12a-review-card-02",
+      "front": "Welchen Aufwand hat der zurückgestellte Fotoanhang im Istvergleich ausgelöst?",
+      "back": "Im Beispiel keinen. Die zwei zusätzlichen Arbeitsstunden für den vereinbarten Kernablauf stammen aus Korrektur und Nachtest des Abrufs.",
+      "objectiveIds": [
+        "fiae-lf12a-review-compare"
+      ],
+      "blockIds": [
+        "fiae-lf12a-review-block-1",
+        "fiae-lf12a-review-block-4"
+      ]
+    },
+    {
+      "id": "fiae-lf12a-review-card-03",
+      "front": "Wie prüfst du Verlässlichkeit und Erweiterbarkeit mit verschiedenen Belegen?",
+      "back": "Bekannte Werte wiederholt speichern und erneut lesen. Für Erweiterbarkeit eine begrenzte Änderung ausführen und neue sowie bisherige Fälle nachprüfen.",
+      "objectiveIds": [
+        "fiae-lf12a-review-quality"
+      ],
+      "blockIds": [
+        "fiae-lf12a-review-block-2"
+      ]
+    },
+    {
+      "id": "fiae-lf12a-review-card-04",
+      "front": "Welche Angaben machen einen Wachstumstest interpretierbar?",
+      "back": "Datenmenge, gleichzeitige Nutzung, Umgebung, Ablauf, Zahl der Versuche, Zeitgrenze, korrekte Ergebnisse und Messwerte je Stufe.",
+      "objectiveIds": [
+        "fiae-lf12a-review-quality"
+      ],
+      "blockIds": [
+        "fiae-lf12a-review-block-2",
+        "fiae-lf12a-review-block-4"
+      ]
+    },
+    {
+      "id": "fiae-lf12a-review-card-05",
+      "front": "Was macht aus der Rückmeldung über die verlorene Kennung eine prüfbare Verbesserung?",
+      "back": "Betroffenen Schritt beobachten, Verweis oder Übung vergleichen, eine Maßnahme wählen und die Eigenaufgabe unter gleichen Bedingungen wiederholen.",
+      "objectiveIds": [
+        "fiae-lf12a-review-learn"
+      ],
+      "blockIds": [
+        "fiae-lf12a-review-block-3"
+      ]
+    },
+    {
+      "id": "fiae-lf12a-review-card-06",
+      "front": "Welchen nächsten Schritt leitest du nach dem Kursabschluss aus einer allein erprobten Übergabe ab?",
+      "back": "Die Rollenprobe als solche ausweisen. Beim nächsten Auftrag die empfangende Person am übergebenen Stand selbst prüfen lassen und ihre Rückmeldung auswerten. Der Kursstand dokumentiert die bestandenen Themen und die selbst bestätigte Praxis.",
+      "objectiveIds": [
+        "fiae-lf12a-review-learn"
+      ],
+      "blockIds": [
+        "fiae-lf12a-review-block-3",
+        "fiae-lf12a-review-block-4"
+      ]
+    }
+  ],
+  "review": {
+    "status": "reviewed",
+    "checkedAt": "2026-11-19"
+  },
+  "fieldReview": {
+    "fieldId": "LF12a",
+    "topicIds": [
+      "fiae-lf12a-scope",
+      "fiae-lf12a-alternatives",
+      "fiae-lf12a-planning",
+      "fiae-lf12a-implementation",
+      "fiae-lf12a-acceptance",
+      "fiae-lf12a-training",
+      "fiae-lf12a-review"
+    ],
+    "blockIds": [
+      "fiae-lf12a-review-block-4"
+    ],
+    "interviewIds": [
+      "fiae-lf12a-review-talk-3"
+    ],
+    "questionIds": [
+      "LJ-LF12A-REVIEW-E01",
+      "LJ-LF12A-REVIEW-E02",
+      "LJ-LF12A-REVIEW-E03",
+      "LJ-LF12A-REVIEW-E04",
+      "LJ-LF12A-REVIEW-E05",
+      "LJ-LF12A-REVIEW-E06",
+      "LJ-LF12A-REVIEW-E07",
+      "LJ-LF12A-REVIEW-E08"
+    ]
+  }
+}

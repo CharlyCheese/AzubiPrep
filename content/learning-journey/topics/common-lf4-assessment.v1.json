@@ -1,0 +1,484 @@
+{
+  "schemaVersion": 1,
+  "id": "common-lf4-assessment",
+  "title": "Schutzbedarf nachvollziehbar begründen",
+  "fieldId": "LF4",
+  "scope": "common",
+  "prerequisites": [
+    "common-lf4-privacy"
+  ],
+  "objectives": [
+    {
+      "id": "common-lf4-assessment-classify",
+      "text": "Für ein Schutzobjekt je Schutzziel anhand vorgegebener Schadenskriterien einen Schutzbedarf begründen."
+    },
+    {
+      "id": "common-lf4-assessment-separate",
+      "text": "Schutzbedarf anhand möglicher Schäden von der Eintrittswahrscheinlichkeit einer Bedrohung unterscheiden."
+    },
+    {
+      "id": "common-lf4-assessment-document",
+      "text": "Annahmen und Abhängigkeiten der Schutzbedarfsfeststellung nachvollziehbar dokumentieren."
+    }
+  ],
+  "version": "1.0.0",
+  "sourceIds": [
+    "lf4-nist-impact",
+    "lf4-nist-risk",
+    "lf4-nist-asset"
+  ],
+  "sources": [
+    {
+      "id": "lf4-nist-impact",
+      "title": "NIST CSRC Glossar: Schadensauswirkung",
+      "url": "https://csrc.nist.gov/glossary/term/impact",
+      "checkedAt": "2026-11-16",
+      "note": "Mögliche Auswirkungen auf Betrieb, Werte und Menschen geprüft. Die konkreten Kategorien und Schwellen sind eigene fiktive Lernvorgaben."
+    },
+    {
+      "id": "lf4-nist-risk",
+      "title": "NIST CSRC Glossar: Risiko",
+      "url": "https://csrc.nist.gov/glossary/term/risk",
+      "checkedAt": "2026-11-16",
+      "note": "Zusammenhang von möglicher Auswirkung und Eintrittswahrscheinlichkeit geprüft."
+    },
+    {
+      "id": "lf4-nist-asset",
+      "title": "NIST CSRC Glossar: Schutzobjekt",
+      "url": "https://csrc.nist.gov/glossary/term/asset",
+      "checkedAt": "2026-11-16",
+      "note": "Materielle und immaterielle Werte und Bezug zu Geschäftsaufgaben geprüft."
+    }
+  ],
+  "caseStudy": {
+    "title": "Mira schützt den Servicearbeitsplatz bei Radblick",
+    "text": "Eigener fiktiver Lernfall: Radblick bearbeitet Serviceanfragen. Mira lernt unter Anleitung von Sam aus der IT und Eda als Serviceverantwortlicher. Alle Personen, Daten, Regeln und Schadensannahmen sind erfunden. Eda gibt Schadenskriterien und Annahmen für eine begrenzte Schutzbedarfsanalyse vor. Mira begründet jede Einstufung getrennt für Vertraulichkeit, Integrität und Verfügbarkeit."
+  },
+  "blocks": [
+    {
+      "id": "common-lf4-assessment-criteria",
+      "title": "1. Mit vorgegebenen Schadenskriterien arbeiten",
+      "objectiveIds": [
+        "common-lf4-assessment-classify"
+      ],
+      "sourceIds": [
+        "lf4-nist-impact"
+      ],
+      "paragraphs": [
+        "Schutzbedarf beschreibt, wie schwer eine Beeinträchtigung eines Schutzziels im betrachteten Zusammenhang wäre. Gehe vom Schutzobjekt und seiner Aufgabe aus. Beschreibe eine mögliche Schadensfolge, vergleiche sie mit den vorgegebenen Kriterien und begründe die Kategorie. Vertraulichkeit, Integrität und Verfügbarkeit erhalten jeweils eine eigene Begründung.",
+        "Für diese Übung gelten ausdrücklich folgende fiktive Kriterien: normal = begrenzte, mit überschaubarem Aufwand behebbare Beeinträchtigung; hoch = erhebliche Auswirkungen auf Kunden oder Betrieb; sehr hoch = existenzbedrohende Folgen oder Gefahr für Leben. Diese Fallkriterien sind kein allgemeiner gesetzlicher Maßstab und keine Schwellenvorgabe für andere Unternehmen.",
+        "Die fiktive Leitung ergänzt je Schutzziel: Bei Vertraulichkeit gilt eine Offenlegung mit erheblichen Vertrags- und Vertrauensfolgen als hoch. Bei Integrität gelten verfälschte Freigaben mit falschen Einsätzen und erheblicher Nacharbeit als hoch. Bei Verfügbarkeit gilt ein zweistündiger Ausfall mit funktionierendem, für vier Stunden freigegebenem Papierablauf als normal. Eine Gefahr für Leben oder Existenz liegt im Fall nicht vor."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Lernfall",
+        "text": "Ein hoher Vertraulichkeitsbedarf zieht nicht automatisch dieselbe Kategorie für Verfügbarkeit nach sich; die Schadensfolgen unterscheiden sich."
+      },
+      "misconception": {
+        "claim": "Eine einzige Zahl beschreibt den Schutzbedarf für alle Ziele.",
+        "correction": "Die Ziele können verschiedene Schäden und deshalb verschiedene Einstufungen haben."
+      },
+      "takeaway": "Kategorie, Schutzziel und Schadensbegründung gehören zusammen."
+    },
+    {
+      "id": "common-lf4-assessment-separate",
+      "title": "2. Schaden und Eintrittswahrscheinlichkeit trennen",
+      "objectiveIds": [
+        "common-lf4-assessment-separate"
+      ],
+      "sourceIds": [
+        "lf4-nist-impact",
+        "lf4-nist-risk"
+      ],
+      "paragraphs": [
+        "Die Schutzbedarfsfrage lautet: Welche Folgen hätte eine Beeinträchtigung? Die Wahrscheinlichkeitsfrage lautet: Wie wahrscheinlich ist ein bestimmtes Ereignis? Eine Risikobetrachtung berücksichtigt beide Seiten. Wenn du sie verwechselst, wird ein schwerer möglicher Schaden unsichtbar, sobald das Ereignis selten erscheint.",
+        "Im Fall könnte eine Offenlegung erhebliche Vertrags- und Vertrauensfolgen verursachen. Selbst wenn Sam den Angriff derzeit für unwahrscheinlich hält, bleibt die Schadensbegründung für hohen Vertraulichkeitsbedarf bestehen. Die Einschätzung zur Wahrscheinlichkeit wird getrennt dokumentiert und kann für spätere Entscheidungen über Risiken relevant sein.",
+        "Bestehende Schutzmaßnahmen sind ebenfalls kein Ersatz für die Schadensfrage. Gut geregelte Zugriffe können das Ereignis erschweren. Das macht die betroffenen Kundenvorgänge bei einer Offenlegung nicht unbedeutend. Ein nachgewiesener Ersatzablauf kann dagegen die Folgen eines Ausfalls tatsächlich begrenzen; Umfang und Dauer dieses Ersatzes müssen als Annahme sichtbar bleiben."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Lernfall",
+        "text": "Seltenes Ereignis plus erhebliche Folgen bedeutet nicht geringen Schutzbedarf. Der mögliche Schaden wird nach den vorgegebenen Kriterien eingeordnet."
+      },
+      "misconception": {
+        "claim": "Ein unwahrscheinlicher Angriff macht den Schutzbedarf niedrig.",
+        "correction": "Wahrscheinlichkeit und Schadensausmaß sind unterschiedliche Bewertungsgrößen."
+      },
+      "takeaway": "Schwere der Folgen und Wahrscheinlichkeit werden getrennt begründet."
+    },
+    {
+      "id": "common-lf4-assessment-document",
+      "title": "3. Annahmen und Abhängigkeiten dokumentieren",
+      "objectiveIds": [
+        "common-lf4-assessment-document"
+      ],
+      "sourceIds": [
+        "lf4-nist-asset",
+        "lf4-nist-impact"
+      ],
+      "paragraphs": [
+        "Eine nachvollziehbare Zeile enthält Objekt und Zweck, Schutzziel, mögliche Folge, verwendetes Kriterium, Kategorie, Annahmen, Abhängigkeiten, zuständige Rolle und Datum. So kann jemand die Schlussfolgerung prüfen. Ein alleinstehendes hoch verrät dagegen nicht, welche Folgen gemeint sind.",
+        "Die Abhängigkeit im Fall lautet: Servicebearbeitung braucht Ticketanwendung; diese benötigt Server, Netz und Client sowie Stromversorgung und Arbeitsumgebung. Der Schutz der Daten darf deshalb nicht am sichtbaren Bildschirm enden. Die technische Ausgestaltung wird mit Sam geprüft, während Eda die Bedeutung für den Serviceablauf bestätigt.",
+        "Eine entscheidende Annahme ist hier der Papierablauf: Er deckt die benötigten Aufnahmeschritte für bis zu vier Stunden ab und ist im Modell freigegeben. Fehlt diese Fähigkeit später, wächst der mögliche Ausfallschaden. Dann muss die Bewertung erneut geprüft werden. Gleiches gilt bei neuen Daten, geänderten Aufgaben oder zusätzlichen Abhängigkeiten."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Lernfall",
+        "text": "Verfügbarkeit normal, weil zwei Stunden Ausfall im freigegebenen vierstündigen Papierablauf mit begrenzter Verzögerung überbrückt werden; Annahme mit Eda bestätigt."
+      },
+      "misconception": {
+        "claim": "Eine dokumentierte Kategorie gilt unabhängig von Änderungen weiter.",
+        "correction": "Die Begründung hängt an Aufgabe, Daten und Annahmen; wesentliche Änderungen lösen eine erneute Prüfung aus."
+      },
+      "takeaway": "Eine Bewertung muss ihre tragenden Annahmen zeigen."
+    },
+    {
+      "id": "common-lf4-assessment-example",
+      "title": "4. Den Servicefall vollständig begründen",
+      "objectiveIds": [
+        "common-lf4-assessment-classify",
+        "common-lf4-assessment-separate",
+        "common-lf4-assessment-document"
+      ],
+      "sourceIds": [
+        "lf4-nist-impact",
+        "lf4-nist-risk",
+        "lf4-nist-asset"
+      ],
+      "paragraphs": [
+        "Betrachtet wird das Ticketsystem für den Servicearbeitsplatz mit seinen Daten und Abhängigkeiten. Vertraulichkeit: hoch, weil eine Offenlegung der Kundenvorgänge laut Fall erhebliche Vertrags- und Vertrauensfolgen hat. Integrität: hoch, weil verfälschte Freigaben falsche Einsätze und erhebliche Nacharbeit auslösen. Verfügbarkeit: normal für das vorgegebene Ausfallszenario, weil zwei Stunden durch den freigegebenen vierstündigen Papierablauf überbrückt werden und begrenzte Verzögerung verbleibt.",
+        "Keine dieser Kategorien entsteht aus der Häufigkeit eines Angriffs. Die Vorgabe liefert keine Eintrittszahl; du erfindest deshalb auch keinen Prozentwert. Sehr hoch wäre nach dem Übungsmaßstab bei existenzbedrohenden Folgen oder Lebensgefahr zu prüfen. Diese Schäden sind im beschriebenen Servicefall ausdrücklich nicht gegeben.",
+        "Als Ergebnis entsteht eine begründete Dreierbewertung mit dem Papierablauf als offener Prüfbedingung für die spätere Maßnahmenkontrolle. Bei einem längeren Ausfall darf normal nicht ungeprüft übernommen werden. Mira schlägt darauf aufbauend Rollenrechte, abgesicherte nachvollziehbare Änderungen und einen geprüften Wiederherstellungs-/Ersatzablauf vor. Umsetzung und Freigabe bleiben bei den zuständigen Rollen."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Lernfall",
+        "text": "Der Ergebnisvermerk lautet hoch / hoch / normal, ergänzt um die drei Schadensgründe, zwei Stunden Ausfall, vier Stunden Papierersatz und Server-/Netzabhängigkeit."
+      },
+      "misconception": {
+        "claim": "Die richtige Kategorienfolge reicht als Nachweis aus.",
+        "correction": "Ohne Schadenskriterien, Begründungen und Annahmen lässt sich die Einstufung nicht überprüfen."
+      },
+      "takeaway": "Eine begründete Dreierbewertung ist die Grundlage passender Maßnahmen."
+    }
+  ],
+  "questionFile": "questions/common-lf4-assessment.v1.csv",
+  "quiz": {
+    "questionIds": [
+      "LJ-LF4-ASSESSMENT-Q01",
+      "LJ-LF4-ASSESSMENT-Q02",
+      "LJ-LF4-ASSESSMENT-Q03",
+      "LJ-LF4-ASSESSMENT-Q04",
+      "LJ-LF4-ASSESSMENT-Q05",
+      "LJ-LF4-ASSESSMENT-Q06"
+    ]
+  },
+  "exam": {
+    "questionIds": [
+      "LJ-LF4-ASSESSMENT-E01",
+      "LJ-LF4-ASSESSMENT-E02",
+      "LJ-LF4-ASSESSMENT-E03",
+      "LJ-LF4-ASSESSMENT-E04",
+      "LJ-LF4-ASSESSMENT-E05",
+      "LJ-LF4-ASSESSMENT-E06",
+      "LJ-LF4-ASSESSMENT-E07",
+      "LJ-LF4-ASSESSMENT-E08"
+    ],
+    "passPercent": 80,
+    "scoring": "all-or-nothing-per-question",
+    "timed": false
+  },
+  "questionLinks": [
+    {
+      "questionId": "LJ-LF4-ASSESSMENT-Q01",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf4-assessment-classify"
+      ],
+      "blockIds": [
+        "common-lf4-assessment-criteria"
+      ]
+    },
+    {
+      "questionId": "LJ-LF4-ASSESSMENT-Q02",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf4-assessment-classify"
+      ],
+      "blockIds": [
+        "common-lf4-assessment-criteria",
+        "common-lf4-assessment-example"
+      ]
+    },
+    {
+      "questionId": "LJ-LF4-ASSESSMENT-Q03",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf4-assessment-classify"
+      ],
+      "blockIds": [
+        "common-lf4-assessment-criteria",
+        "common-lf4-assessment-example"
+      ]
+    },
+    {
+      "questionId": "LJ-LF4-ASSESSMENT-Q04",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf4-assessment-separate"
+      ],
+      "blockIds": [
+        "common-lf4-assessment-separate"
+      ]
+    },
+    {
+      "questionId": "LJ-LF4-ASSESSMENT-Q05",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf4-assessment-document"
+      ],
+      "blockIds": [
+        "common-lf4-assessment-document"
+      ]
+    },
+    {
+      "questionId": "LJ-LF4-ASSESSMENT-Q06",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf4-assessment-separate",
+        "common-lf4-assessment-document"
+      ],
+      "blockIds": [
+        "common-lf4-assessment-separate",
+        "common-lf4-assessment-document"
+      ]
+    },
+    {
+      "questionId": "LJ-LF4-ASSESSMENT-E01",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf4-assessment-classify"
+      ],
+      "blockIds": [
+        "common-lf4-assessment-criteria"
+      ]
+    },
+    {
+      "questionId": "LJ-LF4-ASSESSMENT-E02",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf4-assessment-classify"
+      ],
+      "blockIds": [
+        "common-lf4-assessment-criteria",
+        "common-lf4-assessment-example"
+      ]
+    },
+    {
+      "questionId": "LJ-LF4-ASSESSMENT-E03",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf4-assessment-classify"
+      ],
+      "blockIds": [
+        "common-lf4-assessment-criteria",
+        "common-lf4-assessment-example"
+      ]
+    },
+    {
+      "questionId": "LJ-LF4-ASSESSMENT-E04",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf4-assessment-separate"
+      ],
+      "blockIds": [
+        "common-lf4-assessment-separate"
+      ]
+    },
+    {
+      "questionId": "LJ-LF4-ASSESSMENT-E05",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf4-assessment-separate"
+      ],
+      "blockIds": [
+        "common-lf4-assessment-separate"
+      ]
+    },
+    {
+      "questionId": "LJ-LF4-ASSESSMENT-E06",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf4-assessment-document"
+      ],
+      "blockIds": [
+        "common-lf4-assessment-document"
+      ]
+    },
+    {
+      "questionId": "LJ-LF4-ASSESSMENT-E07",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf4-assessment-document"
+      ],
+      "blockIds": [
+        "common-lf4-assessment-document",
+        "common-lf4-assessment-example"
+      ]
+    },
+    {
+      "questionId": "LJ-LF4-ASSESSMENT-E08",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf4-assessment-classify",
+        "common-lf4-assessment-separate",
+        "common-lf4-assessment-document"
+      ],
+      "blockIds": [
+        "common-lf4-assessment-example"
+      ]
+    }
+  ],
+  "interview": [
+    {
+      "id": "common-lf4-assessment-talk-classify",
+      "prompt": "Begründe die drei Kategorien des Ticketsystems mit den vorgegebenen Schäden.",
+      "objectiveIds": [
+        "common-lf4-assessment-classify"
+      ],
+      "blockIds": [
+        "common-lf4-assessment-criteria",
+        "common-lf4-assessment-example"
+      ],
+      "keyPoints": [
+        "Offenlegung und erhebliche Vertrauens-/Vertragsfolgen zu hoch verbinden.",
+        "Verfälschte Freigaben und erhebliche Nacharbeit zu hoch verbinden.",
+        "Zweistündigen Ausfall mit vierstündigem Papierersatz zu normal verbinden."
+      ],
+      "acceptableAlternatives": [
+        "Eine fachlich gleichwertige, anhand der Fallvorgaben begründete Erklärung."
+      ],
+      "misconceptions": [
+        "Eine Kategorie ohne passenden Schadensgrund angeben."
+      ],
+      "sampleAnswer": "Vertraulichkeit und Integrität sind hoch, weil Offenlegung erhebliche Vertragsfolgen und falsche Freigaben erhebliche Nacharbeit verursachen. Verfügbarkeit ist im gegebenen Szenario normal: Zwei Stunden lassen sich mit dem freigegebenen Papierablauf begrenzt überbrücken.",
+      "followUp": "Wann müsstest du die Verfügbarkeitsannahme neu prüfen?"
+    },
+    {
+      "id": "common-lf4-assessment-talk-separate",
+      "prompt": "Sam erwartet einen Angriff selten. Erkläre, warum das die Schadensbewertung nicht ersetzt.",
+      "objectiveIds": [
+        "common-lf4-assessment-separate"
+      ],
+      "blockIds": [
+        "common-lf4-assessment-separate"
+      ],
+      "keyPoints": [
+        "Folgenfrage von Wahrscheinlichkeitsfrage trennen.",
+        "Erhebliche Schäden bleiben bei seltenem Ereignis möglich.",
+        "Risiko berücksichtigt beide Größen."
+      ],
+      "acceptableAlternatives": [
+        "Eine fachlich gleichwertige, anhand der Fallvorgaben begründete Erklärung."
+      ],
+      "misconceptions": [
+        "Geringe Wahrscheinlichkeit mit geringem Schutzbedarf gleichsetzen."
+      ],
+      "sampleAnswer": "Der Schutzbedarf fragt nach den Folgen eines Eintritts. Die Seltenheit beantwortet eine andere Frage. Ich halte den hohen Vertraulichkeitsbedarf und die getrennte Wahrscheinlichkeitseinschätzung fest, statt sie in einer Kategorie zu vermischen.",
+      "followUp": "Wann kann ein Ersatzablauf tatsächlich die Folgen eines Ausfalls begrenzen?"
+    },
+    {
+      "id": "common-lf4-assessment-talk-record",
+      "prompt": "Übergebe Eda eine nachvollziehbare Bewertungsnotiz. Welche Annahmen und Abhängigkeiten nennst du?",
+      "objectiveIds": [
+        "common-lf4-assessment-document"
+      ],
+      "blockIds": [
+        "common-lf4-assessment-document",
+        "common-lf4-assessment-example"
+      ],
+      "keyPoints": [
+        "Objekt, Zweck und drei begründete Kategorien nennen.",
+        "Server, Netz, Client und Versorgung aufnehmen.",
+        "Dauer und Umfang des Papierersatzes sichtbar machen."
+      ],
+      "acceptableAlternatives": [
+        "Eine fachlich gleichwertige, anhand der Fallvorgaben begründete Erklärung."
+      ],
+      "misconceptions": [
+        "Ersatzmöglichkeiten ohne Nachweis voraussetzen."
+      ],
+      "sampleAnswer": "Ich nenne Ticketsystem und Serviceaufnahme, je Ziel Schaden und Kriterium sowie die Kategorien. Ich dokumentiere Server-/Netz-/Clientabhängigkeit und die Versorgung. Verfügbarkeit normal gilt für zwei Stunden mit dem freigegebenen vierstündigen Papierersatz; bei Änderungen prüfen wir neu.",
+      "followUp": "Welche Rolle bestätigt die betriebliche Bedeutung und welche die technische Abhängigkeit?"
+    }
+  ],
+  "cards": [
+    {
+      "id": "common-lf4-assessment-card-classify",
+      "front": "Wie begründest du eine Kategorie?",
+      "back": "Objekt und Schutzziel nennen, mögliche Folge beschreiben, vorgegebenes Kriterium vergleichen und Kategorie festhalten.",
+      "objectiveIds": [
+        "common-lf4-assessment-classify"
+      ],
+      "blockIds": [
+        "common-lf4-assessment-criteria"
+      ]
+    },
+    {
+      "id": "common-lf4-assessment-card-criteria",
+      "front": "Welche Kategorien gelten in dieser Übung?",
+      "back": "Normal: begrenzte Folgen. Hoch: erhebliche Kunden- oder Betriebsfolgen. Sehr hoch: Existenzbedrohung oder Lebensgefahr. Das sind fiktive Fallkriterien.",
+      "objectiveIds": [
+        "common-lf4-assessment-classify"
+      ],
+      "blockIds": [
+        "common-lf4-assessment-criteria"
+      ]
+    },
+    {
+      "id": "common-lf4-assessment-card-difference",
+      "front": "Was unterscheidet Schutzbedarf und Wahrscheinlichkeit?",
+      "back": "Schutzbedarf folgt der Schwere möglicher Folgen. Wahrscheinlichkeit beschreibt, wie wahrscheinlich ein Ereignis ist.",
+      "objectiveIds": [
+        "common-lf4-assessment-separate"
+      ],
+      "blockIds": [
+        "common-lf4-assessment-separate"
+      ]
+    },
+    {
+      "id": "common-lf4-assessment-card-control",
+      "front": "Senkt eine Zugangskontrolle den möglichen Offenlegungsschaden?",
+      "back": "Nicht allein durch ihr Vorhandensein. Sie kann das Ereignis erschweren, während dessen mögliche Folgen gleich schwer bleiben.",
+      "objectiveIds": [
+        "common-lf4-assessment-separate"
+      ],
+      "blockIds": [
+        "common-lf4-assessment-separate"
+      ]
+    },
+    {
+      "id": "common-lf4-assessment-card-record",
+      "front": "Was gehört in eine nachvollziehbare Bewertung?",
+      "back": "Objekt, Zweck, Schutzziel, Schadensfolge, Kriterium, Kategorie, Annahmen, Abhängigkeiten, Zuständigkeit und Datum.",
+      "objectiveIds": [
+        "common-lf4-assessment-document"
+      ],
+      "blockIds": [
+        "common-lf4-assessment-document"
+      ]
+    },
+    {
+      "id": "common-lf4-assessment-card-fallback",
+      "front": "Welche Annahme trägt die normale Verfügbarkeit im Fall?",
+      "back": "Zwei Stunden Ausfall werden mit dem freigegebenen vierstündigen Papierablauf überbrückt. Fehlt dieser Ersatz, wird neu bewertet.",
+      "objectiveIds": [
+        "common-lf4-assessment-document"
+      ],
+      "blockIds": [
+        "common-lf4-assessment-document",
+        "common-lf4-assessment-example"
+      ]
+    }
+  ],
+  "review": {
+    "status": "reviewed",
+    "checkedAt": "2026-11-16"
+  }
+}

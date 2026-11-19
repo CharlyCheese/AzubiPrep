@@ -1,0 +1,480 @@
+{
+  "schemaVersion": 1,
+  "version": "1.0.0",
+  "id": "fiae-lf12a-alternatives",
+  "title": "Lösungsvarianten und Angebot vergleichen",
+  "fieldId": "LF12a",
+  "scope": "specialization",
+  "prerequisites": [
+    "fiae-lf12a-scope",
+    "common-lf2-procurement",
+    "common-lf4-assessment"
+  ],
+  "objectives": [
+    {
+      "id": "fiae-lf12a-alternatives-compare",
+      "text": "Mindestens zwei Lösungsvarianten nach Nutzen, Aufwand, Risiken sowie Datenschutz und Datensicherheit vergleichen."
+    },
+    {
+      "id": "fiae-lf12a-alternatives-cost",
+      "text": "Mit vorgegebenen Aufwandsschätzungen und Kostensätzen eine nachvollziehbare Kalkulation erstellen."
+    },
+    {
+      "id": "fiae-lf12a-alternatives-agreement",
+      "text": "Die ausgewählte Leistung und ihre Abgrenzung für eine Vereinbarung mit dem Kunden festhalten."
+    }
+  ],
+  "caseStudy": {
+    "title": "Eigenentwicklung oder vorhandenes Modul?",
+    "text": "Die Leitung hat Erfassung, Abruf und Einweisung bestätigt. Jetzt vergleicht sie die Weiterentwicklung der LF11a-Funktion (A) mit der Anpassung eines vorhandenen internen Servicemoduls (B). Alle Zahlen sind Modellannahmen für den gleichen Pilotumfang."
+  },
+  "sourceIds": [
+    "ec-pm2-artefacts",
+    "lf4-eu-gdpr",
+    "pm-ihk-calculation"
+  ],
+  "sources": [
+    {
+      "id": "ec-pm2-artefacts",
+      "title": "Europäische Kommission: PM²-Artefakte",
+      "url": "https://pm2.europa.eu/pm2-artefacts_en",
+      "checkedAt": "2026-11-19",
+      "note": "Artefakte zu Auftrag, Arbeitsplan, Änderung, Abnahme, Übergang und Projektabschluss geprüft. Die Werkstattunterlagen und Entscheidungen im Beispiel sind selbst erstellt."
+    },
+    {
+      "id": "lf4-eu-gdpr",
+      "title": "EUR-Lex: Datenschutz-Grundverordnung, konsolidierte geltende Fassung",
+      "url": "https://eur-lex.europa.eu/legal-content/DE/TXT/?uri=CELEX:02016R0679-20160504",
+      "checkedAt": "2026-11-19",
+      "note": "Art. 5 zu Zweckbindung und Datenminimierung im öffentlichen Verordnungstext geprüft. Die Übungen verwenden erfundene Geräte und Rollen."
+    },
+    {
+      "id": "pm-ihk-calculation",
+      "title": "IHK Darmstadt: Kalkulieren und mit Kennziffern überwachen",
+      "url": "https://www.ihk.de/darmstadt/produktmarken/beraten-und-informieren/festigung-wachstum/kaufmaennisches/kalkulation-3795552",
+      "checkedAt": "2026-11-19",
+      "note": "Öffentliche Erläuterung zur Kalkulation mit Arbeitsstunden und Kostensätzen geprüft. Beträge und Vergleichsbedingungen sind eigene Fallannahmen."
+    }
+  ],
+  "blocks": [
+    {
+      "id": "fiae-lf12a-alternatives-block-1",
+      "title": "1. Zwei Varianten mit denselben Anforderungen prüfen",
+      "objectiveIds": [
+        "fiae-lf12a-alternatives-compare"
+      ],
+      "sourceIds": [
+        "ec-pm2-artefacts",
+        "lf4-eu-gdpr"
+      ],
+      "paragraphs": [
+        "Lege vor dem Rechnen fest, welche Anforderungen unverzichtbar sind. A nutzt die vertraute Maske und die vorhandene Fachfunktion. Die Werkstatt kann Hinweise gezielt ändern, trägt aber die Pflege. B bietet bereits ein Rollenmodell und interne Betreuung, sein vorgegebenes Formular muss jedoch zur Annahme passen. Prüfe verpflichtende Eigenschaften an beiden Varianten.",
+        "Trenne Datenschutz und Datensicherheit im Vergleich. Unnötige personenbezogene Pflichtangaben betreffen die Datenminimierung. Ob Unberechtigte Tickets ändern können, betrifft den wirksamen Zugriffsschutz. Prüfe die benötigten Felder und beobachte eine erlaubte und eine untersagte Aktion im Testsystem."
+      ],
+      "example": {
+        "title": "Aus dem Werkstattprojekt",
+        "text": "B verlangt in der Voreinstellung einen privaten Kontakt. Im Modell lässt sich das Feld deaktivieren. Erst die erfolgreiche Probe ohne Kontakt schließt diese Lücke. Ein günstiger Preis kann eine ungeklärte Pflichtanforderung nicht erfüllen."
+      },
+      "misconception": {
+        "claim": "Die vorhandene Rollenverwaltung beweist bereits, dass die Eingabefelder erforderlich sind.",
+        "correction": "Rollen regeln Zugriffe. Für den Umfang der erfassten Daten ist ihr Zweck zu prüfen."
+      },
+      "takeaway": "Vergleiche Nutzen, Pflege, Risiken und Schutz unter denselben Bedingungen."
+    },
+    {
+      "id": "fiae-lf12a-alternatives-block-2",
+      "title": "2. Aufwand in nachvollziehbare Kosten übersetzen",
+      "objectiveIds": [
+        "fiae-lf12a-alternatives-cost"
+      ],
+      "sourceIds": [
+        "pm-ihk-calculation"
+      ],
+      "paragraphs": [
+        "Setze für beide Varianten denselben Zeitraum und Pilotumfang an. A benötigt 16 Arbeitsstunden zu 50 Euro und 40 Euro einmalige Sachkosten. B benötigt 10 Stunden zu 50 Euro und einmalig 380 Euro für die interne Einrichtung. Weitere Kosten fallen im vereinfachten Vergleich nicht an. Der Satz ist ein interner Verrechnungssatz.",
+        "Multipliziere Stunden mit dem Satz und addiere anschließend die Einmalkosten. A kostet 800 + 40 = 840 Euro, B kostet 500 + 380 = 880 Euro. Zeige, wie empfindlich das Ergebnis ist. Zwei zusätzliche Stunden bei A erhöhen den Betrag um 100 auf 940 Euro. Dann liegt A 60 Euro über B, sofern B bei seiner Schätzung bleibt."
+      ],
+      "example": {
+        "title": "Aus dem Werkstattprojekt",
+        "text": "Die Kalkulationszeile „Anpassung, 4 h × 50 Euro = 200 Euro“ erklärt einen Teilbetrag. Die Angabe „vier Tage“ wäre ohne besetzte Stunden je Tag keine Kostenbasis."
+      },
+      "misconception": {
+        "claim": "Weniger Arbeitsstunden machen B im Pilotvergleich günstiger.",
+        "correction": "Die unterschiedlichen Einmalkosten kehren hier den Vergleich der Arbeitskosten um."
+      },
+      "takeaway": "Rechne Kosten je Variante mit Zeitraum, Menge, Einheit und Annahmen vor."
+    },
+    {
+      "id": "fiae-lf12a-alternatives-block-3",
+      "title": "3. Leistungsumfang und Prüftermin vereinbaren",
+      "objectiveIds": [
+        "fiae-lf12a-alternatives-agreement"
+      ],
+      "sourceIds": [
+        "ec-pm2-artefacts"
+      ],
+      "paragraphs": [
+        "Erstelle ein kurzes internes Angebot mit gewählter Variante, Lieferteilen, Zeitpunkt, Aufwand und Kostenbasis. Ergänze die zugesagte Mitwirkung und die Abnahmekriterien. Nach der Bestätigung durch die Leitung dient diese Leistungsvereinbarung als Ausgangspunkt für Änderungen. Die Leitung soll erkennen können, wofür sie Ressourcen freigibt und wie sie den Erhalt prüft. Die Stundenrechnung umfasst die Entwicklungsarbeit. Der Beitrag von IT und Annahme wird im Modell als bereitgestellte Mitwirkung ausgewiesen. Die im Modell geschätzten internen Kosten sind kein zugesicherter externer Verkaufspreis.",
+        "Für A stehen Maske, Ticketfunktion, Anleitung und Einweisung im Umfang. Die IT stellt den Testzugang. Die Annahme reserviert Übungszeit. Rechnungsdruck bleibt außerhalb. Ergänze, wer später Änderungen bewertet und wer über Mehrumfang entscheidet."
+      ],
+      "example": {
+        "title": "Aus dem Werkstattprojekt",
+        "text": "Die Leistungszeile „Einweisung an einem synthetischen Musterauftrag mit anschließender Eigenaufgabe, Termin Tag 4“ lässt sich bei der Übergabe wiederfinden. „Service nach Bedarf“ lässt Dauer und Prüfbarkeit offen."
+      },
+      "misconception": {
+        "claim": "Ein Stundensatz erklärt dem Kunden bereits, welche Leistung geliefert wird.",
+        "correction": "Die Vereinbarung braucht neben der Rechenbasis konkrete Lieferteile, Grenzen und Abnahmebedingungen."
+      },
+      "takeaway": "Halte mit dem Kunden fest, was unter welchen Bedingungen geliefert und geprüft wird."
+    },
+    {
+      "id": "fiae-lf12a-alternatives-block-4",
+      "title": "4. Eine Entscheidung unter Unsicherheit vertreten",
+      "objectiveIds": [
+        "fiae-lf12a-alternatives-compare",
+        "fiae-lf12a-alternatives-cost",
+        "fiae-lf12a-alternatives-agreement"
+      ],
+      "sourceIds": [
+        "ec-pm2-artefacts",
+        "pm-ihk-calculation"
+      ],
+      "paragraphs": [
+        "Erstelle zuerst eine Zeile pro Muss-Kriterium, dann eine Kostenzeile und zuletzt eine Zeile für offene Risiken. Scheitert eine Variante am Muss-Kriterium, kläre eine tragfähige Anpassung vor der Auswahl. Unter den geeigneten Varianten können Nutzen, Kosten und Risiken gegeneinander abgewogen werden.",
+        "Die Leitung bevorzugt hier A, weil Hinweise und Funktion bereits zur Annahme passen und der Pilot mit 840 Euro kalkuliert ist. Sie übernimmt das Pflegerisiko bewusst und lässt die IT die Zuständigkeit festhalten. Eine andere Entscheidung wäre bei veränderten Bedingungen begründbar."
+      ],
+      "example": {
+        "title": "Aus dem Werkstattprojekt",
+        "text": "Kommt ein Aufwand von zwei zusätzlichen Stunden in Sicht, wird der Vorteil von 40 Euro zu einem Nachteil von 60 Euro. Die Bedienpassung bleibt ein begründeter Nutzen, der Mehrbetrag ist dann sichtbar abzuwägen."
+      },
+      "misconception": {
+        "claim": "Die erste Kostenschätzung bestimmt die Variante auch nach neuen Befunden.",
+        "correction": "Neue Informationen können den Vergleich ändern. Bewahre Ausgangsschätzung, aktualisierte Rechnung und Entscheidung."
+      },
+      "takeaway": "Die Entscheidung nennt ihren Geltungsbereich und die Annahmen, bei denen sie kippen kann."
+    }
+  ],
+  "questionFile": "questions/fiae-lf12a-alternatives.v1.csv",
+  "quiz": {
+    "questionIds": [
+      "LJ-LF12A-ALTERNATIVES-Q01",
+      "LJ-LF12A-ALTERNATIVES-Q02",
+      "LJ-LF12A-ALTERNATIVES-Q03",
+      "LJ-LF12A-ALTERNATIVES-Q04",
+      "LJ-LF12A-ALTERNATIVES-Q05",
+      "LJ-LF12A-ALTERNATIVES-Q06"
+    ]
+  },
+  "exam": {
+    "questionIds": [
+      "LJ-LF12A-ALTERNATIVES-E01",
+      "LJ-LF12A-ALTERNATIVES-E02",
+      "LJ-LF12A-ALTERNATIVES-E03",
+      "LJ-LF12A-ALTERNATIVES-E04",
+      "LJ-LF12A-ALTERNATIVES-E05",
+      "LJ-LF12A-ALTERNATIVES-E06",
+      "LJ-LF12A-ALTERNATIVES-E07",
+      "LJ-LF12A-ALTERNATIVES-E08"
+    ],
+    "passPercent": 80,
+    "scoring": "all-or-nothing-per-question",
+    "timed": false
+  },
+  "questionLinks": [
+    {
+      "questionId": "LJ-LF12A-ALTERNATIVES-Q01",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf12a-alternatives-compare"
+      ],
+      "blockIds": [
+        "fiae-lf12a-alternatives-block-1"
+      ]
+    },
+    {
+      "questionId": "LJ-LF12A-ALTERNATIVES-Q02",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf12a-alternatives-compare"
+      ],
+      "blockIds": [
+        "fiae-lf12a-alternatives-block-1"
+      ]
+    },
+    {
+      "questionId": "LJ-LF12A-ALTERNATIVES-Q03",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf12a-alternatives-cost"
+      ],
+      "blockIds": [
+        "fiae-lf12a-alternatives-block-2"
+      ]
+    },
+    {
+      "questionId": "LJ-LF12A-ALTERNATIVES-Q04",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf12a-alternatives-cost"
+      ],
+      "blockIds": [
+        "fiae-lf12a-alternatives-block-2"
+      ]
+    },
+    {
+      "questionId": "LJ-LF12A-ALTERNATIVES-Q05",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf12a-alternatives-agreement"
+      ],
+      "blockIds": [
+        "fiae-lf12a-alternatives-block-3"
+      ]
+    },
+    {
+      "questionId": "LJ-LF12A-ALTERNATIVES-Q06",
+      "phase": "quiz",
+      "objectiveIds": [
+        "fiae-lf12a-alternatives-agreement"
+      ],
+      "blockIds": [
+        "fiae-lf12a-alternatives-block-3"
+      ]
+    },
+    {
+      "questionId": "LJ-LF12A-ALTERNATIVES-E01",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf12a-alternatives-compare"
+      ],
+      "blockIds": [
+        "fiae-lf12a-alternatives-block-1",
+        "fiae-lf12a-alternatives-block-4"
+      ]
+    },
+    {
+      "questionId": "LJ-LF12A-ALTERNATIVES-E02",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf12a-alternatives-cost"
+      ],
+      "blockIds": [
+        "fiae-lf12a-alternatives-block-2",
+        "fiae-lf12a-alternatives-block-4"
+      ]
+    },
+    {
+      "questionId": "LJ-LF12A-ALTERNATIVES-E03",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf12a-alternatives-cost"
+      ],
+      "blockIds": [
+        "fiae-lf12a-alternatives-block-2"
+      ]
+    },
+    {
+      "questionId": "LJ-LF12A-ALTERNATIVES-E04",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf12a-alternatives-compare"
+      ],
+      "blockIds": [
+        "fiae-lf12a-alternatives-block-1",
+        "fiae-lf12a-alternatives-block-4"
+      ]
+    },
+    {
+      "questionId": "LJ-LF12A-ALTERNATIVES-E05",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf12a-alternatives-agreement"
+      ],
+      "blockIds": [
+        "fiae-lf12a-alternatives-block-3"
+      ]
+    },
+    {
+      "questionId": "LJ-LF12A-ALTERNATIVES-E06",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf12a-alternatives-cost"
+      ],
+      "blockIds": [
+        "fiae-lf12a-alternatives-block-2",
+        "fiae-lf12a-alternatives-block-4"
+      ]
+    },
+    {
+      "questionId": "LJ-LF12A-ALTERNATIVES-E07",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf12a-alternatives-agreement"
+      ],
+      "blockIds": [
+        "fiae-lf12a-alternatives-block-3",
+        "fiae-lf12a-alternatives-block-4"
+      ]
+    },
+    {
+      "questionId": "LJ-LF12A-ALTERNATIVES-E08",
+      "phase": "exam",
+      "objectiveIds": [
+        "fiae-lf12a-alternatives-compare",
+        "fiae-lf12a-alternatives-cost"
+      ],
+      "blockIds": [
+        "fiae-lf12a-alternatives-block-2",
+        "fiae-lf12a-alternatives-block-4"
+      ]
+    }
+  ],
+  "interview": [
+    {
+      "id": "fiae-lf12a-alternatives-talk-1",
+      "prompt": "Entwirf zwei getrennte Proben, bevor du das interne Servicemodul empfiehlst.",
+      "objectiveIds": [
+        "fiae-lf12a-alternatives-compare"
+      ],
+      "blockIds": [
+        "fiae-lf12a-alternatives-block-1"
+      ],
+      "keyPoints": [
+        "Erfundenes Ticket ohne Kontakt speichern.",
+        "Änderungsversuch mit lesender Rolle beobachten.",
+        "Ergebnisse gesondert festhalten."
+      ],
+      "acceptableAlternatives": [
+        "Ein Rollenpaar aus erlaubter und untersagter Änderung macht die zweite Probe besonders aussagekräftig."
+      ],
+      "misconceptions": [
+        "Vom Fehlen eines Felds auf wirksame Rechteprüfung schließen."
+      ],
+      "sampleAnswer": "Ich deaktiviere das Kontaktfeld und speichere ein synthetisches Ticket. Danach teste ich am selben Stand den Statuswechsel mit berechtigter und lesender Rolle. Eingabebedarf und Schutz erhalten jeweils einen Befund.",
+      "followUp": "Welcher offene Befund würde eine sofortige Auswahl verhindern?"
+    },
+    {
+      "id": "fiae-lf12a-alternatives-talk-2",
+      "prompt": "Warum kann sich der wirtschaftliche Vergleich durch einen kleinen Zusatzaufwand umkehren?",
+      "objectiveIds": [
+        "fiae-lf12a-alternatives-cost"
+      ],
+      "blockIds": [
+        "fiae-lf12a-alternatives-block-2",
+        "fiae-lf12a-alternatives-block-4"
+      ],
+      "keyPoints": [
+        "840 und 880 Euro aus den Pilotkosten herleiten.",
+        "Zwei Stunden mit 100 Euro ansetzen.",
+        "60 Euro Mehrkosten für A erläutern."
+      ],
+      "acceptableAlternatives": [
+        "Eine nachvollziehbar beschriftete Differenzrechnung ist gleichwertig."
+      ],
+      "misconceptions": [
+        "Die zusätzlichen Stunden vom Preis von B abziehen."
+      ],
+      "sampleAnswer": "Im geplanten Fall kostet A 40 Euro weniger. Zwei zusätzliche Stunden kosten 100 Euro. Damit steigt A auf 940 Euro und liegt 60 Euro über der unveränderten Schätzung von B.",
+      "followUp": "Welche Annahme über B steckt in diesem Vergleich?"
+    },
+    {
+      "id": "fiae-lf12a-alternatives-talk-3",
+      "prompt": "Formuliere eine kurze Vereinbarung zur ausgewählten Variante.",
+      "objectiveIds": [
+        "fiae-lf12a-alternatives-agreement"
+      ],
+      "blockIds": [
+        "fiae-lf12a-alternatives-block-3",
+        "fiae-lf12a-alternatives-block-4"
+      ],
+      "keyPoints": [
+        "Lieferteile und Grenze benennen.",
+        "Aufwandsschätzung und Mitwirkung festhalten.",
+        "Prüftermin und Entscheidungsrolle vereinbaren."
+      ],
+      "acceptableAlternatives": [
+        "Eine gegliederte Leistungsübersicht mit bestätigtem Stand erfüllt denselben Zweck."
+      ],
+      "misconceptions": [
+        "Eine Kostenschätzung als Festpreiszusage behandeln."
+      ],
+      "sampleAnswer": "Wir passen die bestehende Maske und Ticketfunktion an und liefern Anleitung und Einweisung, kalkuliert mit 840 Euro. Die IT stellt den Zugang, die Annahme stellt vier Plätze an Tag vier. Zusatzberichte beantragt die Leitung separat.",
+      "followUp": "Wie erkennt die Annahme später, ob die Einweisung geliefert wurde?"
+    }
+  ],
+  "cards": [
+    {
+      "id": "fiae-lf12a-alternatives-card-01",
+      "front": "Woran unterscheidest du Datenminimierung und Zugriffsschutz?",
+      "back": "Felder und Verwendungszweck zeigen den Datenbedarf. Rollenproben zeigen, wer tatsächlich lesen oder ändern kann.",
+      "objectiveIds": [
+        "fiae-lf12a-alternatives-compare"
+      ],
+      "blockIds": [
+        "fiae-lf12a-alternatives-block-1"
+      ]
+    },
+    {
+      "id": "fiae-lf12a-alternatives-card-02",
+      "front": "Welches Risiko begleitet die eigene Werkstattlösung?",
+      "back": "Pflege und Anpassung liegen bei der internen IT. Dafür braucht sie Zeit und eine benannte Zuständigkeit.",
+      "objectiveIds": [
+        "fiae-lf12a-alternatives-compare"
+      ],
+      "blockIds": [
+        "fiae-lf12a-alternatives-block-1",
+        "fiae-lf12a-alternatives-block-4"
+      ]
+    },
+    {
+      "id": "fiae-lf12a-alternatives-card-03",
+      "front": "Wie kommt der Kostenansatz von A zustande?",
+      "back": "16 h × 50 Euro/h + 40 Euro einmalig = 840 Euro für den vereinbarten Pilotumfang.",
+      "objectiveIds": [
+        "fiae-lf12a-alternatives-cost"
+      ],
+      "blockIds": [
+        "fiae-lf12a-alternatives-block-2"
+      ]
+    },
+    {
+      "id": "fiae-lf12a-alternatives-card-04",
+      "front": "Wann wird der anfängliche Kostenvorteil von 40 Euro bei A zum Nachteil?",
+      "back": "Bei zwei zusätzlichen Stunden zu 50 Euro liegt A bei 940 Euro und damit 60 Euro über der unveränderten Schätzung für B.",
+      "objectiveIds": [
+        "fiae-lf12a-alternatives-cost"
+      ],
+      "blockIds": [
+        "fiae-lf12a-alternatives-block-2",
+        "fiae-lf12a-alternatives-block-4"
+      ]
+    },
+    {
+      "id": "fiae-lf12a-alternatives-card-05",
+      "front": "Welche Angaben machen eine Leistungsvereinbarung prüfbar?",
+      "back": "Variante, Lieferteile, Abgrenzung, Mitwirkung, Kostenbasis, Termin und Abnahmekriterien.",
+      "objectiveIds": [
+        "fiae-lf12a-alternatives-agreement"
+      ],
+      "blockIds": [
+        "fiae-lf12a-alternatives-block-3"
+      ]
+    },
+    {
+      "id": "fiae-lf12a-alternatives-card-06",
+      "front": "Wer stimmt einen nachträglich verlangten Bericht ab?",
+      "back": "Die Projektverantwortlichen bewerten die Auswirkung. Die Werkstattleitung entscheidet über den geänderten Auftrag.",
+      "objectiveIds": [
+        "fiae-lf12a-alternatives-agreement"
+      ],
+      "blockIds": [
+        "fiae-lf12a-alternatives-block-3",
+        "fiae-lf12a-alternatives-block-4"
+      ]
+    }
+  ],
+  "review": {
+    "status": "reviewed",
+    "checkedAt": "2026-11-19"
+  }
+}

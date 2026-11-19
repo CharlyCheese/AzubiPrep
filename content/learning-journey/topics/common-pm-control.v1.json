@@ -1,0 +1,481 @@
+{
+  "schemaVersion": 1,
+  "id": "common-pm-control",
+  "version": "1.0.0",
+  "title": "Risiken, Änderungen und Projektsteuerung",
+  "fieldId": "PM",
+  "scope": "common",
+  "prerequisites": [
+    "common-pm-feasibility"
+  ],
+  "sourceIds": [
+    "ec-pm2-methodology",
+    "ec-pm2-artefacts"
+  ],
+  "sources": [
+    {
+      "id": "ec-pm2-methodology",
+      "title": "Europäische Kommission: PM²-Projektmanagement",
+      "url": "https://pm2.europa.eu/pm2-methodologies/pm2-project-management_en",
+      "checkedAt": "2026-11-11",
+      "note": "Öffentliche Methodik zu Governance, Projektlebenszyklus, Aktivitäten und Dokumentation geprüft. Eigene vereinfachte IT-Fälle, keine zwingende Bindung jedes Projekts an eine Methode."
+    },
+    {
+      "id": "ec-pm2-artefacts",
+      "title": "Europäische Kommission: PM²-Artefakte",
+      "url": "https://pm2.europa.eu/pm2-artefacts_en",
+      "checkedAt": "2026-11-11",
+      "note": "Öffentliche HTML-Übersicht: Projektauftrag, Arbeitsplan, Risiken, Änderungen, Entscheidungen, Abnahme, Übergabe und Abschlussbericht. Keine Downloads oder privaten Vorlagen verwendet; Beispiele eigenständig formuliert."
+    }
+  ],
+  "objectives": [
+    {
+      "id": "common-pm-control-risks",
+      "text": "Projektrisiken nach Eintrittswahrscheinlichkeit und Auswirkung beurteilen und Maßnahmen planen."
+    },
+    {
+      "id": "common-pm-control-variance",
+      "text": "Soll- und Istwerte vergleichen und Abweichungen begründet untersuchen."
+    },
+    {
+      "id": "common-pm-control-change",
+      "text": "Änderungswünsche auf Umfang, Kosten und Termine prüfen und Entscheidungen festhalten."
+    }
+  ],
+  "caseStudy": {
+    "title": "Nordlicht IT plant und prüft",
+    "text": "Das Portalprojekt von Nordlicht IT befindet sich in der Umsetzung. Ein unsicherer Liefertermin könnte den Test verzögern. Zugleich liegen erste erfasste Arbeitsstunden vor und der Auftraggeber wünscht ein zusätzliches Formular. Das Team trennt mögliche künftige Risiken, bereits eingetretene Probleme und beantragte Änderungen, um belastbare Entscheidungen vorzubereiten."
+  },
+  "blocks": [
+    {
+      "id": "common-pm-control-risks",
+      "title": "1. Risiken erkennen und Maßnahmen zuordnen",
+      "objectiveIds": [
+        "common-pm-control-risks"
+      ],
+      "sourceIds": [
+        "ec-pm2-methodology",
+        "ec-pm2-artefacts"
+      ],
+      "paragraphs": [
+        "Ein Risiko ist ein unsicheres künftiges Ereignis, das Projektziele beeinflussen kann. Hier betrachten wir Bedrohungen: Eine verspätete Lieferung könnte den Testbeginn verschieben. Ist die Lieferung bereits verspätet und blockiert die Arbeit, liegt ein eingetretenes Problem vor. Beides braucht eine Bearbeitung, aber die Wahrscheinlichkeit des bereits eingetretenen Ereignisses wird nicht weiter als Zukunftsfrage behandelt.",
+        "Beschreibe Ursache, mögliches Ereignis und Auswirkung. Bewerte die Eintrittswahrscheinlichkeit und die Folgen für Zeit, Kosten, Qualität oder Leistungsumfang. Eine Einschätzung bleibt begründungsbedürftig; sie wird überprüft, wenn neue Informationen vorliegen.",
+        "Im vereinfachten Geldmodell lässt sich ein Erwartungswert rechnen: 30 Prozent Wahrscheinlichkeit × 2.000 Euro Zusatzkosten im Eintrittsfall = 600 Euro. Das heißt weder, dass genau 600 Euro anfallen, noch dass die 2.000 Euro Schaden gedeckt sind. Ein seltenes Ereignis mit schweren Folgen kann trotz niedrigem Erwartungswert besondere Aufmerksamkeit benötigen.",
+        "Lege eine verantwortliche Person, eine vorbeugende Maßnahme und einen Auslöser für einen Ersatzplan fest. Im Fall prüft Lea bis Dienstag die Lieferbestätigung. Fehlt sie, wird die bereits auf Kompatibilität geprüfte Alternative angefragt. Ein Name ohne Termin oder eine Reserve ohne konkrete Maßnahme genügt nicht als Reaktionsplan.",
+        "Mögliche Reaktionen sind Vermeiden, Wahrscheinlichkeit oder Schaden vermindern, einen Anteil vertraglich übertragen oder ein vertretbares Restrisiko bewusst akzeptieren. Eine vereinbarte Reserve bleibt transparent und zweckgebunden. Eine Maßnahme hat eigene Kosten und beseitigt nicht notwendigerweise jede Folge."
+      ],
+      "example": {
+        "title": "Eigener Lernfall",
+        "text": "Ein früher Test mit einem Ersatzgerät senkt das Risiko einer späten technischen Überraschung. Er kann zusätzlichen Aufwand verursachen; dieser Aufwand wird mit dem erwarteten Nutzen der Maßnahme verglichen."
+      },
+      "misconception": {
+        "claim": "Ein Erwartungswert von 600 Euro ist die sichere spätere Schadenshöhe.",
+        "correction": "Er gewichtet mögliche Schäden mit einer geschätzten Wahrscheinlichkeit; ein einzelner Fall kann ohne Schaden oder mit einem anderen Betrag enden."
+      },
+      "takeaway": "Risiken brauchen Begründung, Verantwortung, Maßnahme und Beobachtung."
+    },
+    {
+      "id": "common-pm-control-variance",
+      "title": "2. Soll, Ist und Prognose auseinanderhalten",
+      "objectiveIds": [
+        "common-pm-control-variance"
+      ],
+      "sourceIds": [
+        "ec-pm2-methodology",
+        "ec-pm2-artefacts"
+      ],
+      "paragraphs": [
+        "Soll ist ein vereinbarter Planwert, Ist der zum Stichtag erfasste tatsächliche Wert. Vergleiche gleiche Einheiten, Zeiträume und Leistungsstände. Weniger bisher verbrauchte Stunden bedeuten nicht zwingend bessere Leistung, wenn weniger Ergebnisse fertig sind.",
+        "Für dieses Thema gilt die Vorzeichenregel: Abweichung = Ist − Soll. Bei Kosten oder Aufwand bedeutet ein positiver Wert eine Überschreitung. Die relative Abweichung ist (Ist − Soll) ÷ Soll × 100, sofern Soll nicht null ist. 25 Iststunden statt 20 Sollstunden für dasselbe fertiggestellte Arbeitspaket ergeben +5 Stunden oder +25 Prozent.",
+        "Bei einem vollständig abgeschlossenen Auftrag mit 3.760 Euro Sollkosten und 4.000 Euro Istkosten beträgt die Kostenabweichung +240 Euro. Bezogen auf Soll sind das 240 ÷ 3.760 × 100 ≈ +6,38 Prozent. Der gleiche Leistungsumfang und die vollständige Erfassung sind Voraussetzungen dieser Aussage.",
+        "Während der Umsetzung ist eine Fertigstellungsprognose aussagekräftiger als der bisherige Verbrauch allein. Geplant sind 80 Stunden, bisher wurden 50 Stunden verbraucht und die neu geschätzte Restarbeit beträgt 40 Stunden. Die Prognose lautet 90 Stunden, also 10 Stunden beziehungsweise 12,5 Prozent über dem ursprünglichen Gesamtplan. Die 40 Stunden Restarbeit sind eine aktuelle Schätzung, kein bereits erfasster Istwert.",
+        "Untersuche Ursachen, bevor du Maßnahmen festlegst: unklare Anforderungen, Mehrarbeit, falsche Schätzannahme, fehlende Fähigkeit oder ein Messfehler können unterschiedlich behandelt werden. Halte den ursprünglichen Vergleichsplan nachvollziehbar fest. Genehmigte Planänderungen werden versioniert; stilles Überschreiben würde die Abweichung verdecken."
+      ],
+      "example": {
+        "title": "Eigener Lernfall",
+        "text": "Eine Auswertung zeigt 50 verbrauchte Stunden von geplanten 80. Erst mit der Frage nach fertigen Ergebnissen und den noch geschätzten 40 Stunden wird sichtbar, dass 90 Stunden zu erwarten sind."
+      },
+      "misconception": {
+        "claim": "Unter dem Gesamtbudget liegende Istkosten beweisen, dass das Projekt erfolgreich im Plan liegt.",
+        "correction": "Vor Abschluss fehlen möglicherweise noch Leistungen und Kosten; prüfe den erreichten Stand und die Restprognose."
+      },
+      "takeaway": "Vergleiche Gleiches mit Gleichem und ergänze die Restarbeit zur Prognose."
+    },
+    {
+      "id": "common-pm-control-change",
+      "title": "3. Änderungswünsche entscheidbar machen",
+      "objectiveIds": [
+        "common-pm-control-change"
+      ],
+      "sourceIds": [
+        "ec-pm2-methodology",
+        "ec-pm2-artefacts"
+      ],
+      "paragraphs": [
+        "Eine Änderung ist eine gewünschte Abweichung vom freigegebenen Leistungsumfang oder Vorgehen. Beschreibe den Wunsch und seinen Nutzen verständlich. Ein beiläufig erwähnter Wunsch ist noch keine genehmigte Erweiterung des Projektauftrags.",
+        "Prüfe die Folgen für Umfang, Aufwand, Kosten, Termine, Qualität und Risiken. Das Team liefert die fachliche Einschätzung, die Projektleitung bereitet die Entscheidung vor. Im Fall entscheidet der im Projektauftrag dafür benannte Auftraggeber über eine Erweiterung außerhalb der freigegebenen Spielräume. Die Entscheidungskompetenz muss vorher feststehen.",
+        "Das zusätzliche Formular benötigt im Lernfall 10 Stunden. Bei 35 Euro direkten Personalkosten je Stunde und 20 Prozent Gemeinkostenzuschlag darauf entstehen 350 + 70 = 420 Euro zusätzliche Selbstkosten. Fremdkosten ändern sich hier nicht; die Selbstkosten steigen von 3.760 auf 4.180 Euro. Das ist noch kein Angebotspreis, denn ein möglicher Gewinnaufschlag wäre getrennt zu behandeln.",
+        "Zusätzliche Stunden verlängern den Termin nicht immer um dieselbe Zahl an Kalendertagen. Prüfe verfügbare Kapazität, Abhängigkeiten und Puffer. Kann die Arbeit erst nach einer Vorleistung beginnen, hilft freie Kapazität davor nicht. Eine Zusatzfunktion darf auch zurückgestellt, gegen andere Leistungen getauscht oder abgelehnt werden.",
+        "Dokumentiere Wunsch, Auswirkungen, geprüfte Alternativen, Entscheidung, zuständige Person und Datum. Bei Freigabe werden Arbeitsplan, Kostenschätzung, Termine und betroffene Abnahmekriterien nachvollziehbar angepasst. Auch eine Ablehnung erhält eine Begründung, damit der Wunsch nicht später stillschweigend wieder als zugesagt gilt."
+      ],
+      "example": {
+        "title": "Eigener Lernfall",
+        "text": "Der Auftraggeber wählt: das Formular in einer späteren Ausbaustufe statt im laufenden Portalprojekt. Das Team hält diese Abgrenzung im Entscheidungsprotokoll und im künftigen Aufgabenbestand fest."
+      },
+      "misconception": {
+        "claim": "Eine nützliche Zusatzfunktion darf ohne weitere Abstimmung in den aktuellen Auftrag wachsen.",
+        "correction": "Nutzen rechtfertigt eine Prüfung, ersetzt aber keine Entscheidung über Umfang, Mittel und Termine."
+      },
+      "takeaway": "Mache Wirkung und Alternativen sichtbar, bevor eine Änderung freigegeben wird."
+    },
+    {
+      "id": "common-pm-control-action",
+      "title": "4. Eine begründete Steuerungsentscheidung treffen",
+      "objectiveIds": [
+        "common-pm-control-risks",
+        "common-pm-control-variance",
+        "common-pm-control-change"
+      ],
+      "sourceIds": [
+        "ec-pm2-methodology",
+        "ec-pm2-artefacts"
+      ],
+      "paragraphs": [
+        "Ein knapper Statusbericht verbindet Fakten und Handlungsbedarf: freigegebener Plan, erreichte Ergebnisse, Istverbrauch, Restprognose, offene Risiken und benötigte Entscheidungen. Eine Ampelfarbe ohne diese Begründung reicht nicht, um Maßnahmen abzuleiten.",
+        "Trenne drei Dinge im Portalfall: Die möglicherweise verspätete Lieferung ist ein Risiko. Die bereits festgestellten 25 statt 20 Stunden für ein Arbeitspaket sind eine Istabweichung. Das zusätzliche Formular ist ein Änderungsantrag. Diese Kategorien können sich beeinflussen, dürfen aber nicht zu einem ungeklärten Sammelpunkt vermischt werden.",
+        "Maßnahmen müssen zum Befund passen. Gegen fehlende Lieferbestätigung hilft beispielsweise ein geprüfter Ersatzweg. Gegen missverständliche Anforderungen hilft eine konkrete Klärung mit prüfbarem Ergebnis. Gegen Zusatzumfang hilft eine begründete Änderungsentscheidung. Mehr Personen einzuplanen löst keine ungeklärte Anforderung von selbst.",
+        "Prüfe nach einer Maßnahme erneut, ob die Ursache und ihre Folgen ausreichend behandelt wurden. Lege dafür Zuständigkeit, Termin und Erfolgskriterium fest. Die Information Testgerät bis Freitag kompatibel bestätigt ist überprüfbarer als die bloße Aussage Risiko erledigt.",
+        "Ein bewusst genehmigter neuer Plan wird neben dem bisherigen Stand nachvollziehbar geführt. So lassen sich später ursprüngliche Schätzung, genehmigte Erweiterung und tatsächliche Leistung auseinanderhalten. Die Nachkalkulation am Abschluss kann daraus konkrete Verbesserungen ableiten."
+      ],
+      "example": {
+        "title": "Eigener Lernfall",
+        "text": "Lea berichtet die fehlende Lieferbestätigung mit Ersatzmaßnahme, der Projektleiter die aktuelle 90-Stunden-Prognose und der Auftraggeber entscheidet über den Formularwunsch. Für alle Punkte werden Termin und Verantwortliche festgehalten."
+      },
+      "misconception": {
+        "claim": "Ein grün gefärbter Status ersetzt die Prüfung von Restaufwand und offenen Entscheidungen.",
+        "correction": "Status und Maßnahmen brauchen prüfbare Daten; eine Darstellung verändert weder Arbeit noch Risiken."
+      },
+      "takeaway": "Steuerung verbindet beobachtete Fakten mit einer überprüfbaren Handlung."
+    }
+  ],
+  "questionFile": "questions/common-pm-control.v1.csv",
+  "quiz": {
+    "questionIds": [
+      "LJ-PM-CONTROL-Q01",
+      "LJ-PM-CONTROL-Q02",
+      "LJ-PM-CONTROL-Q03",
+      "LJ-PM-CONTROL-Q04",
+      "LJ-PM-CONTROL-Q05",
+      "LJ-PM-CONTROL-Q06"
+    ]
+  },
+  "exam": {
+    "questionIds": [
+      "LJ-PM-CONTROL-E01",
+      "LJ-PM-CONTROL-E02",
+      "LJ-PM-CONTROL-E03",
+      "LJ-PM-CONTROL-E04",
+      "LJ-PM-CONTROL-E05",
+      "LJ-PM-CONTROL-E06",
+      "LJ-PM-CONTROL-E07",
+      "LJ-PM-CONTROL-E08"
+    ],
+    "passPercent": 80,
+    "scoring": "all-or-nothing-per-question",
+    "timed": false
+  },
+  "questionLinks": [
+    {
+      "questionId": "LJ-PM-CONTROL-Q01",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-pm-control-risks"
+      ],
+      "blockIds": [
+        "common-pm-control-risks"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-CONTROL-Q02",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-pm-control-risks"
+      ],
+      "blockIds": [
+        "common-pm-control-risks"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-CONTROL-Q03",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-pm-control-variance"
+      ],
+      "blockIds": [
+        "common-pm-control-variance"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-CONTROL-Q04",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-pm-control-variance"
+      ],
+      "blockIds": [
+        "common-pm-control-variance"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-CONTROL-Q05",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-pm-control-change"
+      ],
+      "blockIds": [
+        "common-pm-control-change"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-CONTROL-Q06",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-pm-control-change"
+      ],
+      "blockIds": [
+        "common-pm-control-change"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-CONTROL-E01",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-pm-control-risks"
+      ],
+      "blockIds": [
+        "common-pm-control-risks"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-CONTROL-E02",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-pm-control-risks"
+      ],
+      "blockIds": [
+        "common-pm-control-risks"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-CONTROL-E03",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-pm-control-risks"
+      ],
+      "blockIds": [
+        "common-pm-control-risks",
+        "common-pm-control-action"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-CONTROL-E04",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-pm-control-variance"
+      ],
+      "blockIds": [
+        "common-pm-control-variance"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-CONTROL-E05",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-pm-control-variance"
+      ],
+      "blockIds": [
+        "common-pm-control-variance"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-CONTROL-E06",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-pm-control-change"
+      ],
+      "blockIds": [
+        "common-pm-control-change"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-CONTROL-E07",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-pm-control-change"
+      ],
+      "blockIds": [
+        "common-pm-control-change",
+        "common-pm-control-action"
+      ]
+    },
+    {
+      "questionId": "LJ-PM-CONTROL-E08",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-pm-control-risks",
+        "common-pm-control-variance",
+        "common-pm-control-change"
+      ],
+      "blockIds": [
+        "common-pm-control-action"
+      ]
+    }
+  ],
+  "interview": [
+    {
+      "id": "common-pm-control-talk-1",
+      "prompt": "Beschreibe für eine mögliche Lieferverzögerung Ursache, Wirkung, Bewertung und Maßnahme. Was bedeuten 30 Prozent mal 2.000 Euro?",
+      "objectiveIds": [
+        "common-pm-control-risks"
+      ],
+      "blockIds": [
+        "common-pm-control-risks"
+      ],
+      "keyPoints": [
+        "Unsicheres Ereignis von eingetretenem Problem unterscheiden.",
+        "600 Euro Erwartungswert, keine sichere Schadenshöhe.",
+        "Verantwortliche, Termin und Ersatzmaßnahme festlegen."
+      ],
+      "acceptableAlternatives": [
+        "Sinngleiche fachliche Begründungen und gleichwertige Rechenwege sind möglich."
+      ],
+      "misconceptions": [
+        "Gewichteten Risikowert als Eintrittsschaden oder sichere Risikodeckung behandeln."
+      ],
+      "sampleAnswer": "Eine unsichere Lieferzusage könnte den Teststart verschieben. 30 Prozent von 2.000 Euro ergeben 600 Euro als Erwartungswert. Lea prüft bis Dienstag die Bestätigung; fehlt sie, nutzt sie den geprüften Ersatzweg. Einen schon eingetretenen Verzug bearbeite ich als Problem.",
+      "followUp": "Welche neue Information würde deine Risikobewertung verändern?"
+    },
+    {
+      "id": "common-pm-control-talk-2",
+      "prompt": "Deute 50 verbrauchte Stunden, 40 geschätzte Reststunden und den ursprünglichen 80-Stunden-Plan. Welche Ursachen würdest du vor einer Maßnahme untersuchen?",
+      "objectiveIds": [
+        "common-pm-control-variance"
+      ],
+      "blockIds": [
+        "common-pm-control-variance"
+      ],
+      "keyPoints": [
+        "Prognose 90 Stunden, +10 Stunden und +12,5 Prozent.",
+        "Istverbrauch und geschätzte Restarbeit trennen.",
+        "Leistungsstand, Messfehler, Umfang und Schätzannahmen prüfen."
+      ],
+      "acceptableAlternatives": [
+        "Sinngleiche fachliche Begründungen und gleichwertige Rechenwege sind möglich."
+      ],
+      "misconceptions": [
+        "Unter dem Gesamtbudget liegenden bisherigen Verbrauch als fertiges Ergebnis behandeln."
+      ],
+      "sampleAnswer": "Die Prognose liegt bei 90 Stunden und damit 10 Stunden beziehungsweise 12,5 Prozent über Plan. Ich prüfe fertige Ergebnisse, Stundenbuchungen, geänderten Umfang und ursprüngliche Annahmen. Eine Restschätzung ist noch kein Istverbrauch.",
+      "followUp": "Warum wäre 50 kleiner als 80 allein kein guter Erfolgsnachweis?"
+    },
+    {
+      "id": "common-pm-control-talk-3",
+      "prompt": "Bereite eine Entscheidung zum Zusatzformular vor: zehn Stunden, 35 Euro direkte Kosten je Stunde, 20 Prozent Gemeinkosten auf diese Kosten. Was wird gerechnet, geprüft und dokumentiert?",
+      "objectiveIds": [
+        "common-pm-control-change",
+        "common-pm-control-variance",
+        "common-pm-control-risks"
+      ],
+      "blockIds": [
+        "common-pm-control-change",
+        "common-pm-control-action"
+      ],
+      "keyPoints": [
+        "Zusätzliche Selbstkosten 420 Euro, Gesamtplan 4.180 Euro bei sonst gleichen Kosten.",
+        "Nutzen, Umfang, Kapazität, Termine, Qualität und Risiken prüfen.",
+        "Entscheidung durch benannte Stelle mit Alternativen und Planversion festhalten."
+      ],
+      "acceptableAlternatives": [
+        "Sinngleiche fachliche Begründungen und gleichwertige Rechenwege sind möglich."
+      ],
+      "misconceptions": [
+        "Zusatzaufwand ohne Wirkungsprüfung zusagen oder Kosten mit Verkaufspreis gleichsetzen."
+      ],
+      "sampleAnswer": "Die Änderung kostet 350 Euro direkt plus 70 Euro Gemeinkosten, also 420 Euro. Ich prüfe zusätzlich Kapazität, Abhängigkeiten und Qualitätsfolgen. Die benannte Stelle entscheidet über Umsetzung, Tausch, Verschiebung oder Ablehnung. Entscheidung und aktualisierte Pläne halte ich nachvollziehbar fest.",
+      "followUp": "Welche Information brauchst du, bevor du einen neuen Fertigstellungstermin zusagst?"
+    }
+  ],
+  "cards": [
+    {
+      "id": "common-pm-control-card-1",
+      "front": "Was unterscheidet Risiko und eingetretenes Problem?",
+      "back": "Ein Risiko beschreibt ein unsicheres künftiges Ereignis mit möglicher Zielwirkung. Ein bereits eingetretener Verzug ist ein aktuelles Problem.",
+      "objectiveIds": [
+        "common-pm-control-risks"
+      ],
+      "blockIds": [
+        "common-pm-control-risks"
+      ]
+    },
+    {
+      "id": "common-pm-control-card-2",
+      "front": "Was gehört zu einer Risikomaßnahme?",
+      "back": "Begründete Bewertung, verantwortliche Person, Termin, konkrete Maßnahme und Auslöser für einen Ersatzplan. Ein Erwartungswert ist keine garantierte Schadenshöhe.",
+      "objectiveIds": [
+        "common-pm-control-risks"
+      ],
+      "blockIds": [
+        "common-pm-control-risks"
+      ]
+    },
+    {
+      "id": "common-pm-control-card-3",
+      "front": "Wie wird hier eine relative Abweichung gerechnet?",
+      "back": "(Ist − Soll)/Soll × 100 bei Soll ≠ 0. 25 statt 20 Stunden ergeben +5 Stunden und +25 Prozent.",
+      "objectiveIds": [
+        "common-pm-control-variance"
+      ],
+      "blockIds": [
+        "common-pm-control-variance"
+      ]
+    },
+    {
+      "id": "common-pm-control-card-4",
+      "front": "Wie entsteht eine Fertigstellungsprognose?",
+      "back": "Bisheriger Istaufwand plus aktuell geschätzter Restaufwand. 50 + 40 = 90 Stunden gegenüber 80 geplanten Stunden.",
+      "objectiveIds": [
+        "common-pm-control-variance"
+      ],
+      "blockIds": [
+        "common-pm-control-variance"
+      ]
+    },
+    {
+      "id": "common-pm-control-card-5",
+      "front": "Was ist vor einer Änderungsfreigabe zu prüfen?",
+      "back": "Nutzen, Umfang, Aufwand, Kosten, Termin, Qualität, Risiken und Alternativen. Die vorher benannte entscheidungsbefugte Stelle erhält eine nachvollziehbare Vorlage.",
+      "objectiveIds": [
+        "common-pm-control-change"
+      ],
+      "blockIds": [
+        "common-pm-control-change"
+      ]
+    },
+    {
+      "id": "common-pm-control-card-6",
+      "front": "Woran erkennst du einen brauchbaren Statusbericht?",
+      "back": "Er verbindet erreichte Ergebnisse, Plan und Ist, Restprognose, Risiken, Maßnahmen und offene Entscheidungen mit Zuständigkeit und Termin.",
+      "objectiveIds": [
+        "common-pm-control-change",
+        "common-pm-control-variance",
+        "common-pm-control-risks"
+      ],
+      "blockIds": [
+        "common-pm-control-action"
+      ]
+    }
+  ],
+  "review": {
+    "status": "reviewed",
+    "checkedAt": "2026-11-11"
+  }
+}

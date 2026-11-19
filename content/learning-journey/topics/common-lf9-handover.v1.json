@@ -1,0 +1,649 @@
+{
+  "schemaVersion": 1,
+  "version": "1.0.0",
+  "id": "common-lf9-handover",
+  "title": "Netzwerk und Dienste nachweisen und übergeben",
+  "fieldId": "LF9",
+  "scope": "common",
+  "prerequisites": [
+    "common-lf9-monitoring",
+    "common-lf6-closure"
+  ],
+  "objectives": [
+    {
+      "id": "common-lf9-handover-evidence",
+      "text": "Anforderungen mit Funktionsprüfungen und Messwerten abgleichen und verbleibende Abweichungen dokumentieren."
+    },
+    {
+      "id": "common-lf9-handover-handover",
+      "text": "Netzplan, Dienstkonfiguration und Betriebsinformationen für die zuständigen Personen aufbereiten."
+    },
+    {
+      "id": "common-lf9-handover-improve",
+      "text": "Die Lösung anhand von Kundennutzen, Kosten, Energiebedarf und Erweiterbarkeit beurteilen."
+    }
+  ],
+  "sourceIds": [
+    "lf9-ms-capacity",
+    "lf9-ms-network",
+    "lf9-rfc5737",
+    "lf9-rfc4632",
+    "lf9-rfc1034",
+    "lf9-rfc2606",
+    "lf9-rfc9110",
+    "lf9-ms-recovery",
+    "lf9-ms-redundancy",
+    "lf9-ms-deployment",
+    "lf9-ms-monitoring",
+    "kmk-fachinformatiker-2019"
+  ],
+  "sources": [
+    {
+      "id": "lf9-ms-capacity",
+      "title": "Microsoft: Architecture strategies for capacity planning",
+      "url": "https://learn.microsoft.com/en-us/azure/well-architected/performance-efficiency/capacity-planning",
+      "note": "Öffentliche Herstellergrundlagen zu Arbeitslast, Spitzenlast, Leistungszielen und Kapazitätsplanung geprüft. Nutzerzahlen, Anforderungen und Rechenwerte sind selbst erstellte Fallannahmen.",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "lf9-ms-network",
+      "title": "Microsoft: Architecture strategies for networking and connectivity",
+      "url": "https://learn.microsoft.com/en-us/azure/well-architected/security/networking",
+      "note": "Öffentliche Herstellergrundlagen zu Segmentierung, Verkehrsbeziehungen und Filtern geprüft. Der begrenzte Netzplan und seine Freigaben sind fiktive Modellvorgaben.",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "lf9-rfc5737",
+      "title": "RFC 5737: IPv4 Address Blocks Reserved for Documentation",
+      "url": "https://www.rfc-editor.org/rfc/rfc5737.html",
+      "note": "Dokumentationsbereiche 192.0.2.0/24, 198.51.100.0/24 und 203.0.113.0/24 geprüft; im Lernfall werden keine realen Netze angesprochen.",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "lf9-rfc4632",
+      "title": "RFC 4632: Classless Inter-domain Routing (CIDR)",
+      "url": "https://www.rfc-editor.org/rfc/rfc4632.html",
+      "note": "Abschnitt 3.1 zu IPv4-Präfixen und Blockgrößen geprüft. Teilnetze und Kapazitätsrechnungen im Lernfall sind eigene Beispiele.",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "lf9-rfc1034",
+      "title": "RFC 1034: Domain names – concepts and facilities",
+      "url": "https://www.rfc-editor.org/rfc/rfc1034.html",
+      "note": "Grundlagen der Namensauflösung und typisierten DNS-Daten geprüft. Der A-Eintrag im Lernfall und die vereinfachte Auflösung sind synthetisch.",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "lf9-rfc2606",
+      "title": "RFC 2606: Reserved Top Level DNS Names",
+      "url": "https://www.rfc-editor.org/rfc/rfc2606.html",
+      "note": "Reservierung von .test für Tests geprüft. portal.example.test wird ausschließlich im lokalen Modell verwendet.",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "lf9-rfc9110",
+      "title": "RFC 9110: HTTP Semantics",
+      "url": "https://www.rfc-editor.org/rfc/rfc9110.html",
+      "note": "HTTPS-URI-Schema, Standardport 443 und Identitätsprüfung geprüft. Das Modell nutzt vorgegeben HTTPS über TCP; TLS-Zertifikate, Routing und Rückverkehr sind als funktionsfähig abstrahiert.",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "lf9-ms-recovery",
+      "title": "Microsoft: Architecture strategies for disaster recovery",
+      "url": "https://learn.microsoft.com/en-us/azure/well-architected/reliability/disaster-recovery",
+      "note": "Sicherung, Wiederherstellungsplanung und erprobte Wiederherstellung geprüft. Ausfallgrenzen und Verfahren im Lernfall sind didaktische Vorgaben.",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "lf9-ms-redundancy",
+      "title": "Microsoft: Architecture strategies for designing for redundancy",
+      "url": "https://learn.microsoft.com/en-us/azure/well-architected/reliability/redundancy",
+      "note": "Redundanz und gemeinsame Fehlerquellen anhand öffentlicher Herstellerbeschreibung geprüft. Kein Verfügbarkeitsversprechen für den fiktiven Einserverfall.",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "lf9-ms-deployment",
+      "title": "Microsoft: Architecture strategies for safe deployment practices",
+      "url": "https://learn.microsoft.com/en-us/azure/well-architected/operational-excellence/safe-deployments",
+      "note": "Prüfung von Änderungen, Zuständigkeiten und Wiederherstellung eines bekannten funktionierenden Stands geprüft. Aktualisierungsplan im Lernfall ist selbst erstellt.",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "lf9-ms-monitoring",
+      "title": "Microsoft: Architecture strategies for designing a monitoring system",
+      "url": "https://learn.microsoft.com/en-us/azure/well-architected/operational-excellence/observability",
+      "note": "Messwerte, strukturierte Protokolle, Kontext und Vermeidung sensibler Protokolldaten geprüft. Messreihen, Alarmgrenze und Protokollbeispiele sind synthetisch.",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "kmk-fachinformatiker-2019",
+      "title": "KMK-Rahmenlehrplan Fachinformatiker/Fachinformatikerin vom 13.12.2019",
+      "url": "https://www.kmk.org/fileadmin/Dateien/pdf/Bildung/BeruflicheBildung/rlp/Fachinformatiker_19-12-13_EL.pdf",
+      "checkedAt": "2026-11-16",
+      "note": "Öffentlichen KMK-Rahmenlehrplan geprüft: gemeinsame Lernfelder LF1 bis LF9 und anschließend FIAE-Lernfelder LF10a bis LF12a. Der Modellabschluss bescheinigt keinen Ausbildungsabschluss und keine allgemeine berufliche Kompetenz."
+    }
+  ],
+  "caseStudy": {
+    "title": "Mira plant das Lernportal für Radblick",
+    "text": "Mira übergibt Radblick das lokal simulierte Lernportal. Sie verbindet Bedarf, Netzplan, Dienstkonfiguration, Schutz, Diagnose und Abnahme. Die Abschlussübung nutzt Dokumentationsnetze und synthetische Proben; sie ist keine echte Netzwerkänderung und kein Ausbildungs- oder Kompetenzzertifikat."
+  },
+  "blocks": [
+    {
+      "id": "common-lf9-handover-evidence",
+      "title": "1. Anforderungen mit passenden Ergebnissen abgleichen",
+      "objectiveIds": [
+        "common-lf9-handover-evidence"
+      ],
+      "sourceIds": [
+        "lf9-ms-capacity",
+        "lf9-ms-network",
+        "lf9-rfc5737",
+        "lf9-rfc4632",
+        "lf9-rfc1034",
+        "lf9-rfc2606",
+        "lf9-rfc9110",
+        "lf9-ms-recovery",
+        "lf9-ms-redundancy",
+        "lf9-ms-deployment",
+        "lf9-ms-monitoring"
+      ],
+      "paragraphs": [
+        "Erstelle eine Abnahmeliste mit Anforderung, Prüfbedingungen, Soll, Ist, Beleg und Bewertung. Prüfe den ursprünglichen Nutzen: Der Beschäftigtenclient soll das Lernportal erreichen, der Gästeclient soll abgewehrt werden. Eine vorhandene Konfigurationsdatei ist noch kein Funktionsnachweis.",
+        "Für den Modellfall müssen Server 198.51.100.10, A-Ziel .10, laufender Dienst auf TCP443 und die Beschäftigtenrichtlinie zusammenpassen. Die Beschäftigtenprobe liefert eine Portalantwort; die Gästeprobe wird an der Richtlinie abgewiesen. Halte die Ergebnisse mit geprüftem Stand fest. Nach einer Änderung müssen die betroffenen Proben erneut erfolgen.",
+        "Kennzeichne nicht geprüfte Anforderungen ausdrücklich. Das lokale Modell belegt keine reale Antwortzeit, Jahresverfügbarkeit oder Wiederherstellungsdauer. Ein separates Lastziel und das vereinbarte Wiederherstellungsziel binnen 60 Minuten brauchen eigene geeignete Nachweise. Offene Abweichungen erhalten Auswirkung, verantwortliche Rolle und nächsten Prüfschritt."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Lernfall",
+        "text": "Abnahmezeile: Gästezugriff gesperrt; Quelle .70, Ziel portal.example.test/TCP443; Ist: durch Richtlinie abgewiesen; Beschäftigtengegenprobe erfolgreich."
+      },
+      "misconception": {
+        "claim": "Eine lokal erfolgreiche Modellprobe belegt die Leistung des späteren Produktivnetzes.",
+        "correction": "Die Simulation bestätigt ihre begrenzten Funktionsfälle; reale Betriebsziele bleiben gesondert zu prüfen."
+      },
+      "takeaway": "Ordne jedem Ergebnis eine Anforderung zu und mache fehlende Nachweise sichtbar."
+    },
+    {
+      "id": "common-lf9-handover-handover",
+      "title": "2. Netzplan und Betrieb für andere nutzbar machen",
+      "objectiveIds": [
+        "common-lf9-handover-handover"
+      ],
+      "sourceIds": [
+        "lf9-ms-capacity",
+        "lf9-ms-network",
+        "lf9-rfc5737",
+        "lf9-rfc4632",
+        "lf9-rfc1034",
+        "lf9-rfc2606",
+        "lf9-rfc9110",
+        "lf9-ms-recovery",
+        "lf9-ms-redundancy",
+        "lf9-ms-deployment",
+        "lf9-ms-monitoring"
+      ],
+      "paragraphs": [
+        "Die Übergabe enthält einen aktuellen Netzplan, Dienstblatt, erlaubte Verkehrsbeziehungen, Prüfergebnisse und Betriebsinformationen. Beschäftigte: 192.0.2.0/26 mit Client .10 und Gateway .1. Gäste: 192.0.2.64/26 mit Client .70 und Gateway .65. Dienst: 198.51.100.0/27 mit Server .10 und Gateway .1. DNS 203.0.113.53 ist als funktionierende weitere Infrastruktur vorgegeben.",
+        "Das Dienstblatt nennt portal.example.test → 198.51.100.10, HTTPS im Modell über TCP443, laufenden Dienst und Portalzugriff für Beschäftigte. Gäste erhalten keine Freigabe. Routing, DNS-Transport, Rückverkehr und gültige TLS-Identität sind funktionierend abstrahiert. Der Plan muss diese Grenzen erklären, damit niemand daraus eine geprüfte reale Installation ableitet.",
+        "Für den Betrieb hält Mira Sam als zuständige Rolle, Meldeweg, Aktualisierungsprüfung, Ausgangssicherung und Wiederherstellungsweg fest. Sicherung bewahrt einen geschützten Stand, Wiederherstellung spielt ihn zurück und prüft ihn, Redundanz stellt zusätzliche Instanzen mit Umschaltweg bereit. Geheimnisse gehören in geeignete getrennte Verfahren, nicht in die allgemeine Übergabe."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Lernfall",
+        "text": "Sam erhält Plan, Sollkonfiguration, Probeprotokoll, Aufgaben und offene Nachweise. Zugangstokens werden nicht in das Dokument übernommen."
+      },
+      "misconception": {
+        "claim": "Eine Netzskizze allein genügt zur verantwortlichen Betriebsübernahme.",
+        "correction": "Die zuständigen Personen benötigen außerdem Dienstkonfiguration, Prüfstand, Vorgehen und offene Aufgaben."
+      },
+      "takeaway": "Eine Übergabe ermöglicht anderen, den Stand zu verstehen und begründet weiterzuarbeiten."
+    },
+    {
+      "id": "common-lf9-handover-practice",
+      "title": "3. Das Modell durchführen und die Lösung bewerten",
+      "objectiveIds": [
+        "common-lf9-handover-evidence",
+        "common-lf9-handover-handover",
+        "common-lf9-handover-improve"
+      ],
+      "sourceIds": [
+        "lf9-ms-capacity",
+        "lf9-ms-network",
+        "lf9-rfc5737",
+        "lf9-rfc4632",
+        "lf9-rfc1034",
+        "lf9-rfc2606",
+        "lf9-rfc9110",
+        "lf9-ms-recovery",
+        "lf9-ms-redundancy",
+        "lf9-ms-deployment",
+        "lf9-ms-monitoring"
+      ],
+      "paragraphs": [
+        "Die praktische Übung öffnet in der zweiten Reflexion nach der ersten abgeschlossenen Reflexion. Stelle Serveradresse, Präfix, Gateway, DNS-A-Ziel, Dienstport, Betriebszustand und Portalrichtlinie in den begrenzten Feldern ein. Nutze die sichtbaren Sollangaben; es gibt keine Shell, keine Scans und keine Verbindungen zu echten Zielsystemen.",
+        "Rufe in jedem der drei Fälle zuerst den Befund ab: A-Ziel .11 statt .10, gestoppter Dienst und zu breite Portalrichtlinie. Ordne die Ursache des Ausgangsfehlers zu, korrigiere die belegte Abweichung und wiederhole die Proben. Beschäftigte müssen den Dienst erreichen, Gäste an der Richtlinie scheitern. Erst danach schließt du den Fall ab. Lies das gespeicherte Protokoll. Änderungen verwerfen den Prüfstatus; abgeschlossene Schritte bleiben nachvollziehbar.",
+        "Ordne Sicherung, Wiederherstellung und Redundanz ihren Aufgaben zu. Bewerte den Kundennutzen zusammen mit Kosten, Energie und Wachstum: Der fiktive interne Erstjahresvergleich beträgt 600 + 400 + 36 = 1.036 Euro; 60 W × 2.000 h ergeben 120 kWh und bei 0,30 Euro/kWh 36 Euro. Das externe Angebot kostet 840 Euro pro Jahr bei beschriebenem Umfang, sein Energiebedarf ist unbekannt. Ein /26 bietet 62 Hostadressen für die geplanten 30 Clients plus Gateway; Leistungsreserve bleibt gesondert zu prüfen.",
+        "Begründe eine Verbesserung, zum Beispiel beide Zugriffsproben nach DNS- oder Regeländerungen fest in die Abnahme aufnehmen. Verknüpfe sie mit einer verantwortlichen Rolle und überprüfbarem Ergebnis. Ergänze nach erfolgreicher Praxis eine eigene Beobachtung und bestätige die Durchführung bewusst. Eine Musterantwort oder das bloße Lesen der Aufgabe ist noch kein Durchführungsnachweis."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Lernfall",
+        "text": "Eigene Beobachtung: Nach der A-Korrektur antwortete der Beschäftigtenclient wieder; die Gästeprobe blieb durch die Richtlinie gesperrt. Daraus folgt eine wiederholbare Prüfung beider Fälle."
+      },
+      "misconception": {
+        "claim": "Eine günstigere Lösung ist ohne Prüfung von Nutzen, Schutz und Erweiterbarkeit bereits die bessere Lösung.",
+        "correction": "Vergleichbarer Umfang, erfüllte Anforderungen und offene Nachweise begrenzen die wirtschaftliche Aussage."
+      },
+      "takeaway": "Führe die Proben selbst aus und begründe Nutzen, Aufwand, Grenzen und Verbesserung."
+    },
+    {
+      "id": "common-lf9-handover-review",
+      "title": "4. Rückblick auf LF9 und Übergang zur FIAE-Spezialisierung",
+      "objectiveIds": [
+        "common-lf9-handover-evidence",
+        "common-lf9-handover-handover",
+        "common-lf9-handover-improve"
+      ],
+      "sourceIds": [
+        "lf9-ms-capacity",
+        "lf9-ms-network",
+        "lf9-rfc5737",
+        "lf9-rfc4632",
+        "lf9-rfc1034",
+        "lf9-rfc2606",
+        "lf9-rfc9110",
+        "lf9-ms-recovery",
+        "lf9-ms-redundancy",
+        "lf9-ms-deployment",
+        "lf9-ms-monitoring",
+        "kmk-fachinformatiker-2019"
+      ],
+      "paragraphs": [
+        "Bedarf für Netzwerke und Dienste ermitteln: Radblick hat 20 Beschäftigte, zwölf gleichzeitig aktive Sitzungen zu je 2 Mbit/s, also 24 Mbit/s modellierten Nutzdatenbedarf. Wachstum auf 30 Beschäftigte und Wiederherstellung binnen 60 Minuten werden erfasst. Anforderungen erhalten Bedingungen und Prüfwege: Beschäftigtenzugriff, Gästesperre, ein gesonderter Lasttest mit festgelegten Aufrufen binnen zwei Sekunden sowie eigene Wiederherstellungsprüfung. Die Modellfunktion misst weder echte Laufzeit noch Jahresverfügbarkeit.",
+        "Netzstruktur und Ressourcen planen: Beschäftigte 192.0.2.0/26 (.10, Gateway .1), Gäste 192.0.2.64/26 (.70, Gateway .65), Dienst 198.51.100.0/27 (.10, Gateway .1). /26 umfasst 64 Adressen, hier 62 Hostadressen; /27 umfasst 32, hier 30 Hostadressen. Der Dienstbereich reicht von .0 bis .31, daher liegt .53 außerhalb. Switch, Routing und Firewall erfüllen unterschiedliche Aufgaben; Segmentgrenzen brauchen passende Zugriffsregeln. Die reservierten Netze sind Dokumentationswerte, keine reale Betriebsinstallation.",
+        "Netzdienste bereitstellen: DNS 203.0.113.53 und die übrige Infrastruktur sind funktionierend vorgegeben. portal.example.test wird per A-Eintrag auf 198.51.100.10 abgebildet. Serveradresse, Gateway, laufender Dienst und im Modell TCP443 müssen passen. DNS-Erfolg ist keine Dienstzusage; Ping über ICMP ersetzt keine Portalprobe. Namensidentität, Routing und Rückverkehr sind Modellannahmen. Dokumentiere Sollkonfiguration und geprüften Stand.",
+        "Dienste und Betrieb absichern: Beschäftigtennetz /26 darf den Portaldienst nutzen, Gäste nicht; eine /24-Freigabe wäre zu weit. Beschäftigtenprobe muss erfolgreich sein und Gästeprobe an der Richtlinie scheitern. Sicherung bewahrt einen geschützten Stand, Wiederherstellung spielt ihn zurück und prüft die Funktion, Redundanz benötigt zusätzliche Komponenten und Umschaltung. Replizierte Löschungen und gemeinsame Fehlerquellen begrenzen Redundanz. Updates brauchen Freigabe, Sam als zuständige Rolle, Ausgangssicherung, Funktions-/Sperrtests und Rückfall; ein alter Mangel kann nach Rückfall offenbleiben.",
+        "Verfügbarkeit überwachen und Störungen eingrenzen: Acht erfolgreiche von zehn Beschäftigtenproben ergeben 80 Prozent Stichprobenerfolg, keine exakte Jahresverfügbarkeit. Im Fall lösen zwei aufeinanderfolgende Fehler eine Meldung aus. DNS .11 statt .10 wird gezielt korrigiert, ein gestoppter Dienst gestartet, eine breite Freigabe eingegrenzt; anschließend werden Funktion und Sperre nachgeprüft. Ursache und organisatorischer Entstehungsgrund bleiben getrennt. Protokolle nennen Zeit, synthetische Kennung, Ziel, Soll/Ist, Stand und Änderung, ohne Tokens oder unnötige private Inhalte.",
+        "Netzwerk und Dienste nachweisen und übergeben: Mira ordnet Anforderungen und Belege zu, übergibt Plan, Dienstblatt, Prüfprotokoll, Zuständigkeit und offene Aufgaben. Der Nutzen ist erlaubter Portalzugriff bei wirksamer Trennung. Fiktiver Kostenvergleich im ersten Jahr: intern 600 Euro Anschaffung + 400 Euro Betreuung + 36 Euro Strom = 1.036 Euro; extern 12 × 70 = 840 Euro. 60 W × 2.000 h = 120 kWh, zu 0,30 Euro/kWh = 36 Euro. Die 196 Euro Differenz gilt für die genannten Posten; externe Energiedaten sowie zusätzliche Kosten bleiben zu klären. Adressreserve für 30 Clients plus Gateway ersetzt keine Leistungsprüfung.",
+        "Die allgemeinen Lernfelder bauen aufeinander auf: LF1 beschreibt Unternehmen und eigene Rolle; LF2 leitet passende Arbeitsplätze aus Kundenbedarf ab; LF3 verbindet Clients mit Netzen. LF4 beurteilt Schutzbedarf und Maßnahmen, LF5 passt Software zur Datenverwaltung an, LF6 bearbeitet Serviceanfragen vom Bedarf bis zur Prüfung. LF7 ergänzt cyber-physische Systeme, LF8 stellt Daten systemübergreifend bereit, LF9 verbindet Netze und Dienste mit Betrieb und Übergabe. Wirtschafts- und Sozialkunde sowie Projektmanagement ergänzen diese Grundlagen im Lernreiseplan.",
+        "Darauf folgt in dieser FIAE-Lernreise die Spezialisierung: LF10a gestaltet und entwickelt Benutzerschnittstellen, LF11a realisiert Anwendungsfunktionalität und LF12a führt kundenspezifische Anwendungsentwicklung zusammen. Eine Portaloberfläche braucht verständliche Nutzung; ihre Funktionen brauchen Daten, Schnittstellen, Tests und die hier erarbeiteten Betriebsgrundlagen. Der Abschluss zeigt deinen Lernstand in den bearbeiteten Übungen. Er ist kein Ausbildungsabschluss und kein allgemeiner Kompetenznachweis."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Lernfall",
+        "text": "Vom Bedarf bis zur Übergabe entsteht eine Belegkette. Die FIAE-Felder vertiefen darauf aufbauend Oberflächen, Anwendungsfunktion und kundenspezifische Entwicklung."
+      },
+      "misconception": {
+        "claim": "Mit dem LF9-Modellabschluss ist jede berufliche Fachkompetenz zertifiziert.",
+        "correction": "Die Übung dokumentiert einen begrenzten Lernstand; berufliche und prüfungsbezogene Anforderungen reichen darüber hinaus."
+      },
+      "takeaway": "LF1 bis LF9 schaffen allgemeine Grundlagen; die FIAE-Spezialisierung baut auf ihnen auf."
+    }
+  ],
+  "questionFile": "questions/common-lf9-handover.v1.csv",
+  "quiz": {
+    "questionIds": [
+      "LJ-LF9-HANDOVER-Q01",
+      "LJ-LF9-HANDOVER-Q02",
+      "LJ-LF9-HANDOVER-Q03",
+      "LJ-LF9-HANDOVER-Q04",
+      "LJ-LF9-HANDOVER-Q05",
+      "LJ-LF9-HANDOVER-Q06"
+    ]
+  },
+  "exam": {
+    "questionIds": [
+      "LJ-LF9-HANDOVER-E01",
+      "LJ-LF9-HANDOVER-E02",
+      "LJ-LF9-HANDOVER-E03",
+      "LJ-LF9-HANDOVER-E04",
+      "LJ-LF9-HANDOVER-E05",
+      "LJ-LF9-HANDOVER-E06",
+      "LJ-LF9-HANDOVER-E07",
+      "LJ-LF9-HANDOVER-E08"
+    ],
+    "passPercent": 80,
+    "scoring": "all-or-nothing-per-question",
+    "timed": false
+  },
+  "questionLinks": [
+    {
+      "questionId": "LJ-LF9-HANDOVER-Q01",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf9-handover-evidence"
+      ],
+      "blockIds": [
+        "common-lf9-handover-evidence"
+      ]
+    },
+    {
+      "questionId": "LJ-LF9-HANDOVER-Q02",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf9-handover-evidence"
+      ],
+      "blockIds": [
+        "common-lf9-handover-evidence"
+      ]
+    },
+    {
+      "questionId": "LJ-LF9-HANDOVER-Q03",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf9-handover-handover"
+      ],
+      "blockIds": [
+        "common-lf9-handover-handover"
+      ]
+    },
+    {
+      "questionId": "LJ-LF9-HANDOVER-Q04",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf9-handover-handover"
+      ],
+      "blockIds": [
+        "common-lf9-handover-handover"
+      ]
+    },
+    {
+      "questionId": "LJ-LF9-HANDOVER-Q05",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf9-handover-improve"
+      ],
+      "blockIds": [
+        "common-lf9-handover-practice"
+      ]
+    },
+    {
+      "questionId": "LJ-LF9-HANDOVER-Q06",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf9-handover-improve"
+      ],
+      "blockIds": [
+        "common-lf9-handover-practice"
+      ]
+    },
+    {
+      "questionId": "LJ-LF9-HANDOVER-E01",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf9-handover-evidence"
+      ],
+      "blockIds": [
+        "common-lf9-handover-review"
+      ]
+    },
+    {
+      "questionId": "LJ-LF9-HANDOVER-E02",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf9-handover-handover"
+      ],
+      "blockIds": [
+        "common-lf9-handover-review"
+      ]
+    },
+    {
+      "questionId": "LJ-LF9-HANDOVER-E03",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf9-handover-handover"
+      ],
+      "blockIds": [
+        "common-lf9-handover-review"
+      ]
+    },
+    {
+      "questionId": "LJ-LF9-HANDOVER-E04",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf9-handover-evidence",
+        "common-lf9-handover-handover"
+      ],
+      "blockIds": [
+        "common-lf9-handover-review"
+      ]
+    },
+    {
+      "questionId": "LJ-LF9-HANDOVER-E05",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf9-handover-evidence"
+      ],
+      "blockIds": [
+        "common-lf9-handover-review"
+      ]
+    },
+    {
+      "questionId": "LJ-LF9-HANDOVER-E06",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf9-handover-evidence",
+        "common-lf9-handover-handover"
+      ],
+      "blockIds": [
+        "common-lf9-handover-review"
+      ]
+    },
+    {
+      "questionId": "LJ-LF9-HANDOVER-E07",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf9-handover-improve"
+      ],
+      "blockIds": [
+        "common-lf9-handover-review"
+      ]
+    },
+    {
+      "questionId": "LJ-LF9-HANDOVER-E08",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf9-handover-handover",
+        "common-lf9-handover-improve"
+      ],
+      "blockIds": [
+        "common-lf9-handover-review"
+      ]
+    }
+  ],
+  "interview": [
+    {
+      "id": "common-lf9-handover-talk-evidence",
+      "prompt": "Plane die Abnahme des Portals und benenne ausdrücklich die Grenzen der vorhandenen Nachweise.",
+      "objectiveIds": [
+        "common-lf9-handover-evidence",
+        "common-lf9-handover-handover"
+      ],
+      "blockIds": [
+        "common-lf9-handover-evidence",
+        "common-lf9-handover-handover"
+      ],
+      "keyPoints": [
+        "Erlaubten Beschäftigtenzugriff und richtlinienbedingte Gästeablehnung prüfen.",
+        "Soll, Ist, Stand und Belege mit Anforderungen verbinden.",
+        "Last- und Wiederherstellungsnachweise bei fehlender Prüfung offen führen."
+      ],
+      "acceptableAlternatives": [
+        "Eine fachlich gleichwertige Begründung mit passenden Modellannahmen und überprüfbaren Belegen."
+      ],
+      "misconceptions": [
+        "Die lokale Simulation als Beleg realer Betriebsziele behandeln."
+      ],
+      "sampleAnswer": "Ich verknüpfe jede Anforderung mit einer passenden Probe. Beschäftigte müssen antwortenden Portalzugriff erhalten, Gäste an der Richtlinie scheitern. Die Modellresultate dokumentiere ich mit dem geprüften Stand; reale Last- und Wiederherstellungsziele bleiben als eigene Aufgaben bei Sam offen.",
+      "followUp": "Welche Abnahmezeile würde bei einem gestoppten Dienst noch nicht erfüllt sein?"
+    },
+    {
+      "id": "common-lf9-handover-talk-practice",
+      "prompt": "Führe das lokale Netz-/Dienstmodell durch. Erkläre danach eine selbst vorgenommene Korrektur, ihre Nachprobe und eine begründete Verbesserung.",
+      "objectiveIds": [
+        "common-lf9-handover-evidence",
+        "common-lf9-handover-handover",
+        "common-lf9-handover-improve"
+      ],
+      "blockIds": [
+        "common-lf9-handover-evidence",
+        "common-lf9-handover-handover",
+        "common-lf9-handover-practice"
+      ],
+      "keyPoints": [
+        "Serveradresse, Präfix, Gateway, DNS-Ziel, Port, Betriebszustand und Richtlinie einstellen.",
+        "Positive und negative Zugriffsproben selbst ausführen.",
+        "Falsches DNS-Ziel, Dienststillstand und breite Richtlinie gezielt beheben und nachprüfen.",
+        "Sicherung, Wiederherstellung und Redundanz unterscheiden; Protokoll und Modellgrenzen lesen.",
+        "Eigene Beobachtung und wirtschaftliche/technische Bewertung ergänzen, Durchführung bewusst bestätigen."
+      ],
+      "acceptableAlternatives": [
+        "Eine fachlich gleichwertige Begründung mit passenden Modellannahmen und überprüfbaren Belegen."
+      ],
+      "misconceptions": [
+        "Eine Musterantwort als Beleg der eigenen Durchführung verwenden."
+      ],
+      "sampleAnswer": "Vorlage für meine Notiz nach der Bearbeitung: Ich trage hier meinen tatsächlichen Ausgangsbefund, die selbst gewählte Korrektur und die sichtbaren Ergebnisse beider Proben ein. Ich nenne eine begründete Verbesserung und offene Grenzen. Diese Vorlage bestätigt noch keine Durchführung.",
+      "followUp": "Welcher konkrete Befund hat dich zu deiner Änderung geführt, und was hat die Nachprobe belegt?",
+      "practice": {
+        "task": "Bearbeite das begrenzte lokale Netz-/Dienstmodell schrittweise. Sollplan: Portalserver 198.51.100.10/27 mit Gateway 198.51.100.1; A-Eintrag für portal.example.test auf 198.51.100.10; gestarteter Dienst auf TCP443; Portalrichtlinie für Beschäftigte. Der Beschäftigtenclient 192.0.2.10 soll den Dienst erreichen, der Gästeclient 192.0.2.70 an der Richtlinie scheitern. Bearbeite drei Fehlerfälle: falsches DNS-Ziel .11, gestoppter Dienst und zu breite Gästeerlaubnis. Rufe in jedem Fall zuerst den Befund ab. Vergleiche Soll und Ist, wähle im Feld „Ursache des Ausgangsfehlers“ die passende Diagnose, korrigiere die betreffende Einstellung und prüfe erneut. Schließe den Fall erst ab, wenn die Beschäftigtenprobe gelingt und die Gästeprobe an der Richtlinie scheitert. Ein Ausfall beider Clientaufrufe ist kein Beleg für funktionierende Zugriffstrennung. Ordne Sicherung, Wiederherstellung und Redundanz ihren unterschiedlichen Aufgaben zu und berücksichtige eine vorbereitete Aktualisierung mit Verantwortung, Prüfung und Rückfall. Lies das gespeicherte Protokoll und halte eine eigene Beobachtung sowie eine begründete Verbesserung fest. Bestätige die Durchführung erst nach erfolgreicher Prüfung bewusst. DNS 203.0.113.53, Routing, Rückverkehr und TLS-Identität sind funktionierend vorgegeben; alle Adressen, Proben und Ergebnisse sind synthetisch. Die Übung verändert kein echtes Netz, führt keine Shellbefehle oder Scans aus und misst keine reale Leistung.",
+        "checklist": [
+          "Ich habe Serveradresse 198.51.100.10/27, Gateway 198.51.100.1, A-Ziel .10, TCP443 und laufenden Dienst passend eingestellt.",
+          "Ich habe erlaubten Beschäftigtenzugriff und richtlinienbedingte Gästeablehnung geprüft.",
+          "Ich habe in jedem Fall den Ausgangsbefund abgerufen, die Ursache zugeordnet, die passende Einstellung korrigiert und erneut geprüft.",
+          "Ich habe Sicherung, erprobte Wiederherstellung und Redundanz unterschieden und die Aktualisierungsprüfung berücksichtigt.",
+          "Ich habe das Protokoll mit den tatsächlich geprüften Ständen und Ergebnissen gelesen.",
+          "Ich habe eine eigene Beobachtung, eine begründete Verbesserung und offene Modellgrenzen in meiner Reflexion festgehalten."
+        ],
+        "confirmation": "Ich bestätige, dass ich die lokale Netz-/Dienstsimulation selbst bearbeitet, Konfiguration und Fehlerfälle geprüft und das gespeicherte Protokoll gelesen habe. Meine Reflexion nennt eigene Beobachtungen und eine begründete Verbesserung. Das ist meine Selbstbestätigung einer begrenzten Übung, kein Nachweis einer echten Netzinstallation oder allgemeiner beruflicher Kompetenz."
+      }
+    },
+    {
+      "id": "common-lf9-handover-talk-review",
+      "prompt": "Verbinde alle sechs LF9-Themen zu einer Übergabe und ordne LF1 bis LF9 sowie den folgenden FIAE-Schwerpunkt ein.",
+      "objectiveIds": [
+        "common-lf9-handover-evidence",
+        "common-lf9-handover-handover",
+        "common-lf9-handover-improve"
+      ],
+      "blockIds": [
+        "common-lf9-handover-review"
+      ],
+      "keyPoints": [
+        "Bedarf und prüfbare Kriterien aus Nutzerzahl, Gleichzeitigkeit und Ausfallfolgen ableiten.",
+        "Segmente, Hostbereiche und Kosten-/Energieannahmen erklären.",
+        "DNS, Adresse, Gateway, TCP443 und laufenden Dienst verbinden.",
+        "Gästesperre positiv/negativ prüfen sowie Sicherung, Wiederherstellung, Redundanz und Updateplan unterscheiden.",
+        "Beobachtung, gezielte Korrektur, Nachtest und sparsames Protokoll beschreiben.",
+        "Plan, Nachweise, Nutzenbewertung und offene Aufgaben übergeben.",
+        "Allgemeine LF1–LF9-Grundlagen von der darauf aufbauenden FIAE-Vertiefung LF10a–LF12a unterscheiden."
+      ],
+      "acceptableAlternatives": [
+        "Eine fachlich gleichwertige Begründung mit passenden Modellannahmen und überprüfbaren Belegen."
+      ],
+      "misconceptions": [
+        "Den Übungsabschluss als Zertifikat für allgemeine berufliche Kompetenz ausgeben."
+      ],
+      "sampleAnswer": "Ich beginne bei zwölf gleichzeitigen Sitzungen und 24 Mbit/s Modellbedarf. Drei Segmente trennen Beschäftigte, Gäste und Dienst; Name, .10 und TCP443 passen zusammen. Beide Zugriffsproben kontrollieren Funktion und Sperre. Fehler korrigiere ich gezielt mit Nachtest; Betriebsplan und sparsame Belege gehen an Sam. Kosten, Energie und Reserve bewerte ich mit offenen Grenzen. LF1 bis LF9 verbinden Betrieb, Arbeitsplätze, Netze, Schutz, Software, Service, Systeme und Daten. FIAE vertieft anschließend Oberflächen, Funktionalität und Kundenentwicklung; mein Übungsstand ist kein Berufszertifikat.",
+      "followUp": "Welche Grundlage aus einem früheren Lernfeld wirst du bei der Entwicklung einer Portaloberfläche wieder brauchen?"
+    }
+  ],
+  "cards": [
+    {
+      "id": "common-lf9-handover-card-01",
+      "front": "Was enthält eine aussagekräftige Abnahmezeile?",
+      "back": "Anforderung, Prüfbedingungen, Soll, Ist, geprüfter Stand, Beleg und Bewertung; offene Abweichungen bleiben zugeordnet.",
+      "objectiveIds": [
+        "common-lf9-handover-evidence"
+      ],
+      "blockIds": [
+        "common-lf9-handover-evidence"
+      ]
+    },
+    {
+      "id": "common-lf9-handover-card-02",
+      "front": "Welche Nachweisgrenzen hat das lokale Netzmodell?",
+      "back": "Es prüft vorgegebene Dienstabhängigkeiten und Zugriffe, aber keine reale Last, Jahresverfügbarkeit oder Wiederherstellungsdauer.",
+      "objectiveIds": [
+        "common-lf9-handover-evidence"
+      ],
+      "blockIds": [
+        "common-lf9-handover-evidence",
+        "common-lf9-handover-practice"
+      ]
+    },
+    {
+      "id": "common-lf9-handover-card-03",
+      "front": "Was braucht die Betriebsübergabe?",
+      "back": "Aktuellen Netzplan, Dienstblatt, Regeln, Probeprotokoll, Zuständigkeit, Änderungs-/Wiederherstellungswege und offene Aufgaben.",
+      "objectiveIds": [
+        "common-lf9-handover-handover"
+      ],
+      "blockIds": [
+        "common-lf9-handover-handover"
+      ]
+    },
+    {
+      "id": "common-lf9-handover-card-04",
+      "front": "Wie ordnest du den Abschluss in die Lernreise ein?",
+      "back": "LF1–LF9 vermitteln allgemeine Grundlagen; FIAE vertieft danach Benutzerschnittstellen, Anwendungsfunktionalität und kundenspezifische Entwicklung. Die Übung ist kein Zertifikat.",
+      "objectiveIds": [
+        "common-lf9-handover-handover"
+      ],
+      "blockIds": [
+        "common-lf9-handover-review"
+      ]
+    },
+    {
+      "id": "common-lf9-handover-card-05",
+      "front": "Welche Zahlen gehören zum fiktiven Erstjahresvergleich?",
+      "back": "Intern 1.036 Euro, darin 120 kWh beziehungsweise 36 Euro Energie; extern 840 Euro. Umfang und fehlende externe Energiedaten begrenzen die Bewertung.",
+      "objectiveIds": [
+        "common-lf9-handover-improve"
+      ],
+      "blockIds": [
+        "common-lf9-handover-practice",
+        "common-lf9-handover-review"
+      ]
+    },
+    {
+      "id": "common-lf9-handover-card-06",
+      "front": "Was ist eine konkrete Verbesserung aus dem Portalfehler?",
+      "back": "Nach DNS- oder Regeländerungen positive Beschäftigten- und negative Gästeprobe mit geprüftem Stand dokumentieren; zuständige Rolle und Ergebnisprüfung benennen.",
+      "objectiveIds": [
+        "common-lf9-handover-improve"
+      ],
+      "blockIds": [
+        "common-lf9-handover-practice",
+        "common-lf9-handover-review"
+      ]
+    }
+  ],
+  "review": {
+    "status": "reviewed",
+    "checkedAt": "2026-11-16"
+  },
+  "fieldReview": {
+    "fieldId": "LF9",
+    "topicIds": [
+      "common-lf9-requirements",
+      "common-lf9-design",
+      "common-lf9-services",
+      "common-lf9-security",
+      "common-lf9-monitoring",
+      "common-lf9-handover"
+    ],
+    "blockIds": [
+      "common-lf9-handover-review"
+    ],
+    "interviewIds": [
+      "common-lf9-handover-talk-review"
+    ],
+    "questionIds": [
+      "LJ-LF9-HANDOVER-E01",
+      "LJ-LF9-HANDOVER-E02",
+      "LJ-LF9-HANDOVER-E03",
+      "LJ-LF9-HANDOVER-E04",
+      "LJ-LF9-HANDOVER-E05",
+      "LJ-LF9-HANDOVER-E06",
+      "LJ-LF9-HANDOVER-E07",
+      "LJ-LF9-HANDOVER-E08"
+    ]
+  }
+}

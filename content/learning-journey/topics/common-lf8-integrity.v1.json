@@ -1,0 +1,534 @@
+{
+  "schemaVersion": 1,
+  "id": "common-lf8-integrity",
+  "version": "1.0.0",
+  "title": "Datenübernahme absichern",
+  "fieldId": "LF8",
+  "scope": "common",
+  "prerequisites": [
+    "common-lf8-interfaces",
+    "common-lf4-measures"
+  ],
+  "sourceIds": [
+    "lf8-constraints",
+    "lf8-transactions",
+    "lf8-privileges",
+    "lf8-rest",
+    "lf8-logging",
+    "lf8-http",
+    "lf8-json"
+  ],
+  "sources": [
+    {
+      "id": "lf8-constraints",
+      "title": "PostgreSQL: Constraints",
+      "url": "https://www.postgresql.org/docs/current/ddl-constraints.html",
+      "checkedAt": "2026-11-16",
+      "note": "Pflichtwerte, Prüfbedingungen, eindeutige Schlüssel und Fremdschlüssel geprüft; Feldgrenzen im Simulator sind eigene Vorgaben."
+    },
+    {
+      "id": "lf8-transactions",
+      "title": "PostgreSQL: Transactions",
+      "url": "https://www.postgresql.org/docs/current/tutorial-transactions.html",
+      "checkedAt": "2026-11-16",
+      "note": "Atomare Übernahme, COMMIT und ROLLBACK geprüft. Die lokale Übung veranschaulicht das Prinzip ohne echte Datenbanktransaktion."
+    },
+    {
+      "id": "lf8-privileges",
+      "title": "PostgreSQL: Privileges",
+      "url": "https://www.postgresql.org/docs/current/ddl-priv.html",
+      "checkedAt": "2026-11-16",
+      "note": "Unterschiedliche Datenbankrechte wie SELECT und INSERT geprüft; Rollen und Befugnisse im Fall sind fiktiv."
+    },
+    {
+      "id": "lf8-rest",
+      "title": "OWASP: REST Security Cheat Sheet",
+      "url": "https://cheatsheetseries.owasp.org/cheatsheets/REST_Security_Cheat_Sheet.html",
+      "checkedAt": "2026-11-16",
+      "note": "HTTPS, Zugriffskontrolle und Eingabevalidierung geprüft. Der Simulator stellt Schutzentscheidungen dar und baut keine Netzwerkverbindung auf."
+    },
+    {
+      "id": "lf8-logging",
+      "title": "OWASP: Logging Cheat Sheet",
+      "url": "https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html",
+      "checkedAt": "2026-11-16",
+      "note": "Nachvollziehbare Ereignisse und Ausschluss vertraulicher Inhalte aus Protokollen geprüft. Lokale Fehlermeldungen enthalten synthetische Angaben."
+    },
+    {
+      "id": "lf8-http",
+      "title": "RFC 9110: HTTP Semantics",
+      "url": "https://www.rfc-editor.org/rfc/rfc9110.html",
+      "checkedAt": "2026-11-16",
+      "note": "POST, Inhaltstyp, HTTP-Status 200/201/400/409/422 und Idempotenz geprüft. Wiederholungsregeln anhand batchId sind ein eigener Anwendungsvertrag."
+    },
+    {
+      "id": "lf8-json",
+      "title": "RFC 8259: The JavaScript Object Notation (JSON) Data Interchange Format",
+      "url": "https://www.rfc-editor.org/rfc/rfc8259",
+      "checkedAt": "2026-11-16",
+      "note": "Syntax von Objekten, Arrays, Zahlen, Zeichenketten und null geprüft. Eigene Datensätze und Feldverträge sind didaktische Beispiele."
+    }
+  ],
+  "objectives": [
+    {
+      "id": "common-lf8-integrity-validate",
+      "text": "Eingehende Daten gegen vorgegebene Typ-, Pflichtfeld- und Wertebereichsregeln prüfen."
+    },
+    {
+      "id": "common-lf8-integrity-transaction",
+      "text": "An einem zusammengehörigen Änderungsvorgang erklären, warum eine Transaktion erforderlich sein kann."
+    },
+    {
+      "id": "common-lf8-integrity-rights",
+      "text": "Zugriff, Transport und Fehlerprotokollierung passend zu einem vorgegebenen Schutzbedarf gestalten."
+    }
+  ],
+  "caseStudy": {
+    "title": "Mira erstellt einen regionalen Auftragsbericht",
+    "text": "Mira sichert die Übernahme des synthetischen Regionsberichts ab. Der lokale Empfänger speichert pro Versuch höchstens eine Lieferung unter batchId. Für demo-01 sind Nord 30 und Süd 5 EUR vorgesehen. Eine Lieferung wird als Einheit geprüft und übernommen; ein Fehler darf keinen halben Bericht hinterlassen."
+  },
+  "blocks": [
+    {
+      "id": "common-lf8-integrity-validate",
+      "title": "1. Pflichtfelder, Typen und Bereiche getrennt prüfen",
+      "objectiveIds": [
+        "common-lf8-integrity-validate"
+      ],
+      "sourceIds": [
+        "lf8-constraints",
+        "lf8-transactions",
+        "lf8-privileges",
+        "lf8-rest",
+        "lf8-logging",
+        "lf8-http",
+        "lf8-json"
+      ],
+      "paragraphs": [
+        "Validierung prüft mehrere Ebenen: Ist der Text syntaktisch lesbar? Sind die erlaubten und benötigten Felder vorhanden? Stimmen Typen, Wertebereiche und Beziehungen? Im Modell besitzt das JSON-Objekt genau batchId und rows. batchId ist eine Zeichenkette aus 1 bis 40 Buchstaben a–z/A–Z, Ziffern, Unterstrichen oder Bindestrichen. Zusätzliche Schlüssel sind nicht zugelassen.",
+        "rows enthält genau zwei Objekte mit den Schlüsseln region und total. Nord und Süd müssen jeweils genau einmal vorkommen. total muss eine ganze JSON-Zahl zwischen 0 und 1000000 einschließlich sein. \"30\", null, -1 und 30.5 erfüllen diese Regel nicht; 0 und 1000000 erfüllen den Wertebereich. Die Einheit sind fiktive ganze EUR.",
+        "Eine Syntaxverletzung wie ein fehlendes Anführungszeichen führt zu 400. Ein lesbarer Inhalt mit fehlendem Feld, zusätzlichem Schlüssel, doppelter Region oder falschem Typ führt im Modell zu 422. Die Eingabe ist auf 4096 Zeichen begrenzt; das Werkzeug verarbeitet keine Dateien oder externen Quellen.",
+        "Gültig im Sinne des Schemas bedeutet noch nicht fachlich korrekt: Nord 31 ist eine zulässige Zahl, aber nicht die aus unseren drei Aufträgen berechnete Summe. Deshalb braucht die Freigabe zusätzlich den Abgleich mit Nord 30 und Süd 5. Ein fremder Empfänger kann die Rechenherkunft ohne passende Belege nicht aus der Zahl allein erkennen."
+      ],
+      "example": {
+        "title": "Eigener synthetischer Lernfall",
+        "text": "Gültiger Bereich: 0 und 1000000. Falscher Typ: \"30\". Falsche Struktur: zweimal Nord. Fachlicher Abgleich: Nord muss in diesem Datensatz 30 ergeben."
+      },
+      "misconception": {
+        "claim": "Wenn ein Wert den richtigen Typ hat, ist er für den Kundenauftrag richtig.",
+        "correction": "Typprüfung und fachlicher Sollwertabgleich sind verschiedene Prüfungen."
+      },
+      "takeaway": "Prüfe Syntax, Struktur, Typ, Bereich und fachliche Bedeutung."
+    },
+    {
+      "id": "common-lf8-integrity-transaction",
+      "title": "2. Zusammengehörige Änderungen atomar übernehmen",
+      "objectiveIds": [
+        "common-lf8-integrity-transaction",
+        "common-lf8-integrity-validate"
+      ],
+      "sourceIds": [
+        "lf8-constraints",
+        "lf8-transactions",
+        "lf8-privileges",
+        "lf8-rest",
+        "lf8-logging",
+        "lf8-http",
+        "lf8-json"
+      ],
+      "paragraphs": [
+        "Atomar bedeutet: Ein zusammengehöriger Änderungsvorgang wird als Ganzes wirksam oder gar nicht. Der Bericht umfasst beide Regionen und die Lieferkennung. Würde der Empfänger zuerst Nord schreiben und bei einem fehlerhaften Süd-Wert abbrechen, läge ein unvollständiger Bericht vor.",
+        "Im Lernmodell wird die vollständige Lieferung vor einer Bestandsänderung geprüft. Ist eine Zeile ungültig, bleibt der bisherige Bestand unverändert. Erst wenn die gesamte Lieferung passt und keine widersprüchliche Wiederholung vorliegt, werden beide Zeilen gemeinsam registriert. Das ist eine lokale Veranschaulichung atomarer Übernahme, keine echte Datenbank.",
+        "In einer Datenbank kann eine Transaktion mehrere zusammengehörige Änderungen bündeln. BEGIN beginnt einen Transaktionsblock, COMMIT bestätigt ihn, ROLLBACK verwirft die darin noch nicht bestätigten Änderungen. Atomarität allein prüft jedoch nicht, ob die fachlichen Summen richtig berechnet wurden; dafür bleiben Validierung und Sollwertkontrolle nötig.",
+        "Ein Test der atomaren Übernahme enthält bewusst einen gültigen und einen ungültigen Teil. Im Modell kannst du Nord 30 als Zahl und Süd \"5\" als Text senden. Erwartet sind 422 und keine neue Lieferung. Prüfe dies am Bestand, statt aus der Fehlermeldung allein auf ein korrektes Rücksetzen zu schließen."
+      ],
+      "example": {
+        "title": "Eigener synthetischer Lernfall",
+        "text": "Anfrage mit Nord 30 und Süd \"5\" → 422; kein Teil von demo-01 wird neu übernommen. Danach kann die korrigierte Lieferung als Einheit angenommen werden."
+      },
+      "misconception": {
+        "claim": "Wenn die erste Zeile gültig ist, darf sie trotz Fehler in der zweiten Zeile bereits bestehen bleiben.",
+        "correction": "Der Vertrag behandelt die Lieferung als zusammengehörige Einheit; Teilübernahme wäre ein Fehler."
+      },
+      "takeaway": "Ein halber Bericht ist kein erfolgreicher Gesamtvorgang."
+    },
+    {
+      "id": "common-lf8-integrity-rights",
+      "title": "3. Zugriff, Transport und Protokolle passend schützen",
+      "objectiveIds": [
+        "common-lf8-integrity-rights"
+      ],
+      "sourceIds": [
+        "lf8-constraints",
+        "lf8-transactions",
+        "lf8-privileges",
+        "lf8-rest",
+        "lf8-logging",
+        "lf8-http",
+        "lf8-json"
+      ],
+      "paragraphs": [
+        "Der vorgegebene Schutzbedarf lautet: Nur freigegebene Rollen dürfen den Bericht für den vereinbarten Zweck lesen oder bereitstellen; Inhalte sollen bei Übertragung geschützt und Fehler nachvollziehbar sein. Reale Berechtigungen werden auf erforderliche Aktionen begrenzt, zum Beispiel lesender Quellzugriff und Schreibrecht für den vorgesehenen Empfänger statt allgemeiner Administrationsrechte.",
+        "Für echte HTTP-Schnittstellen schützt HTTPS mit TLS die Übertragung, wenn Verbindung und Zertifikatsprüfung korrekt eingerichtet sind. Das ersetzt weder Nutzungsbefugnis noch Eingabevalidierung. Im lokalen Modell wählst du freigegebene Senderrolle und geschützten Transport; es gibt keine echte Verbindung und keine Tokens. Die Übungsantworten 401 und 426 zeigen die abgelehnten Modellentscheidungen.",
+        "Ein Fehlerprotokoll braucht Bezug zum Vorgang, Zeitpunkt beziehungsweise Reihenfolge, betroffenen Schritt, Fehlerkategorie und Ergebnis der Übernahme. Im Modell sind batchId, Status, Feldfehler und unveränderter Bestand ausreichend nachvollziehbare Angaben. In echten Protokollen werden Kennungen und Daten auf das Erforderliche begrenzt und der Zugriff geschützt.",
+        "Passwörter, Tokens und unnötige personenbezogene Inhalte gehören nicht in ein Fehlerprotokoll. Ein Fehler in total lässt sich als Feldfehler beschreiben, ohne sämtliche ursprünglichen Kundendaten zu kopieren. Zuständigkeit und nachvollziehbare Meldung erleichtern die Klärung, ersetzen aber keine erforderliche Berechtigung."
+      ],
+      "example": {
+        "title": "Eigener synthetischer Lernfall",
+        "text": "Protokoll: demo-01, Validierung, total muss Ganzzahl sein, Status 422, keine Übernahme. Synthetischer Rollenname statt echter Zugangsdaten."
+      },
+      "misconception": {
+        "claim": "Verschlüsselter Transport macht jede sendende Person zum berechtigten Empfänger.",
+        "correction": "Transport schützt die Verbindung; Rechte und Zweckbindung müssen separat durchgesetzt werden."
+      },
+      "takeaway": "Beschränke Rechte, schütze den Transport und protokolliere gezielt."
+    },
+    {
+      "id": "common-lf8-integrity-retries",
+      "title": "4. Validierung und Wiederholung zusammen absichern",
+      "objectiveIds": [
+        "common-lf8-integrity-validate",
+        "common-lf8-integrity-transaction",
+        "common-lf8-integrity-rights"
+      ],
+      "sourceIds": [
+        "lf8-constraints",
+        "lf8-transactions",
+        "lf8-privileges",
+        "lf8-rest",
+        "lf8-logging",
+        "lf8-http",
+        "lf8-json"
+      ],
+      "paragraphs": [
+        "Die Prüfung einer Lieferung verbindet Zugriff, Inhalt und bisherigen Empfängerstand. Eine erste gültige demo-01 wird mit 201 gemeinsam übernommen. Ein zweites gleiches demo-01 erhält 200, ohne weitere Zeilen anzulegen. Bei abweichendem gültigem Inhalt unter derselben Kennung wird 409 gemeldet und der bestätigte Bericht bleibt unverändert.",
+        "Für den Inhaltsvergleich normalisiert das Modell die Reihenfolge der Regionszeilen. Süd vor Nord mit denselben Beträgen ist deshalb eine identische Wiederholung. Eine andere Zahl ist dagegen ein Konflikt. Diese Regeln sind Bestandteil der Anwendung; die Methode POST allein gewährleistet sie nicht.",
+        "Der kontrollierte Praxislauf prüft zunächst 422 bei einem gültig lesbaren Fehlertyp, dann 201 mit Nord 30/Süd 5, danach 200 bei derselben Lieferung und 409 bei einem geänderten Wert. Bei Fehler und Wiederholung vergleichst du den Bestand mit dem vorherigen Zustand. So prüfst du atomare Wirkung und doppelte Verarbeitung direkt.",
+        "Eine bestandene lokale Probe beschreibt ausschließlich dieses begrenzte Modell. Sie belegt keine produktive Zugriffskontrolle, Verschlüsselung oder dauerhafte Datenbankgarantie. Halte den tatsächlichen Umfang im Übergabeprotokoll fest und leite weitere Tests für ein späteres echtes System aus dessen Vertrag ab."
+      ],
+      "example": {
+        "title": "Eigener synthetischer Lernfall",
+        "text": "Bestandsfolge: leer → nach 422 leer → nach 201 demo-01/2 Zeilen → nach 200 unverändert → nach 409 unverändert."
+      },
+      "misconception": {
+        "claim": "Ein guter Fehlertext beweist, dass während der Verarbeitung kein Teilbestand geschrieben wurde.",
+        "correction": "Vergleiche den tatsächlichen Empfängerbestand, um die atomare Wirkung zu prüfen."
+      },
+      "takeaway": "Prüfe Fehlerstatus und Bestand gemeinsam."
+    }
+  ],
+  "questionFile": "questions/common-lf8-integrity.v1.csv",
+  "quiz": {
+    "questionIds": [
+      "LJ-LF8-INTEGRITY-Q01",
+      "LJ-LF8-INTEGRITY-Q02",
+      "LJ-LF8-INTEGRITY-Q03",
+      "LJ-LF8-INTEGRITY-Q04",
+      "LJ-LF8-INTEGRITY-Q05",
+      "LJ-LF8-INTEGRITY-Q06"
+    ]
+  },
+  "exam": {
+    "questionIds": [
+      "LJ-LF8-INTEGRITY-E01",
+      "LJ-LF8-INTEGRITY-E02",
+      "LJ-LF8-INTEGRITY-E03",
+      "LJ-LF8-INTEGRITY-E04",
+      "LJ-LF8-INTEGRITY-E05",
+      "LJ-LF8-INTEGRITY-E06",
+      "LJ-LF8-INTEGRITY-E07",
+      "LJ-LF8-INTEGRITY-E08"
+    ],
+    "passPercent": 80,
+    "scoring": "all-or-nothing-per-question",
+    "timed": false
+  },
+  "questionLinks": [
+    {
+      "questionId": "LJ-LF8-INTEGRITY-Q01",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf8-integrity-validate"
+      ],
+      "blockIds": [
+        "common-lf8-integrity-validate"
+      ]
+    },
+    {
+      "questionId": "LJ-LF8-INTEGRITY-Q02",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf8-integrity-validate"
+      ],
+      "blockIds": [
+        "common-lf8-integrity-validate"
+      ]
+    },
+    {
+      "questionId": "LJ-LF8-INTEGRITY-Q03",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf8-integrity-transaction"
+      ],
+      "blockIds": [
+        "common-lf8-integrity-transaction"
+      ]
+    },
+    {
+      "questionId": "LJ-LF8-INTEGRITY-Q04",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf8-integrity-transaction"
+      ],
+      "blockIds": [
+        "common-lf8-integrity-transaction"
+      ]
+    },
+    {
+      "questionId": "LJ-LF8-INTEGRITY-Q05",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf8-integrity-rights"
+      ],
+      "blockIds": [
+        "common-lf8-integrity-rights"
+      ]
+    },
+    {
+      "questionId": "LJ-LF8-INTEGRITY-Q06",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf8-integrity-rights"
+      ],
+      "blockIds": [
+        "common-lf8-integrity-rights"
+      ]
+    },
+    {
+      "questionId": "LJ-LF8-INTEGRITY-E01",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf8-integrity-validate"
+      ],
+      "blockIds": [
+        "common-lf8-integrity-validate"
+      ]
+    },
+    {
+      "questionId": "LJ-LF8-INTEGRITY-E02",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf8-integrity-validate"
+      ],
+      "blockIds": [
+        "common-lf8-integrity-validate"
+      ]
+    },
+    {
+      "questionId": "LJ-LF8-INTEGRITY-E03",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf8-integrity-validate"
+      ],
+      "blockIds": [
+        "common-lf8-integrity-validate"
+      ]
+    },
+    {
+      "questionId": "LJ-LF8-INTEGRITY-E04",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf8-integrity-transaction"
+      ],
+      "blockIds": [
+        "common-lf8-integrity-transaction"
+      ]
+    },
+    {
+      "questionId": "LJ-LF8-INTEGRITY-E05",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf8-integrity-transaction"
+      ],
+      "blockIds": [
+        "common-lf8-integrity-transaction"
+      ]
+    },
+    {
+      "questionId": "LJ-LF8-INTEGRITY-E06",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf8-integrity-rights"
+      ],
+      "blockIds": [
+        "common-lf8-integrity-rights"
+      ]
+    },
+    {
+      "questionId": "LJ-LF8-INTEGRITY-E07",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf8-integrity-validate",
+        "common-lf8-integrity-transaction"
+      ],
+      "blockIds": [
+        "common-lf8-integrity-retries"
+      ]
+    },
+    {
+      "questionId": "LJ-LF8-INTEGRITY-E08",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf8-integrity-rights"
+      ],
+      "blockIds": [
+        "common-lf8-integrity-rights",
+        "common-lf8-integrity-retries"
+      ]
+    }
+  ],
+  "interview": [
+    {
+      "id": "common-lf8-integrity-talk-01",
+      "prompt": "Prüfe einen Bericht mit doppelter Region und total als Text anhand der einzelnen Validierungsebenen.",
+      "objectiveIds": [
+        "common-lf8-integrity-validate"
+      ],
+      "blockIds": [
+        "common-lf8-integrity-validate"
+      ],
+      "keyPoints": [
+        "Lesbares JSON von gültigem Inhalt trennen.",
+        "Regionen genau einmal verlangen.",
+        "Ganzzahl, Bereich und Pflichtfelder prüfen."
+      ],
+      "acceptableAlternatives": [
+        "Eine gleichwertige fachliche Erklärung mit nachvollziehbarer Begründung und passenden Fallwerten."
+      ],
+      "misconceptions": [
+        "Ein Parsererfolg genüge für die Übernahme."
+      ],
+      "sampleAnswer": "Der Text kann gültiges JSON sein, verletzt aber zwei Inhaltsregeln: Nord und Süd müssen jeweils einmal enthalten sein, und total muss eine ganze Zahl statt Text sein. Daher ist 422 ohne Bestandsänderung zu erwarten.",
+      "followUp": "Welcher zusätzliche Sollwertabgleich bleibt bei formal gültigen Beträgen nötig?"
+    },
+    {
+      "id": "common-lf8-integrity-talk-02",
+      "prompt": "Erkläre, warum Nord und Süd gemeinsam übernommen werden müssen, und entwirf eine passende Fehlerprobe.",
+      "objectiveIds": [
+        "common-lf8-integrity-transaction"
+      ],
+      "blockIds": [
+        "common-lf8-integrity-transaction",
+        "common-lf8-integrity-retries"
+      ],
+      "keyPoints": [
+        "Zusammengehörige Lieferung benennen.",
+        "Gültige Nord-Zeile und ungültige Süd-Zeile einsetzen.",
+        "422 und unveränderten Bestand nachweisen."
+      ],
+      "acceptableAlternatives": [
+        "Eine gleichwertige fachliche Erklärung mit nachvollziehbarer Begründung und passenden Fallwerten."
+      ],
+      "misconceptions": [
+        "Ein gültiger Teil dürfe beim Fehler des anderen Teils stehen bleiben."
+      ],
+      "sampleAnswer": "Beide Regionen bilden den Bericht. Ich sende Nord 30 und Süd als Text \"5\". Der Empfänger muss die ganze Lieferung ablehnen; ich prüfe 422 und den unveränderten Bestand. In einer Datenbank könnte eine Transaktion den zusammengehörigen Änderungsvorgang bündeln.",
+      "followUp": "Was prüfen COMMIT und ROLLBACK nicht an der fachlichen Berechnung?"
+    },
+    {
+      "id": "common-lf8-integrity-talk-03",
+      "prompt": "Begründe Rechte, Transportwahl und Fehlerprotokoll für den angegebenen Schutzbedarf.",
+      "objectiveIds": [
+        "common-lf8-integrity-rights"
+      ],
+      "blockIds": [
+        "common-lf8-integrity-rights",
+        "common-lf8-integrity-retries"
+      ],
+      "keyPoints": [
+        "Erforderliche Rechte und Zweckbindung nennen.",
+        "Geschützten Transport von Berechtigung unterscheiden.",
+        "Fehler nachvollziehbar ohne Geheimnisse protokollieren."
+      ],
+      "acceptableAlternatives": [
+        "Eine gleichwertige fachliche Erklärung mit nachvollziehbarer Begründung und passenden Fallwerten."
+      ],
+      "misconceptions": [
+        "Die Modellprobe beweise einen realen verschlüsselten Netztransport."
+      ],
+      "sampleAnswer": "Ich beschränke die Rollen auf Quelllesen und vereinbarte Bereitstellung. Für ein echtes System wäre korrekt eingerichtetes HTTPS vorgesehen. Das Modell prüft nur die entsprechende Auswahl. Im Fehlerprotokoll genügen Lieferbezug, Status, Feldfehler und Bestandswirkung; Tokens und private Quelldaten gehören nicht hinein.",
+      "followUp": "Welche weiteren Nachweise bräuchtest du vor dem Einsatz eines echten Empfängers?"
+    }
+  ],
+  "cards": [
+    {
+      "id": "common-lf8-integrity-card-01",
+      "front": "Welche Ebenen prüft die Validierung?",
+      "back": "Syntax, erlaubte Pflichtfelder, Datentypen, Wertebereiche, Beziehungen und zusätzlich den fachlichen Sollwert.",
+      "objectiveIds": [
+        "common-lf8-integrity-validate"
+      ],
+      "blockIds": [
+        "common-lf8-integrity-validate"
+      ]
+    },
+    {
+      "id": "common-lf8-integrity-card-02",
+      "front": "Welche Regeln gelten für die Regionszeilen?",
+      "back": "Genau Nord und Süd einmal; exakt region und total; total als ganze Zahl von 0 bis 1000000 EUR.",
+      "objectiveIds": [
+        "common-lf8-integrity-validate"
+      ],
+      "blockIds": [
+        "common-lf8-integrity-validate"
+      ]
+    },
+    {
+      "id": "common-lf8-integrity-card-03",
+      "front": "Was bedeutet atomare Übernahme?",
+      "back": "Die zusammengehörige Lieferung wird vollständig übernommen oder hinterlässt keine neuen Teiländerungen.",
+      "objectiveIds": [
+        "common-lf8-integrity-transaction"
+      ],
+      "blockIds": [
+        "common-lf8-integrity-transaction"
+      ]
+    },
+    {
+      "id": "common-lf8-integrity-card-04",
+      "front": "Was tun COMMIT und ROLLBACK?",
+      "back": "COMMIT bestätigt die offene Transaktion; ROLLBACK verwirft ihre noch nicht bestätigten Änderungen.",
+      "objectiveIds": [
+        "common-lf8-integrity-transaction"
+      ],
+      "blockIds": [
+        "common-lf8-integrity-transaction"
+      ]
+    },
+    {
+      "id": "common-lf8-integrity-card-05",
+      "front": "Wie ergänzen sich Rechte und Transportschutz?",
+      "back": "Rechte begrenzen erlaubte Aktionen; korrekt eingerichteter geschützter Transport schützt die Verbindung. Keines ersetzt das andere.",
+      "objectiveIds": [
+        "common-lf8-integrity-rights"
+      ],
+      "blockIds": [
+        "common-lf8-integrity-rights"
+      ]
+    },
+    {
+      "id": "common-lf8-integrity-card-06",
+      "front": "Welche Fehlerangaben sind sinnvoll?",
+      "back": "Vorgangsbezug, Zeitpunkt oder Reihenfolge, Schritt, Fehlerkategorie, Status und Übernahmewirkung; keine Tokens und keine unnötigen privaten Daten.",
+      "objectiveIds": [
+        "common-lf8-integrity-rights"
+      ],
+      "blockIds": [
+        "common-lf8-integrity-rights"
+      ]
+    }
+  ],
+  "review": {
+    "status": "reviewed",
+    "checkedAt": "2026-11-16"
+  }
+}

@@ -1,0 +1,503 @@
+{
+  "schemaVersion": 1,
+  "id": "common-lf3-physical",
+  "version": "1.0.0",
+  "title": "Netzwerkkomponenten und Übertragungswege",
+  "fieldId": "LF3",
+  "scope": "common",
+  "prerequisites": [
+    "common-lf2-hardware"
+  ],
+  "sourceIds": [
+    "lf3-cisco-switching",
+    "lf3-cisco-router-path",
+    "lf3-cisco-access-point",
+    "lf3-cisco-radio",
+    "lf3-cisco-optical"
+  ],
+  "sources": [
+    {
+      "id": "lf3-cisco-switching",
+      "title": "Cisco: What Is Network Switching?",
+      "url": "https://www.cisco.com/site/us/en/learn/topics/networking/what-is-network-switching.html",
+      "checkedAt": "2026-11-11",
+      "note": "Öffentliche HTML-Seite zu Switch, MAC-basierter Weiterleitung und Abgrenzung vom Routing geprüft. Der Lernfall betrachtet einen einfachen Layer-2-Switch."
+    },
+    {
+      "id": "lf3-cisco-router-path",
+      "title": "Cisco: How Does a Switch Work?",
+      "url": "https://www.cisco.com/site/us/en/learn/topics/small-business/network-switch-how.html",
+      "checkedAt": "2026-11-11",
+      "note": "HTML-Erklärung zur Verbindung innerhalb eines LAN und zwischen Netzen geprüft. Keine Produkt- oder Kaufempfehlung."
+    },
+    {
+      "id": "lf3-cisco-access-point",
+      "title": "Cisco: What is a wireless access point?",
+      "url": "https://www.cisco.com/site/us/en/learn/topics/small-business/what-is-an-access-point.html",
+      "checkedAt": "2026-11-11",
+      "note": "HTML-Grundbeschreibung des Access Points als Anbindung von Funkclients an ein kabelgebundenes LAN geprüft."
+    },
+    {
+      "id": "lf3-cisco-radio",
+      "title": "Cisco: Troubleshooting Problems Affecting Radio Frequency Communication",
+      "url": "https://www.cisco.com/c/en/us/support/docs/wireless-mobility/wireless-lan-wlan/8630-rf-problems.html",
+      "checkedAt": "2026-11-11",
+      "note": "Öffentliche HTML-Erklärung zu Hindernissen und Funkstörungen geprüft. Alte gerätespezifische Reichweitenwerte werden nicht übernommen."
+    },
+    {
+      "id": "lf3-cisco-optical",
+      "title": "Cisco: What is optical networking?",
+      "url": "https://www.cisco.com/site/us/en/learn/topics/networking/optical-networking.html",
+      "checkedAt": "2026-11-11",
+      "note": "HTML-Seite zu Lichtübertragung, passenden optischen Komponenten und Reichweitenabhängigkeit geprüft. Werbliche Pauschalvergleiche sind keine allgemeine Leistungszusage."
+    }
+  ],
+  "objectives": [
+    {
+      "id": "common-lf3-physical-path",
+      "text": "Den Verbindungsweg eines Clients über Netzwerkkomponenten in einem einfachen Netzplan verfolgen."
+    },
+    {
+      "id": "common-lf3-physical-medium",
+      "text": "Kabelgebundene und drahtlose Anbindung nach Reichweite, Störanfälligkeit und Bedarf vergleichen."
+    }
+  ],
+  "caseStudy": {
+    "title": "Knotenpunkt verbindet Radblick",
+    "text": "Knotenpunkt bindet die Arbeitsplätze von Radblick an. Mira verfolgt einen Netzplan, Sam vergleicht Anbindungen und Eda prüft die Begründung. Ein Schreibtisch-PC, ein mobiles Tablet, ein lokaler Drucker und ein Portal in einem anderen Netz bilden einen erfundenen Lernfall. Längen, Messwerte und Freigaben sind Unterrichtsvorgaben."
+  },
+  "blocks": [
+    {
+      "id": "common-lf3-physical-path",
+      "title": "1. Den Netzplan vom Client aus lesen",
+      "objectiveIds": [
+        "common-lf3-physical-path"
+      ],
+      "sourceIds": [
+        "lf3-cisco-switching",
+        "lf3-cisco-router-path",
+        "lf3-cisco-access-point"
+      ],
+      "paragraphs": [
+        "Ein Client ist ein Gerät beziehungsweise Programm, das einen Dienst anfragt. Im Plan bezeichnet Client den Schreibtisch-PC oder das Tablet. Ein LAN ist ein örtlich begrenztes Netz, etwa im Büro. Eine Linie im Netzplan steht für eine Verbindung; ihre Beschriftung zeigt Kabel oder Funk.",
+        "Der fiktive Plan lautet: PC → Switch → Router → anderes Netz mit Portalserver. Zusätzlich hängen Drucker und Access Point am Switch. Tablet → Funk → Access Point beschreibt den drahtlosen Einstieg. Alle lokalen Geräte liegen im selben einfachen LAN und IP-Teilnetz; getrennte virtuelle Netze werden hier noch nicht verwendet.",
+        "Verfolge zuerst Start und Ziel. Zum lokalen Drucker führt der Weg vom PC über den Switch zum Drucker. Zum Portal in einem anderen Netz kommt der Router hinzu. Ein Router verbindet IP-Netze; er kann auch zwei betriebliche Netze verbinden, ohne dass damit das öffentliche Internet gemeint ist.",
+        "Notiere danach die Zwischenstationen in ihrer Reihenfolge. Wanddose und Patchfeld können Kabelstrecken verbinden und ordnen; als passive Verbindungspunkte wählen sie keinen Datenweg. Eine vorhandene Leitung im Plan beweist noch keine funktionierende Anwendung."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Übungsfall",
+        "text": "Mira zeichnet für das Tablet zum Portal: Tablet → Access Point → Switch → Router → Portalnetz. Der Druckerzweig ist nicht Teil dieses Weges."
+      },
+      "misconception": {
+        "claim": "Jede Anfrage muss durch den Router, auch zum Drucker im selben Teilnetz.",
+        "correction": "Im vereinfachten LAN erreicht der PC den lokalen Drucker über den Switch. Der Router wird für den Weg in das andere IP-Netz benötigt."
+      },
+      "takeaway": "Beginne bei Start und Ziel und verfolge die tatsächlich verbundenen Stationen."
+    },
+    {
+      "id": "common-lf3-physical-roles",
+      "title": "2. Switch, Access Point und Router auseinanderhalten",
+      "objectiveIds": [
+        "common-lf3-physical-path"
+      ],
+      "sourceIds": [
+        "lf3-cisco-switching",
+        "lf3-cisco-router-path",
+        "lf3-cisco-access-point"
+      ],
+      "paragraphs": [
+        "Die Netzwerkschnittstelle verbindet den Client mit dem Übertragungsmedium. Der hier betrachtete Ethernet-Switch verbindet kabelgebundene Geräte im lokalen Netz. Er lernt, an welchen Anschlüssen MAC-Adressen erreichbar sind. Ein bekannter einzelner Empfänger kann so gezielt über den passenden Anschluss erreicht werden.",
+        "Ein Switch sendet nicht ausnahmslos alles an genau einen Anschluss: unbekannte Ziele und bestimmte Nachrichten an mehrere Empfänger werden im betreffenden lokalen Netz weiterverteilt. Die einfache Regel lautet daher: lokale Weiterleitung mit MAC-Adressen, nicht eine Garantie für jede einzelne Nachricht.",
+        "Ein Access Point bindet WLAN-Geräte über Funk an das LAN an. In unserem Plan ist er per Kabel mit dem Switch verbunden. Seine Rolle als Funkzugang ist von der Routerrolle zu unterscheiden. Ein einziges Gehäuse kann zwar Access Point, Switch und Router enthalten; die Aufgaben bleiben getrennt.",
+        "Der Router entscheidet anhand von IP-Zieladressen und seinen Wegeinformationen, wohin ein Paket zwischen Netzen weitergeht. Ein Switch mit zusätzlichen Routingfunktionen wäre eine andere Geräteausstattung. Für diesen Plan gelten die ausdrücklich beschriebenen einfachen Rollen."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Übungsfall",
+        "text": "Sam markiert am Kombigerät zwei Aufgaben: WLAN-Zugang für das Tablet und Routing zum anderen Netz. Zwei Aufgaben können im selben Gehäuse stecken."
+      },
+      "misconception": {
+        "claim": "Ein Access Point ist grundsätzlich der Router des WLAN-Clients.",
+        "correction": "Ein Access Point stellt die Funkanbindung her. Ob dasselbe Gerät auch routet, hängt von Ausstattung und Konfiguration ab."
+      },
+      "takeaway": "Unterscheide die Netzwerkaufgabe von der Zahl der Gerätegehäuse."
+    },
+    {
+      "id": "common-lf3-physical-media",
+      "title": "3. Kabel und Funk nach dem Bedarf vergleichen",
+      "objectiveIds": [
+        "common-lf3-physical-medium"
+      ],
+      "sourceIds": [
+        "lf3-cisco-radio",
+        "lf3-cisco-optical"
+      ],
+      "paragraphs": [
+        "Kupferverkabelung überträgt elektrische Signale, Glasfaser optische Signale und WLAN Funksignale. Für einen festen Arbeitsplatz kann ein vorhandener geprüfter Kabelanschluss eine gut planbare Verbindung bieten. Für ein Tablet, das durch die Werkstatt getragen wird, ist Beweglichkeit ein wichtiges Argument für WLAN.",
+        "Reichweite ist kein fester Wert für jede Kabelart oder jedes WLAN. Kabeltyp, Schnittstellen, unterstützte Übertragungsart und Installation bestimmen die zulässige Kabellänge. Bei Glasfaser müssen außerdem Fasertyp und optische Sender/Empfänger zusammenpassen. Eine passende Steckerform reicht als Nachweis nicht.",
+        "Glasfaser eignet sich je nach Ausstattung für längere Strecken und überträgt entlang der Faser keine elektrischen Störsignale wie eine Kupferleitung. Das macht die angeschlossenen Geräte nicht gegen jede Störung geschützt. Auch optische Strecken können etwa durch Schäden, Verschmutzung oder ungeeignete Komponenten ausfallen.",
+        "WLAN-Reichweite und nutzbare Rate hängen unter anderem von Entfernung, Wänden, Störungen und der gemeinsamen Funknutzung ab. Eine angezeigte hohe Verbindungsrate ist kein garantierter Dateidurchsatz. Für die Entscheidung zählen der benötigte Einsatzort und ein Test unter den vorgesehenen Bedingungen."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Übungsfall",
+        "text": "Eda plant WLAN für das bewegte Tablet und den vorhandenen geprüften Kabelanschluss für den festen PC. Für eine längere Gebäudestrecke lässt sie eine passende optische Lösung fachlich prüfen."
+      },
+      "misconception": {
+        "claim": "Eine hohe WLAN-Ratenanzeige belegt an jedem Arbeitsplatz denselben nutzbaren Durchsatz.",
+        "correction": "Entfernung, Hindernisse und Funknutzung verändern das Ergebnis. Der konkrete Einsatzort muss geprüft werden."
+      },
+      "takeaway": "Vergleiche Beweglichkeit, Strecke, Störungen und passende Komponenten gemeinsam."
+    },
+    {
+      "id": "common-lf3-physical-decision",
+      "title": "4. Eine Anbindung nachvollziehbar auswählen",
+      "objectiveIds": [
+        "common-lf3-physical-path",
+        "common-lf3-physical-medium"
+      ],
+      "sourceIds": [
+        "lf3-cisco-switching",
+        "lf3-cisco-router-path",
+        "lf3-cisco-access-point",
+        "lf3-cisco-radio",
+        "lf3-cisco-optical"
+      ],
+      "paragraphs": [
+        "Arbeite in vier Schritten: Erstens Bedarf notieren, etwa fester PC oder bewegtes Tablet. Zweitens den vollständigen Weg mit Zwischenstationen zeichnen. Drittens die vorgeschlagene Verbindung gegen Längenfreigabe, Störumgebung und Kompatibilität prüfen. Viertens das vereinbarte Nutzungsszenario testen und offene Punkte festhalten.",
+        "Im erfundenen Angebot ist eine Kupferverbindung für die benötigte Rate bis 100 m Gesamtstrecke freigegeben; eine passende optische Verbindung bis 300 m. Das sind Vorgaben genau dieser Übung, keine Universalgrenzen für alle Kupfer- oder Glasfaserverbindungen. Eine 140-m-Strecke erfüllt hier die Kupfervorgabe nicht, liegt aber innerhalb der optischen Vorgabe.",
+        "Für den PC am 12-m-Kabelweg ist der vorhandene Kabelanschluss im Fall passend. Das Tablet braucht Funkabdeckung an allen vereinbarten Arbeitsorten. Ein WLAN-Test am Access Point ersetzt keinen Test hinter der Werkstattwand. Die dokumentierten Geräte- und Kabelangaben werden mit dem tatsächlich benötigten Weg verglichen.",
+        "Halte die Entscheidung so fest, dass Sam sie prüfen kann: Gerät und Ziel, Weg, Bedarf, passende Vorgabe, Ergebnis und offene Nachweise. Eine Linkanzeige bestätigt einen Teil der Verbindung, aber noch keinen erfolgreichen Portalaufruf. Die eigentliche Anwendung wird zusätzlich mit der vereinbarten Aufgabe geprüft."
+      ],
+      "example": {
+        "title": "Eigener fiktiver Übungsfall",
+        "text": "Für 140 m vermerkt Mira: Kupferangebot bis 100 m reicht nicht; optisches Angebot bis 300 m passt zur Länge, passende Komponenten und Installation sind vor Umsetzung zu bestätigen."
+      },
+      "misconception": {
+        "claim": "Jedes als Glasfaser bezeichnete Angebot erfüllt dieselbe Reichweite.",
+        "correction": "Die Freigabe gilt für die konkrete Kombination und Übertragungsart. Verglichen wird mit den angegebenen Anforderungen."
+      },
+      "takeaway": "Begründe die Auswahl am vorgegebenen Fall und prüfe anschließend die benötigte Nutzung."
+    }
+  ],
+  "questionFile": "questions/common-lf3-physical.v1.csv",
+  "quiz": {
+    "questionIds": [
+      "LJ-LF3-PHYSICAL-Q01",
+      "LJ-LF3-PHYSICAL-Q02",
+      "LJ-LF3-PHYSICAL-Q03",
+      "LJ-LF3-PHYSICAL-Q04",
+      "LJ-LF3-PHYSICAL-Q05",
+      "LJ-LF3-PHYSICAL-Q06"
+    ]
+  },
+  "exam": {
+    "questionIds": [
+      "LJ-LF3-PHYSICAL-E01",
+      "LJ-LF3-PHYSICAL-E02",
+      "LJ-LF3-PHYSICAL-E03",
+      "LJ-LF3-PHYSICAL-E04",
+      "LJ-LF3-PHYSICAL-E05",
+      "LJ-LF3-PHYSICAL-E06",
+      "LJ-LF3-PHYSICAL-E07",
+      "LJ-LF3-PHYSICAL-E08"
+    ],
+    "passPercent": 80,
+    "scoring": "all-or-nothing-per-question",
+    "timed": false
+  },
+  "questionLinks": [
+    {
+      "questionId": "LJ-LF3-PHYSICAL-Q01",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf3-physical-path"
+      ],
+      "blockIds": [
+        "common-lf3-physical-path"
+      ]
+    },
+    {
+      "questionId": "LJ-LF3-PHYSICAL-Q02",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf3-physical-path"
+      ],
+      "blockIds": [
+        "common-lf3-physical-roles"
+      ]
+    },
+    {
+      "questionId": "LJ-LF3-PHYSICAL-Q03",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf3-physical-path"
+      ],
+      "blockIds": [
+        "common-lf3-physical-path",
+        "common-lf3-physical-roles"
+      ]
+    },
+    {
+      "questionId": "LJ-LF3-PHYSICAL-Q04",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf3-physical-medium"
+      ],
+      "blockIds": [
+        "common-lf3-physical-media"
+      ]
+    },
+    {
+      "questionId": "LJ-LF3-PHYSICAL-Q05",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf3-physical-medium"
+      ],
+      "blockIds": [
+        "common-lf3-physical-media",
+        "common-lf3-physical-decision"
+      ]
+    },
+    {
+      "questionId": "LJ-LF3-PHYSICAL-Q06",
+      "phase": "quiz",
+      "objectiveIds": [
+        "common-lf3-physical-medium"
+      ],
+      "blockIds": [
+        "common-lf3-physical-decision"
+      ]
+    },
+    {
+      "questionId": "LJ-LF3-PHYSICAL-E01",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf3-physical-path"
+      ],
+      "blockIds": [
+        "common-lf3-physical-path"
+      ]
+    },
+    {
+      "questionId": "LJ-LF3-PHYSICAL-E02",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf3-physical-path"
+      ],
+      "blockIds": [
+        "common-lf3-physical-roles"
+      ]
+    },
+    {
+      "questionId": "LJ-LF3-PHYSICAL-E03",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf3-physical-path"
+      ],
+      "blockIds": [
+        "common-lf3-physical-path",
+        "common-lf3-physical-roles"
+      ]
+    },
+    {
+      "questionId": "LJ-LF3-PHYSICAL-E04",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf3-physical-path"
+      ],
+      "blockIds": [
+        "common-lf3-physical-roles"
+      ]
+    },
+    {
+      "questionId": "LJ-LF3-PHYSICAL-E05",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf3-physical-medium"
+      ],
+      "blockIds": [
+        "common-lf3-physical-media",
+        "common-lf3-physical-decision"
+      ]
+    },
+    {
+      "questionId": "LJ-LF3-PHYSICAL-E06",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf3-physical-medium"
+      ],
+      "blockIds": [
+        "common-lf3-physical-media"
+      ]
+    },
+    {
+      "questionId": "LJ-LF3-PHYSICAL-E07",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf3-physical-medium"
+      ],
+      "blockIds": [
+        "common-lf3-physical-media"
+      ]
+    },
+    {
+      "questionId": "LJ-LF3-PHYSICAL-E08",
+      "phase": "exam",
+      "objectiveIds": [
+        "common-lf3-physical-path",
+        "common-lf3-physical-medium"
+      ],
+      "blockIds": [
+        "common-lf3-physical-decision"
+      ]
+    }
+  ],
+  "interview": [
+    {
+      "id": "common-lf3-physical-talk-route",
+      "prompt": "Beschreibe dem Team den Weg des Tablets zum Portal und die Aufgaben unterwegs.",
+      "objectiveIds": [
+        "common-lf3-physical-path"
+      ],
+      "blockIds": [
+        "common-lf3-physical-path",
+        "common-lf3-physical-roles"
+      ],
+      "keyPoints": [
+        "Tablet funkt zum Access Point.",
+        "Access Point ist am Switch angeschlossen.",
+        "Router verbindet das LAN mit dem anderen IP-Netz."
+      ],
+      "acceptableAlternatives": [
+        "Eine Skizze mit derselben Reihenfolge und Rollenbeschreibung."
+      ],
+      "misconceptions": [
+        "Access Point und Router unabhängig von der Ausstattung gleichsetzen."
+      ],
+      "sampleAnswer": "Das Tablet nutzt den Access Point als Funkzugang. Über dessen Kabel geht es zum Switch. Für den Portalserver in einem anderen IP-Netz leitet der Router weiter. Die Aufgaben können in manchen Geräten kombiniert sein, sind im Plan aber getrennt.",
+      "followUp": "Wie unterscheidet sich der Weg zum lokalen Drucker?"
+    },
+    {
+      "id": "common-lf3-physical-talk-compare",
+      "prompt": "Vergleiche die Anbindung des festen PCs und des bewegten Tablets anhand des Bedarfs.",
+      "objectiveIds": [
+        "common-lf3-physical-medium"
+      ],
+      "blockIds": [
+        "common-lf3-physical-media",
+        "common-lf3-physical-decision"
+      ],
+      "keyPoints": [
+        "Fester Arbeitsplatz und geprüfte Kabelstrecke passen zusammen.",
+        "Tablet benötigt Beweglichkeit und Funkabdeckung.",
+        "Störungen, Hindernisse und passende Komponenten berücksichtigen."
+      ],
+      "acceptableAlternatives": [
+        "Eine andere Lösung mit ausdrücklich nachgewiesener Erfüllung derselben Anforderungen."
+      ],
+      "misconceptions": [
+        "Eine WLAN-Ratenanzeige als Garantie für jeden Ort verstehen."
+      ],
+      "sampleAnswer": "Der PC kann den geprüften Kabelanschluss nutzen. Das Tablet braucht Beweglichkeit und deshalb im Fall WLAN. Ich prüfe die Abdeckung an den tatsächlichen Arbeitsorten, einschließlich der Werkstatt hinter der Wand. Datenrate, Strecke und Störeinflüsse müssen zum Bedarf passen.",
+      "followUp": "Was muss bei der 140-m-Strecke zusätzlich zur Längenangabe geprüft werden?"
+    },
+    {
+      "id": "common-lf3-physical-talk-record",
+      "prompt": "Formuliere eine kurze Entscheidung für die 140-m-Strecke mit den Angebotsgrenzen aus der Übung.",
+      "objectiveIds": [
+        "common-lf3-physical-path",
+        "common-lf3-physical-medium"
+      ],
+      "blockIds": [
+        "common-lf3-physical-path",
+        "common-lf3-physical-decision"
+      ],
+      "keyPoints": [
+        "Weg und benötigte Länge festhalten.",
+        "140 m gegen Kupfer 100 m und Optik 300 m vergleichen.",
+        "Kompatibilität und Anwendungstest als weitere Nachweise nennen."
+      ],
+      "acceptableAlternatives": [
+        "Die Entscheidung als beschriftete Skizze mit einer Prüfnotiz formulieren."
+      ],
+      "misconceptions": [
+        "Die Angebotsgrenzen als Werte für alle Kabelarten darstellen."
+      ],
+      "sampleAnswer": "Für den gezeichneten Weg werden 140 m benötigt. Das Kupferangebot ist bis 100 m freigegeben und passt daher nicht. Das optische Angebot reicht bis 300 m und erfüllt die Längenvorgabe. Passende Sender, Empfänger und Faser sowie ein erfolgreicher Nutzungstest sind noch zu bestätigen.",
+      "followUp": "Warum genügt eine Linkanzeige nicht für die gesamte Abnahme?"
+    }
+  ],
+  "cards": [
+    {
+      "id": "common-lf3-physical-card-switch",
+      "front": "Wofür nutzt der einfache Switch MAC-Adressen?",
+      "back": "Er ordnet erreichbare Geräte seinen Anschlüssen zu und leitet bekannte lokale Einzelziele passend weiter. Manche Nachrichten werden an mehrere Anschlüsse verteilt.",
+      "objectiveIds": [
+        "common-lf3-physical-path"
+      ],
+      "blockIds": [
+        "common-lf3-physical-roles"
+      ]
+    },
+    {
+      "id": "common-lf3-physical-card-router",
+      "front": "Wann kommt im Plan der Router ins Spiel?",
+      "back": "Für Ziele in einem anderen IP-Netz. Zwischen PC und Drucker im selben einfachen LAN führt der Weg über den Switch.",
+      "objectiveIds": [
+        "common-lf3-physical-path"
+      ],
+      "blockIds": [
+        "common-lf3-physical-path",
+        "common-lf3-physical-roles"
+      ]
+    },
+    {
+      "id": "common-lf3-physical-card-access-point",
+      "front": "Welche Aufgabe übernimmt ein Access Point?",
+      "back": "Er bindet WLAN-Clients über Funk an das LAN an. Routing ist eine andere Aufgabe, die im selben Gerät zusätzlich vorhanden sein kann.",
+      "objectiveIds": [
+        "common-lf3-physical-path"
+      ],
+      "blockIds": [
+        "common-lf3-physical-roles"
+      ]
+    },
+    {
+      "id": "common-lf3-physical-card-choice",
+      "front": "Welche Kriterien helfen beim Vergleich Kabel/WLAN?",
+      "back": "Beweglichkeit, benötigte Strecke, Störumgebung, passende Komponenten und der tatsächlich benötigte Durchsatz am Einsatzort.",
+      "objectiveIds": [
+        "common-lf3-physical-medium"
+      ],
+      "blockIds": [
+        "common-lf3-physical-media"
+      ]
+    },
+    {
+      "id": "common-lf3-physical-card-range",
+      "front": "Was folgt für 140 m bei Kupferfreigabe 100 m und Optikfreigabe 300 m?",
+      "back": "Das konkrete Kupferangebot reicht nicht; das optische Angebot erfüllt die Länge. Die Werte sind Übungsvorgaben, keine allgemeinen Mediengrenzen.",
+      "objectiveIds": [
+        "common-lf3-physical-medium"
+      ],
+      "blockIds": [
+        "common-lf3-physical-decision"
+      ]
+    },
+    {
+      "id": "common-lf3-physical-card-evidence",
+      "front": "Was ergänzt den Netzplan bei einer nachvollziehbaren Abnahme?",
+      "back": "Bedarf, Komponentenfreigaben, Ergebnis und offene Punkte dokumentieren. Zusätzlich zur Verbindung die vereinbarte Anwendungsaufgabe prüfen.",
+      "objectiveIds": [
+        "common-lf3-physical-path",
+        "common-lf3-physical-medium"
+      ],
+      "blockIds": [
+        "common-lf3-physical-decision"
+      ]
+    }
+  ],
+  "review": {
+    "status": "reviewed",
+    "checkedAt": "2026-11-11"
+  }
+}
