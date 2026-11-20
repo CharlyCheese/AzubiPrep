@@ -108,6 +108,28 @@ async function start(data){
       try{const text=primitiveText(value,limits.logLineChars);if(++logs>limits.logLines||(logChars+=text.length)>limits.logChars)throw new Error('Ausgabegrenze erreicht.');send('log',{text});}catch(error){reason=error.message;}
       return vm.undefined;
     });
+    // Check limits at every point. Only stops and final views need the scope
+    // readers, JSON serialization and an asynchronous trip out of QuickJS.
+    const shouldSnapshot = vm.newFunction('debugShouldSnapshot', (pointHandle, depthHandle) => {
+      try {
+        if (reason) throw new Error(reason);
+        const id = vm.getNumber(pointHandle);
+        const depth = vm.getNumber(depthHandle);
+        const point = artifact.points[id];
+        if (!point || point.id !== id || !Number.isSafeInteger(depth) || depth < 1 || depth > limits.frames || ++hits > limits.checkpointHits) {
+          throw new Error('Ungültiger Kontrollpunkt oder Grenze erreicht.');
+        }
+        currentPoint = id;
+        if (started !== null && performance.now() - started >= remaining) {
+          throw new Error('Aktive Zeitgrenze erreicht.');
+        }
+        const stepHit = lastMode === 'step' || (lastMode === 'over' && depth <= stepDepth) || (lastMode === 'out' && depth < stepDepth);
+        return point.end || first || stepHit || breakpoints.has(id) ? vm.true : vm.false;
+      } catch (error) {
+        reason ||= error.message;
+        throw error;
+      }
+    });
     const pause=vm.newAsyncifiedFunction('debugPause',async payload=>{
       try{
       if(reason)throw new Error(reason);
@@ -115,27 +137,23 @@ async function start(data){
       if(encodedSize(text)>limits.snapshotBytes)throw new Error('Zustandsgrenze erreicht.');
       const snapshot=JSON.parse(text);text='';
       const point=artifact.points[snapshot.point];
-      if(!point||!validateDebugSnapshot(snapshot,point,limits,artifact)||++hits>limits.checkpointHits)throw new Error('Ungültiger Kontrollpunkt oder Grenze erreicht.');
-      currentPoint=point.id;
+      if(!point||point.id!==currentPoint||!validateDebugSnapshot(snapshot,point,limits,artifact))throw new Error('Ungültiger Kontrollpunkt oder Grenze erreicht.');
       consume();
       if(point.end){send('final',{snapshot});started=performance.now();return;}
-      const depth=snapshot.frames.length;
-      const stepHit=lastMode==='step'||lastMode==='over'&&depth<=stepDepth||lastMode==='out'&&depth<stepDepth;
-      if(first||stepHit||breakpoints.has(point.id)){
-        const cause=first?(promiseRun?'promise':timerRun?'timer':eventRun?'event':'start'):breakpoints.has(point.id)?'breakpoint':'step';first=false;
-        if(++pauses>limits.pauses)throw new Error('Pausengrenze erreicht.');
-        state='paused';timerQueue?.pause();pauseId++;pausedDepth=depth;
-        // Install the resolver before posting, without retaining borrowed handles.
-        const waiting=new Promise(resolve=>{release=resolve;});
-        send('paused',{snapshot,point:point.id,pauseId,cause,remaining});
-        await waiting;
-        timerQueue?.resume();started=performance.now();state='running';send('running',{remaining});
-      }else started=performance.now();
+      const cause=first?(promiseRun?'promise':timerRun?'timer':eventRun?'event':'start'):breakpoints.has(point.id)?'breakpoint':'step';first=false;
+      if(++pauses>limits.pauses)throw new Error('Pausengrenze erreicht.');
+      state='paused';timerQueue?.pause();pauseId++;pausedDepth=snapshot.frames.length;
+      // Install the resolver before posting, without retaining borrowed handles.
+      const waiting=new Promise(resolve=>{release=resolve;});
+      send('paused',{snapshot,point:point.id,pauseId,cause,remaining});
+      await waiting;
+      timerQueue?.resume();started=performance.now();state='running';send('running',{remaining});
       }catch(error){reason=reason||error.message;throw error;}
     });
     vm.setProp(vm.global,'__azubi_dbg_native_pause',pause);pause.dispose();
     vm.setProp(vm.global,'__azubi_dbg_native_emit',emit);emit.dispose();
-    const boot=await vm.evalCodeAsync('('+installDebugger.toString()+')(__azubi_dbg_native_pause,__azubi_dbg_native_emit,'+JSON.stringify(limits)+')','debug-hilfe.js');
+    vm.setProp(vm.global,'__azubi_dbg_native_check',shouldSnapshot);shouldSnapshot.dispose();
+    const boot=await vm.evalCodeAsync('('+installDebugger.toString()+')(__azubi_dbg_native_pause,__azubi_dbg_native_emit,'+JSON.stringify(limits)+',__azubi_dbg_native_check)','debug-hilfe.js');
     if(boot.error){boot.error.dispose();throw new Error('Debughilfe konnte nicht starten.');}
     vm.setProp(vm.global,artifact.helper,boot.value);boot.value.dispose();
     if(artifact.dom&&!artifact.react){
@@ -172,7 +190,8 @@ async function start(data){
       if(dataSetup.error){dataSetup.error.dispose();throw new Error(reason||'JSON-/Prüfmethoden konnten nicht starten.');}dataSetup.value.dispose();
       const observePromise=vm.newFunction('observePromise',(mode,value)=>{
         try{
-          if(reason||state!=='running')throw new Error('Promise-Beobachtung außerhalb der Ausführung.');
+          if(reason)return vm.undefined;
+          if(state!=='running')throw new Error('Promise-Beobachtung außerhalb der Ausführung.');
           const action=primitiveText(mode,16);
           if(action==='track'){
             if(promiseHandles.length>=PROMISE_LIMITS.promises||vm.typeof(value)!=='object')throw new Error('Promise-Anzahlgrenze erreicht.');
@@ -218,7 +237,7 @@ async function start(data){
         const setup=await vm.evalCodeAsync(code,name);if(setup.error){setup.error.dispose();throw new Error(reason||'React konnte nicht vorbereitet werden: '+name);}setup.value.dispose();
       }
     }
-    const hidden=await vm.evalCodeAsync('delete globalThis.__azubi_dbg_native_pause;delete globalThis.__azubi_dbg_native_emit;delete globalThis.__azubi_dbg_native_dom;delete globalThis.__azubi_dbg_native_storage;delete globalThis.__azubi_dbg_native_timer;delete globalThis.__azubi_dbg_native_promise;delete globalThis.__azubi_dbg_native_fetch;','debug-setup.js');
+    const hidden=await vm.evalCodeAsync('delete globalThis.__azubi_dbg_native_check;delete globalThis.__azubi_dbg_native_pause;delete globalThis.__azubi_dbg_native_emit;delete globalThis.__azubi_dbg_native_dom;delete globalThis.__azubi_dbg_native_storage;delete globalThis.__azubi_dbg_native_timer;delete globalThis.__azubi_dbg_native_promise;delete globalThis.__azubi_dbg_native_fetch;','debug-setup.js');
     if(hidden.error){hidden.error.dispose();throw new Error('Debughilfe konnte nicht vorbereitet werden.');}hidden.value.dispose();
     send('memory',{bytes:memory.buffer.byteLength,maximum:limits.wasmMaxPages*65536});
     started=performance.now();state='running';send('running',{remaining});

@@ -31,7 +31,7 @@ async function raw(page,source,options={}){
   const finish=()=>{clearTimeout(timeout);clearTimeout(wake);worker.terminate();resolve(events);},timeout=setTimeout(()=>{events.push({type:'timeout'});finish();},14000);
   const send=fields=>worker.postMessage({type:'control',session:'promise',revision:'rev',commandId:++command,...fields});
   worker.onmessage=({data})=>{events.push(data);if(data.type==='paused'){if(options.hold&&data.cause==='promise'){const length=events.length;setTimeout(()=>{events.push({type:'hold-proof',unchanged:events.length===length});send({mode:'continue',pauseId:data.pauseId});},100);}else send({mode:'continue',pauseId:data.pauseId});}if(data.type==='idle'){if(data.timers.pending)wake=setTimeout(()=>send({timer:true}),Math.ceil(data.timers.nextDelay));else finish();}if(['error','done'].includes(data.type))finish();};
-  worker.postMessage({type:'start',session:'promise',revision:'rev',artifact:a,limits:{}});
+  worker.postMessage({type:'start',session:'promise',revision:'rev',artifact:a,limits:options.limits || {}});
  }),{a,asset,options});
 }
 
@@ -54,6 +54,15 @@ test('Promise-Identität, Handlerweitergabe, Rückgabeverkettung und finally-Abl
  ['let p;p=Promise.resolve().then(()=>p);p.catch(e=>{console.log(e.name);});',['TypeError']],
  ];
  for(const [source,expected] of cases){const events=await raw(page,source);expect(events.at(-1).type,JSON.stringify(events.at(-1))).toBe('idle');expect(events.filter(e=>e.type==='log').map(e=>e.text)).toEqual(expected);}
+});
+
+test('Promise-Beobachtung erhält den ursprünglichen Abbruchgrund', async ({ page }) => {
+  await page.goto('/frontendkurs/debugger');
+  const events = await raw(page, 'console.log("erste"); Promise.resolve(console.log("zweite"));', {
+    limits: { logLines: 1 },
+  });
+  expect(events.filter(event => event.type === 'log').map(event => event.text)).toEqual(['erste']);
+  expect(events.at(-1)).toMatchObject({ type: 'error', text: 'Ausgabegrenze erreicht.' });
 });
 
 test('Promise-Schutz: unhandled, Thenables, private Methoden und endgültige Budgets',async({page})=>{

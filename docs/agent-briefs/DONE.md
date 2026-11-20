@@ -401,3 +401,7 @@
 - [FE-082] Desktop, Web-Setup und portable Webversion 0.1.6 mit gemeinsamem Inhaltsstand ausgeliefert, PWA-Start und Update geprüft. Paketinhalt und Benutzerinstallation verifiziert — 2026-11-19 — [Brief](FE-082-pakete-angleichen.md)
 
 - [OPS-043] Node 24.22.3, Electron 45.4.1, Vite 6 und React Router 7 übernommen. Windows-Pakete und Benutzerinstallation 0.1.7 geprüft, Browser- und Desktopabnahme bestanden, verbleibenden Paketbauerbefund dokumentiert — 2026-11-19 — [Brief](OPS-043-node-patches.md)
+
+- [OPS-044] CI-Zeitüberschreitung im Debugger-Gesamtprojekt und verdeckte Promise-Abbruchmeldung behoben. 196 Browser- und 23 Electron-Fälle bestanden, Lastvergleiche und unabhängiger Review abgeschlossen — 2026-11-20 — [Brief](OPS-044-ci-debugger-gesamtprojekt.md)
+
+- [OPS-045] 14 Screenshots erneuert und Willkommensseite sowie Suche ergänzt. README mit geprüfter Galerie und Anleitung für neue Aufnahmen aktualisiert — 2026-11-20 — [Brief](OPS-045-readme-bildgalerie.md)

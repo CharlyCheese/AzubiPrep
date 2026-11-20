@@ -37,9 +37,9 @@ async function raw(page,p,actions=[],options={}){
   };worker.postMessage({type:'start',session:'elements',revision:'rev',artifact,limits:{}});
  }),{artifact:a,asset,actions,options});
 }
-function model(html=''){
+function model(html='',limits=DOM_LIMITS){
  const sent=[],core={guard(){},abort(text){throw new Error(text);},registered:fn=>typeof fn==='function',invoke:(fn,args,target)=>Reflect.apply(fn,target,args)};
- const tree=parseDebugHTML(html),m=installDebugDOM(tree,core,text=>{const t=JSON.parse(text);sent.push(t);return !t.error&&validDOMTree(t);},DOM_LIMITS,DOM_TAGS);
+ const tree=parseDebugHTML(html),m=installDebugDOM(tree,core,text=>{const t=JSON.parse(text);sent.push(t);return !t.error&&validDOMTree(t);},limits,DOM_TAGS);
  return {m,sent,tree,body:m.ref(m.document,'body').value,get:id=>m.bound(m.document,'getElementById')(id),create:tag=>m.bound(m.document,'createElement')(tag),call:(n,key,...args)=>m.bound(n,key)(...args),read:(n,key)=>m.ref(n,key).value,write:(n,key,value)=>{m.ref(n,key).value=value;}};
 }
 
@@ -71,11 +71,54 @@ test('Native Referenz: Entfernen und Umhängen im Handler behalten den begonnene
  const expected=await page.evaluate(({html,source})=>{const doc=document.implementation.createHTMLDocument('synthetic');doc.body.innerHTML=html;const logs=[];new Function('document','console',source)(doc,{log:(...a)=>logs.push(a.join(' '))});doc.getElementById('b').click();doc.getElementById('b').click();return logs;},{html,source});const result=await raw(page,project(html,source),[{id:3},{id:3}]);expect(result.at(-1).type).toBe('idle');expect(result.filter(e=>e.type==='log').map(e=>e.text)).toEqual(expected);
 });
 
+test('Vorschau publiziert sichtbare Umzüge sofort und wartet beim Aufbau abgetrennter Teilbäume', () => {
+ const d = model('<p id="sichtbar">Alt</p>');
+ const shown = d.get('sichtbar');
+ const group = d.create('section');
+ const child = d.create('span');
+ d.call(group, 'append', child);
+ d.write(child, 'textContent', 'Neu');
+ d.call(d.read(child, 'classList'), 'add', 'bereit');
+ d.call(child, 'remove');
+ d.call(group, 'appendChild', child);
+ expect(d.sent).toHaveLength(0);
+
+ // Der abgetrennte Zielknoten entfernt beim Verschieben ein sichtbares Kind.
+ d.call(group, 'replaceChildren', shown, child);
+ expect(d.sent).toHaveLength(1);
+ expect(d.sent[0].children).toEqual([]);
+ d.call(d.body, 'appendChild', group);
+ expect(d.sent).toHaveLength(2);
+ expect(d.sent[1].children[0].children.map(node => node.tag)).toEqual(['p', 'span']);
+ expect(d.sent[1].children[0].children[1].children).toEqual([{ text: 'Neu' }]);
+ d.call(group, 'removeChild', shown);
+ expect(d.sent).toHaveLength(3);
+ expect(d.sent[2].children[0].children.map(node => node.tag)).toEqual(['span']);
+ d.write(shown, 'id', 'abgetrennt');
+ expect(d.sent).toHaveLength(3);
+});
+
+test('UTF-8-Textgrenze umfasst den sichtbaren und abgetrennten Bestand nach Textwechseln', () => {
+ const mixed = 'éあ😀\uD800X\uDC00';
+ const limit = new TextEncoder().encode('🌳' + mixed + 'é').length;
+ const d = model('<p>🌳</p>', { ...DOM_LIMITS, textBytes: limit });
+ const span = d.create('span');
+ d.write(span, 'textContent', mixed);
+ d.write(span, 'className', 'é');
+ d.write(span, 'textContent', 'x');
+ d.call(span, 'replaceChildren', mixed);
+ expect(d.sent).toHaveLength(0);
+ d.call(d.body, 'append', span);
+ expect(d.sent[0].children[1].children).toEqual([{ text: mixed }]);
+ d.call(span, 'remove');
+ expect(() => d.call(span, 'append', 'x')).toThrow('Gesamttextgrenze');
+});
+
 test('Grenzen: 128 gehaltene Knoten einschließlich Text, IDs nicht wiederverwenden und entfernte Texte mitzählen',()=>{
  const a=model();for(let i=0;i<127;i++){const n=a.create('div');a.call(a.body,'appendChild',n);a.call(n,'remove');}expect(a.sent.at(-1).children).toHaveLength(0);expect(()=>a.create('div')).toThrow('Knotengrenze');
  const b=model();for(let i=0;i<126;i++)b.create('div');const n=b.create('p');expect(()=>b.write(n,'textContent','x')).toThrow('Knotengrenze');
  const c=model();for(let i=0;i<8;i++){const n=c.create('p');c.write(n,'textContent','ä'.repeat(1024));}const ninth=c.create('p');expect(()=>c.write(ninth,'textContent','ä')).toThrow('Gesamttextgrenze');
- for(const amount of [16383,16384]){const t=model();for(let offset=0;offset<amount;offset+=2048)t.write(t.create('p'),'textContent','a'.repeat(Math.min(2048,amount-offset)));expect(t.sent.at(-1).tag).toBe('body');}
+ for(const amount of [16383,16384]){const t=model();for(let offset=0;offset<amount;offset+=2048)t.write(t.create('p'),'textContent','a'.repeat(Math.min(2048,amount-offset)));expect(t.sent).toHaveLength(0);}
  const d=model();let at=d.body;for(let i=0;i<16;i++){const n=d.create('div');d.call(at,'appendChild',n);at=n;}expect(()=>d.call(at,'appendChild',d.create('div'))).toThrow('Tiefengrenze');
  const e=model(),input=e.create('input');for(let i=0;i<2047;i++)e.write(input,'value','a');expect(()=>e.write(input,'value','b')).toThrow('Schreibgrenze');
  const initial=parseDebugHTML('');initial.id=128;const core={guard(){},abort(t){throw new Error(t);}};const m=installDebugDOM(initial,core,()=>true,DOM_LIMITS,DOM_TAGS);expect(()=>m.bound(m.document,'createElement')('p')).toThrow('Knotengrenze');

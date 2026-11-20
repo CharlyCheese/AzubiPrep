@@ -31,21 +31,25 @@ Theorie & Glossar und freiwillige Lernhilfe mit lokalem Qwen oder eigenem ChatGP
 
 ## Über das Projekt
 
-AzubiPrep unterstützt Auszubildende der vier Fachinformatiker-Fachrichtungen
-bei der Vorbereitung auf die IHK-Abschlussprüfung: **7.000 Prüfungsfragen** in
-**26 Modulen**, aufbereitet als interaktives Quiz, Karteikarten-Training und
-zeitlimitierte Prüfungssimulation mit automatischer Auswertung. Lernfelder
-gliedern den Einstieg. Theorie & Glossar helfen beim Verstehen vor dem Quiz;
-die Frontend-Werkstatt bietet **167 eingebundene Lektionen in Kapitel 1–31**, einschließlich lokaler DOM-/React-Übungen, TypeScript-Prüfung und externer Werkzeugvorlage. Der eigene Quellcode-Debugger verbindet echte Haltepunkte mit HTML/CSS, Formularen, asynchronen JavaScript-Abläufen sowie TypeScript und React.
+AzubiPrep bereitet Auszubildende der vier Fachinformatiker-Fachrichtungen mit
+**7.000 Prüfungsfragen in 26 Modulen** auf die IHK-Abschlussprüfung vor. Auf
+der Willkommensseite führt **„Ohne Konto weiter nutzen“** zum Dashboard.
+Dort kannst du dein zuletzt geübtes Modul fortsetzen, Karteikarten wiederholen
+oder eine Prüfung auf Zeit starten.
 
-**Windows-Version 0.1.7** enthält die aktuelle Willkommen-Seite, die bereichsübergreifende
-Suche und die vollständige FIAE-Lernreise mit 94 Themen. Electron, lokale Webversion und
-installierbare PWA verwenden dieselbe Oberfläche. Dazu gehören 7.000 Fragen,
-Theorie & Glossar, die freiwillige KI-Auswahl, lokale PDF-Wissenssuche, die
-Frontend-Werkstatt mit 167 Lektionen und der Debugger.
-Modelle, eigene Unterlagen und angemeldete Konten werden nicht mitgeliefert.
-Jeder Anwender richtet seine eigene freiwillige KI-Verbindung ein.
-Die Screenshots zeigen ausgewählte App-Ansichten.
+- Die **geführte FIAE-Lernreise** umfasst 94 Themen von LF1 bis LF12a.
+  Jeder Themenblock verbindet Theorie, Quiz, Selbstreflexion oder ein freiwilliges
+  KI-Gespräch, Karteikarten und einen Mini-Test. Dein Lernstand bestimmt, wo du fortsetzt.
+- Die **Suche** führt zu Fragen, Theorie, Werkstattlektionen
+  und App-Funktionen. Im Lernbereich kannst du Module auch nach Lernfeld und
+  Fachrichtung auswählen.
+- In der **Frontend-Werkstatt** lernst du mit 167 Lektionen in
+  31 Kapiteln. Mit Editor und Vorschau gestaltest du Webseiten. Im eigenen
+  Debugger kannst du JavaScript, TypeScript und React schrittweise untersuchen.
+
+Die lokale Webversion, die installierbare PWA und **AzubiPrep Desktop für
+Windows (0.1.7)** verwenden dieselbe Oberfläche. Die Lernbegleitung kannst du
+bei Bedarf mit lokalem Qwen oder deinem eigenen ChatGPT-Konto einrichten.
 
 Bewusste Architektur-Entscheidung für den MVP: **kein erzwungener
 Datenbank-Server, kein Pflicht-Login, kein Docker.** Das Backend ist im
@@ -72,31 +76,60 @@ Gesamtverantwortung für Qualität und Architektur (Workflow:
 
 ## Screenshots
 
-Aktuelle Aufnahmen vom 31.10.2026 aus einem getrennten Demoprofil mit
-öffentlichen App-Inhalten und selbst erstellten Beispieldaten. Keine privaten
-Unterlagen, persönlichen Lerndaten oder Modellantworten sind abgebildet.
+Die Aufnahmen vom 20.11.2026 zeigen die Web-App mit einem fiktiven Lernprofil
+und öffentlichen Kursinhalten.
 
-| | |
+| Willkommensseite | Dashboard |
 |---|---|
-| ![Dashboard](screenshots/dashboard.png) | ![Lernbereich](screenshots/lernbereich.png) |
-| **Dashboard** – XP, Tages-/Wochenziel, Missionen | **Lernbereich** – Module nach Lernfeld und Fachrichtung |
-| ![Karteikarten](screenshots/karteikarten.png) | ![Prüfungssimulation](screenshots/pruefungssimulation.png) |
-| **Karteikarten** – Leitner-System, Ziffern statt Buchstaben | **Prüfungssimulation** – Zeitlimit & Themengewichtung |
-| ![Statistik & Abzeichen](screenshots/statistik-abzeichen.png) | ![Lernreise](screenshots/lernreise.png) |
-| **Statistik & Abzeichen** – Fortschritt & Gamification | **Lernreise** – Stationenweg durch die Module |
-| ![Lernkalender](screenshots/lernkalender.png) | ![Notizen](screenshots/notizen.png) |
-| **Lernkalender** – Wiederholungsplan & eigene Lerninhalte | **Lernnotizen** – lokal, export-/importierbar als `.txt` |
-| ![Frontend-Werkstatt](screenshots/frontend-werkstatt.png) | ![Theorie und Glossar](screenshots/theorie-glossar.png) |
-| **Frontend-Werkstatt** – eigener HTML-Code und isolierte Vorschau | **Theorie & Glossar** – Lernfeldeinstiege und Begriffssuche |
-| ![Theorie-Fundstellen](screenshots/theorie-fundstellen.png) | ![Einstellungen](screenshots/einstellungen.png) |
-| **Fundstellen lesen** – öffentliche Originalauszüge ohne Modellanfrage | **Einstellungen** – Darstellung und optionale lokale Lernbegleitung |
+| ![Einstieg ohne Konto und kurze Führung](screenshots/willkommen.png) | ![Dashboard mit dem zuletzt geübten Modul, Lernzielen und Lernstand](screenshots/dashboard.png) |
 
-**Mobile Ansichten** im hellen Design:
-
-| | |
+| Geführte FIAE-Lernreise | Bereichsübergreifende Suche |
 |---|---|
-| ![Lernbereich mobil](screenshots/lernbereich-mobile.png) | ![Prüfungssimulation mobil](screenshots/pruefungssimulation-mobile.png) |
-| **Lernbereich** (mobil, helles Design) | **Prüfungssimulation** (mobil, helles Design) |
+| ![Erstes Thema der FIAE-Lernreise mit geöffnetem Lernfeld 1](screenshots/lernreise.png) | ![Treffer für DNS mit Suchbereich und Links zu den Lerninhalten](screenshots/suche.png) |
+
+<details>
+<summary>Lernbereich, Theorie, Werkstatt und Prüfungen ansehen</summary>
+
+| Lernbereich | Theorie &amp; Glossar |
+|---|---|
+| ![Nach Lernfeld gruppierte Module mit geöffnetem Lernfeld 2](screenshots/lernbereich.png) | ![Themen aus Lernfeld 2 in Theorie und Glossar](screenshots/theorie-glossar.png) |
+
+| Fundstellen lesen | Frontend-Werkstatt |
+|---|---|
+| ![Öffentliche Fundstellen zur Frage nach BIOS und UEFI beim Start](screenshots/theorie-fundstellen.png) | ![HTML-Quelltext und gerenderte Webseite in der geteilten Ansicht](screenshots/frontend-werkstatt.png) |
+
+| Karteikarten | Prüfungssimulation |
+|---|---|
+| ![Eine fällige Karte im Übungsstapel mit der Möglichkeit, die Lösung aufzudecken](screenshots/karteikarten.png) | ![Fachrichtung, Fragenzahl, Zeitlimit und Schwierigkeit für eine Prüfung auswählen](screenshots/pruefungssimulation.png) |
+
+</details>
+
+<details>
+<summary>Statistik, Lernkalender, Notizen und Einstellungen ansehen</summary>
+
+| Statistik | Lernkalender |
+|---|---|
+| ![Fortschritt je Modul und geöffnete Abzeichenübersicht](screenshots/statistik-abzeichen.png) | ![Monatsansicht für Lerntage und Wiederholungen](screenshots/lernkalender.png) |
+
+| Lernnotizen | Einstellungen |
+|---|---|
+| ![Beispielnotizen und Eingabefeld für eine neue Notiz](screenshots/notizen.png) | ![Darstellung, Hilfe und Lernbegleitung im Modus „Ohne KI“](screenshots/einstellungen.png) |
+
+</details>
+
+<details>
+<summary>Mobile Ansichten im hellen Design ansehen</summary>
+
+| Lernbereich | Prüfungssimulation |
+|---|---|
+| ![Modulauswahl und untere Schnellnavigation auf dem Smartphone](screenshots/lernbereich-mobile.png) | ![Prüfungseinstellungen auf dem Smartphone](screenshots/pruefungssimulation-mobile.png) |
+
+</details>
+
+Um die **Bilder neu aufzunehmen**, brauchst du die Projektabhängigkeiten und den
+Playwright-Browser Chromium. Führe zuerst in `frontend/` den Befehl `npm run build`
+und danach in `e2e/` den Befehl `node scripts/update-screenshots.mjs` aus.
+Das Skript startet dafür einen eigenen lokalen Server und legt ein frisches Demoprofil an.
 
 ## Funktionsumfang
 
@@ -162,10 +195,9 @@ Unterlagen, persönlichen Lerndaten oder Modellantworten sind abgebildet.
 
 **Technik**
 
-- Überarbeitetes visuelles Design (Dark Mode in warmem Anthrazit statt
-  reinem Schwarz, Teal als Primärfarbe, gut lesbare Typografie – siehe
-  [`docs/04-UI-UX.md`](docs/04-UI-UX.md))
-- Dark/Light Mode, responsives Layout (Desktop-Sidebar + Mobile-Navigation)
+- Helles und dunkles Design mit gruppierter Seitennavigation am Desktop.
+  Auf dem Smartphone führen „Start“, „Lernreise“, „Lernen“ und „Suche“
+  direkt zum Ziel. Unter „Menü“ liegen die weiteren Bereiche. [UI-Konzept](docs/04-UI-UX.md)
 - Installierbare PWA mit begrenztem Offline-Zugriff auf bereits geladene Inhalte; lokale Dienste müssen für KI und private Wissenssuche laufen
 - Zusätzlich als native Windows-Desktop-App (Electron) verfügbar
 - Sicherheitsgehärtetes Backend: Security-Header (Helmet/CSP/HSTS), Rate-Limiting, geschützter Admin-Reload
@@ -493,12 +525,6 @@ vertiefte fachlich-didaktische KI-Evaluation, semantische Suche/OCR,
 Nachweise auf weiteren Zielgeräten sowie Installersignatur und Desktop-Auto-Update.
 Die Inhaltsfassung führt keinen Beispielcode aus und verändert keine bisherigen
 Prüfungsergebnisse.
-
-Die README-Bilder lassen sich mit den vorhandenen Playwright-Abhängigkeiten
-erneuern: erst in `frontend/` mit `npm run build` bauen, dann in `e2e/`
-`node scripts/update-screenshots.mjs` ausführen. Das Skript verwendet einen
-getrennten lokalen Server, ein frisches Demoprofil und öffentliche App-Inhalte;
-persönliche Unterlagen und die laufende Benutzer-App bleiben unangetastet.
 
 ## Autor
 

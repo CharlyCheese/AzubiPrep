@@ -124,6 +124,26 @@ test('DB23: Snapshot-Bytes und konservative Units unter/auf/über Grenze; aktive
   const events=await raw(page,'let summe=0;for(let i=0;i<100000;i++){summe+=i;}',{activeMs:20},'step');const pauses=events.filter(event=>event.type==='paused');expect(pauses.length).toBeGreaterThan(1);for(let i=1;i<pauses.length;i++)expect(pauses[i].remaining).toBeLessThanOrEqual(pauses[i-1].remaining);expect(pauses.at(-1).remaining).toBeLessThan(pauses[0].remaining);expect(events.at(-1).text).toBe('Aktive Zeitgrenze erreicht.');
 });
 
+test('Weiter baut nur sichtbare Variablenansichten im echten Debugger-Worker', async ({ page }) => {
+  await open(page, 'let ergebnis = 0;');
+  const source = 'let ergebnis = 0;\n{\n  const langerText = "' + 'x'.repeat(80) + '";\n  ergebnis = langerText.length;\n}\nconsole.log(ergebnis);';
+  const stepped = await raw(page, source, {}, 'step');
+  expect(stepped.at(-1).type).toBe('done');
+  const views = stepped.filter(event => event.type === 'paused' || event.type === 'final');
+  const size = event => encodedSize(JSON.stringify(event.snapshot));
+  const snapshotBytes = Math.max(size(views[0]), size(views.at(-1)));
+  expect(views.some(event => size(event) > snapshotBytes)).toBe(true);
+
+  const continued = await raw(page, source, { snapshotBytes });
+  expect(continued.at(-1).type).toBe('done');
+  expect(continued.filter(event => event.type === 'log').map(event => event.text)).toEqual(['80']);
+  expect(continued.filter(event => event.type === 'paused')).toHaveLength(1);
+  expect(continued.find(event => event.type === 'final').snapshot).toEqual(views.at(-1).snapshot);
+
+  const limitedStep = await raw(page, source, { snapshotBytes }, 'step');
+  expect(limitedStep.at(-1)).toMatchObject({ type: 'error', text: 'Zustandsgrenze erreicht.' });
+});
+
 test('DB23: echte Asyncify-Heapquota und Stacküberlauf mit frischem Folgeruntime', async () => {
   const quick=await newQuickJSAsyncWASMModuleFromVariant(asyncVariant);
   for(const source of ['function f(n){return n?f(n-1)+1:0;}f(2);','function f(n){return n?f(n-1)+1:0;}f(10000);','var a=[];for(let i=0;i<1000000;i++){a.push({i});}a.length;','function f(n){return n?f(n-1)+1:0;}f(2);']){
@@ -179,6 +199,56 @@ test('Snapshotaufbereitung wächst linear mit angezeigten Bindungen statt wieder
   try{const result=vm.evalCode('var serialized=0;var nativeJSON=JSON.stringify;JSON.stringify=value=>{const text=nativeJSON(value);serialized+=text.length;return text;};var snapshots=[];var helper=('+installDebugger.toString()+')(text=>snapshots.push(text),()=>{},'+JSON.stringify(DEBUG_LIMITS)+');var rows=Array.from({length:'+count+'},(_,i)=>["v"+i,()=>i]);helper(0,[[0,rows]]);nativeJSON({cost:serialized,snapshot:JSON.parse(snapshots[0])});');if(result.error){const error=vm.dump(result.error);result.error.dispose();throw new Error(JSON.stringify(error));}const value=JSON.parse(vm.getString(result.value));result.value.dispose();return value;}finally{vm.dispose();runtime.dispose();}
  };
  const smaller=measure(32),larger=measure(64);expect(larger.snapshot.scopes[0].values).toHaveLength(64);expect(larger.snapshot.frames[0].scopes).toEqual(larger.snapshot.scopes);expect(larger.cost).toBeLessThan(smaller.cost*2.5);
+});
+
+test('Weiterlauf erfasst Variablen und Snapshots erst am Halt und zählt jeden Kontrollpunkt', async () => {
+  const quick = await newQuickJSWASMModuleFromVariant(syncVariant);
+  const vm = quick.newContext();
+  try {
+    const result = vm.unwrapResult(vm.evalCode(`
+      let reads = 0, serialized = 0;
+      const originalJSON = JSON.stringify;
+      JSON.stringify = value => { serialized++; return originalJSON(value); };
+      const snapshots = [], decisions = [];
+      const helper = (${installDebugger.toString()})(
+        text => snapshots.push(JSON.parse(text)),
+        () => {},
+        ${JSON.stringify({ ...DEBUG_LIMITS, checkpointHits: 4 })},
+        (point, depth) => { decisions.push([point, depth]); return point === 2; }
+      );
+      let outside = 'vorher';
+      const root = [[0, [['outside', () => { reads++; return outside; }]]]];
+      helper(0, []);
+      helper(1, root);
+      const beforePause = [reads, serialized, snapshots.length];
+      outside = 'nachher';
+      const frame = helper.enter(9);
+      helper(2, [[1, [['local', () => { reads++; return 42; }]]]]);
+      helper.leave(frame);
+      const afterPause = [reads, serialized, snapshots.length];
+      helper(3, root);
+      let limit = '';
+      try { helper(3, root); } catch (error) { limit = error.message; }
+      originalJSON({ beforePause, afterPause, afterLimit: [reads, serialized, snapshots.length],
+        decisions, snapshots, limit, terminal: helper.failureReason() });
+    `));
+    let observed;
+    try { observed = JSON.parse(vm.getString(result)); } finally { result.dispose(); }
+    expect(observed.beforePause).toEqual([0, 0, 0]);
+    expect(observed.decisions).toEqual([[0, 1], [1, 1], [2, 2], [3, 1]]);
+    expect(observed.afterPause[0]).toBe(2);
+    expect(observed.afterPause[1]).toBeGreaterThan(0);
+    expect(observed.afterLimit).toEqual(observed.afterPause);
+    expect(observed.snapshots).toHaveLength(1);
+    expect(observed.snapshots[0].frames).toEqual([
+      { id: 0, functionId: 0, point: 1, scopes: [{ id: 0, values: [{ name: 'outside', type: 'string', display: 'nachher' }] }] },
+      { id: 1, functionId: 9, point: 2, scopes: [{ id: 1, values: [{ name: 'local', type: 'number', display: '42' }] }] },
+    ]);
+    expect(observed.limit).toBe('Kontrollpunktgrenze erreicht.');
+    expect(observed.terminal).toBe(observed.limit);
+  } finally {
+    vm.dispose();
+  }
 });
 
 test('Exakte Snapshot-Codeunits bei mehreren Frames, JSON-Escapes und Unicode unter/auf/über Grenze',async({page})=>{

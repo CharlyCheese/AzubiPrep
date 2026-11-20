@@ -82,7 +82,7 @@ export function validateDebugSnapshot(snapshot, point, limits, artifact) {
 // This helper executes only in QuickJS. Learner syntax cannot access its name,
 // methods or captured intrinsics. Snapshots never inspect objects/functions;
 // explicit learner data references use the restricted private ref helper.
-export function installDebugger(pause, emit, limits) {
+export function installDebugger(pause, emit, limits, shouldSnapshot = () => true) {
   const stringify = JSON.stringify;
   const slice = Function.prototype.call.bind(String.prototype.slice);
   const string = String, is = Object.is, trim = String.prototype.trim;
@@ -133,6 +133,8 @@ export function installDebugger(pause, emit, limits) {
     react?.publish();
     if (++hits > limits.checkpointHits) abort('Kontrollpunktgrenze erreicht.');
     const current = frames[frames.length - 1]; current.point = point; current.scopes = scopes;
+    // Keep the frame current for a later pause inside a nested call.
+    if (!shouldSnapshot(point, frames.length)) return;
     const views = frames.map(frame => ({ id: frame.id, functionId: frame.functionId, point: frame.point, scopes: frame.scopes.map(scope => ({ id: scope[0], values: [] })) }));
     const result = { point, frames: views, scopes: views[views.length - 1].scopes, truncated: false, ...(suspended.size?{waiting:[...suspended.values()].map(frame=>({id:frame.id,functionId:frame.functionId,point:frame.point}))}:{}) };
     let units = stringify(result).length;

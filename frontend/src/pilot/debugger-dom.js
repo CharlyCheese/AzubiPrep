@@ -85,8 +85,9 @@ export function installDebugDOM(tree, core, emit, limits, allowedTags=[]) {
   const read=handle=>apply(get,weak,[handle]);
   const owned=handle=>(typeof handle==='object'&&handle!==null)&&apply(has,weak,[handle]);
   const text=value=>{if(value!==null&&['object','function','symbol'].includes(typeof value))fail('DOM-Text benötigt einen primitiven Wert.');const result=string(value);if(result.length>limits.field)fail('DOM-Textgrenze erreicht.');return result;};
+  const textLeaf=value=>({text:value,bytes:byteLength(value)});
   function build(source,parent){
-    if(Object.hasOwn(source,'text'))return {text:source.text};
+    if(Object.hasOwn(source,'text'))return textLeaf(source.text);
     const node={id:source.id,tag:source.tag,attrs:{...source.attrs},disabled:source.disabled,...(source.control?{control:{...source.control},dirty:false}:{}),parent,children:[],listeners:[],handle:null,classes:null};
     node.handle=make({kind:'node',node});nodes.set(node.id,node);nextId=Math.max(nextId,node.id+1);node.children=source.children.map(child=>build(child,node));return node;
   }
@@ -102,13 +103,25 @@ export function installDebugDOM(tree, core, emit, limits, allowedTags=[]) {
     for(const node of nodes.values()){
       let depth=0;for(let at=node.parent;at;at=at.parent)if(++depth>limits.depth)fail('DOM-Tiefengrenze erreicht.');
       const values=Object.values(node.attrs);if(node.control)values.push(node.control.value);
-      for(const child of node.children)if(Object.hasOwn(child,'text')){count++;values.push(child.text);if(depth+1>limits.depth)fail('DOM-Tiefengrenze erreicht.');}
+      for(const child of node.children)if(Object.hasOwn(child,'text')){
+        count++;if(depth+1>limits.depth)fail('DOM-Tiefengrenze erreicht.');
+        if(child.text.length>limits.field)fail('DOM-Textgrenze erreicht.');
+        bytes+=child.bytes;
+      }
       if(count>limits.nodes)fail('DOM-Knotengrenze erreicht (auch abgetrennte Elemente zählen).');
-      for(const value of values){if(value.length>limits.field)fail('DOM-Textgrenze erreicht.');bytes+=byteLength(value);if(bytes>limits.textBytes)fail('DOM-Gesamttextgrenze erreicht (auch abgetrennte Elemente zählen).');}
+      for(const value of values){if(value.length>limits.field)fail('DOM-Textgrenze erreicht.');bytes+=byteLength(value);}
+      if(bytes>limits.textBytes)fail('DOM-Gesamttextgrenze erreicht (auch abgetrennte Elemente zählen).');
     }
   }
-  function publish(){guard();checkForest();if(emit(stringify(snapshot(root)))!==true)fail('DOM-Darstellungsgrenze erreicht.');}
-  function changed(){if(++writes>limits.writes)fail('DOM-Schreibgrenze erreicht.');publish();}
+  function connected(node){
+    while(node.parent)node=node.parent;
+    return node===root;
+  }
+  function publish(visible=true){
+    guard();checkForest();
+    if(visible && emit(stringify(snapshot(root)))!==true)fail('DOM-Darstellungsgrenze erreicht.');
+  }
+  function changed(visible){if(++writes>limits.writes)fail('DOM-Schreibgrenze erreicht.');publish(visible);}
   function elements(node,include=false){const result=[];function walk(n){if(!Object.hasOwn(n,'text')){result.push(n);for(const child of n.children)walk(child);}}if(include)walk(node);else for(const child of node.children)walk(child);return result;}
   function query(target,selector,all){
     selector=text(selector);if(!/^(?:#[a-zA-Z_][\w-]*|\.[a-zA-Z_][\w-]*|[a-zA-Z][a-zA-Z0-9]*)$/.test(selector))fail('Im DOM-Pilot bitte #id, .klasse oder einen Tagnamen verwenden.');
@@ -120,15 +133,16 @@ export function installDebugDOM(tree, core, emit, limits, allowedTags=[]) {
   function elementArgument(value){const data=owned(value)?read(value):null;if(data?.kind!=='node')fail('Ein eigenes Modellelement erforderlich.');return data.node;}
   function insert(parent,args,replace=false){
     if(['input','textarea','br','hr'].includes(parent.tag))fail('Dieses Modellelement unterstützt keine eingefügten Kinder.');
-    const items=args.map(value=>owned(value)?elementArgument(value):{text:text(value)});
+    const items=args.map(value=>owned(value)?elementArgument(value):textLeaf(text(value)));
     for(const node of items)if(!Object.hasOwn(node,'text')){if(node===root||ancestry(parent).includes(node))fail('Ungültige DOM-Hierarchie: Wurzel oder Vorfahr kann hier nicht eingefügt werden.');}
     // Detach arguments before clearing the target: arguments can be descendants
     // of children that replaceChildren is about to detach. Repeated handles keep
     // only their final position, like conversion through a native fragment.
+    const visible=connected(parent)||items.some(node=>!Object.hasOwn(node,'text')&&connected(node));
     for(const node of items)if(!Object.hasOwn(node,'text'))detach(node);
     if(replace){for(const child of parent.children)if(!Object.hasOwn(child,'text'))child.parent=null;parent.children=[];}
     for(const node of items){if(!Object.hasOwn(node,'text')){detach(node);node.parent=parent;}parent.children.push(node);}
-    if(items.length||replace)changed();
+    if(items.length||replace)changed(visible);
   }
   function ref(handle,key){
     guard();const target=read(handle);
@@ -139,20 +153,20 @@ export function installDebugDOM(tree, core, emit, limits, allowedTags=[]) {
         }
         if(target.kind==='node'){
           const node=target.node;if(key==='textContent')return content(node);if(key==='id')return node.attrs.id||'';if(key==='className')return node.attrs.class||'';if(key==='tagName')return node.tag.toUpperCase();if(key==='disabled'&&['button','input','textarea'].includes(node.tag))return node.disabled;
-          if(key==='parentNode')return node.parent?.handle||null;if(key==='isConnected')return ancestry(node).at(-1)===root;
+          if(key==='parentNode')return node.parent?.handle||null;if(key==='isConnected')return connected(node);
           if(key==='value'&&node.control)return node.control.value;if(key==='readOnly'&&node.control)return node.control.readOnly;if(key==='type'&&node.tag==='button')return node.attrs.type||'submit';if(key==='type'&&node.tag==='input')return 'text';
           if(key==='classList'){if(!node.classes)node.classes=make({kind:'classes',node});return node.classes;}
         }
         fail('Dieser DOM-/Ereigniszugriff ist im Pilot nicht unterstützt.');
       },
       set(value){guard();if(target.kind!=='node')fail('Dieser DOM-/Ereigniswert ist nur lesbar.');const node=target.node;
-        if(key==='textContent'){if(['input','br','hr'].includes(node.tag))fail('Dieses Modellelement unterstützt keinen Textinhalt; für input bitte value verwenden.');const next=value===null||value===undefined?'':text(value);for(const child of node.children)if(!Object.hasOwn(child,'text'))child.parent=null;node.children=next?[{text:next}]:[];if(node.tag==='textarea'&&!node.dirty)node.control.value=valueText(node,next);}
+        if(key==='textContent'){if(['input','br','hr'].includes(node.tag))fail('Dieses Modellelement unterstützt keinen Textinhalt; für input bitte value verwenden.');const next=value===null||value===undefined?'':text(value);for(const child of node.children)if(!Object.hasOwn(child,'text'))child.parent=null;node.children=next?[textLeaf(next)]:[];if(node.tag==='textarea'&&!node.dirty)node.control.value=valueText(node,next);}
         else if(key==='id'||key==='className')node.attrs[key==='id'?'id':'class']=text(value);
         else if(key==='value'&&node.control){node.control.value=valueText(node,value===null?'':value);node.dirty=true;}
         else if(key==='readOnly'&&node.control)node.control.readOnly=!!value;
         else if(key==='disabled'&&['button','input','textarea'].includes(node.tag))node.disabled=!!value;
         else if(key==='type'&&['button','input'].includes(node.tag)){const type=text(value).toLowerCase()||(node.tag==='input'?'text':'submit');if(node.tag==='input'?type!=='text':!['button','submit'].includes(type))fail('Dieser Eingabe-/Buttontyp ist im Modell nicht unterstützt.');node.attrs.type=type;}
-        else fail('Diese DOM-Zuweisung ist nicht unterstützt.');changed();
+        else fail('Diese DOM-Zuweisung ist nicht unterstützt.');changed(connected(node));
       },
     });
   }
@@ -167,12 +181,12 @@ export function installDebugDOM(tree, core, emit, limits, allowedTags=[]) {
         if(args.length!==1)fail('createElement benötigt genau einen unterstützten HTML-Tagnamen ohne Optionen.');
         const tag=text(args[0]).toLowerCase();if(tag==='body'||!allowedTags.includes(tag))fail('Dieses HTML-Element darf im DOM-Modell nicht erzeugt werden.');
         if(nodes.size>=limits.nodes||nextId>limits.nodes)fail('DOM-Knotengrenze erreicht (auch abgetrennte Elemente zählen).');
-        const node=build({id:nextId,tag,attrs:{},disabled:false,children:[],...(['input','textarea'].includes(tag)?{control:{value:'',readOnly:false}}:{})},null);changed();return node.handle;
+        const node=build({id:nextId,tag,attrs:{},disabled:false,children:[],...(['input','textarea'].includes(tag)?{control:{value:'',readOnly:false}}:{})},null);changed(false);return node.handle;
       }
       if(kind==='node'&&['append','appendChild','replaceChildren','remove','removeChild'].includes(key)){
         const node=target.node;
-        if(key==='remove'){if(args.length)fail('remove ohne Argumente verwenden.');if(node===root)fail('Die feste DOM-Modellwurzel kann nicht entfernt werden.');if(node.parent){detach(node);changed();}return;}
-        if(key==='removeChild'){if(args.length!==1)fail('removeChild benötigt genau ein eigenes Kindelement.');const child=elementArgument(args[0]);if(child.parent!==node)fail('removeChild benötigt ein direktes Kindelement.');detach(child);changed();return child.handle;}
+        if(key==='remove'){if(args.length)fail('remove ohne Argumente verwenden.');if(node===root)fail('Die feste DOM-Modellwurzel kann nicht entfernt werden.');if(node.parent){const visible=connected(node);detach(node);changed(visible);}return;}
+        if(key==='removeChild'){if(args.length!==1)fail('removeChild benötigt genau ein eigenes Kindelement.');const child=elementArgument(args[0]);if(child.parent!==node)fail('removeChild benötigt ein direktes Kindelement.');detach(child);changed(connected(node));return child.handle;}
         if(key==='appendChild'){if(args.length!==1)fail('appendChild benötigt genau ein eigenes Element.');const child=elementArgument(args[0]);insert(node,[child.handle]);return child.handle;}
         insert(node,args,key==='replaceChildren');return;
       }
@@ -180,10 +194,10 @@ export function installDebugDOM(tree, core, emit, limits, allowedTags=[]) {
         const node=target.node,current=[...new Set((node.attrs.class||'').split(/[\t\n\f\r ]+/).filter(Boolean))],tokens=(key==='toggle'?args.slice(0,1):args).map(token);
         if(key==='contains'){if(args.length!==1)fail('Ein Klassenname erforderlich.');return current.includes(tokens[0]);}
         if(key==='toggle'){
-          if(args.length<1||args.length>2)fail('Klassentoggle benötigt Namen und optional Boolean.');const name=tokens[0],next=args.length===2?!!args[1]:!current.includes(name),index=current.indexOf(name);if(next&&index>=0||!next&&index<0)return next;if(next)current.push(name);else current.splice(index,1);node.attrs.class=text(current.join(' '));changed();return next;
+          if(args.length<1||args.length>2)fail('Klassentoggle benötigt Namen und optional Boolean.');const name=tokens[0],next=args.length===2?!!args[1]:!current.includes(name),index=current.indexOf(name);if(next&&index>=0||!next&&index<0)return next;if(next)current.push(name);else current.splice(index,1);node.attrs.class=text(current.join(' '));changed(connected(node));return next;
         }
         if(!tokens.length&&!Object.hasOwn(node.attrs,'class'))return;
-        for(const name of tokens){const index=current.indexOf(name);if(key==='add'&&index<0)current.push(name);if(key==='remove'&&index>=0)current.splice(index,1);}node.attrs.class=text(current.join(' '));changed();return;
+        for(const name of tokens){const index=current.indexOf(name);if(key==='add'&&index<0)current.push(name);if(key==='remove'&&index>=0)current.splice(index,1);}node.attrs.class=text(current.join(' '));changed(connected(node));return;
       }
       if(kind==='event'){if(args.length)fail('Ereignismethode ohne Argumente verwenden.');if(key==='preventDefault'){if(target.event.cancelable)target.event.prevented=true;}else{target.event.stopped=true;if(key==='stopImmediatePropagation')target.event.immediate=true;}return;}
       if(args.length<2||args.length>3||!['click','input','change','submit'].includes(args[0])||args.length===3&&args[2]!==false&&args[2]!==undefined||!core.registered(args[1]))fail('Nur click/input/change/submit mit eigener registrierter Funktion ohne Listeneroptionen ist unterstützt.');
@@ -206,7 +220,7 @@ export function installDebugDOM(tree, core, emit, limits, allowedTags=[]) {
     // are additionally checked in both host/Worker protocol endpoints.
     const edits=values.map(item=>{const field=nodes.get(item.id);if(!field?.control||field.disabled||field.control.readOnly)fail('Dieses Feld kann keine Nutzereingabe übernehmen.');pathOf(field);return {field,value:valueText(field,item.value)};});
     const changedFields=[];
-    for(const {field,value} of edits){if(field.control.value!==value){field.control.value=value;field.dirty=true;changed();changedFields.push(field);}}
+    for(const {field,value} of edits){if(field.control.value!==value){field.control.value=value;field.dirty=true;changed(true);changedFields.push(field);}}
     for(const field of changedFields){fire(field,'input');fire(field,'change');}
     if(type==='commit')return;
     if(type==='submit'){if(node.tag!=='form')fail('Submit benötigt ein Formular.');fire(node,'submit');return;}
