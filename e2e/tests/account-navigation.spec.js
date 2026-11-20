@@ -106,6 +106,7 @@ test('Passwortanfrage nach Verbindungsfehler wiederholen und zur Anmeldung gelan
   await page.setViewportSize({ width: 320, height: 700 });
   await page.goto('/profil#konto');
   await page.getByRole('link', { name: 'Passwort vergessen?' }).click();
+  await expect(page.getByRole('heading', { name: 'Passwort zurücksetzen', exact: true })).toBeVisible();
   await page.getByLabel('E-Mail').fill(email);
   const submit = page.getByRole('button', { name: 'Admin benachrichtigen' });
   await submit.click();

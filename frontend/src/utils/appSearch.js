@@ -1,5 +1,7 @@
 // Only public descriptions of destinations belong here. Notes are matched
 // separately against the current browser profile and never enter an API request.
+import { isPortfolio } from './deployment.js';
+
 const tools = [
   { title: 'Dashboard', url: '/dashboard', description: 'Lernen fortsetzen, Tagesziel und Lernstand ansehen.', keywords: 'Startseite Übersicht Fortschritt' },
   { title: 'Willkommen', url: '/willkommen', description: 'Einstieg in AzubiPrep und kurze Führung durch die App.', keywords: 'Erste Schritte Tour' },
@@ -8,7 +10,7 @@ const tools = [
   { title: 'Freie Modulreise', url: '/lernreise?weg=module', description: 'Stationen deiner Fachrichtung in der Karten- oder Listenansicht öffnen.', keywords: 'Lernreise Lernpfad' },
   { title: 'Theorie & Glossar', url: '/theorie', description: 'Lernfelder und Lernbereiche mit Erklärungen nachschlagen.' },
   { title: 'Glossar', url: '/theorie?modus=glossary', description: 'Fachbegriffe und Abkürzungen nachschlagen.', keywords: 'Wörterbuch Lexikon' },
-  { title: 'Freie Wissenssuche', url: '/theorie?wissen=1', description: 'Eine eigene Frage stellen und Fundstellen in Lernunterlagen lesen.', keywords: 'Wissensfrage Materialsuche Quellen RAG' },
+  { title: 'Freie Wissenssuche', url: '/theorie?wissen=1', description: isPortfolio ? 'Fundstellen in den öffentlichen Lerninhalten nachschlagen.' : 'Eine eigene Frage stellen und Fundstellen in Lernunterlagen lesen.', keywords: isPortfolio ? 'Wissensfrage Quellen' : 'Wissensfrage Materialsuche Quellen RAG' },
   { title: 'Frontend-Werkstatt', url: '/frontendkurs', description: 'Praktische Übungen für HTML, CSS und JavaScript öffnen.', keywords: 'Editor Programmieren Frontendkurs Vorschau' },
   { title: 'Karteikarten', url: '/karteikarten', description: 'Fällige Karten wiederholen oder einen neuen Lernstapel zusammenstellen.', keywords: 'Wiederholung Lernkarten Flashcards' },
   { title: 'Prüfungssimulation', url: '/pruefung', description: 'Eine Prüfung zusammenstellen und mit Zeitlimit bearbeiten.', keywords: 'Prüfung starten Probeklausur IHK Simulator' },
@@ -16,12 +18,12 @@ const tools = [
   { title: 'Statistik', url: '/statistik', description: 'Lernfortschritt, Aktivität und Abzeichen ansehen.', keywords: 'Punkte Erfolge Leistung' },
   { title: 'Lernkalender', url: '/kalender', description: 'Lernzeiten planen und den Tagesplan öffnen.', keywords: 'Termin Termine Lernplan Wochenplan Kalender' },
   { title: 'Lernnotizen', url: '/notizen', description: 'Eigene Notizen schreiben, bearbeiten, importieren und exportieren.', keywords: 'Merksätze' },
-  { title: 'Profil', url: '/profil', description: 'Lernprofil, Fachrichtung und Prüfungstermin bearbeiten.', keywords: 'Konto Anmeldung Registrierung Synchronisierung Passwort' },
+  { title: 'Profil', url: '/profil', description: 'Lernprofil, Fachrichtung und Prüfungstermin bearbeiten.', keywords: isPortfolio ? '' : 'Konto Anmeldung Registrierung Synchronisierung Passwort' },
   { title: 'Passwort zurücksetzen', url: '/passwort-zuruecksetzen', description: 'Bei der Administration einen Link zum Zurücksetzen anfordern.', keywords: 'Passwort vergessen Kennwort Zugang verloren Konto', requiresAccounts: true },
-  { title: 'Benachrichtigungen', url: '/benachrichtigungen', description: 'Deine Mitteilungen und Push-Einstellungen öffnen.', keywords: 'Nachrichten Postfach Archiv Mailbox' },
+  { title: 'Benachrichtigungen', url: '/benachrichtigungen', description: 'Deine Mitteilungen und Push-Einstellungen öffnen.', keywords: 'Nachrichten Postfach Archiv Mailbox', localEdition: true },
   { title: 'Einstellungen', url: '/einstellungen', description: 'Design wechseln, die Führung starten oder Datenschutz und lokale Daten verwalten.', keywords: 'Hell Dunkel Dunkelmodus Dark Mode Darstellung Hilfe Tour zurücksetzen' },
-  { title: 'KI-Anbieter', url: '/einstellungen#ki-anbieter', description: 'Anbieter und Modell für die Lernhilfe auswählen.', keywords: 'Einstellungen künstliche Intelligenz Qwen ChatGPT' },
-  { title: 'Lokale Lernunterlagen', url: '/einstellungen#lernunterlagen', description: 'Unterlagen für die lokale Materialsuche verwalten.', keywords: 'Einstellungen RAG Quellen Index' },
+  { title: 'KI-Anbieter', url: '/einstellungen#ki-anbieter', description: 'Anbieter und Modell für die Lernhilfe auswählen.', keywords: 'Einstellungen künstliche Intelligenz Qwen ChatGPT', localEdition: true },
+  { title: 'Lokale Lernunterlagen', url: '/einstellungen#lernunterlagen', description: 'Unterlagen für die lokale Materialsuche verwalten.', keywords: 'Einstellungen RAG Quellen Index', localEdition: true },
   { title: 'Fragenpflege', url: '/autoren', description: 'Übungsfragen verwalten und Meldungen bearbeiten.', roles: ['admin', 'autor'] },
   { title: 'Nutzerverwaltung', url: '/nutzerverwaltung', description: 'Konten und Rollen verwalten.', roles: ['admin'] },
 ];
@@ -45,7 +47,9 @@ function matches(query, entries) {
 }
 
 export function findTools(query, role) {
-  return matches(query, tools.filter(tool => !tool.roles || tool.roles.includes(role)))
+  const available = tools.filter(tool => (!isPortfolio || !(tool.localEdition || tool.requiresAccounts))
+    && (!tool.roles || tool.roles.includes(role)));
+  return matches(query, available)
     .map(tool => ({ ...tool, type: 'funktionen', id: tool.url }));
 }
 

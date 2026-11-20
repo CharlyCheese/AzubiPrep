@@ -6,6 +6,7 @@ import WillkommenModal from './WillkommenModal.jsx';
 import AppTour from './AppTour.jsx';
 import { authStore } from '../store/authStore.js';
 import { api } from '../api/client.js';
+import { isPortfolio } from '../utils/deployment.js';
 
 const GROUPS = [
   { title: 'Lernen', links: [
@@ -26,7 +27,7 @@ const GROUPS = [
     { to: '/suche', label: 'Suche', icon: '⚲' },
     { to: '/notizen', label: 'Notizen', icon: '✎' },
     { to: '/profil', label: 'Profil', icon: '◎' },
-    { to: '/benachrichtigungen', label: 'Benachrichtigungen', icon: '◌' },
+    ...(!isPortfolio ? [{ to: '/benachrichtigungen', label: 'Benachrichtigungen', icon: '◌' }] : []),
     { to: '/einstellungen', label: 'Einstellungen', icon: '⚙' },
   ] },
 ];

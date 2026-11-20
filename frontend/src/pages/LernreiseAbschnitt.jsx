@@ -6,6 +6,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { journeyApi } from '../api/journey.js';
 import JourneyTutor from '../components/JourneyTutor.jsx';
+import { isPortfolio } from '../utils/deployment.js';
 import JourneyCalculation from '../components/JourneyCalculation.jsx';
 import { createCalculation } from '../utils/journeyCalculation.js';
 import JourneyWorkplace from '../components/JourneyWorkplace.jsx';
@@ -14,6 +15,10 @@ import { NETWORK_TOPIC, createNetwork, networkPassed } from '../utils/journeyNet
 import { WORKPLACE_TOPIC, createWorkplace, checkWorkplace } from '../utils/journeyWorkplace.js';
 import { journeyStorageKey, createJourneyState, createJourneyStore, reduceJourney, exportJourney, parseJourneyBackup } from '../store/journeyStore.js';
 import '../styles/journey.css';
+
+const reflectionInstructions = isPortfolio
+  ? 'Erkläre es schriftlich oder gedanklich in eigenen Worten. Vergleiche deine Antwort mit den Kernpunkten.'
+  : 'Erkläre es in eigenen Worten – schriftlich, gedanklich oder im freiwilligen KI-Gespräch. Vergleiche danach mit den festen Kernpunkten.';
 
 const phases = { theory: 'Theorie', quiz: 'Quiz', reflection: 'Selbstreflexion', cards: 'Karteikarten', 'exam-intro': 'Mini-Test', exam: 'Mini-Test', result: 'Auswertung' };
 
@@ -286,7 +291,7 @@ function JourneySession({ topic }) {
         {currentBlock ? <section className="card journey-work" aria-label="Theorie nachlesen">
           <p className="small">Dein aktueller Lernschritt bleibt erhalten.</p>
           <h2 ref={heading} tabIndex={-1}>{currentBlock.title}</h2><TheoryBlock block={currentBlock} />
-          {phase !== 'exam' && <JourneyTutor key={currentBlock.id} topic={topic} kind="theory" targetId={currentBlock.id} />}
+          {!isPortfolio && phase !== 'exam' && <JourneyTutor key={currentBlock.id} topic={topic} kind="theory" targetId={currentBlock.id} />}
           <button className="btn btn-primary" onClick={() => setReviewBlock(null)}>Zurück zum Lernschritt</button>
         </section> : <section className="card journey-work" aria-label="Aktueller Lernschritt">
           {phase === 'theory' && <>
@@ -294,7 +299,7 @@ function JourneySession({ topic }) {
             <h2 ref={heading} tabIndex={-1}>{topic.blocks[index].title}</h2>
             {index === 0 && <details className="journey-detail"><summary>Unser gemeinsames Beispiel</summary><p>{topic.caseStudy.text}</p></details>}
             <TheoryBlock block={topic.blocks[index]} />
-            <JourneyTutor key={topic.blocks[index].id} topic={topic} kind="theory" targetId={topic.blocks[index].id} />
+            {!isPortfolio && <JourneyTutor key={topic.blocks[index].id} topic={topic} kind="theory" targetId={topic.blocks[index].id} />}
             <div className="journey-actions">{index > 0 && <button className="btn btn-ghost" disabled={disabled} onClick={() => act({ type: 'previous' })}>Vorheriger Block</button>}
               <button className="btn btn-primary" disabled={disabled} onClick={() => act({ type: 'read-block' })}>{index === topic.blocks.length - 1 ? 'Gelesen – zum Quiz' : 'Gelesen – weiter'}</button>
             </div>
@@ -314,13 +319,13 @@ function JourneySession({ topic }) {
           </>}
           {phase === 'reflection' && <>
             <h2 ref={heading} tabIndex={-1}>Selbstreflexion {index + 1} von {topic.interview.length}</h2>
-            <p>{reflection.practice ? externalProject ? 'Bearbeite den Praxisauftrag mit einem Werkzeug deiner Wahl. Halte deine Beobachtungen fest und vergleiche sie mit der Checkliste.' : [...PRACTICE_TOPICS, ...LAB_TOPICS].includes(topic.id) ? 'Bearbeite die praktische Übung Schritt für Schritt. Prüfe die Ergebnisse, vergleiche das gespeicherte Protokoll und bestätige deine Durchführung.' : topic.id === NETWORK_TOPIC ? 'Untersuche die drei Störungen im Modell, korrigiere sie und prüfe erneut. Vergleiche danach das gespeicherte Protokoll und bestätige deine Durchführung.' : topic.id === WORKPLACE_TOPIC ? 'Richte den Modellarbeitsplatz ein, prüfe seine Funktionen und vergleiche das Übergabeprotokoll mit dem Auftrag. Danach bestätigst du deine Durchführung.' : 'Erstelle deine Darstellung, trage sie vor und prüfe sie mit den folgenden Kriterien. Danach bestätigst du deine Durchführung.' : 'Erkläre es in eigenen Worten – schriftlich, gedanklich oder im freiwilligen KI-Gespräch. Vergleiche danach mit den festen Kernpunkten.'} Die KI vergibt keine Note und schließt keinen Lernschritt ab.</p>
+            <p>{reflection.practice ? externalProject ? 'Bearbeite den Praxisauftrag mit einem Werkzeug deiner Wahl. Halte deine Beobachtungen fest und vergleiche sie mit der Checkliste.' : [...PRACTICE_TOPICS, ...LAB_TOPICS].includes(topic.id) ? 'Bearbeite die praktische Übung Schritt für Schritt. Prüfe die Ergebnisse, vergleiche das gespeicherte Protokoll und bestätige deine Durchführung.' : topic.id === NETWORK_TOPIC ? 'Untersuche die drei Störungen im Modell, korrigiere sie und prüfe erneut. Vergleiche danach das gespeicherte Protokoll und bestätige deine Durchführung.' : topic.id === WORKPLACE_TOPIC ? 'Richte den Modellarbeitsplatz ein, prüfe seine Funktionen und vergleiche das Übergabeprotokoll mit dem Auftrag. Danach bestätigst du deine Durchführung.' : 'Erstelle deine Darstellung, trage sie vor und prüfe sie mit den folgenden Kriterien. Danach bestätigst du deine Durchführung.' : reflectionInstructions}{!isPortfolio && ' Die KI vergibt keine Note und schließt keinen Lernschritt ab.'}</p>
             <p><strong>{reflection.prompt}</strong></p>
             {reflection.practice && <section className="journey-example" aria-label={externalProject ? 'Praktischer Projektauftrag' : [...PRACTICE_TOPICS, ...LAB_TOPICS].includes(topic.id) ? 'Praktischer Arbeitsauftrag' : topic.id === NETWORK_TOPIC ? 'Praktisches Netzwerklabor' : topic.id === WORKPLACE_TOPIC ? 'Praktische Einrichtungsaufgabe' : 'Praktische Präsentationsaufgabe'}>
               <h3>{externalProject ? 'Dein Projektauftrag' : [...PRACTICE_TOPICS, ...LAB_TOPICS].includes(topic.id) ? 'Jetzt Schritt für Schritt bearbeiten und prüfen' : topic.id === NETWORK_TOPIC ? 'Jetzt selbst untersuchen und korrigieren' : topic.id === WORKPLACE_TOPIC ? 'Jetzt selbst einrichten und prüfen' : 'Jetzt selbst erstellen und präsentieren'}</h3>
               <p className="journey-code">{reflection.practice.task}</p>
               <ul>{reflection.practice.checklist.map(item => <li key={item}>{item}</li>)}</ul>
-              {!externalProject && ![WORKPLACE_TOPIC, NETWORK_TOPIC, ...PRACTICE_TOPICS, ...LAB_TOPICS].includes(topic.id) && <p className="small">Du kannst außerhalb der App arbeiten und allein vortragen. Deine Dateien bleiben bei dir; ein Upload ist nicht nötig. Die KI oder der Mini-Test können deine tatsächliche Präsentation nicht nachweisen.</p>}
+              {!externalProject && ![WORKPLACE_TOPIC, NETWORK_TOPIC, ...PRACTICE_TOPICS, ...LAB_TOPICS].includes(topic.id) && <p className="small">Du kannst außerhalb der App arbeiten und allein vortragen. Deine Dateien bleiben bei dir; ein Upload ist nicht nötig. {isPortfolio ? 'Du bestätigst deine Durchführung selbst.' : 'Die KI oder der Mini-Test können deine tatsächliche Präsentation nicht nachweisen.'}</p>}
             </section>}
             {reflection.practice && LAB_TOPICS.includes(topic.id) && <JourneyLab topicId={topic.id} value={state.lab || createLab(topic.id)} disabled={exclusive || requesting || Boolean(storageError) || state.reflection.done.includes(reflection.id)} busy={saving} completed={state.reflection.done.includes(reflection.id)} onAction={action => { setPracticeConfirmed(false); if (action.type === 'code-result') acceptLabResult(action); else act({ type: 'lab-action', action }); }} />}
             {reflection.practice && PRACTICE_TOPICS.includes(topic.id) && <JourneyPractice topicId={topic.id} value={state.practice || createPractice(topic.id)} disabled={exclusive || requesting || Boolean(storageError) || state.reflection.done.includes(reflection.id)} busy={saving} completed={state.reflection.done.includes(reflection.id)} onAction={action => { setPracticeConfirmed(false); act({ type: 'practice-action', action }); }} />}
@@ -328,7 +333,7 @@ function JourneySession({ topic }) {
             {reflection.practice && topic.id === NETWORK_TOPIC && <JourneyNetwork value={state.network || createNetwork()} disabled={exclusive || requesting || Boolean(storageError) || state.reflection.done.includes(reflection.id)} busy={saving} completed={state.reflection.done.includes(reflection.id)} onAction={action => { setPracticeConfirmed(false); act({ type: 'network-action', action }); }} />}
             <label htmlFor="journey-reflection">Deine Antwort (optional, nur lokal)</label>
             <textarea id="journey-reflection" rows={5} maxLength={2000} value={state.reflection.drafts[reflection.id] || ''} disabled={exclusive || Boolean(storageError)} onChange={event => act({ type: 'reflection-draft', text: event.target.value })} />
-            <JourneyTutor key={reflection.id} topic={topic} kind="reflection" targetId={reflection.id} />
+            {!isPortfolio && <JourneyTutor key={reflection.id} topic={topic} kind="reflection" targetId={reflection.id} />}
             {!state.reflection.revealed.includes(reflection.id) ? <button className="btn btn-primary" disabled={disabled} onClick={() => act({ type: 'reflection-reveal' })}>Kernpunkte ansehen</button> : <>
               <h3>Vergleiche deine Erklärung</h3><ul>{reflection.keyPoints.map(point => <li key={point}>{point}</li>)}</ul>
               <p>{reflection.sampleAnswer}</p>

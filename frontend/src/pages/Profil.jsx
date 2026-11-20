@@ -11,6 +11,7 @@ import { profileStore } from '../store/localStore.js';
 import { authStore } from '../store/authStore.js';
 import { hochladen, herunterladen } from '../api/sync.js';
 import KontoFormular from '../components/KontoFormular.jsx';
+import { isPortfolio } from '../utils/deployment.js';
 import '../styles/account.css';
 
 export default function Profil() {
@@ -20,7 +21,7 @@ export default function Profil() {
   const [meldung, setMeldung] = useState('');
 
   const auth = useSyncExternalStore(authStore.subscribe, authStore.snapshot);
-  const syncAktiviert = Boolean(status?.syncAktiviert);
+  const syncAktiviert = !isPortfolio && Boolean(status?.syncAktiviert);
   const eingeloggt = Boolean(auth?.token);
   const location = useLocation();
   const kontoRef = useRef(null);

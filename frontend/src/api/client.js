@@ -1,15 +1,16 @@
 // Schlanker API-Client. Basis-URL aus Umgebungsvariable oder Default
 // (gleiche Origin im Produktions-Build, Vite-Proxy im Dev-Modus).
 import { authStore } from '../store/authStore.js';
+import { isPortfolio } from '../utils/deployment.js';
 
-const BASE = (import.meta.env.VITE_API_BASE_URL || '/api').replace(/\/$/, '');
+const BASE = isPortfolio ? '/api' : (import.meta.env.VITE_API_BASE_URL || '/api').replace(/\/$/, '');
 
 async function request(path, options = {}) {
   const token = authStore.token();
   const headers = { 'Content-Type': 'application/json', ...(options.headers || {}) };
   if (token) headers.Authorization = `Bearer ${token}`;
 
-  const res = await fetch(`${BASE}${path}`, { ...options, headers });
+  const res = await fetch(`${BASE}${path}`, { ...options, headers, ...(isPortfolio && { credentials: 'omit' }) });
 
   if (!res.ok) {
     let message = `Fehler ${res.status}`;
@@ -31,7 +32,7 @@ async function request(path, options = {}) {
 }
 
 export const api = {
-  get: (path) => request(path),
+  get: (path, options) => request(path, options),
   post: (path, body) =>
     request(path, { method: 'POST', body: JSON.stringify(body ?? {}) }),
   put: (path, body) =>

@@ -1,4 +1,5 @@
 import { Routes, Route } from 'react-router-dom';
+import { isPortfolio } from './utils/deployment.js';
 import Layout from './components/Layout.jsx';
 import Landing from './pages/Landing.jsx';
 import Dashboard from './pages/Dashboard.jsx';
@@ -31,7 +32,7 @@ export default function App() {
     <Routes>
       <Route index element={<Landing />} />
       <Route path="willkommen" element={<Landing />} />
-      <Route path="passwort-zuruecksetzen" element={<PasswortZuruecksetzen />} />
+      {!isPortfolio && <Route path="passwort-zuruecksetzen" element={<PasswortZuruecksetzen />} />}
       <Route element={<Layout />}>
         <Route path="dashboard" element={<Dashboard />} />
         <Route path="lernen" element={<Lernen />} />
@@ -50,9 +51,11 @@ export default function App() {
         <Route path="notizen" element={<Notizen />} />
         <Route path="einstellungen" element={<Einstellungen />} />
         <Route path="profil" element={<Profil />} />
-        <Route path="benachrichtigungen" element={<Benachrichtigungen />} />
-        <Route path="autoren" element={<Autoren />} />
-        <Route path="nutzerverwaltung" element={<Nutzerverwaltung />} />
+        {!isPortfolio && <>
+          <Route path="benachrichtigungen" element={<Benachrichtigungen />} />
+          <Route path="autoren" element={<Autoren />} />
+          <Route path="nutzerverwaltung" element={<Nutzerverwaltung />} />
+        </>}
         <Route path="lernreise" element={<Lernreise />} />
         <Route path="lernreise/fiae/:topicId" element={<LernreiseAbschnitt />} />
         <Route path="*" element={<Dashboard />} />

@@ -3,10 +3,16 @@ import { Link } from 'react-router-dom';
 import { ai, isLocalAi } from '../api/ai.js';
 import { aiStore } from '../store/aiStore.js';
 import { renderMarkdown } from '../utils/markdown.jsx';
+import { isPortfolio } from '../utils/deployment.js';
+import PublicTheoryLesson from './PublicTheoryLesson.jsx';
 import '../styles/ki.css';
 import '../styles/theorie.css';
 
-export default function TheorieLektion({ topic = null, standalone = false }) {
+export default function TheorieLektion(props) {
+  return isPortfolio ? <PublicTheoryLesson key={props.topic?.id || 'search'} {...props} /> : <LocalTheoryLesson {...props} />;
+}
+
+function LocalTheoryLesson({ topic = null, standalone = false }) {
   const settings = aiStore.useStore(); const [question, setQuestion] = useState('');
   const cloud = settings.provider === 'chatgpt';
   const [privateSource, setPrivateSource] = useState(false); const [material, setMaterial] = useState(null);

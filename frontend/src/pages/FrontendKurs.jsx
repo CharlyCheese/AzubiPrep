@@ -6,6 +6,7 @@ import { loadCourse, saveCourse } from '../pilot/storage.js';
 import { validateProject } from '../pilot/validator.js';
 import PilotPreview from '../components/PilotPreview.jsx';
 import KiHilfe from '../components/KiHilfe.jsx';
+import { isPortfolio } from '../utils/deployment.js';
 import JsSandboxPilot from '../components/JsSandboxPilot.jsx';
 import JsPlayground from '../components/JsPlayground.jsx';
 import JsCourseConsole from '../components/JsCourseConsole.jsx';
@@ -316,9 +317,9 @@ export default function FrontendKurs() {
       <section aria-label="Hilfestellung und Projektstand"><h2>Hilfestellung und Projektstand</h2>
       <details className="card pilot-disclosure" data-pilot-tool="hints"><summary>Hinweise und Musterlösung</summary><button className="btn btn-ghost" onClick={() => update({ hints: Math.min(lesson.hints.length, current.hints + 1) })}>Nächsten Hinweis zeigen</button>{lesson.hints.slice(0, current.hints).map((hint) => <p key={hint}>{hint}</p>)}<button className="btn btn-ghost" onClick={() => { update({ solutionSeen: true }); setShowSolution(!showSolution); }}>Musterlösung bewusst ansehen</button>{showSolution && <details open><summary>Musterlösung – eine mögliche Umsetzung, kein Kompetenznachweis</summary>{Object.entries(solutionFor(lesson)).filter(([, item]) => item.kind === 'text').map(([name, item]) => <div key={name}><h3>{name}</h3><pre>{item.content}</pre></div>)}</details>}
       </details>
-      <details className="card pilot-disclosure" data-pilot-tool="ai"><summary>KI-Lernbegleitung</summary>
+      {!isPortfolio && <details className="card pilot-disclosure" data-pilot-tool="ai"><summary>KI-Lernbegleitung</summary>
         <KiHilfe course contextKey={`${lesson.id}:${current.stand}:${selected}:${latest?.at || ''}`} makeContext={includeCode => courseContext(lesson, current, selected, includeCode)} onHint={() => update(project => ({ ...project, aiHints: (project.aiHints || 0) + 1 }))} />
-      </details>
+      </details>}
       <details className="card pilot-disclosure" data-pilot-tool="project"><summary>Projekt sichern und einlesen</summary>
         <p className="small">{desktop ? 'Deine Projekte werden im lokalen Desktop-App-Profil gespeichert.' : 'Deine Projekte bleiben in diesem Browserprofil. Wenn du die Browserdaten löschst, gehen auch die Entwürfe verloren.'} Exportiere wichtige Projekte. Der Quiz-Lernfortschritt wird getrennt gespeichert.</p>
         <p className="small">Für Projekte und eingereichte Prüfstände stehen insgesamt 32 MiB zur Verfügung. Bilder benötigen besonders viel Platz. Ist der Speicher voll, kannst du deinen Entwurf weiterhin exportieren.</p>

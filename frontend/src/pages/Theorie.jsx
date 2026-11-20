@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Link, useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import { api } from '../api/client.js';
 import { useApi } from '../utils/useApi.js';
+import { isPortfolio } from '../utils/deployment.js';
 import TheorieLektion from '../components/TheorieLektion.jsx';
 import '../styles/theorie.css';
 
@@ -37,7 +38,7 @@ export default function Theorie() {
   const resultHeading = useRef(null);
   const movedPage = useRef(false);
   const wanted = new URLSearchParams({ field, module, mode, fachrichtung: direction, q: term, page }).toString();
-  const directTopic = Boolean(topicId && !state?.theoryList);
+  const directTopic = Boolean(topicId && (isPortfolio || !state?.theoryList));
   const { daten: catalog, laden, fehler } = useApi(() => directTopic ? Promise.resolve(null) : api.get(`/theorie?${wanted}`), [wanted, directTopic]);
   // Keep the existing 24-topic API pages and their URLs. Split each page into shorter lists.
   const listSize = 8;

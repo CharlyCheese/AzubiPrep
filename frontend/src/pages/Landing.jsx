@@ -5,6 +5,7 @@ import { api } from '../api/client.js';
 import { profileStore } from '../store/localStore.js';
 import { authStore } from '../store/authStore.js';
 import KontoFormular from '../components/KontoFormular.jsx';
+import { isPortfolio } from '../utils/deployment.js';
 
 export default function Landing() {
   const navigate = useNavigate();
@@ -12,7 +13,7 @@ export default function Landing() {
   const session = useSyncExternalStore(authStore.subscribe, authStore.snapshot);
   const { daten: fachrichtungen } = useApi(() => api.get('/fachrichtungen'), []);
   const { daten: status } = useApi(() => api.get('/status'), []);
-  const syncAktiviert = Boolean(status?.syncAktiviert);
+  const syncAktiviert = !isPortfolio && Boolean(status?.syncAktiviert);
   const [fachrichtung, setFachrichtung] = useState(profileStore.get().fachrichtung || 'FIAE');
 
   function weiter(startTour = false) {
@@ -51,7 +52,7 @@ export default function Landing() {
             <KontoFormular fachrichtungen={fachrichtungen} fachrichtung={fachrichtung}
               onFachrichtungChange={setFachrichtung} onErfolg={kontoErfolg} startModus="login" />
           </details>}
-          {!session?.token && status && !syncAktiviert && <details className="landing-account">
+          {!isPortfolio && !session?.token && status && !syncAktiviert && <details className="landing-account">
             <summary>Kontosynchronisation einrichten</summary>
             <p className="small text-muted">Für den Einsatz auf mehreren Geräten kann die betreibende Person die Kontosynchronisation aktivieren. <a href="https://github.com/CharlyCheese/AzubiPrep/blob/main/docs/19-Datenbank-Login.md" target="_blank" rel="noreferrer">Anleitung für den Betrieb</a></p>
           </details>}

@@ -18,6 +18,7 @@ Theorie & Glossar und freiwillige Lernhilfe mit lokalem Qwen oder eigenem ChatGP
 
 - [Über das Projekt](#über-das-projekt)
 - [Screenshots](#screenshots)
+- [Als Portfolio auf Netlify zeigen](#als-portfolio-auf-netlify-zeigen)
 - [Funktionsumfang](#funktionsumfang)
 - [Eigener Quellcode-Debugger](#eigener-quellcode-debugger)
 - [Lokale Lernbegleitung und eigene Unterlagen](#lokale-lernbegleitung-und-eigene-unterlagen)
@@ -332,6 +333,41 @@ Anbieterauswahl, Anmeldung und Datenschutz: [KI-Anbieter](docs/26-KI-Anbieter.md
 | Tests & CI/CD | Vitest (Backend-Unit- & DB-Integrationstests), Playwright (e2e), GitHub Actions |
 
 ## Schnellstart (Web-App)
+
+### Als Portfolio auf Netlify zeigen
+
+Die öffentliche Version ist für Besucher gedacht, die AzubiPrep über einen Link
+ausprobieren möchten. Sie können als Gast die FIAE-Lernreise beginnen, öffentliche
+Theorie lesen, Fragen und Karteikarten üben, eine Prüfung auswerten und die
+Frontend-Werkstatt mit Debugger nutzen. Der Lernfortschritt gehört zum
+Browserprofil auf der jeweiligen Website. Die Online-Version braucht für neue
+Lerninhalte und Auswertungen eine Verbindung. Bereits geladene Inhalte sind
+über den PWA-Cache teilweise offline verfügbar.
+
+1. Den Stand mit der Datei `netlify.toml` nach GitHub pushen.
+2. In Netlify ein Projekt aus einem bestehenden Git-Repository importieren.
+   GitHub verbinden, das AzubiPrep-Repository und den Branch `main` auswählen.
+3. Den **Repository-Stamm** als Basis verwenden. Build-Befehl, öffentlicher
+   Ausgabeordner und die Funktion für die Lerninhalte stehen in `netlify.toml`.
+   Für den Gastbetrieb sind keine Zugangsdaten oder Umgebungsvariablen nötig.
+4. Den ersten Deploy starten und die von Netlify angezeigte Adresse öffnen.
+   Als kurzer Funktionstest eignen sich „Ohne Konto weiter nutzen“, die Suche
+   nach „DNS“ und eine Prüfungssimulation. Spätere Pushes auf den verbundenen
+   Branch aktualisieren die Website automatisch. [Netlify-Anleitung zum GitHub-Import](https://docs.netlify.com/start/quickstarts/deploy-from-repository/)
+
+Der Build übernimmt ausschließlich öffentliche Lerninhalte. Die persönliche
+PDF-Suche, lokale Modellverbindungen und die Anmeldung mit dem eigenen
+ChatGPT-Konto gehören zur lokal gestarteten Web- oder Desktop-App.
+
+Für eine lokale Prüfung aus dem Repository-Stamm:
+
+```sh
+npm ci --prefix frontend
+npm ci --prefix e2e
+npm --prefix e2e exec -- playwright install chromium
+node scripts/build-netlify.mjs
+node e2e/scripts/check-netlify.mjs
+```
 
 ### Windows: im Browser per Doppelklick starten
 

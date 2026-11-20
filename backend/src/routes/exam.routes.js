@@ -2,34 +2,12 @@
 import { Router } from 'express';
 import { generierePruefung, auswertePruefung } from '../exam.js';
 import { config } from '../config.js';
+import { publicExamOperations } from '../public-learning.js';
+import { mountLearningOperations } from './learning-operations.js';
 
 export function buildExamRoutes(store) {
   const router = Router();
-
-  router.post('/pruefung/generieren', (req, res, next) => {
-    try {
-      const { fachrichtung, anzahl, gewichtung, schwierigkeit } = req.body || {};
-      const ergebnis = generierePruefung(store.get(), {
-        fachrichtung,
-        anzahl: Number(anzahl),
-        gewichtung: gewichtung && typeof gewichtung === 'object' ? gewichtung : {},
-        schwierigkeit,
-      });
-      res.json(ergebnis);
-    } catch (err) {
-      next(err);
-    }
-  });
-
-  router.post('/pruefung/auswerten', (req, res, next) => {
-    try {
-      const { fragen } = req.body || {};
-      const ergebnis = auswertePruefung(store.get(), { fragen });
-      res.json(ergebnis);
-    } catch (err) {
-      next(err);
-    }
-  });
+  mountLearningOperations(router, publicExamOperations(store));
 
   if (config.demoEndpoints) {
     router.get('/pruefung/ergebnisbeispiel', (req, res) => {

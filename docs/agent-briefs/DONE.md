@@ -405,3 +405,5 @@
 - [OPS-044] CI-Zeitüberschreitung im Debugger-Gesamtprojekt und verdeckte Promise-Abbruchmeldung behoben. 196 Browser- und 23 Electron-Fälle bestanden, Lastvergleiche und unabhängiger Review abgeschlossen — 2026-11-20 — [Brief](OPS-044-ci-debugger-gesamtprojekt.md)
 
 - [OPS-045] 14 Screenshots erneuert und Willkommensseite sowie Suche ergänzt. README mit geprüfter Galerie und Anleitung für neue Aufnahmen aktualisiert — 2026-11-20 — [Brief](OPS-045-readme-bildgalerie.md)
+
+- [OPS-046] Öffentliche Gast-PWA für den Netlify-Import aus GitHub vorbereitet. Produktionspaket, private Dateigrenzen, Lernbetrieb und Offline-Aufruf lokal geprüft — 2026-11-20 — [Brief](OPS-046-netlify-portfolio.md)

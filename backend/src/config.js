@@ -1,6 +1,7 @@
 // Zentrale Konfiguration: alles aus Umgebungsvariablen mit sinnvollen
 // Defaults (siehe docs/14-Betrieb-Wartung.md). Keine hart kodierten Pfade/Ports.
 import path from 'node:path';
+import { EXAM_PASS_PERCENT } from './public-content.js';
 import { fileURLToPath } from 'node:url';
 import { config as dotenvConfig } from 'dotenv';
 
@@ -44,7 +45,7 @@ export const config = {
   frontendDist: process.env.FRONTEND_DIST
     ? path.resolve(process.env.FRONTEND_DIST)
     : path.join(projectRoot, 'frontend', 'dist'),
-  bestehensgrenzeProzent: 50,
+  bestehensgrenzeProzent: EXAM_PASS_PERCENT,
   projectRoot,
 
   // Optionale lokale Lernbegleitung. Die KI-Schicht akzeptiert nur Loopback.

@@ -1,10 +1,12 @@
 import { VALIDATOR_VERSION } from '../pilot/course.js';
+import { isPortfolio } from '../utils/deployment.js';
 
 const hosts = ['127.0.0.1', 'localhost', '[::1]'];
-export function isLocalAi() { return hosts.includes(window.location.hostname); }
+export function isLocalAi() { return !isPortfolio && hosts.includes(window.location.hostname); }
 async function request(endpoint, { body, signal, method, pdf } = {}) {
+  if (!isLocalAi()) throw new Error('Die Lernbegleitung ist nur in der lokalen AzubiPrep-Anwendung verfügbar.');
   const base = new URL(import.meta.env.VITE_API_BASE_URL || '/api', window.location.origin);
-  if (!isLocalAi() || base.origin !== window.location.origin) throw new Error('Die Lernbegleitung ist nur in der lokalen AzubiPrep-Anwendung verfügbar.');
+  if (base.origin !== window.location.origin) throw new Error('Die Lernbegleitung ist nur in der lokalen AzubiPrep-Anwendung verfügbar.');
   let response;
   try {
     response = await fetch(`${base.href.replace(/\/$/, '')}/ai/${endpoint}`, { method: method || (body || pdf ? 'POST' : 'GET'), cache: 'no-store', credentials: 'same-origin', signal, headers: { 'X-AzubiPrep-AI': '1', ...(pdf ? { 'Content-Type': 'application/pdf' } : body ? { 'Content-Type': 'application/json' } : {}) }, ...(pdf ? { body: pdf } : body ? { body: JSON.stringify(body) } : {}) });

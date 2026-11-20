@@ -5,6 +5,8 @@ node_modules/
 frontend/dist/
 /frontend/course-template/dist/
 desktop/dist/
+/netlify-build/
+/.netlify/
 # Manuell exportierter/kopierter Installer-Build (enthält u. a. die über
 # 100MB große win-unpacked/AzubiPrep.exe – GitHub verweigert Pushes mit
 # Dateien über diesem Limit, siehe auch desktop/dist/ oben)

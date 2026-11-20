@@ -5,6 +5,7 @@ import TheorieLektion from '../components/TheorieLektion.jsx';
 import { authStore } from '../store/authStore.js';
 import { notesStore } from '../store/localStore.js';
 import { findNotes, findTools } from '../utils/appSearch.js';
+import { isPortfolio } from '../utils/deployment.js';
 import { useApi } from '../utils/useApi.js';
 import '../styles/learning-home.css';
 import '../styles/search.css';
@@ -183,7 +184,7 @@ function ProfileSearch({ noteOwner, role }) {
             <p>Probiere einen kürzeren Begriff oder wähle einen anderen Suchbereich.</p></div>}
     </section>}
     <details className="lh-disclosure" onToggle={event => { if (event.currentTarget.open) setKnowledgeLoaded(true); }}>
-      <summary><strong>Wissensfrage stellen oder Fundstellen lesen</strong></summary>
+      <summary><strong>{isPortfolio ? 'Fundstellen aus den Lerninhalten lesen' : 'Wissensfrage stellen oder Fundstellen lesen'}</strong></summary>
       {knowledgeLoaded && <TheorieLektion />}
     </details>
   </div>;

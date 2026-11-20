@@ -1,0 +1,13 @@
+[build]
+  base = "."
+  command = "npm ci --prefix frontend --include=dev && node scripts/build-netlify.mjs"
+  publish = "netlify-build/site"
+  functions = "netlify/functions"
+
+[functions]
+  node_bundler = "esbuild"
+  included_files = ["netlify-build/data/**"]
+
+# Die PWA prüft die Integrität ihrer erzeugten Dateien beim Installieren.
+[build.processing]
+  skip_processing = true

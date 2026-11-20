@@ -1,8 +1,7 @@
 // Prüfungs-Generierung & -Auswertung (stateless) – siehe docs/09-API-Referenz.md
 // und docs/03-Pruefungssimulation.md.
-import { fragenFuerFachrichtung } from './content.js';
+import { EXAM_PASS_PERCENT, fragenFuerFachrichtung } from './public-content.js';
 import { pruefeAntwort, musterloesungFT } from './answer.js';
-import { config } from './config.js';
 
 /** Fisher-Yates, optional gewichtet nach Thema (höheres Gewicht = eher vorne). */
 function mischen(liste, gewichtung) {
@@ -92,7 +91,7 @@ export function auswertePruefung(content, { fragen }) {
 
   const gesamt = detail.length;
   const scoreProzent = gesamt > 0 ? Math.round((richtigGesamt / gesamt) * 100) : 0;
-  const bestanden = scoreProzent >= config.bestehensgrenzeProzent;
+  const bestanden = scoreProzent >= EXAM_PASS_PERCENT;
 
   const staerken = [];
   const schwaechen = [];

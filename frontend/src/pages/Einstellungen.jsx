@@ -7,6 +7,7 @@ import { useTheme } from '../context/ThemeContext.jsx';
 import { tourManuellStarten } from '../utils/tour.js';
 import KiEinstellungen from '../components/KiEinstellungen.jsx';
 import { aiStore } from '../store/aiStore.js';
+import { isPortfolio } from '../utils/deployment.js';
 import '../styles/settings.css';
 
 export default function Einstellungen() {
@@ -23,12 +24,13 @@ export default function Einstellungen() {
   }, [hash]);
   const { theme, toggleTheme } = useTheme();
   const { daten: status } = useApi(() => api.get('/status'), []);
-  const syncAktiviert = Boolean(status?.syncAktiviert);
+  const syncAktiviert = !isPortfolio && Boolean(status?.syncAktiviert);
 
   function reset() {
-    if (!confirm('Die aufgeführten lokalen Lern- und Übungsdaten endgültig löschen und die KI-Einstellungen zurücksetzen?')) return;
+    const question = isPortfolio ? 'Die aufgeführten Lern- und Übungsdaten auf diesem Gerät endgültig löschen?' : 'Die aufgeführten lokalen Lern- und Übungsdaten endgültig löschen und die KI-Einstellungen zurücksetzen?';
+    if (!confirm(question)) return;
     resetAll();
-    aiStore.reset();
+    if (!isPortfolio) aiStore.reset();
     navigate('/dashboard');
   }
 
@@ -37,9 +39,9 @@ export default function Einstellungen() {
       <header className="main-header">
         <h1>Einstellungen</h1>
         <nav aria-label="Einstellungsbereiche" className="settings-links">
-          <Link to="#ki-anbieter">KI-Anbieter</Link>
-          <Link to="#lernunterlagen">Lernunterlagen</Link>
-          <Link to="/profil">Lernprofil und Konto</Link>
+          {!isPortfolio && <><Link to="#ki-anbieter">KI-Anbieter</Link>
+            <Link to="#lernunterlagen">Lernunterlagen</Link></>}
+          <Link to="/profil">{isPortfolio ? 'Lernprofil' : 'Lernprofil und Konto'}</Link>
         </nav>
       </header>
 
@@ -57,7 +59,10 @@ export default function Einstellungen() {
         </div>
       </section>
 
-      <KiEinstellungen />
+      {isPortfolio ? <section className="card">
+        <h2>Lernen im Browser</h2>
+        <p>In dieser Webversion lernst du als Gast. Dein Lernstand und deine Notizen bleiben in diesem Browserprofil. KI-Lernbegleitung und eigene PDF-Unterlagen stehen in der lokal installierten Version zur Verfügung.</p>
+      </section> : <KiEinstellungen />}
 
       <details className="card settings-details">
         <summary>Datenschutz &amp; Hinweise</summary>
@@ -67,7 +72,7 @@ export default function Einstellungen() {
             Browser</strong> dieses Geräts (localStorage).
             {syncAktiviert
               ? ' Nur wenn du dich freiwillig registrierst und aktiv „Jetzt hochladen" nutzt, wird dein Lernstand zusätzlich auf dem Server gespeichert (Passwörter werden dabei ausschließlich als Hash abgelegt, nie im Klartext).'
-              : ' Es gibt kein Benutzerkonto und keine Speicherung auf dem Server.'}
+              : ' Diese Version speichert deinen Lernstand im Browserprofil.'}
           </li>
           <li>
             Auf gemeinsam genutzten Geräten kann jede Person diese lokalen Daten einsehen. Sichere Notizen bei
@@ -78,15 +83,14 @@ export default function Einstellungen() {
             zertifiziert und ersetzen keinen Prüfungsnachweis.
           </li>
           <li>
-            Fragen und Lösungen werden über die lokale API geladen – die Lösungen sind dort technisch abrufbar.
-            Bitte als Lernhilfe nutzen (Details in docs/17-Sicherheit.md).
+            {isPortfolio ? 'Die Website verarbeitet Suchbegriffe und eingereichte Prüfungsantworten. Beim Üben kannst du die Musterlösungen ansehen.' : 'Fragen und Lösungen werden über die lokale API geladen – die Lösungen sind dort technisch abrufbar. Bitte als Lernhilfe nutzen (Details in docs/17-Sicherheit.md).'}
           </li>
         </ul>
       </details>
 
       <details className="card settings-details settings-delete">
         <summary>Lokale Lerndaten zurücksetzen</summary>
-        <p>Du löschst auf diesem Gerät den Modulfortschritt, Prüfungsverlauf, Karteikarten, Lernplan und Lernaktivitäten einschließlich Punkten. Auch die Notizen des aktuellen Profils sowie Quiz-, Karteikarten- und KI-Einstellungen werden zurückgesetzt. Sichere wichtige Notizen vorher über den Export.</p>
+        <p>Du löschst auf diesem Gerät den Modulfortschritt, Prüfungsverlauf, Karteikarten, Lernplan und Lernaktivitäten einschließlich Punkten. Auch die Notizen des aktuellen Profils sowie {isPortfolio ? 'Quiz- und Karteikarteneinstellungen' : 'Quiz-, Karteikarten- und KI-Einstellungen'} werden zurückgesetzt. Sichere wichtige Notizen vorher über den Export.</p>
         <button className="btn btn-danger" onClick={reset}>Aufgeführte Daten löschen</button>
       </details>
     </div>

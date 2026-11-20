@@ -1,5 +1,7 @@
 import { Router } from 'express';
 import { loadJourney } from '../journey.js';
+import { publicJourneyOperations } from '../public-learning.js';
+import { mountLearningOperations } from './learning-operations.js';
 
 export function loadAvailableJourney(contentDir) {
   try {
@@ -20,17 +22,6 @@ export function buildJourneyRoutes(contentDir, journey = loadAvailableJourney(co
     }
     next();
   });
-  const respond = (operation) => (req, res) => {
-    try {
-      res.json(operation(req));
-    } catch (error) {
-      res.status(error.status || 500).json({ error: error.status ? error.message : 'Die Lernreise konnte nicht geladen werden.' });
-    }
-  };
-  router.get('/fiae', respond(() => journey.getSummary()));
-  router.get('/fiae/progress-catalog', respond(() => journey.getProgressCatalog()));
-  router.get('/fiae/topics/:topicId', respond((req) => journey.getTopic(req.params.topicId)));
-  router.post('/fiae/topics/:topicId/check', respond((req) => journey.check(req.params.topicId, req.body)));
-  router.post('/fiae/topics/:topicId/evaluate', respond((req) => journey.evaluate(req.params.topicId, req.body)));
+  mountLearningOperations(router, publicJourneyOperations(journey), 'Die Lernreise konnte nicht geladen werden.');
   return router;
 }

@@ -2,6 +2,8 @@
 // Snapshot-Cache-Muster wie gamificationStore/notesStore, nötig für
 // useSyncExternalStore). Login ist rein optional – ohne Login verhält sich
 // die App wie bisher (reiner localStorage-Modus).
+import { isPortfolio } from '../utils/deployment.js';
+
 const PREFIX = 'azubiprep.';
 const KEY = 'auth';
 
@@ -9,6 +11,7 @@ let cache = null;
 let raw = null;
 
 function readAuth() {
+  if (isPortfolio) return null;
   let r = 'null';
   try { r = localStorage.getItem(PREFIX + KEY) || 'null'; } catch { r = 'null'; }
   if (r !== raw) {
@@ -22,6 +25,7 @@ function readAuth() {
 }
 
 function writeAuth(value) {
+  if (isPortfolio) return;
   raw = value ? JSON.stringify(value) : 'null';
   cache = value;
   try {
